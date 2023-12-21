@@ -7,5 +7,12 @@ import { HelloService } from './services/hello.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ng-pos';
+
+/**
+ *
+ */
+constructor() {
+  // localStorage.clear();
+  // sessionStorage.clear();
+}
 }

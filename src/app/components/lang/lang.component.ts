@@ -7,11 +7,11 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
-  selector: 'app-lenguaje-aplicacion',
-  templateUrl: './lenguaje-aplicacion.component.html',
-  styleUrls: ['./lenguaje-aplicacion.component.scss']
+  selector: 'app-lang',
+  templateUrl: './lang.component.html',
+  styleUrls: ['./lang.component.scss']
 })
-export class LenguajeAplicacionComponent {
+export class LangComponent {
   activeLang: LanguageInterface;
   idioma: number = indexDefaultLang;
   languages: LanguageInterface[] = languagesProvider;
