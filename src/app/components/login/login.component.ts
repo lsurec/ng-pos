@@ -94,7 +94,7 @@ export class LoginComponent {
 
     if (!this.nombreInput || !this.claveInput) {
       // alert ("Por favor completa todos los campos para continuar")
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(completar, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('crm.login.completar'), MensajesService.findValueLrCode(ok, this.activeLang));
       return
     }
     //Interface de credenciales

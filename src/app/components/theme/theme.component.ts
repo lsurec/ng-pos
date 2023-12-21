@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
@@ -61,6 +62,6 @@ oscuro(idTema: number): void {
 }
 
 guardar(): void {
-  this._router.navigate(["/login"]);
+  this._router.navigate([RouteNamesService.LOGIN]);
 }
 }

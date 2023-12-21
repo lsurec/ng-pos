@@ -17,7 +17,7 @@ const appRoutes = [
     { path: RouteNamesService.SPLASH, component: SplashComponent},
     { path: RouteNamesService.LANGUAGE, component: LangComponent},
     { path: RouteNamesService.THEME, component: ThemeComponent},
-    // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+    { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
     // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
     // { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },
     // { path: '**', redirectTo: '/notFound', pathMatch: 'full' as PathMatch },

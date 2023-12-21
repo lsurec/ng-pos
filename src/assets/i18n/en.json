@@ -6,7 +6,8 @@
             "ver": "Show password",
             "ocultar": "Hide password",
             "recordar": "Remember me",
-            "iniciar": "LOGIN"
+            "iniciar": "LOGIN",
+            "completar":"Please complete all fields to continue."
         },
         "progress": {
             "cargar": "Loading...",
