@@ -11,7 +11,7 @@ import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
@@ -33,6 +33,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { LocalConfigComponent } from './components/local-config/local-config.component';
 
+import { routing } from './app.routing';
+import {   HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -78,6 +80,7 @@ import { LocalConfigComponent } from './components/local-config/local-config.com
     MatToolbarModule,
     MatTooltipModule,
     MatRadioModule,
+    routing,
   ],
   providers: [],
   bootstrap: [AppComponent]
