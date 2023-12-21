@@ -10,7 +10,7 @@ import { HelloService } from './services/hello.service';
 export class AppComponent {
   title = 'ng-pos';
 
-  constructor(private _helloService:HelloService){
-    _helloService.getHello("https://localhost:7077/api/Hello");
-  }
+  // constructor(private _helloService:HelloService){
+  //   _helloService.getHello("https://localhost:7077/api/Hello");
+  // }
 }

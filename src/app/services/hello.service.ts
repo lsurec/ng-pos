@@ -13,16 +13,16 @@ export class HelloService{
     }
 
 
-    getHello(apiUrl:string){
-        this._getHello(apiUrl).subscribe(
-            (response) => {
-              console.log('Datos:', response.body);
-              console.log('Código de estado:', response.status);
-            },
-            (error) => {
-              console.error('Error al obtener datos:', error.status);
-            }
-          );
-    }
+    // getHello(apiUrl:string):Promise<ResApiInterface> {
+    //     this._getHello(apiUrl).subscribe(
+    //         (response) => {
+    //           console.log('Datos:', response.body);
+    //           console.log('Código de estado:', response.status);
+    //         },
+    //         (error) => {
+    //           console.error('Error al obtener datos:', error.status);
+    //         }
+    //       );
+    // }
 
 }
