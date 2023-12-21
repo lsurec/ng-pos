@@ -1,0 +1,69 @@
+$color-naranja        : #df9722;
+$color-negro          : #000000;
+$color-blanco         : #fff;
+$color-gris           : #c1bfbf;
+$color-azul           : #134895;
+$color-bordes         : #c1bfbf; //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+$bordes               : #c1bfbf;
+$idioma-seleccionado  : #5d6d6c;
+
+.container-main {
+    height : calc(100vh - 64px) !important;
+    padding: 70px 0px 20px;
+}
+
+.contenido {
+    align-items: center !important;
+    width      : 100%;
+    height     : calc(100% - 200px);
+    display    : flex;
+}
+
+.cambios-cerrar {
+    text-align : center;
+    display    : flex;
+    align-items: center;
+    height     : 50px;
+    padding-top: 10px;
+}
+
+.titulo {
+    text-align : center;
+    font-size  : 19px;
+    font-weight: 500;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.titulos-menu {
+    padding-top: 30px;
+    width      : 100%;
+}
+
+.detalles {
+    display: flex;
+    width  : 100%;
+}
+
+.informacion-tema {
+    width        : 50%;
+    cursor       : pointer;
+    text-align   : center !important;
+    border       : 1px solid $color-bordes;
+    margin       : 10px 0px;
+    border-radius: 10px;
+}
+
+.opciones {
+    padding: 10px;
+    width  : 100%;
+}
