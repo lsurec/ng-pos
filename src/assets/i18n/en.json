@@ -7,6 +7,15 @@
             "ocultar": "Hide password",
             "recordar": "Remember me",
             "iniciar": "LOGIN"
+        },
+        "progress": {
+            "cargar": "Loading...",
+            "esperar": "Please wait...",
+            "error": "404",
+            "linea1": "NO RECORDS FOUND",
+            "linea2": "The page you are looking for might have been removed or temporarily unavailable.",
+            "linea3": "Try searching for something else.",
+            "construccion": "SITE UNDER CONSTRUCTION"
         }
     }
 }

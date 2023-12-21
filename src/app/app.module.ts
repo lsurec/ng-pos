@@ -23,6 +23,10 @@ import { ProgressComponent } from './components/progress/progress.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BarraLogosComponent } from './components/barra-logos/barra-logos.component';
+import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,8 @@ import { MatButtonModule } from '@angular/material/button';
     DialogActionsComponent,
     LogosComponent,
     ProgressComponent,
+    BarraLogosComponent,
+    BarraLogoDemosoftComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +64,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,6 +7,15 @@
             "ocultar": "Ocultar contraseña",
             "recordar": "Recordar mis datos.",
             "iniciar": "INICIAR SESION"
+        },
+        "progress": {
+            "cargar": "Cargando...",
+            "esperar": "Por favor espere...",
+            "error": "404",
+            "linea1": "NO SE HAN ENCONTRADO REGISTROS",
+            "linea2": "Es posible que lo que está buscando se haya eliminado o no está disponible temporalmente.",
+            "linea3": "Intente realizar una busqueda.",
+            "construccion": "SITIO EN CONSTRUCCIÓN"
         }
     }
 }
