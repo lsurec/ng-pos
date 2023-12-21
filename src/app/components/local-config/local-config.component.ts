@@ -10,6 +10,7 @@ import { borraranDatos, cancelar, debeSeleccionar, noSeleccionado, ok, salioMal,
 import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.service';
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -138,7 +139,7 @@ export class LocalConfigComponent {
     if (this.estaciones.length == 1 && this.empresas.length == 1) {
       StorageService.empresa = JSON.stringify(this.empresaSelect);
       StorageService.estacion = JSON.stringify(this.estacionSelect);
-      this._router.navigate(['/home']); //navegar a home
+      this._router.navigate([RouteNamesService.HOME]); //navegar a home
     }
   };
 
@@ -152,7 +153,7 @@ export class LocalConfigComponent {
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
     StorageService.empresa = JSON.stringify(this.empresaSelect);
     StorageService.estacion = JSON.stringify(this.estacionSelect);
-    this._router.navigate(['/home']);
+    this._router.navigate([RouteNamesService.HOME]);
   };
 
   //Cerrar sesion
@@ -175,7 +176,7 @@ export class LocalConfigComponent {
     sessionStorage.removeItem("name");
 
     //Regresar a Login
-    this._router.navigate(["/login"]);
+    this._router.navigate([RouteNamesService.LOGIN]);
 
     //Limpiar storage del navegador
     // localStorage.clear();

@@ -21,6 +21,7 @@ const appRoutes = [
     { path: RouteNamesService.API, component: ApiComponent},
     { path: RouteNamesService.LOCAL_CONFIG, component: LocalConfigComponent},
     { path: RouteNamesService.NOT_FOUND, component: NotFoundComponent},
+    { path: RouteNamesService.HOME, component: HomeComponent},
 
 
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-api',
@@ -9,6 +10,8 @@ import { RouteNamesService } from 'src/app/services/route.names.service';
 })
 export class ApiComponent {
 
+  url!: string;
+
   constructor(
     private _router: Router,
   ) {
@@ -16,6 +19,7 @@ export class ApiComponent {
   }
 
   guardar(): void {
-    // this._router.navigate([RouteNamesService.LOGIN]);
+    StorageService.baseUrl = this.url;
+    this._router.navigate([RouteNamesService.LOGIN]);
   }
 }

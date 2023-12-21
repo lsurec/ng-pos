@@ -7,15 +7,18 @@
         <div class="row">
             <div class="col-md-5 mx-auto text-center">
                 <div class="login-right">
+                    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>mvpn_lock</mat-icon>
+                    </button>
                     <!-- Seleccionar idioma -->
-                    <button mat-button [matMenuTriggerFor]="menu" class="languagebtn">
+                    <!-- <button mat-button [matMenuTriggerFor]="menu" class="languagebtn">
                         <mat-icon>expand_more</mat-icon>
                         {{getNameByLanguageRegion(activeLang)}}
                     </button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngFor="let item of languages; let i = index"
                             (click)="changeLang(i)">{{getNameByLanguageRegion(item)}}</button>
-                    </mat-menu>
+                    </mat-menu> -->
                     <!-- Ingresar y validar datos ingresados en los inputs  -->
                     <form #loginForm="ngForm" (ngSubmit)="login()">
                         <div class="sign-in">
