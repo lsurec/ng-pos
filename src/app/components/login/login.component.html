@@ -20,22 +20,22 @@
                     <form #loginForm="ngForm" (ngSubmit)="login()">
                         <div class="sign-in">
                             <!-- Correo o usuario -->
-                            <h4>{{ 'crm.login.correo' | translate }}</h4>
+                            <h4>{{ 'pos.login.correo' | translate }}</h4>
                             <input type="text" required [(ngModel)]="nombreInput" name="nombre" autocomplete="off">
                         </div>
                         <div class="sign-in">
                             <!-- Contraseña  -->
-                            <h4>{{ 'crm.login.contrasena' | translate }}</h4>
+                            <h4>{{ 'pos.login.contrasena' | translate }}</h4>
                             <input *ngIf="!mostrarTexto" type="password" required [(ngModel)]="claveInput" name="clave">
                             <input *ngIf="mostrarTexto" type="text" required [(ngModel)]="claveInput" name="clave"
                                 autocomplete="off">
                             <br>
                             <!-- Ver y ocutar contraseña -->
-                            <p *ngIf="!mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">{{ 'crm.login.ver'
+                            <p *ngIf="!mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">{{ 'pos.login.ver'
                                 |
                                 translate }}</p>
                             <p *ngIf="mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">{{
-                                'crm.login.ocultar'
+                                'pos.login.ocultar'
                                 |
                                 translate }}</p>
                             <!-- <a>Olvidaste tu contraseña?</a> -->
@@ -46,11 +46,11 @@
                             <input type="checkbox" id="brand" value="" (click)="rememberMe()" checked
                                 *ngIf="saveMyData">
                             <input type="checkbox" id="brand" value="" (click)="rememberMe()" *ngIf="!saveMyData">
-                            <label for="brand"><span></span>{{ 'crm.login.recordar' | translate }}</label>
+                            <label for="brand"><span></span>{{ 'pos.login.recordar' | translate }}</label>
                         </div>
                         <!-- Ingresar, iniciar sesion -->
                         <div class="sign-in">
-                            <input type="submit" value="{{ 'crm.login.iniciar' | translate }}">
+                            <input type="submit" value="{{ 'pos.login.iniciar' | translate }}">
                         </div>
                     </form>
                 </div>

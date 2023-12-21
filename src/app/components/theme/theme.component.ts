@@ -62,6 +62,6 @@ oscuro(idTema: number): void {
 }
 
 guardar(): void {
-  this._router.navigate([RouteNamesService.LOGIN]);
+  this._router.navigate([RouteNamesService.API]);
 }
 }

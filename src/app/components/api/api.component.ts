@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 
 @Component({
   selector: 'app-api',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class ApiComponent {
 
+  constructor(
+    private _router: Router,
+  ) {
+
+  }
+
+  guardar(): void {
+    this._router.navigate([RouteNamesService.API]);
+  }
 }
