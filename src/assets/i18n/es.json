@@ -16,6 +16,47 @@
             "linea2": "Es posible que lo que está buscando se haya eliminado o no está disponible temporalmente.",
             "linea3": "Intente realizar una busqueda.",
             "construccion": "SITIO EN CONSTRUCCIÓN"
+        },
+        "ajustes": {
+            "ajustesT": "AJUSTES",
+            "semana": "Inicio de semana:",
+            "idioma": "Idioma de la aplicación:",
+            "horas": "Horas Laborales:",
+            "inicioSema": "Iniciar semana en:",
+            "rango": "a",
+            "idiomaT": "IDIOMA DE LA APLICACION",
+            "horario": "Horario Laboral",
+            "inicio": "Inicio:",
+            "fin": "Fin:",
+            "inicioLab": "Iniciar Labores en:",
+            "finLab": "Finalizar Labores en",
+            "aceptar": "Aceptar",
+            "cancelar": "Cancelar",
+            "regresar": "Regresar",
+            "continuar": "Continuar",
+            "ajustes": "Ajustes",
+            "cerrar": "Cerrar"
+        },
+        "preferencias": {
+            "tema": "TEMA DE LA APLICACIÓN",
+            "oscuro": "Tema Oscuro",
+            "claro": "Tema Claro",
+            "cambiar": "Más adelante también podrá cambiar el tema de la aplicación según su preferencia.",
+            "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia."
+        },
+        "configuracionLocal": {
+            "titulo": "CONFIGURACION LOCAL",
+            "empresas": "Empresas",
+            "estaciones": "Estacion de Trabajo",
+            "registros": "Registros",
+            "empresa": "Empresa",
+            "localidad": "Localidad",
+            "guardar": "Guardar",
+            "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar."
+        },
+        "toolTip": {
+            "regresar": "regresar al menú principal",
+            "regresarAnterior": "regresar pagina anterior"
         }
     }
 }

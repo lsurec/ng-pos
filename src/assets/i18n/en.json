@@ -16,6 +16,47 @@
             "linea2": "The page you are looking for might have been removed or temporarily unavailable.",
             "linea3": "Try searching for something else.",
             "construccion": "SITE UNDER CONSTRUCTION"
+        },
+        "ajustes": {
+            "ajustesT": "SETTINGS",
+            "semana": "Start of the week:",
+            "idioma": "App language:",
+            "horas": "Business Hours:",
+            "inicioSema": "Start week on:",
+            "rango": "to",
+            "idiomaT": "APP LANGUAGE",
+            "horario": "Business Hours",
+            "inicio": "Start:",
+            "fin": "End:",
+            "inicioLab": "Start Work at:",
+            "finLab": "End Work at",
+            "aceptar": "OK",
+            "cancelar": "Cancel",
+            "regresar": "Go back",
+            "continuar": "Continue",
+            "ajustes": "Settings",
+            "cerrar": "Close"
+        },
+        "preferencias": {
+            "tema": "APPLICATION THEME",
+            "oscuro": "Dark Theme",
+            "claro": "Light Theme",
+            "cambiar": "Later on, you will also be able to change the application theme according to your preference.",
+            "idioma": "Later on, you will also be able to change the application language according to your preference."
+        },
+        "configuracionLocal": {
+            "titulo": "LOCAL CONFIGURATION",
+            "empresas": "Companies",
+            "estaciones": "Workstation",
+            "registros": "Records",
+            "empresa": "Company",
+            "localidad": "Location",
+            "guardar": "Save",
+            "cambiar": "To make changes to Local Settings, you will need to log out and log in again."
+        },
+        "toolTip": {
+            "regresar": "return to main menu",
+            "regresarAnterior": "return previous page"
         }
     }
 }

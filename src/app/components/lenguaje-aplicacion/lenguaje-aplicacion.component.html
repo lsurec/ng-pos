@@ -1,0 +1,38 @@
+<div class="container-main">
+    <div class="cambios-cerrar">
+        <span class="spacer"></span>
+        <p class="titulo">{{ 'crm.ajustes.idiomaT' | translate }}</p>
+        <span class="spacer"></span>
+    </div>
+
+    <div class="contenido">
+        <div class="titulos-menu">
+            <div class="detalles" *ngFor="let item of languages; let i = index" (click)="changeLang(i)">
+                <span class="spacer"></span>
+                <div class="informacion-tema">
+                    <div class="seleccionado d-flex" [ngClass]="{'idioma-seleccionado': idioma === i}">
+                        <button mat-icon-button>
+                            <mat-icon>language</mat-icon>
+                        </button>
+                        <p class="opciones">{{getNameByLanguageRegion(item)}}</p>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+            </div>
+        </div>
+    </div>
+    <div class="cambios-cerrar">
+        <span class="spacer"></span>
+        <p class="realizar-cambio">{{ 'crm.preferencias.idioma' | translate }}</p>
+        <span class="spacer"></span>
+    </div>
+    <div class="cambios-cerrar">
+        <span class="spacer"></span>
+        <button mat-stroked-button (click)="guardar()">{{'crm.ajustes.continuar' | translate}}</button>
+        <span class="spacer"></span>
+    </div>
+
+</div>
+<!-- Mostrar logos -->
+<!-- <app-barra-logos></app-barra-logos> -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>

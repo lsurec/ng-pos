@@ -134,14 +134,14 @@ export class LoginComponent {
       //sesion permanente
       StorageService.token = resApiLogin.message;
       //guardar el usuario
-      StorageService.user = this.nombreInput;
-      // StorageService.user = 'desa026';
+      // StorageService.user = this.nombreInput;
+      StorageService.user = 'desa026';
     }
     else {
       //sesion no permanente
       sessionStorage.setItem("token", resApiLogin.message);
-      sessionStorage.setItem('user', this.nombreInput);
-      // sessionStorage.setItem('user', 'desa026');
+      // sessionStorage.setItem('user', this.nombreInput);
+      sessionStorage.setItem('user', 'desa026');
     };
 
     //consumir estaciones y empresas

@@ -1,0 +1,215 @@
+$color-bordes         : #c1bfbf; //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+$bordes               : #c1bfbf;
+$color-naranja        : #df9722;
+
+
+@media screen and (max-width: 365px) {
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles,
+    .estaciones-trabajo {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles,
+    .estaciones-trabajo {
+        width: 100% !important;
+    }
+}
+
+.localidades::-webkit-scrollbar,
+.empresas::-webkit-scrollbar {
+    width           : 6px;
+    background-color: $background-oficial;
+}
+
+.localidades::-webkit-scrollbar-track,
+.empresas::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.localidades::-webkit-scrollbar-thumb,
+.empresas::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.contenido::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.contenido::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.container-main {
+    height: 100%;
+}
+
+.contenido {
+    height     : calc(100% - 130px);
+    align-items: center !important;
+    overflow   : auto;
+}
+
+.estaciones-trabajo {
+    width      : 80%;
+    align-items: center;
+}
+
+.titulos-menu {
+    display    : flex;
+    height     : calc(100% - 130px);
+    padding-top: 30px;
+}
+
+.textos {
+    width: 45%;
+}
+
+.derecha {
+    text-align: right;
+}
+
+.registros {
+    width     : 85%;
+    text-align: right !important;
+}
+
+.detalles {
+    display: flex;
+    width  : 100%;
+}
+
+.seleccionar-empresa,
+.seleccionar-localidad {
+    width     : 85%;
+    text-align: center !important;
+    border    : 1px solid $color-bordes;
+}
+
+.linea {
+    box-shadow: 0px -3px 10px 1.5px rgba(0, 0, 0, 0.2);
+    width     : 100%;
+}
+
+.localidades,
+.empresas {
+    min-height: auto;
+    max-height: 230px;
+    overflow  : auto;
+    overflow-x: hidden;
+    padding   : 0px;
+}
+
+.b-b {
+    border-top: none !important;
+}
+
+.boton-guardar {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    right           : 60px;
+    font-size       : 20px;
+    background-color: $color-azul;
+}
+
+.boton-cerrar {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    left            : 60px;
+    font-size       : 20px;
+    background-color: $color-azul;
+}
+
+.identificadores {
+    font-size  : 15px;
+    font-weight: 500;
+    display    : flex;
+    margin     : 2px 0px;
+    width      : 100%;
+}
+
+.seleccionado {
+    padding-left: 10px;
+    text-align  : left;
+    border-top  : 1px solid $color-bordes;
+    width       : 100% !important;
+    align-items : center;
+    font-size   : 12px;
+    font-weight : 500;
+    cursor      : pointer;
+}
+
+.opciones {
+    padding  : 5px 10px 5px 0px;
+    font-size: 12px;
+    width    : 100%;
+}
+
+.opciones:hover {
+    color      : $color-azul;
+    font-weight: 500;
+    cursor     : pointer;
+}
+
+.titulo {
+    text-align : center;
+    font-size  : 19px;
+    font-weight: 500;
+}
+
+.sin-negrita {
+    font-weight : 400 !important;
+    padding-left: 5px;
+}
+
+.example-radio-group {
+    padding-bottom: 4px;
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+}
+
+.example-radio-button {
+    margin: 5px;
+    width : 100%;
+}
+
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $background-oficial;
+}

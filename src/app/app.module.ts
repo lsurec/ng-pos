@@ -27,6 +27,13 @@ import { BarraLogosComponent } from './components/barra-logos/barra-logos.compon
 import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { LenguajeAplicacionComponent } from './components/lenguaje-aplicacion/lenguaje-aplicacion.component';
+import { TemaAplicacionComponent } from './components/tema-aplicacion/tema-aplicacion.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { LocalConfigComponent } from './components/local-config/local-config.component';
+
+
 
 @NgModule({
   declarations: [
@@ -43,6 +50,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ProgressComponent,
     BarraLogosComponent,
     BarraLogoDemosoftComponent,
+    LenguajeAplicacionComponent,
+    TemaAplicacionComponent,
+    LocalConfigComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +76,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatButtonModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
