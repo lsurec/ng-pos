@@ -8,6 +8,7 @@ import { HomeGuard } from "./guards/home.guard";
 import { SplashComponent } from "./components/splash/splash.component";
 import { RouteNamesService } from "./services/route.names.service";
 import { LangComponent } from "./components/lang/lang.component";
+import { ThemeComponent } from "./components/theme/theme.component";
 
 type PathMatch = "full" | "prefix" | undefined;
 
@@ -15,6 +16,7 @@ const appRoutes = [
 
     { path: RouteNamesService.SPLASH, component: SplashComponent},
     { path: RouteNamesService.LANGUAGE, component: LangComponent},
+    { path: RouteNamesService.THEME, component: ThemeComponent},
     // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
     // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
     // { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },

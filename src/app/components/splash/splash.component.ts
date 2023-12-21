@@ -9,6 +9,7 @@ import { languagesProvider, indexDefaultLang } from 'src/app/providers/languages
 import { ok, salioMal } from 'src/app/providers/mensajes.provider';
 import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -61,7 +62,7 @@ export class SplashComponent {
   async loadData(): Promise<void> {
 
     if (!StorageService.laguageActive) {
-      this._router.navigate(['/lenguaje']);
+      this._router.navigate([RouteNamesService.LANGUAGE]);
       return
     }
     //Verificar si hay una sesion con token iniciada
