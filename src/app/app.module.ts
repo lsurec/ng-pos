@@ -11,6 +11,18 @@ import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { LogosComponent } from './components/logos/logos.component';
+import { ProgressComponent } from './components/progress/progress.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,11 +34,30 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     HelpComponent,
     ErrorComponent,
+    DialogActionsComponent,
+    LogosComponent,
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [HttpClient]
+      }
+    }),
+    MatDialogModule,
+    MatSnackBarModule,
+    FormsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

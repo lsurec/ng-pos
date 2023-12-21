@@ -1,0 +1,12 @@
+{
+    "crm": {
+        "login": {
+            "correo": "User",
+            "contrasena": "Password",
+            "ver": "Show password",
+            "ocultar": "Hide password",
+            "recordar": "Remember me",
+            "iniciar": "LOGIN"
+        }
+    }
+}
