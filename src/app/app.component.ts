@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HelloService } from './services/hello.service';
+import { TranslateService } from '@ngx-translate/core';
+import { PreferencesService } from './services/preferences.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,21 @@ import { HelloService } from './services/hello.service';
 })
 export class AppComponent {
 
-/**
- *
- */
-constructor() {
-  // localStorage.clear();
-  // sessionStorage.clear();
-}
+  constructor(
+    private translate: TranslateService
+  ) {
+    // localStorage.clear();
+    // sessionStorage.clear();
+    
+    if(PreferencesService.lang){
+         this.translate.use(PreferencesService.lang);
+      }else{
+        translate.use("es")
+        
+      }
+  }
+
+  // public cambiarLenguaje(lang: any) {
+  //   this.activeLang = lang;
+  // }
 }

@@ -11,7 +11,7 @@ import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -56,7 +56,7 @@ export class LocalConfigComponent {
   ) {
 
     //Buscar y obtener el leguaje guardado en el servicio  
-    let getLanguage = StorageService.laguageActive;
+    let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
       this.translate.setDefaultLang(this.activeLang.lang);
@@ -136,8 +136,8 @@ export class LocalConfigComponent {
 
     //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
     if (this.estaciones.length == 1 && this.empresas.length == 1) {
-      StorageService.empresa = JSON.stringify(this.empresaSelect);
-      StorageService.estacion = JSON.stringify(this.estacionSelect);
+      PreferencesService.empresa = JSON.stringify(this.empresaSelect);
+      PreferencesService.estacion = JSON.stringify(this.estacionSelect);
       this._router.navigate(['/home']); //navegar a home
     }
   };
@@ -150,8 +150,8 @@ export class LocalConfigComponent {
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    StorageService.empresa = JSON.stringify(this.empresaSelect);
-    StorageService.estacion = JSON.stringify(this.estacionSelect);
+    PreferencesService.empresa = JSON.stringify(this.empresaSelect);
+    PreferencesService.estacion = JSON.stringify(this.estacionSelect);
     this._router.navigate(['/home']);
   };
 
@@ -184,8 +184,8 @@ export class LocalConfigComponent {
 
   mostrarboton() {
     //buscamos si hay alguna empresa guardada 
-    let getEmpresa = StorageService.empresa;
-    let getEstacion = StorageService.estacion;
+    let getEmpresa = PreferencesService.empresa;
+    let getEstacion = PreferencesService.estacion;
 
     if (!getEstacion && !getEmpresa) {
       this.regresar = true;

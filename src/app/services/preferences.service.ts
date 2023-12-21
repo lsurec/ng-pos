@@ -1,14 +1,14 @@
 import { Injectable, Input } from "@angular/core";
 
 @Injectable()
-export class StorageService {
+export class PreferencesService {
 
     @Input()
-    static set laguageActive(value: string) {
+    static set lang(value: string) {
         localStorage.setItem("language", value);
     }
 
-    static get laguageActive(): string {
+    static get lang(): string {
         let language = localStorage.getItem("language");
         if (!language) return "";
         return language;

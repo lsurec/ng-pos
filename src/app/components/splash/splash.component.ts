@@ -11,7 +11,7 @@ import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -44,7 +44,7 @@ export class SplashComponent {
   ) {
 
     //Buscar y obtener el leguaje guardado en el servicio  
-    let getLanguage = StorageService.laguageActive;
+    let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
       this.translate.setDefaultLang(this.activeLang.lang);
@@ -61,12 +61,12 @@ export class SplashComponent {
 
   async loadData(): Promise<void> {
 
-    if (!StorageService.laguageActive) {
+    if (!PreferencesService.lang) {
       this._router.navigate([RouteNamesService.LANGUAGE]);
       return
     }
     //Verificar si hay una sesion con token iniciada
-    if (!StorageService.token) {
+    if (!PreferencesService.token) {
       //temporizador para ver la pantalla de ccarga de datos (LOGO)
       setTimeout(() => {
         this._router.navigate(['/login']);
@@ -115,8 +115,8 @@ export class SplashComponent {
     };
 
     // Guardar la etaciones
-    StorageService.empresa = JSON.stringify(this.empresas[0]);
-    StorageService.estacion = JSON.stringify(this.estaciones[0]);
+    PreferencesService.empresa = JSON.stringify(this.empresas[0]);
+    PreferencesService.estacion = JSON.stringify(this.estaciones[0]);
 
     //Navegar a pantalla principal (Home)
     this._router.navigate(['/home']);

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
@@ -27,7 +27,7 @@ constructor(
 
 ) {
   //Buscar y obtener el leguaje guardado en el servicio  
-  let getLanguage = StorageService.laguageActive;
+  let getLanguage = PreferencesService.lang;
   if (!getLanguage) {
     this.activeLang = languagesProvider[indexDefaultLang];
     this.translate.setDefaultLang(this.activeLang.lang);
@@ -42,7 +42,7 @@ constructor(
 
 ngOnInit(): void {
 
-  if (StorageService.tema == '1') {
+  if (PreferencesService.tema == '1') {
     this.tema = 1;
   }
 };
@@ -51,14 +51,14 @@ claro(idTema: number): void {
   this.tema = idTema;
   this.themeService.isDarkTheme = false;
   this.themeService.updateTheme();
-  StorageService.tema = "0";
+  PreferencesService.tema = "0";
 }
 
 oscuro(idTema: number): void {
   this.tema = idTema;
   this.themeService.isDarkTheme = true;
   this.themeService.updateTheme();
-  StorageService.tema = "1";
+  PreferencesService.tema = "1";
 }
 
 guardar(): void {

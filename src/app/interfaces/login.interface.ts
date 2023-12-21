@@ -1,4 +1,6 @@
 export interface LoginInterface {
-    res: boolean;
-    message: any;
+    user:    string;
+    success: boolean;
+    message: string;
+    con:     string;
 }

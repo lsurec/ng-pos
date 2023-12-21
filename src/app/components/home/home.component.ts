@@ -16,7 +16,7 @@ import { activo, borraranDatos, cancelar, inactivo, noAsignado, ok, salioMal, ti
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { MenuService } from 'src/app/services/menu.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { UserService } from 'src/app/services/user.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -117,7 +117,7 @@ export class HomeComponent {
     window.addEventListener('scroll', this.scrollEvent, true);
 
     //Buscar y obtener el leguaje guardado en el servicio  
-    let getLanguage = StorageService.laguageActive;
+    let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
       this.translate.setDefaultLang(this.activeLang.lang);
@@ -166,7 +166,7 @@ export class HomeComponent {
     this.idioma = lang;
     this.activeLang = languagesProvider[lang];
     this.translate.use(this.activeLang.lang);
-    StorageService.laguageActive = JSON.stringify(lang);
+    PreferencesService.lang = JSON.stringify(lang);
     this.verDetalles();
   };
 
@@ -449,10 +449,10 @@ export class HomeComponent {
 
     // this.temaOscuro ? StorageService.tema = '1' : StorageService.tema = '0';
     if (this.temaOscuro == true) {
-      StorageService.tema = '1';
+      PreferencesService.tema = '1';
       this.tema = MensajesService.findValueLrCode(activo, this.activeLang);
     } else {
-      StorageService.tema = '0';
+      PreferencesService.tema = '0';
       this.tema = MensajesService.findValueLrCode(inactivo, this.activeLang);
     }
     this.verDetalles();
