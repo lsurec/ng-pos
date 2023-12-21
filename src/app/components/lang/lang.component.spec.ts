@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TemaAplicacionComponent } from './tema-aplicacion.component';
+import { LangComponent } from './lang.component';
 
-describe('TemaAplicacionComponent', () => {
-  let component: TemaAplicacionComponent;
-  let fixture: ComponentFixture<TemaAplicacionComponent>;
+describe('LangComponent', () => {
+  let component: LangComponent;
+  let fixture: ComponentFixture<LangComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TemaAplicacionComponent ]
+      declarations: [ LangComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TemaAplicacionComponent);
+    fixture = TestBed.createComponent(LangComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

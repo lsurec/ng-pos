@@ -27,14 +27,14 @@ import { BarraLogosComponent } from './components/barra-logos/barra-logos.compon
 import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { LenguajeAplicacionComponent } from './components/lenguaje-aplicacion/lenguaje-aplicacion.component';
-import { TemaAplicacionComponent } from './components/tema-aplicacion/tema-aplicacion.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { LocalConfigComponent } from './components/local-config/local-config.component';
 
 import { routing } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
+import { LangComponent } from './components/lang/lang.component';
+import { ThemeComponent } from './components/theme/theme.component';
 
 
 @NgModule({
@@ -52,9 +52,9 @@ import { HttpClientModule } from '@angular/common/http';
     ProgressComponent,
     BarraLogosComponent,
     BarraLogoDemosoftComponent,
-    LenguajeAplicacionComponent,
-    TemaAplicacionComponent,
     LocalConfigComponent,
+    LangComponent,
+    ThemeComponent,
   ],
   imports: [
     BrowserModule,

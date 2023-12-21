@@ -6,7 +6,8 @@
             "ver": "Ver contraseña",
             "ocultar": "Ocultar contraseña",
             "recordar": "Recordar mis datos.",
-            "iniciar": "INICIAR SESION"
+            "iniciar": "INICIAR SESION",
+            "completar":"Por favor completa todos los campos para continuar."
         },
         "progress": {
             "cargar": "Cargando...",
