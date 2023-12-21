@@ -12,7 +12,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { routing } from './app.routing';
-import {  HttpClient, HttpClientModule } from '@angular/common/http';
+import {   HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({

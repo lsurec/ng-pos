@@ -1,12 +1,11 @@
 import { RouterModule } from "@angular/router";
-import { HomeComponent } from "./components/home/home.component";
 import { LoginComponent } from "./components/login/login.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 
 type PathMatch = "full" | "prefix" | undefined;
 
 const appRoutes = [
-    // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+    { path: 'login', component: LoginComponent },
     // { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },
     // { path: 'view', component: DetalleTareaComponent },
     { path: 'notFound', component: NotFoundComponent },
