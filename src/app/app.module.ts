@@ -9,6 +9,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ErrorComponent } from './components/error/error.component';
     ErrorComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
