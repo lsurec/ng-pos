@@ -55,7 +55,7 @@ export class SplashComponent {
     };
 
     //Cargar Datos
-    // this.loadData();
+    this.loadData();
   }
 
   async loadData(): Promise<void> {

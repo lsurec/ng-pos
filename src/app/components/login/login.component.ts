@@ -70,9 +70,9 @@ export class LoginComponent {
 
   //guardar Token y navegar a la pantalla Home
   ngOnInit(): void {
-    // if (StorageService.token) {
-    //   this._router.navigate(['/station']);
-    // };
+    if (StorageService.token) {
+      this._router.navigate(['/station']);
+    };
   };
 
   //Obtener nombre del idioma
@@ -123,6 +123,8 @@ export class LoginComponent {
     //Obtener la respuesta del api login
     let resApiLogin: LoginInterface = resLogin.response;
     //si algo esta incorrecto mostrar mensaje
+    console.log(resApiLogin);
+    
     if (!resApiLogin.res) {
       this.isLoading = false;
       this._widgetsService.openSnackbar(MensajesService.findValueLrCode(incorrecto, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));

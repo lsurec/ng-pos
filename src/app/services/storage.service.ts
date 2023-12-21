@@ -69,4 +69,15 @@ export class StorageService {
         return tema;
     }
 
+    @Input()
+    static set baseUrl(value: string) {
+        localStorage.setItem("baseUrl", value);
+    }
+
+    static get baseUrl(): string {
+        let baseUrl = localStorage.getItem("baseUrl");
+        if (!baseUrl) return "";
+        return baseUrl;
+    }
+
 }
