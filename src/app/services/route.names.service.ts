@@ -11,9 +11,10 @@ export class RouteNamesService {
   static readonly LOGIN = 'login';
   static readonly HOME = 'home';
   static readonly LOCAL_CONFIG = 'local-config';
-  static readonly API= 'api';
+  static readonly API = 'api';
+  static readonly NOT_FOUND = 'not-found';
 
   // Agrega más nombres de rutas según sea necesario
 
-  constructor() {}
+  constructor() { }
 }

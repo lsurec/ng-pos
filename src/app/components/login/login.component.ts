@@ -12,6 +12,7 @@ import { completar, incorrecto, ok, salioMal } from 'src/app/providers/mensajes.
 import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.service';
 import { LoginService } from 'src/app/services/login.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -71,7 +72,7 @@ export class LoginComponent {
   //guardar Token y navegar a la pantalla Home
   ngOnInit(): void {
     if (StorageService.token) {
-      this._router.navigate(['/station']);
+      this._router.navigate([RouteNamesService.HOME]);
     };
   };
 
@@ -124,7 +125,7 @@ export class LoginComponent {
     let resApiLogin: LoginInterface = resLogin.response;
     //si algo esta incorrecto mostrar mensaje
     console.log(resApiLogin);
-    
+
     if (!resApiLogin.res) {
       this.isLoading = false;
       this._widgetsService.openSnackbar(MensajesService.findValueLrCode(incorrecto, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
@@ -157,7 +158,7 @@ export class LoginComponent {
       console.error(resEmpresas.response);
       console.error(resEmpresas.storeProcedure);
 
-      this._router.navigate(['/notFound']); //si algo sale mal mostar pantalla de no encontrado.
+      this._router.navigate([[RouteNamesService.NOT_FOUND]]); //si algo sale mal mostar pantalla de no encontrado.
       return
     }
     //Guardar Emoresas obtenidas
@@ -172,7 +173,7 @@ export class LoginComponent {
       this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
       console.error(resEstacion.response);
       console.error(resEstacion.storeProcedure);
-      this._router.navigate(['/notFound']);
+      this._router.navigate([RouteNamesService.NOT_FOUND]);
       return
     };
 
@@ -183,7 +184,7 @@ export class LoginComponent {
     if (this.empresas.length > 1 || this.estaciones.length > 1) {
       this._shared.empresas = this.empresas;
       this._shared.estaciones = this.estaciones;
-      this._router.navigate(['/station']);
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
       return;
     };
 
@@ -193,7 +194,7 @@ export class LoginComponent {
 
     //Si el usuario esta correcto y se encontraron las empresas y estaciones:
     //ir a pantalla confifuracion local
-    this._router.navigate(['/station']);
+    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
   };
   //Permanencia de la sesión
   rememberMe(): void {

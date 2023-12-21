@@ -19,6 +19,9 @@ const appRoutes = [
     { path: RouteNamesService.LANGUAGE, component: LangComponent},
     { path: RouteNamesService.THEME, component: ThemeComponent},
     { path: RouteNamesService.API, component: ApiComponent},
+    { path: RouteNamesService.LOCAL_CONFIG, component: LocalConfigComponent},
+    { path: RouteNamesService.NOT_FOUND, component: NotFoundComponent},
+
 
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
     // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },

@@ -7,7 +7,7 @@
             "ocultar": "Ocultar contraseña",
             "recordar": "Recordar mis datos.",
             "iniciar": "INICIAR SESION",
-            "completar":"Por favor completa todos los campos para continuar."
+            "completar": "Por favor completa todos los campos para continuar."
         },
         "progress": {
             "cargar": "Cargando...",
@@ -58,6 +58,10 @@
         "toolTip": {
             "regresar": "regresar al menú principal",
             "regresarAnterior": "regresar pagina anterior"
+        },
+        "url": {
+            "url": "Url Apis",
+            "ingresar": "Para poder utilizar nuestros servicios, por favor, introduce una URL válida."
         }
     }
 }

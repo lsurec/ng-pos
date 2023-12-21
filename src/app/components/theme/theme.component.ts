@@ -13,55 +13,55 @@ import { ThemeService } from 'src/app/services/theme.service';
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-///LENGUAJES: Opciones lenguajes
-activeLang: LanguageInterface;
-idioma: number = indexDefaultLang;
-languages: LanguageInterface[] = languagesProvider;
-temaOscuro: boolean = false;
-tema: number = 0;
+  ///LENGUAJES: Opciones lenguajes
+  activeLang: LanguageInterface;
+  idioma: number = indexDefaultLang;
+  languages: LanguageInterface[] = languagesProvider;
+  temaOscuro: boolean = false;
+  tema: number = 0;
 
-constructor(
-  private translate: TranslateService,
-  private themeService: ThemeService,
-  private _router: Router,
+  constructor(
+    private translate: TranslateService,
+    private themeService: ThemeService,
+    private _router: Router,
 
-) {
-  //Buscar y obtener el leguaje guardado en el servicio  
-  let getLanguage = StorageService.laguageActive;
-  if (!getLanguage) {
-    this.activeLang = languagesProvider[indexDefaultLang];
-    this.translate.setDefaultLang(this.activeLang.lang);
-  } else {
-    //sino se encuentra asignar el idioma por defecto
-    this.idioma = +getLanguage;
-    this.activeLang = languagesProvider[this.idioma];
-    this.translate.setDefaultLang(this.activeLang.lang);
+  ) {
+    //Buscar y obtener el leguaje guardado en el servicio  
+    let getLanguage = StorageService.laguageActive;
+    if (!getLanguage) {
+      this.activeLang = languagesProvider[indexDefaultLang];
+      this.translate.setDefaultLang(this.activeLang.lang);
+    } else {
+      //sino se encuentra asignar el idioma por defecto
+      this.idioma = +getLanguage;
+      this.activeLang = languagesProvider[this.idioma];
+      this.translate.setDefaultLang(this.activeLang.lang);
+    };
+
+  }
+
+  ngOnInit(): void {
+
+    if (StorageService.tema == '1') {
+      this.tema = 1;
+    }
   };
 
-}
-
-ngOnInit(): void {
-
-  if (StorageService.tema == '1') {
-    this.tema = 1;
+  claro(idTema: number): void {
+    this.tema = idTema;
+    this.themeService.isDarkTheme = false;
+    this.themeService.updateTheme();
+    StorageService.tema = "0";
   }
-};
 
-claro(idTema: number): void {
-  this.tema = idTema;
-  this.themeService.isDarkTheme = false;
-  this.themeService.updateTheme();
-  StorageService.tema = "0";
-}
+  oscuro(idTema: number): void {
+    this.tema = idTema;
+    this.themeService.isDarkTheme = true;
+    this.themeService.updateTheme();
+    StorageService.tema = "1";
+  }
 
-oscuro(idTema: number): void {
-  this.tema = idTema;
-  this.themeService.isDarkTheme = true;
-  this.themeService.updateTheme();
-  StorageService.tema = "1";
-}
-
-guardar(): void {
-  this._router.navigate([RouteNamesService.API]);
-}
+  guardar(): void {
+    this._router.navigate([RouteNamesService.API]);
+  }
 }

@@ -1,34 +1,33 @@
-<div class="container-main">
-    <div class="cambios-cerrar">
-        <span class="spacer"></span>
-        <p class="titulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
-        <span class="spacer"></span>
-    </div>
+<div class="centrar">
+    <div class="container-main">
+        <div class="cambios-cerrar">
+            <span class="spacer"></span>
+            <p class="titulo">{{ 'pos.url.url' | translate }}</p>
+            <span class="spacer"></span>
+        </div>
 
-    <div class="contenido">
-        <div class="titulos-menu">
-            <div class="detalles">
-                <span class="spacer"></span>
-                <div class="informacion-tema">
-                    <div class="seleccionado d-flex">
-                        <p class="opciones">Ingresar</p>
-                    </div>
+        <div class="cambios-cerrar">
+            <span class="spacer"></span>
+            <p class="titulo">{{ 'pos.url.ingresar' | translate }}</p>
+            <span class="spacer"></span>
+        </div>
+
+        <div class="contenido">
+            <div class="titulos-menu">
+                <div class="detalles">
+                    <span class="spacer"></span>
+                    <input type="text" class="informacion-tema" placeholder="URL">
+                    <span class="spacer"></span>
                 </div>
-                <span class="spacer"></span>
             </div>
         </div>
-    </div>
-    <div class="cambios-cerrar">
-        <span class="spacer"></span>
-        <p class="realizar-cambio">{{ 'pos.preferencias.idioma' | translate }}</p>
-        <span class="spacer"></span>
-    </div>
-    <div class="cambios-cerrar">
-        <span class="spacer"></span>
-        <button mat-stroked-button>{{'pos.ajustes.continuar' | translate}}</button>
-        <span class="spacer"></span>
-    </div>
+        <div class="cambios-cerrar">
+            <span class="spacer"></span>
+            <button mat-stroked-button (click)="guardar()">{{'pos.ajustes.continuar' | translate}}</button>
+            <span class="spacer"></span>
+        </div>
 
+    </div>
 </div>
 <!-- Mostrar logos -->
 <!-- <app-barra-logos></app-barra-logos> -->
