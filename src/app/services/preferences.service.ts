@@ -59,11 +59,11 @@ export class PreferencesService {
     }
 
     @Input()
-    static set tema(value: string) {
+    static set theme(value: string) {
         localStorage.setItem("tema", value);
     }
 
-    static get tema(): string {
+    static get theme(): string {
         let tema = localStorage.getItem("tema");
         if (!tema) return "";
         return tema;

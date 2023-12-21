@@ -449,10 +449,10 @@ export class HomeComponent {
 
     // this.temaOscuro ? StorageService.tema = '1' : StorageService.tema = '0';
     if (this.temaOscuro == true) {
-      PreferencesService.tema = '1';
+      PreferencesService.theme = '1';
       this.tema = MensajesService.findValueLrCode(activo, this.activeLang);
     } else {
-      PreferencesService.tema = '0';
+      PreferencesService.theme = '0';
       this.tema = MensajesService.findValueLrCode(inactivo, this.activeLang);
     }
     this.verDetalles();

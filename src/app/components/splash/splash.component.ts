@@ -25,10 +25,6 @@ import { WidgetsService } from 'src/app/services/widgets.service';
   ]
 })
 export class SplashComponent {
-  //Idiomas disponibles de la aplicacion
-  languages: LanguageInterface[] = languagesProvider;
-  activeLang: LanguageInterface;
-  idioma: number = indexDefaultLang;
 
   //Lista de empresas y estaciones
   empresas: EmpresaInterface[] = [];
@@ -43,42 +39,39 @@ export class SplashComponent {
     private _estacion: ConfiguracionLocalService,
   ) {
 
-    //Buscar y obtener el leguaje guardado en el servicio  
-    let getLanguage = PreferencesService.lang;
-    if (!getLanguage) {
-      this.activeLang = languagesProvider[indexDefaultLang];
-      this.translate.setDefaultLang(this.activeLang.lang);
-    } else {
-      //sino se encuentra asignar el idioma por defecto
-      this.idioma = +getLanguage;
-      this.activeLang = languagesProvider[this.idioma];
-      this.translate.setDefaultLang(this.activeLang.lang);
-    };
-
     //Cargar Datos
     this.loadData();
   }
 
   async loadData(): Promise<void> {
 
-    if (!PreferencesService.lang) {
-      this._router.navigate([RouteNamesService.LANGUAGE]);
-      return
-    }
     //Verificar si hay una sesion con token iniciada
-    if (!PreferencesService.token) {
-      //temporizador para ver la pantalla de ccarga de datos (LOGO)
-      setTimeout(() => {
-        this._router.navigate(['/login']);
-      }, 1000);
-      return;
-    };
+    //temporizador para ver la pantalla de ccarga de datos (LOGO)
+    setTimeout(() => {
+      
+
+      if (!PreferencesService.lang) {
+        this._router.navigate([RouteNamesService.LANGUAGE]);
+        return
+      }
+  
+      if (PreferencesService.theme == "1") {
+        this._router.navigate([RouteNamesService.THEME]);
+        return
+      }
+
+      if (!PreferencesService.token) {
+        this._router.navigate([RouteNamesService.LOGIN]);
+        return;
+      }
+    }, 1000);
+
 
     //Consumo de servicios
     let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar("csac", "ok");
       console.error(resEmpresas.response);
       console.error(resEmpresas.storeProcedure);
       //si algo sale mal ira a la pantalla de no encontrado
@@ -93,7 +86,7 @@ export class SplashComponent {
     let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEstaciones.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar("csac", "ok");
       console.error(resEstaciones.response);
       console.error(resEstaciones.storeProcedure);
       //si algo sale mal ira a la pantalla de no encontrado

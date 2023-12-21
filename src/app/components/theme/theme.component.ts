@@ -42,7 +42,7 @@ constructor(
 
 ngOnInit(): void {
 
-  if (PreferencesService.tema == '1') {
+  if (PreferencesService.theme == '1') {
     this.tema = 1;
   }
 };
@@ -51,14 +51,14 @@ claro(idTema: number): void {
   this.tema = idTema;
   this.themeService.isDarkTheme = false;
   this.themeService.updateTheme();
-  PreferencesService.tema = "0";
+  PreferencesService.theme = "0";
 }
 
 oscuro(idTema: number): void {
   this.tema = idTema;
   this.themeService.isDarkTheme = true;
   this.themeService.updateTheme();
-  PreferencesService.tema = "1";
+  PreferencesService.theme = "1";
 }
 
 guardar(): void {
