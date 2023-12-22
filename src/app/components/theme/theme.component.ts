@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageInterface } from 'src/app/interfaces/language.interface';
-import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -13,55 +11,40 @@ import { ThemeService } from 'src/app/services/theme.service';
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent {
-///LENGUAJES: Opciones lenguajes
-activeLang: LanguageInterface;
-idioma: number = indexDefaultLang;
-languages: LanguageInterface[] = languagesProvider;
-temaOscuro: boolean = false;
-tema: number = 0;
+  temaOscuro: boolean = false;
+  tema: number = 0;
 
-constructor(
-  private translate: TranslateService,
-  private themeService: ThemeService,
-  private _router: Router,
+  constructor(
+    private translate: TranslateService,
+    private themeService: ThemeService,
+    private _router: Router,
 
-) {
-  //Buscar y obtener el leguaje guardado en el servicio  
-  let getLanguage = PreferencesService.lang;
-  if (!getLanguage) {
-    this.activeLang = languagesProvider[indexDefaultLang];
-    this.translate.setDefaultLang(this.activeLang.lang);
-  } else {
-    //sino se encuentra asignar el idioma por defecto
-    this.idioma = +getLanguage;
-    this.activeLang = languagesProvider[this.idioma];
-    this.translate.setDefaultLang(this.activeLang.lang);
+  ) {
+
+  }
+
+  ngOnInit(): void {
+
+    if (PreferencesService.theme == '1') {
+      this.tema = 1;
+    }
   };
 
-}
-
-ngOnInit(): void {
-
-  if (PreferencesService.theme == '1') {
-    this.tema = 1;
+  claro(idTema: number): void {
+    this.tema = idTema;
+    this.themeService.isDarkTheme = false;
+    this.themeService.updateTheme();
+    PreferencesService.theme = "0";
   }
-};
 
-claro(idTema: number): void {
-  this.tema = idTema;
-  this.themeService.isDarkTheme = false;
-  this.themeService.updateTheme();
-  PreferencesService.theme = "0";
-}
+  oscuro(idTema: number): void {
+    this.tema = idTema;
+    this.themeService.isDarkTheme = true;
+    this.themeService.updateTheme();
+    PreferencesService.theme = "1";
+  }
 
-oscuro(idTema: number): void {
-  this.tema = idTema;
-  this.themeService.isDarkTheme = true;
-  this.themeService.updateTheme();
-  PreferencesService.theme = "1";
-}
-
-guardar(): void {
-  this._router.navigate([RouteNamesService.LOGIN]);
-}
+  guardar(): void {
+    this._router.navigate([RouteNamesService.LOGIN]);
+  }
 }

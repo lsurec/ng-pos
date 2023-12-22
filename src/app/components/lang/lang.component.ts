@@ -5,7 +5,6 @@ import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-lang',
@@ -20,23 +19,11 @@ export class LangComponent {
 
   constructor(
     private translate: TranslateService,
-    private themeService: ThemeService,
     private _router: Router,
 
   ) {
-    //Buscar y obtener el leguaje guardado en el servicio  
-    let getLanguage = PreferencesService.lang;
-    if (!getLanguage) {
-      this.activeLang = languagesProvider[indexDefaultLang];
-      this.translate.setDefaultLang(this.activeLang.lang);
-    } else {
-      //sino se encuentra asignar el idioma por defecto
-      this.idioma = +getLanguage;
-      this.activeLang = languagesProvider[this.idioma];
-      this.translate.setDefaultLang(this.activeLang.lang);
-    };
-
-    this.temaOscuro = themeService.isDarkTheme;
+    
+    this.activeLang = languagesProvider[0];
 
   }
 
@@ -45,7 +32,6 @@ export class LangComponent {
     this.idioma = lang;
     this.activeLang = languagesProvider[lang];
     this.translate.use(this.activeLang.lang);
-    PreferencesService.lang = JSON.stringify(lang);
   };
 
   //Obtener nombre 
@@ -56,6 +42,7 @@ export class LangComponent {
   };
 
   guardar() {
+    PreferencesService.lang = JSON.stringify(this.idioma);
     this._router.navigate([RouteNamesService.THEME]);
   }
 }

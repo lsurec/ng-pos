@@ -47,24 +47,30 @@ export class SplashComponent {
 
     //Verificar si hay una sesion con token iniciada
     //temporizador para ver la pantalla de ccarga de datos (LOGO)
-    setTimeout(() => {
-      
 
-      if (!PreferencesService.lang) {
+    
+    if (!PreferencesService.lang) {
+      setTimeout(() => {
         this._router.navigate([RouteNamesService.LANGUAGE]);
-        return
-      }
-  
-      if (PreferencesService.theme == "1") {
-        this._router.navigate([RouteNamesService.THEME]);
-        return
-      }
+      }, 1000);
+      return;
+    }
 
-      if (!PreferencesService.token) {
+    if (PreferencesService.theme == "1") {
+      setTimeout(() => {
+        this._router.navigate([RouteNamesService.THEME]);
+      }, 1000);
+      return;
+    }
+
+
+    if (!PreferencesService.token) {
+      setTimeout(() => {
         this._router.navigate([RouteNamesService.LOGIN]);
-        return;
-      }
-    }, 1000);
+      }, 1000);
+      return;
+    }
+
 
 
     //Consumo de servicios
