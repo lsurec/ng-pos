@@ -22,7 +22,6 @@ import { DataUserService } from 'src/app/services/data-user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [
-    WidgetsService,
     LoginService,
     LocalSettingsService,
   ]
@@ -78,8 +77,8 @@ export class LoginComponent {
       //TODO:Pantalla de error
       this.isLoading = false;
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resLogin.response);
-      console.error(resLogin.storeProcedure);
+      console.error(res.response);
+      console.error(res.storeProcedure);
       return
     };
 
@@ -87,9 +86,8 @@ export class LoginComponent {
     //Obtener la respuesta del api login
     let resLogin: LoginInterface = res.response;
     //si algo esta incorrecto mostrar mensaje
-    console.log(resApiLogin);
 
-    if (!resApiLogin.res) {
+    if (!resLogin.success) {
       this.isLoading = false;
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'), this.translate.instant('pos.alertas.ok'));
       return;
@@ -112,49 +110,49 @@ export class LoginComponent {
 
     console.log(resLogin);
 
-    //Consumo de servicios
-    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    //Si el servico se ejecuta mal mostar mensaje
-    if (!resEmpresas.status) {
-      this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
-
-      this._router.navigate([[RouteNamesService.NOT_FOUND]]); //si algo sale mal mostar pantalla de no encontrado.
-      return
-    }
-    //Guardar Emoresas obtenidas
-    this.empresas = resEmpresas.response;
-
     // //Consumo de servicios
     // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
     // //Si el servico se ejecuta mal mostar mensaje
     // if (!resEmpresas.status) {
     //   this.isLoading = false;
-    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
     //   console.error(resEmpresas.response);
     //   console.error(resEmpresas.storeProcedure);
 
-    //Si el servico se ejecuta mal mostar mensaje
-    if (!resEstacion.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
-      this._router.navigate([RouteNamesService.NOT_FOUND]);
-      return
-    };
+    //   this._router.navigate([[RouteNamesService.NOT_FOUND]]); //si algo sale mal mostar pantalla de no encontrado.
+    //   return
+    // }
+    // //Guardar Emoresas obtenidas
+    // this.empresas = resEmpresas.response;
 
-    // //Consumo de api
-    // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
-    // this.isLoading = false;
+    // // //Consumo de servicios
+    // // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
+    // // //Si el servico se ejecuta mal mostar mensaje
+    // // if (!resEmpresas.status) {
+    // //   this.isLoading = false;
+    // //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+    // //   console.error(resEmpresas.response);
+    // //   console.error(resEmpresas.storeProcedure);
 
-    if (this.empresas.length > 1 || this.estaciones.length > 1) {
-      this._shared.empresas = this.empresas;
-      this._shared.estaciones = this.estaciones;
-      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
-      return;
-    };
+    // //Si el servico se ejecuta mal mostar mensaje
+    // if (!resEstacion.status) {
+    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+    //   console.error(resEstacion.response);
+    //   console.error(resEstacion.storeProcedure);
+    //   this._router.navigate([RouteNamesService.NOT_FOUND]);
+    //   return
+    // };
+
+    // // //Consumo de api
+    // // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
+    // // this.isLoading = false;
+
+    // if (this.empresas.length > 1 || this.estaciones.length > 1) {
+    //   this._shared.empresas = this.empresas;
+    //   this._shared.estaciones = this.estaciones;
+    //   this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+    //   return;
+    // };
 
     // //Guardar Estaciones obtenidas
     // this.estaciones = resEstacion.response;
@@ -162,7 +160,7 @@ export class LoginComponent {
 
     //Si el usuario esta correcto y se encontraron las empresas y estaciones:
     //ir a pantalla confifuracion local
-    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+    // this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
   };
   //Permanencia de la sesión
   rememberMe(): void {

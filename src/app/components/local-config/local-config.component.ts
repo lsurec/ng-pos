@@ -93,90 +93,90 @@ export class LocalConfigComponent {
   };
 
   async estacionesTrabajo(): Promise<void> {
-    //Consumo de servicios
-    this.isLoading = true;
-    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    //Si el servico se ejecuta mal mostrar mensaje
-    if (!resEmpresas.status) {
-      this.isLoading = false; //dejar de cargar la pantalla
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
-      return
-    }
+  //   //Consumo de servicios
+  //   this.isLoading = true;
+  //   let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
+  //   //Si el servico se ejecuta mal mostrar mensaje
+  //   if (!resEmpresas.status) {
+  //     this.isLoading = false; //dejar de cargar la pantalla
+  //     this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+  //     console.error(resEmpresas.response);
+  //     console.error(resEmpresas.storeProcedure);
+  //     return
+  //   }
 
-    // //Guardar empresas obtenidas
-    // this.empresas = resEmpresas.response;
+  //   // //Guardar empresas obtenidas
+  //   // this.empresas = resEmpresas.response;
 
-    //Consumo de api
-    let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
-    //Si el servico se ejecuta mal mostrar mensaje
-    this.isLoading = false; //dejar de cargar 
-    if (!resEstacion.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
-      return
-    }
+  //   //Consumo de api
+  //   let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
+  //   //Si el servico se ejecuta mal mostrar mensaje
+  //   this.isLoading = false; //dejar de cargar 
+  //   if (!resEstacion.status) {
+  //     this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+  //     console.error(resEstacion.response);
+  //     console.error(resEstacion.storeProcedure);
+  //     return
+  //   }
 
-    // //Guardar Estaciones
-    // this.estaciones = resEstacion.response;
-    // // this.estaciones.push(this.estaciones[0]) //insertar un nuevo elemento a la lista para pruebas
+  //   // //Guardar Estaciones
+  //   // this.estaciones = resEstacion.response;
+  //   // // this.estaciones.push(this.estaciones[0]) //insertar un nuevo elemento a la lista para pruebas
 
-    // //verificar si la lista tiene solo un elemento
-    // if (this.empresas.length == 1) {
-    //   //Seleccionar la empresa 
-    //   this.empresaSelect = this.empresas[0];
-    // };
+  //   // //verificar si la lista tiene solo un elemento
+  //   // if (this.empresas.length == 1) {
+  //   //   //Seleccionar la empresa 
+  //   //   this.empresaSelect = this.empresas[0];
+  //   // };
 
-    // //verificar si la lista tiene solo un elemento
-    // if (this.estaciones.length == 1) {
-    //   //Seleccionar la estacion
-    //   this.estacionSelect = this.estaciones[0];
-    // };
+  //   // //verificar si la lista tiene solo un elemento
+  //   // if (this.estaciones.length == 1) {
+  //   //   //Seleccionar la estacion
+  //   //   this.estacionSelect = this.estaciones[0];
+  //   // };
 
-    //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
-    if (this.estaciones.length == 1 && this.empresas.length == 1) {
-      StorageService.empresa = JSON.stringify(this.empresaSelect);
-      StorageService.estacion = JSON.stringify(this.estacionSelect);
-      this._router.navigate([RouteNamesService.HOME]); //navegar a home
-    }
-  };
+  //   //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
+  //   if (this.estaciones.length == 1 && this.empresas.length == 1) {
+  //     StorageService.empresa = JSON.stringify(this.empresaSelect);
+  //     StorageService.estacion = JSON.stringify(this.estacionSelect);
+  //     this._router.navigate([RouteNamesService.HOME]); //navegar a home
+  //   }
+  // };
 
-  irAHome(): void {
-    //Validar que se seleccione empresa y estacion
-    if (!this.empresaSelect || !this.estacionSelect) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));
-      return;
-    };
+  // irAHome(): void {
+  //   //Validar que se seleccione empresa y estacion
+  //   if (!this.empresaSelect || !this.estacionSelect) {
+  //     this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));
+  //     return;
+  //   };
 
-    //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    StorageService.empresa = JSON.stringify(this.empresaSelect);
-    StorageService.estacion = JSON.stringify(this.estacionSelect);
-    this._router.navigate([RouteNamesService.HOME]);
-  };
+  //   //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
+  //   StorageService.empresa = JSON.stringify(this.empresaSelect);
+  //   StorageService.estacion = JSON.stringify(this.estacionSelect);
+  //   this._router.navigate([RouteNamesService.HOME]);
+  // };
 
-  //Cerrar sesion
-  async cerrarSesion(): Promise<void> {
-    let verificador = await this._widgetsService.openDialogActions(
-      {
-        title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
-        description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
-        verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
-        falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
-      }
-    );
+  // //Cerrar sesion
+  // async cerrarSesion(): Promise<void> {
+  //   let verificador = await this._widgetsService.openDialogActions(
+  //     {
+  //       title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
+  //       description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
+  //       verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
+  //       falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
+  //     }
+  //   );
 
-    if (!verificador) return;
+  //   if (!verificador) return;
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
+  //   localStorage.removeItem("token");
+  //   localStorage.removeItem("name");
 
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
+  //   sessionStorage.removeItem("token");
+  //   sessionStorage.removeItem("name");
 
-    //Regresar a Login
-    this._router.navigate([RouteNamesService.LOGIN]);
+  //   //Regresar a Login
+  //   this._router.navigate([RouteNamesService.LOGIN]);
 
     //Limpiar storage del navegador
     // localStorage.clear();
@@ -193,6 +193,14 @@ export class LocalConfigComponent {
     };
 
   };
+
+  irAHome(){
+
+  }
+
+  cerrarSesion(){
+    
+  }
 
   //regresar a la pantalla anterior
   backHome(): void {

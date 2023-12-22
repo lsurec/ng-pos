@@ -45,10 +45,7 @@ export class SplashComponent {
 
   async loadData(): Promise<void> {
 
-    //Verificar si hay una sesion con token iniciada
-    //temporizador para ver la pantalla de ccarga de datos (LOGO)
 
-    
     if (!PreferencesService.lang) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.LANGUAGE]);
@@ -56,50 +53,12 @@ export class SplashComponent {
       return;
     }
 
-    if (PreferencesService.theme == "1") {
+    if (!PreferencesService.theme) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.THEME]);
       }, 1000);
-    //Consumo de servicios
-    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    //Si el servico se ejecuta mal mostar mensaje
-    if (!resEmpresas.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
-      //si algo sale mal ira a la pantalla de no encontrado
-      this._router.navigate(['/notFound']);
-      return
-    };
-
-    //Guardar Empresas obtenidas
-    this.empresas = resEmpresas.response;
-
-    //Consumo de api
-    let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
-    //Si el servico se ejecuta mal mostar mensaje
-    if (!resEstaciones.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstaciones.response);
-      console.error(resEstaciones.storeProcedure);
-      //si algo sale mal ira a la pantalla de no encontrado
-      this._router.navigate(['/notFound']);
-      return
-    };
-
-    //Guardar Estaciones obtenidas
-    this.estaciones = resEstaciones.response;
-    // this.estaciones.push(this.estaciones[0]);
-
-    //Si las listas tienen mas de un elemento mostrar pantalla de configuracion local
-    if (this.empresas.length > 1 || this.estaciones.length > 1) {
-      //mostrar listas con propiedades
-      this._shared.empresas = this.empresas;
-      this._shared.estaciones = this.estaciones;
-      this._router.navigate(['/station']);
       return;
     }
-
 
     if (!PreferencesService.token) {
       setTimeout(() => {
@@ -114,7 +73,7 @@ export class SplashComponent {
     // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
     // //Si el servico se ejecuta mal mostar mensaje
     // if (!resEmpresas.status) {
-    //   this._widgetsService.openSnackbar("csac", "ok");
+    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
     //   console.error(resEmpresas.response);
     //   console.error(resEmpresas.storeProcedure);
     //   //si algo sale mal ira a la pantalla de no encontrado
@@ -129,7 +88,7 @@ export class SplashComponent {
     // let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
     // //Si el servico se ejecuta mal mostar mensaje
     // if (!resEstaciones.status) {
-    //   this._widgetsService.openSnackbar("csac", "ok");
+    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
     //   console.error(resEstaciones.response);
     //   console.error(resEstaciones.storeProcedure);
     //   //si algo sale mal ira a la pantalla de no encontrado
@@ -148,14 +107,9 @@ export class SplashComponent {
     //   this._shared.estaciones = this.estaciones;
     //   this._router.navigate(['/station']);
     //   return;
-    // };
+    // }
 
-    // // Guardar la etaciones
-    // PreferencesService.empresa = JSON.stringify(this.empresas[0]);
-    // PreferencesService.estacion = JSON.stringify(this.estaciones[0]);
 
-    // //Navegar a pantalla principal (Home)
-    // this._router.navigate(['/home']);
-  };
 
+  }
 }

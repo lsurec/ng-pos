@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class ApiComponent {
 
   url!: string;
 
-  urlStorage: string = StorageService.baseUrl;
+  urlStorage: string = PreferencesService.baseUrl;
 
   constructor(
     private _router: Router,
@@ -24,8 +24,8 @@ export class ApiComponent {
   }
 
   ngOnInit(): void {
-    if (StorageService.baseUrl) {
-      this.urlStorage = StorageService.baseUrl;
+    if (PreferencesService.baseUrl) {
+      this.urlStorage = PreferencesService.baseUrl;
       this.url = '';
     }
   };
@@ -37,7 +37,7 @@ export class ApiComponent {
       return
     }
     this._router.navigate([RouteNamesService.LOGIN]);
-    StorageService.baseUrl = this.url;
+    PreferencesService.baseUrl = this.url;
   }
 
 
@@ -48,12 +48,12 @@ export class ApiComponent {
   cambiar() {
 
     if (!this.url) {
-      StorageService.baseUrl = this.urlStorage;
+      PreferencesService.baseUrl = this.urlStorage;
       this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'), this.translate.instant('pos.ajustes.aceptar'))
       return
       this._router.navigate([RouteNamesService.LOGIN]);
     } else {
-      StorageService.baseUrl = this.url;
+      PreferencesService.baseUrl = this.url;
       this._router.navigate([RouteNamesService.LOGIN]);
     }
 
