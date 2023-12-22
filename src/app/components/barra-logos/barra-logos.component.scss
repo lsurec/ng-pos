@@ -1,0 +1,50 @@
+//sidenav bottom y logos
+
+.head__sidenav__bottom {
+    height     : 64px !important;
+    padding    : 0px 20px;
+    border-top : 1px solid rgba(0, 0, 0, 0.12);
+    display    : flex;
+    align-items: center;
+    position   : fixed;
+    bottom     : 0;
+    width      : 100%;
+}
+
+.logos {
+    align-items: center !important;
+    display    : flex;
+    width      : 100%;
+}
+
+.img_empresas {
+    height      : 60px;
+    margin-right: 20px;
+    margin-left : 20px;
+}
+
+.img_demosoft {
+    height      : 40px;
+    margin-right: 20px;
+    margin-left : 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .img_empresas {
+        height: 60px;
+        margin: 0px 20px;
+    }
+}
+
+@media screen and (max-width: 265px) {
+    .img_empresas {
+        height: 45px;
+        margin: 5px;
+    }
+}
+
+/*Fin logos*/
+
+.spacer {
+    flex: 1 1 auto;
+}

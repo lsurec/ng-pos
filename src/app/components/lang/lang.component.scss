@@ -1,0 +1,139 @@
+$color-naranja        : #df9722;
+$color-negro          : #000000;
+$color-blanco         : #fff;
+$color-gris           : #c1bfbf;
+$color-azul           : #134895;
+$color-bordes         : #c1bfbf; //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+$bordes               : #c1bfbf;
+$idioma-seleccionado  : #5d6d6c;
+
+
+.container-main {
+    height : calc(100vh - 64px) !important;
+    padding: 70px 0px 20px;
+}
+
+.contenido {
+    align-items: center !important;
+    width      : 100%;
+    height     : calc(100% - 200px);
+    display    : flex;
+}
+
+.titulos-menu {
+    // display    : flex;
+    padding-top: 30px;
+    width      : 100%;
+}
+
+.titulo {
+    text-align : center;
+    font-size  : 19px;
+    font-weight: 500;
+}
+
+.detalles {
+    display: flex;
+    width  : 100%;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.cambios-cerrar {
+    text-align : center;
+    display    : flex;
+    align-items: center;
+    height     : 50px;
+    padding-top: 10px;
+}
+
+.estaciones-trabajo {
+    // width: 80%;
+    margin: 15px 0px;
+}
+
+.seleccionar-empresa,
+.seleccionar-localidad {
+    width        : 100%;
+    text-align   : center !important;
+    border       : 1px solid $color-bordes;
+    border-bottom: 1px solid $color-bordes;
+    border-top   : none;
+}
+
+.seleccionado {
+    padding-left: 10px;
+    text-align  : left;
+    border-top  : 1px solid $color-bordes;
+    width       : 100% !important;
+    align-items : center;
+    font-size   : 12px;
+    font-weight : 500;
+    cursor      : pointer;
+}
+
+.opciones {
+    padding  : 5px 10px 5px 0px;
+    font-size: 12px;
+    width    : 100%;
+}
+
+.realizar-cambio {
+    font-size  : 14px;
+    font-weight: 450;
+}
+
+.informacion-tema {
+    width        : 60%;
+    cursor       : pointer;
+    text-align   : center !important;
+    border       : 1px solid $color-bordes;
+    border-bottom: 1px solid $color-bordes;
+    border-top   : none;
+    margin       : 10px 0px;
+}
+
+.informacion-tema:hover {
+    background-color: $idioma-seleccionado;
+    color           : $color-blanco;
+}
+
+@media screen and (max-width: 365px) {
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles,
+    .estaciones-trabajo {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles,
+    .estaciones-trabajo {
+        width: 100% !important;
+    }
+}
+
+.fondo {
+    background-color: none;
+}
+
+.idioma-seleccionado {
+    background-color: $idioma-seleccionado;
+    color           : $color-blanco;
+}

@@ -11,12 +11,33 @@ import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { routing } from './app.routing';
-import { HttpClientModule } from '@angular/common/http';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { LogosComponent } from './components/logos/logos.component';
+import { ProgressComponent } from './components/progress/progress.component';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { BarraLogosComponent } from './components/barra-logos/barra-logos.component';
+import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRadioModule } from '@angular/material/radio';
+import { LocalConfigComponent } from './components/local-config/local-config.component';
+
+import { routing } from './app.routing';
+import { HttpClientModule } from '@angular/common/http';
+
+import { LangComponent } from './components/lang/lang.component';
+import { ThemeComponent } from './components/theme/theme.component';
+import { DataUserService } from './services/data-user.service';
+
 
 @NgModule({
   declarations: [
@@ -28,19 +49,48 @@ import { MatButtonModule } from '@angular/material/button';
     HomeComponent,
     HelpComponent,
     ErrorComponent,
+    DialogActionsComponent,
+    LogosComponent,
+    ProgressComponent,
+    BarraLogosComponent,
+    BarraLogoDemosoftComponent,
+    LocalConfigComponent,
+    LangComponent,
+    ThemeComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(http);
+        },
+        deps: [HttpClient]
+      }
+    }),
+    MatDialogModule,
+    MatSnackBarModule,
+    FormsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatRadioModule,
     routing,
     MatToolbarModule,
     MatTooltipModule,
     MatIconModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [
+    DataUserService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,66 @@
+{
+    "pos": {
+        "login": {
+            "correo": "User",
+            "contrasena": "Password",
+            "ver": "Show password",
+            "ocultar": "Hide password",
+            "recordar": "Remember my data.",
+            "iniciar": "SIGN IN"
+        },
+        "progress": {
+            "cargar": "Loading...",
+            "esperar": "Please wait...",
+            "error": "404",
+            "linea1": "NO RECORDS FOUND",
+            "linea2": "What you're looking for may have been deleted or is temporarily unavailable.",
+            "linea3": "Try searching again.",
+            "construccion": "SITE UNDER CONSTRUCTION"
+        },
+        "ajustes": {
+            "ajustesT": "SETTINGS",
+            "idiomaT": "APPLICATION LANGUAGE",
+            "aceptar": "Accept",
+            "cancelar": "Cancel",
+            "regresar": "Go back",
+            "continuar": "Continue",
+            "ajustes": "Settings",
+            "cerrar": "Close",
+            "cambiar": "Change"
+        },
+        "preferencias": {
+            "tema": "APPLICATION THEME",
+            "oscuro": "Dark Theme",
+            "claro": "Light Theme",
+            "cambiar": "Later on, you will also be able to change the application theme according to your preference.",
+            "idioma": "Later on, you will also be able to change the application language according to your preference."
+        },
+        "configuracionLocal": {
+            "titulo": "LOCAL CONFIGURATION",
+            "empresas": "Companies",
+            "estaciones": "Workstations",
+            "registros": "Records",
+            "empresa": "Company",
+            "localidad": "Location",
+            "guardar": "Save",
+            "cambiar": "To make changes in Local Configuration, you must log out and log in again."
+        },
+        "toolTip": {
+            "regresar": "return to the main menu",
+            "regresarAnterior": "return to the previous page"
+        },
+        "url": {
+            "url": "APIs URL",
+            "ingresar": "To use our services, please enter a valid URL.",
+            "noValida": "Invalid URL.",
+            "actual": "Current URL"
+        },
+        "alertas": {
+            "ok": "OK",
+            "salioMal": "Something went wrong, please try again",
+            "completar": "Please fill in all fields to continue.",
+            "debeSeleccionar": "To continue, select a company and a workstation.",
+            "incorrecto": "Incorrect username or password"
+        }
+    }
+}
