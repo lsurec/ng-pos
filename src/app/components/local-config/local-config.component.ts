@@ -7,7 +7,7 @@ import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { borraranDatos, cancelar, debeSeleccionar, noSeleccionado, ok, salioMal, tituloCerrar } from 'src/app/providers/mensajes.provider';
-import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.service';
+import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -20,7 +20,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
   styleUrls: ['./local-config.component.scss'],
   providers: [
     //inyeccion de servicios
-    ConfiguracionLocalService,
+    LocalSettingsService,
     WidgetsService
   ]
 })
@@ -50,8 +50,8 @@ export class LocalConfigComponent {
     private translate: TranslateService,
     private _sharedService: SharedService,
     private _widgetsService: WidgetsService,
-    private _empresa: ConfiguracionLocalService,
-    private _estacion: ConfiguracionLocalService,
+    private _empresa: LocalSettingsService,
+    private _estacion: LocalSettingsService,
 
   ) {
 
@@ -92,54 +92,54 @@ export class LocalConfigComponent {
   };
 
   async estacionesTrabajo(): Promise<void> {
-    //Consumo de servicios
-    this.isLoading = true;
-    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    //Si el servico se ejecuta mal mostrar mensaje
-    if (!resEmpresas.status) {
-      this.isLoading = false; //dejar de cargar la pantalla
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
-      return
-    }
+    // //Consumo de servicios
+    // this.isLoading = true;
+    // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
+    // //Si el servico se ejecuta mal mostrar mensaje
+    // if (!resEmpresas.status) {
+    //   this.isLoading = false; //dejar de cargar la pantalla
+    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+    //   console.error(resEmpresas.response);
+    //   console.error(resEmpresas.storeProcedure);
+    //   return
+    // }
 
-    //Guardar empresas obtenidas
-    this.empresas = resEmpresas.response;
+    // //Guardar empresas obtenidas
+    // this.empresas = resEmpresas.response;
 
-    //Consumo de api
-    let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
-    //Si el servico se ejecuta mal mostrar mensaje
-    this.isLoading = false; //dejar de cargar 
-    if (!resEstacion.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
-      return
-    }
+    // //Consumo de api
+    // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
+    // //Si el servico se ejecuta mal mostrar mensaje
+    // this.isLoading = false; //dejar de cargar 
+    // if (!resEstacion.status) {
+    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+    //   console.error(resEstacion.response);
+    //   console.error(resEstacion.storeProcedure);
+    //   return
+    // }
 
-    //Guardar Estaciones
-    this.estaciones = resEstacion.response;
-    // this.estaciones.push(this.estaciones[0]) //insertar un nuevo elemento a la lista para pruebas
+    // //Guardar Estaciones
+    // this.estaciones = resEstacion.response;
+    // // this.estaciones.push(this.estaciones[0]) //insertar un nuevo elemento a la lista para pruebas
 
-    //verificar si la lista tiene solo un elemento
-    if (this.empresas.length == 1) {
-      //Seleccionar la empresa 
-      this.empresaSelect = this.empresas[0];
-    };
+    // //verificar si la lista tiene solo un elemento
+    // if (this.empresas.length == 1) {
+    //   //Seleccionar la empresa 
+    //   this.empresaSelect = this.empresas[0];
+    // };
 
-    //verificar si la lista tiene solo un elemento
-    if (this.estaciones.length == 1) {
-      //Seleccionar la estacion
-      this.estacionSelect = this.estaciones[0];
-    };
+    // //verificar si la lista tiene solo un elemento
+    // if (this.estaciones.length == 1) {
+    //   //Seleccionar la estacion
+    //   this.estacionSelect = this.estaciones[0];
+    // };
 
-    //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
-    if (this.estaciones.length == 1 && this.empresas.length == 1) {
-      PreferencesService.empresa = JSON.stringify(this.empresaSelect);
-      PreferencesService.estacion = JSON.stringify(this.estacionSelect);
-      this._router.navigate(['/home']); //navegar a home
-    }
+    // //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
+    // if (this.estaciones.length == 1 && this.empresas.length == 1) {
+    //   PreferencesService.empresa = JSON.stringify(this.empresaSelect);
+    //   PreferencesService.estacion = JSON.stringify(this.estacionSelect);
+    //   this._router.navigate(['/home']); //navegar a home
+    // }
   };
 
   irAHome(): void {

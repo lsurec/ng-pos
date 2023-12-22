@@ -8,7 +8,7 @@ import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { completar, incorrecto, ok, salioMal } from 'src/app/providers/mensajes.provider';
-import { ConfiguracionLocalService } from 'src/app/services/configuracion-local.service';
+import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { SharedService } from 'src/app/services/shared.service';
@@ -23,7 +23,7 @@ import { DataUserService } from 'src/app/services/data-user.service';
   providers: [
     WidgetsService,
     LoginService,
-    ConfiguracionLocalService,
+    LocalSettingsService,
   ]
 })
 export class LoginComponent {
@@ -43,8 +43,8 @@ export class LoginComponent {
     private translate: TranslateService,
     private _loginService: LoginService,
     private _widgetsService: WidgetsService,
-    private _empresa: ConfiguracionLocalService,
-    private _estacion: ConfiguracionLocalService,
+    private _empresa: LocalSettingsService,
+    private _estacion: LocalSettingsService,
     private _router: Router,
     private _shared: SharedService,
     private _dataUserService: DataUserService,
@@ -112,7 +112,7 @@ export class LoginComponent {
     console.log(resLogin);
 
 
-    //consumir estaciones y empresas
+    // consumir estaciones y empresas
 
     // //Consumo de servicios
     // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();

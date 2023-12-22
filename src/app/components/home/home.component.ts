@@ -18,7 +18,6 @@ import { MensajesService } from 'src/app/services/mensajes.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
-import { UserService } from 'src/app/services/user.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
 @Component({
@@ -105,7 +104,7 @@ export class HomeComponent {
     });
 
     //obtener nombre de usuario de la sesión
-    this.userName = UserService.getUser().toUpperCase();
+    // this.userName = UserService.getUser().toUpperCase();
 
     // localStorage.clear();
     // sessionStorage.clear();
@@ -233,7 +232,8 @@ export class HomeComponent {
   // Funcion para llamar datos para el menu (Application y Display)
   async loadDataMenu(): Promise<void> {
 
-    let resApplication: ResApiInterface = await this._menu.getAplicaciones();
+    //TODO:remplazar
+    let resApplication: ResApiInterface = await this._menu.getAplicaciones("","");
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
@@ -260,8 +260,9 @@ export class HomeComponent {
 
     // For asyncrono para obtener los displays.
     for (const item of this.menuData) {
+      // TODO:Reemplazar
       //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await this._menu.getDisplays(item.application.application)
+      let resDisplay: ResApiInterface = await this._menu.getDisplays("","",item.application.application)
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {

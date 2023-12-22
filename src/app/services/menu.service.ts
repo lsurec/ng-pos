@@ -1,44 +1,40 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { urlApi } from "../providers/api.provider";
-import { UserService } from "./user.service";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { ResponseInterface } from "../interfaces/response.interface";
+import { PreferencesService } from "./preferences.service";
 
 @Injectable()
 
 export class MenuService {
     //urlBase
-    private _urlBase: string = "";
-    private _token: string = "";
-    private _user: string = "";
+    private _urlBase: string = PreferencesService.baseUrl;
+
 
     //inicializar http
     constructor(private _http: HttpClient) {
-        //asignacion de urlBase
-        this._urlBase = urlApi.apiServer.urlBase;
-        this._token = UserService.getToken();
-        this._user = UserService.getUser();
+
     }
 
-    private _getAplicaciones() {
+    private _getAplicaciones(user: string, token: string) {
         //configurar headers
         let headers = new HttpHeaders(
             {
                 "Content-Type": "application/json",
-                "Authorization": "bearer " + this._token,
+                "Authorization": "bearer " + token,
             }
         )
         //consumo de api
-        // return this._http.get(`${this._urlBase}aplicaciones/${this._user}`, { headers: headers });
-        return this._http.get(`${this._urlBase}aplicaciones/${this._user}`, { headers: headers });
+        // return this._http.get(`${this._urlBase}aplicaciones/${user}`, { headers: headers });
+        return this._http.get(`${this._urlBase}aplicaciones/${user}`, { headers: headers });
     }
 
     // funcion asyncrona con promise
-    getAplicaciones(): Promise<ResApiInterface> {
+    getAplicaciones(user: string, token: string): Promise<ResApiInterface> {
         //consumo del primer servicio
         return new Promise((resolve, reject) => {
-            this._getAplicaciones().subscribe(
+            this._getAplicaciones(user, token,).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
@@ -65,27 +61,27 @@ export class MenuService {
         })
     }
 
-    private _getDisplays(application: number) {
+    private _getDisplays(user: string, token: string, application: number,) {
 
         //configurar headers
         let headers = new HttpHeaders(
             {
                 "Content-Type": "application/json",
-                "Authorization": "bearer " + this._token,
+                "Authorization": "bearer " + token,
                 "app": application.toString(),
-                "user": this._user,
+                "user": user,
             }
         )
         //consumo de api
-        // return this._http.get(`${this._urlBase}displays/${this._user}`, { headers: headers });
+        // return this._http.get(`${this._urlBase}displays/${user}`, { headers: headers });
         return this._http.get(`${this._urlBase}displays`, { headers: headers });
     }
 
     // funcion asyncrona con promise
-    getDisplays(application: number): Promise<ResApiInterface> {
+    getDisplays(user: string, token: string, application: number,): Promise<ResApiInterface> {
         //consumo del primer servicio
         return new Promise((resolve, reject) => {
-            this._getDisplays(application).subscribe(
+            this._getDisplays(user, token, application,).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
