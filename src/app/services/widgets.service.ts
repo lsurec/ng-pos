@@ -4,7 +4,10 @@ import { DialogActionsComponent } from "../components/dialog-actions/dialog-acti
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class WidgetsService {
 
     //Inicializar snack

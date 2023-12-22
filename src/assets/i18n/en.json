@@ -1,42 +1,32 @@
 {
-    "crm": {
+    "pos": {
         "login": {
             "correo": "User",
             "contrasena": "Password",
             "ver": "Show password",
             "ocultar": "Hide password",
-            "recordar": "Remember me",
-            "iniciar": "LOGIN",
-            "completar":"Please complete all fields to continue."
+            "recordar": "Remember my data.",
+            "iniciar": "SIGN IN"
         },
         "progress": {
             "cargar": "Loading...",
             "esperar": "Please wait...",
             "error": "404",
             "linea1": "NO RECORDS FOUND",
-            "linea2": "The page you are looking for might have been removed or temporarily unavailable.",
-            "linea3": "Try searching for something else.",
+            "linea2": "What you're looking for may have been deleted or is temporarily unavailable.",
+            "linea3": "Try searching again.",
             "construccion": "SITE UNDER CONSTRUCTION"
         },
         "ajustes": {
             "ajustesT": "SETTINGS",
-            "semana": "Start of the week:",
-            "idioma": "App language:",
-            "horas": "Business Hours:",
-            "inicioSema": "Start week on:",
-            "rango": "to",
-            "idiomaT": "APP LANGUAGE",
-            "horario": "Business Hours",
-            "inicio": "Start:",
-            "fin": "End:",
-            "inicioLab": "Start Work at:",
-            "finLab": "End Work at",
-            "aceptar": "OK",
+            "idiomaT": "APPLICATION LANGUAGE",
+            "aceptar": "Accept",
             "cancelar": "Cancel",
             "regresar": "Go back",
             "continuar": "Continue",
             "ajustes": "Settings",
-            "cerrar": "Close"
+            "cerrar": "Close",
+            "cambiar": "Change"
         },
         "preferencias": {
             "tema": "APPLICATION THEME",
@@ -48,16 +38,29 @@
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
             "empresas": "Companies",
-            "estaciones": "Workstation",
+            "estaciones": "Workstations",
             "registros": "Records",
             "empresa": "Company",
             "localidad": "Location",
             "guardar": "Save",
-            "cambiar": "To make changes to Local Settings, you will need to log out and log in again."
+            "cambiar": "To make changes in Local Configuration, you must log out and log in again."
         },
         "toolTip": {
-            "regresar": "return to main menu",
-            "regresarAnterior": "return previous page"
+            "regresar": "return to the main menu",
+            "regresarAnterior": "return to the previous page"
+        },
+        "url": {
+            "url": "APIs URL",
+            "ingresar": "To use our services, please enter a valid URL.",
+            "noValida": "Invalid URL.",
+            "actual": "Current URL"
+        },
+        "alertas": {
+            "ok": "OK",
+            "salioMal": "Something went wrong, please try again",
+            "completar": "Please fill in all fields to continue.",
+            "debeSeleccionar": "To continue, select a company and a workstation.",
+            "incorrecto": "Incorrect username or password"
         }
     }
 }

@@ -11,6 +11,7 @@ import { completar, incorrecto, ok, salioMal } from 'src/app/providers/mensajes.
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -58,8 +59,7 @@ export class LoginComponent {
   async login(): Promise<void> {
 
     if (!this.nombreInput || !this.claveInput) {
-      // alert ("Por favor completa todos los campos para continuar")
-      this._widgetsService.openSnackbar(this.translate.instant('crm.login.completar'), "ok");
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'), this.translate.instant('pos.alertas.ok'));
       return
     }
     //Interface de credenciales
@@ -77,9 +77,9 @@ export class LoginComponent {
     if (!res.status) {
       //TODO:Pantalla de error
       this.isLoading = false;
-      this._widgetsService.openSnackbar("MensajesService.findValueLrCode(salioMal, this.activeLang)", "ok");
-      console.error(res.response);
-      console.error(res.storeProcedure);
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resLogin.response);
+      console.error(resLogin.storeProcedure);
       return
     };
 
@@ -87,10 +87,11 @@ export class LoginComponent {
     //Obtener la respuesta del api login
     let resLogin: LoginInterface = res.response;
     //si algo esta incorrecto mostrar mensaje
+    console.log(resApiLogin);
 
-    if (!resLogin.success) {
+    if (!resApiLogin.res) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar("MensajesService.findValueLrCode(incorrecto, this.activeLang)", "ok");
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'), this.translate.instant('pos.alertas.ok'));
       return;
     };
 
@@ -111,8 +112,20 @@ export class LoginComponent {
 
     console.log(resLogin);
 
+    //Consumo de servicios
+    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEmpresas.status) {
+      this.isLoading = false;
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
 
-    // consumir estaciones y empresas
+      this._router.navigate([[RouteNamesService.NOT_FOUND]]); //si algo sale mal mostar pantalla de no encontrado.
+      return
+    }
+    //Guardar Emoresas obtenidas
+    this.empresas = resEmpresas.response;
 
     // //Consumo de servicios
     // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
@@ -123,46 +136,42 @@ export class LoginComponent {
     //   console.error(resEmpresas.response);
     //   console.error(resEmpresas.storeProcedure);
 
-    //   this._router.navigate(['/notFound']); //si algo sale mal mostar pantalla de no encontrado.
-    //   return
-    // }
-    // //Guardar Emoresas obtenidas
-    // this.empresas = resEmpresas.response;
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEstacion.status) {
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
+      this._router.navigate([RouteNamesService.NOT_FOUND]);
+      return
+    };
 
     // //Consumo de api
     // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
     // this.isLoading = false;
 
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEstacion.status) {
-    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-    //   console.error(resEstacion.response);
-    //   console.error(resEstacion.storeProcedure);
-    //   this._router.navigate(['/notFound']);
-    //   return
-    // };
+    if (this.empresas.length > 1 || this.estaciones.length > 1) {
+      this._shared.empresas = this.empresas;
+      this._shared.estaciones = this.estaciones;
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+      return;
+    };
 
     // //Guardar Estaciones obtenidas
     // this.estaciones = resEstacion.response;
     // // this.estaciones.push(this.estaciones[0]);
 
-    // if (this.empresas.length > 1 || this.estaciones.length > 1) {
-    //   this._shared.empresas = this.empresas;
-    //   this._shared.estaciones = this.estaciones;
-    //   this._router.navigate(['/station']);
-    //   return;
-    // };
-
-    // // Guardar la etaciones
-    // StorageService.empresa = JSON.stringify(this.empresas[0]);
-    // StorageService.estacion = JSON.stringify(this.estaciones[0]);
-
-    // //Si el usuario esta correcto y se encontraron las empresas y estaciones:
-    // //ir a pantalla confifuracion local
-    // this._router.navigate(['/station']);
+    //Si el usuario esta correcto y se encontraron las empresas y estaciones:
+    //ir a pantalla confifuracion local
+    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
   };
   //Permanencia de la sesión
   rememberMe(): void {
     this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
   };
+
+  cambiarUrl() {
+    this._router.navigate([RouteNamesService.API]);
+
+  }
+
 }

@@ -10,6 +10,7 @@ import { borraranDatos, cancelar, debeSeleccionar, noSeleccionado, ok, salioMal,
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -92,31 +93,31 @@ export class LocalConfigComponent {
   };
 
   async estacionesTrabajo(): Promise<void> {
-    // //Consumo de servicios
-    // this.isLoading = true;
-    // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    // //Si el servico se ejecuta mal mostrar mensaje
-    // if (!resEmpresas.status) {
-    //   this.isLoading = false; //dejar de cargar la pantalla
-    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-    //   console.error(resEmpresas.response);
-    //   console.error(resEmpresas.storeProcedure);
-    //   return
-    // }
+    //Consumo de servicios
+    this.isLoading = true;
+    let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
+    //Si el servico se ejecuta mal mostrar mensaje
+    if (!resEmpresas.status) {
+      this.isLoading = false; //dejar de cargar la pantalla
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
+      return
+    }
 
     // //Guardar empresas obtenidas
     // this.empresas = resEmpresas.response;
 
-    // //Consumo de api
-    // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
-    // //Si el servico se ejecuta mal mostrar mensaje
-    // this.isLoading = false; //dejar de cargar 
-    // if (!resEstacion.status) {
-    //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-    //   console.error(resEstacion.response);
-    //   console.error(resEstacion.storeProcedure);
-    //   return
-    // }
+    //Consumo de api
+    let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
+    //Si el servico se ejecuta mal mostrar mensaje
+    this.isLoading = false; //dejar de cargar 
+    if (!resEstacion.status) {
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
+      return
+    }
 
     // //Guardar Estaciones
     // this.estaciones = resEstacion.response;
@@ -134,25 +135,25 @@ export class LocalConfigComponent {
     //   this.estacionSelect = this.estaciones[0];
     // };
 
-    // //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
-    // if (this.estaciones.length == 1 && this.empresas.length == 1) {
-    //   PreferencesService.empresa = JSON.stringify(this.empresaSelect);
-    //   PreferencesService.estacion = JSON.stringify(this.estacionSelect);
-    //   this._router.navigate(['/home']); //navegar a home
-    // }
+    //Si solo hay una empresa y solo una estacion, guardarlas en el Storage
+    if (this.estaciones.length == 1 && this.empresas.length == 1) {
+      StorageService.empresa = JSON.stringify(this.empresaSelect);
+      StorageService.estacion = JSON.stringify(this.estacionSelect);
+      this._router.navigate([RouteNamesService.HOME]); //navegar a home
+    }
   };
 
   irAHome(): void {
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(debeSeleccionar, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));
       return;
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    PreferencesService.empresa = JSON.stringify(this.empresaSelect);
-    PreferencesService.estacion = JSON.stringify(this.estacionSelect);
-    this._router.navigate(['/home']);
+    StorageService.empresa = JSON.stringify(this.empresaSelect);
+    StorageService.estacion = JSON.stringify(this.estacionSelect);
+    this._router.navigate([RouteNamesService.HOME]);
   };
 
   //Cerrar sesion
@@ -175,7 +176,7 @@ export class LocalConfigComponent {
     sessionStorage.removeItem("name");
 
     //Regresar a Login
-    this._router.navigate(["/login"]);
+    this._router.navigate([RouteNamesService.LOGIN]);
 
     //Limpiar storage del navegador
     // localStorage.clear();

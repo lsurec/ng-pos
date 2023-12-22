@@ -4,11 +4,11 @@
     <app-logos></app-logos>
     <div class="contenido">
         <button (click)="backHome()" mat-icon-button aria-label class="flecha-regresar"
-            matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}" *ngIf="regresar">
+            matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" *ngIf="regresar">
             <mat-icon>arrow_back</mat-icon>
         </button>
 
-        <p class="titulo">{{ 'crm.configuracionLocal.titulo' | translate }}</p>
+        <p class="titulo">{{ 'pos.configuracionLocal.titulo' | translate }}</p>
 
         <div class="titulos-menu">
             <div class="estaciones-trabajo">
@@ -16,9 +16,9 @@
                     <span class="spacer"></span>
                     <div class="registros">
                         <div class="identificadores">
-                            <p>{{ 'crm.configuracionLocal.empresas' | translate }}</p>
+                            <p>{{ 'pos.configuracionLocal.empresas' | translate }}</p>
                             <span class="spacer"></span>
-                            <p>{{ 'crm.configuracionLocal.registros' | translate }}</p>
+                            <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
                             <p class="sin-negrita">({{empresas.length}})</p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     <div class="registros">
                         <div class="identificadores">
                             <span class="spacer"></span>
-                            <p>{{ 'crm.configuracionLocal.empresa' | translate }} </p>
+                            <p>{{ 'pos.configuracionLocal.empresa' | translate }} </p>
                             <p class="sin-negrita">{{empresaSelect?.empresa_Nombre ?? nonSelect}}</p>
                         </div>
                     </div>
@@ -56,9 +56,9 @@
                     <span class="spacer"></span>
                     <div class="registros">
                         <div class="identificadores">
-                            <p>{{ 'crm.configuracionLocal.estaciones' | translate }}</p>
+                            <p>{{ 'pos.configuracionLocal.estaciones' | translate }}</p>
                             <span class="spacer"></span>
-                            <p>{{ 'crm.configuracionLocal.registros' | translate }}</p>
+                            <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
                             <p class="sin-negrita">({{estaciones.length}})</p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="registros">
                         <div class="identificadores">
                             <span class="spacer"></span>
-                            <p>{{ 'crm.configuracionLocal.localidad' | translate }}</p>
+                            <p>{{ 'pos.configuracionLocal.localidad' | translate }}</p>
                             <p class="sin-negrita">{{estacionSelect?.nombre ?? nonSelect}}</p>
                         </div>
                     </div>
@@ -91,12 +91,12 @@
                 </div>
                 <div class="d-flex">
                     <button mat-mini-fab class="boton-guardar" (click)="irAHome()"
-                        [matTooltip]="'crm.configuracionLocal.guardar' | translate">
+                        [matTooltip]="'pos.configuracionLocal.guardar' | translate">
                         <mat-icon>save</mat-icon>
                     </button>
                     <span class="spacer"></span>
                     <button mat-mini-fab class="boton-cerrar" (click)="cerrarSesion()"
-                        [matTooltip]="'crm.home.salir' | translate">
+                        [matTooltip]="'pos.home.salir' | translate">
                         <mat-icon>logout</mat-icon>
                     </button>
                 </div>

@@ -47,23 +47,23 @@
         </div>
         <!-- <div class="vistas row">
             <button [ngClass]="{ 'seleccionado' : vistaActiva === 1 }" (click)="vistaSeleccionada(1)" class="vista">{{
-                'crm.home.vistaTarea' | translate }}</button>
+                'pos.home.vistaTarea' | translate }}</button>
             <button [ngClass]="{ 'seleccionado' : vistaActiva === 2 }" (click)="vistaSeleccionada(2); calendario(true)"
-                class="vista">{{ 'crm.home.vistaCalendario' | translate }}</button>
+                class="vista">{{ 'pos.home.vistaCalendario' | translate }}</button>
         </div> -->
     </mat-sidenav>
     <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
         <mat-toolbar class="head__sidenav">
-            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'crm.ajustes.cerrar' | translate">
+            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.ajustes.cerrar' | translate">
                 <mat-icon>close</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- <span class="spacer" *ngIf="ajustes"></span> -->
             <!-- nombre de las barras de ajustes -->
             <div class="nombresAjustes">
-                <label class="ajustesMenu" *ngIf="ajustes">{{ 'crm.ajustes.ajustesT' | translate }}</label>
-                <label class="ajustesMenu" *ngIf="idiomas">{{ 'crm.ajustes.idiomaT' | translate }}</label>
-                <label class="ajustesMenu" *ngIf="temas">{{'crm.home.temaAplicacion' | translate}}</label>
+                <label class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</label>
+                <label class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</label>
+                <label class="ajustesMenu" *ngIf="temas">{{'pos.home.temaAplicacion' | translate}}</label>
             </div>
             <span class="spacer"></span>
             <span class="spacer" *ngIf="ajustes"></span>
@@ -72,12 +72,12 @@
         <div class="ajustes" *ngIf="ajustes">
             <!-- Vista Seleccionar Lenguajes -->
             <div class="vistaAjustes" (click)="verLenguajes()">
-                <p class="pTitulo">{{ 'crm.ajustes.idioma' | translate }}</p>
+                <p class="pTitulo">{{ 'pos.ajustes.idioma' | translate }}</p>
                 <p class="pDescripcion">{{getNameByLanguageRegion(activeLang)}}</p>
             </div>
             <p class="separador"></p>
             <div class="vistaAjustes" (click)="verTema()">
-                <p class="pTitulo">{{'crm.home.modo' | translate}}</p>
+                <p class="pTitulo">{{'pos.home.modo' | translate}}</p>
                 <p class="pDescripcion"> {{tema}} </p>
             </div>
             <p class="separador"></p>
@@ -97,17 +97,17 @@
             <div class="temaOscuro">
                 <mat-icon class="ico-tema">dark_mode</mat-icon>
                 <div class="desc-tema">
-                    <p class="titulo-tema">{{'crm.home.modo' | translate}}</p>
-                    <p class="descripcion-tema">{{'crm.home.descripcionTema' | translate}}</p>
+                    <p class="titulo-tema">{{'pos.home.modo' | translate}}</p>
+                    <p class="descripcion-tema">{{'pos.home.descripcionTema' | translate}}</p>
                 </div>
             </div>
             <p class="separador"></p>
 
             <mat-radio-group class="example-radio-group" [(ngModel)]="temaOscuro" (ngModelChange)="toggleTheme()">
                 <mat-radio-button class="example-radio-button separador" color="primary" [value]="true">
-                    {{'crm.home.activo' | translate}}</mat-radio-button>
+                    {{'pos.home.activo' | translate}}</mat-radio-button>
                 <mat-radio-button class="example-radio-button separador" color="primary" [value]="false">
-                    {{'crm.home.inactivo' | translate}}</mat-radio-button>
+                    {{'pos.home.inactivo' | translate}}</mat-radio-button>
             </mat-radio-group>
         </div>
         <!-- Mostrar detalles del usuario -->
@@ -166,18 +166,18 @@
         <!-- botones detalle usuario, ajustes y salir -->
         <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
             <!-- Ver informacion del usuario -->
-            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'crm.ajustes.ajustes' | translate">
+            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.ajustes.ajustes' | translate">
                 <mat-icon>settings</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- Salir o cerrar sesion -->
-            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'crm.home.salir' | translate">
+            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.home.salir' | translate">
                 <mat-icon>logout</mat-icon>
             </button>
         </mat-toolbar>
         <!-- boton regresar a detalle usuario -->
         <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'crm.ajustes.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.ajustes.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>
@@ -189,7 +189,7 @@
         </mat-toolbar>
         <!-- Regresar tema -->
         <mat-toolbar class="backColorNavBar" *ngIf="temas">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'crm.ajustes.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.ajustes.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>

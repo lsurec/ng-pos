@@ -1,13 +1,12 @@
 {
-    "crm": {
+    "pos": {
         "login": {
             "correo": "Usuario",
             "contrasena": "Contraseña",
             "ver": "Ver contraseña",
             "ocultar": "Ocultar contraseña",
             "recordar": "Recordar mis datos.",
-            "iniciar": "INICIAR SESION",
-            "completar":"Por favor completa todos los campos para continuar."
+            "iniciar": "INICIAR SESION"
         },
         "progress": {
             "cargar": "Cargando...",
@@ -20,23 +19,14 @@
         },
         "ajustes": {
             "ajustesT": "AJUSTES",
-            "semana": "Inicio de semana:",
-            "idioma": "Idioma de la aplicación:",
-            "horas": "Horas Laborales:",
-            "inicioSema": "Iniciar semana en:",
-            "rango": "a",
             "idiomaT": "IDIOMA DE LA APLICACION",
-            "horario": "Horario Laboral",
-            "inicio": "Inicio:",
-            "fin": "Fin:",
-            "inicioLab": "Iniciar Labores en:",
-            "finLab": "Finalizar Labores en",
             "aceptar": "Aceptar",
             "cancelar": "Cancelar",
             "regresar": "Regresar",
             "continuar": "Continuar",
             "ajustes": "Ajustes",
-            "cerrar": "Cerrar"
+            "cerrar": "Cerrar",
+            "cambiar": "Cambiar"
         },
         "preferencias": {
             "tema": "TEMA DE LA APLICACIÓN",
@@ -58,6 +48,19 @@
         "toolTip": {
             "regresar": "regresar al menú principal",
             "regresarAnterior": "regresar pagina anterior"
+        },
+        "url": {
+            "url": "Url Apis",
+            "ingresar": "Para poder utilizar nuestros servicios, por favor, introduce una URL válida.",
+            "noValida": "URL no válida.",
+            "actual": "Url Actual"
+        },
+        "alertas": {
+            "ok": "Aceptar",
+            "salioMal": "Algo salió mal, inténtelo de nuevo",
+            "completar": "Por favor completa todos los campos para continuar.",
+            "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo",
+            "incorrecto": "Usuario o contraseña incorrectos"
         }
     }
 }

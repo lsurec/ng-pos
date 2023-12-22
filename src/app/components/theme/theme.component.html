@@ -2,7 +2,7 @@
 
     <div class="cambios-cerrar">
         <span class="spacer"></span>
-        <p class="titulo">{{ 'crm.preferencias.tema' | translate }}</p>
+        <p class="titulo">{{ 'pos.preferencias.tema' | translate }}</p>
         <span class="spacer"></span>
     </div>
     <div class="contenido">
@@ -16,7 +16,7 @@
                                 <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
                                     <mat-icon>light_mode</mat-icon>
                                 </button>
-                                <p class="opciones">{{ 'crm.preferencias.claro' | translate }}</p>
+                                <p class="opciones">{{ 'pos.preferencias.claro' | translate }}</p>
                             </div>
                             <span class="spacer"></span>
                         </div>
@@ -33,13 +33,13 @@
             <div class="estaciones-trabajo">
                 <div class="detalles">
                     <span class="spacer"></span>
-                    <div class="informacion-tema" (click)="oscuro(1)"  [ngClass]="{'tema-seleccionado': tema == 1}">
+                    <div class="informacion-tema" (click)="oscuro(1)" [ngClass]="{'tema-seleccionado': tema == 1}">
                         <div class="seleccionar-localidad">
                             <div class="seleccionado d-flex">
                                 <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
                                     <mat-icon>dark_mode</mat-icon>
                                 </button>
-                                <p class="opciones">{{ 'crm.preferencias.oscuro' | translate }}</p>
+                                <p class="opciones">{{ 'pos.preferencias.oscuro' | translate }}</p>
 
                             </div>
                             <span class="spacer"></span>
@@ -55,12 +55,12 @@
     </div>
     <div class="cambios-cerrar">
         <span class="spacer"></span>
-        <p class="realizar-cambio">{{ 'crm.preferencias.cambiar' | translate }}</p>
+        <p class="realizar-cambio">{{ 'pos.preferencias.cambiar' | translate }}</p>
         <span class="spacer"></span>
     </div>
     <div class="cambios-cerrar">
         <span class="spacer"></span>
-        <button mat-stroked-button (click)="guardar()">{{'crm.ajustes.continuar' | translate}}</button>
+        <button mat-stroked-button (click)="guardar()">{{'pos.ajustes.continuar' | translate}}</button>
         <span class="spacer"></span>
     </div>
 </div>
