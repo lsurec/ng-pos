@@ -41,6 +41,12 @@ $idioma-seleccionado  : #5d6d6c;
     font-weight: 500;
 }
 
+.url {
+    text-align  : center;
+    font-weight : 500;
+    margin-right: 40px;
+}
+
 .spacer {
     flex: 1 1 auto;
 }
@@ -65,7 +71,7 @@ p {
     font-size    : 14px;
     outline      : none;
     border-style : none;
-    border-radius: 20px;
+    border-radius: 15px;
     border       : 0.5px solid $color-bordes;
     color        : $color-azul;
     padding      : 0px 15px;

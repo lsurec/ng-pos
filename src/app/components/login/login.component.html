@@ -7,9 +7,12 @@
         <div class="row">
             <div class="col-md-5 mx-auto text-center">
                 <div class="login-right">
-                    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-                        <mat-icon>mvpn_lock</mat-icon>
-                    </button>
+                    <div class="cambiar">
+                        <span class="spacer"></span>
+                        <button mat-icon-button (click)="cambiarUrl()">
+                            <mat-icon>vpn_lock</mat-icon>
+                        </button>
+                    </div>
                     <!-- Seleccionar idioma -->
                     <!-- <button mat-button [matMenuTriggerFor]="menu" class="languagebtn">
                         <mat-icon>expand_more</mat-icon>

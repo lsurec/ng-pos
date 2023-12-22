@@ -57,7 +57,8 @@
         },
         "toolTip": {
             "regresar": "return to main menu",
-            "regresarAnterior": "return previous page"
+            "regresarAnterior": "return previous page",
+            "noValida" : "Invalid URL."
         }
     }
 }

@@ -200,4 +200,10 @@ export class LoginComponent {
   rememberMe(): void {
     this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
   };
+
+  cambiarUrl(){
+    this._router.navigate([RouteNamesService.API]);
+
+  }
+
 }

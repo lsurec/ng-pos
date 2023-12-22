@@ -1,15 +1,32 @@
 <div class="centrar">
     <div class="container-main">
-        <div class="cambios-cerrar">
+        <div class="cambios-cerrar" *ngIf="!urlStorage">
             <span class="spacer"></span>
             <p class="titulo">{{ 'pos.url.url' | translate }}</p>
             <span class="spacer"></span>
         </div>
 
-        <div class="cambios-cerrar">
+        <div class="cambios-cerrar" *ngIf="urlStorage">
+            <span class="spacer"></span>
+            <p class="titulo">{{ 'pos.url.actual' | translate }}</p>
+            <span class="spacer"></span>
+        </div>
+
+        <div class="cambios-cerrar" *ngIf="!urlStorage">
             <span class="spacer"></span>
             <p class="titulo">{{ 'pos.url.ingresar' | translate }}</p>
             <span class="spacer"></span>
+        </div>
+
+        <div class="cambios-cerrar" *ngIf="urlStorage">
+            <span class="spacer"></span>
+            <p class="url">{{ urlStorage }}</p>
+            <!-- <span class="spacer"></span> -->
+            <button mat-icon-button>
+                <mat-icon>content_copy</mat-icon>
+            </button>
+            <span class="spacer"></span>
+
         </div>
 
         <div class="contenido">
@@ -21,9 +38,17 @@
                 </div>
             </div>
         </div>
-        <div class="cambios-cerrar">
+        <div class="cambios-cerrar" *ngIf="!urlStorage">
             <span class="spacer"></span>
             <button mat-stroked-button (click)="guardar()">{{'pos.ajustes.continuar' | translate}}</button>
+            <span class="spacer"></span>
+        </div>
+
+        <div class="cambios-cerrar" *ngIf="urlStorage">
+            <span class="spacer"></span>
+            <button mat-stroked-button (click)="regresar()">{{'pos.ajustes.cancelar' | translate}}</button>
+            <span class="spacer"></span>
+            <button mat-stroked-button (click)="cambiar()">{{'pos.ajustes.cambiar' | translate}}</button>
             <span class="spacer"></span>
         </div>
 

@@ -36,7 +36,8 @@
             "regresar": "Regresar",
             "continuar": "Continuar",
             "ajustes": "Ajustes",
-            "cerrar": "Cerrar"
+            "cerrar": "Cerrar",
+            "cambiar": "Cambiar"
         },
         "preferencias": {
             "tema": "TEMA DE LA APLICACIÓN",
@@ -61,7 +62,9 @@
         },
         "url": {
             "url": "Url Apis",
-            "ingresar": "Para poder utilizar nuestros servicios, por favor, introduce una URL válida."
+            "ingresar": "Para poder utilizar nuestros servicios, por favor, introduce una URL válida.",
+            "noValida" : "URL no válida.",
+            "actual": "Url Actual"
         }
     }
 }
