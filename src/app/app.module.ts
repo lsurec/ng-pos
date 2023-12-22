@@ -35,6 +35,7 @@ import { routing } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { LangComponent } from './components/lang/lang.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import { DataUserService } from './services/data-user.service';
 
 
 @NgModule({
@@ -82,7 +83,9 @@ import { ThemeComponent } from './components/theme/theme.component';
     MatRadioModule,
     routing,
   ],
-  providers: [],
+  providers: [
+    DataUserService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

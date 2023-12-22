@@ -14,6 +14,7 @@ import { MensajesService } from 'src/app/services/mensajes.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-login',
@@ -46,6 +47,7 @@ export class LoginComponent {
     private _estacion: ConfiguracionLocalService,
     private _router: Router,
     private _shared: SharedService,
+    private _dataUserService: DataUserService,
 
   ) {
    
@@ -85,7 +87,6 @@ export class LoginComponent {
     //Obtener la respuesta del api login
     let resLogin: LoginInterface = res.response;
     //si algo esta incorrecto mostrar mensaje
-    console.log(resLogin);
 
     if (!resLogin.success) {
       this.isLoading = false;
@@ -99,12 +100,13 @@ export class LoginComponent {
       PreferencesService.token = resLogin.message;
       //guardar el usuario
       PreferencesService.user = resLogin.user;
+      this._dataUserService.token = resLogin.message;
+      this._dataUserService.user = resLogin.user;
     }
     else {
       //sesion no permanente
-      sessionStorage.setItem("token", resLogin.message);
-      // sessionStorage.setItem('user', this.nombreInput);
-      sessionStorage.setItem('user', resLogin.user);
+      this._dataUserService.token = resLogin.message;
+      this._dataUserService.user = resLogin.user;
     };
 
     console.log(resLogin);
