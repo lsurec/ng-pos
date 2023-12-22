@@ -10,7 +10,6 @@ import { ok, salioMal } from 'src/app/providers/mensajes.provider';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
@@ -32,7 +31,6 @@ export class SplashComponent {
 
   constructor(
     private _router: Router,
-    private _shared: SharedService,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
     private _empresa: LocalSettingsService,

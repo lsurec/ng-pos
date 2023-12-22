@@ -12,7 +12,6 @@ import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { DataUserService } from 'src/app/services/data-user.service';
@@ -35,6 +34,7 @@ export class LoginComponent {
   saveMyData: boolean = false; //guardar infomacion
   mostrarTexto: boolean = false; //ver clave
 
+
   //empresas y estaciones
   empresas: EmpresaInterface[] = [];
   estaciones: EstacionInterface[] = [];
@@ -43,10 +43,8 @@ export class LoginComponent {
     private translate: TranslateService,
     private _loginService: LoginService,
     private _widgetsService: WidgetsService,
-    private _empresa: LocalSettingsService,
-    private _estacion: LocalSettingsService,
+    private _localSettingsService: LocalSettingsService,
     private _router: Router,
-    private _shared: SharedService,
     private _dataUserService: DataUserService,
 
   ) {
@@ -108,59 +106,65 @@ export class LoginComponent {
       this._dataUserService.user = resLogin.user;
     };
 
-    console.log(resLogin);
+
+    let user = this._dataUserService.user;
+    let token = this._dataUserService.token;
 
     // //Consumo de servicios
-    // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEmpresas.status) {
-    //   this.isLoading = false;
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEmpresas.response);
-    //   console.error(resEmpresas.storeProcedure);
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEmpresas.status) {
+      //TODO: Error view
+      this.isLoading = false;
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
 
-    //   this._router.navigate([[RouteNamesService.NOT_FOUND]]); //si algo sale mal mostar pantalla de no encontrado.
-    //   return
-    // }
-    // //Guardar Emoresas obtenidas
-    // this.empresas = resEmpresas.response;
+      return;
+    }
 
-    // // //Consumo de servicios
-    // // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    // // //Si el servico se ejecuta mal mostar mensaje
-    // // if (!resEmpresas.status) {
-    // //   this.isLoading = false;
-    // //   this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
-    // //   console.error(resEmpresas.response);
-    // //   console.error(resEmpresas.storeProcedure);
+    
+    //Guardar Emoresas obtenidas
+    this.empresas = resEmpresas.response;
 
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEstacion.status) {
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEstacion.response);
-    //   console.error(resEstacion.storeProcedure);
-    //   this._router.navigate([RouteNamesService.NOT_FOUND]);
-    //   return
-    // };
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-    // // //Consumo de api
-    // // let resEstacion: ResApiInterface = await this._estacion.getEstaciones();
-    // // this.isLoading = false;
+    this.isLoading = false;
 
-    // if (this.empresas.length > 1 || this.estaciones.length > 1) {
-    //   this._shared.empresas = this.empresas;
-    //   this._shared.estaciones = this.estaciones;
-    //   this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
-    //   return;
-    // };
+    if (!resEstacion.status) {
+      //TODO: Error view
+      this.isLoading = false;
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
 
-    // //Guardar Estaciones obtenidas
-    // this.estaciones = resEstacion.response;
-    // // this.estaciones.push(this.estaciones[0]);
+      return;
+    }
 
-    //Si el usuario esta correcto y se encontraron las empresas y estaciones:
-    //ir a pantalla confifuracion local
-    // this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+    this.estaciones = resEstacion.response;
+
+    if(this.estaciones.length == 0 || this.empresas.length == 0){
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      return;
+    }
+
+      this._dataUserService.empresas = this.empresas;
+      this._dataUserService.estaciones = this.estaciones;
+
+
+
+    if (this.empresas.length == 1 && this.estaciones.length == 1) {
+      this._dataUserService.selectedEmpresa = this.empresas[0];
+      this._dataUserService.selectedEstacion = this.estaciones[0];
+
+      this._router.navigate([RouteNamesService.HOME]);
+      return;
+    };
+
+    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+
+   
+    
   };
   //Permanencia de la sesión
   rememberMe(): void {

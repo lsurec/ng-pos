@@ -11,7 +11,6 @@ import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { SharedService } from 'src/app/services/shared.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
@@ -49,7 +48,6 @@ export class LocalConfigComponent {
     private _router: Router,
     private _eventService: EventService,
     private translate: TranslateService,
-    private _sharedService: SharedService,
     private _widgetsService: WidgetsService,
     private _empresa: LocalSettingsService,
     private _estacion: LocalSettingsService,
@@ -69,8 +67,8 @@ export class LocalConfigComponent {
     };
 
     //obtener listas de empresas y estaciones guardadas en Shared Service
-    this.empresas = this._sharedService.empresas;
-    this.estaciones = this._sharedService.estaciones;
+    // this.empresas = this._sharedService.empresas;
+    // this.estaciones = this._sharedService.estaciones;
 
     //verificar si la lista tiene solo un elemento
     if (this.empresas.length == 1) {
