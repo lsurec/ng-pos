@@ -59,10 +59,10 @@ export class SplashComponent {
       }, 1000);
       return;
     }
-
+    
     if (!PreferencesService.token) {
       setTimeout(() => {
-        this._router.navigate([RouteNamesService.LOGIN]);
+        this._router.navigate([RouteNamesService.API]);
       }, 1000);
       return;
     }

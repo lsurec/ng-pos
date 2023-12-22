@@ -9,7 +9,7 @@ export class LoginGuard implements CanActivate {
 
   constructor(private _router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(): boolean {
     //condicion que se cumple para aaceso a la ruta
     let token = this.getToken();
     //si existe token

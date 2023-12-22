@@ -21,8 +21,6 @@ export class AppComponent {
   ) {
     // localStorage.clear();
     // sessionStorage.clear();
-    //TODO:Elimminar
-    PreferencesService.baseUrl = "https://ds.demosoftonline.com/host/la_carreta/POSApis/api"
 
     //Buscar y obtener el leguaje guardado en el servicio  
     let getLanguage = PreferencesService.lang;

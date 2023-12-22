@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -44,6 +43,6 @@ export class ThemeComponent {
   }
 
   guardar(): void {
-    this._router.navigate([RouteNamesService.LOGIN]);
+    this._router.navigate([RouteNamesService.API]);
   }
 }
