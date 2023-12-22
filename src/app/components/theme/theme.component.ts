@@ -15,7 +15,6 @@ export class ThemeComponent {
   tema: number = 0;
 
   constructor(
-    private translate: TranslateService,
     private themeService: ThemeService,
     private _router: Router,
 
