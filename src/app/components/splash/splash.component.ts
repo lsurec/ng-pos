@@ -78,7 +78,7 @@ export class SplashComponent {
     let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEmpresas.response);
       console.error(resEmpresas.storeProcedure);
       //si algo sale mal ira a la pantalla de no encontrado
@@ -93,7 +93,7 @@ export class SplashComponent {
     let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEstaciones.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEstaciones.response);
       console.error(resEstaciones.storeProcedure);
       //si algo sale mal ira a la pantalla de no encontrado

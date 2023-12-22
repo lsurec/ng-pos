@@ -237,7 +237,7 @@ export class HomeComponent {
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.log(resApplication.response);
       console.log(resApplication.storeProcedure);
       return;
@@ -265,7 +265,7 @@ export class HomeComponent {
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
-        this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
         console.error(resDisplay.response);
         console.error(resDisplay.storeProcedure);
 

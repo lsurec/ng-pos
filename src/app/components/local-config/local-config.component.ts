@@ -99,7 +99,7 @@ export class LocalConfigComponent {
     //Si el servico se ejecuta mal mostrar mensaje
     if (!resEmpresas.status) {
       this.isLoading = false; //dejar de cargar la pantalla
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEmpresas.response);
       console.error(resEmpresas.storeProcedure);
       return
@@ -113,7 +113,7 @@ export class LocalConfigComponent {
     //Si el servico se ejecuta mal mostrar mensaje
     this.isLoading = false; //dejar de cargar 
     if (!resEstacion.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEstacion.response);
       console.error(resEstacion.storeProcedure);
       return
@@ -146,7 +146,7 @@ export class LocalConfigComponent {
   irAHome(): void {
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(debeSeleccionar, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));
       return;
     };
 

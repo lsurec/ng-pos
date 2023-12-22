@@ -94,8 +94,7 @@ export class LoginComponent {
   async login(): Promise<void> {
 
     if (!this.nombreInput || !this.claveInput) {
-      // alert ("Por favor completa todos los campos para continuar")
-      this._widgetsService.openSnackbar(this.translate.instant('crm.login.completar'), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'), this.translate.instant('pos.alertas.ok'));
       return
     }
     //Interface de credenciales
@@ -114,7 +113,7 @@ export class LoginComponent {
     ///Si el servico se ejecuta mal mostar menaje
     if (!resLogin.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resLogin.response);
       console.error(resLogin.storeProcedure);
       return
@@ -128,7 +127,7 @@ export class LoginComponent {
 
     if (!resApiLogin.res) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(incorrecto, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'), this.translate.instant('pos.alertas.ok'));
       return;
     };
 
@@ -154,7 +153,7 @@ export class LoginComponent {
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEmpresas.response);
       console.error(resEmpresas.storeProcedure);
 
@@ -170,7 +169,7 @@ export class LoginComponent {
 
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEstacion.status) {
-      this._widgetsService.openSnackbar(MensajesService.findValueLrCode(salioMal, this.activeLang), MensajesService.findValueLrCode(ok, this.activeLang));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
       console.error(resEstacion.response);
       console.error(resEstacion.storeProcedure);
       this._router.navigate([RouteNamesService.NOT_FOUND]);
@@ -201,7 +200,7 @@ export class LoginComponent {
     this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
   };
 
-  cambiarUrl(){
+  cambiarUrl() {
     this._router.navigate([RouteNamesService.API]);
 
   }
