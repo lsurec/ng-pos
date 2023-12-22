@@ -19,6 +19,8 @@ export class ApiComponent {
   }
 
   guardar(): void {
+    console.log("comit");
+    
     StorageService.baseUrl = this.url;
     this._router.navigate([RouteNamesService.LOGIN]);
   }
