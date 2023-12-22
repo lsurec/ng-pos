@@ -85,4 +85,21 @@ export class ApiComponent {
 
   }
 
+  async cambiar() {
+    if (!this.url) {
+
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this.translate.instant('pos.alertas.salioMal'),
+          description: this.translate.instant('pos.alertas.error'),
+          verdadero: this.translate.instant('pos.botones.informe'),
+          falso: this.translate.instant('pos.botones.aceptar'),
+        }
+      );
+      if (!verificador) return;
+    }
+
+    this._router.navigate([RouteNamesService.ERROR]);
+  }
+
 }

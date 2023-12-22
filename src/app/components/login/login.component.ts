@@ -48,7 +48,7 @@ export class LoginComponent {
     private _dataUserService: DataUserService,
 
   ) {
-   
+
   }
 
 
@@ -123,7 +123,7 @@ export class LoginComponent {
       return;
     }
 
-    
+
     //Guardar Emoresas obtenidas
     this.empresas = resEmpresas.response;
 
@@ -143,13 +143,13 @@ export class LoginComponent {
 
     this.estaciones = resEstacion.response;
 
-    if(this.estaciones.length == 0 || this.empresas.length == 0){
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+    if (this.estaciones.length == 0 || this.empresas.length == 0) {
+      this._widgetsService.openSnackbar(`${this.translate.instant('pos.alertas.configuracion')} ${user}`, this.translate.instant('pos.alertas.ok'));
       return;
     }
 
-      this._dataUserService.empresas = this.empresas;
-      this._dataUserService.estaciones = this.estaciones;
+    this._dataUserService.empresas = this.empresas;
+    this._dataUserService.estaciones = this.estaciones;
 
 
 
@@ -163,8 +163,8 @@ export class LoginComponent {
 
     this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-   
-    
+
+
   };
   //Permanencia de la sesión
   rememberMe(): void {
@@ -174,6 +174,10 @@ export class LoginComponent {
   cambiarUrl() {
     this._router.navigate([RouteNamesService.API]);
 
+  }
+
+  api() {
+    this._router.navigate([RouteNamesService.API]);
   }
 
 }

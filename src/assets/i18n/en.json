@@ -19,14 +19,7 @@
         },
         "ajustes": {
             "ajustesT": "SETTINGS",
-            "idiomaT": "APPLICATION LANGUAGE",
-            "aceptar": "Accept",
-            "cancelar": "Cancel",
-            "regresar": "Go back",
-            "continuar": "Continue",
-            "ajustes": "Settings",
-            "cerrar": "Close",
-            "cambiar": "Change"
+            "idiomaT": "APPLICATION LANGUAGE"
         },
         "preferencias": {
             "tema": "APPLICATION THEME",
@@ -42,7 +35,6 @@
             "registros": "Records",
             "empresa": "Company",
             "localidad": "Location",
-            "guardar": "Save",
             "cambiar": "To make changes in Local Configuration, you must log out and log in again."
         },
         "toolTip": {
@@ -60,7 +52,33 @@
             "salioMal": "Something went wrong, please try again",
             "completar": "Please fill in all fields to continue.",
             "debeSeleccionar": "To continue, select a company and a workstation.",
-            "incorrecto": "Incorrect username or password"
+            "incorrecto": "Incorrect username or password",
+            "error": "The process of connecting to the service could not be completed. Please try again later.",
+            "configuracion": "No companies or workstations were found for the user: "
+        },
+        "botones": {
+            "aceptar": "Accept",
+            "cancelar": "Cancel",
+            "regresar": "Go back",
+            "continuar": "Continue",
+            "ajustes": "Settings",
+            "cerrar": "Close",
+            "cambiar": "Change",
+            "guardar": "Save",
+            "informe": "View report",
+            "salir": "Log out"
+        },
+        "error": {
+            "informe": "Informe de error",
+            "usuario": "Usuario",
+            "fecha": "Fecha",
+            "documento": "Documento",
+            "serie": "Serie documento",
+            "empresa": "Empresa",
+            "estacion": "Estación de trabajo",
+            "servicio": "Servicio origen",
+            "origen": "DB Origen",
+            "descripcion": "Descripcion"
         }
     }
 }

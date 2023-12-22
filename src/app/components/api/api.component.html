@@ -7,19 +7,19 @@
                 <p class="titulo">{{ 'pos.url.url' | translate }}</p>
                 <span class="spacer"></span>
             </div>
-    
+
             <div class="cambios-cerrar" *ngIf="urlStorage">
                 <span class="spacer"></span>
                 <p class="titulo">{{ 'pos.url.actual' | translate }}</p>
                 <span class="spacer"></span>
             </div>
-    
+
             <div class="cambios-cerrar" *ngIf="!urlStorage">
                 <span class="spacer"></span>
                 <p class="titulo">{{ 'pos.url.ingresar' | translate }}</p>
                 <span class="spacer"></span>
             </div>
-    
+
             <div class="cambios-cerrar" *ngIf="urlStorage">
                 <span class="spacer"></span>
                 <p class="url">{{ urlStorage }}</p>
@@ -28,11 +28,11 @@
                     <mat-icon>content_copy</mat-icon>
                 </button>
                 <span class="spacer"></span>
-    
+
             </div>
-    
+
             <form #urlForm="ngForm" (ngSubmit)="save()">
-    
+
                 <div class="contenido">
                     <div class="titulos-menu">
                         <div class="detalles">
@@ -44,19 +44,21 @@
                 </div>
                 <div class="cambios-cerrar" *ngIf="!urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button type="submit">{{'pos.ajustes.continuar' | translate}}</button>
+                    <button mat-stroked-button type="submit">{{'pos.botones.continuar' | translate}}</button>
                     <span class="spacer"></span>
                 </div>
-    
+
                 <div class="cambios-cerrar" *ngIf="urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button (click)="regresar()" type="button">{{'pos.ajustes.cancelar' | translate}}</button>
+                    <button mat-stroked-button (click)="regresar()" type="button">{{'pos.botones.cancelar' |
+                        translate}}</button>
                     <span class="spacer"></span>
-                    <button mat-stroked-button type="submit">{{'pos.ajustes.cambiar' | translate}}</button>
+                    <button mat-stroked-button type="submit" (click)="cambiar()">{{'pos.botones.cambiar' |
+                        translate}}</button>
                     <span class="spacer"></span>
                 </div>
             </form>
-    
+
         </div>
     </div>
     <!-- Mostrar logos -->

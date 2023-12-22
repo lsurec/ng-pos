@@ -166,18 +166,18 @@
         <!-- botones detalle usuario, ajustes y salir -->
         <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
             <!-- Ver informacion del usuario -->
-            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.ajustes.ajustes' | translate">
+            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.boton.ajustes' | translate">
                 <mat-icon>settings</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- Salir o cerrar sesion -->
-            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.home.salir' | translate">
+            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.boton.salir' | translate">
                 <mat-icon>logout</mat-icon>
             </button>
         </mat-toolbar>
         <!-- boton regresar a detalle usuario -->
         <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.ajustes.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.boton.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>
@@ -189,7 +189,7 @@
         </mat-toolbar>
         <!-- Regresar tema -->
         <mat-toolbar class="backColorNavBar" *ngIf="temas">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.ajustes.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.boton.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>

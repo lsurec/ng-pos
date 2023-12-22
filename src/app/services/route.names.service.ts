@@ -13,6 +13,7 @@ export class RouteNamesService {
   static readonly LOCAL_CONFIG = 'local-config';
   static readonly API = 'api';
   static readonly NOT_FOUND = 'not-found';
+  static readonly ERROR = 'error';
 
   // Agrega más nombres de rutas según sea necesario
 

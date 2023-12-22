@@ -19,14 +19,7 @@
         },
         "ajustes": {
             "ajustesT": "AJUSTES",
-            "idiomaT": "IDIOMA DE LA APLICACION",
-            "aceptar": "Aceptar",
-            "cancelar": "Cancelar",
-            "regresar": "Regresar",
-            "continuar": "Continuar",
-            "ajustes": "Ajustes",
-            "cerrar": "Cerrar",
-            "cambiar": "Cambiar"
+            "idiomaT": "IDIOMA DE LA APLICACION"
         },
         "preferencias": {
             "tema": "TEMA DE LA APLICACIÓN",
@@ -42,7 +35,6 @@
             "registros": "Registros",
             "empresa": "Empresa",
             "localidad": "Localidad",
-            "guardar": "Guardar",
             "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar."
         },
         "toolTip": {
@@ -60,7 +52,33 @@
             "salioMal": "Algo salió mal, inténtelo de nuevo",
             "completar": "Por favor completa todos los campos para continuar.",
             "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo",
-            "incorrecto": "Usuario o contraseña incorrectos"
+            "incorrecto": "Usuario o contraseña incorrectos",
+            "error": "No se pudo completar el proceso de conexión al servicio. por favor, inténtalo de nuevo más tarde. ",
+            "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: "
+        },
+        "botones": {
+            "aceptar": "Aceptar",
+            "cancelar": "Cancelar",
+            "regresar": "Regresar",
+            "continuar": "Continuar",
+            "ajustes": "Ajustes",
+            "cerrar": "Cerrar",
+            "cambiar": "Cambiar",
+            "guardar": "Guardar",
+            "informe": "Ver informe",
+            "salir": "Cerrar sesion"
+        },
+        "error": {
+            "informe": "Informe de error",
+            "usuario": "Usuario",
+            "fecha": "Fecha",
+            "documento": "Documento",
+            "serie": "Serie documento",
+            "empresa": "Empresa",
+            "estacion": "Estación de trabajo",
+            "servicio": "Servicio origen",
+            "origen": "DB Origen",
+            "descripcion": "Descripcion"
         }
     }
 }
