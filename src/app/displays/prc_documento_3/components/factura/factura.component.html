@@ -1,0 +1,150 @@
+<mat-toolbar-row class="head__sidenav">
+    <button (click)="backPage()" mat-icon-button aria-label matTooltip="regresar">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button aria-label matTooltip="actualizar">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <!-- Titulo de la tarea -->
+    <p class="titulo">Facturas</p>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label matTooltip="recientes">
+        <mat-icon>schedule</mat-icon>
+    </button>
+    <button mat-icon-button aria-label matTooltip="nuevo">
+        <mat-icon>note_add</mat-icon>
+    </button>
+    <button mat-icon-button aria-label matTooltip="nuevo">
+        <mat-icon>print</mat-icon>
+    </button>
+</mat-toolbar-row>
+<!-- <div class="menu-izquierdo">
+        <div class="tipo-vista" (click)="vistaDocumento()"
+            [ngClass]="{'vista-seleccionada': documento, 'tipo-vista': !documento}">
+            <p>Documento</p>
+        </div>
+        <div class="tipo-vista" (click)="vistaDetalle()"
+            [ngClass]="{'vista-seleccionada': detalle, 'tipo-vista': !detalle}">
+            <p>Detalle</p>
+        </div>
+        <div class="tipo-vista" (click)="vistaPago()" [ngClass]="{'vista-seleccionada': pago, 'tipo-vista': !pago}">
+            <p>Pago</p>
+        </div>
+    </div> -->
+
+<div class="dFlex">
+    <div class="tipo-vista" (click)="vistaDocumento()"
+        [ngClass]="{'vista-seleccionada': documento, 'tipo-vista': !documento}">
+        <p>Documento</p>
+    </div>
+    <div class="tipo-vista" (click)="vistaDetalle()"
+        [ngClass]="{'vista-seleccionada': detalle, 'tipo-vista': !detalle}">
+        <p>Detalle</p>
+    </div>
+    <div class="tipo-vista" (click)="vistaPago()" [ngClass]="{'vista-seleccionada': pago, 'tipo-vista': !pago}">
+        <p>Pago</p>
+    </div>
+</div>
+<div class="container-main">
+    <!-- VISTA DE DOCUMENTO -->
+    <div class="" *ngIf="documento">
+        <div class="informacion">
+            <p class="subtitulo">Serie</p>
+            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
+                <mat-option *ngFor="let serie of series" [value]="serie">
+                    {{serie}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="buscar-cliente">
+            <p class="subtitulo">Cliente</p>
+
+            <div class="d-flex">
+                <button mat-button>
+                    Nueva cuenta
+                    <mat-icon>person_add</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <button mat-button>
+                    Buscar cuenta
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="informacion">
+            <div class="d-flex">
+                <p class="subtitulo">C/F</p>
+                <span class="spacer"></span>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        (change)="toggleSwitch()">
+                </div>
+            </div>
+        </div>
+
+        <div class="informacion" *ngIf="switchState">
+            <p class="titulo">Información del cliente.</p>
+            <p class="detalles">C/F</p>
+            <p class="detalles">CONSUMIDOR FINAL</p>
+            <p class="detalles">CIUDAD</p>
+        </div>
+
+        <div class="informacion">
+            <p class="subtitulo">Vendedor</p>
+            <mat-select name="estado" class="seleccionar" placeholder="VENDEDOR" [(ngModel)]="vendedor">
+                <mat-option *ngFor="let vendedor of vendedores" [value]="vendedor">
+                    {{vendedor}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <!-- VISTA DE DETALLE-->
+    <div class="" *ngIf="detalle">
+
+        <div class="informacion">
+            <form #searchForm="ngForm" (ngSubmit)="buscarProducto()" class="inputSearch">
+                <div class="input-container">
+                    <button class="iconoLupa" mat-icon-button>
+                        <mat-icon>search</mat-icon> </button>
+                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
+                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                </div>
+                <div class="tipo-busqueda">
+                    <p class="buscar-opcion">{{ 'crm.home.buscar' | translate }}</p>
+                    <div class="buscar">
+                        <div *ngFor="let option of filtrosBusqueda">
+                            <div class="chip" [class.selected]="option.id === selectedOption"
+                                (click)="onOptionChange(option.id)">{{ option.nombre }}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="coincidencias">{{'crm.home.registros' | translate}}
+                        12</p>
+                </div>
+            </form>
+        </div>
+
+        <!-- <div class="informacion">
+                <div class="dFlex">
+                    <p class="subtitulo">Filtros</p>
+                    <span class="spacer"></span>
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button color="primary" value="1">SKU</mat-radio-button>
+                        <mat-radio-button color="primary" value="2">Descripcion</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="buscar-clientes">
+                <button mat-button>Buscar Producto
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div> -->
+    </div>
+</div>
+<!-- Mostrar logos -->
+<!-- <app-barra-logos></app-barra-logos> -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>
