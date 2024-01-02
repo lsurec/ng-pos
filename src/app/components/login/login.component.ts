@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { UserInterface } from 'src/app/interfaces/user.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
-import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { completar, incorrecto, ok, salioMal } from 'src/app/providers/mensajes.provider';
+import { UserInterface } from 'src/app/interfaces/user.interface';
+import { DataUserService } from 'src/app/services/data-user.service';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
-import { MensajesService } from 'src/app/services/mensajes.service';
-import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
-import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-login',

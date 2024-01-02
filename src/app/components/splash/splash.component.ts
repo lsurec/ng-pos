@@ -65,8 +65,6 @@ export class SplashComponent {
       return;
     }
 
-
-
     // //Consumo de servicios
     // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
     // //Si el servico se ejecuta mal mostar mensaje
