@@ -1,0 +1,560 @@
+$color-negro          : #000; //texto negro
+$color-azul           : #134895; //bordes y texto azul
+$color-blanco         : #fff; //resaltar texto blanco
+$color-gris           : #666666; //texto gris
+$color-gris-s         : #777; //sombra y texto gris
+$font-serif           : sans-serif; //fuente del texto
+$background-options   : #fff; //fondo blanco
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra rosada
+$background-botones   : #134895; //resaltar botones azul
+$background-transparent: transparent; //fondo transparennte, 
+
+//Pantalla de carga centrada
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $background-oficial;
+}
+
+/*SideNav*/
+.icon_close_head {
+    cursor: pointer;
+}
+
+.head_carr_end {
+    color      : $color-negro;
+    font-weight: 300;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+mat-sidenav {
+    width           : 365px;
+    background-color: $background-oficial;
+
+}
+
+@media screen and (max-width: 365px) {
+    mat-sidenav {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-sidenav {
+        width: 100%;
+    }
+
+    .contenedorModulo {
+        width: 100% !important;
+    }
+
+}
+
+.sidenav_container {
+    display         : flex;
+    flex-direction  : column;
+    position        : absolute;
+    top             : 0;
+    bottom          : 0;
+    left            : 0;
+    right           : 0;
+    background-color: $background-oficial;
+}
+
+/*Fin SideNav*/
+
+/*Toolbar*/
+
+.icon_toolbar {
+    font-size       : 22px;
+    background-color: $background-oficial;
+}
+
+.toolbarPhone {
+    display: none;
+}
+
+.toolbarPhone,
+.toolbarlarge {
+    // position        : fixed !important;
+    background-color: $background-oficial;
+    border-bottom   : 1px solid rgba(0, 0, 0, .12);
+}
+
+@media screen and (max-width: 767px) {
+    .toolbarlarge {
+        display         : none !important;
+        background-color: $background-oficial;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+    }
+}
+
+/*Fin Toolbar*/
+
+/*Contendo derecho*/
+
+.container_main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.container_main::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.horarioLaboral::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.toolbarNavScreenShort::-webkit-scrollbar {
+    width           : 5px;
+    background-color: $background-transparent;
+    height          : 5px;
+}
+
+.toolbarNavScreenShort::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.toolbarNavScreenShort::-webkit-scrollbar-thumb {
+    background-color: $background-transparent;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.container_page {
+    height             : calc(100% - 128px);
+    width              : 100vw;
+    // margin-top      : 65px;
+    position           : fixed;
+    background-color   : $background-oficial;
+}
+
+/* Contenedor del menu modulos */
+.container_start {
+    border-right: 1px solid rgba(0, 0, 0, .12);
+    width       : 180px;
+    height      : calc(100% - 40px);
+    float       : left;
+    /* Coloca el nombre del modulo en una sola linea */
+    overflow-y  : auto;
+    /* desabilita el scroll horizontal */
+    overflow-x  : hidden;
+}
+
+/* inicia Diseño de scroll modulos*/
+.container_start::-webkit-scrollbar {
+    width           : 6px;
+    height          : 0px;
+    background-color: #F5F5F5;
+}
+
+.container_start::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px #ececece6;
+    border-radius     : 10px;
+    background-color  : transparent;
+}
+
+.container_start::-webkit-scrollbar-thumb {
+    border-radius   : 4px;
+    background-color: #134895;
+    height          : 10%;
+}
+
+/* termina Diseño de scroll modulos*/
+
+.container_main {
+    padding-left : 15px;
+    padding-right: 15px;
+    width        : calc(100% - 180px);
+    height       : calc(100% - 40px);
+    float        : left;
+    overflow     : auto;
+}
+
+@media screen and (max-width: 767px) {
+    .container_start {
+        display: none;
+    }
+
+    .container_main {
+        width     : 100%;
+        /* padding: 20px; */
+    }
+}
+
+.head__sidenav {
+    height          : 44px !important;
+    background-color: $background-oficial;
+    padding         : 0px;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.head__sidenav_horaFinal {
+    height          : 88px !important;
+    background-color: $background-oficial;
+}
+
+/*Fin Contendo derecho*/
+
+label {
+    font-size     : 0.75em;
+    font-weight   : 700;
+    text-transform: uppercase;
+}
+
+.vistas {
+    text-align : center;
+    margin-left: 0px;
+}
+
+.vista {
+    width           : 100%;
+    height          : 35px;
+    border          : none;
+    background-color: $background-transparent;
+    text-align      : justify;
+    padding-left    : 15px;
+    font-size       : 14px;
+    cursor          : pointer;
+}
+
+.vistaAjustes {
+    width           : 100%;
+    border          : none;
+    background-color: $background-transparent;
+    text-align      : justify;
+    padding         : 5px 0px;
+    font-size       : 14px;
+    cursor          : pointer;
+}
+
+.cambiarTema {
+
+    width           : 100%;
+    border          : none;
+    background-color: $background-transparent;
+    text-align      : justify;
+    padding         : 5px 0px;
+    font-size       : 14px;
+    cursor          : pointer;
+
+}
+
+.seleccinarTema {
+    display    : flex;
+    align-items: center;
+    font-size  : 13px;
+    margin     : 0px 30px;
+}
+
+.ajustesMenu {
+    font-size      : 14px;
+    font-weight    : bold;
+    display        : flex;
+    justify-content: center;
+    padding        : 0px;
+}
+
+.nombresAjustes {
+    width       : calc(100% - 50px);
+    margin-right: 50px;
+}
+
+.seleccionado,
+.vista:hover,
+.vistaAjustes:hover {
+    background-color: $background-botones;
+    color           : $color-blanco !important;
+    border-left     : 5px solid #DF9722 !important;
+}
+
+// detalles de usuario
+.backColorNavBar {
+    background: #FEF5E7;
+    color     : #000000;
+    height    : 40px !important;
+    padding   : 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.horasNavBar {
+    background: #FEF5E7;
+    color     : #000000;
+    height    : 40px !important;
+    position  : absolute;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.listaHoras {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+}
+
+.ajustes,
+.lenguajes,
+.horarioLaboral {
+    background-color: $background-oficial;
+    height          : calc(100% - 89px) !important;
+    padding         : 0px;
+    overflow        : auto;
+}
+
+.temaOscuro {
+    display: flex;
+    padding: 10px;
+}
+
+.desc-tema {
+    padding-right: 10px;
+    width        : calc(100% - 40px);
+}
+
+.ico-tema {
+    margin: 10px;
+}
+
+.detallesUsuario {
+    background-color   : $background-oficial;
+    height             : calc(100% - 89px);
+    // display         : none;
+}
+
+.primerDia {
+    background-color: $background-oficial;
+    height          : calc(100% - 89px);
+}
+
+.dias {
+    padding: 20px;
+}
+
+.horas {
+    height: calc(100% - 88px) !important;
+
+}
+
+//detalles del usuario
+
+.circular-image {
+    margin-top   : 10px;
+    width        : 100px;
+    /* Ajusta el ancho deseado */
+    height       : 100px;
+    /* Ajusta el alto deseado */
+    border-radius: 50%;
+    /* Establece el radio de borde en 50% para hacerlo circular */
+    overflow     : hidden;
+    /* Oculta cualquier contenido que se desborde del área circular */
+}
+
+.circular-usuario {
+    background-color: $color-gris-s;
+    margin-top      : 10px;
+    width           : 100px;
+    /* Ajusta el ancho deseado */
+    height          : 100px;
+    /* Ajusta el alto deseado */
+    border-radius   : 50%;
+    /* Establece el radio de borde en 50% para hacerlo circular */
+    overflow        : hidden;
+    /* Oculta cualquier contenido que se desborde del área circular */
+}
+
+p {
+    margin: 0px;
+}
+
+.inicial-usuario {
+    padding       : 25%;
+    text-align    : center;
+    color         : $color-blanco;
+    font-size     : 35px;
+    // font-weight: bold;
+}
+
+/* Estilo adicional opcional para centrar la imagen dentro del contenedor circular */
+.circular-image img {
+    display   : block;
+    margin    : 0 auto;
+    max-width : 100%;
+    max-height: 100%;
+}
+
+.userName {
+    font-size      : 17px;
+    font-weight    : bold;
+    padding        : 5px 0px;
+    display        : flex;
+    justify-content: center;
+    margin         : 0px;
+}
+
+.userEmail {
+    font-size: 15px;
+}
+
+.textEncabezado {
+    display        : flex;
+    justify-content: center;
+    padding        : 0px;
+    margin-bottom  : 0px !important;
+}
+
+h2 {
+    margin-bottom: 0px;
+}
+
+.pTitulo {
+    font-weight  : bold;
+    font-size    : 11px;
+    margin-bottom: 0px;
+    margin-left  : 30px;
+    margin-right : 30px;
+}
+
+.pDescripcion {
+    font-size       : 13px;
+    margin-left     : 30px;
+    margin-right    : 30px;
+    margin-top      : 0px;
+    margin-bottom   : 2px;
+    /* border-bottom: 0.8px solid #c4c4c4; */
+}
+
+.descripcion-tema {
+    font-size: 14px;
+}
+
+.titulo-tema {
+    font-weight: bold;
+    font-size  : 14px;
+}
+
+.separador {
+    margin-top   : 0px;
+    border-bottom: 0.8px solid #c4c4c4 !important;
+    margin-bottom: 0px;
+    width        : 100%;
+}
+
+//Primer dia de la semana
+.example-radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+    font-size     : 12px;
+}
+
+.example-radio-button {
+    margin      : 5px 0px;
+    padding-left: 15px;
+    color       : #134895;
+}
+
+.radio-button {
+    font-size: 12px;
+}
+
+//Nuevo Menu
+
+.itemMenuSelect {
+    cursor: pointer;
+}
+
+.itemMenuSelect:hover {
+    position: static !important;
+    cursor  : pointer !important;
+}
+
+/* icono menu disponible */
+
+.contenedorModulo {
+    width          : 100%;
+    align-items    : center !important;
+    justify-content: space-between;
+    border-bottom  : 0.8px solid #c4c4c4;
+    font-size      : 14px;
+    min-height     : 40px;
+    display        : flex;
+    padding-left   : 10px;
+}
+
+.mat-iconmenu {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}
+
+/* Estilo de contenedor de navegacion de rutas */
+.toolbarNavegacion {
+    background-color   : #f0f0f0;
+    // padding-top     : 70px;
+    color              : #969696;
+    cursor             : pointer;
+    height             : 40px;
+    padding-left       : 10px;
+
+}
+
+.itemRouteActive:hover {
+    color : #134895;
+    cursor: pointer;
+}
+
+.itemRouteActive {
+    color: #134895;
+}
+
+.toolbarNavScreenShort {
+    background-color: #f0f0f0;
+    height          : auto;
+    padding-left    : 5px;
+    overflow-x      : auto;
+}
+
+.containerMenuSshort {
+    // width     : 360px !important;
+    height     : 40px;
+    overflow-x : none !important;
+    align-items: center;
+}
+
+.rutasMenuPeque {
+    font-size: 14px;
+    display  : flex;
+}
+
+.rutasMenuPeque:hover {
+    cursor: pointer;
+    color : $color-azul !important;
+}
