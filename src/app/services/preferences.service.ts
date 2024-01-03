@@ -19,6 +19,12 @@ export class PreferencesService {
     private static conStoragekey = 'conStorageStr';
 
 
+   static closeSession(){
+        localStorage.removeItem(PreferencesService.tokenStorageKey);
+        sessionStorage.removeItem(PreferencesService.tokenKey);
+
+    }
+
     //lenguaje
     @Input()
     static set lang(value: string) {

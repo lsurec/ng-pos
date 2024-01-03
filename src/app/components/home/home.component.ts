@@ -17,6 +17,7 @@ import { EventService } from 'src/app/services/event.service';
 import { MensajesService } from 'src/app/services/mensajes.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
@@ -218,19 +219,12 @@ export class HomeComponent {
     );
 
     if (!verificador) return;
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
+    
+    PreferencesService.closeSession();
 
     //Regresar a Login
-    this._router.navigate(["/login"]);
+    this._router.navigate([RouteNamesService.LOGIN]);
 
-    //Limpiar storage del navegador
-    // localStorage.clear();
-    // sessionStorage.clear();
   };
 
   // Funcion para llamar datos para el menu (Application y Display)
