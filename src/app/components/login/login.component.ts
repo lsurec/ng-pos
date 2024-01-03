@@ -7,6 +7,7 @@ import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { UserInterface } from 'src/app/interfaces/user.interface';
 import { DataUserService } from 'src/app/services/data-user.service';
+import { EncryptService } from 'src/app/services/encrypt.service';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
@@ -20,6 +21,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
   providers: [
     LoginService,
     LocalSettingsService,
+    EncryptService,
   ]
 })
 export class LoginComponent {
@@ -31,21 +33,16 @@ export class LoginComponent {
   saveMyData: boolean = false; //guardar infomacion
   mostrarTexto: boolean = false; //ver clave
 
-
-  //empresas y estaciones
-  empresas: EmpresaInterface[] = [];
-  estaciones: EstacionInterface[] = [];
-
   constructor(
     private translate: TranslateService,
     private _loginService: LoginService,
     private _widgetsService: WidgetsService,
     private _localSettingsService: LocalSettingsService,
     private _router: Router,
-    private _dataUserService: DataUserService,
+    private _encryptService: EncryptService,
 
   ) {
-   
+
   }
 
 
@@ -83,6 +80,7 @@ export class LoginComponent {
     //si algo esta incorrecto mostrar mensaje
 
     if (!resLogin.success) {
+
       this.isLoading = false;
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'), this.translate.instant('pos.alertas.ok'));
       return;
@@ -90,22 +88,17 @@ export class LoginComponent {
 
     //verificar si se guarda a informacion del usuario
     if (this.saveMyData) {
-      //sesion permanente
-      PreferencesService.token = resLogin.message;
-      //guardar el usuario
-      PreferencesService.user = resLogin.user;
-      this._dataUserService.token = resLogin.message;
-      this._dataUserService.user = resLogin.user;
+      PreferencesService.tokenStorage = resLogin.message;
+      PreferencesService.userStorage = resLogin.user;
+      PreferencesService.conStorageStr = this._encryptService.encrypt(resLogin.con)
     }
-    else {
-      //sesion no permanente
-      this._dataUserService.token = resLogin.message;
-      this._dataUserService.user = resLogin.user;
-    };
 
+    PreferencesService.token = resLogin.message;
+    PreferencesService.user = resLogin.user;
+    PreferencesService.conStr = this._encryptService.encrypt(resLogin.con)
 
-    let user = this._dataUserService.user;
-    let token = this._dataUserService.token;
+    let user = PreferencesService.user;
+    let token = PreferencesService.token;
 
     // //Consumo de servicios
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
@@ -120,9 +113,13 @@ export class LoginComponent {
       return;
     }
 
-    
+    //empresas y estaciones
+    let empresas: EmpresaInterface[] = [];
+    let estaciones: EstacionInterface[] = [];
+
+
     //Guardar Emoresas obtenidas
-    this.empresas = resEmpresas.response;
+    empresas = resEmpresas.response;
 
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
@@ -138,22 +135,17 @@ export class LoginComponent {
       return;
     }
 
-    this.estaciones = resEstacion.response;
+    estaciones = resEstacion.response;
 
-    if(this.estaciones.length == 0 || this.empresas.length == 0){
+    if (estaciones.length == 0 || empresas.length == 0) {
+      //TODO:translate
       this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
       return;
     }
 
-      this._dataUserService.empresas = this.empresas;
-      this._dataUserService.estaciones = this.estaciones;
-
-      this._dataUserService.estaciones.push(this.estaciones[0]);
-
-
-    if (this.empresas.length == 1 && this.estaciones.length == 1) {
-      this._dataUserService.selectedEmpresa = this.empresas[0];
-      this._dataUserService.selectedEstacion = this.estaciones[0];
+    if (empresas.length == 1 && estaciones.length == 1) {
+      PreferencesService.empresa = empresas[0];
+      PreferencesService.estacion = estaciones[0];
 
       this._router.navigate([RouteNamesService.HOME]);
       return;
@@ -161,8 +153,6 @@ export class LoginComponent {
 
     this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-   
-    
   };
   //Permanencia de la sesión
   rememberMe(): void {

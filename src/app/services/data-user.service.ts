@@ -7,13 +7,7 @@ import { EstacionInterface } from '../interfaces/estacion.interface';
   providedIn: 'root',
 })
 export class DataUserService {
-  // Define tus datos o funcionalidades aquí
-  token = "";
-  user = "";
-  empresas: EmpresaInterface[] = [];
-  estaciones: EstacionInterface[] = [];
-  selectedEmpresa?:EmpresaInterface;
-  selectedEstacion?:EstacionInterface;
+
 
 
   constructor() {}

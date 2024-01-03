@@ -50,24 +50,11 @@ export class LocalConfigComponent {
 
 
   ) {
-    if (dataUserService.estaciones.length == 1) {
-
-      this.estacionSelect = dataUserService.estaciones[0];
-
-    }
-
-    if (dataUserService.empresas.length == 1) {
-
-      this.empresaSelect = dataUserService.empresas[0]
-
-    }
-
+   
   }
 
   saveSettings() {
-    console.log(this.dataUserService.token);
     
-    console.log(this.dataUserService.estaciones);
     
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
@@ -76,8 +63,8 @@ export class LocalConfigComponent {
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    this.dataUserService.selectedEmpresa = this.empresaSelect;
-    this.dataUserService.selectedEstacion = this.estacionSelect;
+    // this.dataUserService.selectedEmpresa = this.empresaSelect;
+    // this.dataUserService.selectedEstacion = this.estacionSelect;
     this._router.navigate([RouteNamesService.HOME]);
   }
 

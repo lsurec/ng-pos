@@ -1,4 +1,6 @@
 import { Injectable, Input } from "@angular/core";
+import { EmpresaInterface } from "../interfaces/empresa.interface";
+import { EstacionInterface } from "../interfaces/estacion.interface";
 
 @Injectable()
 export class PreferencesService {
@@ -16,6 +18,8 @@ export class PreferencesService {
     private static conKey = 'conStr';
     private static conStoragekey = 'conStorageStr';
 
+
+    //lenguaje
     @Input()
     static set lang(value: string) {
         localStorage.setItem(this.languageKey, value);
@@ -27,6 +31,7 @@ export class PreferencesService {
         return value;
     }
 
+    //token permanente
     @Input()
     static set tokenStorage(value: string) {
         localStorage.setItem(this.tokenStorageKey, value);
@@ -38,6 +43,7 @@ export class PreferencesService {
         return value;
     }
 
+    //token de la secion
     @Input()
     static set token(value: string) {
         localStorage.setItem(this.tokenKey, value);
@@ -74,25 +80,23 @@ export class PreferencesService {
 
 
     @Input()
-    static set empresa(value: string) {
-        sessionStorage.setItem(this.empresaKey, value);
+    static set empresa(value: EmpresaInterface) {
+        sessionStorage.setItem(this.empresaKey, JSON.stringify(value));
     }
 
-    static get empresa(): string {
+    static get empresa(): EmpresaInterface {
         let value = sessionStorage.getItem(this.empresaKey);
-        if (!value) return "";
-        return value;
+        return JSON.parse(value!);
     }
 
     @Input()
-    static set estacion(value: string) {
-        sessionStorage.setItem(this.estacionKey, value);
+    static set estacion(value: EstacionInterface) {
+        sessionStorage.setItem(this.estacionKey, JSON.stringify(value));
     }
 
-    static get estacion(): string {
+    static get estacion(): EstacionInterface {
         let value = sessionStorage.getItem(this.estacionKey);
-        if (!value) return "";
-        return value;
+        return JSON.parse(value!);
     }
 
     @Input()

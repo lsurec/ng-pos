@@ -84,7 +84,7 @@ import { DataUserService } from './services/data-user.service';
     routing,
   ],
   providers: [
-    DataUserService,
+    // DataUserService,
   ],
   bootstrap: [AppComponent]
 })
