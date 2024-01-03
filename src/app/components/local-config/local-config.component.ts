@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
@@ -22,17 +22,23 @@ import { DataUserService } from 'src/app/services/data-user.service';
   providers: [
     //inyeccion de servicios
     LocalSettingsService,
-    WidgetsService
+    WidgetsService,
+    LocalSettingsService,
   ]
 })
-export class LocalConfigComponent {
+export class LocalConfigComponent implements OnInit{
   //Declaracion de variables
   nonSelect: string = ''; //frase que indica que no se ha seleccionado empresa o estacion
   isLoading: boolean = false; //pantalla de carga
 
+  //empresas y estaciones
+  empresas: EmpresaInterface[] = [];
+  estaciones: EstacionInterface[] = [];
+
   //empresa seleccionada y estacion seleccionada
   empresaSelect?: EmpresaInterface;
   estacionSelect?: EstacionInterface;
+
 
   regresar: boolean = true;
 
@@ -46,16 +52,69 @@ export class LocalConfigComponent {
     private _eventService: EventService,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
-    public dataUserService: DataUserService,
+    private _localSettingsService:LocalSettingsService,
 
 
   ) {
-   
+
+  }
+  ngOnInit(): void {
+    this.loadData();
   }
 
+  async loadData(){
+    let user = PreferencesService.user;
+    let token = PreferencesService.token;
+
+
+    this.isLoading = true;
+    // //Consumo de servicios
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEmpresas.status) {
+      //TODO: Error view
+      this.isLoading = false;
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
+
+      return;
+    }
+
+
+    //Guardar Emoresas obtenidas
+    this.empresas = resEmpresas.response;
+
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
+
+    this.isLoading = false;
+
+    if (!resEstacion.status) {
+      //TODO: Error view
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
+
+      return;
+    }
+
+    this.estaciones = resEstacion.response;
+    
+    
+    if(this.estaciones.length == 1){
+      this.estacionSelect = this.estaciones[0];
+    }
+
+    if(this.empresas.length == 1){
+      this.empresaSelect = this.empresas[0];
+    }
+
+  }
+
+
   saveSettings() {
-    
-    
+
+
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));

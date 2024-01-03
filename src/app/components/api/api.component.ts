@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ClipboardService } from 'src/app/services/clipboard.service';
 import { HelloService } from 'src/app/services/hello.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
@@ -24,12 +25,17 @@ export class ApiComponent {
     private _widgetsService: WidgetsService,
     private _helloService: HelloService,
     private translate: TranslateService,
+    private _clipboardService: ClipboardService
   ) {
   }
 
 
   regresar() {
     this._router.navigate([RouteNamesService.LOGIN]);
+  }
+
+  copyToClipboard(){
+    this._clipboardService.copyToClipboard(PreferencesService.baseUrl);
   }
 
 

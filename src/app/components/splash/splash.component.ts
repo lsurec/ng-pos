@@ -65,46 +65,7 @@ export class SplashComponent {
       return;
     }
 
-    // //Consumo de servicios
-    // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEmpresas.status) {
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEmpresas.response);
-    //   console.error(resEmpresas.storeProcedure);
-    //   //si algo sale mal ira a la pantalla de no encontrado
-    //   this._router.navigate(['/notFound']);
-    //   return
-    // };
-
-    // //Guardar Empresas obtenidas
-    // this.empresas = resEmpresas.response;
-
-    // //Consumo de api
-    // let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEstaciones.status) {
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEstaciones.response);
-    //   console.error(resEstaciones.storeProcedure);
-    //   //si algo sale mal ira a la pantalla de no encontrado
-    //   this._router.navigate(['/notFound']);
-    //   return
-    // };
-
-    // //Guardar Estaciones obtenidas
-    // this.estaciones = resEstaciones.response;
-    // // this.estaciones.push(this.estaciones[0]);
-
-    // //Si las listas tienen mas de un elemento mostrar pantalla de configuracion local
-    // if (this.empresas.length > 1 || this.estaciones.length > 1) {
-    //   //mostrar listas con propiedades
-    //   this._shared.empresas = this.empresas;
-    //   this._shared.estaciones = this.estaciones;
-    //   this._router.navigate(['/station']);
-    //   return;
-    // }
-
+    this._router.navigate([RouteNamesService.LOGIN]);
 
 
   }
