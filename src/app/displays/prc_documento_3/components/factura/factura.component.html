@@ -19,131 +19,54 @@
         <mat-icon>print</mat-icon>
     </button>
 </mat-toolbar-row>
-<!-- <div class="menu-izquierdo">
-        <div class="tipo-vista" (click)="vistaDocumento()"
-            [ngClass]="{'vista-seleccionada': documento, 'tipo-vista': !documento}">
-            <p>Documento</p>
-        </div>
-        <div class="tipo-vista" (click)="vistaDetalle()"
-            [ngClass]="{'vista-seleccionada': detalle, 'tipo-vista': !detalle}">
-            <p>Detalle</p>
-        </div>
-        <div class="tipo-vista" (click)="vistaPago()" [ngClass]="{'vista-seleccionada': pago, 'tipo-vista': !pago}">
-            <p>Pago</p>
-        </div>
-    </div> -->
 
-<div class="dFlex">
-    <div class="tipo-vista" (click)="vistaDocumento()"
-        [ngClass]="{'vista-seleccionada': documento, 'tipo-vista': !documento}">
-        <p>Documento</p>
-    </div>
-    <div class="tipo-vista" (click)="vistaDetalle()"
-        [ngClass]="{'vista-seleccionada': detalle, 'tipo-vista': !detalle}">
-        <p>Detalle</p>
-    </div>
-    <div class="tipo-vista" (click)="vistaPago()" [ngClass]="{'vista-seleccionada': pago, 'tipo-vista': !pago}">
-        <p>Pago</p>
-    </div>
-</div>
 <div class="container-main">
-    <!-- VISTA DE DOCUMENTO -->
-    <div class="" *ngIf="documento">
-        <div class="informacion">
-            <p class="subtitulo">Serie</p>
-            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
-                <mat-option *ngFor="let serie of series" [value]="serie">
-                    {{serie}}
-                </mat-option>
-            </mat-select>
-        </div>
 
-        <div class="buscar-cliente">
-            <p class="subtitulo">Cliente</p>
+    <!--Tabs-->
+    <input id="tab1" type="radio" name="tabs" checked>
+    <label for="tab1" matTooltip="Documento" (click)="tabAcitve = 'document'">Documento</label>
 
-            <div class="d-flex">
-                <button mat-button>
-                    Nueva cuenta
-                    <mat-icon>person_add</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <button mat-button>
-                    Buscar cuenta
-                    <mat-icon>search</mat-icon>
-                </button>
-            </div>
-        </div>
+    <input id="tab2" type="radio" name="tabs">
+    <label for="tab2" matTooltip="Transaccion" (click)="tabAcitve = 'transaction'">Transaccion</label>
 
-        <div class="informacion">
-            <div class="d-flex">
-                <p class="subtitulo">C/F</p>
-                <span class="spacer"></span>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                        (change)="toggleSwitch()">
-                </div>
-            </div>
-        </div>
+    <input id="tab3" type="radio" name="tabs">
+    <label for="tab3" matTooltip="Forma de Pago" (click)="tabAcitve = 'payment'">Forma de Pago</label>
 
-        <div class="informacion" *ngIf="switchState">
-            <p class="titulo">Información del cliente.</p>
-            <p class="detalles">C/F</p>
-            <p class="detalles">CONSUMIDOR FINAL</p>
-            <p class="detalles">CIUDAD</p>
-        </div>
+    <input id="tab4" type="radio" name="tabs">
+    <label for="tab4" matTooltip="Elemento Asiganado" (click)="tabAcitve = 'element'">Elemento Asignado</label>
 
-        <div class="informacion">
-            <p class="subtitulo">Vendedor</p>
-            <mat-select name="estado" class="seleccionar" placeholder="VENDEDOR" [(ngModel)]="vendedor">
-                <mat-option *ngFor="let vendedor of vendedores" [value]="vendedor">
-                    {{vendedor}}
-                </mat-option>
-            </mat-select>
-        </div>
-    </div>
-    <!-- VISTA DE DETALLE-->
-    <div class="" *ngIf="detalle">
+    <input id="tab5" type="radio" name="tabs">
+    <label for="tab5" matTooltip="Referencia" (click)="tabAcitve = 'reference'"> Referencia</label>
 
-        <div class="informacion">
-            <form #searchForm="ngForm" (ngSubmit)="buscarProducto()" class="inputSearch">
-                <div class="input-container">
-                    <button class="iconoLupa" mat-icon-button>
-                        <mat-icon>search</mat-icon> </button>
-                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
-                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
-                </div>
-                <div class="tipo-busqueda">
-                    <p class="buscar-opcion">{{ 'crm.home.buscar' | translate }}</p>
-                    <div class="buscar">
-                        <div *ngFor="let option of filtrosBusqueda">
-                            <div class="chip" [class.selected]="option.id === selectedOption"
-                                (click)="onOptionChange(option.id)">{{ option.nombre }}
-                            </div>
-                        </div>
-                    </div>
-                    <p class="coincidencias">{{'crm.home.registros' | translate}}
-                        12</p>
-                </div>
-            </form>
-        </div>
+    <input id="tab6" type="radio" name="tabs">
+    <label for="tab6" matTooltip="Consultas" (click)="tabAcitve = 'consult'">Consultas</label>
 
-        <!-- <div class="informacion">
-                <div class="dFlex">
-                    <p class="subtitulo">Filtros</p>
-                    <span class="spacer"></span>
-                    <mat-radio-group aria-label="Select an option">
-                        <mat-radio-button color="primary" value="1">SKU</mat-radio-button>
-                        <mat-radio-button color="primary" value="2">Descripcion</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-            </div>
+    <!--Fin Tabs-->
 
-            <div class="buscar-clientes">
-                <button mat-button>Buscar Producto
-                    <mat-icon>search</mat-icon>
-                </button>
-            </div> -->
-    </div>
+
+    <!--Content Tabs-->
+    <section id="content1">
+        <!-- <app-document></app-document> -->
+    </section>
+
+    <section id="content2">
+        <!-- <app-transaction></app-transaction> -->
+    </section>
+
+    <section id="content3">
+        <!-- <app-payment [tabActive]="tabAcitve"></app-payment> -->
+    </section>
+
+    <section id="content4">
+    </section>
+
+    <section id="content5">
+    </section>
+
+    <section id="content6">
+    </section>
+    <!--Fin Content Tabs-->
+
 </div>
 <!-- Mostrar logos -->
 <!-- <app-barra-logos></app-barra-logos> -->

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
+import { Router } from '@angular/router';
+import { WidgetsService } from 'src/app/services/widgets.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-factura',
@@ -24,7 +27,9 @@ export class FacturaComponent {
   switchState: boolean = false;
 
   constructor(
-    private _eventService: EventService
+    private _eventService: EventService,
+    private router: Router,
+    private _widgetService: WidgetsService
   ) {
 
   }
@@ -80,5 +85,35 @@ export class FacturaComponent {
 
   onOptionChange(optionId: number) {
     this.selectedOption = optionId;
+  }
+
+  //Abrir/Cerrar SideNav
+  @ViewChild('sidenav')
+  sidenav!: MatSidenav;
+  @ViewChild('sidenavend')
+  sidenavend!: MatSidenav;
+
+  tabAcitve = "document"
+
+  close(reason: string) {
+    this.sidenav.close();
+    this.sidenavend.close();
+  }
+
+
+  ngOnInit(): void {
+  }
+
+  //Cerra sesion
+  async logOut() {
+
+    let verificador = await this._widgetService.openDialogActions({ title: "Cerrar sesión", description: "Se perderán los datos que no han sido guardados ¿Estás seguro?", verdadero: "", falso: "" });
+    if (!verificador) return;
+
+    //Limpiar datos del storage
+    localStorage.clear();
+    sessionStorage.clear();
+    //return to login and delete de navigation route
+    this.router.navigate(['/login']);
   }
 }

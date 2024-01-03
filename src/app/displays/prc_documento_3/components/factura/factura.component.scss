@@ -13,7 +13,7 @@ $idioma-seleccionado  : #5d6d6c;
 .container-main {
     height : calc(100vh - 128px) !important;
     width  : 100%;
-    padding: 10px 20px;
+    padding: 0px;
 }
 
 .menu-izquierdo {
@@ -222,3 +222,154 @@ p {
     border-radius: 20px;
     font-size    : 12px;
 }
+
+// nuevoooooooooooooooooooo
+
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width : 100%;
+    height: 100%;
+}
+
+$color1 : #0f3851;
+$color2 : #154d67;
+$color3 : #1a7084;
+$color4 : #2398a0;
+$color5 : #2bc9bf;
+
+.elevation_bar {
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+
+.nav_bar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 1000;
+    height          : 56px !important;
+    background-color: $color3;
+    color           : #fff;
+    font-size       : 14px;
+}
+
+body {
+    font : 14px/1 'Open Sans', sans-serif;
+    color: #555;
+}
+
+
+main {
+    width : 100%;
+    height: 100%;
+}
+
+section {
+    display   : none;
+    // padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+input {
+    display: none;
+}
+
+label {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 15px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $color3;
+    border     : 2px solid transparent;
+}
+
+label:before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+label[for*='1']:before {
+    content: '\f15b';
+}
+
+label[for*='2']:before {
+    content: '\f07a';
+}
+
+label[for*='3']:before {
+    content: '\f0d6';
+}
+
+label[for*='4']:before {
+    content: '\f01c';
+}
+
+label[for*='5']:before {
+    content: '\f01c';
+}
+
+label[for*='6']:before {
+    content: '\f002';
+}
+
+label:hover {
+    color : #888;
+    cursor: pointer;
+}
+
+input:checked+label {
+    color        : #555;
+    border       : 1px solid #ddd;
+    border-top   : 3px solid orange;
+    border-bottom: 1px solid #fff;
+}
+
+#tab1:checked~#content1,
+#tab2:checked~#content2,
+#tab3:checked~#content3,
+#tab4:checked~#content4,
+#tab5:checked~#content5,
+#tab6:checked~#content6 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    label {
+        font-size: 0;
+    }
+
+    label:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    label {
+        padding: 15px;
+    }
+}
+
+/*Logos*/
+
+.img_empresas {
+    height: 50px;
+    margin: 10px;
+}
+
+
+/*FIn logos*/
