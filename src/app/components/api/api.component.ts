@@ -30,10 +30,6 @@ export class ApiComponent {
   }
 
 
-  regresar() {
-    this._router.navigate([RouteNamesService.LOGIN]);
-  }
-
   copyToClipboard(){
     this._clipboardService.copyToClipboard(PreferencesService.baseUrl);
   }

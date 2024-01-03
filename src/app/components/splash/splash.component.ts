@@ -33,8 +33,7 @@ export class SplashComponent {
     private _router: Router,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
-    private _empresa: LocalSettingsService,
-    private _estacion: LocalSettingsService,
+    private _localSettingsService: LocalSettingsService,
   ) {
 
     //Cargar Datos
@@ -57,16 +56,86 @@ export class SplashComponent {
       }, 1000);
       return;
     }
-    
-    if (!PreferencesService.token) {
+
+    if (!PreferencesService.baseUrl) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.API]);
       }, 1000);
       return;
     }
 
-    this._router.navigate([RouteNamesService.LOGIN]);
+    
+    if (!PreferencesService.token) {
+      setTimeout(() => {
+        this._router.navigate([RouteNamesService.LOGIN]);
+      }, 1000);
+      return;
+    }
 
+    //Buscar empresas y estaciones
+
+    PreferencesService.user = PreferencesService.userStorage;
+    PreferencesService.token = PreferencesService.tokenStorage;
+    PreferencesService.conStr = PreferencesService.conStorageStr;
+
+    let user = PreferencesService.user;
+    let token = PreferencesService.token;
+
+    // //Consumo de servicios
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEmpresas.status) {
+      //TODO: Error view
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
+
+      return;
+    }
+
+    //empresas y estaciones
+    let empresas: EmpresaInterface[] = [];
+    let estaciones: EstacionInterface[] = [];
+
+
+    //Guardar Emoresas obtenidas
+    empresas = resEmpresas.response;
+
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
+
+
+    if (!resEstacion.status) {
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+
+      //TODO: Error view
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
+
+      return;
+    }
+
+    estaciones = resEstacion.response;
+
+    if (estaciones.length == 0 || empresas.length == 0) {
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+
+      //TODO:translate
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      return;
+    }
+
+    if (empresas.length == 1 && estaciones.length == 1) {
+      PreferencesService.empresa = empresas[0];
+      PreferencesService.estacion = estaciones[0];
+
+      this._router.navigate([RouteNamesService.HOME]);
+      return;
+    };
+
+    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
   }
 }
