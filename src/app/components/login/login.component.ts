@@ -97,6 +97,8 @@ export class LoginComponent {
     PreferencesService.user = resLogin.user;
     PreferencesService.conStr = this._encryptService.encrypt(resLogin.con)
 
+    
+
     let user = PreferencesService.user;
     let token = PreferencesService.token;
 
