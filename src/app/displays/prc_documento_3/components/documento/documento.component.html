@@ -1,0 +1,95 @@
+<!-- VISTA DE DOCUMENTO -->
+<div class="documento">
+
+    <div class="serie-vendedor">
+
+        <div class="informacion">
+            <p class="subtitulo">Serie</p>
+            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
+                <mat-option *ngFor="let serie of series" [value]="serie">
+                    {{serie}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="buscar-cliente">
+            <div class="dFlex">
+                <p class="subtitulo">Cliente</p>
+                <span class="spacer"></span>
+                <button mat-icon-button>
+                    <mat-icon>person_add</mat-icon>
+                </button>
+            </div>
+
+            <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
+                <p class="">Buscar</p>
+                <div class="input-container">
+                    <button class="iconoLupa" mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
+                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                </div>
+                <p class="coincidencias">Registros: {{registros.length}}</p>
+            </form>
+
+            <!-- <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
+                <p class="">Buscar</p>
+                <div class="input-container">
+                    <button class="iconoLupa" mat-icon-button>
+                        <mat-icon>search</mat-icon> </button>
+                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
+                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                </div>
+                <p class="coincidencias">Registros: {{registros.length}}</p>
+            </form> -->
+        </div>
+
+        <div class="informacion" *ngFor="let cliente of registros">
+            <p (click)="selectedCliente = true" class="cliente-seleccionado">
+                {{ cliente.nombre }} - NIT: {{ cliente.nit }}
+            </p>
+        </div>
+
+        <div class="informacion">
+            <div class="d-flex">
+                <p class="subtitulo">C/F</p>
+                <span class="spacer"></span>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        (change)="toggleSwitch()">
+                </div>
+            </div>
+        </div>
+
+        <div class="informacion" *ngIf="switchState">
+            <p class="titulo">Información del cliente.</p>
+            <p class="detalles">C/F</p>
+            <p class="detalles">CONSUMIDOR FINAL</p>
+            <p class="detalles">CIUDAD</p>
+        </div>
+
+        <div class="informacion" *ngIf="selectedCliente">
+            <p class="titulo">Información del cliente.</p>
+            <p class="detalles">NIT: {{cliente.nit}}</p>
+            <p class="detalles">NOMBRE: {{cliente.nombre}}</p>
+            <p class="detalles">CIUDAD</p>
+        </div>
+
+    </div>
+    <span class="spacer"></span>
+
+    <div class="cliente">
+
+        <div class="informacion">
+            <p class="subtitulo">Vendedor</p>
+            <mat-select name="estado" class="seleccionar" placeholder="VENDEDOR" [(ngModel)]="vendedor">
+                <mat-option *ngFor="let vendedor of vendedores" [value]="vendedor">
+                    {{vendedor}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+    </div>
+
+</div>

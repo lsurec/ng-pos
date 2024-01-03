@@ -40,6 +40,8 @@ import { DataUserService } from './services/data-user.service';
 import { FacturaComponent } from './displays/prc_documento_3/components/factura/factura.component';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DocumentoComponent } from './displays/prc_documento_3/components/documento/documento.component';
+import { NuevoClienteComponent } from './displays/prc_documento_3/components/nuevo-cliente/nuevo-cliente.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     LangComponent,
     ThemeComponent,
     FacturaComponent,
+    DocumentoComponent,
+    NuevoClienteComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,159 @@
+$color-naranja        : #df9722;
+$color-negro          : #000000;
+$color-blanco         : #fff;
+$color-azul           : #134895;
+$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+
+.documento {
+    padding: 10px 25px;
+    display: flex;
+}
+
+.serie-vendedor,
+.cliente {
+    width: 50%;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+
+.informacion {
+    padding: 10px 0px;
+    width  : 400px;
+}
+
+.detalles {
+    font-size: 14px;
+}
+
+.buscar-cliente {
+    padding: 10px 0px;
+    width  : 400px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.titulo {
+    font-size  : 14px;
+    text-align : center;
+    font-weight: 500;
+}
+
+.titulos:hover {
+    cursor       : pointer;
+    border-bottom: 1px solid $color-azul;
+    font-weight  : 500;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $color-bordes;
+    font-size    : 12px;
+}
+
+.subtitulo {
+    font-size     : 14px;
+    font-weight   : bold;
+    padding-bottom: 5px;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
+}
+
+.form-switch .form-check-input {
+    border-color: #bdb76b;
+    height      : 20px;
+}
+
+
+//buscador y filtos
+.inputSearch {
+    text-align: center !important;
+}
+
+
+/* Estilo para el contenedor del icono y el campo de entrada */
+.input-container {
+    position: relative;
+    padding: 10px 0px;
+}
+
+/* Estilo para el icono */
+.iconoLupa {
+    position   : absolute;
+    top        : 48%;
+    /* Ajusta la posición verticalmente según sea necesario */
+    right      : 0.5%;
+    /* Ajusta la posición horizontalmente según sea necesario */
+    transform  : translateY(-50%);
+    color      : $color-azul;
+    align-items: center;
+}
+
+/* estilos para los inputs */
+.barra-de-busqueda {
+    height       : 45px;
+    width        : 100%;
+    background   : none;
+    font-size    : 14px;
+    padding-left : 10px;
+    outline      : none;
+    border-style : none;
+    border       : 0.5px solid $color-bordes;
+    color        : $color-azul;
+    border-radius: 10px;
+}
+
+.tipo-busqueda {
+    text-align: center;
+    width     : 100%;
+    padding   : 10px 15px 5px;
+}
+
+.buscar {
+    padding-left: 5px;
+    display     : flex;
+}
+
+.buscar-opcion {
+    font-size    : 12px;
+    text-align   : left;
+    padding-right: 5px;
+    padding-left : 15px;
+}
+
+.chip {
+    display      : inline-block;
+    padding      : 5px 8px;
+    margin       : 4px;
+    cursor       : pointer;
+    border       : 1px solid #ccc;
+    border-radius: 20px;
+    font-size    : 12px;
+}
+
+.selected {
+    background-color: $color-azul;
+    color           : #fff;
+    border          : 1px solid $color-azul;
+}
+
+.cliente-seleccionado{
+    cursor: pointer;
+    
+}
