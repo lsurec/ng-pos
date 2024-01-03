@@ -43,6 +43,8 @@ export class ThemeComponent {
   }
 
   guardar(): void {
+    PreferencesService.theme = `${this.tema}`;
+
     this._router.navigate([RouteNamesService.API]);
   }
 }

@@ -46,11 +46,11 @@ export class PreferencesService {
     //token de la secion
     @Input()
     static set token(value: string) {
-        localStorage.setItem(this.tokenKey, value);
+        sessionStorage.setItem(this.tokenKey, value);
     }
 
     static get token(): string {
-        let value = localStorage.getItem(this.tokenKey);
+        let value = sessionStorage.getItem(this.tokenKey);
         if (!value) return "";
         return value;
     }
@@ -69,11 +69,11 @@ export class PreferencesService {
 
     @Input()
     static set user(value: string) {
-        localStorage.setItem(this.userKey, value);
+        sessionStorage.setItem(this.userKey, value);
     }
 
     static get user(): string {
-        let value = localStorage.getItem(this.userKey);
+        let value = sessionStorage.getItem(this.userKey);
         if (!value) return "";
         return value;
     }
@@ -135,11 +135,11 @@ export class PreferencesService {
 
     @Input()
     static set conStr(value: string) {
-        localStorage.setItem(this.conKey, value);
+        sessionStorage.setItem(this.conKey, value);
     }
 
     static get conStr(): string {
-        let value = localStorage.getItem(this.conKey);
+        let value = sessionStorage.getItem(this.conKey);
         if (!value) return "";
         return value;
     }
