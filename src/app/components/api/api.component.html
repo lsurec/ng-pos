@@ -50,7 +50,7 @@
 
                 <div class="cambios-cerrar" *ngIf="urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button  type="button">{{'pos.ajustes.cancelar' | translate}}</button>
+                    <button mat-stroked-button  type="button" (click)="goBack()">{{'pos.botones.cancelar' | translate}}</button>
                     <span class="spacer"></span>
                     <button mat-stroked-button type="submit" (click)="cambiar()">{{'pos.botones.cambiar' |
                         translate}}</button>

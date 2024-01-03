@@ -15,6 +15,8 @@ export class RouteNamesService {
   static readonly NOT_FOUND = 'not-found';
   static readonly ERROR = 'error';  
   static readonly NO_CONNECTED = 'no-conexion';
+  static readonly DOC = 'no-conexion';
+
 
   // Agrega más nombres de rutas según sea necesario
 

@@ -7,6 +7,7 @@ import { HelloService } from 'src/app/services/hello.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-api',
@@ -25,12 +26,13 @@ export class ApiComponent {
     private _widgetsService: WidgetsService,
     private _helloService: HelloService,
     private translate: TranslateService,
-    private _clipboardService: ClipboardService
+    private _clipboardService: ClipboardService,
+    private _location: Location
   ) {
   }
 
 
-  copyToClipboard(){
+  copyToClipboard() {
     this._clipboardService.copyToClipboard(PreferencesService.baseUrl);
   }
 
@@ -102,6 +104,11 @@ export class ApiComponent {
     }
 
     this._router.navigate([RouteNamesService.ERROR]);
+  }
+
+  //regresar a la pantalla anterior
+  goBack() {
+    this._location.back();
   }
 
 }

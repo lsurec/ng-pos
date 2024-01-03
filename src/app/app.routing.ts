@@ -12,6 +12,7 @@ import { ThemeComponent } from "./components/theme/theme.component";
 import { ApiComponent } from "./components/api/api.component";
 import { ErrorComponent } from "./components/error/error.component";
 import { NoConnectedComponent } from "./components/no-connected/no-connected.component";
+import { DocumentoComponent } from "./displays/prc_documento_3/components/documento/documento.component";
 
 type PathMatch = "full" | "prefix" | undefined;
 
@@ -26,6 +27,8 @@ const appRoutes = [
     { path: RouteNamesService.HOME, component: HomeComponent },
     { path: RouteNamesService.ERROR, component: ErrorComponent },
     { path: RouteNamesService.NO_CONNECTED, component: NoConnectedComponent },
+    { path: RouteNamesService.DOC, component: DocumentoComponent },
+
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
     { path: '', redirectTo: RouteNamesService.SPLASH, pathMatch: 'full' as PathMatch },
 

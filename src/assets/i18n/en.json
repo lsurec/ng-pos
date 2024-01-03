@@ -103,8 +103,12 @@
             "nit": "NIT",
             "nombre": "NAME",
             "vendedor": "Salesperson",
-            "selecciona": "Select Client",
-            "encontrados": "Found Clients"
+            "seleccionar": "Select Client",
+            "encontrados": "Found Clients",
+            "telefono": "PHONE",
+            "correo": "EMAIL",
+            "direccion": "ADDRESS",
+            "nueva": "New account"
         }
     }
 }

@@ -104,7 +104,11 @@
             "nombre": "NOMBRE",
             "vendedor": "Vendedor",
             "seleccionar": "Seleccionar Cliente",
-            "encontrados": "Clientes encontrados"
+            "encontrados": "Clientes encontrados",
+            "telefono": "TELEFONO",
+            "correo": "CORREO",
+            "direccion": "DIRECCION",
+            "nueva": "Nueva cuenta"
         }
     }
 }
