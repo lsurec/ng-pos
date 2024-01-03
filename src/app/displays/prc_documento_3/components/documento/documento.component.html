@@ -4,7 +4,7 @@
     <div class="serie-vendedor">
 
         <div class="informacion">
-            <p class="subtitulo">Serie</p>
+            <p class="subtitulo">{{ 'pos.documento.serie' | translate }}</p>
             <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
                 <mat-option *ngFor="let serie of series" [value]="serie">
                     {{serie}}
@@ -14,7 +14,7 @@
 
         <div class="buscar-cliente">
             <div class="dFlex">
-                <p class="subtitulo">Cliente</p>
+                <p class="subtitulo">{{ 'pos.documento.cliente' | translate }}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button>
                     <mat-icon>person_add</mat-icon>
@@ -22,31 +22,20 @@
             </div>
 
             <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
-                <p class="">Buscar</p>
+                <p class="">{{ 'pos.documento.buscar' | translate }}</p>
                 <div class="input-container">
                     <button class="iconoLupa" mat-icon-button>
                         <mat-icon>search</mat-icon>
                     </button>
                     <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
-                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                        autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
                 </div>
             </form>
-
-            <!-- <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
-                <p class="">Buscar</p>
-                <div class="input-container">
-                    <button class="iconoLupa" mat-icon-button>
-                        <mat-icon>search</mat-icon> </button>
-                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
-                        autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
-                </div>
-                <p class="coincidencias">Registros: {{registros.length}}</p>
-            </form> -->
         </div>
 
         <div class="informacion">
             <div class="d-flex">
-                <p class="subtitulo">C/F</p>
+                <p class="subtitulo">{{ 'pos.documento.cf' | translate }} </p>
                 <span class="spacer"></span>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
@@ -56,27 +45,27 @@
         </div>
 
         <div class="informacion" *ngIf="switchState">
-            <p class="titulo">Información del cliente.</p>
-            <p class="detalles">C/F</p>
-            <p class="detalles">CONSUMIDOR FINAL</p>
-            <p class="detalles">CIUDAD</p>
+            <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
+            <p class="detalles">{{ 'pos.documento.cf' | translate }}</p>
+            <p class="detalles">{{ 'pos.documento.consumidor' | translate }}</p>
+            <p class="detalles">{{ 'pos.documento.ciudad' | translate }}</p>
         </div>
 
         <div class="informacion" *ngIf="selectedCliente">
-            <p class="titulo">Información del cliente.</p>
+            <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
             <div class="dFlex">
-                <p class="detalles">NIT:</p>
+                <p class="detalles">{{ 'pos.documento.nit' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{cliente.nit}}</p>
             </div>
             <div class="dFlex">
-                <p class="detalles">NOMBRE:</p>
+                <p class="detalles">{{ 'pos.documento.nombre' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{cliente.nombre}}</p>
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
-                <p class="detalles">CIUDAD:</p>
+                <p class="detalles">{{ 'pos.documento.ciudad' | translate }}</p>
                 <span class="spacer"></span>
                 <p>Ciudad</p>
             </div>
@@ -87,7 +76,7 @@
     <div class="cliente">
 
         <div class="informacion">
-            <p class="subtitulo">Vendedor</p>
+            <p class="subtitulo">{{ 'pos.documento.vendedor' | translate }}</p>
             <mat-select name="estado" class="seleccionar" placeholder="VENDEDOR" [(ngModel)]="vendedor">
                 <mat-option *ngFor="let vendedor of vendedores" [value]="vendedor">
                     {{vendedor}}

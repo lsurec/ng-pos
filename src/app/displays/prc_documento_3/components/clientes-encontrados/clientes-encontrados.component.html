@@ -2,34 +2,32 @@
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="d-flex">
+        <div class="dFlex">
             <span class="spacer"></span>
             <!-- Titulo -->
-            <p class="verDetalle">Seleccionar Cliente</p>
+            <p class="verDetalle">{{ 'pos.documento.seleccionar' | translate }}</p>
             <span class="spacer"></span>
             <!-- Cerrar dialogo -->
             <span class="close" (click)="closeDialog()">&times;</span>
         </div>
         <hr>
         <div class="busqueda">
-            <div class="d-flex">
-                <div class="contenido-izquierdo">
-                    <div class="d-flex">
-                        <p class="campo-obligatorio">Clientes encontrados</p>
-                        <p class="obligatorio">*</p>
-                    </div>
+            <div class="contenido-izquierdo">
+                <div class="dFlex">
+                    <p class="campo-obligatorio">{{ 'pos.documento.encontrados' | translate }}</p>
+                    <p class="obligatorio">*</p>
+                </div>
 
-                    <div class="dFlex">
-                        <p>Nombre:</p>
+                <div class="titulos">
+                    <p>{{ 'pos.documento.nombre' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p>{{ 'pos.documento.nit' | translate }}</p>
+                </div>
+                <div class="" *ngFor="let cliente of clientes">
+                    <div class="seleccionar" [mat-dialog-close]="[cliente]">
+                        <p> {{cliente.nombre}} </p>
                         <span class="spacer"></span>
-                        <p>Nit:</p>
-                    </div>
-                    <div class="" *ngFor="let cliente of clientes">
-                        <div class="seleccionar" [mat-dialog-close]="[cliente]">
-                            <p> {{cliente.nombre}} </p>
-                            <span class="spacer"></span>
-                            <p>{{cliente.nit}}</p>
-                        </div>
+                        <p>{{cliente.nit}}</p>
                     </div>
                 </div>
             </div>

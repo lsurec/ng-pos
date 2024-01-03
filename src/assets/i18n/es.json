@@ -88,6 +88,23 @@
             "servicio": "Servicio origen",
             "origen": "DB Origen",
             "descripcion": "Descripcion"
+        },
+        "inputs": {
+            "buscar": "escriba para realizar la busqueda."
+        },
+        "documento": {
+            "serie": "Serie",
+            "cliente": "Cliente",
+            "buscar": "Buscar",
+            "cf": "C/F",
+            "informacion": "Información del cliente",
+            "consumidor": "CONSUMIDOR FINAL",
+            "ciudad": "CIUDAD",
+            "nit": "NIT",
+            "nombre": "NOMBRE",
+            "vendedor": "Vendedor",
+            "seleccionar": "Seleccionar Cliente",
+            "encontrados": "Clientes encontrados"
         }
     }
 }

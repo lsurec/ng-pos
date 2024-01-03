@@ -88,6 +88,23 @@
             "servicio": "Source service",
             "origen": "DB Source",
             "descripcion": "Description"
+        },
+        "inputs": {
+            "buscar": "type to search."
+        },
+        "documento": {
+            "serie": "Series",
+            "cliente": "Client",
+            "buscar": "Search",
+            "cf": "C/F",
+            "informacion": "Client Information",
+            "consumidor": "FINAL CONSUMER",
+            "ciudad": "CITY",
+            "nit": "NIT",
+            "nombre": "NAME",
+            "vendedor": "Salesperson",
+            "selecciona": "Select Client",
+            "encontrados": "Found Clients"
         }
     }
 }
