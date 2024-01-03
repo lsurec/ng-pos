@@ -49,12 +49,12 @@
         },
         "alertas": {
             "ok": "OK",
-            "salioMal": "Something went wrong, please try again",
+            "salioMal": "Something went wrong, please try again.",
             "completar": "Please fill in all fields to continue.",
             "debeSeleccionar": "To continue, select a company and a workstation.",
             "incorrecto": "Incorrect username or password",
             "error": "The process of connecting to the service could not be completed. Please try again later.",
-            "configuracion": "No companies or workstations were found for the user: "
+            "configuracion": "No companies or workstations found for the user: "
         },
         "botones": {
             "aceptar": "Accept",
@@ -66,19 +66,20 @@
             "cambiar": "Change",
             "guardar": "Save",
             "informe": "View report",
-            "salir": "Log out"
+            "salir": "Log out",
+            "reintentar": "Retry"
         },
         "error": {
-            "informe": "Informe de error",
-            "usuario": "Usuario",
-            "fecha": "Fecha",
-            "documento": "Documento",
-            "serie": "Serie documento",
-            "empresa": "Empresa",
-            "estacion": "Estación de trabajo",
-            "servicio": "Servicio origen",
-            "origen": "DB Origen",
-            "descripcion": "Descripcion"
+            "informe": "Error report",
+            "usuario": "User",
+            "fecha": "Date",
+            "documento": "Document",
+            "serie": "Document series",
+            "empresa": "Company",
+            "estacion": "Workstation",
+            "servicio": "Source service",
+            "origen": "DB Source",
+            "descripcion": "Description"
         }
     }
 }

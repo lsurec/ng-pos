@@ -11,6 +11,7 @@ import { LangComponent } from "./components/lang/lang.component";
 import { ThemeComponent } from "./components/theme/theme.component";
 import { ApiComponent } from "./components/api/api.component";
 import { ErrorComponent } from "./components/error/error.component";
+import { NoConnectedComponent } from "./components/no-connected/no-connected.component";
 
 type PathMatch = "full" | "prefix" | undefined;
 
@@ -24,6 +25,7 @@ const appRoutes = [
     { path: RouteNamesService.NOT_FOUND, component: NotFoundComponent },
     { path: RouteNamesService.HOME, component: HomeComponent },
     { path: RouteNamesService.ERROR, component: ErrorComponent },
+    { path: RouteNamesService.NO_CONNECTED, component: NoConnectedComponent },
 
 
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },

@@ -1,0 +1,33 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+    <div class="contenedor">
+        <div class="d-flex">
+            <span class="spacer"></span>
+            <!-- Titulo -->
+            <p class="verDetalle">Seleccionar Cliente</p>
+            <span class="spacer"></span>
+            <!-- Cerrar dialogo -->
+            <span class="close" (click)="closeDialog()">&times;</span>
+        </div>
+        <hr>
+        <div class="busqueda">
+            <div class="d-flex">
+                <div class="contenido-izquierdo">
+                    <div class="d-flex">
+                        <p class="campo-obligatorio">Clientes encontrados</p>
+                        <p class="obligatorio">*</p>
+                    </div>
+
+                    <div class="seleccionar" *ngFor="let cliente of clientes">
+                        <div class="seleccionar" [mat-dialog-close]="[cliente]">
+                            <p> {{cliente.nombre}} </p>
+                            <span class="spacer"></span>
+                            <p>{{cliente.nit}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

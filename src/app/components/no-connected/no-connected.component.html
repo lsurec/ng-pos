@@ -1,0 +1,30 @@
+<mat-toolbar-row class="head__sidenav">
+    <button mat-icon-button aria-label matTooltip="regresar">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button aria-label matTooltip="actualizar">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <!-- Titulo de la tarea -->
+    <p class="titulo"></p>
+</mat-toolbar-row>
+
+<div class="container-main">
+    <div class="sin-conexion">
+        <span class="spacer"></span>
+        <div class="centro">
+            <mat-icon class="salio-mal">cloud_off</mat-icon>
+            <p class="titulo">{{'pos.alertas.salioMal' | translate}}</p>
+            <div class="dFlex">
+                <button mat-button (click)="verInforme()">{{'pos.botones.informe' | translate}}</button>
+                <span class="spacer"></span>
+                <button mat-button>{{'pos.botones.reintentar' | translate}}</button>
+            </div>
+        </div>
+        <span class="spacer"></span>
+    </div>
+</div>
+<!-- Mostrar logos -->
+<!-- <app-barra-logos></app-barra-logos> -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>

@@ -30,7 +30,6 @@
                     <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
                         autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
                 </div>
-                <p class="coincidencias">Registros: {{registros.length}}</p>
             </form>
 
             <!-- <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
@@ -43,12 +42,6 @@
                 </div>
                 <p class="coincidencias">Registros: {{registros.length}}</p>
             </form> -->
-        </div>
-
-        <div class="informacion" *ngFor="let cliente of registros">
-            <p (click)="selectedCliente = true" class="cliente-seleccionado">
-                {{ cliente.nombre }} - NIT: {{ cliente.nit }}
-            </p>
         </div>
 
         <div class="informacion">

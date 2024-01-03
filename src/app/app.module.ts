@@ -39,9 +39,11 @@ import { ThemeComponent } from './components/theme/theme.component';
 import { DataUserService } from './services/data-user.service';
 import { FacturaComponent } from './displays/prc_documento_3/components/factura/factura.component';
 import { MatSelectModule } from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DocumentoComponent } from './displays/prc_documento_3/components/documento/documento.component';
 import { NuevoClienteComponent } from './displays/prc_documento_3/components/nuevo-cliente/nuevo-cliente.component';
+import { ClientesEncontradosComponent } from './displays/prc_documento_3/components/clientes-encontrados/clientes-encontrados.component';
+import { NoConnectedComponent } from './components/no-connected/no-connected.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { NuevoClienteComponent } from './displays/prc_documento_3/components/nue
     FacturaComponent,
     DocumentoComponent,
     NuevoClienteComponent,
+    ClientesEncontradosComponent,
+    NoConnectedComponent,
   ],
   imports: [
     BrowserModule,

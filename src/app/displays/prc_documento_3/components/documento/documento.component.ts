@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
 
 @Component({
   selector: 'app-documento',
@@ -23,6 +25,11 @@ export class DocumentoComponent {
     "Vendedor 01",
     "DEMOSOFT"
   ]
+
+  constructor(
+    private _dialog: MatDialog,
+  ) {
+  }
 
   // Función para manejar el cambio de estado del switch
   toggleSwitch(): void {
@@ -101,11 +108,25 @@ export class DocumentoComponent {
         this.registros = [];
       }
 
-      if (this.registros.length == 1) {
-        this.cliente = this.registros[0];
-      }
     });
 
+    if (this.registros.length == 1) {
+      this.cliente = this.registros[0];
+      this.selectedCliente = true;
+    }
+
     // Puedes agregar lógica adicional aquí si es necesario
+
+    if (this.registros.length > 1) {
+      let estado = this._dialog.open(ClientesEncontradosComponent, { data: this.registros })
+      estado.afterClosed().subscribe(result => {
+        if (result) {
+          let cliente: ClienteInterface = result;
+          this.cliente.nit = cliente.nit;
+          this.cliente.nombre = cliente.nombre;
+          this.selectedCliente = true;
+        }
+      })
+    }
   }
 }
