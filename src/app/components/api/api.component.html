@@ -24,7 +24,7 @@
                 <span class="spacer"></span>
                 <p class="url">{{ urlStorage }}</p>
                 <!-- <span class="spacer"></span> -->
-                <button mat-icon-button>
+                <button mat-icon-button (click)="copyToClipboard()">
                     <mat-icon>content_copy</mat-icon>
                 </button>
                 <span class="spacer"></span>
@@ -50,8 +50,7 @@
 
                 <div class="cambios-cerrar" *ngIf="urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button (click)="regresar()" type="button">{{'pos.botones.cancelar' |
-                        translate}}</button>
+                    <button mat-stroked-button  type="button">{{'pos.ajustes.cancelar' | translate}}</button>
                     <span class="spacer"></span>
                     <button mat-stroked-button type="submit" (click)="cambiar()">{{'pos.botones.cambiar' |
                         translate}}</button>

@@ -3,12 +3,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
-import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { languagesProvider, indexDefaultLang } from 'src/app/providers/languages.provider';
-import { ok, salioMal } from 'src/app/providers/mensajes.provider';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
-import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -33,8 +29,7 @@ export class SplashComponent {
     private _router: Router,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
-    private _empresa: LocalSettingsService,
-    private _estacion: LocalSettingsService,
+    private _localSettingsService: LocalSettingsService,
   ) {
 
     //Cargar Datos
@@ -44,6 +39,7 @@ export class SplashComponent {
   async loadData(): Promise<void> {
 
 
+    //Si no hay idioma configurar
     if (!PreferencesService.lang) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.LANGUAGE]);
@@ -51,63 +47,91 @@ export class SplashComponent {
       return;
     }
 
+    //si no hay trema configurar
     if (!PreferencesService.theme) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.THEME]);
       }, 1000);
       return;
     }
-    
-    if (!PreferencesService.token) {
+
+    //si no hay url configurar
+    if (!PreferencesService.baseUrl) {
       setTimeout(() => {
         this._router.navigate([RouteNamesService.API]);
       }, 1000);
       return;
     }
 
+    //si no hay taoken configurar     
+    if (!PreferencesService.tokenStorage) {
+      setTimeout(() => {
+        this._router.navigate([RouteNamesService.LOGIN]);
+      }, 1000);
+      return;
+    }
 
+    //Buscar empresas y estaciones
+    PreferencesService.user = PreferencesService.userStorage;
+    PreferencesService.token = PreferencesService.tokenStorage;
+    PreferencesService.conStr = PreferencesService.conStorageStr;
+
+    let user = PreferencesService.user;
+    let token = PreferencesService.token;
+
+    //empresas y estaciones
+    let empresas: EmpresaInterface[] = [];
+    let estaciones: EstacionInterface[] = [];
 
     // //Consumo de servicios
-    // let resEmpresas: ResApiInterface = await this._empresa.getEmpresas();
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEmpresas.status) {
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEmpresas.response);
-    //   console.error(resEmpresas.storeProcedure);
-    //   //si algo sale mal ira a la pantalla de no encontrado
-    //   this._router.navigate(['/notFound']);
-    //   return
-    // };
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEmpresas.status) {
+      //TODO: Error view
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-    // //Guardar Empresas obtenidas
-    // this.empresas = resEmpresas.response;
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEmpresas.response);
+      console.error(resEmpresas.storeProcedure);
 
-    // //Consumo de api
-    // let resEstaciones: ResApiInterface = await this._estacion.getEstaciones();
-    // //Si el servico se ejecuta mal mostar mensaje
-    // if (!resEstaciones.status) {
-    //   this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-    //   console.error(resEstaciones.response);
-    //   console.error(resEstaciones.storeProcedure);
-    //   //si algo sale mal ira a la pantalla de no encontrado
-    //   this._router.navigate(['/notFound']);
-    //   return
-    // };
+      return;
+    }
+    
+    //Guardar Emoresas obtenidas
+    empresas = resEmpresas.response;
 
-    // //Guardar Estaciones obtenidas
-    // this.estaciones = resEstaciones.response;
-    // // this.estaciones.push(this.estaciones[0]);
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-    // //Si las listas tienen mas de un elemento mostrar pantalla de configuracion local
-    // if (this.empresas.length > 1 || this.estaciones.length > 1) {
-    //   //mostrar listas con propiedades
-    //   this._shared.empresas = this.empresas;
-    //   this._shared.estaciones = this.estaciones;
-    //   this._router.navigate(['/station']);
-    //   return;
-    // }
+    if (!resEstacion.status) {
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
+      //TODO: Error view
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      console.error(resEstacion.response);
+      console.error(resEstacion.storeProcedure);
 
+      return;
+    }
+
+    estaciones = resEstacion.response;
+
+    if (estaciones.length == 0 || empresas.length == 0) {
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
+
+      //TODO:translate
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      return;
+    }
+
+    if (empresas.length == 1 && estaciones.length == 1) {
+      PreferencesService.empresa = empresas[0];
+      PreferencesService.estacion = estaciones[0];
+
+      this._router.navigate([RouteNamesService.HOME]);
+      return;
+    };
+
+    this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { RouteNamesService } from '../services/route.names.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LoginGuard implements CanActivate {
     let token = this.getToken();
     //si existe token
     if (token) {
-      this._router.navigate(['/station']); //devolver a home
+      this._router.navigate([RouteNamesService.LOCAL_CONFIG]); //devolver a home
       return false; // no va a tener acceso a la ruta
     } else {
       //si el token existe va a tener acceso a la ruta

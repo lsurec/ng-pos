@@ -32,6 +32,10 @@ import { WidgetsService } from 'src/app/services/widgets.service';
 })
 export class HomeComponent {
 
+  //token y usuario
+  user = PreferencesService.user;
+  token = PreferencesService.token;
+
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
@@ -233,7 +237,7 @@ export class HomeComponent {
   async loadDataMenu(): Promise<void> {
 
     //TODO:remplazar
-    let resApplication: ResApiInterface = await this._menu.getAplicaciones("","");
+    let resApplication: ResApiInterface = await this._menu.getAplicaciones(this.user, this.token);
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
@@ -262,7 +266,7 @@ export class HomeComponent {
     for (const item of this.menuData) {
       // TODO:Reemplazar
       //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await this._menu.getDisplays("","",item.application.application)
+      let resDisplay: ResApiInterface = await this._menu.getDisplays(this.user,this.token,item.application.application)
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
@@ -422,6 +426,7 @@ export class HomeComponent {
     };
   };
 
+  //TODO: verificar de forma inversa
   //Asigna los nodos padres e hijos.
   asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]) {
     for (let indexPadre = 0; indexPadre < padres.length; indexPadre++) {

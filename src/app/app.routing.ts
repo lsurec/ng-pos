@@ -26,12 +26,7 @@ const appRoutes = [
     { path: RouteNamesService.HOME, component: HomeComponent },
     { path: RouteNamesService.ERROR, component: ErrorComponent },
     { path: RouteNamesService.NO_CONNECTED, component: NoConnectedComponent },
-
-
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
-    // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-    // { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },
-    // { path: '**', redirectTo: '/notFound', pathMatch: 'full' as PathMatch },
     { path: '', redirectTo: RouteNamesService.SPLASH, pathMatch: 'full' as PathMatch },
 
 ]

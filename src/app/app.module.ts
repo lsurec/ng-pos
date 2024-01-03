@@ -102,7 +102,7 @@ import { NoConnectedComponent } from './components/no-connected/no-connected.com
     MatCheckboxModule
   ],
   providers: [
-    DataUserService,
+    // DataUserService,
   ],
   bootstrap: [AppComponent]
 })

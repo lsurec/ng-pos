@@ -27,7 +27,7 @@ export class MenuService {
         )
         //consumo de api
         // return this._http.get(`${this._urlBase}aplicaciones/${user}`, { headers: headers });
-        return this._http.get(`${this._urlBase}aplicaciones/${user}`, { headers: headers });
+        return this._http.get(`${this._urlBase}Application/${user}`, { headers: headers });
     }
 
     // funcion asyncrona con promise
@@ -74,7 +74,7 @@ export class MenuService {
         )
         //consumo de api
         // return this._http.get(`${this._urlBase}displays/${user}`, { headers: headers });
-        return this._http.get(`${this._urlBase}displays`, { headers: headers });
+        return this._http.get(`${this._urlBase}display`, { headers: headers });
     }
 
     // funcion asyncrona con promise
