@@ -3,7 +3,7 @@ import { Injectable, Input } from "@angular/core";
 @Injectable()
 export class PreferencesService {
 
-    
+
     private static userKey = 'user';
     private static userStorageKey = 'userStorage';
     private static tokenKey = 'token';
@@ -13,7 +13,8 @@ export class PreferencesService {
     private static estacionKey = 'estacion';
     private static temaKey = 'tema';
     private static urlKey = 'url';
-    private static con = 'conStr';
+    private static conKey = 'conStr';
+    private static conStoragekey = 'conStorageStr';
 
     @Input()
     static set lang(value: string) {
@@ -118,12 +119,23 @@ export class PreferencesService {
 
 
     @Input()
+    static set conStorageStr(value: string) {
+        localStorage.setItem(this.conStoragekey, value);
+    }
+
+    static get conStorageStr(): string {
+        let value = localStorage.getItem(this.conStoragekey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
     static set conStr(value: string) {
-        localStorage.setItem(this.conStr, value);
+        localStorage.setItem(this.conKey, value);
     }
 
     static get conStr(): string {
-        let value = localStorage.getItem(this.conStr);
+        let value = localStorage.getItem(this.conKey);
         if (!value) return "";
         return value;
     }
