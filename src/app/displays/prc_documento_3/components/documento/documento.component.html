@@ -64,11 +64,23 @@
 
         <div class="informacion" *ngIf="selectedCliente">
             <p class="titulo">Información del cliente.</p>
-            <p class="detalles">NIT: {{cliente.nit}}</p>
-            <p class="detalles">NOMBRE: {{cliente.nombre}}</p>
-            <p class="detalles">CIUDAD</p>
+            <div class="dFlex">
+                <p class="detalles">NIT:</p>
+                <span class="spacer"></span>
+                <p>{{cliente.nit}}</p>
+            </div>
+            <div class="dFlex">
+                <p class="detalles">NOMBRE:</p>
+                <span class="spacer"></span>
+                <p>{{cliente.nombre}}</p>
+            </div>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <p class="detalles">CIUDAD:</p>
+                <span class="spacer"></span>
+                <p>Ciudad</p>
+            </div>
         </div>
-
     </div>
     <span class="spacer"></span>
 

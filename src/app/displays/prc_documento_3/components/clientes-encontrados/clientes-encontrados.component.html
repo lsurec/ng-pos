@@ -19,7 +19,12 @@
                         <p class="obligatorio">*</p>
                     </div>
 
-                    <div class="seleccionar" *ngFor="let cliente of clientes">
+                    <div class="dFlex">
+                        <p>Nombre:</p>
+                        <span class="spacer"></span>
+                        <p>Nit:</p>
+                    </div>
+                    <div class="" *ngFor="let cliente of clientes">
                         <div class="seleccionar" [mat-dialog-close]="[cliente]">
                             <p> {{cliente.nombre}} </p>
                             <span class="spacer"></span>

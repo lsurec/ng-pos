@@ -109,9 +109,14 @@ p {
     cursor          : pointer;
     align-items     : center;
     height          : 30px;
-    // border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $color-bordes;
 }
 
 .seleccionar:hover {
     background-color: #ebebeb;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
 }

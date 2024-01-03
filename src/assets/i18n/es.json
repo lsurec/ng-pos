@@ -1,5 +1,12 @@
 {
     "pos": {
+        "home": {
+            "activo": "Activado",
+            "inactivo": "Desactivado",
+            "modo": "Modo Oscuro",
+            "descripcionTema": "Ajusta el aspecto de la aplicación para reducir el reflejo y dar un descanso a la vista.",
+            "temaAplicacion": "TEMA DE LA APLICACIÓN"
+        },
         "login": {
             "correo": "Usuario",
             "contrasena": "Contraseña",

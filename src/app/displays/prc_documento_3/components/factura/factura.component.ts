@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { EventService } from 'src/app/services/event.service';
+import { Location } from '@angular/common';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { Router } from '@angular/router';
 import { WidgetsService } from 'src/app/services/widgets.service';
@@ -27,15 +27,15 @@ export class FacturaComponent {
   switchState: boolean = false;
 
   constructor(
-    private _eventService: EventService,
     private router: Router,
-    private _widgetService: WidgetsService
+    private _widgetService: WidgetsService,
+    private _location: Location
   ) {
 
   }
 
-  backPage() {
-    this._eventService.emitCustomEvent(false);
+  goBack() {
+    this._location.back();
   }
   // Función para manejar el cambio de estado del switch
   toggleSwitch(): void {

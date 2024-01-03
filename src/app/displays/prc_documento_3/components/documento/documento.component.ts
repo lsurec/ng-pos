@@ -121,9 +121,10 @@ export class DocumentoComponent {
       let estado = this._dialog.open(ClientesEncontradosComponent, { data: this.registros })
       estado.afterClosed().subscribe(result => {
         if (result) {
-          let cliente: ClienteInterface = result;
-          this.cliente.nit = cliente.nit;
-          this.cliente.nombre = cliente.nombre;
+          console.log(result[0]);
+          
+          let cliente: ClienteInterface = result[0];
+          this.cliente = cliente;
           this.selectedCliente = true;
         }
       })

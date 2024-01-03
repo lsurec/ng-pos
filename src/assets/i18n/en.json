@@ -1,5 +1,12 @@
 {
     "pos": {
+        "home": {
+            "activo": "Active",
+            "inactivo": "Inactive",
+            "modo": "Dark Mode",
+            "descripcionTema": "Adjusts the appearance of the application to reduce glare and give your eyes a break.",
+            "temaAplicacion": "APPLICATION THEME"
+        },
         "login": {
             "correo": "User",
             "contrasena": "Password",
