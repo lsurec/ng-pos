@@ -44,6 +44,7 @@ import { DocumentoComponent } from './displays/prc_documento_3/components/docume
 import { NuevoClienteComponent } from './displays/prc_documento_3/components/nuevo-cliente/nuevo-cliente.component';
 import { ClientesEncontradosComponent } from './displays/prc_documento_3/components/clientes-encontrados/clientes-encontrados.component';
 import { NoConnectedComponent } from './components/no-connected/no-connected.component';
+import { InConstructionComponent } from './components/in-construction/in-construction.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { NoConnectedComponent } from './components/no-connected/no-connected.com
     NuevoClienteComponent,
     ClientesEncontradosComponent,
     NoConnectedComponent,
+    InConstructionComponent,
   ],
   imports: [
     BrowserModule,

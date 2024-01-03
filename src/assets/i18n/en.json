@@ -15,7 +15,8 @@
             "linea1": "NO RECORDS FOUND",
             "linea2": "What you're looking for may have been deleted or is temporarily unavailable.",
             "linea3": "Try searching again.",
-            "construccion": "SITE UNDER CONSTRUCTION"
+            "construccion": "SITE UNDER CONSTRUCTION",
+            "inicio": "Return to the home page."
         },
         "ajustes": {
             "ajustesT": "SETTINGS",

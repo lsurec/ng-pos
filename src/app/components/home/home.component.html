@@ -63,7 +63,7 @@
             <div class="nombresAjustes">
                 <label class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</label>
                 <label class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</label>
-                <label class="ajustesMenu" *ngIf="temas">{{'pos.home.temaAplicacion' | translate}}</label>
+                <label class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</label>
             </div>
             <span class="spacer"></span>
             <span class="spacer" *ngIf="ajustes"></span>
@@ -72,12 +72,12 @@
         <div class="ajustes" *ngIf="ajustes">
             <!-- Vista Seleccionar Lenguajes -->
             <div class="vistaAjustes" (click)="verLenguajes()">
-                <p class="pTitulo">{{ 'pos.ajustes.idioma' | translate }}</p>
+                <p class="pTitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
                 <p class="pDescripcion">{{getNameByLanguageRegion(activeLang)}}</p>
             </div>
             <p class="separador"></p>
             <div class="vistaAjustes" (click)="verTema()">
-                <p class="pTitulo">{{'pos.home.modo' | translate}}</p>
+                <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
                 <p class="pDescripcion"> {{tema}} </p>
             </div>
             <p class="separador"></p>
@@ -166,18 +166,18 @@
         <!-- botones detalle usuario, ajustes y salir -->
         <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
             <!-- Ver informacion del usuario -->
-            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.boton.ajustes' | translate">
+            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
                 <mat-icon>settings</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- Salir o cerrar sesion -->
-            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.boton.salir' | translate">
+            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
                 <mat-icon>logout</mat-icon>
             </button>
         </mat-toolbar>
         <!-- boton regresar a detalle usuario -->
         <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.boton.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>
@@ -189,7 +189,7 @@
         </mat-toolbar>
         <!-- Regresar tema -->
         <mat-toolbar class="backColorNavBar" *ngIf="temas">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.boton.regresar' | translate">
+            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
                 <mat-icon>arrow_back</mat-icon>
             </button>
         </mat-toolbar>

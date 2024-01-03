@@ -1,0 +1,32 @@
+<!-- Pantalla de no encontrado -->
+<mat-toolbar-row class="head__sidenav">
+    <div class="descripcion-guardar">
+        <div class="botones">
+            <button (click)="goBack()" mat-icon-button aria-label class="btn"
+                matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-toolbar-row>
+<!-- Mostrar logos -->
+<!-- <app-barra-logos></app-barra-logos> -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>
+<div class="container-main">
+    <div class="row">
+        <div class="centrar">
+            <div id="notfound">
+                <div class="notfound">
+                    <!-- Mensaje de no encontrado -->
+                    <div class="notfound-404">
+                        <h1>{{ 'pos.progress.error' | translate }}</h1>
+                    </div>
+                    <h2>{{ 'pos.progress.construccion' | translate }}</h2>
+                    <p>{{ 'pos.progress.linea2' | translate }}</p>
+
+                    <a class="regresar" (click)="goBack()">{{ 'pos.progress.inicio' | translate }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

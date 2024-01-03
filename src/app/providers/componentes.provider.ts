@@ -1,3 +1,4 @@
+import { InConstructionComponent } from "../components/in-construction/in-construction.component";
 import { LocalConfigComponent } from "../components/local-config/local-config.component";
 import { NotFoundComponent } from "../components/not-found/not-found.component";
 import { ComponentesInterface } from "../interfaces/components.interface";
@@ -10,7 +11,7 @@ export const components: ComponentesInterface[] = [
     },
     {
         id: "En Construccion",
-        componente: NotFoundComponent,
+        componente: InConstructionComponent,
         visible: false,
     },
     {

@@ -35,7 +35,8 @@
             "registros": "Registros",
             "empresa": "Empresa",
             "localidad": "Localidad",
-            "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar."
+            "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar.",
+            "inicio": "Regresar a la página de inicio."
         },
         "toolTip": {
             "regresar": "regresar al menú principal",
