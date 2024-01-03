@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PreferencesService } from './services/preferences.service';
 import { LanguageInterface } from './interfaces/language.interface';
 import { languagesProvider, indexDefaultLang } from './providers/languages.provider';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
   idioma: number = indexDefaultLang;
 
   constructor(
-    private translate: TranslateService
+    private translate: TranslateService,
+    private _themeService: ThemeService
   ) {
     // localStorage.clear();
     // sessionStorage.clear();
@@ -33,6 +35,14 @@ export class AppComponent {
       this.activeLang = languagesProvider[this.idioma];
       this.translate.setDefaultLang(this.activeLang.lang);
     };
+
+
+    //buscar y asignar tema
+    
+    if (PreferencesService.theme == '1') {
+      this._themeService.isDarkTheme = true;
+      this._themeService.updateTheme();
+    }
 
   }
 
