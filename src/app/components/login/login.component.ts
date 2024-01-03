@@ -148,6 +148,7 @@ export class LoginComponent {
       this._dataUserService.empresas = this.empresas;
       this._dataUserService.estaciones = this.estaciones;
 
+      this._dataUserService.estaciones.push(this.estaciones[0]);
 
 
     if (this.empresas.length == 1 && this.estaciones.length == 1) {

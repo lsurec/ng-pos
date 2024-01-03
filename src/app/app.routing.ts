@@ -22,12 +22,7 @@ const appRoutes = [
     { path: RouteNamesService.LOCAL_CONFIG, component: LocalConfigComponent},
     { path: RouteNamesService.NOT_FOUND, component: NotFoundComponent},
     { path: RouteNamesService.HOME, component: HomeComponent},
-
-
     { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
-    // { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-    // { path: 'home', component: HomeComponent, canActivate: [HomeGuard] },
-    // { path: '**', redirectTo: '/notFound', pathMatch: 'full' as PathMatch },
     { path: '', redirectTo: RouteNamesService.SPLASH, pathMatch: 'full' as PathMatch },
 
 ]

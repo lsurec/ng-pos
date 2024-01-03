@@ -19,7 +19,7 @@
                             <p>{{ 'pos.configuracionLocal.empresas' | translate }}</p>
                             <span class="spacer"></span>
                             <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
-                            <p class="sin-negrita">({{empresas.length}})</p>
+                            <p class="sin-negrita">({{dataUserService.empresas.length}})</p>
                         </div>
                     </div>
                     <span class="spacer"></span>
@@ -28,13 +28,13 @@
                     <span class="spacer"></span>
                     <div class="seleccionar-empresa">
                         <mat-radio-group class="example-radio-group empresas" [(ngModel)]="empresaSelect">
-                            <mat-radio-button class="seleccionado" *ngFor="let empresa of empresas; let i = index"
+                            <mat-radio-button class="seleccionado" *ngFor="let empresa of dataUserService.empresas; let i = index"
                                 [ngClass]="i == 0 ? 'b-b':''" [value]="empresa" color="primary"
                                 (click)="empresaSelect = empresa">
                                 <p class="opciones">{{empresa.empresa_Nombre}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <p *ngIf="empresas.length -1 !== 0" class="linea"></p>
+                        <p *ngIf="dataUserService.empresas.length -1 !== 0" class="linea"></p>
                         <span class="spacer"></span>
                     </div>
                     <span class="spacer"></span>
@@ -59,7 +59,7 @@
                             <p>{{ 'pos.configuracionLocal.estaciones' | translate }}</p>
                             <span class="spacer"></span>
                             <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
-                            <p class="sin-negrita">({{estaciones.length}})</p>
+                            <p class="sin-negrita">({{dataUserService.estaciones.length}})</p>
                         </div>
                     </div>
                     <span class="spacer"></span>
@@ -68,13 +68,13 @@
                     <span class="spacer"></span>
                     <div class="seleccionar-localidad">
                         <mat-radio-group class="example-radio-group empresas" [(ngModel)]="estacionSelect">
-                            <mat-radio-button class="seleccionado " *ngFor="let estacion of estaciones; let i = index"
+                            <mat-radio-button class="seleccionado " *ngFor="let estacion of dataUserService.estaciones; let i = index"
                                 [ngClass]="i == 0 ? 'b-b':''" [value]="estacion" color="primary"
                                 (click)="estacionSelect = estacion">
                                 <p class="opciones">{{estacion.nombre}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <p *ngIf="estaciones.length -1 !== 0" class="linea"></p>
+                        <p *ngIf="dataUserService.estaciones.length -1 !== 0" class="linea"></p>
                     </div>
                     <span class="spacer"></span>
                 </div>
@@ -90,7 +90,7 @@
                     <span class="spacer"></span>
                 </div>
                 <div class="d-flex">
-                    <button mat-mini-fab class="boton-guardar" (click)="irAHome()"
+                    <button mat-mini-fab class="boton-guardar" (click)="saveSettings()"
                         [matTooltip]="'pos.configuracionLocal.guardar' | translate">
                         <mat-icon>save</mat-icon>
                     </button>
