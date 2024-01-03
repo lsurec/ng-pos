@@ -3,6 +3,10 @@ import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
+import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 
 @Component({
   selector: 'app-documento',
@@ -28,6 +32,9 @@ export class DocumentoComponent {
 
   constructor(
     private _dialog: MatDialog,
+    private _location: Location,
+    private translate: TranslateService,
+    private _router: Router,
   ) {
   }
 
@@ -122,12 +129,21 @@ export class DocumentoComponent {
       estado.afterClosed().subscribe(result => {
         if (result) {
           console.log(result[0]);
-          
+
           let cliente: ClienteInterface = result[0];
           this.cliente = cliente;
           this.selectedCliente = true;
         }
       })
     }
+  }
+
+  agregarCliente() {
+    this._router.navigate([RouteNamesService.NEW_ACCOUNT]);
+
+  }
+
+  goBack() {
+    this._location.back();
   }
 }
