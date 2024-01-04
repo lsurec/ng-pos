@@ -1,7 +1,10 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
 <mat-toolbar-row class="head__sidenav">
-
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
+        <mat-icon>logout</mat-icon>
+    </button>
 </mat-toolbar-row>
 
 <div class="container-main" *ngIf="!isLoading">
@@ -102,23 +105,12 @@
                 </div>
                 <div class="d-flex">
                     <button mat-mini-fab class="boton-guardar" (click)="saveSettings()"
-                        [matTooltip]="'pos.configuracionLocal.guardar' | translate">
+                        [matTooltip]="'pos.botones.guardar' | translate">
                         <mat-icon>save</mat-icon>
-                    </button>
-                    <span class="spacer"></span>
-                    <button mat-mini-fab class="boton-cerrar" (click)="cerrarSesion()"
-                        [matTooltip]="'pos.boton.salir' | translate">
-                        <mat-icon>logout</mat-icon>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- <div class="d-flex" *ngIf="empresas.length == 0 || estaciones.length == 0">
-            <span class="spacer"></span>
-            <p class="alerta">No se encontraron empresas y estaciones de trabajo, comuniquese con el Departamento de
-                Soporte.</p>
-            <span class="spacer"></span>
-        </div> -->
     </div>
 </div>
 

@@ -5,7 +5,10 @@
             "inactivo": "Inactive",
             "modo": "Dark Mode",
             "descripcionTema": "Adjusts the appearance of the application to reduce glare and give your eyes a break.",
-            "temaAplicacion": "APPLICATION THEME"
+            "temaAplicacion": "APPLICATION THEME",
+            "noAsignado": "Not assigned",
+            "tituloCerrar": "Sign off",
+            "borraranDatos": "Unsaved data will be lost and you will need to log in again. Are you sure?"
         },
         "login": {
             "correo": "User",

@@ -14,7 +14,6 @@ import { components } from 'src/app/providers/componentes.provider';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { activo, borraranDatos, cancelar, inactivo, noAsignado, ok, salioMal, tituloCerrar } from 'src/app/providers/mensajes.provider';
 import { EventService } from 'src/app/services/event.service';
-import { MensajesService } from 'src/app/services/mensajes.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -134,16 +133,16 @@ export class HomeComponent {
     this.temaOscuro = themeService.isDarkTheme;
 
     if (this.temaOscuro == true) {
-      this.tema = MensajesService.findValueLrCode(activo, this.activeLang);
+      this.tema = this.translate.instant('pos.home.activo');
     } else {
-      this.tema = MensajesService.findValueLrCode(inactivo, this.activeLang);
+      this.tema = this.translate.instant('pos.home.inactivo');
     }
   };
 
   //cuando la informacion de los detalles esta vacia
   resolveObject(objeto: any): string {
     if (objeto == null)
-      return MensajesService.findValueLrCode(noAsignado, this.activeLang);
+      return this.translate.instant('pos.home.noAsignado');
     return objeto;
   };
 
@@ -210,10 +209,10 @@ export class HomeComponent {
   async cerrarSesion(): Promise<void> {
     let verificador: boolean = await this._widgetsService.openDialogActions(
       {
-        title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
-        description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
-        verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
-        falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
+        title: this.translate.instant('pos.home.tituloCerrar'),
+        description: this.translate.instant('pos.home.borraranDatos'),
+        verdadero: this.translate.instant('pos.botones.aceptar'),
+        falso: this.translate.instant('pos.botones.cancelar'),
       }
     );
 
@@ -266,7 +265,7 @@ export class HomeComponent {
     for (const item of this.menuData) {
       // TODO:Reemplazar
       //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await this._menu.getDisplays(this.user,this.token,item.application.application)
+      let resDisplay: ResApiInterface = await this._menu.getDisplays(this.user, this.token, item.application.application)
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
@@ -456,10 +455,10 @@ export class HomeComponent {
     // this.temaOscuro ? StorageService.tema = '1' : StorageService.tema = '0';
     if (this.temaOscuro == true) {
       PreferencesService.theme = '1';
-      this.tema = MensajesService.findValueLrCode(activo, this.activeLang);
+      this.tema = this.translate.instant('pos.home.activo');
     } else {
       PreferencesService.theme = '0';
-      this.tema = MensajesService.findValueLrCode(inactivo, this.activeLang);
+      this.tema = this.translate.instant('pos.home.inactivo');
     }
     this.verDetalles();
   }

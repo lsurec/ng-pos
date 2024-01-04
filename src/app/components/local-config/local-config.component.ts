@@ -22,7 +22,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
     LocalSettingsService,
   ]
 })
-export class LocalConfigComponent implements OnInit{
+export class LocalConfigComponent implements OnInit {
   //Declaracion de variables
   nonSelect: string = ''; //frase que indica que no se ha seleccionado empresa o estacion
   isLoading: boolean = false; //pantalla de carga
@@ -47,7 +47,7 @@ export class LocalConfigComponent implements OnInit{
     private _router: Router,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
-    private _localSettingsService:LocalSettingsService,
+    private _localSettingsService: LocalSettingsService,
 
 
   ) {
@@ -57,7 +57,7 @@ export class LocalConfigComponent implements OnInit{
     this.loadData();
   }
 
-  async loadData(){
+  async loadData() {
     let user = PreferencesService.user;
     let token = PreferencesService.token;
 
@@ -94,13 +94,13 @@ export class LocalConfigComponent implements OnInit{
     }
 
     this.estaciones = resEstacion.response;
-    
-    
-    if(this.estaciones.length == 1){
+
+
+    if (this.estaciones.length == 1) {
       this.estacionSelect = this.estaciones[0];
     }
 
-    if(this.empresas.length == 1){
+    if (this.empresas.length == 1) {
       this.empresaSelect = this.empresas[0];
     }
 
@@ -123,17 +123,17 @@ export class LocalConfigComponent implements OnInit{
   }
 
   async cerrarSesion() {
-    // //Cerrar sesion
-    // let verificador = await this._widgetsService.openDialogActions(
-    //   {
-    //     title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
-    //     description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
-    //     verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
-    //     falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
-    //   }
-    // );
+    //Cerrar sesion
+    let verificador: boolean = await this._widgetsService.openDialogActions(
+      {
+        title: this.translate.instant('pos.home.tituloCerrar'),
+        description: this.translate.instant('pos.home.borraranDatos'),
+        verdadero: this.translate.instant('pos.botones.aceptar'),
+        falso: this.translate.instant('pos.botones.cancelar'),
+      }
+    );
 
-    // if (!verificador) return;
+    if (!verificador) return;
 
     localStorage.removeItem("token");
     localStorage.removeItem("name");

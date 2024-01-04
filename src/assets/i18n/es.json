@@ -5,7 +5,10 @@
             "inactivo": "Desactivado",
             "modo": "Modo Oscuro",
             "descripcionTema": "Ajusta el aspecto de la aplicación para reducir el reflejo y dar un descanso a la vista.",
-            "temaAplicacion": "TEMA DE LA APLICACIÓN"
+            "temaAplicacion": "TEMA DE LA APLICACIÓN",
+            "noAsignado": "No asignado",
+            "tituloCerrar": "Cerrar sesión",
+            "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?"
         },
         "login": {
             "correo": "Usuario",
