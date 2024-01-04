@@ -95,7 +95,7 @@ export class HomeComponent {
   // Mostrar componente datos de usuario
 
 
-  
+
   constructor(
     //Declaracion de variables privadas
     private _router: Router,
@@ -221,7 +221,7 @@ export class HomeComponent {
     );
 
     if (!verificador) return;
-    
+
     PreferencesService.closeSession();
 
     //Regresar a Login
@@ -232,14 +232,14 @@ export class HomeComponent {
   // Funcion para llamar datos para el menu (Application y Display)
   async loadDataMenu(): Promise<void> {
 
-    //TODO:remplazar
-    let resApplication: ResApiInterface = await this._menu.getAplicaciones(this.user, this.token);
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
+
+    let resApplication: ResApiInterface = await this._menu.getAplicaciones(user, token);
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
-      console.log(resApplication.response);
-      console.log(resApplication.storeProcedure);
+      this._widgetsService.showErrorAlert(resApplication)
       return;
     };
 
@@ -260,15 +260,12 @@ export class HomeComponent {
 
     // For asyncrono para obtener los displays.
     for (const item of this.menuData) {
-      // TODO:Reemplazar
       //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await this._menu.getDisplays(this.user, this.token, item.application.application)
+      let resDisplay: ResApiInterface = await this._menu.getDisplays(user, token, item.application.application)
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
-        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
-        console.error(resDisplay.response);
-        console.error(resDisplay.storeProcedure);
+        this._widgetsService.showErrorAlert(resDisplay);
 
         return;
       };
@@ -422,20 +419,24 @@ export class HomeComponent {
     };
   };
 
-  //TODO: verificar de forma inversa
   //Asigna los nodos padres e hijos.
   asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]) {
-    for (let indexPadre = padres.length - 1; indexPadre >= 0; indexPadre--) {
-      const padre = padres[indexPadre];
-      for (let indexHijo = hijos.length - 1; indexHijo >= 0; indexHijo--) {
-        const hijo = hijos[indexHijo];
+    for (let indexPadre = 0; indexPadre < padres.length; indexPadre++) {
+      const padre: MenuInterface = padres[indexPadre];
+      for (let indexHijo = 0; indexHijo < hijos.length; indexHijo++) {
+        const hijo: MenuInterface = hijos[indexHijo];
+        // asignacion de elementos hijos al padre. 
         if (padre.idChild == hijo.idFather) {
+          //Asignacion del elemento hijo.
           padre.children.push(hijo);
+          // Elimina el hijo de la lista de hijos
           hijos.splice(indexHijo, 1);
+          // Llamar a la misma funcion usando recursividad para volver a ejecutarse
           this.asignarNodos(padre.children, hijos);
         };
       };
     };
+    //Retornar el menu completo con la estructura armada
     return padres;
   };
 

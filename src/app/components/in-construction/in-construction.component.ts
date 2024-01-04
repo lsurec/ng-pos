@@ -17,4 +17,10 @@ export class InConstructionComponent {
   goBack() {
     this._location.back();
   }
+
+  //  //regresar a la pantalla anterior
+  //  backPage(): void {
+  //   this._eventService.emitCustomEvent(false)
+  // }
+
 }

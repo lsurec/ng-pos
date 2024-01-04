@@ -68,7 +68,7 @@ export class MenuService {
             {
                 "Content-Type": "application/json",
                 "Authorization": "bearer " + token,
-                "app": application.toString(),
+                "application": application.toString(),
                 "user": user,
             }
         )

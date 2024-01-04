@@ -1,12 +1,13 @@
 import { InConstructionComponent } from "../components/in-construction/in-construction.component";
 import { LocalConfigComponent } from "../components/local-config/local-config.component";
 import { NotFoundComponent } from "../components/not-found/not-found.component";
+import { FacturaComponent } from "../displays/prc_documento_3/components/factura/factura.component";
 import { ComponentesInterface } from "../interfaces/components.interface";
 
 export const components: ComponentesInterface[] = [
     {
-        id: "Calendario & Tarea",
-        componente: NotFoundComponent,
+        id: "shrLocalConfig",
+        componente: LocalConfigComponent,
         visible: false,
     },
     {
@@ -15,18 +16,8 @@ export const components: ComponentesInterface[] = [
         visible: false,
     },
     {
-        id: "Configuración Local",
-        componente: LocalConfigComponent,
-        visible: false,
-    },
-    {
-        id: "Tarea",
-        componente: NotFoundComponent,
-        visible: false,
-    },
-    {
-        id: "Detalle de Tarea",
-        componente: NotFoundComponent,
+        id: "prcdocumento_3",
+        componente: FacturaComponent,
         visible: false,
     }
 ]
