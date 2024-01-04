@@ -9,7 +9,7 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 0px;
     padding-right   : 0px;
     width           : 380px;
-    height          : 430px;
+    height          : 750px;
     background-color: $background-oficial;
 }
 
@@ -17,7 +17,7 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 10px 20px;
     padding-right   : 0px;
     width           : 400px;
-    height          : 350px;
+    height          : 750px;
     background-color: $background-oficial;
 }
 
@@ -200,6 +200,11 @@ p {
     font-size     : 14px;
     font-weight   : 550;
     padding-bottom: 5px;
+}
+
+.textos{
+    font-size: 12px;
+    font-size: 400;
 }
 
 .bodegas {

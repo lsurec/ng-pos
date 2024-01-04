@@ -43,14 +43,22 @@
                         </mat-option>
                     </mat-select>
                 </div>
-                <!-- <div class="menus">
+                <div class="menus">
                     <p class="subtitulo">Tipo precio</p>
-                    <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="bodega">
-                        <mat-option *ngFor="let bodega of bodegas" [value]="bodega">
-                            {{bodega}}
+                    <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="precio">
+                        <mat-option *ngFor="let precio of precios" [value]="precio">
+                            {{precio}}
                         </mat-option>
                     </mat-select>
-                </div> -->
+                </div>
+                <div class="menus">
+                    <p class="subtitulo">Precio Unitario</p>
+                    <p class="textos">Q {{precioProducto}}.00 </p>
+                </div>
+                <div class="menus dFlex">
+                    <span class="spacer"></span>
+                    <p class="subtitulo">Total: Q {{total}}.00</p>
+                </div>
             </div>
         </div>
     </div>

@@ -14,6 +14,8 @@ export class ProductoComponent {
   cantidad: number = 1;
   bodega!: string;
 
+  precioProducto: number = 65.00;
+  total: number = 0.00;
   bodegas: string[] = [
     "(1) COCINA | Existencia (1000.00)"
   ];
@@ -34,13 +36,19 @@ export class ProductoComponent {
 
   sumar() {
     this.cantidad++;
+    let unidades: number = this.cantidad;
+    this.total = this.precioProducto * unidades;
   }
 
   restar() {
     this.cantidad--;
+    let unidades: number = this.cantidad;
+    this.total = this.precioProducto * unidades;
+
     if (this.cantidad <= 0) {
       this.cantidad = 0;
     }
+
   }
   //cerrar dialogo
   closeDialog(): void {
