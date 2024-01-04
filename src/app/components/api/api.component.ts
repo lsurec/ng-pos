@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ClipboardService } from 'src/app/services/clipboard.service';
 import { HelloService } from 'src/app/services/hello.service';
@@ -41,7 +42,7 @@ export class ApiComponent {
 
 
     if (!this.url) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'), this.translate.instant('pos.ajustes.aceptar'))
+      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'))
       return;
     }
 
@@ -56,7 +57,7 @@ export class ApiComponent {
 
     // Si no contiene "/api/", mostrar un mensaje y devolver undefined
     if (!containsApi) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'), this.translate.instant('pos.ajustes.aceptar'))
+      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'))
 
       return;
     }
@@ -74,23 +75,6 @@ export class ApiComponent {
 
 
     if (!res.status) {
-      this._widgetsService.openSnackbar("Algo salió mal, intentalo mas tarder.", "Ok");
-      return;
-    }
-
-    this._widgetsService.openSnackbar("Url configurada correctamente.", "Ok");
-
-
-
-    PreferencesService.baseUrl = result;
-
-    this._router.navigate([RouteNamesService.LOGIN]);
-
-
-  }
-
-  async cambiar() {
-    if (!this.url) {
 
       let verificador = await this._widgetsService.openDialogActions(
         {
@@ -100,15 +84,36 @@ export class ApiComponent {
           falso: this.translate.instant('pos.botones.aceptar'),
         }
       );
+
       if (!verificador) return;
+
+
+      let dateNow: Date = new Date();
+
+      let error: ErrorInterface = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+
+      }
+
+      PreferencesService.error = error;
+      this._router.navigate([RouteNamesService.ERROR]);
+
+      return;
     }
 
-    this._router.navigate([RouteNamesService.ERROR]);
-  }
+    //TODO:transalate
+    this._widgetsService.openSnackbar("Url configurada correctamente.");
 
-  //regresar a la pantalla anterior
-  goBack() {
-    this._location.back();
+
+
+    PreferencesService.baseUrl = result;
+
+    this._router.navigate([RouteNamesService.LOGIN]);
+
+
   }
 
 }

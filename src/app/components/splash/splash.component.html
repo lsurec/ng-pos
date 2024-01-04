@@ -1,7 +1,9 @@
 <!-- Pantalla de carga -->
-<div class="progress">
+<div class="progress" *ngIf="!showError">
     <div class="col-12 text-center">
         <!-- Imagen de carga -->
         <img src="assets/logo_demosoft.png" alt="{{ 'pos.progress.cargar' | translate }}">
     </div>
 </div>
+
+<app-no-connected   *ngIf="showError" [error]="error" [component]="name"></app-no-connected>

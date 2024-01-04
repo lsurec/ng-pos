@@ -1,6 +1,7 @@
 import { Injectable, Input } from "@angular/core";
 import { EmpresaInterface } from "../interfaces/empresa.interface";
 import { EstacionInterface } from "../interfaces/estacion.interface";
+import { ErrorInterface } from "../interfaces/error.interface";
 
 @Injectable()
 export class PreferencesService {
@@ -17,7 +18,14 @@ export class PreferencesService {
     private static urlKey = 'url';
     private static conKey = 'conStr';
     private static conStoragekey = 'conStorageStr';
+    private static errorKey = 'error';
 
+
+   static closeSession(){
+        localStorage.removeItem(PreferencesService.tokenStorageKey);
+        sessionStorage.removeItem(PreferencesService.tokenKey);
+
+    }
 
     //lenguaje
     @Input()
@@ -142,6 +150,16 @@ export class PreferencesService {
         let value = sessionStorage.getItem(this.conKey);
         if (!value) return "";
         return value;
+    }
+
+    @Input()
+    static set error(value: ErrorInterface) {
+        sessionStorage.setItem(this.errorKey, JSON.stringify(value));
+    }
+
+    static get error(): ErrorInterface {
+        let value = sessionStorage.getItem(this.errorKey);
+        return JSON.parse(value!);
     }
 
 }

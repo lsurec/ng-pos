@@ -3,6 +3,12 @@ import { DialogActionInterface } from "../interfaces/dialog-actions";
 import { DialogActionsComponent } from "../components/dialog-actions/dialog-actions.component";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { TranslateService } from "@ngx-translate/core";
+import { ErrorInterface } from "../interfaces/error.interface";
+import { PreferencesService } from "./preferences.service";
+import { RouteNamesService } from "./route.names.service";
+import { Router } from "@angular/router";
+import { ResApiInterface } from "../interfaces/res-api.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -11,19 +17,21 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class WidgetsService {
 
     //Inicializar snack
-    constructor(private _snackBar: MatSnackBar,
+    constructor(
+        private _snackBar: MatSnackBar,
         private _dialog: MatDialog,
+        private _translate: TranslateService,
+        private _router: Router,
+
     ) {
     }
 
     //Abrir o mostar  snackbar
-    openSnackbar(message: string, action: string) {
-        this._snackBar.open(message, action, { duration: 5 * 1000 })
+    openSnackbar(message: string) {
+        this._snackBar.open(message,this._translate.instant('pos.alertas.ok'), { duration: 5 * 1000 })
     }
 
-    openSnackbarID(message: string, action: string) {
-        this._snackBar.open(message, action, { duration: 15 * 1000 })
-    }
+ 
 
     //Abrir dialogo antes de cerrar sesion o salir
     openDialogActions(data: DialogActionInterface): Promise<boolean> {
@@ -45,5 +53,34 @@ export class WidgetsService {
             });
         });
     }
+
+    async showErrorAlert(res: ResApiInterface) {
+        let verificador = await this.openDialogActions(
+            {
+                title: this._translate.instant('pos.alertas.salioMal'),
+                description: this._translate.instant('pos.alertas.error'),
+                verdadero: this._translate.instant('pos.botones.informe'),
+                falso: this._translate.instant('pos.botones.aceptar'),
+            }
+        );
+
+        if (!verificador) return;
+
+
+        let dateNow: Date = new Date();
+
+        let error: ErrorInterface = {
+            date: dateNow,
+            description: res.response,
+            storeProcedure: res.storeProcedure,
+            url: res.url,
+
+        }
+
+        PreferencesService.error = error;
+        this._router.navigate([RouteNamesService.ERROR]);
+
+    }
+    
 
 }

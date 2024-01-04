@@ -6,6 +6,7 @@ import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplaysInterface } from 'src/app/interfaces/displays.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
@@ -16,6 +17,7 @@ import { activo, borraranDatos, cancelar, inactivo, noAsignado, ok, salioMal, ti
 import { EventService } from 'src/app/services/event.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 
@@ -92,6 +94,8 @@ export class HomeComponent {
   indiceSeleccionado: number = 0;
   // Mostrar componente datos de usuario
 
+
+  
   constructor(
     //Declaracion de variables privadas
     private _router: Router,
@@ -217,19 +221,12 @@ export class HomeComponent {
     );
 
     if (!verificador) return;
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
+    
+    PreferencesService.closeSession();
 
     //Regresar a Login
-    this._router.navigate(["/login"]);
+    this._router.navigate([RouteNamesService.LOGIN]);
 
-    //Limpiar storage del navegador
-    // localStorage.clear();
-    // sessionStorage.clear();
   };
 
   // Funcion para llamar datos para el menu (Application y Display)
@@ -240,7 +237,7 @@ export class HomeComponent {
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
       console.log(resApplication.response);
       console.log(resApplication.storeProcedure);
       return;
@@ -269,7 +266,7 @@ export class HomeComponent {
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
-        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
         console.error(resDisplay.response);
         console.error(resDisplay.storeProcedure);
 
@@ -428,22 +425,17 @@ export class HomeComponent {
   //TODO: verificar de forma inversa
   //Asigna los nodos padres e hijos.
   asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]) {
-    for (let indexPadre = 0; indexPadre < padres.length; indexPadre++) {
+    for (let indexPadre = padres.length - 1; indexPadre >= 0; indexPadre--) {
       const padre = padres[indexPadre];
-      for (let indexHijo = 0; indexHijo < hijos.length; indexHijo++) {
+      for (let indexHijo = hijos.length - 1; indexHijo >= 0; indexHijo--) {
         const hijo = hijos[indexHijo];
-        // asignacion de elementos hijos al padre. 
         if (padre.idChild == hijo.idFather) {
-          //Asignacion del elemento hijo.
           padre.children.push(hijo);
-          // Elimina el hijo de la lista de hijos
           hijos.splice(indexHijo, 1);
-          // Llamar a la misma funcion usando recursividad para volver a ejecutarse
           this.asignarNodos(padre.children, hijos);
         };
       };
     };
-    //Retornar el menu completo con la estructura armada
     return padres;
   };
 

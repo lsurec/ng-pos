@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
@@ -8,6 +8,8 @@ import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-splash',
@@ -19,22 +21,38 @@ import { WidgetsService } from 'src/app/services/widgets.service';
     WidgetsService,
   ]
 })
-export class SplashComponent {
+export class SplashComponent implements OnInit {
 
   //Lista de empresas y estaciones
   empresas: EmpresaInterface[] = [];
   estaciones: EstacionInterface[] = [];
+
+  error?: ErrorInterface;
+  showError: boolean = false;
+  name = RouteNamesService.SPLASH;
+
 
   constructor(
     private _router: Router,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
     private _localSettingsService: LocalSettingsService,
+    private _retryService: RetryService,
   ) {
 
     //Cargar Datos
     this.loadData();
+
   }
+
+  ngOnInit(): void {
+    this._retryService.splash$.subscribe(() => {
+      this.showError = false;
+      this.loadData();
+    });
+  }
+
+
 
   async loadData(): Promise<void> {
 
@@ -87,28 +105,43 @@ export class SplashComponent {
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      //TODO: Error view
-      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: resEmpresas.response,
+        storeProcedure: resEmpresas.storeProcedure,
+        url: resEmpresas.url,
+
+      }
 
       return;
     }
-    
+
     //Guardar Emoresas obtenidas
     empresas = resEmpresas.response;
 
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-    if (!resEstacion.status) {
-      this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-      //TODO: Error view
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
+
+    if (!resEstacion.status) {
+
+
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: resEstacion.response,
+        storeProcedure: resEstacion.storeProcedure,
+        url: resEstacion.url,
+
+      }
 
       return;
     }
@@ -119,7 +152,7 @@ export class SplashComponent {
       this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
       //TODO:translate
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`);
       return;
     }
 

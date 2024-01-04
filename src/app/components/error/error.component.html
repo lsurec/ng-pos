@@ -12,6 +12,7 @@
 
         <span class="spacer"></span>
 
+
         <!-- lita de detalles del error -->
         <div class="lista-detalles">
             <div class="display-flex">
@@ -19,7 +20,7 @@
                     <mat-icon>person</mat-icon>
                     <div class="datos-error">
                         <p class="subtitulos">{{ 'pos.error.usuario' | translate }}</p>
-                        <p class="informacion">Desa001</p>
+                        <p class="informacion">{{user.length == 0 ?"Indefinido":user}}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
@@ -27,11 +28,11 @@
                     <mat-icon>calendar_today</mat-icon>
                     <div class="datos-error">
                         <p class="subtitulos">{{ 'pos.error.fecha' | translate }}</p>
-                        <p class="informacion">22/12/2023 04:03 am</p>
+                        <p class="informacion">{{error.date | date}}</p>
                     </div>
                 </div>
             </div>
-            <div class="display-flex">
+            <!-- <div class="display-flex">
                 <div class="descripcion-error-doble">
                     <mat-icon>description</mat-icon>
                     <div class="datos-error">
@@ -47,45 +48,40 @@
                         <p class="informacion">3059339036289085</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="descripcion-error">
                 <mat-icon>domain</mat-icon>
                 <div class="datos-error">
                     <p class="subtitulos">{{ 'pos.error.empresa' | translate }}</p>
-                    <p class="informacion">Demosoft SA</p>
+                    <p class="informacion">{{empresa?.empresa_Nombre ?? "Indefinido"}}</p>
                 </div>
             </div>
             <div class="descripcion-error">
                 <mat-icon>home</mat-icon>
                 <div class="datos-error">
                     <p class="subtitulos">{{ 'pos.error.estacion' | translate }}</p>
-                    <p class="informacion">Principal</p>
+                    <p class="informacion">{{estacion?.nombre ?? "Indefinido"}}</p>
                 </div>
             </div>
             <div class="descripcion-error">
                 <mat-icon>cloud</mat-icon>
                 <div class="datos-error">
                     <p class="subtitulos">{{ 'pos.error.servicio' | translate }}</p>
-                    <p class="informacion">http://localhost:4200/login</p>
+                    <p class="informacion">{{error.url ?? "Indefinido"}}</p>
                 </div>
             </div>
             <div class="descripcion-error">
                 <mat-icon>cloud</mat-icon>
                 <div class="datos-error">
                     <p class="subtitulos">{{ 'pos.error.origen' | translate }}</p>
-                    <p class="informacion">No aplica</p>
+                    <p class="informacion">{{error.storeProcedure ?? "Indefinido"}}</p>
                 </div>
             </div>
             <div class="descripcion-error">
                 <mat-icon>report</mat-icon>
                 <div class="datos-error">
                     <p class="subtitulos">{{ 'pos.error.descripcion' | translate }}</p>
-                    <p class="informacion">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente, aliquid
-                        temporibus qui, deleniti earum aperiam quibusdam quaerat quia illo ab debitis praesentium quo
-                        officiis voluptas impedit, perspiciatis odit maiores quae nesciunt. Asperiores earum velit quae
-                        explicabo fugit nihil temporibus odio maiores ducimus quis. Veritatis ut sapiente reiciendis,
-                        sunt
-                        dicta ea.</p>
+                    <p class="informacion">{{error.description | json}}</p>
                 </div>
             </div>
         </div>
