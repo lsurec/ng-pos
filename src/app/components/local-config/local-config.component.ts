@@ -14,6 +14,8 @@ import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { DataUserService } from 'src/app/services/data-user.service';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-local-config',
@@ -26,10 +28,11 @@ import { DataUserService } from 'src/app/services/data-user.service';
     LocalSettingsService,
   ]
 })
-export class LocalConfigComponent implements OnInit{
+export class LocalConfigComponent implements OnInit {
   //Declaracion de variables
   nonSelect: string = ''; //frase que indica que no se ha seleccionado empresa o estacion
   isLoading: boolean = false; //pantalla de carga
+  showError:boolean=false;
 
   //empresas y estaciones
   empresas: EmpresaInterface[] = [];
@@ -46,23 +49,33 @@ export class LocalConfigComponent implements OnInit{
   languages: LanguageInterface[] = languagesProvider;
   idioma: number = indexDefaultLang;
 
+  error?: ErrorInterface;
+  name = RouteNamesService.LOCAL_CONFIG;
+
+
+
   constructor(
     //Instancia de servicios a utilizar
     private _router: Router,
     private _eventService: EventService,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
-    private _localSettingsService:LocalSettingsService,
-
+    private _localSettingsService: LocalSettingsService,
+    private _retryService: RetryService,
 
   ) {
 
   }
   ngOnInit(): void {
     this.loadData();
+
+    this._retryService.config$.subscribe(() => {
+      this.showError = false;
+      this.loadData();
+    });
   }
 
-  async loadData(){
+  async loadData() {
     let user = PreferencesService.user;
     let token = PreferencesService.token;
 
@@ -72,9 +85,19 @@ export class LocalConfigComponent implements OnInit{
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      
+
       this.isLoading = false;
-      this._widgetsService.showErrorAlert(resEmpresas);
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: resEmpresas.response,
+        storeProcedure: resEmpresas.storeProcedure,
+        url: resEmpresas.url,
+
+      }
 
       return;
     }
@@ -88,19 +111,29 @@ export class LocalConfigComponent implements OnInit{
     this.isLoading = false;
 
     if (!resEstacion.status) {
-      this._widgetsService.showErrorAlert(resEstacion);
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: resEstacion.response,
+        storeProcedure: resEstacion.storeProcedure,
+        url: resEstacion.url,
+
+      }
 
       return;
     }
 
     this.estaciones = resEstacion.response;
-    
-    
-    if(this.estaciones.length == 1){
+
+
+    if (this.estaciones.length == 1) {
       this.estacionSelect = this.estaciones[0];
     }
 
-    if(this.empresas.length == 1){
+    if (this.empresas.length == 1) {
       this.empresaSelect = this.empresas[0];
     }
 
@@ -117,10 +150,10 @@ export class LocalConfigComponent implements OnInit{
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    
-    PreferencesService.empresa= this.empresaSelect;
+
+    PreferencesService.empresa = this.empresaSelect;
     PreferencesService.estacion = this.estacionSelect;
-    
+
     this._router.navigate([RouteNamesService.HOME]);
   }
 

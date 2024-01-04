@@ -14,17 +14,30 @@ export class NoConnectedComponent {
 
 
   @Input() error: ErrorInterface | undefined;
-  
+  @Input() component: string | undefined;
+
   constructor(
     private _router: Router,
-    private _retryService:RetryService,
+    private _retryService: RetryService,
 
   ) {
   }
 
 
   reload() {
-    this._retryService.splashRetry();
+
+    switch (this.component) {
+      case RouteNamesService.SPLASH:
+        this._retryService.splashRetry();
+        break;
+
+        case RouteNamesService.LOCAL_CONFIG:
+        this._retryService.configRetry();
+        break;
+
+      default:
+        break;
+    }
   }
 
   verInforme() {

@@ -13,4 +13,12 @@ export class RetryService {
   splashRetry() {
     this.splash.next();
   }
+
+  private config = new Subject<void>();
+
+  config$ = this.config.asObservable();
+
+  configRetry() {
+    this.config.next();
+  }
 }

@@ -1,104 +1,108 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<app-no-connected *ngIf="showError" [error]="error" [component]="name"></app-no-connected>
+<div *ngIf="!showError">
 
-<div class="container-main" *ngIf="!isLoading">
-    <app-logos></app-logos>
-    <div class="contenido">
-        <button (click)="backHome()" mat-icon-button aria-label class="flecha-regresar"
-            matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" *ngIf="regresar">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
-        <p class="titulo">{{ 'pos.configuracionLocal.titulo' | translate }}</p>
+    <div class="container-main" *ngIf="!isLoading">
+        <app-logos></app-logos>
+        <div class="contenido">
+            <button (click)="backHome()" mat-icon-button aria-label class="flecha-regresar"
+                matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" *ngIf="regresar">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
 
-        <div class="titulos-menu">
-            <div class="estaciones-trabajo">
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="registros">
-                        <div class="identificadores">
-                            <p>{{ 'pos.configuracionLocal.empresas' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
-                            <p class="sin-negrita">({{empresas.length}})</p>
+            <p class="titulo">{{ 'pos.configuracionLocal.titulo' | translate }}</p>
+
+            <div class="titulos-menu">
+                <div class="estaciones-trabajo">
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="registros">
+                            <div class="identificadores">
+                                <p>{{ 'pos.configuracionLocal.empresas' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
+                                <p class="sin-negrita">({{empresas.length}})</p>
+                            </div>
                         </div>
-                    </div>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="seleccionar-empresa">
-                        <mat-radio-group class="example-radio-group empresas" [(ngModel)]="empresaSelect">
-                            <mat-radio-button class="seleccionado" *ngFor="let empresa of empresas; let i = index"
-                                [ngClass]="i == 0 ? 'b-b':''" [value]="empresa" color="primary"
-                                (click)="empresaSelect = empresa">
-                                <p class="opciones">{{empresa.empresa_Nombre}}</p>
-                            </mat-radio-button>
-                        </mat-radio-group>
-                        <p *ngIf="empresas.length -1 !== 0" class="linea"></p>
                         <span class="spacer"></span>
                     </div>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="registros">
-                        <div class="identificadores">
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="seleccionar-empresa">
+                            <mat-radio-group class="example-radio-group empresas" [(ngModel)]="empresaSelect">
+                                <mat-radio-button class="seleccionado" *ngFor="let empresa of empresas; let i = index"
+                                    [ngClass]="i == 0 ? 'b-b':''" [value]="empresa" color="primary"
+                                    (click)="empresaSelect = empresa">
+                                    <p class="opciones">{{empresa.empresa_Nombre}}</p>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <p *ngIf="empresas.length -1 !== 0" class="linea"></p>
                             <span class="spacer"></span>
-                            <p>{{ 'pos.configuracionLocal.empresa' | translate }} </p>
-                            <p class="sin-negrita">{{empresaSelect?.empresa_Nombre ?? nonSelect}}</p>
                         </div>
+                        <span class="spacer"></span>
                     </div>
-                    <span class="spacer"></span>
-                </div>
-            </div>
-            <div class="estaciones-trabajo">
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="registros">
-                        <div class="identificadores">
-                            <p>{{ 'pos.configuracionLocal.estaciones' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
-                            <p class="sin-negrita">({{estaciones.length}})</p>
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="registros">
+                            <div class="identificadores">
+                                <span class="spacer"></span>
+                                <p>{{ 'pos.configuracionLocal.empresa' | translate }} </p>
+                                <p class="sin-negrita">{{empresaSelect?.empresa_Nombre ?? nonSelect}}</p>
+                            </div>
                         </div>
+                        <span class="spacer"></span>
                     </div>
-                    <span class="spacer"></span>
                 </div>
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="seleccionar-localidad">
-                        <mat-radio-group class="example-radio-group empresas" [(ngModel)]="estacionSelect">
-                            <mat-radio-button class="seleccionado " *ngFor="let estacion of estaciones; let i = index"
-                                [ngClass]="i == 0 ? 'b-b':''" [value]="estacion" color="primary"
-                                (click)="estacionSelect = estacion">
-                                <p class="opciones">{{estacion.nombre}}</p>
-                            </mat-radio-button>
-                        </mat-radio-group>
-                        <p *ngIf="estaciones.length -1 !== 0" class="linea"></p>
-                    </div>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalles">
-                    <span class="spacer"></span>
-                    <div class="registros">
-                        <div class="identificadores">
-                            <span class="spacer"></span>
-                            <p>{{ 'pos.configuracionLocal.localidad' | translate }}</p>
-                            <p class="sin-negrita">{{estacionSelect?.nombre ?? nonSelect}}</p>
+                <div class="estaciones-trabajo">
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="registros">
+                            <div class="identificadores">
+                                <p>{{ 'pos.configuracionLocal.estaciones' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p>{{ 'pos.configuracionLocal.registros' | translate }}</p>
+                                <p class="sin-negrita">({{estaciones.length}})</p>
+                            </div>
                         </div>
+                        <span class="spacer"></span>
                     </div>
-                    <span class="spacer"></span>
-                </div>
-                <div class="d-flex">
-                    <button mat-mini-fab class="boton-guardar" (click)="saveSettings()"
-                        [matTooltip]="'pos.configuracionLocal.guardar' | translate">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                    <span class="spacer"></span>
-                    <button mat-mini-fab class="boton-cerrar" (click)="cerrarSesion()"
-                        [matTooltip]="'pos.boton.salir' | translate">
-                        <mat-icon>logout</mat-icon>
-                    </button>
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="seleccionar-localidad">
+                            <mat-radio-group class="example-radio-group empresas" [(ngModel)]="estacionSelect">
+                                <mat-radio-button class="seleccionado "
+                                    *ngFor="let estacion of estaciones; let i = index" [ngClass]="i == 0 ? 'b-b':''"
+                                    [value]="estacion" color="primary" (click)="estacionSelect = estacion">
+                                    <p class="opciones">{{estacion.nombre}}</p>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <p *ngIf="estaciones.length -1 !== 0" class="linea"></p>
+                        </div>
+                        <span class="spacer"></span>
+                    </div>
+                    <div class="detalles">
+                        <span class="spacer"></span>
+                        <div class="registros">
+                            <div class="identificadores">
+                                <span class="spacer"></span>
+                                <p>{{ 'pos.configuracionLocal.localidad' | translate }}</p>
+                                <p class="sin-negrita">{{estacionSelect?.nombre ?? nonSelect}}</p>
+                            </div>
+                        </div>
+                        <span class="spacer"></span>
+                    </div>
+                    <div class="d-flex">
+                        <button mat-mini-fab class="boton-guardar" (click)="saveSettings()"
+                            [matTooltip]="'pos.configuracionLocal.guardar' | translate">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <button mat-mini-fab class="boton-cerrar" (click)="cerrarSesion()"
+                            [matTooltip]="'pos.boton.salir' | translate">
+                            <mat-icon>logout</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -29,6 +29,8 @@ export class SplashComponent implements OnInit {
 
   error?: ErrorInterface;
   showError: boolean = false;
+  name = RouteNamesService.SPLASH;
+
 
   constructor(
     private _router: Router,

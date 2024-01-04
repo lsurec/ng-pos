@@ -6,6 +6,7 @@ import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplaysInterface } from 'src/app/interfaces/displays.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
@@ -94,6 +95,8 @@ export class HomeComponent {
   indiceSeleccionado: number = 0;
   // Mostrar componente datos de usuario
 
+
+  
   constructor(
     //Declaracion de variables privadas
     private _router: Router,
