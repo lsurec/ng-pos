@@ -72,11 +72,9 @@ export class LocalConfigComponent implements OnInit{
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      //TODO: Error view
+      
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
+      this._widgetsService.showErrorAlert(resEmpresas);
 
       return;
     }
@@ -90,10 +88,7 @@ export class LocalConfigComponent implements OnInit{
     this.isLoading = false;
 
     if (!resEstacion.status) {
-      //TODO: Error view
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
+      this._widgetsService.showErrorAlert(resEstacion);
 
       return;
     }
@@ -117,13 +112,15 @@ export class LocalConfigComponent implements OnInit{
 
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'));
       return;
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-    // this.dataUserService.selectedEmpresa = this.empresaSelect;
-    // this.dataUserService.selectedEstacion = this.estacionSelect;
+    
+    PreferencesService.empresa= this.empresaSelect;
+    PreferencesService.estacion = this.estacionSelect;
+    
     this._router.navigate([RouteNamesService.HOME]);
   }
 

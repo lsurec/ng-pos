@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { UserInterface } from 'src/app/interfaces/user.interface';
-import { DataUserService } from 'src/app/services/data-user.service';
 import { EncryptService } from 'src/app/services/encrypt.service';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -50,7 +50,7 @@ export class LoginComponent {
   async login(): Promise<void> {
 
     if (!this.nombreInput || !this.claveInput) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
     //Interface de credenciales
@@ -68,10 +68,10 @@ export class LoginComponent {
     if (!res.status) {
       //TODO:Pantalla de error
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(res.response);
-      console.error(res.storeProcedure);
-      return
+
+      this._widgetsService.showErrorAlert(res);
+
+      return;
     };
 
     //Si el servicio se ejucuto ben
@@ -82,7 +82,7 @@ export class LoginComponent {
     if (!resLogin.success) {
 
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'));
       return;
     };
 
@@ -103,13 +103,11 @@ export class LoginComponent {
 
     // //Consumo de servicios
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
-      //TODO: Error view
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEmpresas.response);
-      console.error(resEmpresas.storeProcedure);
+      this._widgetsService.showErrorAlert(resEmpresas);
 
       return;
     }
@@ -127,11 +125,8 @@ export class LoginComponent {
     this.isLoading = false;
 
     if (!resEstacion.status) {
-      //TODO: Error view
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
-      console.error(resEstacion.response);
-      console.error(resEstacion.storeProcedure);
+      this._widgetsService.showErrorAlert(resEstacion);
 
       return;
     }
@@ -140,7 +135,7 @@ export class LoginComponent {
 
     if (estaciones.length == 0 || empresas.length == 0) {
       //TODO:translate
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`);
       return;
     }
 

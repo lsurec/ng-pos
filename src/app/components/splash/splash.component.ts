@@ -150,7 +150,7 @@ export class SplashComponent implements OnInit {
       this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
       //TODO:translate
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`, "Ok");
+      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`);
       return;
     }
 

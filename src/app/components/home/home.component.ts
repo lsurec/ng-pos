@@ -209,22 +209,7 @@ export class HomeComponent {
   };
   //Cerrar sesion
   async cerrarSesion(): Promise<void> {
-    let verificador: boolean = await this._widgetsService.openDialogActions(
-      {
-        title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
-        description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
-        verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
-        falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
-      }
-    );
-
-    if (!verificador) return;
-    
-    PreferencesService.closeSession();
-
-    //Regresar a Login
-    this._router.navigate([RouteNamesService.LOGIN]);
-
+   
   };
 
   // Funcion para llamar datos para el menu (Application y Display)
@@ -235,7 +220,7 @@ export class HomeComponent {
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApplication.status) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
       console.log(resApplication.response);
       console.log(resApplication.storeProcedure);
       return;
@@ -264,7 +249,7 @@ export class HomeComponent {
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
-        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'), this.translate.instant('pos.alertas.ok'));
+        this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.salioMal'));
         console.error(resDisplay.response);
         console.error(resDisplay.storeProcedure);
 

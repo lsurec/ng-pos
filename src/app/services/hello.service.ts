@@ -19,20 +19,20 @@ export class HelloService {
       this._getHello(apiUrl).subscribe(
         (response) => {
 
-          let res:ResApiInterface = {
+          let res: ResApiInterface = {
             response: response.body,
             status: true,
-            storeProcedure:"",
+            storeProcedure: "",
           }
 
-        resolve(res);
+          resolve(res);
         },
         (error) => {
 
-          let res:ResApiInterface = {
-            response: error.body,
+          let res: ResApiInterface = {
+            response: error,
             status: false,
-            storeProcedure:"",
+            storeProcedure: "",
           }
           resolve(res);
 
@@ -40,7 +40,7 @@ export class HelloService {
       );
 
     });
-   
+
   }
 
 }
