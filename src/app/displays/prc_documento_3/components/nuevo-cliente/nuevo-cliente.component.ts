@@ -34,7 +34,7 @@ export class NuevoClienteComponent {
 
   guardar() {
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'), this.translate.instant('pos.alertas.ok'));
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     } else {
       this._router.navigate([RouteNamesService.DOC]);

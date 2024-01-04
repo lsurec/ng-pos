@@ -1,4 +1,6 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected>
+<div *ngIf="!showError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
 <mat-toolbar-row class="head__sidenav">
     <span class="spacer"></span>
@@ -117,3 +119,4 @@
 <!-- Mostrar logos -->
 <!-- <app-barra-logos></app-barra-logos> -->
 <app-barra-logo-demosoft></app-barra-logo-demosoft>
+</div>

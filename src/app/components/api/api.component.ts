@@ -38,6 +38,8 @@ export class ApiComponent {
   }
 
 
+  goBack(){}
+
   async save() {
 
 
