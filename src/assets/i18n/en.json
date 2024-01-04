@@ -109,6 +109,9 @@
             "correo": "EMAIL",
             "direccion": "ADDRESS",
             "nueva": "New account"
+        },
+        "detalle": {
+            "filtro": "Filter"
         }
     }
 }

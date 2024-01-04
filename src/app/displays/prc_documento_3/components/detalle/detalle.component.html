@@ -1,1 +1,33 @@
-<p>detalle works!</p>
+<div class="documento">
+    <div class="buscar-producto">
+        <div class="informacion">
+            <form #searchForm="ngForm" (ngSubmit)="buscarProducto(searchText)" class="inputSearch">
+                <div class="buscar">
+                    <p class="subtitulo">{{ 'pos.detalle.filtro' | translate }}</p>
+                    <span class="spacer"></span>
+                    <div *ngFor="let option of filtrosBusqueda">
+                        <div class="chip" [class.selected]="option.id === selectedOption"
+                            (click)="onOptionChange(option.id)">{{ option.nombre }}
+                        </div>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <button class="iconoLupa" mat-icon-button>
+                        <mat-icon>search</mat-icon> </button>
+                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
+                        autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
+                </div>
+            </form>
+        </div>
+    </div>
+    <span class="spacer"></span>
+
+    <div class="producto">
+        <div class="" *ngFor="let producto of registros">
+            <div class="encontrado">
+                <p> {{producto.nombre}} </p>
+                <p> {{producto.sku}} </p>
+            </div>
+        </div>
+    </div>
+</div>

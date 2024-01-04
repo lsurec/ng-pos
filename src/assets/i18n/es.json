@@ -109,6 +109,9 @@
             "correo": "CORREO",
             "direccion": "DIRECCION",
             "nueva": "Nueva cuenta"
+        },
+        "detalle": {
+            "filtro": "Filtro"
         }
     }
 }

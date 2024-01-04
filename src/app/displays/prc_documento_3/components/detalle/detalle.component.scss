@@ -2,53 +2,20 @@ $color-transparent  : transparent; //fondo transparente
 $color-naranja      : #ff6f68; //texto, fondo y bordes
 $color-rosadito     : #ffa34f;
 $color-azul         : #134895;
+$color-bordes       : rgba(0, 0, 0, 0.12); //bordes menu
 $background-naranja : #DF9722; //resaltar naranja
 $color-gris-s       : #777; //sombra y texto gris
 $color-blanco       : #fff; //texto blanco
 $color-gris         : #efefef;
 
-// .container-main {
-//     height  : calc(100% - 128px);
-//     width   : 100%;
-//     overflow: hidden;
-// }
-
-// .head__sidenav {
-//     height       : 64px !important;
-//     padding      : 0px;
-//     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-//     padding      : 0px 10px;
-// }
-
-// .spacer {
-//     flex: 1 1 auto;
-// }
-
-// p {
-//     margin-bottom: 0px;
-// }
-
-// .dFlex {
-//     display    : flex;
-//     align-items: center;
-// }
-
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : #fff;
-$color-azul           : #134895;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
-
 .documento {
     padding: 10px 25px;
     display: flex;
+    height : 100%;
 }
 
-.serie-vendedor,
-.cliente {
+.buscar-producto,
+.producto {
     width: 50%;
 }
 
@@ -163,6 +130,7 @@ p {
 .buscar {
     padding-left: 5px;
     display     : flex;
+    align-items : center;
 }
 
 .buscar-opcion {
@@ -192,4 +160,8 @@ p {
     font-size  : 13px;
     padding    : 2px 1px;
     font-weight: 500;
+}
+
+.encontrado {
+    border-bottom: 1px solid $color-gris;
 }
