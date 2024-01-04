@@ -100,7 +100,7 @@ export class SplashComponent implements OnInit {
     let estaciones: EstacionInterface[] = [];
 
     // //Consumo de servicios
-    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, "token");
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
 
