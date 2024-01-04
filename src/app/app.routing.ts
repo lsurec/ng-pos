@@ -32,7 +32,9 @@ const appRoutes = [
     { path: RouteNamesService.DOC, component: DocumentoComponent },
     { path: RouteNamesService.NEW_ACCOUNT, component: NuevoClienteComponent },
 
-    { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
+    { path: RouteNamesService.LOGIN, component: LoginComponent},
+
+    // { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
     { path: '', redirectTo: RouteNamesService.SPLASH, pathMatch: 'full' as PathMatch },
 
 ]
