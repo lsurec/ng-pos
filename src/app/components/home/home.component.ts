@@ -209,7 +209,22 @@ export class HomeComponent {
   };
   //Cerrar sesion
   async cerrarSesion(): Promise<void> {
-   
+    let verificador: boolean = await this._widgetsService.openDialogActions(
+      {
+        title: MensajesService.findValueLrCode(tituloCerrar, this.activeLang),
+        description: MensajesService.findValueLrCode(borraranDatos, this.activeLang),
+        verdadero: MensajesService.findValueLrCode(ok, this.activeLang),
+        falso: MensajesService.findValueLrCode(cancelar, this.activeLang)
+      }
+    );
+
+    if (!verificador) return;
+    
+    PreferencesService.closeSession();
+
+    //Regresar a Login
+    this._router.navigate([RouteNamesService.LOGIN]);
+
   };
 
   // Funcion para llamar datos para el menu (Application y Display)
