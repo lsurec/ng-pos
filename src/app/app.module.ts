@@ -47,6 +47,7 @@ import { NoConnectedComponent } from './components/no-connected/no-connected.com
 import { InConstructionComponent } from './components/in-construction/in-construction.component';
 import { DetalleComponent } from './displays/prc_documento_3/components/detalle/detalle.component';
 import { ProductosEncontradosComponent } from './displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component';
+import { ProductoComponent } from './displays/prc_documento_3/components/producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ProductosEncontradosComponent } from './displays/prc_documento_3/compon
     InConstructionComponent,
     DetalleComponent,
     ProductosEncontradosComponent,
+    ProductoComponent,
   ],
   imports: [
     BrowserModule,

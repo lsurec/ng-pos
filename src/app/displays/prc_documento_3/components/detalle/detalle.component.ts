@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ProductoInterface } from '../../interfaces/producto.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 
 @Component({
   selector: 'app-detalle',
@@ -76,6 +78,12 @@ export class DetalleComponent {
   ];
 
   registros: ProductoInterface[] = [];
+  producto!: ProductoInterface;
+
+  constructor(
+    private _dialog: MatDialog,
+  ) { }
+
 
   buscarProducto(filtro: string) {
     // Limpiar la lista de registros antes de cada búsqueda
@@ -95,6 +103,18 @@ export class DetalleComponent {
       }
 
     });
+
+    if (this.registros.length > 1) {
+      let estado = this._dialog.open(ProductosEncontradosComponent, { data: this.registros })
+      estado.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result[0]);
+
+          let producto: ProductoInterface = result[0];
+          this.producto = producto;
+        }
+      })
+    }
 
   }
 

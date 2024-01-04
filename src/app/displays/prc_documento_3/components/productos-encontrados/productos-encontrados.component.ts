@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { ProductoInterface } from '../../interfaces/producto.interface';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -6,5 +8,34 @@ import { Component } from '@angular/core';
   styleUrls: ['./productos-encontrados.component.scss']
 })
 export class ProductosEncontradosComponent {
+
+  productos: ProductoInterface[] = [];
+  isLoading: boolean = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<ProductosEncontradosComponent>,
+    @Inject(MAT_DIALOG_DATA) public productosEncontrados: ProductoInterface[],
+    private _dialog: MatDialog,
+
+  ) {
+    this.productos = productosEncontrados;
+  }
+
+  //cerrar dialogo
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
+  productoSeleccionado(producto: ProductoInterface) {
+
+    let estado = this._dialog.open(ProductosEncontradosComponent, { data: producto })
+    estado.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result[0]);
+        let producto: ProductoInterface = result[0];
+      }
+    })
+
+  }
 
 }
