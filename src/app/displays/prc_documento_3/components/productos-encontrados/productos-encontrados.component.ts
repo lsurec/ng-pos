@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ProductoComponent } from '../producto/producto.component';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -28,7 +29,7 @@ export class ProductosEncontradosComponent {
 
   productoSeleccionado(producto: ProductoInterface) {
 
-    let estado = this._dialog.open(ProductosEncontradosComponent, { data: producto })
+    let estado = this._dialog.open(ProductoComponent, { data: producto })
     estado.afterClosed().subscribe(result => {
       if (result) {
         console.log(result[0]);

@@ -1,0 +1,209 @@
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
+$color-bordes         : #CED4DA; //bordes del calendario
+$color-azul           : #134895; //bordes y texto azul
+$color-negro          : #000; //bordes y texto azul
+
+
+.progress {
+    padding         : 0px;
+    padding-right   : 0px;
+    width           : 380px;
+    height          : 430px;
+    background-color: $background-oficial;
+}
+
+.dialog {
+    padding         : 10px 20px;
+    padding-right   : 0px;
+    width           : 400px;
+    height          : 350px;
+    background-color: $background-oficial;
+}
+
+.contenedor {
+    overflow-y   : auto;
+    overflow-x   : hidden;
+    padding-right: 20px;
+}
+
+.contenedor::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenedor::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.close {
+    color      : #aaa;
+    float      : left !important;
+    font-size  : 28px;
+    font-weight: bold;
+    cursor     : pointer;
+    text-align : center;
+}
+
+.close:hover,
+.close:focus {
+    color          : black;
+    text-decoration: none;
+    cursor         : pointer;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+p {
+    margin: 0px;
+    color : $color-negro;
+}
+
+.busqueda {
+    text-align : left !important;
+    font-size  : 14px;
+    width      : 100%;
+    font-weight: 450;
+    align-items: center;
+}
+
+.contenido-izquierdo {
+    //corregir ancho del contenedor
+    min-height      : 35px;
+    align-items     : center;
+    // margin-bottom: 5px;
+    width           : 100%;
+    padding-left    : 5px;
+    padding-right   : 5px;
+}
+
+.campo-obligatorio {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+}
+
+.obligatorio {
+    color       : #ff0000;
+    font-weight : bold;
+    font-size   : 12px;
+    padding-left: 3px;
+}
+
+.seleccionar {
+    display      : flex;
+    width        : 100%;
+    align-items  : center;
+    height       : 30px;
+    border-bottom: 1px solid $color-bordes;
+    font-weight  : 400;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.titulos {
+    display    : flex;
+    align-items: center;
+    padding    : 3px 0px;
+}
+
+.sku {
+    display    : flex;
+    align-items: center;
+    padding    : 5px;
+    font-size  : 15px;
+    font-weight: 600;
+}
+
+.cantidad {
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $color-bordes;
+    border-bottom: 0.5px solid $color-bordes;
+    color        : $color-azul;
+    width        : 40px;
+    text-align   : center;
+}
+
+.producto-cantidad {
+    display    : flex;
+    align-items: center;
+    padding    : 5px 0px;
+}
+
+.menus {
+    padding: 5px 0px;
+}
+
+.sumar,
+.restar {
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $color-bordes;
+    color       : $color-azul;
+    width       : 40px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width     : 100%;
+    text-align: center;
+}
+
+.sumar-restar:hover {
+    cursor: pointer;
+}
+
+.subtitulo {
+    font-size     : 14px;
+    font-weight   : 550;
+    padding-bottom: 5px;
+}
+
+.bodegas {
+    border-style : none;
+    border-bottom: 1px solid $color-bordes;
+    font-size    : 12px;
+}
