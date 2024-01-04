@@ -426,22 +426,17 @@ export class HomeComponent {
   //TODO: verificar de forma inversa
   //Asigna los nodos padres e hijos.
   asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]) {
-    for (let indexPadre = 0; indexPadre < padres.length; indexPadre++) {
+    for (let indexPadre = padres.length - 1; indexPadre >= 0; indexPadre--) {
       const padre = padres[indexPadre];
-      for (let indexHijo = 0; indexHijo < hijos.length; indexHijo++) {
+      for (let indexHijo = hijos.length - 1; indexHijo >= 0; indexHijo--) {
         const hijo = hijos[indexHijo];
-        // asignacion de elementos hijos al padre. 
         if (padre.idChild == hijo.idFather) {
-          //Asignacion del elemento hijo.
           padre.children.push(hijo);
-          // Elimina el hijo de la lista de hijos
           hijos.splice(indexHijo, 1);
-          // Llamar a la misma funcion usando recursividad para volver a ejecutarse
           this.asignarNodos(padre.children, hijos);
         };
       };
     };
-    //Retornar el menu completo con la estructura armada
     return padres;
   };
 
