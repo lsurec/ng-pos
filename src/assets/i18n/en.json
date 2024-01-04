@@ -39,11 +39,14 @@
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
             "empresas": "Companies",
-            "estaciones": "Workstations",
+            "estaciones": "Workstation",
             "registros": "Records",
             "empresa": "Company",
             "localidad": "Location",
-            "cambiar": "To make changes in Local Configuration, you must log out and log in again."
+            "cambiar": "To make changes in Local Configuration, you must log out and log in again.",
+            "inicio": "Return to the home page.",
+            "sinEmpresas": "No companies available, please contact the Support Department.",
+            "sinEstaciones": "No workstations available, please contact the Support Department."
         },
         "toolTip": {
             "regresar": "return to the main menu",

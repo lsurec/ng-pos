@@ -6,14 +6,10 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
-import { borraranDatos, cancelar, debeSeleccionar, noSeleccionado, ok, salioMal, tituloCerrar } from 'src/app/providers/mensajes.provider';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
-import { EventService } from 'src/app/services/event.service';
-import { MensajesService } from 'src/app/services/mensajes.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
-import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-local-config',
@@ -49,7 +45,6 @@ export class LocalConfigComponent implements OnInit{
   constructor(
     //Instancia de servicios a utilizar
     private _router: Router,
-    private _eventService: EventService,
     private translate: TranslateService,
     private _widgetsService: WidgetsService,
     private _localSettingsService:LocalSettingsService,
@@ -154,9 +149,4 @@ export class LocalConfigComponent implements OnInit{
     sessionStorage.clear();
   }
 
-  //regresar a la pantalla anterior
-  backHome(): void {
-    // this.newItemEvent.emit(false);
-    this._eventService.emitCustomEvent(false)
-  };
 }

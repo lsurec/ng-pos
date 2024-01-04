@@ -43,7 +43,9 @@
             "empresa": "Empresa",
             "localidad": "Localidad",
             "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar.",
-            "inicio": "Regresar a la página de inicio."
+            "inicio": "Regresar a la página de inicio.",
+            "sinEmpresas": "No hay empresas disponibles, comuniquese con el Departamento de Soporte.",
+            "sinEstaciones": "No hay estaciones de trabajo disponibles, comuniquese con el Departamento de Soporte."
         },
         "toolTip": {
             "regresar": "regresar al menú principal",
