@@ -120,7 +120,8 @@ export class PagoComponent {
       let pago: PagoInterface = {
         id: 1,
         nombre: this.tipoPago,
-        monto: this.total
+        monto: this.total,
+        checked: false
       }
       this.pagosAgregados.push(pago);
 
@@ -195,6 +196,23 @@ export class PagoComponent {
       this.verTipos();
     }
 
+  }
+
+  // Propiedad para el estado del checkbox principal
+  checkboxPrincipal = false;
+
+  // Función para cambiar el estado de todos los checkboxes
+  cambiarEstadoCheckboxes() {
+    this.checkboxPrincipal = !this.checkboxPrincipal;
+    this.pagosAgregados.forEach((pago) => (pago.checked = this.checkboxPrincipal));
+  }
+
+  // Función para manejar la eliminación de pagos seleccionados
+  eliminarPagosSeleccionados() {
+    const pagosSeleccionados = this.pagosAgregados.filter((pago) => pago.checked);
+    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
+    // También puedes realizar otras acciones necesarias aquí
   }
 }
 

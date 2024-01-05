@@ -15,4 +15,5 @@ export interface PagoInterface {
     referencia?: string;
     autorizacion?: string;
     banco?: string;
+    checked?: boolean; 
 }
