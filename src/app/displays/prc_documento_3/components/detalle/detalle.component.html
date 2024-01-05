@@ -19,6 +19,12 @@
                 </div>
             </form>
         </div>
+        <div class="informacion" *ngIf="producto">
+            <div class="encontrado">
+                <p> {{producto.nombre}} </p>
+                <p> {{producto.sku}} </p>
+            </div>
+        </div>
     </div>
     <span class="spacer"></span>
 

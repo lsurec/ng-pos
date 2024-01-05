@@ -20,8 +20,7 @@
                         <div class="restar" (click)="restar()">
                             <mat-icon class="sumar-restar">remove</mat-icon>
                         </div>
-                        <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
-                            placeholder="{{'pos.inputs.buscar' | translate}}">
+                        <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off">
                         <div class="sumar" (click)="sumar()">
                             <mat-icon class="sumar-restar">add</mat-icon>
                         </div>
@@ -58,6 +57,11 @@
                 <div class="menus dFlex">
                     <span class="spacer"></span>
                     <p class="subtitulo">Total: Q {{total}}.00</p>
+                </div>
+                <div class="dFlex">
+                    <button mat-stroked-button [mat-dialog-close]="[]">Cancelar</button>
+                    <span class="spacer"></span>
+                    <button mat-stroked-button (click)="enviar()">Agregar</button>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 0px;
     padding-right   : 0px;
     width           : 380px;
-    height          : 750px;
+    min-height      : 500px;
     background-color: $background-oficial;
 }
 
@@ -17,25 +17,25 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 10px 20px;
     padding-right   : 0px;
     width           : 400px;
-    height          : 750px;
+    min-height      : 500px;
     background-color: $background-oficial;
 }
 
 .contenedor {
-    overflow-y   : auto;
+    overflow-y   : hidden;
     overflow-x   : hidden;
     padding-right: 20px;
 }
 
-.contenedor::-webkit-scrollbar {
+.dialog::-webkit-scrollbar {
     width: 7px;
 }
 
-.contenedor::-webkit-scrollbar-track {
+.dialog::-webkit-scrollbar-track {
     background: $background-oficial;
 }
 
-.contenedor::-webkit-scrollbar-thumb {
+.dialog::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
     border          : 3px $background-oficial;
@@ -202,7 +202,7 @@ p {
     padding-bottom: 5px;
 }
 
-.textos{
+.textos {
     font-size: 12px;
     font-size: 400;
 }

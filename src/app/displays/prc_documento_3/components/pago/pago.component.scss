@@ -1,0 +1,169 @@
+$color-transparent    : transparent; //fondo transparente
+$color-rosadito       : #ff6f68; //texto, fondo y bordes
+$color-naranja        : #ffa34f;
+$color-azul           : #134895;
+$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
+$background-naranja   : #DF9722; //resaltar naranja
+$color-gris-s         : #777; //sombra y texto gris
+$color-blanco         : #fff; //texto blanco
+$color-gris           : #efefef;
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
+
+.detalle-pago {
+    padding   : 00px 25px;
+    // display: flex;
+    height    : calc(100vh - 190px);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.informacion {
+    padding: 10px 0px;
+    width  : 400px;
+}
+
+.detalles {
+    font-size: 14px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.titulo {
+    font-size  : 14px;
+    text-align : justify;
+    font-weight: 500;
+}
+
+.subtitulo {
+    font-size  : 12px;
+    font-weight: 500;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
+}
+
+.tipos-pago {
+    height          : 35px;
+    display         : flex;
+    align-items     : center;
+    background-color: $color-bordes;
+    width           : 100%;
+    margin          : 5px 0px;
+    padding         : 0px 10px;
+}
+
+.tipos-pago:hover {
+    cursor          : pointer;
+    background-color: $color-gris-s;
+    color           : $color-blanco;
+}
+
+.bancos {
+    height          : 35px;
+    display         : flex;
+    align-items     : center;
+    background-color: $color-bordes;
+    width           : 100%;
+    margin          : 5px 0px;
+    padding         : 0px 10px;
+}
+
+.bancos:hover {
+    cursor          : pointer;
+    background-color: $color-gris;
+    color           : $color-blanco;
+}
+
+.agregar-pago {
+    height          : 35px;
+    display         : flex;
+    align-items     : center;
+    background-color: $color-azul;
+    width           : 100%;
+    margin          : 5px 0px 10px;
+    padding         : 0px 10px;
+}
+
+.agregar-pago:hover {
+    background-color: $background-naranja;
+    cursor          : pointer;
+}
+
+.pago {
+    text-align : center;
+    font-size  : 12px;
+    font-weight: 500;
+    color      : $color-blanco;
+    width      : 100%;
+    cursor     : pointer;
+}
+
+.pagar {
+    padding : 10px 0px;
+    width   : 400px;
+    position: fixed;
+    bottom  : 64px;
+}
+
+.textos {
+    font-size  : 12px;
+    font-weight: 500;
+    color      : $color-azul;
+}
+
+.total {
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 10px;
+    outline      : none;
+    border-style : none;
+    border       : 1px solid $color-bordes;
+    color        : $color-azul;
+    text-align   : justify;
+    width        : 100%;
+    margin-bottom: 5px;
+}
+
+.flecha-regresar {
+    right    : 10px;
+    font-size: 20px;
+}
+
+.opciones {
+    font-size: 12px;
+}
+
+.lista-bancos {
+    height       : 170px;
+    overflow-y   : auto;
+    overflow-x   : hidden;
+    margin-bottom: 10px;
+}
+
+.lista-bancos::-webkit-scrollbar {
+    width: 7px;
+}
+
+.lista-bancos::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.lista-bancos::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}

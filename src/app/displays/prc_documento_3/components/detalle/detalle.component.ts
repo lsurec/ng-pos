@@ -3,6 +3,7 @@ import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
+import { ProductoComponent } from '../producto/producto.component';
 
 @Component({
   selector: 'app-detalle',

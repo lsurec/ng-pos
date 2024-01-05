@@ -55,4 +55,10 @@ export class ProductoComponent {
     this.dialogRef.close();
   }
 
+  enviar() {
+
+    this.dialogRef.close();
+
+  }
+
 }
