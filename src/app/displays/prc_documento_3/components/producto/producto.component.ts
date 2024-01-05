@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DetalleComponent } from '../detalle/detalle.component';
 
 @Component({
   selector: 'app-producto',
@@ -26,11 +27,10 @@ export class ProductoComponent {
   ]
 
   constructor(
-    public dialogRef: MatDialogRef<ProductoComponent>,
+    public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public productoSeleccionado: ProductoInterface,
   ) {
     this.producto = productoSeleccionado;
-    console.log(this.producto);
   }
 
 
@@ -57,7 +57,7 @@ export class ProductoComponent {
 
   enviar() {
 
-    this.dialogRef.close();
+    this.dialogRef.close(["total de ulidades", this.cantidad, "total a pagar", this.total]);
 
   }
 

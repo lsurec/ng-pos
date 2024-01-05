@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { TranslateService } from '@ngx-translate/core';
-import { BancosInterface, MetodoPagoInterface } from '../../interfaces/pagos.interface';
+import { BancosInterface, PagoInterface } from '../../interfaces/pagos.interface';
 
 @Component({
   selector: 'app-pago',
@@ -10,7 +10,9 @@ import { BancosInterface, MetodoPagoInterface } from '../../interfaces/pagos.int
 })
 export class PagoComponent {
 
-  pagos: MetodoPagoInterface[] = [
+  pagosAgregados: PagoInterface[] = [];
+
+  pagos: PagoInterface[] = [
     { id: 1, nombre: "EFECTIVO" },
     { id: 2, nombre: "MASTERCARD" },
     { id: 3, nombre: "VISA" },
@@ -33,7 +35,7 @@ export class PagoComponent {
 
   total: number = 165;
   autorizacion!: string;
-  referencia!: string;
+  referencia!: string
 
   constructor(
     private _widgetsService: WidgetsService,
@@ -85,25 +87,25 @@ export class PagoComponent {
   tipoPago!: string;
   bancoSelect!: BancosInterface;
 
-  verPago(tipo: MetodoPagoInterface) {
+  verPago(tipo: PagoInterface) {
 
     if (tipo.id == 1 && tipo.nombre == this.pagos[0].nombre) {
-      this.tipoPago = tipo.nombre
+      this.tipoPago = tipo.nombre;
       this.verEfectivo();
     }
 
     if (tipo.id == 2 && tipo.nombre == this.pagos[1].nombre) {
-      this.tipoPago = tipo.nombre
+      this.tipoPago = tipo.nombre;
       this.verMastercard();
     }
 
     if (tipo.id == 3 && tipo.nombre == this.pagos[2].nombre) {
-      this.tipoPago = tipo.nombre
+      this.tipoPago = tipo.nombre;
       this.verVisa();
     }
 
     if (tipo.id == 4 && tipo.nombre == this.pagos[3].nombre) {
-      this.tipoPago = tipo.nombre
+      this.tipoPago = tipo.nombre;
       this.verCheque();
     }
   }
@@ -114,31 +116,64 @@ export class PagoComponent {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     } else {
+
+      let pago: PagoInterface = {
+        id: 1,
+        nombre: this.tipoPago,
+        monto: this.total
+      }
+      this.pagosAgregados.push(pago);
+
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this.verTipos();
     }
   }
 
   pagarVisa() {
-    if (!this.autorizacion && !this.referencia) {
+    if (!this.autorizacion || !this.referencia) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     } else {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
 
+      let pago: PagoInterface = {
+        id: 1,
+        nombre: this.tipoPago,
+        monto: this.total,
+        autorizacion: this.autorizacion,
+        referencia: this.referencia
+      }
+
+      this.pagosAgregados.push(pago);
+
+      console.log(this.pagosAgregados);
+
+
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this.verTipos();
     }
   }
 
   pagarMasterCard() {
-    if (!this.autorizacion && !this.referencia) {
+    if (!this.autorizacion || !this.referencia) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     } else {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      let pago: PagoInterface = {
+        id: 1,
+        nombre: this.tipoPago,
+        monto: this.total,
+        autorizacion: this.autorizacion,
+        referencia: this.referencia
+      }
 
+      this.pagosAgregados.push(pago);
+
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this.verTipos();
     }
   }
 
-  pagoCheque() {
+  pagarCheque() {
     if (!this.referencia) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
@@ -146,10 +181,19 @@ export class PagoComponent {
     if (!this.referencia || !this.bancoSelect) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.banco'));
     } else {
+      let pago: PagoInterface = {
+        id: 1,
+        nombre: this.tipoPago,
+        monto: this.total,
+        autorizacion: this.autorizacion,
+        referencia: this.referencia,
+        banco: this.bancoSelect.nombre
+      }
+
+      this.pagosAgregados.push(pago);
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
-
+      this.verTipos();
     }
-
 
   }
 }

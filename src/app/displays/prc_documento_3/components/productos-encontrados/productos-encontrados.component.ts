@@ -27,18 +27,4 @@ export class ProductosEncontradosComponent {
     this.dialogRef.close();
   }
 
-  productoSeleccionado(producto: ProductoInterface) {
-    this.dialogRef.close();
-
-    let estado = this._dialog.open(ProductoComponent, { data: producto })
-    estado.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result[0]);
-        let producto: ProductoInterface = result[0];
-
-      }
-    })
-
-  }
-
 }

@@ -109,13 +109,33 @@ export class DetalleComponent {
       let estado = this._dialog.open(ProductosEncontradosComponent, { data: this.registros })
       estado.afterClosed().subscribe(result => {
         if (result) {
-          console.log(result[0]);
+          // console.log(result[0]);
 
-          let producto: ProductoInterface = result[0];
-          this.producto = producto;
+          let productoSeleccionado: ProductoInterface = result;
+          console.log(productoSeleccionado);
+
+          if (!productoSeleccionado) {
+            console.log("no se selecciono ningun producto");
+            return
+          } else {
+            let estado = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
+            estado.afterClosed().subscribe(result => {
+              if (result) {
+                console.log(result);
+
+                // let producto: ProductoInterface = result[0];
+                // this.producto.nombre = producto.nombre;
+                // this.producto.sku = producto.sku;
+
+              }
+            })
+          }
+          // let producto: ProductoInterface = result[0];
+          // this.producto = producto;
         }
       })
     }
+
 
   }
 
