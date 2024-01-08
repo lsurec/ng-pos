@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ClienteInterface } from '../displays/prc_documento_3/interfaces/cliente.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,7 @@ export class EventService {
 
     verActualizar$ = this.verActualizar.asObservable();
 
-    verActualizarEvent(eventData: boolean) {
+    verActualizarEvent(eventData: ClienteInterface) {
         this.verActualizar.next(eventData);
     }
 

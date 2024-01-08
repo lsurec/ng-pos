@@ -5,6 +5,7 @@ import { RouteNamesService } from 'src/app/services/route.names.service';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { Location } from '@angular/common';
 import { EventService } from 'src/app/services/event.service';
+import { ClienteInterface } from '../../interfaces/cliente.interface';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./editar-cliente.component.scss']
 })
 export class EditarClienteComponent {
-  @Input() item!: string ; // decorate the property with @Input()
+  @Input() cuenta?: ClienteInterface; // decorate the property with @Input()
 
   nombre!: string;
   direccion!: string;

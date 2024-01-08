@@ -16,6 +16,8 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class DocumentoComponent {
 
+  @Output() newItemEvent = new EventEmitter<string>();
+
   switchState: boolean = false;
   serie!: string;
   series: string[] = [
@@ -146,7 +148,7 @@ export class DocumentoComponent {
   }
 
   actualizar() {
-    this._eventService.verActualizarEvent(true);
+    this._eventService.verActualizarEvent(this.cliente);
     // this.verActualizarCliente.emit(true);
   }
 

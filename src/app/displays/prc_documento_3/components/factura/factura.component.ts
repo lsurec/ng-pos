@@ -16,6 +16,8 @@ export class FacturaComponent {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
+  cuenta?: ClienteInterface;
+
   constructor(
     private router: Router,
     private _widgetService: WidgetsService,
@@ -28,6 +30,7 @@ export class FacturaComponent {
     });
 
     this._eventService.verActualizar$.subscribe((eventData) => {
+      this.cuenta = eventData;
       this.verActualizarCliente();
     });
 
