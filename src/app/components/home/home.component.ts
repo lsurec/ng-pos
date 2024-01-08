@@ -13,7 +13,6 @@ import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interf
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
-import { activo, borraranDatos, cancelar, inactivo, noAsignado, ok, salioMal, tituloCerrar } from 'src/app/providers/mensajes.provider';
 import { EventService } from 'src/app/services/event.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
