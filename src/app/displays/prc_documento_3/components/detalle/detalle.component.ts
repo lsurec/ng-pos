@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
@@ -80,6 +80,11 @@ export class DetalleComponent {
 
   registros: ProductoInterface[] = [];
   producto!: ProductoInterface;
+  // precio!: number;
+  // cantidad!: number;
+  // total!: number;
+
+  compras: CompraInterface[] = [];
 
   constructor(
     private _dialog: MatDialog,
@@ -106,26 +111,32 @@ export class DetalleComponent {
     });
 
     if (this.registros.length > 1) {
-      let estado = this._dialog.open(ProductosEncontradosComponent, { data: this.registros })
-      estado.afterClosed().subscribe(result => {
+      let productos = this._dialog.open(ProductosEncontradosComponent, { data: this.registros })
+      productos.afterClosed().subscribe(result => {
         if (result) {
-          // console.log(result[0]);
 
-          let productoSeleccionado: ProductoInterface = result;
+          let productoSeleccionado: ProductoInterface = result[0];
           console.log(productoSeleccionado);
 
           if (!productoSeleccionado) {
             console.log("no se selecciono ningun producto");
             return
           } else {
-            let estado = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
-            estado.afterClosed().subscribe(result => {
+            let producto = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
+            producto.afterClosed().subscribe(result => {
               if (result) {
                 console.log(result);
 
-                // let producto: ProductoInterface = result[0];
-                // this.producto.nombre = producto.nombre;
-                // this.producto.sku = producto.sku;
+                let producto: CompraInterface = result;
+
+                let compra: CompraInterface = {
+                  producto: producto.producto,
+                  cantidad: producto.cantidad,
+                  precioUnitario: producto.precioUnitario,
+                  total: producto.total,
+                }
+
+                this.compras.push(compra);
 
               }
             })

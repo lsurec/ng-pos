@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleComponent } from '../detalle/detalle.component';
 
@@ -31,6 +31,8 @@ export class ProductoComponent {
     @Inject(MAT_DIALOG_DATA) public productoSeleccionado: ProductoInterface,
   ) {
     this.producto = productoSeleccionado;
+
+    this.total = this.cantidad * this.precioProducto;
   }
 
 
@@ -57,7 +59,23 @@ export class ProductoComponent {
 
   enviar() {
 
-    this.dialogRef.close(["total de ulidades", this.cantidad, "total a pagar", this.total]);
+    let producto: ProductoInterface = {
+      sku: this.producto.sku,
+      nombre: this.producto.nombre,
+    }
+
+    this.producto = producto;
+
+    let compra: CompraInterface = {
+      producto: this.producto,
+      cantidad: this.cantidad,
+      precioUnitario: this.precioProducto,
+      total: this.total,
+    }
+    
+    console.log(compra);
+
+    this.dialogRef.close(compra);
 
   }
 
