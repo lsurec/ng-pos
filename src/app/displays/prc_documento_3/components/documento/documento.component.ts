@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-documento',
@@ -35,6 +36,7 @@ export class DocumentoComponent {
     private _location: Location,
     private translate: TranslateService,
     private _router: Router,
+    private _eventService: EventService,
   ) {
   }
 
@@ -139,11 +141,14 @@ export class DocumentoComponent {
   }
 
   agregarCliente() {
-    this._router.navigate([RouteNamesService.NEW_ACCOUNT]);
-
+    this._eventService.verCrearEvent(true);
+    // this.verNuevoCliente.emit(true);
   }
 
-  goBack() {
-    this._location.back();
+  actualizar() {
+    this._eventService.verActualizarEvent(true);
+    // this.verActualizarCliente.emit(true);
   }
+
+
 }

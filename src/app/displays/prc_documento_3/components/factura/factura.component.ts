@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
+import { ClienteInterface } from '../../interfaces/cliente.interface';
 
 @Component({
   selector: 'app-factura',
@@ -15,20 +16,6 @@ export class FacturaComponent {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
-  serie!: string;
-  series: string[] = [
-    "FAC M",
-    "FAC MX",
-    "FAC GT"
-  ]
-  vendedor!: string;
-  vendedores: string[] = [
-    "Proveedor",
-    "Vendedor 01",
-    "DEMOSOFT"
-  ]
-  switchState: boolean = false;
-
   constructor(
     private router: Router,
     private _widgetService: WidgetsService,
@@ -36,57 +23,27 @@ export class FacturaComponent {
     private _eventService: EventService,
   ) {
 
-  }
+    this._eventService.verCrear$.subscribe((eventData) => {
+      this.verNuevoCliente();
+    });
 
-  // Función para manejar el cambio de estado del switch
-  toggleSwitch(): void {
-    this.switchState = !this.switchState;
-  }
+    this._eventService.verActualizar$.subscribe((eventData) => {
+      this.verActualizarCliente();
+    });
 
-  documento: boolean = false;
-  detalle: boolean = true;
-  pago: boolean = false;
-
-  vistaDocumento() {
-    this.documento = true;
-    this.detalle = false;
-    this.pago = false;
-  }
-
-  vistaDetalle() {
-    this.detalle = true;
-    this.documento = false;
-    this.pago = false;
-  }
-
-  vistaPago() {
-    this.pago = true;
-    this.detalle = false;
-    this.documento = false;
-  }
-
-  searchText!: string;
-  selectedOption: number | null = 1;
-
-
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: "SKU",
-    },
-    {
-      id: 2,
-      nombre: "Descripción",
-    },
-  ];
-
-  buscarProducto() {
+    this._eventService.verDocumento$.subscribe((eventData) => {
+      this.verDocumento();
+    });
 
   }
 
-  onOptionChange(optionId: number) {
-    this.selectedOption = optionId;
-  }
+
+
+  vistaFactura: boolean = true;
+
+  nuevoCliente: boolean = false;
+  actualizarCliente: boolean = false;
+
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
@@ -101,6 +58,24 @@ export class FacturaComponent {
     this.sidenavend.close();
   }
 
+
+  verNuevoCliente() {
+    this.nuevoCliente = true;
+    this.actualizarCliente = false;
+    this.vistaFactura = false;
+  }
+
+  verActualizarCliente() {
+    this.actualizarCliente = true;
+    this.nuevoCliente = false;
+    this.vistaFactura = false;
+  }
+
+  verDocumento() {
+    this.vistaFactura = true;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+  }
 
   ngOnInit(): void {
   }
@@ -117,11 +92,6 @@ export class FacturaComponent {
     //return to login and delete de navigation route
     this.router.navigate(['/login']);
   }
-
-  // //regresar a la pantalla anterior.
-  // goBack(): void {
-  //   this.newItemEvent.emit(true);
-  // }
 
   goBack(): void {
     // this.newItemEvent.emit(false);

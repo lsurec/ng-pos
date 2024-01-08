@@ -115,7 +115,8 @@
             "telefono": "TELEFONO",
             "correo": "CORREO",
             "direccion": "DIRECCION",
-            "nueva": "Nueva cuenta"
+            "nueva": "Nueva cuenta",
+            "actualizar" : "Actualizar cuenta"
         },
         "detalle": {
             "filtro": "Filtro"

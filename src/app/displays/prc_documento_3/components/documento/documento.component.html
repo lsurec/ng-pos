@@ -52,7 +52,13 @@
         </div>
 
         <div class="informacion" *ngIf="selectedCliente">
-            <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
+            <div class="dFlex">
+                <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="actualizar()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
             <div class="dFlex">
                 <p class="detalles">{{ 'pos.documento.nit' | translate }}</p>
                 <span class="spacer"></span>
