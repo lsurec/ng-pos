@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { Router } from '@angular/router';
 import { WidgetsService } from 'src/app/services/widgets.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-factura',
@@ -11,6 +12,8 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./factura.component.scss']
 })
 export class FacturaComponent {
+
+  @Output() newItemEvent = new EventEmitter<boolean>();
 
   serie!: string;
   series: string[] = [
@@ -29,14 +32,12 @@ export class FacturaComponent {
   constructor(
     private router: Router,
     private _widgetService: WidgetsService,
-    private _location: Location
+    private _location: Location,
+    private _eventService: EventService,
   ) {
 
   }
 
-  goBack() {
-    this._location.back();
-  }
   // Función para manejar el cambio de estado del switch
   toggleSwitch(): void {
     this.switchState = !this.switchState;
@@ -115,5 +116,15 @@ export class FacturaComponent {
     sessionStorage.clear();
     //return to login and delete de navigation route
     this.router.navigate(['/login']);
+  }
+
+  // //regresar a la pantalla anterior.
+  // goBack(): void {
+  //   this.newItemEvent.emit(true);
+  // }
+
+  goBack(): void {
+    // this.newItemEvent.emit(false);
+    this._eventService.emitCustomEvent(false);
   }
 }
