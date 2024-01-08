@@ -358,7 +358,7 @@ export class HomeComponent {
       id: 0,
       idFather: null,
       idChild: null,
-      name: "Inicio",
+      name: "Aplicaciones", //TODO: translate
       route: '',
       children: this.menu,
     };
