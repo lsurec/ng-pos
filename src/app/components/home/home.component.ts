@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
-import { DisplaysInterface } from 'src/app/interfaces/displays.interface';
+import { DisplayInterface } from 'src/app/interfaces/displays.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
@@ -73,8 +73,6 @@ export class HomeComponent {
   //Guardar el nombre del usuario
   userName: string = '';
 
-  aplicaciones: AplicacionesInterface[] = [];
-  displays: DisplaysInterface[] = [];
   vistaMenu: string = '';
 
   //Variables para mostrar componentes segun el menu
@@ -84,7 +82,6 @@ export class HomeComponent {
 
   //MENU
   clickedItem?: number;
-  menuData: MenuDataInterface[] = [];
   menu: MenuInterface[] = []; // lista de menu completo
   // menu activo que el usuario ve en pantalla
   menuActive: MenuInterface[] = [];
@@ -232,69 +229,86 @@ export class HomeComponent {
   // Funcion para llamar datos para el menu (Application y Display)
   async loadDataMenu(): Promise<void> {
 
-    let user: string = PreferencesService.user;
-    let token: string = PreferencesService.token;
+    //limpiar datos
+    this.menuActive = [];
+    this.routeMenu = [];
+    this.menu = [];
 
-    let resApplication: ResApiInterface = await this._menu.getAplicaciones(user, token);
+
+    let menuData: MenuDataInterface[] = [];
+
+
+    let resApp: ResApiInterface = await this._menu.getAplicaciones(this.user, this.token);
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
-    if (!resApplication.status) {
-      this._widgetsService.showErrorAlert(resApplication)
+    if (!resApp.status) {
+      //TODO:Mostrar pantalla reintentar
+      this._widgetsService.showErrorAlert(resApp)
       return;
     };
 
     //guardar aplicaciones
-    let applicationList: AplicacionesInterface[] = resApplication.response;
-    //crear objetos para guardar Displays de cada aplicacion
-    applicationList.forEach(element => {
+    let applications: AplicacionesInterface[] = resApp.response;
 
-      let itemMenu: MenuDataInterface = {
-        application: element,
-        displays: []
-      };
+
+    menuData = [];
+
+
+    //crear objetos para guardar Displays de cada aplicacion
+    applications.forEach(element => {
+
       //guardo datos sin ordenar
-      this.menuData.push(
-        itemMenu
+      menuData.push(
+        {
+          application: element,
+          children: []
+        }
       );
     });
 
     // For asyncrono para obtener los displays.
-    for (const item of this.menuData) {
+    for (const app of menuData) {
       //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await this._menu.getDisplays(user, token, item.application.application)
+      let resDisplay: ResApiInterface = await this._menu.getDisplays(
+        this.user,
+        this.token,
+        app.application.application,
+      );
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
-        this._widgetsService.showErrorAlert(resDisplay);
 
+        //TODO:Mostrar pantalla reintentar
+        this._widgetsService.showErrorAlert(resDisplay);
         return;
+
       };
+
       //asignar displays a cada aplicacion 
-      let displayList: DisplaysInterface[] = resDisplay.response;
-      item.displays = displayList;
+      let displays: DisplayInterface[] = resDisplay.response;
+      app.children = displays;
+
     };
 
-    // Ejecuta funcion que separa displays
-    this.separarDisplay();
-  };
+    //separar nodos
+    menuData.forEach(item => {
 
-  //separar los displays de cada aplicacion 
-  separarDisplay(): void {
-    //  Funcion para separar Display Padre (nodo1) de el resto de Displays
-    this.menuData.forEach(app => {
-      // Las listas se declaran dentro del foreach para que en cada iteracion se vuelvan a declarar vacias
       let padres: MenuInterface[] = [];
       let hijos: MenuInterface[] = [];
 
-      app.displays.forEach(display => {
-        // Item que contiene la estructura de arbol de una application
-        let nodo: MenuInterface = {
+      //generar estructira de arbol
+      item.children.forEach(display => {
+
+          
+
+        let itemMenu: MenuInterface = {
           id: display.user_Display,
           name: display.name,
-          idChild: !(display.user_Display) ? display.user_Display : null,
-          idFather: !isNaN(display.user_Display_Father) ? display.user_Display_Father : null,
-          route: "", //TODO: asignar ruta
+          idChild: display.user_Display,
+          idFather: display.user_Display_Father,
+          route: display.display_URL_Alter ?? "En Construccion",
           children: [],
+          display: display,
           // Colores configurables para la seleccion de menu.
           colorBackground: display.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
           colorSelected: display.colorSelected ?? "#134895", // Color al para objeto seleccionado.
@@ -303,34 +317,37 @@ export class HomeComponent {
           colorMargenSelect: display.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
         };
 
-        // Separa y agrega los displays a dos listas.
-        if (!display.user_Display_Father) {
-          hijos.push(nodo);
+        if (display.user_Display_Father == null) {
+          
+          padres.push(itemMenu);
         } else {
-          padres.push(nodo)
-        };
+          hijos.push(itemMenu);
+          
+        }
+
       });
 
-      //armar nodos el forma de albol
-      let itemMenuApp: MenuInterface = {
-        id: app.application.application,
-        name: app.application.description,
-        idFather: null,
-        idChild: null,
-        route: '',
-        children: this.asignarNodos(padres, hijos),
-        // Colores parmetrizables para el menu.
-        colorBackground: app.application.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
-        colorSelected: app.application.colorSelected ?? "#134895", // Color seleccion objeto
-        colorFontNotSelect: app.application.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada)
-        colorFontSelect: app.application.colorFontSelect ?? "#FFFFFF", //Color para fuente Seleccionada
-        colorMargenSelect: app.application.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu
-      };
+      
+      
 
-      //asignar nodos de una aplicacion al menu
+      // agregar itemms a la lista propia
       this.menu.push(
-        itemMenuApp
+
+        {
+          name: item.application.description,
+          id: item.application.application,
+          route: "",
+          children: this.ordenarNodos(padres, hijos),
+          colorBackground: item.application.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
+          colorSelected: item.application.colorSelected ?? "#134895", // Color al para objeto seleccionado.
+          colorFontNotSelect: item.application.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada).
+          colorFontSelect: item.application.colorFontSelect ?? "#FFFFFF", //Color para fuente al ser seleccionada.
+          colorMargenSelect: item.application.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
+          idChild: null,
+          idFather: null,
+        }
       );
+
     });
 
     //Asignar nuevo contenido (vista activa)
@@ -345,9 +362,49 @@ export class HomeComponent {
       route: '',
       children: this.menu,
     };
+
     //Asignar recorrido de elementos
     this.addRouteMenu(primerElemento);
+
+
+
+
   };
+
+
+  ordenarNodos(padres: MenuInterface[], hijos: MenuInterface[]): MenuInterface[] {
+
+    
+    
+
+    //recorer los nodos principales
+
+    for (let index = 0; index < padres.length; index++) {
+      const padre = padres[index];
+      //recorrer los hijos de formma inversa para evitar problemas al eliminar
+      for (let i = hijos.length - 1; i >= 0; i--) {
+
+        //hiijo de la iteracion
+        const hijo = hijos[i];
+
+        //si el id del hijo es igaual al del padre asiganr hijo
+        if (padre.idChild == hijo.idFather) {
+          //asignar hijo al padre
+          padre.children.push(hijo);
+          //eliminar hijo asignado
+          hijos.splice(i, 1);
+          //Reoetir el proceso con lo shijos restantes hasta que no hayan mas hijos
+          this.ordenarNodos(padre.children, hijos);
+        }
+
+      }
+    }
+
+
+
+
+    return padres;
+  }
 
   addRouteMenu(menu: MenuInterface) {
     this.routeMenu.push(menu)

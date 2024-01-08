@@ -1,5 +1,5 @@
 import { AplicacionesInterface } from "./aplicaciones.interface";
-import { DisplaysInterface } from "./displays.interface";
+import { DisplayInterface } from "./displays.interface";
 
 export interface MenuInterface {
     name: string;
@@ -8,6 +8,7 @@ export interface MenuInterface {
     idFather: any;
     idChild: any;
     children: MenuInterface[];
+    display? :DisplayInterface;
     // colores 
     colorBackground?: string;    //Color de fonde de la app.
     colorFontNotSelect?: string; //Color de fuente no seleccionada.
@@ -18,5 +19,5 @@ export interface MenuInterface {
 
 export interface MenuDataInterface {
     application: AplicacionesInterface;
-    displays: DisplaysInterface[];
+    children: DisplayInterface[];
 }

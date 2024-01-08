@@ -1,4 +1,4 @@
-export interface DisplaysInterface {
+export interface DisplayInterface {
     user_Display:        number;
     user_Display_Father: any;
     userName:            string;
