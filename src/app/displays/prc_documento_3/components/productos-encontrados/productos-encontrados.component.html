@@ -26,8 +26,7 @@
                     <p>SKU</p>
                 </div>
                 <div class="" *ngFor="let producto of productos">
-                    <!-- <div class="seleccionar" [mat-dialog-close]="[producto]"> -->
-                    <div class="seleccionar" (click)="productoSeleccionado(producto)" >
+                    <div class="seleccionar" [mat-dialog-close]="[producto]">
                         <p> {{producto.nombre}} </p>
                         <span class="spacer"></span>
                         <p>{{producto.sku}}</p>

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ProductoComponent } from '../producto/producto.component';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -24,18 +25,6 @@ export class ProductosEncontradosComponent {
   //cerrar dialogo
   closeDialog(): void {
     this.dialogRef.close();
-  }
-
-  productoSeleccionado(producto: ProductoInterface) {
-
-    let estado = this._dialog.open(ProductosEncontradosComponent, { data: producto })
-    estado.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result[0]);
-        let producto: ProductoInterface = result[0];
-      }
-    })
-
   }
 
 }

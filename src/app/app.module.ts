@@ -48,6 +48,7 @@ import { InConstructionComponent } from './components/in-construction/in-constru
 import { DetalleComponent } from './displays/prc_documento_3/components/detalle/detalle.component';
 import { ProductosEncontradosComponent } from './displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from './displays/prc_documento_3/components/producto/producto.component';
+import { PagoComponent } from './displays/prc_documento_3/components/pago/pago.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { ProductoComponent } from './displays/prc_documento_3/components/product
     DetalleComponent,
     ProductosEncontradosComponent,
     ProductoComponent,
+    PagoComponent,
   ],
   imports: [
     BrowserModule,

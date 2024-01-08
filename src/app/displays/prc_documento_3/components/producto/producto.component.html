@@ -2,10 +2,10 @@
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="dFlex">
-            <span class="spacer"></span>
+        <div class="sku">
             <!-- Titulo -->
-            <p class="verDetalle">Productos encontrados</p>
+            <p>SKU:</p>
+            <p> {{producto.sku}} </p>
             <span class="spacer"></span>
             <!-- Cerrar dialogo -->
             <span class="close" (click)="closeDialog()">&times;</span>
@@ -13,21 +13,55 @@
         <hr>
         <div class="busqueda">
             <div class="contenido-izquierdo">
-                <div class="dFlex">
-                    <p class="campo-obligatorio">Registros:</p>
+                <div class="producto-cantidad">
+                    <p class="subtitulo">Cantidad</p>
                     <span class="spacer"></span>
-                    <!-- <p class="obligatorio">*</p> -->
+                    <div class="dFlex">
+                        <div class="restar" (click)="restar()">
+                            <mat-icon class="sumar-restar">remove</mat-icon>
+                        </div>
+                        <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off">
+                        <div class="sumar" (click)="sumar()">
+                            <mat-icon class="sumar-restar">add</mat-icon>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="titulos">
-                    <p>Producto</p>
+                    <p class="subtitulo">Descripcion</p>
                     <span class="spacer"></span>
-                    <p>SKU</p>
                 </div>
                 <div class="seleccionar">
                     <p> {{producto.nombre}} </p>
                     <span class="spacer"></span>
-                    <p>{{producto.sku}}</p>
+                </div>
+                <div class="menus">
+                    <p class="subtitulo">Bodega</p>
+                    <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="bodega">
+                        <mat-option *ngFor="let bodega of bodegas" [value]="bodega">
+                            {{bodega}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="menus">
+                    <p class="subtitulo">Tipo precio</p>
+                    <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="precio">
+                        <mat-option *ngFor="let precio of precios" [value]="precio">
+                            {{precio}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="menus">
+                    <p class="subtitulo">Precio Unitario</p>
+                    <p class="textos">Q {{precioProducto}}.00 </p>
+                </div>
+                <div class="menus dFlex">
+                    <span class="spacer"></span>
+                    <p class="subtitulo">Total: Q {{total}}.00</p>
+                </div>
+                <div class="dFlex">
+                    <button mat-stroked-button [mat-dialog-close]="[]">Cancelar</button>
+                    <span class="spacer"></span>
+                    <button mat-stroked-button (click)="enviar()">Agregar</button>
                 </div>
             </div>
         </div>

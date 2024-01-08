@@ -19,15 +19,25 @@
                 </div>
             </form>
         </div>
-    </div>
-    <span class="spacer"></span>
-
-    <div class="producto">
-        <!-- <div class="" *ngFor="let producto of registros">
+        <div class="informacion" *ngIf="producto">
             <div class="encontrado">
                 <p> {{producto.nombre}} </p>
                 <p> {{producto.sku}} </p>
             </div>
-        </div> -->
+        </div>
+    </div>
+    <span class="spacer"></span>
+
+    <div class="producto">
+        <div class="producto-seleccionado" *ngFor="let producto of compras">
+            <div class="dFlex">
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
+                <div class="descripcion-producto">
+                    <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
+                    <p class="info-producto">Precio unitario: {{producto.precioUnitario}}</p>
+                    <p class="info-producto">Precio total: {{producto.total}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

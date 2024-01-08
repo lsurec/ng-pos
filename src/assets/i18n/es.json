@@ -67,7 +67,9 @@
             "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo",
             "incorrecto": "Usuario o contraseña incorrectos",
             "error": "No se pudo completar el proceso de conexión al servicio. por favor, inténtalo de nuevo más tarde. ",
-            "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: "
+            "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: ",
+            "banco": "Seleccione una cuenta de banco para continuar.",
+            "tipoPago" : "Tipo de pago agregado correctamente"
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -117,6 +119,11 @@
         },
         "detalle": {
             "filtro": "Filtro"
+        },
+        "pago": {
+            "total": "Total",
+            "saldo": "Saldo",
+            "cambio": "Cambio"
         }
     }
 }
