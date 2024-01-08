@@ -7,7 +7,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 
@@ -18,7 +18,7 @@ import { RetryService } from 'src/app/services/retry.service';
   providers: [
     //Inyctar servicios
     LocalSettingsService,
-    WidgetsService,
+    NotificationsService,
   ]
 })
 export class SplashComponent implements OnInit {
@@ -35,7 +35,7 @@ export class SplashComponent implements OnInit {
   constructor(
     private _router: Router,
     private translate: TranslateService,
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private _localSettingsService: LocalSettingsService,
     private _retryService: RetryService,
   ) {

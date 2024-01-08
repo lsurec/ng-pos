@@ -14,7 +14,7 @@ import { ResApiInterface } from "../interfaces/res-api.interface";
     providedIn: 'root'
 })
 
-export class WidgetsService {
+export class NotificationsService {
 
     //Inicializar snack
     constructor(
@@ -28,10 +28,10 @@ export class WidgetsService {
 
     //Abrir o mostar  snackbar
     openSnackbar(message: string) {
-        this._snackBar.open(message,this._translate.instant('pos.alertas.ok'), { duration: 5 * 1000 })
+        this._snackBar.open(message, this._translate.instant('pos.alertas.ok'), { duration: 5 * 1000 })
     }
 
- 
+
 
     //Abrir dialogo antes de cerrar sesion o salir
     openDialogActions(data: DialogActionInterface): Promise<boolean> {
@@ -81,6 +81,24 @@ export class WidgetsService {
         this._router.navigate([RouteNamesService.ERROR]);
 
     }
-    
+
+    async showCloseSesionDialog() {
+        let verificador: boolean = await this.openDialogActions(
+            {
+                title: this._translate.instant('pos.home.tituloCerrar'),
+                description: this._translate.instant('pos.home.borraranDatos'),
+                verdadero: this._translate.instant('pos.botones.aceptar'),
+                falso: this._translate.instant('pos.botones.cancelar'),
+            }
+        );
+
+        if (!verificador) return;
+
+        PreferencesService.closeSession();
+
+        //Regresar a Login
+        this._router.navigate([RouteNamesService.LOGIN]);
+    }
+
 
 }

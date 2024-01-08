@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
@@ -20,7 +20,7 @@ export class NuevoClienteComponent {
 
   constructor(
     private _location: Location,
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private translate: TranslateService,
     private _router: Router,
 

@@ -12,7 +12,7 @@ import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,7 @@ export class LoginComponent {
   constructor(
     private translate: TranslateService,
     private _loginService: LoginService,
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private _localSettingsService: LocalSettingsService,
     private _router: Router,
     private _encryptService: EncryptService,
