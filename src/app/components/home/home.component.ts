@@ -368,13 +368,10 @@ export class HomeComponent {
 
 
 
-
   };
 
 
   ordenarNodos(padres: MenuInterface[], hijos: MenuInterface[]): MenuInterface[] {
-
-    
     
 
     //recorer los nodos principales
@@ -425,9 +422,10 @@ export class HomeComponent {
       for (let index = 0; index < this.components.length; index++) {
         const selectedComponent = this.components[index];
         //si el nombre del componente seleccionado conincide con algun componente agregado a la lista.
-        if (selectedComponent.id == itemMenu.name) {
+        if (selectedComponent.id.toLowerCase() == itemMenu.route.toLowerCase()) {
           //hacerlo visible
           this.components[index].visible = true;
+          
           return;
         };
       };
@@ -445,7 +443,8 @@ export class HomeComponent {
       return;
     };
 
-    this.changeMenuActive(itemMenu.children); this.addRouteMenu(itemMenu);
+    this.changeMenuActive(itemMenu.children);
+    this.addRouteMenu(itemMenu);
   };
 
   changeMenuActive(menuActive: MenuInterface[]): void {
