@@ -119,6 +119,7 @@ export class LoginComponent {
 
     //Guardar Emoresas obtenidas
     empresas = resEmpresas.response;
+    empresas.push(empresas[0]);
 
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
