@@ -6,6 +6,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-factura',
@@ -23,6 +24,7 @@ export class FacturaComponent {
     private _widgetService: NotificationsService,
     private _location: Location,
     private _eventService: EventService,
+    public dataUserService:DataUserService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {

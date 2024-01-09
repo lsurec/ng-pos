@@ -36,7 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LangComponent } from './components/lang/lang.component';
 import { ThemeComponent } from './components/theme/theme.component';
-import { DataUserService } from './services/data-user.service';
+import { DataUserService } from './displays/prc_documento_3/services/data-user.service';
 import { FacturaComponent } from './displays/prc_documento_3/components/factura/factura.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
