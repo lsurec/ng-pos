@@ -7,7 +7,7 @@ import { ClipboardService } from 'src/app/services/clipboard.service';
 import { HelloService } from 'src/app/services/hello.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -24,7 +24,7 @@ export class ApiComponent {
 
   constructor(
     private _router: Router,
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private _helloService: HelloService,
     private translate: TranslateService,
     private _clipboardService: ClipboardService,

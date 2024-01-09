@@ -1,25 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
-import { activo, borraranDatos, cancelar, inactivo, noAsignado, ok, salioMal, tituloCerrar } from 'src/app/providers/mensajes.provider';
 import { EventService } from 'src/app/services/event.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { RouteNamesService } from 'src/app/services/route.names.service';
 import { ThemeService } from 'src/app/services/theme.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +23,7 @@ import { WidgetsService } from 'src/app/services/widgets.service';
   styleUrls: ['./home.component.scss'],
   // Inyectar servicios
   providers: [
-    WidgetsService,
+    NotificationsService,
     MenuService,
   ]
 })
@@ -95,12 +91,11 @@ export class HomeComponent {
 
   constructor(
     //Declaracion de variables privadas
-    private _router: Router,
     private _menu: MenuService,
     private translate: TranslateService,
     private _eventService: EventService,
-    private _widgetsService: WidgetsService,
-    private themeService: ThemeService,
+    private _notificationsService: NotificationsService,
+    private themeService: ThemeService
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -210,21 +205,7 @@ export class HomeComponent {
   };
   //Cerrar sesion
   async cerrarSesion(): Promise<void> {
-    let verificador: boolean = await this._widgetsService.openDialogActions(
-      {
-        title: this.translate.instant('pos.home.tituloCerrar'),
-        description: this.translate.instant('pos.home.borraranDatos'),
-        verdadero: this.translate.instant('pos.botones.aceptar'),
-        falso: this.translate.instant('pos.botones.cancelar'),
-      }
-    );
-
-    if (!verificador) return;
-
-    PreferencesService.closeSession();
-
-    //Regresar a Login
-    this._router.navigate([RouteNamesService.LOGIN]);
+   this._notificationsService.showCloseSesionDialog();
 
   };
 
@@ -245,7 +226,7 @@ export class HomeComponent {
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApp.status) {
       //TODO:Mostrar pantalla reintentar
-      this._widgetsService.showErrorAlert(resApp)
+      this._notificationsService.showErrorAlert(resApp)
       return;
     };
 
@@ -281,7 +262,7 @@ export class HomeComponent {
       if (!resDisplay.status) {
 
         //TODO:Mostrar pantalla reintentar
-        this._widgetsService.showErrorAlert(resDisplay);
+        this._notificationsService.showErrorAlert(resDisplay);
         return;
 
       };

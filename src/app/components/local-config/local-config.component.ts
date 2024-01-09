@@ -9,8 +9,7 @@ import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
-import { DataUserService } from 'src/app/services/data-user.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 
@@ -21,7 +20,7 @@ import { RetryService } from 'src/app/services/retry.service';
   providers: [
     //inyeccion de servicios
     LocalSettingsService,
-    WidgetsService,
+    NotificationsService,
     LocalSettingsService,
   ]
 })
@@ -49,13 +48,11 @@ export class LocalConfigComponent implements OnInit {
   error?: ErrorInterface;
   name = RouteNamesService.LOCAL_CONFIG;
 
-
-
   constructor(
     //Instancia de servicios a utilizar
     private _router: Router,
     private translate: TranslateService,
-    private _widgetsService: WidgetsService,
+    private _notificationsService: NotificationsService,
     private _localSettingsService: LocalSettingsService,
     private _retryService: RetryService,
 
@@ -141,7 +138,7 @@ export class LocalConfigComponent implements OnInit {
 
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'));
+      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'));
       return;
     };
 
@@ -155,29 +152,7 @@ export class LocalConfigComponent implements OnInit {
 
   async cerrarSesion() {
     //Cerrar sesion
-    let verificador: boolean = await this._widgetsService.openDialogActions(
-      {
-        title: this.translate.instant('pos.home.tituloCerrar'),
-        description: this.translate.instant('pos.home.borraranDatos'),
-        verdadero: this.translate.instant('pos.botones.aceptar'),
-        falso: this.translate.instant('pos.botones.cancelar'),
-      }
-    );
-
-    if (!verificador) return;
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("name");
-
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("name");
-
-    //Regresar a Login
-    this._router.navigate([RouteNamesService.LOGIN]);
-
-    // Limpiar storage del navegador
-    localStorage.clear();
-    sessionStorage.clear();
+    this._notificationsService.showCloseSesionDialog();
   }
 
 }

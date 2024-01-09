@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BancosInterface, PagoInterface } from '../../interfaces/pagos.interface';
 
@@ -38,7 +38,7 @@ export class PagoComponent {
   referencia!: string
 
   constructor(
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private translate: TranslateService,
   ) {
 

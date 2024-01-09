@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { Router } from '@angular/router';
-import { WidgetsService } from 'src/app/services/widgets.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
@@ -20,7 +20,7 @@ export class FacturaComponent {
 
   constructor(
     private router: Router,
-    private _widgetService: WidgetsService,
+    private _widgetService: NotificationsService,
     private _location: Location,
     private _eventService: EventService,
   ) {
