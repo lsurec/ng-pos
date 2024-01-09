@@ -40,4 +40,12 @@ export class EventService {
         this.verDocumento.next(eventData);
     }
 
+    private verResumen = new Subject<any>();
+
+    verResumen$ = this.verResumen.asObservable();
+
+    verResumenEvent(eventData: boolean) {
+        this.verResumen.next(eventData);
+    }
+
 }

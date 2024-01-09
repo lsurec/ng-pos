@@ -1,5 +1,6 @@
 <app-nuevo-cliente *ngIf="!vistaFactura && nuevoCliente"></app-nuevo-cliente>
-<app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta" ></app-editar-cliente>
+<app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta"></app-editar-cliente>
+<app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
 
 <div class="" *ngIf="vistaFactura">
     <mat-toolbar-row class="head__sidenav">
@@ -19,7 +20,7 @@
         <button mat-icon-button aria-label matTooltip="nuevo">
             <mat-icon>note_add</mat-icon>
         </button>
-        <button mat-icon-button aria-label matTooltip="nuevo">
+        <button mat-icon-button aria-label matTooltip="nuevo" (click)="verResumen()">
             <mat-icon>print</mat-icon>
         </button>
     </mat-toolbar-row>

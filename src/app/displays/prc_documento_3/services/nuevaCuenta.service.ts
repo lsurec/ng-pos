@@ -1,6 +1,6 @@
 import { ClienteInterface } from "../interfaces/cliente.interface";
 
-export class EventService {
+export class NuevaCuentaService {
 
     cuentaActualizada?: ClienteInterface;
 

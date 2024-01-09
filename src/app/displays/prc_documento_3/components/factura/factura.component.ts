@@ -38,15 +38,18 @@ export class FacturaComponent {
       this.verDocumento();
     });
 
+    this._eventService.verResumen$.subscribe((eventData) => {
+      this.verDocumento();
+    });
+
   }
 
 
 
   vistaFactura: boolean = true;
-
   nuevoCliente: boolean = false;
   actualizarCliente: boolean = false;
-
+  vistaResumen: boolean = false;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
@@ -66,16 +69,27 @@ export class FacturaComponent {
     this.nuevoCliente = true;
     this.actualizarCliente = false;
     this.vistaFactura = false;
+    this.vistaResumen = false;
   }
 
   verActualizarCliente() {
     this.actualizarCliente = true;
     this.nuevoCliente = false;
     this.vistaFactura = false;
+    this.vistaResumen = false;
+
   }
 
   verDocumento() {
     this.vistaFactura = true;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaResumen = false;
+  }
+
+  verResumen() {
+    this.vistaResumen = true;
+    this.vistaFactura = false;
     this.actualizarCliente = false;
     this.nuevoCliente = false;
   }

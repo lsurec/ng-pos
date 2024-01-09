@@ -1,0 +1,49 @@
+<mat-toolbar-row class="head__sidenav">
+    <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <!-- Titulo de la tarea -->
+    <p class="titulo">Resumen Documento</p>
+    <span class="spacer"></span>
+
+</mat-toolbar-row>
+<div class="container-main">
+
+    <div class="detalle-resumen">
+        <div class="informacion">
+            <p class="subtitulo">Cliente</p>
+            <p class="textos">Nit: 12345678-9</p>
+            <p class="textos">Nombre: Cliente 1</p>
+            <p class="textos">Direccion: Tecpan</p>
+
+        </div>
+        <div class="informacion">
+            <p class="subtitulo">Vendedor</p>
+            <p class="textos">DEMOSOFT</p>
+        </div>
+        <div class="informacion">
+            <p class="subtitulo">Productos</p>
+            <div class="descripcion-producto">
+                <p class="textos">3 x Bebida fria</p>
+                <p class="textos">SKU: BF01</p>
+                <p class="textos">Precio unitario: 55.00</p>
+                <p class="textos">Total: 165.00</p>
+            </div>
+        </div>
+        <div class="informacion">
+            <p class="subtitulo">Formas de pago</p>
+            <div class="descripcion-pago">
+                <p class="subtitulo">pago.nombre</p>
+                <p class="textos">Monto: Q pago.monto.00</p>
+                <p class="textos">Autorizacion: pago.autorizacion</p>
+                <p class="textos">Referencia: pago.referencia</p>
+                <p class="textos">Banco: pago.banco</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mostrar logos -->
+<!-- <app-barra-logos></app-barra-logos> -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>
