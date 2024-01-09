@@ -1,9 +1,6 @@
 <mat-toolbar-row class="head__sidenav">
-    <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
+    <button mat-icon-button aria-label [matTooltip]="'pos.toolTip.regresarAnterior' | translate" (click)="goBack()">
         <mat-icon>arrow_back</mat-icon>
-    </button>
-    <button mat-icon-button aria-label matTooltip="actualizar">
-        <mat-icon>refresh</mat-icon>
     </button>
     <span class="spacer"></span>
     <!-- Titulo de la tarea -->
@@ -14,34 +11,31 @@
     <div class="sin-conexion">
         <span class="spacer"></span>
         <div class="centro">
-            <p>
-                <!-- {{cuenta| json}} -->
-            </p>
             <p class="titulo">{{ 'pos.documento.actualizar' | translate }}</p>
             <form #searchForm="ngForm" class="formulario">
                 <div class="campos">
-                    <input type="text" name="titulo" placeholder="{{ 'pos.documento.nombre' | translate }}"
-                        class="detalles" [(ngModel)]="nombre" autocomplete="off">
+                    <input type="text" placeholder="{{ 'pos.documento.nombre' | translate }}" class="detalles"
+                        [(ngModel)]="cuenta!.nombre" name="nombre">
                 </div>
                 <div class="campos">
-                    <input type="text" name="titulo" placeholder="{{ 'pos.documento.direccion' | translate }}"
-                        class="detalles" [(ngModel)]="direccion" autocomplete="off">
+                    <input type="text" name="direccion" placeholder="{{ 'pos.documento.direccion' | translate }}"
+                        class="detalles" [(ngModel)]="cuenta!.direccion">
                 </div>
                 <div class="campos">
-                    <input type="text" name="titulo" placeholder="{{ 'pos.documento.nit' | translate }}"
-                        class="detalles" [(ngModel)]="nit" autocomplete="off">
+                    <input type="text" name="nit" placeholder="{{ 'pos.documento.nit' | translate }}" class="detalles"
+                        [(ngModel)]="cuenta!.nit">
                 </div>
                 <div class="campos">
-                    <input type="text" name="titulo" placeholder="{{ 'pos.documento.telefono' | translate }}"
-                        class="detalles" [(ngModel)]="telefono" autocomplete="off">
+                    <input type="text" name="telefono" placeholder="{{ 'pos.documento.telefono' | translate }}"
+                        class="detalles" [(ngModel)]="cuenta!.telefono">
                 </div>
                 <div class="campos d-flex">
-                    <input type="text" name="titulo" placeholder="{{ 'pos.documento.correo' | translate }}"
-                        class="detalles" [(ngModel)]="correo" autocomplete="off">
+                    <input type="text" name="correo" placeholder="{{ 'pos.documento.correo' | translate }}"
+                        class="detalles" [(ngModel)]="cuenta!.correo">
                 </div>
             </form>
         </div>
-        <button mat-mini-fab class="guardar" [matTooltip]="'pos.boton.guardar' | translate" (click)="guardar()">
+        <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" (click)="guardar()">
             <mat-icon>save</mat-icon>
         </button>
         <span class="spacer"></span>

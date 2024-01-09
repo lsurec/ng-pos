@@ -71,29 +71,48 @@ export class DocumentoComponent {
   listaClientes: ClienteInterface[] = [
     {
       nit: 12345678,
-      nombre: "Cliente1"
+      nombre: "Cliente1",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 23456789,
-      nombre: "Cliente2"
+      nombre: "Comprador",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 34567890,
-      nombre: "OtroCliente"
+      nombre: "OtroCliente",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 45678901,
-      nombre: "Cliente3"
+      nombre: "Cliente3",
+      direccion: "zona 21",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 56789012,
-      nombre: "Juan"
+      nombre: "Juan",
+      direccion: "zona 5",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 67890123,
-      nombre: "Maria"
+      nombre: "Maria",
+      direccion: "zona 7",
+      telefono: 0,
+      correo: "",
     },
   ];
+
   registros: ClienteInterface[] = [];
   selectedCliente: boolean = false;
   cliente!: ClienteInterface;

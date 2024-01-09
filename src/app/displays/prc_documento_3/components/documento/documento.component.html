@@ -16,7 +16,7 @@
             <div class="dFlex">
                 <p class="subtitulo">{{ 'pos.documento.cliente' | translate }}</p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="agregarCliente()">
+                <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.documento.nueva'  | translate">
                     <mat-icon>person_add</mat-icon>
                 </button>
             </div>
@@ -55,7 +55,7 @@
             <div class="dFlex">
                 <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="actualizar()">
+                <button mat-icon-button (click)="actualizar()" [matTooltip]="'pos.documento.actualizar' | translate">
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>

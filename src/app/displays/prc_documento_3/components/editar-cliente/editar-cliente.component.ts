@@ -16,11 +16,13 @@ import { ClienteInterface } from '../../interfaces/cliente.interface';
 export class EditarClienteComponent {
   @Input() cuenta?: ClienteInterface; // decorate the property with @Input()
 
-  nombre!: string;
-  direccion!: string;
-  nit!: number;
-  telefono!: number;
-  correo!: string;
+  cliente?: ClienteInterface;
+
+  nombre?: string;
+  direccion?: string;
+  nit?: number;
+  telefono?: number;
+  correo?: string;
 
   constructor(
     private _location: Location,
@@ -30,14 +32,25 @@ export class EditarClienteComponent {
     private _eventService: EventService,
 
   ) {
+    // this.cliente = {
+    //   nombre: this.cuenta!.nombre,
+    //   direccion: this.cuenta!.direccion,
+    //   nit: this.cuenta!.nit,
+    //   telefono: this.cuenta!.telefono,
+    //   correo: this.cuenta!.correo,
+    // }
   }
 
+  ngOnInit() {
+
+  }
   //regresar a la pantalla anterior
   goBack() {
     this._eventService.verDocumentoEvent(true);
   }
 
   guardar() {
+    console.log(this.cuenta);
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
       this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return

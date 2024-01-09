@@ -78,7 +78,9 @@
             <p class="separador"></p>
             <div class="vistaAjustes" (click)="verTema()">
                 <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
-                <p class="pDescripcion"> {{tema}} </p>
+                <p class="pDescripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
+                <p class="pDescripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+
             </div>
             <p class="separador"></p>
         </div>
@@ -126,35 +128,35 @@
             <div class="backgroundscreenUser">
                 <div class="containerDatosUser">
                     <div>
-                        <p class="pTitulo">Server</p>
-                        <p class="pDescripcion">DSSA-CORE</p>
+                        <p class="pTitulo">{{'pos.home.servidor' | translate}}</p>
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
-                        <p class="pTitulo">Data Base:</p>
-                        <p class="pDescripcion">CONBEXSA</p>
+                        <p class="pTitulo">{{'pos.home.baseDatos' | translate}}</p>
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
-                        <p class="pTitulo">Empresa: </p>
+                        <p class="pTitulo">{{'pos.home.empresa' | translate}}</p>
                         <!-- <p class="pDescripcion">(1) CONBEXSA</p> -->
-                        <!-- <p class="pDescripcion"> {{selectedEmpresa!.empresa_Nombre}} </p> -->
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
-                        <p class="pTitulo">Estacion de Trabajo:</p>
+                        <p class="pTitulo">{{'pos.home.estacion' | translate}}</p>
                         <!-- <p class="pDescripcion">(6) ADMINISTRACION</p> -->
-                        <!-- <p class="pDescripcion">{{selectedEstacion!.nombre}}</p> -->
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
-                        <p class="pTitulo">Fecha Servidor:</p>
-                        <p class="pDescripcion">26/06/2023 09:56:59</p>
+                        <p class="pTitulo">{{'pos.home.fecha' | translate}}</p>
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
-                        <p class="pTitulo">Version de compilacion:</p>
-                        <p class="pDescripcion">v2021.05.21.23:32</p>
+                        <p class="pTitulo">{{'pos.home.version' | translate}}</p>
+                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
                     </div>
                 </div>
