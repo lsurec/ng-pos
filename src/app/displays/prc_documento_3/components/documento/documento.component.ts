@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-documento',
@@ -14,6 +15,8 @@ import { RouteNamesService } from 'src/app/services/route.names.service';
   styleUrls: ['./documento.component.scss']
 })
 export class DocumentoComponent {
+
+  @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
   serie!: string;
@@ -35,6 +38,7 @@ export class DocumentoComponent {
     private _location: Location,
     private translate: TranslateService,
     private _router: Router,
+    private _eventService: EventService,
   ) {
   }
 
@@ -67,29 +71,48 @@ export class DocumentoComponent {
   listaClientes: ClienteInterface[] = [
     {
       nit: 12345678,
-      nombre: "Cliente1"
+      nombre: "Cliente1",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 23456789,
-      nombre: "Cliente2"
+      nombre: "Comprador",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 34567890,
-      nombre: "OtroCliente"
+      nombre: "OtroCliente",
+      direccion: "zona 1",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 45678901,
-      nombre: "Cliente3"
+      nombre: "Cliente3",
+      direccion: "zona 21",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 56789012,
-      nombre: "Juan"
+      nombre: "Juan",
+      direccion: "zona 5",
+      telefono: 0,
+      correo: "",
     },
     {
       nit: 67890123,
-      nombre: "Maria"
+      nombre: "Maria",
+      direccion: "zona 7",
+      telefono: 0,
+      correo: "",
     },
   ];
+
   registros: ClienteInterface[] = [];
   selectedCliente: boolean = false;
   cliente!: ClienteInterface;
@@ -139,11 +162,14 @@ export class DocumentoComponent {
   }
 
   agregarCliente() {
-    this._router.navigate([RouteNamesService.NEW_ACCOUNT]);
-
+    this._eventService.verCrearEvent(true);
+    // this.verNuevoCliente.emit(true);
   }
 
-  goBack() {
-    this._location.back();
+  actualizar() {
+    this._eventService.verActualizarEvent(this.cliente);
+    // this.verActualizarCliente.emit(true);
   }
+
+
 }

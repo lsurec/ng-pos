@@ -1,5 +1,5 @@
 <mat-toolbar-row class="head__sidenav">
-    <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
+    <button mat-icon-button aria-label [matTooltip]="'pos.toolTip.regresarAnterior' | translate" (click)="goBack()">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -11,27 +11,27 @@
     <div class="sin-conexion">
         <span class="spacer"></span>
         <div class="centro">
-            <p class="titulo">{{ 'pos.documento.nueva' | translate }}</p>
+            <p class="titulo">{{ 'pos.documento.actualizar' | translate }}</p>
             <form #searchForm="ngForm" class="formulario">
                 <div class="campos">
-                    <input type="text" name="nombre" placeholder="{{ 'pos.documento.nombre' | translate }}"
-                        class="detalles" [(ngModel)]="nombre">
+                    <input type="text" placeholder="{{ 'pos.documento.nombre' | translate }}" class="detalles"
+                        [(ngModel)]="cuenta!.nombre" name="nombre">
                 </div>
                 <div class="campos">
                     <input type="text" name="direccion" placeholder="{{ 'pos.documento.direccion' | translate }}"
-                        class="detalles" [(ngModel)]="direccion">
+                        class="detalles" [(ngModel)]="cuenta!.direccion">
                 </div>
                 <div class="campos">
-                    <input type="text" name="nit" placeholder="{{ 'pos.documento.nit' | translate }}"
-                        class="detalles" [(ngModel)]="nit">
+                    <input type="text" name="nit" placeholder="{{ 'pos.documento.nit' | translate }}" class="detalles"
+                        [(ngModel)]="cuenta!.nit">
                 </div>
                 <div class="campos">
                     <input type="text" name="telefono" placeholder="{{ 'pos.documento.telefono' | translate }}"
-                        class="detalles" [(ngModel)]="telefono">
+                        class="detalles" [(ngModel)]="cuenta!.telefono">
                 </div>
                 <div class="campos d-flex">
                     <input type="text" name="correo" placeholder="{{ 'pos.documento.correo' | translate }}"
-                        class="detalles" [(ngModel)]="correo">
+                        class="detalles" [(ngModel)]="cuenta!.correo">
                 </div>
             </form>
         </div>

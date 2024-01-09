@@ -4,6 +4,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-nuevo-cliente',
@@ -23,14 +24,14 @@ export class NuevoClienteComponent {
     private _widgetsService: NotificationsService,
     private translate: TranslateService,
     private _router: Router,
-
+    private _eventService: EventService,
   ) {
   }
 
   //regresar a la pantalla anterior
-  goBack() {
-    this._location.back();
-  }
+  // goBack(): void {
+  //   this._eventService.emitCustomEvent(false);
+  // }
 
   guardar() {
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
@@ -39,6 +40,10 @@ export class NuevoClienteComponent {
     } else {
       this._router.navigate([RouteNamesService.DOC]);
     }
+  }
+
+  goBack() {
+    this._eventService.verDocumentoEvent(true);
   }
 
 }

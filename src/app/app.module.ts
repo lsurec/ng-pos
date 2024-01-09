@@ -49,6 +49,8 @@ import { DetalleComponent } from './displays/prc_documento_3/components/detalle/
 import { ProductosEncontradosComponent } from './displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from './displays/prc_documento_3/components/producto/producto.component';
 import { PagoComponent } from './displays/prc_documento_3/components/pago/pago.component';
+import { EditarClienteComponent } from './displays/prc_documento_3/components/editar-cliente/editar-cliente.component';
+import { ResumenDocumentoComponent } from './displays/prc_documento_3/components/resumen-documento/resumen-documento.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import { PagoComponent } from './displays/prc_documento_3/components/pago/pago.c
     ProductosEncontradosComponent,
     ProductoComponent,
     PagoComponent,
+    EditarClienteComponent,
+    ResumenDocumentoComponent,
   ],
   imports: [
     BrowserModule,

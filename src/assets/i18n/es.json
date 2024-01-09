@@ -8,7 +8,15 @@
             "temaAplicacion": "TEMA DE LA APLICACIÓN",
             "noAsignado": "No asignado",
             "tituloCerrar": "Cerrar sesión",
-            "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?"
+            "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
+            "aplicaciones": "Aplicaciones",
+            "noDidsponible": "No Disponible",
+            "servidor": "Servidor",
+            "baseDatos": "Base de Datos",
+            "empresa": "Empresa",
+            "estacion": "Estación de Trabajo",
+            "fecha": "Fecha Servidor",
+            "version": "Versión de Compilación"
         },
         "login": {
             "correo": "Usuario",
@@ -69,7 +77,7 @@
             "error": "No se pudo completar el proceso de conexión al servicio. por favor, inténtalo de nuevo más tarde. ",
             "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: ",
             "banco": "Seleccione una cuenta de banco para continuar.",
-            "tipoPago" : "Tipo de pago agregado correctamente"
+            "tipoPago": "Tipo de pago agregado correctamente"
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -115,7 +123,8 @@
             "telefono": "TELEFONO",
             "correo": "CORREO",
             "direccion": "DIRECCION",
-            "nueva": "Nueva cuenta"
+            "nueva": "Nueva cuenta",
+            "actualizar": "Actualizar cuenta"
         },
         "detalle": {
             "filtro": "Filtro"

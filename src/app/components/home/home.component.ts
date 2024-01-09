@@ -54,7 +54,7 @@ export class HomeComponent {
   ajustes: boolean = false;
   idiomas: boolean = false;
   btnRegresar: boolean = false;
-  tema: string = '';
+  tema!: number;
 
   //Subir contenido
   showGoUpButton: boolean = false;
@@ -129,10 +129,12 @@ export class HomeComponent {
     this.temaOscuro = themeService.isDarkTheme;
 
     if (this.temaOscuro == true) {
-      this.tema = this.translate.instant('pos.home.activo');
+      this.tema = 1;
     } else {
-      this.tema = this.translate.instant('pos.home.inactivo');
+      this.tema = 0;
     }
+
+    this.userName = PreferencesService.user.toUpperCase();
   };
 
   //cuando la informacion de los detalles esta vacia
@@ -280,7 +282,7 @@ export class HomeComponent {
       //generar estructira de arbol
       item.children.forEach(display => {
 
-          
+
 
         let itemMenu: MenuInterface = {
           id: display.user_Display,
@@ -299,17 +301,17 @@ export class HomeComponent {
         };
 
         if (display.user_Display_Father == null) {
-          
+
           padres.push(itemMenu);
         } else {
           hijos.push(itemMenu);
-          
+
         }
 
       });
 
-      
-      
+
+
 
       // agregar itemms a la lista propia
       this.menu.push(
@@ -339,7 +341,7 @@ export class HomeComponent {
       id: 0,
       idFather: null,
       idChild: null,
-      name: "Aplicaciones", //TODO: translate
+      name: this.translate.instant('pos.home.aplicaciones'), //TODO: translate
       route: '',
       children: this.menu,
     };
@@ -353,7 +355,7 @@ export class HomeComponent {
 
 
   ordenarNodos(padres: MenuInterface[], hijos: MenuInterface[]): MenuInterface[] {
-    
+
 
     //recorer los nodos principales
 
@@ -406,7 +408,7 @@ export class HomeComponent {
         if (selectedComponent.id.toLowerCase() == itemMenu.route.toLowerCase()) {
           //hacerlo visible
           this.components[index].visible = true;
-          
+
           return;
         };
       };
@@ -485,10 +487,10 @@ export class HomeComponent {
     // this.temaOscuro ? StorageService.tema = '1' : StorageService.tema = '0';
     if (this.temaOscuro == true) {
       PreferencesService.theme = '1';
-      this.tema = this.translate.instant('pos.home.activo');
+      this.tema = 1;
     } else {
       PreferencesService.theme = '0';
-      this.tema = this.translate.instant('pos.home.inactivo');
+      this.tema = 0;
     }
     this.verDetalles();
   }

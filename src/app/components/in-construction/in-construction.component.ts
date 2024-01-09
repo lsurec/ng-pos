@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-in-construction',
@@ -9,18 +10,13 @@ import { Component } from '@angular/core';
 export class InConstructionComponent {
 
   constructor(
-    private _location: Location
+    private _location: Location,
+    private _eventService: EventService,
   ) {
   }
-
   //regresar a la pantalla anterior
-  goBack() {
-    this._location.back();
+  goBack(): void {
+    this._eventService.emitCustomEvent(false)
   }
-
-  //  //regresar a la pantalla anterior
-  //  backPage(): void {
-  //   this._eventService.emitCustomEvent(false)
-  // }
 
 }

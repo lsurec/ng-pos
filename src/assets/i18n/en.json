@@ -1,32 +1,39 @@
 {
     "pos": {
         "home": {
-            "activo": "Active",
-            "inactivo": "Inactive",
+            "activo": "Activated",
+            "inactivo": "Deactivated",
             "modo": "Dark Mode",
             "descripcionTema": "Adjusts the appearance of the application to reduce glare and give your eyes a break.",
             "temaAplicacion": "APPLICATION THEME",
-            "noAsignado": "Not assigned",
-            "tituloCerrar": "Sign off",
-            "borraranDatos": "Unsaved data will be lost and you will need to log in again. Are you sure?"
+            "noAsignado": "Not Assigned",
+            "tituloCerrar": "Log Out",
+            "borraranDatos": "Unsaved data will be lost, and you'll need to log in again. Are you sure?",
+            "aplicaciones": "Applications",
+            "noDidsponible": "Not Available",
+            "servidor": "Server",
+            "baseDatos": "Database",
+            "empresa": "Company",
+            "estacion": "Workstation",
+            "fecha": "Server Date",
+            "version": "Build Version"
         },
         "login": {
-            "correo": "User",
+            "correo": "Username",
             "contrasena": "Password",
-            "ver": "Show password",
-            "ocultar": "Hide password",
-            "recordar": "Remember my data.",
-            "iniciar": "SIGN IN"
+            "ver": "Show Password",
+            "ocultar": "Hide Password",
+            "recordar": "Remember me",
+            "iniciar": "LOG IN"
         },
         "progress": {
             "cargar": "Loading...",
             "esperar": "Please wait...",
             "error": "404",
             "linea1": "NO RECORDS FOUND",
-            "linea2": "What you're looking for may have been deleted or is temporarily unavailable.",
-            "linea3": "Try searching again.",
-            "construccion": "SITE UNDER CONSTRUCTION",
-            "inicio": "Return to the home page."
+            "linea2": "The page you are looking for might have been removed or temporarily unavailable.",
+            "linea3": "Try searching for something else.",
+            "construccion": "SITE UNDER CONSTRUCTION"
         },
         "ajustes": {
             "ajustesT": "SETTINGS",
@@ -34,29 +41,29 @@
         },
         "preferencias": {
             "tema": "APPLICATION THEME",
-            "oscuro": "Dark Theme",
-            "claro": "Light Theme",
-            "cambiar": "Later on, you will also be able to change the application theme according to your preference.",
-            "idioma": "Later on, you will also be able to change the application language according to your preference."
+            "oscuro": "Dark Mode",
+            "claro": "Light Mode",
+            "cambiar": "You will be able to change the application theme according to your preference in the future.",
+            "idioma": "You will be able to change the application language according to your preference in the future."
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
             "empresas": "Companies",
-            "estaciones": "Workstation",
+            "estaciones": "Workstations",
             "registros": "Records",
             "empresa": "Company",
             "localidad": "Location",
-            "cambiar": "To make changes in Local Configuration, you must log out and log in again.",
-            "inicio": "Return to the home page.",
-            "sinEmpresas": "No companies available, please contact the Support Department.",
-            "sinEstaciones": "No workstations available, please contact the Support Department."
+            "cambiar": "To make changes to Local Configuration, you need to log out and log in again.",
+            "inicio": "Back to the home page.",
+            "sinEmpresas": "No companies available, please contact Support.",
+            "sinEstaciones": "No workstations available, please contact Support."
         },
         "toolTip": {
-            "regresar": "return to the main menu",
-            "regresarAnterior": "return to the previous page"
+            "regresar": "Return to the main menu",
+            "regresarAnterior": "Return to the previous page"
         },
         "url": {
-            "url": "APIs URL",
+            "url": "API Url",
             "ingresar": "To use our services, please enter a valid URL.",
             "noValida": "Invalid URL.",
             "actual": "Current URL"
@@ -66,37 +73,39 @@
             "salioMal": "Something went wrong, please try again.",
             "completar": "Please fill in all fields to continue.",
             "debeSeleccionar": "To continue, select a company and a workstation.",
-            "incorrecto": "Incorrect username or password",
+            "incorrecto": "Incorrect username or password.",
             "error": "The process of connecting to the service could not be completed. Please try again later.",
-            "configuracion": "No companies or workstations found for the user: "
+            "configuracion": "No companies or workstations found for the user:",
+            "banco": "Select a bank account to continue.",
+            "tipoPago": "Payment type added successfully."
         },
         "botones": {
-            "aceptar": "Accept",
+            "aceptar": "OK",
             "cancelar": "Cancel",
-            "regresar": "Go back",
+            "regresar": "Back",
             "continuar": "Continue",
             "ajustes": "Settings",
             "cerrar": "Close",
             "cambiar": "Change",
             "guardar": "Save",
-            "informe": "View report",
-            "salir": "Log out",
+            "informe": "View Report",
+            "salir": "Log Out",
             "reintentar": "Retry"
         },
         "error": {
-            "informe": "Error report",
+            "informe": "Error Report",
             "usuario": "User",
             "fecha": "Date",
             "documento": "Document",
-            "serie": "Document series",
+            "serie": "Document Series",
             "empresa": "Company",
             "estacion": "Workstation",
-            "servicio": "Source service",
-            "origen": "DB Source",
+            "servicio": "Origin Service",
+            "origen": "DB Origin",
             "descripcion": "Description"
         },
         "inputs": {
-            "buscar": "type to search."
+            "buscar": "Type to search."
         },
         "documento": {
             "serie": "Series",
@@ -108,16 +117,22 @@
             "ciudad": "CITY",
             "nit": "NIT",
             "nombre": "NAME",
-            "vendedor": "Salesperson",
+            "vendedor": "Seller",
             "seleccionar": "Select Client",
             "encontrados": "Found Clients",
             "telefono": "PHONE",
             "correo": "EMAIL",
             "direccion": "ADDRESS",
-            "nueva": "New account"
+            "nueva": "New Account",
+            "actualizar": "Update Account"
         },
         "detalle": {
             "filtro": "Filter"
+        },
+        "pago": {
+            "total": "Total",
+            "saldo": "Balance",
+            "cambio": "Change"
         }
     }
 }
