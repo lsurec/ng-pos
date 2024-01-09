@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { RouteNamesService } from 'src/app/services/route.names.service';
-import { WidgetsService } from 'src/app/services/widgets.service';
 import { Location } from '@angular/common';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class EditarClienteComponent {
 
   constructor(
     private _location: Location,
-    private _widgetsService: WidgetsService,
+    private _widgetsService: NotificationsService,
     private translate: TranslateService,
     private _router: Router,
     private _eventService: EventService,
