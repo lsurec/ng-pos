@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { Router } from '@angular/router';
@@ -7,13 +7,15 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { DataUserService } from '../../services/data-user.service';
+import { FacturaService } from '../../services/factura.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.scss']
 })
-export class FacturaComponent {
+export class FacturaComponent implements OnInit, OnDestroy {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
@@ -24,7 +26,8 @@ export class FacturaComponent {
     private _widgetService: NotificationsService,
     private _location: Location,
     private _eventService: EventService,
-    public dataUserService:DataUserService,
+    private _facturaService: FacturaService,
+    public dataUserService: DataUserService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -95,10 +98,31 @@ export class FacturaComponent {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
   }
+  private ngUnsubscribe = new Subject<void>();
+
 
   ngOnInit(): void {
+    this._facturaService.loadData$
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => {
+        this.loadData();
+      });
+
+    this._facturaService.loadDataSet();
   }
 
+  loadData() {
+    console.log("siempre");
+  }
+
+  ngOnDestroy(): void {
+    console.log("cerrar");
+    
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
   //Cerra sesion
   async logOut() {
 

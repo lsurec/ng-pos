@@ -17,6 +17,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 
 @Component({
   selector: 'app-home',
@@ -98,6 +99,7 @@ export class HomeComponent {
     private _notificationsService: NotificationsService,
     private themeService: ThemeService,
     private _dataUserService: DataUserService,
+    private _facturaService: FacturaService,
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -416,6 +418,11 @@ export class HomeComponent {
       //recorremos la lista qeu tiene todos los componentes
       for (let index = 0; index < this.components.length; index++) {
         const selectedComponent = this.components[index];
+
+        //activar funcion para el modulo de facturacion
+        if(itemMenu.route.toLowerCase() == "prcdocumento_3"){
+          this._facturaService.loadDataSet();
+        }
         //si el nombre del componente seleccionado conincide con algun componente agregado a la lista.
         if (selectedComponent.id.toLowerCase() == itemMenu.route.toLowerCase()) {
           //hacerlo visible
