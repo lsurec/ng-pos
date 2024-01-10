@@ -5,7 +5,7 @@
         <div class="dFlex">
             <span class="spacer"></span>
             <!-- Titulo -->
-            <p class="verDetalle">Productos encontrados</p>
+            <p class="verDetalle">{{ 'pos.factura.productos_encontrados' | translate }}</p>
             <span class="spacer"></span>
             <!-- Cerrar dialogo -->
             <span class="close" (click)="closeDialog()">&times;</span>
@@ -14,16 +14,14 @@
         <div class="busqueda">
             <div class="contenido-izquierdo">
                 <div class="dFlex">
-                    <p class="campo-obligatorio">Registros:</p>
+                    <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }}</p>
                     <span class="spacer"></span>
                     <p> {{productos.length }} </p>
-                    <!-- <p class="obligatorio">*</p> -->
                 </div>
-
                 <div class="titulos">
-                    <p>Producto</p>
+                    <p>{{ 'pos.factura.producto' | translate }}</p>
                     <span class="spacer"></span>
-                    <p>SKU</p>
+                    <p>{{ 'pos.factura.sku' | translate }}</p>
                 </div>
                 <div class="" *ngFor="let producto of productos">
                     <div class="seleccionar" [mat-dialog-close]="[producto]">

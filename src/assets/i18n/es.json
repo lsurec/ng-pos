@@ -93,7 +93,12 @@
             "guardar": "Guardar",
             "informe": "Ver informe",
             "salir": "Cerrar sesion",
-            "reintentar": "Reintentar"
+            "reintentar": "Reintentar",
+            "resumen": "Resumen",
+            "nuevo": "Nuevo",
+            "actualizar": "Actualizar",
+            "reciente": "Recientes",
+            "agregar": "Agregar"
         },
         "error": {
             "informe": "Informe de error",
@@ -110,8 +115,12 @@
         "inputs": {
             "buscar": "escriba para realizar la busqueda."
         },
-        "documento": {
-            "serie": "Serie",
+        "factura": {
+            "factura": "Factura",
+            "documento": "Documento",
+            "detalle": "Detalle",
+            "pago": "Pago",
+            "series": "Series",
             "cliente": "Cliente",
             "buscar": "Buscar",
             "cf": "C/F",
@@ -122,19 +131,41 @@
             "nombre": "NOMBRE",
             "vendedor": "Vendedor",
             "seleccionar": "Seleccionar Cliente",
-            "encontrados": "Clientes encontrados",
+            "encontrados": "Clientes encontrados:",
             "telefono": "TELEFONO",
             "correo": "CORREO",
             "direccion": "DIRECCION",
             "nueva": "Nueva cuenta",
-            "actualizar": "Actualizar cuenta"
-        },
-        "detalle": {
-            "filtro": "Filtro"
-        },
-        "pago": {
-            "total": "Total",
+            "actualizar": "Actualizar cuenta",
+            "formas_pago": "Formas de pago",
+            "agregar_pago": "Agregar Pago",
+            "pagos_agregados": "Pagos agregados",
+            "monto": "Monto",
+            "autorizacion": "Autorización",
+            "referencia": "Referencia",
+            "bancos": "Bancos",
+            "banco": "Banco:",
+            "productos_agregados": "Productos Agregados",
+            "precio_unitario": "Precio Unitario",
+            "precio_total": "Precio Total",
+            "resumen_documento": "Resumen Documento",
+            "productos": "Productos",
+            "sku": "SKU",
+            "subtotal": "Subtotal",
+            "cargos": "(+) Cargos",
+            "descuentos": "(-) Descuentos",
             "saldo": "Saldo",
+            "total": "Total",
+            "contado": "Contado",
+            "cantidad": "Cantidad",
+            "observacion": "Observación",
+            "descripcion": "Descripción",
+            "bodega": "Bodega",
+            "tipo_precio": "Tipo Precio",
+            "productos_encontrados": "Productos Encontrados",
+            "registros": "Registros",
+            "producto": "Producto",
+            "filtro": "Filtro",
             "cambio": "Cambio"
         }
     }

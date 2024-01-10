@@ -4,8 +4,8 @@
     <div class="serie-vendedor">
 
         <div class="informacion">
-            <p class="subtitulo">{{ 'pos.documento.serie' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
+            <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
+            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.series' | translate }}" [(ngModel)]="serie">
                 <mat-option *ngFor="let serie of series" [value]="serie">
                     {{serie}}
                 </mat-option>
@@ -14,15 +14,15 @@
 
         <div class="buscar-cliente">
             <div class="dFlex">
-                <p class="subtitulo">{{ 'pos.documento.cliente' | translate }}</p>
+                <p class="subtitulo">{{ 'pos.factura.cliente' | translate }}</p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.documento.nueva'  | translate">
+                <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
                     <mat-icon>person_add</mat-icon>
                 </button>
             </div>
 
             <form #searchForm="ngForm" (ngSubmit)="buscarCliente(searchText)">
-                <p class="">{{ 'pos.documento.buscar' | translate }}</p>
+                <p class="">{{ 'pos.factura.buscar' | translate }}</p>
                 <div class="input-container">
                     <button class="iconoLupa" mat-icon-button>
                         <mat-icon>search</mat-icon>
@@ -35,7 +35,7 @@
 
         <div class="informacion">
             <div class="d-flex">
-                <p class="subtitulo">{{ 'pos.documento.cf' | translate }} </p>
+                <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
                 <span class="spacer"></span>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
@@ -45,33 +45,33 @@
         </div>
 
         <div class="informacion" *ngIf="switchState">
-            <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
-            <p class="detalles">{{ 'pos.documento.cf' | translate }}</p>
-            <p class="detalles">{{ 'pos.documento.consumidor' | translate }}</p>
-            <p class="detalles">{{ 'pos.documento.ciudad' | translate }}</p>
+            <p class="titulo">{{ 'pos.factura.informacion' | translate }}</p>
+            <p class="detalles">{{ 'pos.factura.cf' | translate }}</p>
+            <p class="detalles">{{ 'pos.factura.consumidor' | translate }}</p>
+            <p class="detalles">{{ 'pos.factura.ciudad' | translate }}</p>
         </div>
 
         <div class="informacion" *ngIf="selectedCliente">
             <div class="dFlex">
-                <p class="titulo">{{ 'pos.documento.informacion' | translate }}</p>
+                <p class="titulo">{{ 'pos.factura.informacion' | translate }}</p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="actualizar()" [matTooltip]="'pos.documento.actualizar' | translate">
+                <button mat-icon-button (click)="actualizar()" [matTooltip]="'pos.factura.actualizar' | translate">
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.documento.nit' | translate }}</p>
+                <p class="detalles">{{ 'pos.factura.nit' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{cliente.nit}}</p>
             </div>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.documento.nombre' | translate }}</p>
+                <p class="detalles">{{ 'pos.factura.nombre' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{cliente.nombre}}</p>
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.documento.ciudad' | translate }}</p>
+                <p class="detalles">{{ 'pos.factura.ciudad' | translate }}</p>
                 <span class="spacer"></span>
                 <p>Ciudad</p>
             </div>
@@ -82,8 +82,8 @@
     <div class="cliente">
 
         <div class="informacion">
-            <p class="subtitulo">{{ 'pos.documento.vendedor' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="VENDEDOR" [(ngModel)]="vendedor">
+            <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
+            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.vendedor' | translate }}" [(ngModel)]="vendedor">
                 <mat-option *ngFor="let vendedor of vendedores" [value]="vendedor">
                     {{vendedor}}
                 </mat-option>

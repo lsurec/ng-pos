@@ -77,7 +77,10 @@
             "error": "The process of connecting to the service could not be completed. Please try again later.",
             "configuracion": "No companies or workstations found for the user:",
             "banco": "Select a bank account to continue.",
-            "tipoPago": "Payment type added successfully."
+            "tipoPago": "Payment type added correctly",
+            "eliminar": "Are you sure?",
+            "perderDatos": "If changes haven't been saved, you will lose them forever.",
+            "seleccionar": "Select at least one transaction."
         },
         "botones": {
             "aceptar": "OK",
@@ -90,7 +93,12 @@
             "guardar": "Save",
             "informe": "View Report",
             "salir": "Log Out",
-            "reintentar": "Retry"
+            "reintentar": "Retry",
+            "resumen": "Summary",
+            "nuevo": "New",
+            "actualizar": "Update",
+            "reciente": "Recent",
+            "agregar": "Add"
         },
         "error": {
             "informe": "Error Report",
@@ -107,8 +115,12 @@
         "inputs": {
             "buscar": "Type to search."
         },
-        "documento": {
-            "serie": "Series",
+        "factura": {
+            "factura": "Invoice",
+            "documento": "Document",
+            "detalle": "Detail",
+            "pago": "Payment",
+            "series": "Series",
             "cliente": "Client",
             "buscar": "Search",
             "cf": "C/F",
@@ -124,14 +136,36 @@
             "correo": "EMAIL",
             "direccion": "ADDRESS",
             "nueva": "New Account",
-            "actualizar": "Update Account"
-        },
-        "detalle": {
-            "filtro": "Filter"
-        },
-        "pago": {
-            "total": "Total",
+            "actualizar": "Update Account",
+            "formas_pago": "Payment Methods",
+            "agregar_pago": "Add Payment",
+            "pagos_agregados": "Payments added",
+            "monto": "Amount",
+            "autorizacion": "Authorization",
+            "referencia": "Reference",
+            "bancos": "Banks",
+            "banco": "Bank:",
+            "productos_agregados": "Products added",
+            "precio_unitario": "Unit Price",
+            "precio_total": "Total Price",
+            "resumen_documento": "Document Summary",
+            "productos": "Products",
+            "sku": "SKU",
+            "subtotal": "Subtotal",
+            "cargos": "(+) Charges",
+            "descuentos": "(-) Discounts",
             "saldo": "Balance",
+            "total": "Total",
+            "contado": "Cash",
+            "cantidad": "Quantity",
+            "observacion": "Observation",
+            "descripcion": "Description",
+            "bodega": "Warehouse",
+            "tipo_precio": "Price Type",
+            "productos_encontrados": "Products Found",
+            "registros": "Records",
+            "producto": "Product",
+            "filtro": "Filter",
             "cambio": "Change"
         }
     }

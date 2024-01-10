@@ -5,7 +5,7 @@
         <div class="dFlex">
             <span class="spacer"></span>
             <!-- Titulo -->
-            <p class="verDetalle">{{ 'pos.documento.seleccionar' | translate }}</p>
+            <p class="verDetalle">{{ 'pos.factura.seleccionar' | translate }}</p>
             <span class="spacer"></span>
             <!-- Cerrar dialogo -->
             <span class="close" (click)="closeDialog()">&times;</span>
@@ -13,15 +13,12 @@
         <hr>
         <div class="busqueda">
             <div class="contenido-izquierdo">
-                <div class="dFlex">
-                    <p class="campo-obligatorio">{{ 'pos.documento.encontrados' | translate }}</p>
-                    <p class="obligatorio">*</p>
-                </div>
+                <p class="campo-obligatorio">{{ 'pos.factura.encontrados' | translate }}</p>
 
                 <div class="titulos">
-                    <p>{{ 'pos.documento.nombre' | translate }}</p>
+                    <p>{{ 'pos.factura.nombre' | translate }}</p>
                     <span class="spacer"></span>
-                    <p>{{ 'pos.documento.nit' | translate }}</p>
+                    <p>{{ 'pos.factura.nit' | translate }}</p>
                 </div>
                 <div class="" *ngFor="let cliente of clientes">
                     <div class="seleccionar" [mat-dialog-close]="[cliente]">

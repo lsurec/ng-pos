@@ -3,7 +3,7 @@
         <div class="informacion">
             <form #searchForm="ngForm" (ngSubmit)="buscarProducto(searchText)" class="inputSearch">
                 <div class="buscar">
-                    <p class="subtitulo">{{ 'pos.detalle.filtro' | translate }}</p>
+                    <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
                     <span class="spacer"></span>
                     <div *ngFor="let option of filtrosBusqueda">
                         <div class="chip" [class.selected]="option.id === selectedOption"
@@ -33,7 +33,7 @@
             <div class="dFlex">
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
                     (ngModelChange)="seleccionar()"></mat-checkbox>
-                <p class="titulo">Pagos agregados</p>
+                <p class="titulo">{{ 'pos.factura.productos_agregados' | translate }}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="eliminarProducto()">
                     <mat-icon>delete</mat-icon>
@@ -45,8 +45,9 @@
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
                 <div class="descripcion-producto">
                     <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
-                    <p class="info-producto">Precio unitario: {{producto.precioUnitario}}</p>
-                    <p class="info-producto">Precio total: {{producto.total}}</p>
+                    <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }} {{producto.precioUnitario}}
+                    </p>
+                    <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{producto.total}}</p>
                 </div>
             </div>
         </div>
