@@ -79,7 +79,7 @@
     </div>
     <span class="spacer"></span>
 
-    <div class="cliente">
+    <div class="cliente" *ngIf="facturaService.vendedores.length > 0">
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
