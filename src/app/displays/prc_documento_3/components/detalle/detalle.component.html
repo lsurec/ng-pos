@@ -3,7 +3,7 @@
         <div class="informacion">
             <form #searchForm="ngForm" (ngSubmit)="buscarProducto(searchText)" class="inputSearch">
                 <div class="buscar">
-                    <p class="subtitulo">{{ 'pos.detalle.filtro' | translate }}</p>
+                    <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
                     <span class="spacer"></span>
                     <div *ngFor="let option of filtrosBusqueda">
                         <div class="chip" [class.selected]="option.id === selectedOption"
@@ -25,17 +25,49 @@
                 <p> {{producto.sku}} </p>
             </div>
         </div>
+
+        <div class="informacion">
+            <mat-accordion class="mat-expansion">
+                <mat-expansion-panel (opened)="cargosDescuentos = true" (closed)="cargosDescuentos = false"
+                    class="color_fondo">
+                    <mat-expansion-panel-header class="color_fondo">
+                        <mat-panel-description>
+                            Cargo/Descuento
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="mat-expansion-panel-body">
+                        <div class="dFlex">
+                            <span class="spacer"></span>
+                            <p>Porcentaje</p>
+                            <p>Monto</p>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
     <span class="spacer"></span>
 
     <div class="producto">
+        <div class="eliminar" *ngIf="compras.length > 0">
+            <div class="dFlex">
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                    (ngModelChange)="seleccionar()"></mat-checkbox>
+                <p class="titulo">{{ 'pos.factura.productos_agregados' | translate }}</p>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="eliminarProducto()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
         <div class="producto-seleccionado" *ngFor="let producto of compras">
             <div class="dFlex">
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
                 <div class="descripcion-producto">
                     <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
-                    <p class="info-producto">Precio unitario: {{producto.precioUnitario}}</p>
-                    <p class="info-producto">Precio total: {{producto.total}}</p>
+                    <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }} {{producto.precioUnitario}}
+                    </p>
+                    <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{producto.total}}</p>
                 </div>
             </div>
         </div>

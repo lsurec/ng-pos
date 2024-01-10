@@ -4,82 +4,77 @@
 
 <app-progress *ngIf="facturaService.isLoading"></app-progress>
 <div *ngIf="!facturaService.isLoading">
-    
-<div class="" *ngIf="vistaFactura">
-    <mat-toolbar-row class="head__sidenav">
-        <button (click)="goBack()" mat-icon-button aria-label matTooltip="regresar">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button mat-icon-button aria-label matTooltip="actualizar">
-            <mat-icon>refresh</mat-icon>
-        </button>
-        <span class="spacer"></span>
-        <!-- Titulo de la tarea -->
-        <p class="titulo">{{dataUserService.nameDisplay}}</p>
-        <span class="spacer"></span>
-        <button mat-icon-button aria-label matTooltip="recientes">
-            <mat-icon>schedule</mat-icon>
-        </button>
-        <button mat-icon-button aria-label matTooltip="nuevo">
-            <mat-icon>note_add</mat-icon>
-        </button>
-        <button mat-icon-button aria-label matTooltip="nuevo" (click)="verResumen()">
-            <mat-icon>print</mat-icon>
-        </button>
-    </mat-toolbar-row>
 
-    <div class="container-main">
+    <div class="" *ngIf="vistaFactura">
+        <mat-toolbar-row class="head__sidenav">
+            <button (click)="goBack()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <!-- Titulo de la tarea -->
+            <p class="titulo">{{dataUserService.nameDisplay}}</p>
+            <span class="spacer"></span>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.reciente' | translate }}">
+                <mat-icon>schedule</mat-icon>
+            </button>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevo' | translate }}">
+                <mat-icon>note_add</mat-icon>
+            </button>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.resumen' | translate }}"
+                (click)="verResumen()">
+                <mat-icon>print</mat-icon>
+            </button>
+        </mat-toolbar-row>
 
-        <!--Tabs-->
-        <input id="tab1" type="radio" name="tabs" checked>
-        <label for="tab1" matTooltip="Documento" (click)="tabAcitve = 'document'">Documento</label>
+        <div class="container-main">
 
-        <input id="tab2" type="radio" name="tabs">
-        <label for="tab2" matTooltip="Detalle" (click)="tabAcitve = 'transaction'">Detalle</label>
+            <!--Tabs-->
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}" (click)="tabAcitve = 'document'">{{
+                'pos.factura.documento' | translate }}</label>
 
-        <input id="tab3" type="radio" name="tabs">
-        <label for="tab3" matTooltip="Forma de Pago" (click)="tabAcitve = 'payment'">Forma de Pago</label>
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
+                (click)="tabAcitve = 'transaction'">{{
+                'pos.factura.detalle' | translate }}</label>
 
-        <!-- <input id="tab4" type="radio" name="tabs">
-        <label for="tab4" matTooltip="Elemento Asiganado" (click)="tabAcitve = 'element'">Elemento Asignado</label>
-    
-        <input id="tab5" type="radio" name="tabs">
-        <label for="tab5" matTooltip="Referencia" (click)="tabAcitve = 'reference'"> Referencia</label>
-    
-        <input id="tab6" type="radio" name="tabs">
-        <label for="tab6" matTooltip="Consultas" (click)="tabAcitve = 'consult'">Consultas</label> -->
+            <input id="tab3" type="radio" name="tabs">
+            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)="tabAcitve = 'payment'">{{
+                'pos.factura.pago' | translate }}</label>
 
-        <!--Fin Tabs-->
+            <!--Fin Tabs-->
 
+            <!--Content Tabs-->
+            <section id="content1">
+                <!-- <app-pago></app-pago> -->
+                <!-- <app-detalle></app-detalle> -->
+                <app-documento></app-documento>
+            </section>
 
-        <!--Content Tabs-->
-        <section id="content1">
-            <!-- <app-pago></app-pago> -->
-            <!-- <app-detalle></app-detalle> -->
-            <app-documento></app-documento>
-        </section>
+            <section id="content2">
+                <app-detalle></app-detalle>
+            </section>
 
-        <section id="content2">
-            <app-detalle></app-detalle>
-        </section>
+            <section id="content3">
+                <app-pago></app-pago>
+            </section>
 
-        <section id="content3">
-            <app-pago></app-pago>
-        </section>
+            <section id="content4">
+            </section>
 
-        <section id="content4">
-        </section>
+            <section id="content5">
+            </section>
 
-        <section id="content5">
-        </section>
+            <section id="content6">
+            </section>
+            <!--Fin Content Tabs-->
 
-        <section id="content6">
-        </section>
-        <!--Fin Content Tabs-->
-
+        </div>
+        <!-- Mostrar logos -->
+        <!-- <app-barra-logos></app-barra-logos> -->
+        <app-barra-logo-demosoft></app-barra-logo-demosoft>
     </div>
-    <!-- Mostrar logos -->
-    <!-- <app-barra-logos></app-barra-logos> -->
-    <app-barra-logo-demosoft></app-barra-logo-demosoft>
-</div>
 </div>

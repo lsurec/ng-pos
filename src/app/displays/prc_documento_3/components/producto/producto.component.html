@@ -4,7 +4,7 @@
     <div class="contenedor">
         <div class="sku">
             <!-- Titulo -->
-            <p>SKU:</p>
+            <p>{{ 'pos.factura.sku' | translate }}</p>
             <p> {{producto.sku}} </p>
             <span class="spacer"></span>
             <!-- Cerrar dialogo -->
@@ -14,7 +14,7 @@
         <div class="busqueda">
             <div class="contenido-izquierdo">
                 <div class="producto-cantidad">
-                    <p class="subtitulo">Cantidad</p>
+                    <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
                     <span class="spacer"></span>
                     <div class="dFlex">
                         <div class="restar" (click)="restar()">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="titulos">
-                    <p class="subtitulo">Descripcion</p>
+                    <p class="subtitulo">{{ 'pos.factura.descripcion' | translate }}</p>
                     <span class="spacer"></span>
                 </div>
                 <div class="seleccionar">
@@ -35,7 +35,7 @@
                     <span class="spacer"></span>
                 </div>
                 <div class="menus">
-                    <p class="subtitulo">Bodega</p>
+                    <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
                     <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="bodega">
                         <mat-option *ngFor="let bodega of bodegas" [value]="bodega">
                             {{bodega}}
@@ -43,7 +43,7 @@
                     </mat-select>
                 </div>
                 <div class="menus">
-                    <p class="subtitulo">Tipo precio</p>
+                    <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
                     <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="precio">
                         <mat-option *ngFor="let precio of precios" [value]="precio">
                             {{precio}}
@@ -51,17 +51,17 @@
                     </mat-select>
                 </div>
                 <div class="menus">
-                    <p class="subtitulo">Precio Unitario</p>
+                    <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
                     <p class="textos">Q {{precioProducto}}.00 </p>
                 </div>
                 <div class="menus dFlex">
                     <span class="spacer"></span>
-                    <p class="subtitulo">Total: Q {{total}}.00</p>
+                    <p class="subtitulo">{{ 'pos.factura.total' | translate }} Q {{total}}.00</p>
                 </div>
                 <div class="dFlex">
-                    <button mat-stroked-button [mat-dialog-close]="[]">Cancelar</button>
+                    <button mat-stroked-button [mat-dialog-close]="[]">{{ 'pos.botones.cancelar' | translate }}</button>
                     <span class="spacer"></span>
-                    <button mat-stroked-button (click)="enviar()">Agregar</button>
+                    <button mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
                 </div>
             </div>
         </div>
