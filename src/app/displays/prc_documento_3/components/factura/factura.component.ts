@@ -14,6 +14,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { ParametroService } from '../../services/parametro.service';
 
 @Component({
   selector: 'app-factura',
@@ -23,6 +24,7 @@ import { TipoTransaccionService } from '../../services/tipos-transaccion.service
     SerieService,
     CuentaService,
     TipoTransaccionService,
+    ParametroService,
   ]
 })
 export class FacturaComponent implements OnInit {
@@ -51,6 +53,7 @@ export class FacturaComponent implements OnInit {
     private _serieService: SerieService,
     private _cuentaService: CuentaService,
     private _tipoTransaccionService: TipoTransaccionService,
+    private _parametroService: ParametroService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -156,7 +159,24 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tiposTransaccion = resTransaccion.response;
 
       //Buscar parametros del documento
-      
+      let resParametro:ResApiInterface = await this._parametroService.getParametro(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+        estacion,
+      )
+
+      if(!resParametro.status){
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resParametro);
+        return;
+      }
+
+      this.facturaService.parametros = resParametro.response;
+
+      //Buscar formas de pago
 
     }
 
