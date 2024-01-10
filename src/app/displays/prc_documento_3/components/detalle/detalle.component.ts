@@ -18,9 +18,7 @@ export class DetalleComponent {
   selectedOption: number | null = 1;
   eliminarPagos: boolean = false;
 
-  cargosDescuentos: boolean = false;
-
-
+  tipoDesCar: number | null = 1;
   filtrosBusqueda: FiltroInterface[] = [
     {
       id: 1,
@@ -29,6 +27,17 @@ export class DetalleComponent {
     {
       id: 2,
       nombre: "Descripción",
+    },
+  ];
+
+  tipos: FiltroInterface[] = [
+    {
+      id: 1,
+      nombre: "Porcentaje",
+    },
+    {
+      id: 2,
+      nombre: "Monto",
     },
   ];
 
@@ -160,6 +169,10 @@ export class DetalleComponent {
 
   onOptionChange(optionId: number) {
     this.selectedOption = optionId;
+  }
+
+  onOptionCarDes(optionId: number) {
+    this.tipoDesCar = optionId;
   }
 
   seleccionar() {

@@ -2,9 +2,9 @@ $color-naranja        : #df9722;
 $color-negro          : #000000;
 $color-blanco         : #fff;
 $color-gris           : #c1bfbf;
-$color-azul           : #134895;
 $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
 $color-azul           : #134895; // fondo, bordes y texto azul
+$color-pestanas       : #555;
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 $bordes               : #c1bfbf;
@@ -23,48 +23,6 @@ $idioma-seleccionado  : #5d6d6c;
     background-color: $background-oficial;
 }
 
-.menu-izquierdo {
-    width         : 200px;
-    float         : right;
-    overflow      : auto;
-    background    : $background-oficial;
-    border-right  : 1px solid rgba(0, 0, 0, .12);
-    padding-bottom: 10px;
-}
-
-.tipo-vista {
-    width          : 100%;
-    align-items    : center !important;
-    justify-content: space-between;
-    border-bottom  : 0.8px solid $color-bordes;
-    border-left    : 1px solid $color-bordes;
-    font-size      : 14px;
-    min-height     : 40px;
-    display        : flex;
-    padding-left   : 10px;
-}
-
-.tipo-vista:hover {
-    cursor          : pointer;
-    background-color: $color-azul;
-    color           : $color-blanco;
-    border-left     : 6px solid $color-naranja;
-}
-
-.vista-seleccionada {
-    width           : 100%;
-    align-items     : center !important;
-    justify-content : space-between;
-    border-bottom   : 0.8px solid $color-bordes;
-    font-size       : 14px;
-    min-height      : 40px;
-    display         : flex;
-    padding-left    : 10px;
-    background-color: $color-azul;
-    color           : $color-blanco;
-    border-left     : 6px solid $color-naranja;
-}
-
 .head__sidenav {
     width           : 100%;
     height          : 64px !important;
@@ -81,21 +39,6 @@ $idioma-seleccionado  : #5d6d6c;
 
 p {
     margin-bottom: 0px;
-}
-
-.vistas {
-    display    : flex;
-    align-items: center;
-    width      : 100%;
-}
-
-.documento {
-    padding: 10px;
-}
-
-.opciones {
-    width  : 33%;
-    padding: 5px 10px;
 }
 
 //BORRAR
@@ -182,11 +125,13 @@ body {
     height: 100%;
 }
 
-$color1 : #0f3851;
-$color2 : #154d67;
-$color3 : #1a7084;
-$color4 : #2398a0;
-$color5 : #2bc9bf;
+$color1     : #0f3851;
+$color2     : #154d67;
+$color3     : #1a7084;
+$color4     : #2398a0;
+$color5     : #2bc9bf;
+$color-azul : #134895;
+
 
 .elevation_bar {
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -218,8 +163,7 @@ main {
 
 section {
     display   : none;
-    // padding: 20px 0 0;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $color-bordes;
 }
 
 input {
@@ -232,7 +176,7 @@ label {
     padding    : 15px 25px;
     font-weight: 500;
     text-align : center;
-    color      : $color3;
+    color      : $color-pestanas;
     border     : 2px solid transparent;
 }
 
@@ -272,10 +216,10 @@ label:hover {
 }
 
 input:checked+label {
-    color        : #555;
-    border       : 1px solid #ddd;
+    color        : $color-azul;
+    border       : 1px solid $color-bordes;
     border-top   : 3px solid orange;
-    border-bottom: 1px solid #fff;
+    border-bottom: 0px;
 }
 
 #tab1:checked~#content1,
@@ -303,13 +247,3 @@ input:checked+label {
         padding: 15px;
     }
 }
-
-/*Logos*/
-
-.img_empresas {
-    height: 50px;
-    margin: 10px;
-}
-
-
-/*FIn logos*/

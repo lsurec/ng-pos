@@ -1,8 +1,8 @@
 <div class="documento">
     <div class="buscar-producto">
         <div class="informacion">
-            <form #searchForm="ngForm" (ngSubmit)="buscarProducto(searchText)" class="inputSearch">
-                <div class="buscar">
+            <form #searchForm="ngForm" (ngSubmit)="buscarProducto(searchText)">
+                <div class="dFlex">
                     <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
                     <span class="spacer"></span>
                     <div *ngFor="let option of filtrosBusqueda">
@@ -11,11 +11,13 @@
                         </div>
                     </div>
                 </div>
+                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
                 <div class="input-container">
-                    <button class="iconoLupa" mat-icon-button>
-                        <mat-icon>search</mat-icon> </button>
                     <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
                         autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
+                    <button mat-icon-button class="iconoLupa">
+                        <mat-icon>search</mat-icon>
+                    </button>
                 </div>
             </form>
         </div>
@@ -27,23 +29,24 @@
         </div>
 
         <div class="informacion">
-            <mat-accordion class="mat-expansion">
-                <mat-expansion-panel (opened)="cargosDescuentos = true" (closed)="cargosDescuentos = false"
-                    class="color_fondo">
-                    <mat-expansion-panel-header class="color_fondo">
-                        <mat-panel-description>
-                            Cargo/Descuento
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <div class="mat-expansion-panel-body">
-                        <div class="dFlex">
-                            <span class="spacer"></span>
-                            <p>Porcentaje</p>
-                            <p>Monto</p>
-                        </div>
+            <div class="dFlex">
+                <p class="subtitulo">Cargo/Descuento</p>
+                <span class="spacer"></span>
+                <div *ngFor="let option of tipos">
+                    <div class="chip" [class.selected]="option.id === tipoDesCar" (click)="onOptionCarDes(option.id)">{{
+                        option.nombre }}
                     </div>
-                </mat-expansion-panel>
-            </mat-accordion>
+                </div>
+            </div>
+            <div class="dFlex">
+                <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00">
+                <button mat-mini-fab class="iconoCargo">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button mat-mini-fab class="iconoDescuento">
+                    <mat-icon>remove</mat-icon>
+                </button>
+            </div>
         </div>
     </div>
     <span class="spacer"></span>

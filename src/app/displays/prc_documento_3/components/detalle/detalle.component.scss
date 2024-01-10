@@ -8,7 +8,7 @@ $color-gris-s       : #777; //sombra y texto gris
 $color-blanco       : #fff; //texto blanco
 $color-gris         : #efefef;
 $background-transparent: transparent; //fondo transparennte,
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-oficial : #FEF5E7; //fondo Demosoft, bordes scroollbar
 
 .documento {
     padding: 10px 25px;
@@ -35,8 +35,8 @@ p {
     width  : 400px;
 }
 
-.eliminar{
-    width  : 400px;
+.eliminar {
+    width: 400px;
 }
 
 .detalles {
@@ -95,25 +95,50 @@ p {
 }
 
 
-/* Estilo para el contenedor del icono y el campo de entrada */
+//buscador y filtos
+.inputSearch {
+    text-align: center !important;
+}
+
+
+//Estilo para el contenedor del icono y el campo de entrada
 .input-container {
-    position: relative;
-    padding : 10px 0px;
+    position     : relative;
+    display      : flex;
+    align-items  : center;
+    width        : 100%;
+    border-bottom: 1px solid $color-bordes;
 }
 
-/* Estilo para el icono */
+.input-container:hover {
+    border-bottom: 1px solid $color-azul;
+}
+
+//Estilo para el icono
 .iconoLupa {
-    position   : absolute;
-    top        : 48%;
-    /* Ajusta la posición verticalmente según sea necesario */
-    right      : 0.5%;
-    /* Ajusta la posición horizontalmente según sea necesario */
-    transform  : translateY(-50%);
-    color      : $color-azul;
-    align-items: center;
+    color: $color-azul;
 }
 
-/* estilos para los inputs */
+.iconoCargo {
+    color           : $color-blanco;
+    background-color: #25a704;
+    margin-right    : 5px;
+    width           : 30px;
+    height          : 30px;
+}
+
+.iconoDescuento {
+    color           : $color-blanco;
+    background-color: #ce1414;
+    width           : 30px;
+    height          : 30px;
+}
+
+.icono {
+    font-size: 20px !important;
+}
+
+// estilos para los inputs 
 .barra-de-busqueda {
     height       : 45px;
     width        : 100%;
@@ -122,7 +147,6 @@ p {
     padding-left : 10px;
     outline      : none;
     border-style : none;
-    border       : 0.5px solid $color-bordes;
     color        : $color-azul;
     border-radius: 10px;
 }
@@ -131,12 +155,6 @@ p {
     text-align: center;
     width     : 100%;
     padding   : 10px 15px 5px;
-}
-
-.buscar {
-    padding-left: 5px;
-    display     : flex;
-    align-items : center;
 }
 
 .buscar-opcion {
@@ -173,11 +191,11 @@ p {
 }
 
 .producto-seleccionado {
-    min-height         : 40px;
-    width              : 400px;
-    background-color   : $color-bordes;
-    padding-left       : 5px;
-    margin             : 5px 0px;
+    min-height      : 40px;
+    width           : 400px;
+    background-color: $color-bordes;
+    padding-left    : 5px;
+    margin          : 5px 0px;
 }
 
 .descripcion-producto {
@@ -188,14 +206,16 @@ p {
     font-size: 12px;
 }
 
-/* color de fondo de toda la pantalla */
-.color_fondo {
-    background-color: $background-transparent;
-}
-
-.mat-expansion-panel-body {
-    padding         : 0 !important;
-    background-color: $background-oficial !important;
-    margin          : 0px -20px;
-    border-radius   : 0px !important;
+.barra-monto {
+    height       : 45px;
+    width        : calc(100% - 100px);
+    background   : none;
+    font-size    : 14px;
+    padding-left : 10px;
+    outline      : none;
+    border-style : none;
+    color        : $color-azul;
+    border-radius: 10px;
+    border       : 1px solid $color-azul;
+    margin       : 10px 10px 0px 0px;
 }

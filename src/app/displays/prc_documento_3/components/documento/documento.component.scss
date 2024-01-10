@@ -25,6 +25,13 @@ p {
     margin-bottom: 0px;
 }
 
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
 
 .informacion,
 .buscar-cliente {
@@ -34,11 +41,6 @@ p {
 
 .detalles {
     font-size: 14px;
-}
-
-.buscar-cliente {
-    padding: 10px 0px;
-    width  : 400px;
 }
 
 .dFlex {
@@ -88,25 +90,25 @@ p {
 }
 
 
-/* Estilo para el contenedor del icono y el campo de entrada */
+//Estilo para el contenedor del icono y el campo de entrada
 .input-container {
-    position: relative;
-    padding : 10px 0px;
+    position     : relative;
+    display      : flex;
+    align-items  : center;
+    width        : 100%;
+    border-bottom: 1px solid $color-bordes;
 }
 
-/* Estilo para el icono */
+.input-container:hover {
+    border-bottom: 1px solid $color-azul;
+}
+
+//Estilo para el icono
 .iconoLupa {
-    position   : absolute;
-    top        : 48%;
-    /* Ajusta la posición verticalmente según sea necesario */
-    right      : 0.5%;
-    /* Ajusta la posición horizontalmente según sea necesario */
-    transform  : translateY(-50%);
-    color      : $color-azul;
-    align-items: center;
+    color: $color-azul;
 }
 
-/* estilos para los inputs */
+// estilos para los inputs 
 .barra-de-busqueda {
     height       : 45px;
     width        : 100%;
@@ -115,7 +117,6 @@ p {
     padding-left : 10px;
     outline      : none;
     border-style : none;
-    border       : 0.5px solid $color-bordes;
     color        : $color-azul;
     border-radius: 10px;
 }
