@@ -8,6 +8,7 @@ import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { components } from 'src/app/providers/componentes.provider';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-factura',
@@ -26,6 +27,7 @@ export class FacturaComponent implements OnInit {
     private _location: Location,
     private _eventService: EventService,
     public dataUserService: DataUserService,
+    public facturaService: FacturaService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -47,8 +49,8 @@ export class FacturaComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    console.log("Iniciando factura");
-    
+    this.loadData();
+
   }
 
 
@@ -101,9 +103,11 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
   }
 
+  loadData() {
+    console.log("Iniciando factura");
+  }
 
-
-   //Cerra sesion
+  //Cerra sesion
   async logOut() {
 
     let verificador = await this._widgetService.openDialogActions({ title: "Cerrar sesión", description: "Se perderán los datos que no han sido guardados ¿Estás seguro?", verdadero: "", falso: "" });

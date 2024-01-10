@@ -17,6 +17,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 
 @Component({
   selector: 'app-home',
@@ -98,6 +99,7 @@ export class HomeComponent {
     private _notificationsService: NotificationsService,
     private themeService: ThemeService,
     private _dataUserService: DataUserService,
+    public facturaService: FacturaService,
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -402,9 +404,9 @@ export class HomeComponent {
 
       let display:DisplayInterface = itemMenu.display!;
 
-      this._dataUserService.tipoDocumento = display.tipo_Documento;
+      this.facturaService.tipoDocumento = display.tipo_Documento;
       this._dataUserService.nameDisplay = display.name;
-      this._dataUserService.documentoName = display.des_Tipo_Documento ?? "";
+      this.facturaService.documentoName = display.des_Tipo_Documento ?? "";
       
       //Oculta el contenido de todos los componentes de la lista
       this.components.forEach(component => {

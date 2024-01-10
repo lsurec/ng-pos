@@ -6,13 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class DataUserService {
 
-  tipoDocumento?:number;
-  nameDisplay:string ="";
-  documentoName:string ="";
+  nameDisplay: string = "";
 
 
-  constructor() {}
+  constructor() { }
 
 
-  
+
 }

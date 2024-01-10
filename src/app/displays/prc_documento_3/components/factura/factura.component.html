@@ -2,6 +2,9 @@
 <app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta"></app-editar-cliente>
 <app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
 
+<app-progress *ngIf="facturaService.isLoading"></app-progress>
+<div *ngIf="!facturaService.isLoading">
+    
 <div class="" *ngIf="vistaFactura">
     <mat-toolbar-row class="head__sidenav">
         <button (click)="goBack()" mat-icon-button aria-label matTooltip="regresar">
@@ -78,4 +81,5 @@
     <!-- Mostrar logos -->
     <!-- <app-barra-logos></app-barra-logos> -->
     <app-barra-logo-demosoft></app-barra-logo-demosoft>
+</div>
 </div>
