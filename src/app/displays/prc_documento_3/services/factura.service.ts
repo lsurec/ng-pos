@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { SerieInterface } from '../interfaces/serie.interface';
 import { VendedorInterface } from '../interfaces/vendedor.interface';
+import { TipoTransaccionInterface } from '../interfaces/tipo-transaccion.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -14,6 +15,7 @@ export class FacturaService {
     serie?:SerieInterface;
     vendedores:VendedorInterface[] = [];
     vendedor?:VendedorInterface;
+    tiposTransaccion:TipoTransaccionInterface[] = [];
 
     constructor() { }
 

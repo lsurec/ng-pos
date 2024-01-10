@@ -13,14 +13,16 @@ import { SerieService } from '../../services/serie.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.scss'],
-  providers:[
+  providers: [
     SerieService,
     CuentaService,
+    TipoTransaccionService,
   ]
 })
 export class FacturaComponent implements OnInit {
@@ -48,6 +50,7 @@ export class FacturaComponent implements OnInit {
     public facturaService: FacturaService,
     private _serieService: SerieService,
     private _cuentaService: CuentaService,
+    private _tipoTransaccionService: TipoTransaccionService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -73,21 +76,21 @@ export class FacturaComponent implements OnInit {
 
   }
 
-  
+
   async loadData() {
     //Si no hay tipo de documento validar
-    if(!this.facturaService.tipoDocumento){
+    if (!this.facturaService.tipoDocumento) {
       //TODO: show retry view
       this._notificationService.openSnackbar("No se ha asigando un tipo de documento al display. Comunicate con el departamento de soporte.");
       return;
     }
-    
-    let user:string =  PreferencesService.user;
-    let token:string =  PreferencesService.token;
-    let empresa:number = PreferencesService.empresa.empresa;
-    let estacion:number = PreferencesService.estacion.estacion_Trabajo;
-    let documento:number = this.facturaService.tipoDocumento;
-    
+
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
+    let empresa: number = PreferencesService.empresa.empresa;
+    let estacion: number = PreferencesService.estacion.estacion_Trabajo;
+    let documento: number = this.facturaService.tipoDocumento;
+
     this.facturaService.isLoading = true;
 
     //Buscar series
@@ -98,8 +101,8 @@ export class FacturaComponent implements OnInit {
       empresa,
       estacion,
     );
-   
-    if(!resSeries.status){
+
+    if (!resSeries.status) {
       this.facturaService.isLoading = false;
       this._notificationService.showErrorAlert(resSeries);
       return;
@@ -108,10 +111,10 @@ export class FacturaComponent implements OnInit {
     this.facturaService.series = resSeries.response;
 
     //si solo hay una serie seleccionarla por defecto;
-    if(this.facturaService.series.length == 1){
+    if (this.facturaService.series.length == 1) {
       //seleccionar serie
       this.facturaService.serie = this.facturaService.series[0];
-      let serie:string = this.facturaService.serie.serie_Documento;
+      let serie: string = this.facturaService.serie.serie_Documento;
 
       //buscar vendedores
       let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -122,20 +125,38 @@ export class FacturaComponent implements OnInit {
         empresa,
       )
 
-      if(!resVendedor.status){
+      if (!resVendedor.status) {
         this.facturaService.isLoading = false;
         this._notificationService.showErrorAlert(resVendedor);
         return;
       }
-  
+
       this.facturaService.vendedores = resVendedor.response;
 
       //si solo hay un vendedor seleccionarlo por defecto
-      if(this.facturaService.vendedores.length == 1){
+      if (this.facturaService.vendedores.length == 1) {
         this.facturaService.vendedor = this.facturaService.vendedores[0];
       }
 
       //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      );
+
+      if (!resTransaccion.status) {
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resTransaccion);
+        return;
+      }
+
+      this.facturaService.tiposTransaccion = resTransaccion.response;
+
+      //Buscar parametros del documento
+      
 
     }
 
@@ -147,7 +168,7 @@ export class FacturaComponent implements OnInit {
 
 
 
- 
+
 
   close(reason: string) {
     this.sidenav.close();
@@ -184,7 +205,7 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
   }
 
-  
+
   goBack(): void {
     // this.newItemEvent.emit(false);
     components.forEach(element => {
