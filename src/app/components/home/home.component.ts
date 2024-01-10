@@ -16,6 +16,8 @@ import { MenuService } from 'src/app/services/menu.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 
 @Component({
   selector: 'app-home',
@@ -95,7 +97,9 @@ export class HomeComponent {
     private translate: TranslateService,
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private _dataUserService: DataUserService,
+    public facturaService: FacturaService,
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -391,9 +395,19 @@ export class HomeComponent {
   };
 
   viewContent(itemMenu: MenuInterface) {
+   
+ 
+    
+
     this.clickedItem = itemMenu.id;
     if (itemMenu.children.length == 0) {
 
+      let display:DisplayInterface = itemMenu.display!;
+
+      this.facturaService.tipoDocumento = display.tipo_Documento;
+      this._dataUserService.nameDisplay = display.name;
+      this.facturaService.documentoName = display.des_Tipo_Documento ?? "";
+      
       //Oculta el contenido de todos los componentes de la lista
       this.components.forEach(component => {
         component.visible = false;
@@ -404,6 +418,7 @@ export class HomeComponent {
       //recorremos la lista qeu tiene todos los componentes
       for (let index = 0; index < this.components.length; index++) {
         const selectedComponent = this.components[index];
+
         //si el nombre del componente seleccionado conincide con algun componente agregado a la lista.
         if (selectedComponent.id.toLowerCase() == itemMenu.route.toLowerCase()) {
           //hacerlo visible

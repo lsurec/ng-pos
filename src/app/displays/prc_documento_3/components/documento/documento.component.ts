@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { EventService } from 'src/app/services/event.service';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-documento',
@@ -19,19 +20,6 @@ export class DocumentoComponent {
   @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
-  serie!: string;
-  series: string[] = [
-    "FAC M",
-    "FAC MX",
-    "FAC GT"
-  ]
-
-  vendedor!: string;
-  vendedores: string[] = [
-    "Proveedor",
-    "Vendedor 01",
-    "DEMOSOFT"
-  ]
 
   constructor(
     private _dialog: MatDialog,
@@ -39,6 +27,7 @@ export class DocumentoComponent {
     private translate: TranslateService,
     private _router: Router,
     private _eventService: EventService,
+    public facturaService: FacturaService,
   ) {
   }
 

@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -9,9 +10,13 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class InConstructionComponent {
 
+  // TODO:Centrar contenido
+
   constructor(
     private _location: Location,
     private _eventService: EventService,
+    public dataUserService:DataUserService,
+    
   ) {
   }
   //regresar a la pantalla anterior

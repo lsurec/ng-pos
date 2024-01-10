@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { Router } from '@angular/router';
@@ -6,23 +6,54 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { DataUserService } from '../../services/data-user.service';
+import { components } from 'src/app/providers/componentes.provider';
+import { FacturaService } from '../../services/factura.service';
+import { SerieService } from '../../services/serie.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { CuentaService } from '../../services/cuenta.service';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { ParametroService } from '../../services/parametro.service';
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss']
+  styleUrls: ['./factura.component.scss'],
+  providers: [
+    SerieService,
+    CuentaService,
+    TipoTransaccionService,
+    ParametroService,
+  ]
 })
-export class FacturaComponent {
+export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
   cuenta?: ClienteInterface;
+  vistaFactura: boolean = true;
+  nuevoCliente: boolean = false;
+  actualizarCliente: boolean = false;
+  vistaResumen: boolean = false;
+
+  //Abrir/Cerrar SideNav
+  @ViewChild('sidenav')
+  sidenav!: MatSidenav;
+  @ViewChild('sidenavend')
+  sidenavend!: MatSidenav;
+
+  tabAcitve = "document"
 
   constructor(
-    private router: Router,
-    private _widgetService: NotificationsService,
-    private _location: Location,
+    private _notificationService: NotificationsService,
     private _eventService: EventService,
+    public dataUserService: DataUserService,
+    public facturaService: FacturaService,
+    private _serieService: SerieService,
+    private _cuentaService: CuentaService,
+    private _tipoTransaccionService: TipoTransaccionService,
+    private _parametroService: ParametroService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -43,21 +74,121 @@ export class FacturaComponent {
     });
 
   }
+  ngOnInit(): void {
+    this.loadData();
+
+  }
+
+
+  async loadData() {
+    //Si no hay tipo de documento validar
+    if (!this.facturaService.tipoDocumento) {
+      //TODO: show retry view
+      this._notificationService.openSnackbar("No se ha asigando un tipo de documento al display. Comunicate con el departamento de soporte.");
+      return;
+    }
+
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
+    let empresa: number = PreferencesService.empresa.empresa;
+    let estacion: number = PreferencesService.estacion.estacion_Trabajo;
+    let documento: number = this.facturaService.tipoDocumento;
+
+    this.facturaService.isLoading = true;
+
+    //Buscar series
+    let resSeries: ResApiInterface = await this._serieService.getSerie(
+      user,
+      token,
+      documento,
+      empresa,
+      estacion,
+    );
+
+    if (!resSeries.status) {
+      this.facturaService.isLoading = false;
+      this._notificationService.showErrorAlert(resSeries);
+      return;
+    }
+
+    this.facturaService.series = resSeries.response;
+
+    //si solo hay una serie seleccionarla por defecto;
+    if (this.facturaService.series.length == 1) {
+      //seleccionar serie
+      this.facturaService.serie = this.facturaService.series[0];
+      let serie: string = this.facturaService.serie.serie_Documento;
+
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      )
+
+      if (!resVendedor.status) {
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resVendedor);
+        return;
+      }
+
+      this.facturaService.vendedores = resVendedor.response;
+
+      //si solo hay un vendedor seleccionarlo por defecto
+      if (this.facturaService.vendedores.length == 1) {
+        this.facturaService.vendedor = this.facturaService.vendedores[0];
+      }
+
+      //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      );
+
+      if (!resTransaccion.status) {
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resTransaccion);
+        return;
+      }
+
+      this.facturaService.tiposTransaccion = resTransaccion.response;
+
+      //Buscar parametros del documento
+      let resParametro:ResApiInterface = await this._parametroService.getParametro(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+        estacion,
+      )
+
+      if(!resParametro.status){
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resParametro);
+        return;
+      }
+
+      this.facturaService.parametros = resParametro.response;
+
+      //Buscar formas de pago
+
+    }
+
+    this.facturaService.isLoading = false;
 
 
 
-  vistaFactura: boolean = true;
-  nuevoCliente: boolean = false;
-  actualizarCliente: boolean = false;
-  vistaResumen: boolean = false;
+  }
 
-  //Abrir/Cerrar SideNav
-  @ViewChild('sidenav')
-  sidenav!: MatSidenav;
-  @ViewChild('sidenavend')
-  sidenavend!: MatSidenav;
 
-  tabAcitve = "document"
+
+
 
   close(reason: string) {
     this.sidenav.close();
@@ -94,24 +225,13 @@ export class FacturaComponent {
     this.nuevoCliente = false;
   }
 
-  ngOnInit(): void {
-  }
-
-  //Cerra sesion
-  async logOut() {
-
-    let verificador = await this._widgetService.openDialogActions({ title: "Cerrar sesión", description: "Se perderán los datos que no han sido guardados ¿Estás seguro?", verdadero: "", falso: "" });
-    if (!verificador) return;
-
-    //Limpiar datos del storage
-    localStorage.clear();
-    sessionStorage.clear();
-    //return to login and delete de navigation route
-    this.router.navigate(['/login']);
-  }
 
   goBack(): void {
     // this.newItemEvent.emit(false);
+    components.forEach(element => {
+      element.visible = false;
+    });
+
     this._eventService.emitCustomEvent(false);
   }
 }
