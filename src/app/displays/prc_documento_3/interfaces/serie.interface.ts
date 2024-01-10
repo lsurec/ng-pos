@@ -1,0 +1,34 @@
+export interface SerieInterface {
+    tipo_Documento:       number;
+    serie_Documento:      string;
+    empresa:              number;
+    bodega:               number;
+    descripcion:          string;
+    serie_Ini:            number;
+    serie_Fin:            number;
+    estado:               number;
+    campo01:              string;
+    campo02:              string;
+    campo03:              string;
+    campo04:              string;
+    campo05:              string;
+    campo06:              string;
+    campo07:              string;
+    campo08:              string;
+    campo09:              string;
+    campo10:              string;
+    documento_Disp:       number;
+    documento_Aviso:      number;
+    documento_Frecuencia: any;
+    fecha_Hora:           Date;
+    doc_Det:              any;
+    limite_Impresion:     any;
+    userName:             string;
+    m_Fecha_Hora:         Date;
+    m_UserName:           string;
+    orden:                any;
+    grupo:                number;
+    opc_Venta:            any;
+    bloquear_Imprimir:    boolean;
+    des_Tipo_Documento:   string;
+}

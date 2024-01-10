@@ -9,25 +9,45 @@ import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { FacturaService } from '../../services/factura.service';
+import { SerieService } from '../../services/serie.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { CuentaService } from '../../services/cuenta.service';
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss']
+  styleUrls: ['./factura.component.scss'],
+  providers:[
+    SerieService,
+    CuentaService,
+  ]
 })
 export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
   cuenta?: ClienteInterface;
+  vistaFactura: boolean = true;
+  nuevoCliente: boolean = false;
+  actualizarCliente: boolean = false;
+  vistaResumen: boolean = false;
+
+  //Abrir/Cerrar SideNav
+  @ViewChild('sidenav')
+  sidenav!: MatSidenav;
+  @ViewChild('sidenavend')
+  sidenavend!: MatSidenav;
+
+  tabAcitve = "document"
 
   constructor(
-    private router: Router,
-    private _widgetService: NotificationsService,
-    private _location: Location,
+    private _notificationService: NotificationsService,
     private _eventService: EventService,
     public dataUserService: DataUserService,
     public facturaService: FacturaService,
+    private _serieService: SerieService,
+    private _cuentaService: CuentaService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -53,20 +73,75 @@ export class FacturaComponent implements OnInit {
 
   }
 
+  
+  async loadData() {
+    //Si no hay tipo de documento validar
+    if(!this.facturaService.tipoDocumento){
+      //TODO: show retry view
+      this._notificationService.openSnackbar("No se ha asigando un tipo de documento al display. Comunicate con el departamento de soporte.");
+      return;
+    }
+    
+    let user:string =  PreferencesService.user;
+    let token:string =  PreferencesService.token;
+    let empresa:number = PreferencesService.empresa.empresa;
+    let estacion:number = PreferencesService.estacion.estacion_Trabajo;
+    let documento:number = this.facturaService.tipoDocumento;
+    
+    this.facturaService.isLoading = true;
+
+    //Buscar series
+    let resSeries: ResApiInterface = await this._serieService.getSerie(
+      user,
+      token,
+      documento,
+      empresa,
+      estacion,
+    );
+   
+    if(!resSeries.status){
+      this.facturaService.isLoading = false;
+      this._notificationService.showErrorAlert(resSeries);
+      return;
+    }
+
+    this.facturaService.series = resSeries.response;
+
+    //si solo hay una serie seleccionarla por defecto;
+    if(this.facturaService.series.length == 1){
+      //seleccionar serie
+      this.facturaService.serieSelect = this.facturaService.series[0];
+      let serie:string = this.facturaService.serieSelect.serie_Documento;
+
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      )
+
+      if(!resVendedor.status){
+        this.facturaService.isLoading = false;
+        this._notificationService.showErrorAlert(resVendedor);
+        return;
+      }
+  
+      this.facturaService.series = resSeries.response;
 
 
-  vistaFactura: boolean = true;
-  nuevoCliente: boolean = false;
-  actualizarCliente: boolean = false;
-  vistaResumen: boolean = false;
+    }
 
-  //Abrir/Cerrar SideNav
-  @ViewChild('sidenav')
-  sidenav!: MatSidenav;
-  @ViewChild('sidenavend')
-  sidenavend!: MatSidenav;
+    this.facturaService.isLoading = false;
 
-  tabAcitve = "document"
+
+
+  }
+
+
+
+ 
 
   close(reason: string) {
     this.sidenav.close();
@@ -103,23 +178,7 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
   }
 
-  loadData() {
-    console.log("Iniciando factura");
-  }
-
-  //Cerra sesion
-  async logOut() {
-
-    let verificador = await this._widgetService.openDialogActions({ title: "Cerrar sesión", description: "Se perderán los datos que no han sido guardados ¿Estás seguro?", verdadero: "", falso: "" });
-    if (!verificador) return;
-
-    //Limpiar datos del storage
-    localStorage.clear();
-    sessionStorage.clear();
-    //return to login and delete de navigation route
-    this.router.navigate(['/login']);
-  }
-
+  
   goBack(): void {
     // this.newItemEvent.emit(false);
     components.forEach(element => {

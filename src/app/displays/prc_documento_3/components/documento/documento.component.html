@@ -5,9 +5,9 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.documento.serie' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="serie">
-                <mat-option *ngFor="let serie of series" [value]="serie">
-                    {{serie}}
+            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="facturaService.serieSelect">
+                <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
+                    {{serie.descripcion}}
                 </mat-option>
             </mat-select>
         </div>
