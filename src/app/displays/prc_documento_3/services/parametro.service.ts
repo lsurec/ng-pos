@@ -34,7 +34,7 @@ export class ParametroService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}empresa/${user}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}parametro`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa
