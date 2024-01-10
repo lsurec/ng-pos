@@ -11,9 +11,9 @@ export class FacturaService {
     tipoDocumento?: number;
     documentoName: string = "";
     series:SerieInterface[] = []
-    serieSelect?:SerieInterface;
+    serie?:SerieInterface;
     vendedores:VendedorInterface[] = [];
-    vendedorSelect?:VendedorInterface;
+    vendedor?:VendedorInterface;
 
     constructor() { }
 

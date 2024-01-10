@@ -110,8 +110,8 @@ export class FacturaComponent implements OnInit {
     //si solo hay una serie seleccionarla por defecto;
     if(this.facturaService.series.length == 1){
       //seleccionar serie
-      this.facturaService.serieSelect = this.facturaService.series[0];
-      let serie:string = this.facturaService.serieSelect.serie_Documento;
+      this.facturaService.serie = this.facturaService.series[0];
+      let serie:string = this.facturaService.serie.serie_Documento;
 
       //buscar vendedores
       let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -128,8 +128,14 @@ export class FacturaComponent implements OnInit {
         return;
       }
   
-      this.facturaService.series = resSeries.response;
+      this.facturaService.vendedores = resVendedor.response;
 
+      //si solo hay un vendedor seleccionarlo por defecto
+      if(this.facturaService.vendedores.length == 1){
+        this.facturaService.vendedor = this.facturaService.vendedores[0];
+      }
+
+      //Buscar tipos transaccion
 
     }
 

@@ -21,14 +21,6 @@ export class DocumentoComponent {
 
   switchState: boolean = false;
 
-
-  vendedor!: string;
-  vendedores: string[] = [
-    "Proveedor",
-    "Vendedor 01",
-    "DEMOSOFT"
-  ]
-
   constructor(
     private _dialog: MatDialog,
     private _location: Location,
