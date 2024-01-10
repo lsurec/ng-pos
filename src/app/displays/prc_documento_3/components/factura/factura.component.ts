@@ -15,6 +15,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
+import { PagoService } from '../../services/pago.service';
 
 @Component({
   selector: 'app-factura',
@@ -25,6 +26,7 @@ import { ParametroService } from '../../services/parametro.service';
     CuentaService,
     TipoTransaccionService,
     ParametroService,
+    PagoService,
   ]
 })
 export class FacturaComponent implements OnInit {
@@ -54,6 +56,7 @@ export class FacturaComponent implements OnInit {
     private _cuentaService: CuentaService,
     private _tipoTransaccionService: TipoTransaccionService,
     private _parametroService: ParametroService,
+    private _formaPagoService: PagoService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -159,7 +162,7 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tiposTransaccion = resTransaccion.response;
 
       //Buscar parametros del documento
-      let resParametro:ResApiInterface = await this._parametroService.getParametro(
+      let resParametro: ResApiInterface = await this._parametroService.getParametro(
         user,
         token,
         documento,
@@ -168,7 +171,7 @@ export class FacturaComponent implements OnInit {
         estacion,
       )
 
-      if(!resParametro.status){
+      if (!resParametro.status) {
         this.facturaService.isLoading = false;
         this._notificationService.showErrorAlert(resParametro);
         return;
@@ -177,6 +180,22 @@ export class FacturaComponent implements OnInit {
       this.facturaService.parametros = resParametro.response;
 
       //Buscar formas de pago
+      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+        token,
+        empresa,
+        serie,
+        documento,
+      );
+
+      if (!resFormaPago.status) {
+        this.facturaService.isLoading = false;
+
+        this._notificationService.showErrorAlert(resFormaPago);
+        return;
+
+      }
+
+      this.facturaService.formasPago = resFormaPago.response;
 
     }
 
