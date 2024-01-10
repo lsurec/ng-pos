@@ -9,11 +9,24 @@ import { Router } from '@angular/router';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { CuentaService } from '../../services/cuenta.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { ParametroService } from '../../services/parametro.service';
+import { PagoService } from '../../services/pago.service';
 
 @Component({
   selector: 'app-documento',
   templateUrl: './documento.component.html',
-  styleUrls: ['./documento.component.scss']
+  styleUrls: ['./documento.component.scss'],
+  providers: [
+    CuentaService,
+    TipoTransaccionService,
+    ParametroService,
+    PagoService,
+  ]
 })
 export class DocumentoComponent {
 
@@ -21,14 +34,112 @@ export class DocumentoComponent {
 
   switchState: boolean = false;
 
+
+
   constructor(
     private _dialog: MatDialog,
-    private _location: Location,
     private translate: TranslateService,
-    private _router: Router,
     private _eventService: EventService,
     public facturaService: FacturaService,
+    private _cuentaService: CuentaService,
+    private _notificationService: NotificationsService,
+    private _tipoTransaccionService: TipoTransaccionService,
+    private _parametroService: ParametroService,
+    private _formaPagoService: PagoService,
   ) {
+  }
+
+  async changeSerie() {
+
+    //cargar datos que dependen de la serie 
+    let serie: string = this.facturaService.serie!.serie_Documento;
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
+    let empresa: number = PreferencesService.empresa.empresa;
+    let estacion: number = PreferencesService.estacion.estacion_Trabajo;
+    let documento: number = this.facturaService.tipoDocumento!;
+
+
+    this.facturaService.isLoading = true;
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+      user,
+      token,
+      documento,
+      serie,
+      empresa,
+    )
+
+    if (!resVendedor.status) {
+      this.facturaService.isLoading = false;
+      this._notificationService.showErrorAlert(resVendedor);
+      return;
+    }
+
+    this.facturaService.vendedores = resVendedor.response;
+
+    //si solo hay un vendedor seleccionarlo por defecto
+    if (this.facturaService.vendedores.length == 1) {
+      this.facturaService.vendedor = this.facturaService.vendedores[0];
+    }
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+      user,
+      token,
+      documento,
+      serie,
+      empresa,
+    );
+
+    if (!resTransaccion.status) {
+      this.facturaService.isLoading = false;
+      this._notificationService.showErrorAlert(resTransaccion);
+      return;
+    }
+
+    this.facturaService.tiposTransaccion = resTransaccion.response;
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+      user,
+      token,
+      documento,
+      serie,
+      empresa,
+      estacion,
+    )
+
+    if (!resParametro.status) {
+      this.facturaService.isLoading = false;
+      this._notificationService.showErrorAlert(resParametro);
+      return;
+    }
+
+    this.facturaService.parametros = resParametro.response;
+
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+      token,
+      empresa,
+      serie,
+      documento,
+    );
+
+    if (!resFormaPago.status) {
+      this.facturaService.isLoading = false;
+
+      this._notificationService.showErrorAlert(resFormaPago);
+      return;
+
+    }
+    this.facturaService.isLoading = false;
+
+
+    this.facturaService.formasPago = resFormaPago.response;
+
+
   }
 
   // Función para manejar el cambio de estado del switch
