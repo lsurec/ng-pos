@@ -18,6 +18,8 @@ export class DetalleComponent {
   selectedOption: number | null = 1;
   eliminarPagos: boolean = false;
 
+  cargosDescuentos: boolean = false;
+
 
   filtrosBusqueda: FiltroInterface[] = [
     {

@@ -7,6 +7,8 @@ $background-naranja : #DF9722; //resaltar naranja
 $color-gris-s       : #777; //sombra y texto gris
 $color-blanco       : #fff; //texto blanco
 $color-gris         : #efefef;
+$background-transparent: transparent; //fondo transparennte,
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 
 .documento {
     padding: 10px 25px;
@@ -184,4 +186,16 @@ p {
 
 .info-producto {
     font-size: 12px;
+}
+
+/* color de fondo de toda la pantalla */
+.color_fondo {
+    background-color: $background-transparent;
+}
+
+.mat-expansion-panel-body {
+    padding         : 0 !important;
+    background-color: $background-oficial !important;
+    margin          : 0px -20px;
+    border-radius   : 0px !important;
 }

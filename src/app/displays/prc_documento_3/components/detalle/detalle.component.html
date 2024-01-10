@@ -25,6 +25,26 @@
                 <p> {{producto.sku}} </p>
             </div>
         </div>
+
+        <div class="informacion">
+            <mat-accordion class="mat-expansion">
+                <mat-expansion-panel (opened)="cargosDescuentos = true" (closed)="cargosDescuentos = false"
+                    class="color_fondo">
+                    <mat-expansion-panel-header class="color_fondo">
+                        <mat-panel-description>
+                            Cargo/Descuento
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="mat-expansion-panel-body">
+                        <div class="dFlex">
+                            <span class="spacer"></span>
+                            <p>Porcentaje</p>
+                            <p>Monto</p>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
     <span class="spacer"></span>
 

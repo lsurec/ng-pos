@@ -51,6 +51,8 @@ import { ProductoComponent } from './displays/prc_documento_3/components/product
 import { PagoComponent } from './displays/prc_documento_3/components/pago/pago.component';
 import { EditarClienteComponent } from './displays/prc_documento_3/components/editar-cliente/editar-cliente.component';
 import { ResumenDocumentoComponent } from './displays/prc_documento_3/components/resumen-documento/resumen-documento.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
@@ -113,7 +115,8 @@ import { ResumenDocumentoComponent } from './displays/prc_documento_3/components
     MatIconModule,
     MatButtonModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatExpansionModule
   ],
   providers: [
     // DataUserService,
