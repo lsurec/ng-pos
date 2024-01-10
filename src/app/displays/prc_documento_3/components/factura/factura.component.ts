@@ -83,6 +83,7 @@ export class FacturaComponent implements OnInit {
   }
 
 
+    //TODO:Refresh limpia primero toadas las variables
   async loadData() {
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {

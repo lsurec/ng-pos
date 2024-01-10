@@ -22,9 +22,9 @@
                 </div>
                 <div class="" *ngFor="let cliente of clientes">
                     <div class="seleccionar" [mat-dialog-close]="[cliente]">
-                        <p> {{cliente.nombre}} </p>
+                        <p> {{cliente.factura_Nombre}} </p>
                         <span class="spacer"></span>
-                        <p>{{cliente.nit}}</p>
+                        <p>{{cliente.factura_NIT}}</p>
                     </div>
                 </div>
             </div>

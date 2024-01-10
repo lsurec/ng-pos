@@ -33,7 +33,14 @@ export class DocumentoComponent {
   @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
+  searchText!: string;
 
+
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  documento: number = this.facturaService.tipoDocumento!;
 
 
   constructor(
@@ -53,22 +60,16 @@ export class DocumentoComponent {
 
     //cargar datos que dependen de la serie 
     let serie: string = this.facturaService.serie!.serie_Documento;
-    let user: string = PreferencesService.user;
-    let token: string = PreferencesService.token;
-    let empresa: number = PreferencesService.empresa.empresa;
-    let estacion: number = PreferencesService.estacion.estacion_Trabajo;
-    let documento: number = this.facturaService.tipoDocumento!;
-
 
     this.facturaService.isLoading = true;
 
     //buscar vendedores
     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
-      user,
-      token,
-      documento,
+      this.user,
+      this.token,
+      this.documento,
       serie,
-      empresa,
+      this.empresa,
     )
 
     if (!resVendedor.status) {
@@ -86,11 +87,11 @@ export class DocumentoComponent {
 
     //Buscar tipos transaccion
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
-      user,
-      token,
-      documento,
+      this.user,
+      this.token,
+      this.documento,
       serie,
-      empresa,
+      this.empresa,
     );
 
     if (!resTransaccion.status) {
@@ -103,12 +104,12 @@ export class DocumentoComponent {
 
     //Buscar parametros del documento
     let resParametro: ResApiInterface = await this._parametroService.getParametro(
-      user,
-      token,
-      documento,
+      this.user,
+      this.token,
+      this.documento,
       serie,
-      empresa,
-      estacion,
+      this.empresa,
+      this.estacion,
     )
 
     if (!resParametro.status) {
@@ -121,10 +122,10 @@ export class DocumentoComponent {
 
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
-      token,
-      empresa,
+      this.token,
+      this.empresa,
       serie,
-      documento,
+      this.documento,
     );
 
     if (!resFormaPago.status) {
@@ -143,122 +144,75 @@ export class DocumentoComponent {
   }
 
   // Función para manejar el cambio de estado del switch
-  toggleSwitch(): void {
+  setCF(): void {
     this.switchState = !this.switchState;
-    this.selectedCliente = false;
+
+    if (this.switchState) {
+      this.facturaService.cuenta = {
+        cuenta_Correntista: 1,
+        cuenta_Cta: "1",
+        factura_Nombre: "CONSUMIDOR FINAL",
+        factura_NIT: "C/F",
+        factura_Direccion: "CIUDAD",
+        cC_Direccion: "Ciudad",
+        des_Cuenta_Cta: "C/F",
+        direccion_1_Cuenta_Cta: "Ciudad",
+        eMail: "",
+        telefono: "",
+        limite_Credito: 10000000.00,
+        permitir_CxC: true,
+      }
+    } else {
+      this.facturaService.cuenta = undefined;
+    }
   }
 
-  searchText!: string;
-  selectedOption: number | null = 1;
 
-
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: "SKU",
-    },
-    {
-      id: 2,
-      nombre: "Descripción",
-    },
-  ];
-
-
-  onOptionChange(optionId: number) {
-    this.selectedOption = optionId;
-  }
-
-  listaClientes: ClienteInterface[] = [
-    {
-      nit: 12345678,
-      nombre: "Cliente1",
-      direccion: "zona 1",
-      telefono: 0,
-      correo: "",
-    },
-    {
-      nit: 23456789,
-      nombre: "Comprador",
-      direccion: "zona 1",
-      telefono: 0,
-      correo: "",
-    },
-    {
-      nit: 34567890,
-      nombre: "OtroCliente",
-      direccion: "zona 1",
-      telefono: 0,
-      correo: "",
-    },
-    {
-      nit: 45678901,
-      nombre: "Cliente3",
-      direccion: "zona 21",
-      telefono: 0,
-      correo: "",
-    },
-    {
-      nit: 56789012,
-      nombre: "Juan",
-      direccion: "zona 5",
-      telefono: 0,
-      correo: "",
-    },
-    {
-      nit: 67890123,
-      nombre: "Maria",
-      direccion: "zona 7",
-      telefono: 0,
-      correo: "",
-    },
-  ];
-
-  registros: ClienteInterface[] = [];
-  selectedCliente: boolean = false;
-  cliente!: ClienteInterface;
 
   // Función de filtrado
-  buscarCliente(terminoBusqueda: string): void {
+  async buscarCliente(terminoBusqueda: string) {
     // Limpiar la lista de registros antes de cada búsqueda
-    this.registros.length = 0;
+    this.facturaService.isLoading = true;
 
-    // Convertir el término de búsqueda a minúsculas para hacer la búsqueda sin distinción entre mayúsculas y minúsculas
-    let terminoMinusculas = terminoBusqueda.toLowerCase();
+    let resCuenta: ResApiInterface = await this._cuentaService.getClient(
+      this.user,
+      this.token,
+      this.empresa,
+      terminoBusqueda,
+    );
 
-    // Filtrar la lista de clientes
-    this.listaClientes.forEach((cliente) => {
-      const nombreMinusculas = cliente.nombre.toLowerCase();
-      const nitStr = cliente.nit.toString(); // Convertir el NIT a cadena para facilitar la comparación
+    this.facturaService.isLoading = false;
 
-      if (nombreMinusculas.includes(terminoMinusculas) || nitStr.includes(terminoMinusculas)) {
-        this.registros.push(cliente);
-      }
-
-      if (this.searchText.length == 0) {
-        this.registros = [];
-      }
-
-    });
-
-    if (this.registros.length == 1) {
-      this.cliente = this.registros[0];
-      this.selectedCliente = true;
+    if (!resCuenta.status) {
+      this._notificationService.showErrorAlert(resCuenta);
+      return;
     }
 
-    // Puedes agregar lógica adicional aquí si es necesario
+    let cuentas: ClienteInterface[] = resCuenta.response;
 
-    if (this.registros.length > 1) {
-      let estado = this._dialog.open(ClientesEncontradosComponent, { data: this.registros })
-      estado.afterClosed().subscribe(result => {
-        if (result) {
-          console.log(result[0]);
 
-          let cliente: ClienteInterface = result[0];
-          this.cliente = cliente;
-          this.selectedCliente = true;
-        }
-      })
+    //si no hay coicidencias mostrar mensaje
+    if (cuentas.length == 0) {
+      this._notificationService.openSnackbar("No hay coincidencias para la busqueda.");
+      return;
     }
+
+
+    //si solo hay uno seleccioanrlo
+    if (cuentas.length == 1) {
+      this.facturaService.cuenta = cuentas[0];
+      return;
+    }
+
+    //si hay mas de una coicidencia mostrar dialogo
+    let estado = this._dialog.open(ClientesEncontradosComponent, { data: cuentas })
+    estado.afterClosed().subscribe(result => {
+      if (result) {
+
+        let cliente: ClienteInterface = result[0];
+        this.facturaService.cuenta = cliente;
+      }
+    })
   }
 
   agregarCliente() {
@@ -267,7 +221,7 @@ export class DocumentoComponent {
   }
 
   actualizar() {
-    this._eventService.verActualizarEvent(this.cliente);
+    this._eventService.verActualizarEvent(this.facturaService.cuenta!);
     // this.verActualizarCliente.emit(true);
   }
 
