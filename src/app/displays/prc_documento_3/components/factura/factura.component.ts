@@ -7,15 +7,14 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { DataUserService } from '../../services/data-user.service';
-import { FacturaService } from '../../services/factura.service';
-import { Subject, takeUntil } from 'rxjs';
+import { components } from 'src/app/providers/componentes.provider';
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.scss']
 })
-export class FacturaComponent implements OnInit, OnDestroy {
+export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
@@ -26,7 +25,6 @@ export class FacturaComponent implements OnInit, OnDestroy {
     private _widgetService: NotificationsService,
     private _location: Location,
     private _eventService: EventService,
-    private _facturaService: FacturaService,
     public dataUserService: DataUserService,
   ) {
 
@@ -47,6 +45,10 @@ export class FacturaComponent implements OnInit, OnDestroy {
       this.verDocumento();
     });
 
+  }
+  ngOnInit(): void {
+    console.log("Iniciando factura");
+    
   }
 
 
@@ -98,32 +100,10 @@ export class FacturaComponent implements OnInit, OnDestroy {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
   }
-  private ngUnsubscribe = new Subject<void>();
 
 
-  ngOnInit(): void {
-    this._facturaService.loadData$
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(() => {
-        this.loadData();
-      });
 
-    this._facturaService.loadDataSet();
-  }
-
-  loadData() {
-    console.log("siempre");
-  }
-
-  ngOnDestroy(): void {
-    console.log("cerrar");
-    
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
-  //Cerra sesion
+   //Cerra sesion
   async logOut() {
 
     let verificador = await this._widgetService.openDialogActions({ title: "Cerrar sesión", description: "Se perderán los datos que no han sido guardados ¿Estás seguro?", verdadero: "", falso: "" });
@@ -138,6 +118,10 @@ export class FacturaComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     // this.newItemEvent.emit(false);
+    components.forEach(element => {
+      element.visible = false;
+    });
+
     this._eventService.emitCustomEvent(false);
   }
 }
