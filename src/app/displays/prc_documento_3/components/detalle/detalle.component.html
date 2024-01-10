@@ -29,6 +29,17 @@
     <span class="spacer"></span>
 
     <div class="producto">
+        <div class="eliminar" *ngIf="compras.length > 0">
+            <div class="dFlex">
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                    (ngModelChange)="seleccionar()"></mat-checkbox>
+                <p class="titulo">Pagos agregados</p>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="eliminarProducto()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
         <div class="producto-seleccionado" *ngFor="let producto of compras">
             <div class="dFlex">
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>

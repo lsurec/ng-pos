@@ -85,8 +85,8 @@ export class NotificationsService {
     async showCloseSesionDialog() {
         let verificador: boolean = await this.openDialogActions(
             {
-                title: this._translate.instant('pos.home.tituloCerrar'),
-                description: this._translate.instant('pos.home.borraranDatos'),
+                title: this._translate.instant('pos.alertas.tituloCerrar'),
+                description: this._translate.instant('pos.alertas.borraranDatos'),
                 verdadero: this._translate.instant('pos.botones.aceptar'),
                 falso: this._translate.instant('pos.botones.cancelar'),
             }

@@ -11,6 +11,7 @@ import { BancosInterface, PagoInterface } from '../../interfaces/pagos.interface
 export class PagoComponent {
 
   pagosAgregados: PagoInterface[] = [];
+  eliminarPagos: boolean = false;
 
   pagos: PagoInterface[] = [
     { id: 1, nombre: "EFECTIVO" },
@@ -39,7 +40,9 @@ export class PagoComponent {
 
   constructor(
     private _widgetsService: NotificationsService,
-    private translate: TranslateService,
+    private _translate: TranslateService,
+    private _notificationsService: NotificationsService,
+
   ) {
 
   }
@@ -113,7 +116,7 @@ export class PagoComponent {
   pagarEfectivo() {
 
     if (!this.total) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
       return
     } else {
 
@@ -125,14 +128,14 @@ export class PagoComponent {
       }
       this.pagosAgregados.push(pago);
 
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
       this.verTipos();
     }
   }
 
   pagarVisa() {
     if (!this.autorizacion || !this.referencia) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
       return
     } else {
 
@@ -149,14 +152,14 @@ export class PagoComponent {
       console.log(this.pagosAgregados);
 
 
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
       this.verTipos();
     }
   }
 
   pagarMasterCard() {
     if (!this.autorizacion || !this.referencia) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
       return
     } else {
       let pago: PagoInterface = {
@@ -169,18 +172,18 @@ export class PagoComponent {
 
       this.pagosAgregados.push(pago);
 
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
       this.verTipos();
     }
   }
 
   pagarCheque() {
     if (!this.referencia) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
       return
     }
     if (!this.referencia || !this.bancoSelect) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.banco'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.banco'));
     } else {
       let pago: PagoInterface = {
         id: 1,
@@ -192,24 +195,38 @@ export class PagoComponent {
       }
 
       this.pagosAgregados.push(pago);
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.tipoPago'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
       this.verTipos();
     }
 
   }
 
-  // Propiedad para el estado del checkbox principal
-  checkboxPrincipal = false;
-
-  // Función para cambiar el estado de todos los checkboxes
-  cambiarEstadoCheckboxes() {
-    this.checkboxPrincipal = !this.checkboxPrincipal;
-    this.pagosAgregados.forEach((pago) => (pago.checked = this.checkboxPrincipal));
+  seleccionar() {
+    for (let index = 0; index < this.pagosAgregados.length; index++) {
+      const element = this.pagosAgregados[index];
+      element.checked = this.eliminarPagos;
+    }
   }
 
   // Función para manejar la eliminación de pagos seleccionados
-  eliminarPagosSeleccionados() {
-    const pagosSeleccionados = this.pagosAgregados.filter((pago) => pago.checked);
+  async eliminarPagosSeleccionados() {
+    let pagosSeleccionados: PagoInterface[] = this.pagosAgregados.filter((pago) => pago.checked);
+
+    if (pagosSeleccionados.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
     this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
     // También puedes realizar otras acciones necesarias aquí

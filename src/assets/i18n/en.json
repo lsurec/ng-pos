@@ -7,8 +7,6 @@
             "descripcionTema": "Adjusts the appearance of the application to reduce glare and give your eyes a break.",
             "temaAplicacion": "APPLICATION THEME",
             "noAsignado": "Not Assigned",
-            "tituloCerrar": "Log Out",
-            "borraranDatos": "Unsaved data will be lost, and you'll need to log in again. Are you sure?",
             "aplicaciones": "Applications",
             "noDidsponible": "Not Available",
             "servidor": "Server",
@@ -70,6 +68,8 @@
         },
         "alertas": {
             "ok": "OK",
+            "tituloCerrar": "Log Out",
+            "borraranDatos": "Unsaved data will be lost, and you'll need to log in again. Are you sure?",
             "salioMal": "Something went wrong, please try again.",
             "completar": "Please fill in all fields to continue.",
             "debeSeleccionar": "To continue, select a company and a workstation.",

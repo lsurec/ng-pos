@@ -4,6 +4,8 @@ import { CompraInterface, ProductoInterface } from '../../interfaces/producto.in
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-detalle',
@@ -14,6 +16,7 @@ export class DetalleComponent {
 
   searchText!: string;
   selectedOption: number | null = 1;
+  eliminarPagos: boolean = false;
 
 
   filtrosBusqueda: FiltroInterface[] = [
@@ -88,6 +91,9 @@ export class DetalleComponent {
 
   constructor(
     private _dialog: MatDialog,
+    private _notificationsService: NotificationsService,
+    private _translate: TranslateService,
+
   ) { }
 
 
@@ -152,6 +158,38 @@ export class DetalleComponent {
 
   onOptionChange(optionId: number) {
     this.selectedOption = optionId;
+  }
+
+  seleccionar() {
+    for (let index = 0; index < this.compras.length; index++) {
+      const element = this.compras[index];
+      element.checked = this.eliminarPagos;
+    }
+  }
+
+  // Función para manejar la eliminación de pagos seleccionados
+  async eliminarProducto() {
+
+    let comprasSeleccionadas: CompraInterface[] = this.compras.filter((compra) => compra.checked);
+
+    if (comprasSeleccionadas.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    this.compras = this.compras.filter((compra) => !compra.checked);
+    // También puedes realizar otras acciones necesarias aquí
   }
 
 }

@@ -123,8 +123,8 @@
     <div class="pagos-gregados">
         <div class="pago-agregado">
             <div class="dFlex" *ngIf="pagosAgregados.length > 0">
-                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="checkboxPrincipal"
-                    (change)="cambiarEstadoCheckboxes()"></mat-checkbox>
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                    (ngModelChange)="seleccionar()"></mat-checkbox>
                 <p class="titulo">Pagos agregados ({{pagosAgregados.length}})</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="eliminarPagosSeleccionados()">
