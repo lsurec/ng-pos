@@ -2,7 +2,7 @@
 <app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta"></app-editar-cliente>
 <app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
 
-<app-progress *ngIf="facturaService.isLoading"></app-progress>
+<app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
 <div *ngIf="!facturaService.isLoading">
 
     <div class="" *ngIf="vistaFactura">
