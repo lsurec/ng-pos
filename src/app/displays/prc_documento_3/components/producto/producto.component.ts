@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleComponent } from '../detalle/detalle.component';
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-producto',
@@ -13,22 +14,16 @@ export class ProductoComponent {
   producto: ProductoInterface;
   isLoading: boolean = false;
   cantidad: number = 1;
-  bodega!: string;
 
   precioProducto: number = 65.00;
   total: number = 0.00;
-  bodegas: string[] = [
-    "(1) COCINA | Existencia (1000.00)"
-  ];
+  
 
-  precio!: string;
-  precios: string[] = [
-    "Precio Normal"
-  ]
 
   constructor(
     public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public productoSeleccionado: ProductoInterface,
+    public productoService:ProductoService,
   ) {
     this.producto = productoSeleccionado;
 

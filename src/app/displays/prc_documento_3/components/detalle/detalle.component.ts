@@ -129,19 +129,22 @@ export class DetalleComponent {
       return;
     }
 
+
+    //reiniciar valores 
+    this._productoService.total = 0;
+    this._productoService.precios = [];
+    this._productoService.precio = undefined;
+    this._productoService.bodegas = [];
+    this._productoService.bodega = undefined;
+    this._productoService.cantidad = "1";
+    this._productoService.precioU = 0;
+    this._productoService.precioText = "0";
+
+
     if (productos.length == 1) {
 
       let product = productos[0];
-      //reiniciar valores 
-      this._productoService.total = 0;
-      this._productoService.precios = [];
-      this._productoService.precio = undefined;
-      this._productoService.bodegas = [];
-      this._productoService.bodega = undefined;
-      this._productoService.cantidad = "1";
-      this._productoService.precioU = 0;
-      this._productoService.precioText = "0";
-
+      
       //buscar bodegas del produxto
       let resBodega = await this._productService.getBodegaProducto(
         this.user,
