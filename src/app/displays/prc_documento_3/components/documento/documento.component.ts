@@ -161,7 +161,10 @@ export class DocumentoComponent {
         telefono: "",
         limite_Credito: 10000000.00,
         permitir_CxC: true,
+        
       }
+      this._notificationService.openSnackbar("Cuenta seleccioanda.")
+
     } else {
       this.facturaService.cuenta = undefined;
     }
@@ -201,6 +204,8 @@ export class DocumentoComponent {
     //si solo hay uno seleccioanrlo
     if (cuentas.length == 1) {
       this.facturaService.cuenta = cuentas[0];
+      this._notificationService.openSnackbar("Cuenta seleccioanda.")
+
       return;
     }
 
@@ -211,6 +216,9 @@ export class DocumentoComponent {
 
         let cliente: ClienteInterface = result[0];
         this.facturaService.cuenta = cliente;
+
+        //TODO:transalate
+        this._notificationService.openSnackbar("Cuenta seleccioanda.")
       }
     })
   }
@@ -221,7 +229,7 @@ export class DocumentoComponent {
   }
 
   actualizar() {
-    this._eventService.verActualizarEvent(this.facturaService.cuenta!);
+    this._eventService.verActualizarEvent(true);
     // this.verActualizarCliente.emit(true);
   }
 

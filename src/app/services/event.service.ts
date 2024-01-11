@@ -28,7 +28,7 @@ export class EventService {
 
     verActualizar$ = this.verActualizar.asObservable();
 
-    verActualizarEvent(eventData: ClienteInterface) {
+    verActualizarEvent(eventData: boolean) {
         this.verActualizar.next(eventData);
     }
 
