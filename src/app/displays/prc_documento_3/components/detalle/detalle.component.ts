@@ -144,7 +144,7 @@ export class DetalleComponent {
     if (productos.length == 1) {
 
       let product = productos[0];
-      
+
       //buscar bodegas del produxto
       let resBodega = await this._productService.getBodegaProducto(
         this.user,
@@ -228,7 +228,7 @@ export class DetalleComponent {
           }
 
 
-          let factores:FactorConversionInterface[] = resfactor.response;
+          let factores: FactorConversionInterface[] = resfactor.response;
 
 
           factores.forEach(element => {
@@ -247,14 +247,14 @@ export class DetalleComponent {
 
         //si no hay precos ni factores
 
-        if(this._productoService.precios.length == 1){
+        if (this._productoService.precios.length == 1) {
 
-          let precioU:UnitarioInterface = this._productoService.precios[0];
+          let precioU: UnitarioInterface = this._productoService.precios[0];
 
-            this._productoService.precio = precioU;
-            this._productoService.total = precioU.precioU;
-            this._productoService.precioU = precioU.precioU;
-            this._productoService.precioText = precioU.precioU.toString();
+          this._productoService.precio = precioU;
+          this._productoService.total = precioU.precioU;
+          this._productoService.precioU = precioU.precioU;
+          this._productoService.precioText = precioU.precioU.toString();
         }
 
       }
@@ -293,32 +293,24 @@ export class DetalleComponent {
     productosDialog.afterClosed().subscribe(result => {
       if (result) {
 
-        let productoSeleccionado: ProductoInterface = result[0];
-        console.log(productoSeleccionado);
+        let productoDialog2 = this._dialog.open(ProductoComponent, { data: result })
+        productoDialog2.afterClosed().subscribe(result => {
+          if (result) {
+            console.log(result);
 
-        if (!productoSeleccionado) {
-          console.log("no se selecciono ningun producto");
-          return
-        } else {
-          let productoDialog2 = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
-          productoDialog2.afterClosed().subscribe(result => {
-            if (result) {
-              console.log(result);
+            let producto: CompraInterface = result;
 
-              let producto: CompraInterface = result;
-
-              let compra: CompraInterface = {
-                producto: producto.producto,
-                cantidad: producto.cantidad,
-                precioUnitario: producto.precioUnitario,
-                total: producto.total,
-              }
-
-              this.compras.push(compra);
-
+            let compra: CompraInterface = {
+              producto: producto.producto,
+              cantidad: producto.cantidad,
+              precioUnitario: producto.precioUnitario,
+              total: producto.total,
             }
-          })
-        }
+
+            this.compras.push(compra);
+
+          }
+        })
         // let producto: ProductoInterface = result[0];
         // this.producto = producto;
       }
