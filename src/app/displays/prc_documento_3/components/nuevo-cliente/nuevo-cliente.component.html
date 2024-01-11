@@ -13,7 +13,7 @@
             <span class="spacer"></span>
             <div class="centro">
                 <p class="titulo">{{ 'pos.factura.nueva' | translate }}</p>
-                <form #searchForm="ngForm" class="formulario">
+                <form #searchForm="ngForm" class="formulario" (ngSubmit)="guardar()">
                     <div class="campos">
                         <input type="text" name="nombre" placeholder="{{ 'pos.factura.nombre' | translate }}"
                             class="detalles" [(ngModel)]="nombre">
@@ -34,11 +34,11 @@
                         <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
                             class="detalles" [(ngModel)]="correo">
                     </div>
+                    <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" >
+                        <mat-icon>save</mat-icon>
+                    </button>
                 </form>
             </div>
-            <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" (click)="guardar()">
-                <mat-icon>save</mat-icon>
-            </button>
             <span class="spacer"></span>
         </div>
     </div>
