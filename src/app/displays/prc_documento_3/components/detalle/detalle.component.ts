@@ -7,22 +7,32 @@ import { ProductoComponent } from '../producto/producto.component';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../services/product.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
   styleUrls: ['./detalle.component.scss'],
-  providers:[
+  providers: [
     ProductService
   ]
 })
 export class DetalleComponent {
 
+
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  documento: number = this._facturaService.tipoDocumento!;
+
   searchText!: string;
-  selectedOption: number | null = 1;
+  filtrosProductos: number = 1;
   eliminarPagos: boolean = false;
 
-  tipoDesCar: number | null = 1;
+  tipoDesCar: number = 1;
   filtrosBusqueda: FiltroInterface[] = [
     {
       id: 1,
@@ -45,58 +55,7 @@ export class DetalleComponent {
     },
   ];
 
-  productos: ProductoInterface[] = [
-    {
-      sku: 'AL1',
-      nombre: 'Plato de Comida 1'
-    },
-    {
-      sku: 'AL2',
-      nombre: 'Plato de Comida 2'
-    },
-    {
-      sku: 'AL3',
-      nombre: 'Plato de Comida 3'
-    },
-    {
-      sku: 'AL4',
-      nombre: 'Bebida Fría 1'
-    },
-    {
-      sku: 'AL5',
-      nombre: 'Bebida Fría 2'
-    },
-    {
-      sku: 'LM6',
-      nombre: 'Bebida Fría 3'
-    },
-    {
-      sku: 'LM7',
-      nombre: 'Bebida Caliente 1'
-    },
-    {
-      sku: 'LM8',
-      nombre: 'Bebida Caliente 2'
-    },
-    {
-      sku: 'LM9',
-      nombre: 'Bebida Caliente 3'
-    },
-    {
-      sku: 'LM0',
-      nombre: 'Postre 1'
-    },
-    {
-      sku: 'P11',
-      nombre: 'Postre 2'
-    },
-    {
-      sku: 'P12',
-      nombre: 'Postre 3'
-    },
-  ];
 
-  registros: ProductoInterface[] = [];
   producto!: ProductoInterface;
   // precio!: number;
   // cantidad!: number;
@@ -109,14 +68,16 @@ export class DetalleComponent {
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     private _productService: ProductService,
+    private _facturaService:FacturaService,
 
   ) { }
 
 
-  buscarProducto(filtro: string) {
+  async buscarProducto(filtro: string) {
 
     //TODO:Translate
-    if(!filtro){
+    //validar que siempre hay nun texto para buscar
+    if (!filtro) {
       this._notificationsService.openSnackbar("Ingresa un texto para la busqueda.")
       return;
     }
@@ -124,28 +85,70 @@ export class DetalleComponent {
     //eliminar espacios al final de la cadena
     filtro = filtro.trim()
 
-      
+
+    let res: ResApiInterface;
+
+
+    this._facturaService.isLoading = true;
+    //filtro 1 = sku
+    if(this.filtrosProductos == 1){
+      res = await this._productService.getProductId(
+        this.token,
+        filtro,
+      ); 
+    }
+
+    //filtro 2 = descripcion
+    if(this.filtrosProductos == 2){
+      res = await this._productService.getProductDesc(
+        this.token,
+        filtro,
+      );
+    }
+
+    this._facturaService.isLoading = false;
 
     
+    if(!res!.status){
+      this._notificationsService.showErrorAlert(res!);
+      return;
+    }
 
-    this.productos.forEach((producto) => {
-      if (this.selectedOption == 1 && producto.sku.toLowerCase().includes(filtro.toLowerCase())) {
-        this.registros.push(producto);
-      }
 
-      if (this.selectedOption == 2 && producto.nombre.toLowerCase().includes(filtro.toLowerCase())) {
-        this.registros.push(producto);
-      }
+    let productos:ProductoInterface[] = res!.response;
 
-      if (this.searchText.length == 0) {
-        this.registros = [];
-      }
 
-    });
+    if(productos.length == 0){
+      this._notificationsService.openSnackbar("No hay coincidencias para la busqueda");
+      return;
+    }
 
-    if (this.registros.length > 1) {
-      let productos = this._dialog.open(ProductosEncontradosComponent, { data: this.registros })
-      productos.afterClosed().subscribe(result => {
+    if(productos.length ==1){
+      let productoDialog = this._dialog.open(ProductoComponent, { data: productos[0] })
+      productoDialog.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+
+          let producto: CompraInterface = result;
+
+          let compra: CompraInterface = {
+            producto: producto.producto,
+            cantidad: producto.cantidad,
+            precioUnitario: producto.precioUnitario,
+            total: producto.total,
+          }
+
+          this.compras.push(compra);
+
+        }
+
+        return;
+      })
+    }
+    
+
+      let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
+      productosDialog.afterClosed().subscribe(result => {
         if (result) {
 
           let productoSeleccionado: ProductoInterface = result[0];
@@ -155,8 +158,8 @@ export class DetalleComponent {
             console.log("no se selecciono ningun producto");
             return
           } else {
-            let producto = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
-            producto.afterClosed().subscribe(result => {
+            let productoDialog2 = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
+            productoDialog2.afterClosed().subscribe(result => {
               if (result) {
                 console.log(result);
 
@@ -178,13 +181,12 @@ export class DetalleComponent {
           // this.producto = producto;
         }
       })
-    }
 
 
   }
 
   onOptionChange(optionId: number) {
-    this.selectedOption = optionId;
+    this.filtrosProductos = optionId;
   }
 
   onOptionCarDes(optionId: number) {

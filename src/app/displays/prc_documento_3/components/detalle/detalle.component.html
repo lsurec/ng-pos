@@ -7,7 +7,7 @@
                         <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
                         <span class="spacer"></span>
                         <div *ngFor="let option of filtrosBusqueda">
-                            <div class="chip" [class.selected]="option.id === selectedOption"
+                            <div class="chip" [class.selected]="option.id === filtrosProductos"
                                 (click)="onOptionChange(option.id)">{{ option.nombre }}
                             </div>
                         </div>
