@@ -8,7 +8,7 @@ $color-negro          : #000; //bordes y texto azul
 .progress {
     padding         : 0px;
     padding-right   : 0px;
-    width           : 380px;
+    width           : 680px;
     min-height      : 500px;
     background-color: $background-oficial;
 }
@@ -16,7 +16,7 @@ $color-negro          : #000; //bordes y texto azul
 .dialog {
     padding         : 10px 20px;
     padding-right   : 0px;
-    width           : 400px;
+    width           : 700px;
     min-height      : 500px;
     background-color: $background-oficial;
 }
@@ -80,6 +80,7 @@ p {
     width      : 100%;
     font-weight: 450;
     align-items: center;
+    height     : calc(100vh - 290px);
 }
 
 .contenido-izquierdo {
@@ -161,6 +162,7 @@ p {
 
 .menus {
     padding: 5px 0px;
+    width  : 48%;
 }
 
 .sumar,
@@ -197,14 +199,26 @@ p {
 }
 
 .subtitulo {
-    font-size     : 14px;
-    font-weight   : 550;
-    padding-bottom: 5px;
+    font-size  : 14px;
+    font-weight: 550;
 }
 
 .textos {
-    font-size: 12px;
-    font-size: 400;
+    font-size  : 12px;
+    font-weight: 400;
+}
+
+.precio-unitario {
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    padding     : 0px 10px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $color-bordes;
+    color       : $color-azul;
+    width       : 48%;
+    margin      : 5px 0px;
 }
 
 .bodegas {

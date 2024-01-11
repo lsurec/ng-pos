@@ -34,36 +34,43 @@
                     <p> {{producto.nombre}} </p>
                     <span class="spacer"></span>
                 </div>
-                <div class="menus">
-                    <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
-                    <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="bodega">
-                        <mat-option *ngFor="let bodega of bodegas" [value]="bodega">
-                            {{bodega}}
-                        </mat-option>
-                    </mat-select>
+                <div class="dFlex">
+
+                    <div class="menus">
+                        <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
+                        <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="bodega">
+                            <mat-option *ngFor="let bodega of bodegas" [value]="bodega">
+                                {{bodega}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="menus">
+                        <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
+                        <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="precio">
+                            <mat-option *ngFor="let precio of precios" [value]="precio">
+                                {{precio}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
                 </div>
-                <div class="menus">
-                    <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
-                    <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="precio">
-                        <mat-option *ngFor="let precio of precios" [value]="precio">
-                            {{precio}}
-                        </mat-option>
-                    </mat-select>
-                </div>
-                <div class="menus">
+                <div class="">
                     <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
-                    <p class="textos">Q {{precioProducto}}.00 </p>
+                    <input class="precio-unitario " type="text" name="search" [(ngModel)]="precioProducto"
+                        autocomplete="off">
                 </div>
-                <div class="menus dFlex">
+                <div class="dFlex">
                     <span class="spacer"></span>
                     <p class="subtitulo">{{ 'pos.factura.total' | translate }} Q {{total}}.00</p>
                 </div>
-                <div class="dFlex">
-                    <button mat-stroked-button [mat-dialog-close]="[]">{{ 'pos.botones.cancelar' | translate }}</button>
-                    <span class="spacer"></span>
-                    <button mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
-                </div>
             </div>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="dFlex">
+            <button mat-stroked-button [mat-dialog-close]="[]">{{ 'pos.botones.cancelar' | translate }}</button>
+            <span class="spacer"></span>
+            <button mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
         </div>
     </div>
 </div>

@@ -72,7 +72,7 @@ export class ProductoComponent {
       precioUnitario: this.precioProducto,
       total: this.total,
     }
-    
+
     console.log(compra);
 
     this.dialogRef.close(compra);
