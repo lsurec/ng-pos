@@ -9,7 +9,7 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 0px;
     padding-right   : 0px;
     width           : 680px;
-    min-height      : 500px;
+    min-height      : 350px;
     background-color: $background-oficial;
 }
 
@@ -17,32 +17,42 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 10px 20px;
     padding-right   : 0px;
     width           : 700px;
-    min-height      : 500px;
+    height          : 350px;
     background-color: $background-oficial;
 }
 
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $background-oficial;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $color-bordes;
+}
+
+.botones {
+    width           : 100%;
+    height          : 40px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $background-oficial;
+    padding         : 0px 15px;
+}
+
 .contenedor {
-    overflow-y   : hidden;
-    overflow-x   : hidden;
     padding-right: 20px;
-}
-
-.dialog::-webkit-scrollbar {
-    width: 7px;
-}
-
-.dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
-
-.dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px $background-oficial;
 }
 
 .spacer {
     flex: 1 1 auto;
+}
+
+.verDetalle {
+    font-weight  : 500;
+    text-align   : center;
+    margin-bottom: 0px;
+    padding-right: 10px;
 }
 
 .close {
@@ -75,17 +85,17 @@ p {
 }
 
 .busqueda {
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
-    height     : calc(100vh - 290px);
+    text-align    : left !important;
+    font-size     : 14px;
+    width         : 100%;
+    font-weight   : 450;
+    align-items   : center;
+    // height     : calc(100vh - 290px);
 }
 
 .contenido-izquierdo {
     //corregir ancho del contenedor
-    min-height      : 35px;
+    // min-height      : 35px;
     align-items     : center;
     // margin-bottom: 5px;
     width           : 100%;

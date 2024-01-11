@@ -1,33 +1,25 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="verDetalle">{{ 'pos.factura.productos_encontrados' | translate }}</p>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="dFlex">
-            <span class="spacer"></span>
-            <!-- Titulo -->
-            <p class="verDetalle">{{ 'pos.factura.productos_encontrados' | translate }}</p>
-            <span class="spacer"></span>
-            <!-- Cerrar dialogo -->
-            <span class="close" (click)="closeDialog()">&times;</span>
-        </div>
-        <hr>
         <div class="busqueda">
             <div class="contenido-izquierdo">
                 <div class="dFlex">
-                    <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }}</p>
                     <span class="spacer"></span>
-                    <p> {{productos.length }} </p>
-                </div>
-                <div class="titulos">
-                    <p>{{ 'pos.factura.producto' | translate }}</p>
-                    <span class="spacer"></span>
-                    <p>{{ 'pos.factura.sku' | translate }}</p>
+                    <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }} ({{productos.length }}) </p>
                 </div>
                 <div class="" *ngFor="let producto of productos">
                     <div class="seleccionar" [mat-dialog-close]="[producto]">
-                        <p> {{producto.nombre}} </p>
-                        <span class="spacer"></span>
-                        <p>{{producto.sku}}</p>
+                        <p class="textos">{{producto.nombre}} </p>
+                        <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.sku}}</p>
                     </div>
                 </div>
             </div>

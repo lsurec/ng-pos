@@ -1,18 +1,18 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
 <!-- Dialogo de los detalles de las tareas -->
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="sku">
-            <!-- Titulo -->
-            <p>{{ 'pos.factura.sku' | translate }}</p>
-            <p> {{producto.sku}} </p>
-            <span class="spacer"></span>
-            <!-- Cerrar dialogo -->
-            <span class="close" (click)="closeDialog()">&times;</span>
-        </div>
-        <hr>
         <div class="busqueda">
             <div class="contenido-izquierdo">
+                <div class="dFlex">
+                    <p class="verDetalle">{{ 'pos.factura.sku' | translate }}: </p>
+                    <p class="subtitulo"> {{producto.sku}} </p>
+                </div>
                 <div class="producto-cantidad">
                     <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
                     <span class="spacer"></span>
@@ -66,11 +66,9 @@
             </div>
         </div>
     </div>
-    <div class="contenedor">
-        <div class="dFlex">
-            <button mat-stroked-button [mat-dialog-close]="[]">{{ 'pos.botones.cancelar' | translate }}</button>
-            <span class="spacer"></span>
-            <button mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
-        </div>
-    </div>
+</div>
+<div class="botones">
+    <button mat-stroked-button [mat-dialog-close]="[]">{{ 'pos.botones.cancelar' | translate }}</button>
+    <span class="spacer"></span>
+    <button mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
 </div>
