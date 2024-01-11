@@ -16,6 +16,13 @@ $idioma-seleccionado  : #5d6d6c;
     padding: 0px;
 }
 
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $background-oficial;
+}
+
 .menu-izquierdo {
     width         : 200px;
     float         : right;

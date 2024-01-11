@@ -1,15 +1,12 @@
 <!-- Pantalla de no encontrado -->
 <mat-toolbar-row class="head__sidenav">
-    <div class="descripcion-guardar">
-        <div class="botones">
-            <button (click)="goBack()" mat-icon-button aria-label class="btn"
-                matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-        <p class="titulo">{{dataUserService.nameDisplay}}</p>
-            
-        </div>
-    </div>
+    <button (click)="goBack()" mat-icon-button aria-label class="btn"
+        matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <p class="titulo">{{dataUserService.nameDisplay}}</p>
+    <span class="spacer"></span>
 </mat-toolbar-row>
 <!-- Mostrar logos -->
 <!-- <app-barra-logos></app-barra-logos> -->
