@@ -5,7 +5,8 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()"> 
+            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="facturaService.serie"
+                (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
                 </mat-option>
@@ -64,7 +65,7 @@
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.ciudad' | translate }}</p>
+                <p class="detalles">{{ 'pos.factura.direccion' | translate }}</p>
                 <span class="spacer"></span>
                 <p>Ciudad</p>
             </div>

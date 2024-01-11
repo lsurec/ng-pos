@@ -16,26 +16,28 @@ $color-negro          : #000; //bordes y texto azul
 .dialog {
     padding         : 10px 20px;
     padding-right   : 0px;
-    width           : 400px;
+    width           : 700px;
     height          : 350px;
     background-color: $background-oficial;
+    overflow-y      : auto;
 }
 
 .contenedor {
-    overflow-y   : auto;
-    overflow-x   : hidden;
-    padding-right: 20px;
+    overflow-y    : hidden;
+    overflow-x    : hidden;
+    padding-right : 10px;
+    padding-bottom: 10px;
 }
 
-.contenedor::-webkit-scrollbar {
+.dialog::-webkit-scrollbar {
     width: 7px;
 }
 
-.contenedor::-webkit-scrollbar-track {
+.dialog::-webkit-scrollbar-track {
     background: $background-oficial;
 }
 
-.contenedor::-webkit-scrollbar-thumb {
+.dialog::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
     border          : 3px $background-oficial;
@@ -75,14 +77,6 @@ p {
     color : $color-negro;
 }
 
-.busqueda {
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
-}
-
 .contenido-izquierdo {
     //corregir ancho del contenedor
     min-height      : 35px;
@@ -107,13 +101,12 @@ p {
 }
 
 .seleccionar {
-    display      : flex;
     width        : 100%;
     cursor       : pointer;
-    align-items  : center;
-    height       : 30px;
+    min-height   : 30px;
     border-bottom: 1px solid $color-bordes;
     font-weight  : 400;
+    padding      : 5px 0px;
 }
 
 .seleccionar:hover {
@@ -137,4 +130,8 @@ p {
     display    : flex;
     align-items: center;
     padding    : 3px 0px;
+}
+
+.textos {
+    font-size: 14px;
 }

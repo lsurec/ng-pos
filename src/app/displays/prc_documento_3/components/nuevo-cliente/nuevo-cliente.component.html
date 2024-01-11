@@ -1,4 +1,4 @@
-<app-progress *ngIf="isLoading"></app-progress>
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
 <div *ngIf="!isLoading">
     <mat-toolbar-row class="head__sidenav">
         <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
@@ -8,7 +8,6 @@
         <!-- Titulo de la tarea -->
         <p class="titulo"></p>
     </mat-toolbar-row>
-    
     <div class="container-main">
         <div class="sin-conexion">
             <span class="spacer"></span>
@@ -24,8 +23,8 @@
                             class="detalles" [(ngModel)]="direccion">
                     </div>
                     <div class="campos">
-                        <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}"
-                            class="detalles" [(ngModel)]="nit">
+                        <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}" class="detalles"
+                            [(ngModel)]="nit">
                     </div>
                     <div class="campos">
                         <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"

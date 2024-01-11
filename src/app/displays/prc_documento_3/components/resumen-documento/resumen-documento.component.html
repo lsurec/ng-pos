@@ -1,117 +1,124 @@
-<mat-toolbar-row class="head__sidenav">
-    <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span class="spacer"></span>
-    <!-- Titulo de la tarea -->
-    <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
-    <span class="spacer"></span>
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<div *ngIf="!isLoading">
 
-</mat-toolbar-row>
-<div class="container-main">
-    <div class="container">
-        <div class="d-flex">
-            <div class="detalle-resumen">
-                <div class="informacion">
-                    <p class="subtitulo-borde ">{{ 'pos.factura.cliente' | translate }}</p>
-                    <div class="descripciones">
-                        <p class="textos">{{ 'pos.factura.nit' | translate }} 12345678-9</p>
-                        <p class="textos">{{ 'pos.factura.nombre' | translate }} Cliente 1</p>
-                        <p class="textos">{{ 'pos.factura.direccion' | translate }} Tecpan</p>
-                    </div>
-                </div>
-                <div class="informacion">
-                    <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
-                    <div class="descripciones">
-                        <p class="textos">DEMOSOFT</p>
-                    </div>
-                </div>
-                <div class="detalles-lista">
-                    <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
-                    <div class="descripcion-producto" *ngFor="let compra of compras">
-                        <p class="textos">{{compra.cantidad}} x {{compra.producto.nombre}}</p>
-                        <p class="textos">{{ 'pos.factura.sku' | translate }} {{compra.producto.sku}}</p>
-                        <p class="textos">{{ 'pos.factura.productos' | translate }} {{compra.precioUnitario}}</p>
-                        <p class="textos">{{ 'pos.factura.total' | translate }} {{compra.total}} </p>
-                    </div>
-                </div>
-                <div class="detalles-lista">
-                    <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
-                    <div class="descripcion-pago" *ngFor="let pago of pagos">
-                        <p class="textos">{{pago.nombre}}</p>
-                        <p class="textos">{{ 'pos.factura.monto' | translate }} Q {{pago.monto}}</p>
-                        <p class="textos" *ngIf="pago.autorizacion">{{ 'pos.factura.autorizacion' | translate }}
-                            {{pago.autorizacion}}</p>
-                        <p class="textos" *ngIf="pago.referencia">{{ 'pos.factura.referencia' | translate }}
-                            {{pago.referencia}}</p>
-                        <p class="textos" *ngIf="pago.banco">{{ 'pos.factura.banco' | translate }} {{pago.banco}}</p>
-                    </div>
-                </div>
+    <mat-toolbar-row class="head__sidenav">
+        <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
+            (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <!-- Titulo de la tarea -->
+        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
+        <span class="spacer"></span>
 
-                <hr>
+    </mat-toolbar-row>
+    <div class="container-main">
+        <div class="container">
+            <div class="d-flex">
+                <div class="detalle-resumen">
+                    <div class="informacion">
+                        <p class="subtitulo-borde ">{{ 'pos.factura.cliente' | translate }}</p>
+                        <div class="descripciones">
+                            <p class="textos">{{ 'pos.factura.nit' | translate }} 12345678-9</p>
+                            <p class="textos">{{ 'pos.factura.nombre' | translate }} Cliente 1</p>
+                            <p class="textos">{{ 'pos.factura.direccion' | translate }} Tecpan</p>
+                        </div>
+                    </div>
+                    <div class="informacion">
+                        <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
+                        <div class="descripciones">
+                            <p class="textos">DEMOSOFT</p>
+                        </div>
+                    </div>
+                    <div class="detalles-lista">
+                        <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
+                        <div class="descripcion-producto" *ngFor="let compra of compras">
+                            <p class="textos">{{compra.cantidad}} x {{compra.producto.nombre}}</p>
+                            <p class="textos">{{ 'pos.factura.sku' | translate }} {{compra.producto.sku}}</p>
+                            <p class="textos">{{ 'pos.factura.productos' | translate }} {{compra.precioUnitario}}</p>
+                            <p class="textos">{{ 'pos.factura.total' | translate }} {{compra.total}} </p>
+                        </div>
+                    </div>
+                    <div class="detalles-lista">
+                        <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
+                        <div class="descripcion-pago" *ngFor="let pago of pagos">
+                            <p class="textos">{{pago.nombre}}</p>
+                            <p class="textos">{{ 'pos.factura.monto' | translate }} Q {{pago.monto}}</p>
+                            <p class="textos" *ngIf="pago.autorizacion">{{ 'pos.factura.autorizacion' | translate }}
+                                {{pago.autorizacion}}</p>
+                            <p class="textos" *ngIf="pago.referencia">{{ 'pos.factura.referencia' | translate }}
+                                {{pago.referencia}}</p>
+                            <p class="textos" *ngIf="pago.banco">{{ 'pos.factura.banco' | translate }} {{pago.banco}}
+                            </p>
+                        </div>
+                    </div>
 
-                <div class="informacion">
-                    <div class="descripcion-total">
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 145.00 </p>
+                    <hr>
+
+                    <div class="informacion">
+                        <div class="descripcion-total">
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 145.00 </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 0.00 </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 0.00 </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.saldo' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 0.00 </p>
+                            </div>
+                            <hr>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 145.00 </p>
+                            </div>
                         </div>
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 0.00 </p>
-                        </div>
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 0.00 </p>
-                        </div>
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.saldo' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 0.00 </p>
-                        </div>
-                        <hr>
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 145.00 </p>
+                    </div>
+
+                    <div class="informacion">
+                        <div class="descripcion-total">
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.contado' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 165.00 </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.cambio' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos"> 0.00 </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="informacion">
-                    <div class="descripcion-total">
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.contado' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 165.00 </p>
-                        </div>
-                        <div class="dFlex">
-                            <p class="subtitulo">{{ 'pos.factura.cambio' | translate }}</p>
-                            <span class="spacer"></span>
-                            <p class="textos"> 0.00 </p>
-                        </div>
+                <span class="spacer"></span>
+                <div class="detalle-resumen">
+                    <div class="informacion">
+                        <textarea class="observacion"
+                            placeholder="{{ 'pos.factura.observacion' | translate }}"></textarea>
                     </div>
-                </div>
-            </div>
-            <span class="spacer"></span>
-            <div class="detalle-resumen">
-                <div class="informacion">
-                    <textarea class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"></textarea>
-                </div>
 
-                <div class="dFlex">
-                    <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
-                    <span class="spacer"></span>
-                    <button mat-stroked-button>{{ 'pos.botones.agregar' | translate }}</button>
+                    <div class="dFlex">
+                        <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>{{ 'pos.botones.agregar' | translate }}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Mostrar logos -->
-<!-- <app-barra-logos></app-barra-logos> -->
-<app-barra-logo-demosoft></app-barra-logo-demosoft>
+    <!-- Mostrar logos -->
+    <!-- <app-barra-logos></app-barra-logos> -->
+    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+</div>

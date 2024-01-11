@@ -11,21 +11,16 @@
             <span class="close" (click)="closeDialog()">&times;</span>
         </div>
         <hr>
-        <div class="busqueda">
-            <div class="contenido-izquierdo">
-                <p class="campo-obligatorio">{{ 'pos.factura.encontrados' | translate }}</p>
-
-                <div class="titulos">
-                    <p>{{ 'pos.factura.nombre' | translate }}</p>
-                    <span class="spacer"></span>
-                    <p>{{ 'pos.factura.nit' | translate }}</p>
-                </div>
-                <div class="" *ngFor="let cliente of clientes">
-                    <div class="seleccionar" [mat-dialog-close]="[cliente]">
-                        <p> {{cliente.factura_Nombre}} </p>
-                        <span class="spacer"></span>
-                        <p>{{cliente.factura_NIT}}</p>
-                    </div>
+        <div class="contenido-izquierdo">
+            <div class="dFlex">
+                <span class="spacer"></span>
+                <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }} ({{clientes.length}})</p>
+            </div>
+            <hr>
+            <div class="" *ngFor="let cliente of clientes">
+                <div class="seleccionar" [mat-dialog-close]="[cliente]">
+                    <p class="textos"> {{cliente.factura_Nombre}} </p>
+                    <p class="textos">{{cliente.factura_NIT}}</p>
                 </div>
             </div>
         </div>

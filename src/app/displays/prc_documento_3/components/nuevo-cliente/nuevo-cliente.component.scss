@@ -14,6 +14,13 @@ $background-scrollbar : #134895; //barra azul
     padding: 0px;
 }
 
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $background-oficial;
+}
+
 .head__sidenav {
     width           : 100%;
     height          : 64px !important;

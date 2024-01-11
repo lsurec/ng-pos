@@ -10,6 +10,8 @@ import { PagoInterface } from '../../interfaces/pagos.interface';
 })
 export class ResumenDocumentoComponent {
 
+  isLoading: boolean = false;
+
   productos: ProductoInterface[] = [
     {
       sku: 'AL1',

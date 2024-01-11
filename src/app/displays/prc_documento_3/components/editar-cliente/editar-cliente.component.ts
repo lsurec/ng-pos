@@ -24,6 +24,8 @@ export class EditarClienteComponent {
   telefono?: number;
   correo?: string;
 
+  isLoading: boolean = false;
+
   constructor(
     private _location: Location,
     private _widgetsService: NotificationsService,
