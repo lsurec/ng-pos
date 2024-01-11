@@ -63,7 +63,6 @@ export class ProductosEncontradosComponent {
 
     this._productoService.bodegas = resBodega.response;
 
-
     //validar que existan bodegas
     if (this._productoService.bodegas.length == 0) {
       this.isLoading = false;
@@ -159,9 +158,6 @@ export class ProductosEncontradosComponent {
     }
 
     this.isLoading = false;
-
-    console.log(product);
-    
 
     this.dialogRef.close(product);
 

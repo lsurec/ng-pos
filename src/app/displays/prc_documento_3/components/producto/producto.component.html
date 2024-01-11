@@ -20,7 +20,7 @@
                         <div class="restar" (click)="restar()">
                             <mat-icon class="sumar-restar">remove</mat-icon>
                         </div>
-                        <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off">
+                        <input class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad" autocomplete="off">
                         <div class="sumar" (click)="sumar()">
                             <mat-icon class="sumar-restar">add</mat-icon>
                         </div>
@@ -38,7 +38,7 @@
 
                     <div class="menus">
                         <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
-                        <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="productoService.bodega">
+                        <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="productoService.bodega" (ngModelChange)="changeBodega()">
                             <mat-option *ngFor="let bodega of productoService.bodegas" [value]="bodega">
                                 ({{bodega.bodega}}) {{bodega.nombre | titlecase}} | Existencia ({{bodega.existencia}}) 
                             </mat-option>
@@ -47,7 +47,7 @@
                     <span class="spacer"></span>
                     <div class="menus">
                         <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
-                        <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="productoService.precio">
+                        <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO" [(ngModel)]="productoService.precio" (ngModelChange)="changePrice()">
                             <mat-option *ngFor="let precio of productoService.precios" [value]="precio">
                                 {{precio.descripcion}}
                             </mat-option>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="dFlex">
                     <span class="spacer"></span>
-                    <p class="subtitulo">{{ 'pos.factura.total' | translate }} Q {{total}}.00</p>
+                    <p class="subtitulo">{{ 'pos.factura.total' | translate }} {{productoService.total | currency:' ':'symbol':'2.2-2' }}</p>
                 </div>
             </div>
         </div>
