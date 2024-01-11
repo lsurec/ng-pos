@@ -80,11 +80,16 @@ hr {
     font-weight: 500;
 }
 
+.detalles {
+    padding: 10px 0px;
+}
+
 .detalle-documento {
-    display      : flex;
-    padding      : 5px 0px;
-    border-bottom: 1px solid $color-bordes;
-    border-top   : 1px solid $color-bordes;
+    display         : flex;
+    padding         : 5px 0px;
+    border-top      : 1px solid $color-bordes;
+    // border-bottom: 1px solid $color-bordes;
+    // margin-top   : 5px;
 }
 
 .info-documento {
@@ -93,7 +98,6 @@ hr {
 }
 
 .totales {
-    width     : 40%;
     padding   : 5px 10px;
     text-align: right;
 
@@ -105,21 +109,25 @@ hr {
 }
 
 .saldo {
-    font-size: 13px;
-    color    : $color-azul;
+    font-size  : 13px;
+    color      : $color-azul;
+    font-weight: 500;
 }
 
 .cargo {
-    font-size: 13px;
-    color    : $color-verde;
+    font-size  : 13px;
+    color      : $color-verde;
+    font-weight: 500;
 }
 
 .descuento {
-    font-size: 13px;
-    color    : $color-rojo;
+    font-size  : 13px;
+    color      : $color-rojo;
+    font-weight: 500;
 }
 
 .total {
+    border-top : 1px solid $color-negro;
     font-size  : 13px;
     font-weight: bold;
 }

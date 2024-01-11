@@ -14,21 +14,23 @@
     <div class="container-main">
         <div class="container">
 
-            <div class="dFlex">
-                <span class="spacer"></span>
-                <p class="subtitulo">{{ 'pos.factura.registros' | translate }} (8)</p>
-            </div>
-            <div class="detalle-documento">
-                <div class="info-documento">
-                    <p class="subtitulo">10209</p>
-                    <p class="fecha-hora">05/01/2023 07:19</p>
+            <div class="detalles">
+                <div class="dFlex">
+                    <span class="spacer"></span>
+                    <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})</p>
                 </div>
-                <span class="spacer"></span>
-                <div class="totales">
-                    <p class="saldo">55.00</p>
-                    <p class="cargo">(+) 5.00</p>
-                    <p class="descuento">(-) 10.00</p>
-                    <p class="total">45.00</p>
+                <div class="detalle-documento" *ngFor="let documento of documentos">
+                    <div class="info-documento">
+                        <p class="subtitulo">{{documento.id}} </p>
+                        <p class="fecha-hora">{{documento.fecha_hora}} </p>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="totales">
+                        <p class="saldo">{{documento.saldo}} </p>
+                        <p class="cargo">(+) {{documento.cargo}} </p>
+                        <p class="descuento">(-) {{documento.descuento}} </p>
+                        <p class="total">{{documento.total}} </p>
+                    </div>
                 </div>
             </div>
 
