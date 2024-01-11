@@ -71,7 +71,12 @@ export class CuentaService {
                 //si algo sale mal
                 err => {
                     if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        console.log(err);
+                        console.log("Arriba");
+                        
+                        
 
                         let resApi: ResApiInterface = {
                             status: false,
@@ -127,7 +132,7 @@ export class CuentaService {
                 err => {
 
                     if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,
@@ -203,7 +208,7 @@ export class CuentaService {
                 err => {
 
                     if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,
@@ -282,7 +287,7 @@ export class CuentaService {
                 err => {
 
                     if(err.status == 400){
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,

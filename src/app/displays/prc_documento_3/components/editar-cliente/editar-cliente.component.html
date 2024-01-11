@@ -15,31 +15,31 @@
             <span class="spacer"></span>
             <div class="centro">
                 <p class="titulo">{{ 'pos.factura.actualizar' | translate }}</p>
-                <form #searchForm="ngForm" class="formulario">
+                <form #searchForm="ngForm" class="formulario" (ngSubmit)="guardar()">
                     <div class="campos">
                         <input type="text" placeholder="{{ 'pos.factura.nombre' | translate }}" class="detalles"
-                            [(ngModel)]="cuenta!.factura_Nombre" name="nombre">
+                            [(ngModel)]="nombre" name="nombre">
                     </div>
                     <div class="campos">
                         <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
-                            class="detalles" [(ngModel)]="cuenta!.factura_Direccion">
+                            class="detalles" [(ngModel)]="direccion">
                     </div>
                     <div class="campos">
                         <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}" class="detalles"
-                            [(ngModel)]="cuenta!.factura_NIT">
+                            [(ngModel)]="nit">
                     </div>
                     <div class="campos">
                         <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
-                            class="detalles" [(ngModel)]="cuenta!.telefono">
+                            class="detalles" [(ngModel)]="telefono">
                     </div>
                     <div class="campos d-flex">
                         <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
-                            class="detalles" [(ngModel)]="cuenta!.eMail">
+                            class="detalles" [(ngModel)]="correo">
                     </div>
                     <div class="dFlex">
-                        <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
+                        <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' | translate }}</button>
                         <span class="spacer"></span>
-                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+                        <button mat-stroked-button type="submit">{{ 'pos.botones.aceptar' | translate }}</button>
                     </div>
                 </form>
             </div>
