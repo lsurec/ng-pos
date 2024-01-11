@@ -15,7 +15,7 @@
 
         <div class="buscar-cliente">
             <div class="dFlex">
-                <p class="subtitulo">{{ 'pos.factura.cliente' | translate }}</p>
+                <p class="subtitulo">{{facturaService.getTextCuenta() | titlecase}}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
                     <mat-icon>person_add</mat-icon>
@@ -47,7 +47,7 @@
 
         <div class="informacion" *ngIf="facturaService.cuenta">
             <div class="dFlex">
-                <p class="titulo">{{ 'pos.factura.informacion' | translate }}</p>
+                <p class="titulo">{{facturaService.getTextCuenta() | titlecase}}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="actualizar()" [matTooltip]="'pos.factura.actualizar' | translate">
                     <mat-icon>edit</mat-icon>
