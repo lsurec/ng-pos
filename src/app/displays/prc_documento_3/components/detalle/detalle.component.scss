@@ -8,17 +8,42 @@ $color-gris-s       : #777; //sombra y texto gris
 $color-blanco       : #fff; //texto blanco
 $color-gris         : #efefef;
 $background-transparent: transparent; //fondo transparennte,
-$background-oficial : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
 
 .documento {
-    padding: 10px 25px;
     display: flex;
     height : 100%;
 }
 
-.buscar-producto,
+.buscar-producto {
+    width  : 50%;
+    padding: 10px 25px;
+}
+
 .producto {
-    width: 50%;
+    max-height: calc(100vh - 256px);
+    width     : 50%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.cargos-productos {
+    padding-bottom: 10px;
+}
+
+.producto::-webkit-scrollbar {
+    width: 7px;
+}
+
+.producto::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.producto::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
 }
 
 .spacer {
@@ -218,4 +243,22 @@ p {
     border-radius: 10px;
     border       : 1px solid $color-azul;
     margin       : 10px 10px 0px 0px;
+}
+
+.descripcion-pago {
+    padding: 10px 0px;
+}
+
+.pagar {
+    padding : 10px 0px;
+    width   : 200px;
+    position: fixed;
+    bottom  : 64px;
+    right   : 25px;
+}
+
+.textos {
+    font-size  : 13px;
+    font-weight: 500;
+    color      : $color-azul;
 }

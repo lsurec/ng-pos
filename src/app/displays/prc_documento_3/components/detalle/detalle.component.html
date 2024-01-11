@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="informacion">
+        <!-- <div class="informacion">
             <div class="dFlex">
                 <p class="subtitulo">Cargo/Descuento</p>
                 <span class="spacer"></span>
@@ -47,31 +47,73 @@
                     <mat-icon>remove</mat-icon>
                 </button>
             </div>
-        </div>
+        </div> -->
     </div>
     <span class="spacer"></span>
 
     <div class="producto">
-        <div class="eliminar" *ngIf="compras.length > 0">
-            <div class="dFlex">
-                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
-                    (ngModelChange)="seleccionar()"></mat-checkbox>
-                <p class="titulo">{{ 'pos.factura.productos_agregados' | translate }}</p>
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="eliminarProducto()">
-                    <mat-icon>delete</mat-icon>
-                </button>
+        <div class="cargos-productos">
+            <div class="informacion">
+                <div class="dFlex">
+                    <p class="subtitulo">Cargo/Descuento</p>
+                    <span class="spacer"></span>
+                    <div *ngFor="let option of tipos">
+                        <div class="chip" [class.selected]="option.id === tipoDesCar"
+                            (click)="onOptionCarDes(option.id)">{{
+                            option.nombre }}
+                        </div>
+                    </div>
+                </div>
+                <div class="dFlex">
+                    <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00">
+                    <button mat-mini-fab class="iconoCargo">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="iconoDescuento">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="eliminar" *ngIf="compras.length > 0">
+                <div class="dFlex">
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                        (ngModelChange)="seleccionar()"></mat-checkbox>
+                    <p class="titulo">{{ 'pos.factura.productos_agregados' | translate }}</p>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="eliminarProducto()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="producto-seleccionado" *ngFor="let producto of compras">
+                <div class="dFlex">
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
+                    <div class="descripcion-producto">
+                        <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
+                        <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}
+                            {{producto.precioUnitario}}
+                        </p>
+                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{producto.total}}</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="producto-seleccionado" *ngFor="let producto of compras">
+        <!-- Agregar Pago -->
+        <div class="pagar">
             <div class="dFlex">
-                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
-                <div class="descripcion-producto">
-                    <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
-                    <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }} {{producto.precioUnitario}}
-                    </p>
-                    <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{producto.total}}</p>
-                </div>
+                <p class="textos">{{ 'pos.factura.total' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos">165.00</p>
+            </div>
+            <div class="dFlex">
+                <p class="textos">{{ 'pos.factura.saldo' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos">165.00</p>
+            </div>
+            <div class="dFlex">
+                <p class="textos">{{ 'pos.factura.cambio' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos">0.00</p>
             </div>
         </div>
     </div>
