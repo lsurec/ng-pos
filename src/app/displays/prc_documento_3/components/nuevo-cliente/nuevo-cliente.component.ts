@@ -9,12 +9,14 @@ import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista'
 import { CuentaService } from '../../services/cuenta.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-nuevo-cliente',
   templateUrl: './nuevo-cliente.component.html',
   styleUrls: ['./nuevo-cliente.component.scss'],
-  providers:[
+  providers: [
     CuentaService,
   ]
 })
@@ -32,7 +34,8 @@ export class NuevoClienteComponent {
     private _notificationsService: NotificationsService,
     private translate: TranslateService,
     private _eventService: EventService,
-    private _cuentaService:CuentaService,
+    private _cuentaService: CuentaService,
+    private _facturaService: FacturaService,
   ) {
   }
 
@@ -48,9 +51,9 @@ export class NuevoClienteComponent {
 
   async guardar() {
 
-   
+
     //TODO:Reportes de error
-    
+
     //validar formulario
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
       this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
@@ -58,14 +61,14 @@ export class NuevoClienteComponent {
     }
 
     //Validar correo
-    if(!this.validarCorreo(this.correo)){
+    if (!this.validarCorreo(this.correo)) {
       //TODO:Translate
       this._notificationsService.openSnackbar("El correo ingresado no es valido");
       return;
     }
 
     //Crear cuenta
-    
+
     //nueva cuneta
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
@@ -76,45 +79,89 @@ export class NuevoClienteComponent {
       telefono: this.telefono
     }
 
-    
+
     let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;
     let empresa: number = PreferencesService.empresa.empresa;
-    
+
     this.isLoading = true;
-    
+
     //Usar servicio crear cuenta
-    let resCuenta:ResApiInterface = await this._cuentaService.postCuenta(
+    let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
       user,
       token,
       empresa,
       cuenta,
     )
 
+    console.log("termino el api");
+    
+
     //Si el servicio falló
-    if(!resCuenta.status){
+    if (!resCuenta.status) {
       this.isLoading = false;
       this._notificationsService.showErrorAlert(resCuenta);
       return;
     }
 
     //buscar informacin de la cuenta  creada
-    let infoCuenta:ResApiInterface = await this._cuentaService.getClient(
+    let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
       user,
       token,
       empresa,
       cuenta.nit,
     );
 
-    if(!infoCuenta.response){
-      this._notificationsService.showErrorAlert(infoCuenta);
+    this.isLoading = false;
+
+
+    if (!infoCuenta.response) {
+
+      //TODO: translate
+      this._notificationsService.openSnackbar("Se creo la cuenta, pero ocurrió un error al seleccioanarla.");
+      console.error(infoCuenta);
+
       return;
     }
 
+    let cuentas: ClienteInterface[] = infoCuenta.response;
 
-    //regresar
-    this._eventService.verDocumentoEvent(true);
-    
+    if (cuentas.length == 0) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("Se creo la cuenta, pero ocurrió un error al seleccioanarla.");
+      return;
+    }
+
+    if (cuentas.length == 1) {
+
+      //seleccionar cuenta
+      this._facturaService.cuenta = cuentas[0];
+
+      //TODO translate
+      this._notificationsService.openSnackbar("Cuenta creada y seleccioanda correctamente.");
+
+      //regresar
+      this._eventService.verDocumentoEvent(true);
+      return;
+
+    }
+
+
+    cuentas.forEach(element => {
+      if (element.factura_NIT == cuenta.nit) {
+        //seleccionar cuenta
+        this._facturaService.cuenta =element;
+
+        //TODO translate
+        this._notificationsService.openSnackbar("Cuenta creada y seleccioanda correctamente.");
+
+        //regresar
+        this._eventService.verDocumentoEvent(true);
+        return;
+      }
+    });
+
+
   }
 
   goBack() {

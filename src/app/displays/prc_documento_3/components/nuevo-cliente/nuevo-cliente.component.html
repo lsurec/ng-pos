@@ -35,9 +35,9 @@
                             class="detalles" [(ngModel)]="correo">
                     </div>
                     <div class="dFlex">
-                        <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
+                        <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' | translate }}</button>
                         <span class="spacer"></span>
-                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+                        <button mat-stroked-button type="submit">{{ 'pos.botones.aceptar' | translate }}</button>
                     </div>
                 </form>
             </div>
