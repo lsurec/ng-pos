@@ -34,9 +34,11 @@
                         <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
                             class="detalles" [(ngModel)]="correo">
                     </div>
-                    <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" >
-                        <mat-icon>save</mat-icon>
-                    </button>
+                    <div class="dFlex">
+                        <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+                    </div>
                 </form>
             </div>
             <span class="spacer"></span>

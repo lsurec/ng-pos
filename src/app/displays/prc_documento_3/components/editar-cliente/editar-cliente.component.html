@@ -36,11 +36,13 @@
                         <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
                             class="detalles" [(ngModel)]="cuenta!.eMail">
                     </div>
+                    <div class="dFlex">
+                        <button mat-stroked-button>{{ 'pos.botones.cancelar' | translate }}</button>
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+                    </div>
                 </form>
             </div>
-            <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" (click)="guardar()">
-                <mat-icon>save</mat-icon>
-            </button>
             <span class="spacer"></span>
         </div>
     </div>
