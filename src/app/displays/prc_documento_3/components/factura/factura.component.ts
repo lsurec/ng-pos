@@ -33,6 +33,7 @@ export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
+  cuenta?: ClienteInterface;
   vistaFactura: boolean = true;
   nuevoCliente: boolean = false;
   actualizarCliente: boolean = false;
@@ -63,6 +64,7 @@ export class FacturaComponent implements OnInit {
     });
 
     this._eventService.verActualizar$.subscribe((eventData) => {
+      this.cuenta = eventData;
       this.verActualizarCliente();
     });
 

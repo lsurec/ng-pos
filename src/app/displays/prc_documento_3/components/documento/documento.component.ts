@@ -229,7 +229,7 @@ export class DocumentoComponent {
   }
 
   actualizar() {
-    this._eventService.verActualizarEvent(true);
+    this._eventService.verActualizarEvent(this.facturaService.cuenta!);
     // this.verActualizarCliente.emit(true);
   }
 
