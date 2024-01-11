@@ -94,8 +94,6 @@ export class NuevoClienteComponent {
       cuenta,
     )
 
-    console.log("termino el api");
-    
 
     //Si el servicio falló
     if (!resCuenta.status) {
