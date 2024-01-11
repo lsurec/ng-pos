@@ -132,7 +132,7 @@ export class CuentaService {
                 err => {
 
                     if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,
@@ -208,7 +208,7 @@ export class CuentaService {
                 err => {
 
                     if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,
@@ -287,7 +287,7 @@ export class CuentaService {
                 err => {
 
                     if(err.status == 400){
-                        let response: ResponseInterface = <ResponseInterface>err.body;
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
                         let resApi: ResApiInterface = {
                             status: false,

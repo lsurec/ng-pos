@@ -48,7 +48,7 @@ export class MenuService {
                 },
                 //si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
@@ -95,7 +95,7 @@ export class MenuService {
                 },
                 //si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
