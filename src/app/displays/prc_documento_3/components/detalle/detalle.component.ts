@@ -10,6 +10,10 @@ import { ProductService } from '../../services/product.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { FacturaService } from '../../services/factura.service';
+import { ProductoService } from '../../services/producto.service';
+import { PrecioInterface } from '../../interfaces/precio.interface';
+import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
+import { UnitarioInterface } from '../../interfaces/unitario.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -68,7 +72,8 @@ export class DetalleComponent {
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     private _productService: ProductService,
-    private _facturaService:FacturaService,
+    private _facturaService: FacturaService,
+    private _productoService: ProductoService,
 
   ) { }
 
@@ -91,39 +96,169 @@ export class DetalleComponent {
 
     this._facturaService.isLoading = true;
     //filtro 1 = sku
-    if(this.filtrosProductos == 1){
+    if (this.filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
         filtro,
-      ); 
+      );
     }
 
     //filtro 2 = descripcion
-    if(this.filtrosProductos == 2){
+    if (this.filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
         filtro,
       );
     }
 
-    this._facturaService.isLoading = false;
 
-    
-    if(!res!.status){
+
+    if (!res!.status) {
+      this._facturaService.isLoading = false;
+
       this._notificationsService.showErrorAlert(res!);
       return;
     }
 
 
-    let productos:ProductoInterface[] = res!.response;
+    let productos: ProductoInterface[] = res!.response;
 
 
-    if(productos.length == 0){
+    if (productos.length == 0) {
       this._notificationsService.openSnackbar("No hay coincidencias para la busqueda");
       return;
     }
 
-    if(productos.length ==1){
+    if (productos.length == 1) {
+
+      let product = productos[0];
+      //reiniciar valores 
+      this._productoService.total = 0;
+      this._productoService.precios = [];
+      this._productoService.precio = undefined;
+      this._productoService.bodegas = [];
+      this._productoService.bodega = undefined;
+      this._productoService.cantidad = "1";
+      this._productoService.precioU = 0;
+      this._productoService.precioText = "0";
+
+      //buscar bodegas del produxto
+      let resBodega = await this._productService.getBodegaProducto(
+        this.user,
+        this.token,
+        this.empresa,
+        this.estacion,
+        product.producto,
+        product.unidad_Medida,
+      );
+
+
+      if (!resBodega.status) {
+        this._facturaService.isLoading = false;
+        this._notificationsService.showErrorAlert(resBodega);
+        return;
+      }
+
+      this._productoService.bodegas = resBodega.response;
+
+
+      //validar que existan bodegas
+      if (this._productoService.bodegas.length == 0) {
+        this._facturaService.isLoading = false;
+        this._notificationsService.openSnackbar("No hay bodegas asignadas a este producto.");
+        return;
+      }
+
+
+      //Si solo hay una bodega
+      if (this._productoService.bodegas.length == 1) {
+        this._productoService.bodega = this._productoService.bodegas[0];
+        let bodega: number = this._productoService.bodega.bodega;
+
+        //buscar precios
+        let resPrecio = await this._productService.getPrecios(
+          this.user,
+          this.token,
+          bodega,
+          product.producto,
+          product.unidad_Medida,
+        );
+
+
+        if (!resPrecio.status) {
+          this._facturaService.isLoading = false;
+
+          this._notificationsService.showErrorAlert(resPrecio);
+          return;
+        }
+
+        let precios: PrecioInterface[] = resPrecio.response;
+
+        precios.forEach(element => {
+          this._productoService.precios.push(
+            {
+              id: element.tipo_Precio,
+              precioU: element.precio_Unidad,
+              descripcion: element.des_Tipo_Precio,
+              precio: true,
+              moneda: element.moneda,
+            }
+          );
+        });
+
+        //si no hay precios buscar factor conversion
+        if (this._productoService.precios.length == 0) {
+          let resfactor = await this._productService.getFactorConversion(
+            this.user,
+            this.token,
+            bodega,
+            product.producto,
+            product.unidad_Medida,
+          );
+
+          if (!resfactor.status) {
+
+            this._facturaService.isLoading = false;
+
+            this._notificationsService.showErrorAlert(resfactor);
+            return;
+          }
+
+
+          let factores:FactorConversionInterface[] = resfactor.response;
+
+
+          factores.forEach(element => {
+            this._productoService.precios.push(
+              {
+                id: element.tipo_Precio,
+                precioU: element.precio_Unidad,
+                descripcion: element.des_Tipo_Precio,
+                precio: false,
+                moneda: element.moneda,
+              }
+            );
+          });
+
+        }
+
+        //si no hay precos ni factores
+
+        if(this._productoService.precios.length == 1){
+
+          let precioU:UnitarioInterface = this._productoService.precios[0];
+
+            this._productoService.precio = precioU;
+            this._productoService.total = precioU.precioU;
+            this._productoService.precioU = precioU.precioU;
+            this._productoService.precioText = precioU.precioU.toString();
+        }
+
+      }
+
+      this._facturaService.isLoading = false;
+
+
       let productoDialog = this._dialog.open(ProductoComponent, { data: productos[0] })
       productoDialog.afterClosed().subscribe(result => {
         if (result) {
@@ -142,45 +277,49 @@ export class DetalleComponent {
 
         }
 
-        return;
       })
+
+      return;
+
     }
-    
 
-      let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
-      productosDialog.afterClosed().subscribe(result => {
-        if (result) {
+    this._facturaService.isLoading = false;
 
-          let productoSeleccionado: ProductoInterface = result[0];
-          console.log(productoSeleccionado);
 
-          if (!productoSeleccionado) {
-            console.log("no se selecciono ningun producto");
-            return
-          } else {
-            let productoDialog2 = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
-            productoDialog2.afterClosed().subscribe(result => {
-              if (result) {
-                console.log(result);
+    let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
+    productosDialog.afterClosed().subscribe(result => {
+      if (result) {
 
-                let producto: CompraInterface = result;
+        let productoSeleccionado: ProductoInterface = result[0];
+        console.log(productoSeleccionado);
 
-                let compra: CompraInterface = {
-                  producto: producto.producto,
-                  cantidad: producto.cantidad,
-                  precioUnitario: producto.precioUnitario,
-                  total: producto.total,
-                }
+        if (!productoSeleccionado) {
+          console.log("no se selecciono ningun producto");
+          return
+        } else {
+          let productoDialog2 = this._dialog.open(ProductoComponent, { data: productoSeleccionado })
+          productoDialog2.afterClosed().subscribe(result => {
+            if (result) {
+              console.log(result);
 
-                this.compras.push(compra);
+              let producto: CompraInterface = result;
 
+              let compra: CompraInterface = {
+                producto: producto.producto,
+                cantidad: producto.cantidad,
+                precioUnitario: producto.precioUnitario,
+                total: producto.total,
               }
-            })
-          }
-          // let producto: ProductoInterface = result[0];
-          // this.producto = producto;
+
+              this.compras.push(compra);
+
+            }
+          })
         }
-      })
+        // let producto: ProductoInterface = result[0];
+        // this.producto = producto;
+      }
+    })
 
 
   }
