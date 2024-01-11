@@ -25,6 +25,23 @@ export class FacturaService {
 
     constructor() { }
 
+    getTextCuenta():string{
+        let name:string = "Cuenta";
+
+        for (let i = 0; i < this.parametros.length; i++) {
+            const parametro = this.parametros[i];
+            
+            //buscar el nombre en el parametro 57
+            if(parametro.parametro == 57){
+                name = parametro.pa_Caracter ?? "Cuenta";
+                break;
+            }
+
+        }
+
+        return name;
+        
+    }
 
 
 }

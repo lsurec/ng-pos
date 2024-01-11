@@ -6,11 +6,15 @@ import { ProductosEncontradosComponent } from '../productos-encontrados/producto
 import { ProductoComponent } from '../producto/producto.component';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
-  styleUrls: ['./detalle.component.scss']
+  styleUrls: ['./detalle.component.scss'],
+  providers:[
+    ProductService
+  ]
 })
 export class DetalleComponent {
 
@@ -104,13 +108,25 @@ export class DetalleComponent {
     private _dialog: MatDialog,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
+    private _productService: ProductService,
 
   ) { }
 
 
   buscarProducto(filtro: string) {
-    // Limpiar la lista de registros antes de cada búsqueda
-    this.registros.length = 0;
+
+    //TODO:Translate
+    if(!filtro){
+      this._notificationsService.openSnackbar("Ingresa un texto para la busqueda.")
+      return;
+    }
+
+    //eliminar espacios al final de la cadena
+    filtro = filtro.trim()
+
+      
+
+    
 
     this.productos.forEach((producto) => {
       if (this.selectedOption == 1 && producto.sku.toLowerCase().includes(filtro.toLowerCase())) {
