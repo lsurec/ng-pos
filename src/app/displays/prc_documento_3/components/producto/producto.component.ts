@@ -59,12 +59,7 @@ export class ProductoComponent {
 
   enviar() {
 
-    let producto: ProductoInterface = {
-      sku: this.producto.sku,
-      nombre: this.producto.nombre,
-    }
-
-    this.producto = producto;
+   
 
     let compra: CompraInterface = {
       producto: this.producto,

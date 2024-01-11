@@ -24,8 +24,8 @@
             </div>
             <div class="informacion" *ngIf="producto">
                 <div class="encontrado">
-                    <p> {{producto.nombre}} </p>
-                    <p> {{producto.sku}} </p>
+                    <p> {{producto.des_Producto}} </p>
+                    <p> {{producto.producto_Id}} </p>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 <div class="dFlex">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
                     <div class="descripcion-producto">
-                        <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.nombre}}</p>
+                        <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.des_Producto}}</p>
                         <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}
                             {{producto.precioUnitario}}
                         </p>

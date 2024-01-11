@@ -13,14 +13,7 @@ export class ResumenDocumentoComponent {
   isLoading: boolean = false;
 
   productos: ProductoInterface[] = [
-    {
-      sku: 'AL1',
-      nombre: 'Viuda en barbacoa'
-    },
-    {
-      sku: 'BF2',
-      nombre: 'Limonana natural'
-    },
+    
   ]
 
   compras: CompraInterface[] = [

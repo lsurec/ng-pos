@@ -33,8 +33,8 @@
                     <div class="detalles-lista">
                         <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
                         <div class="descripcion-producto" *ngFor="let compra of compras">
-                            <p class="textos">{{compra.cantidad}} x {{compra.producto.nombre}}</p>
-                            <p class="textos">{{ 'pos.factura.sku' | translate }} {{compra.producto.sku}}</p>
+                            <p class="textos">{{compra.cantidad}} x {{compra.producto.des_Producto}}</p>
+                            <p class="textos">{{ 'pos.factura.sku' | translate }} {{compra.producto.producto_Id}}</p>
                             <p class="textos">{{ 'pos.factura.productos' | translate }} {{compra.precioUnitario}}</p>
                             <p class="textos">{{ 'pos.factura.total' | translate }} {{compra.total}} </p>
                         </div>

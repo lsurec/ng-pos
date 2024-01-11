@@ -1,8 +1,12 @@
 export interface ProductoInterface {
-    sku: string,
-    nombre: string,
-    checked?: boolean;
+    producto:          number;
+    unidad_Medida:     number;
+    producto_Id:       string;
+    des_Producto:      string;
+    des_Unidad_Medida: string;
+    tipo_Producto:     number;
 }
+
 
 export interface CompraInterface {
     producto: ProductoInterface

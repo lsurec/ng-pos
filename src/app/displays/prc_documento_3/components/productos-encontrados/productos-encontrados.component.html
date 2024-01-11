@@ -18,8 +18,8 @@
                 </div>
                 <div class="" *ngFor="let producto of productos">
                     <div class="seleccionar" [mat-dialog-close]="[producto]">
-                        <p class="textos">{{producto.nombre}} </p>
-                        <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.sku}}</p>
+                        <p class="textos">{{producto.des_Producto}} </p>
+                        <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.producto_Id}}</p>
                     </div>
                 </div>
             </div>
