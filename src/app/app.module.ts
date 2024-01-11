@@ -52,6 +52,7 @@ import { PagoComponent } from './displays/prc_documento_3/components/pago/pago.c
 import { EditarClienteComponent } from './displays/prc_documento_3/components/editar-cliente/editar-cliente.component';
 import { ResumenDocumentoComponent } from './displays/prc_documento_3/components/resumen-documento/resumen-documento.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HistorialComponent } from './displays/prc_documento_3/components/historial/historial.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     PagoComponent,
     EditarClienteComponent,
     ResumenDocumentoComponent,
+    HistorialComponent,
   ],
   imports: [
     BrowserModule,

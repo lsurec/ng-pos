@@ -1,0 +1,41 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<div *ngIf="!isLoading">
+    <mat-toolbar-row class="head__sidenav">
+        <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
+            (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <!-- Titulo de la tarea -->
+        <p class="titulo">Documentos recientes</p>
+        <span class="spacer"></span>
+
+    </mat-toolbar-row>
+    <div class="container-main">
+        <div class="container">
+
+            <div class="dFlex">
+                <span class="spacer"></span>
+                <p class="subtitulo">{{ 'pos.factura.registros' | translate }} (8)</p>
+            </div>
+            <div class="detalle-documento">
+                <div class="info-documento">
+                    <p class="subtitulo">10209</p>
+                    <p class="fecha-hora">05/01/2023 07:19</p>
+                </div>
+                <span class="spacer"></span>
+                <div class="totales">
+                    <p class="saldo">55.00</p>
+                    <p class="cargo">(+) 5.00</p>
+                    <p class="descuento">(-) 10.00</p>
+                    <p class="total">45.00</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Mostrar logos -->
+    <!-- <app-barra-logos></app-barra-logos> -->
+    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+</div>
