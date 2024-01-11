@@ -12,6 +12,7 @@ export class ProductoComponent {
 
   producto: ProductoInterface;
   isLoading: boolean = false;
+  modificarPrecio: boolean = false;
   cantidad: number = 1;
   bodega!: string;
 
@@ -59,7 +60,7 @@ export class ProductoComponent {
 
   enviar() {
 
-   
+
 
     let compra: CompraInterface = {
       producto: this.producto,
