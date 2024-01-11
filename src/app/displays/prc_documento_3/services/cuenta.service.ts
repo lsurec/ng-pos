@@ -157,7 +157,7 @@ export class CuentaService {
     private _getClient(
         user: string,
         token: string,
-        empresa: string,
+        empresa: number,
         filter: string,
     ) {
 
@@ -178,7 +178,7 @@ export class CuentaService {
     getClient(
         user: string,
         token: string,
-        empresa: string,
+        empresa: number,
         filter: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {

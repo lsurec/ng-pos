@@ -4,6 +4,8 @@ import { SerieInterface } from '../interfaces/serie.interface';
 import { VendedorInterface } from '../interfaces/vendedor.interface';
 import { TipoTransaccionInterface } from '../interfaces/tipo-transaccion.interface';
 import { ParametroInterface } from '../interfaces/parametro.interface';
+import { FormaPagoInterface } from '../interfaces/forma-pago.interface';
+import { ClienteInterface } from '../interfaces/cliente.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +20,8 @@ export class FacturaService {
     vendedor?:VendedorInterface;
     tiposTransaccion:TipoTransaccionInterface[] = [];
     parametros:ParametroInterface[] = [];
+    formasPago:FormaPagoInterface[]=[];
+    cuenta?:ClienteInterface; 
 
     constructor() { }
 

@@ -5,7 +5,7 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="facturaService.serie">
+            <mat-select name="estado" class="seleccionar" placeholder="SERIE" [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()"> 
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
                 </mat-option>
@@ -38,19 +38,13 @@
                 <span class="spacer"></span>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                        (change)="toggleSwitch()">
+                        (change)="setCF()">
                 </div>
             </div>
         </div>
 
-        <div class="informacion" *ngIf="switchState">
-            <p class="titulo">{{ 'pos.factura.informacion' | translate }}</p>
-            <p class="detalles">{{ 'pos.factura.cf' | translate }}</p>
-            <p class="detalles">{{ 'pos.factura.consumidor' | translate }}</p>
-            <p class="detalles">{{ 'pos.factura.ciudad' | translate }}</p>
-        </div>
 
-        <div class="informacion" *ngIf="selectedCliente">
+        <div class="informacion" *ngIf="facturaService.cuenta">
             <div class="dFlex">
                 <p class="titulo">{{ 'pos.factura.informacion' | translate }}</p>
                 <span class="spacer"></span>
@@ -61,12 +55,12 @@
             <div class="dFlex">
                 <p class="detalles">{{ 'pos.factura.nit' | translate }}</p>
                 <span class="spacer"></span>
-                <p>{{cliente.nit}}</p>
+                <p>{{facturaService.cuenta.factura_NIT}}</p>
             </div>
             <div class="dFlex">
                 <p class="detalles">{{ 'pos.factura.nombre' | translate }}</p>
                 <span class="spacer"></span>
-                <p>{{cliente.nombre}}</p>
+                <p>{{facturaService.cuenta.factura_Nombre}}</p>
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
@@ -78,7 +72,7 @@
     </div>
     <span class="spacer"></span>
 
-    <div class="cliente">
+    <div class="cliente" *ngIf="facturaService.vendedores.length > 0">
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>

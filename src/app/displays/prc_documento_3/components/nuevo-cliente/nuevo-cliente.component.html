@@ -1,46 +1,49 @@
-<mat-toolbar-row class="head__sidenav">
-    <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span class="spacer"></span>
-    <!-- Titulo de la tarea -->
-    <p class="titulo"></p>
-</mat-toolbar-row>
-
-<div class="container-main">
-    <div class="sin-conexion">
-        <span class="spacer"></span>
-        <div class="centro">
-            <p class="titulo">{{ 'pos.factura.nueva' | translate }}</p>
-            <form #searchForm="ngForm" class="formulario">
-                <div class="campos">
-                    <input type="text" name="nombre" placeholder="{{ 'pos.factura.nombre' | translate }}"
-                        class="detalles" [(ngModel)]="nombre">
-                </div>
-                <div class="campos">
-                    <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
-                        class="detalles" [(ngModel)]="direccion">
-                </div>
-                <div class="campos">
-                    <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}"
-                        class="detalles" [(ngModel)]="nit">
-                </div>
-                <div class="campos">
-                    <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
-                        class="detalles" [(ngModel)]="telefono">
-                </div>
-                <div class="campos d-flex">
-                    <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
-                        class="detalles" [(ngModel)]="correo">
-                </div>
-            </form>
-        </div>
-        <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" (click)="guardar()">
-            <mat-icon>save</mat-icon>
+<app-progress *ngIf="isLoading"></app-progress>
+<div *ngIf="!isLoading">
+    <mat-toolbar-row class="head__sidenav">
+        <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
         </button>
         <span class="spacer"></span>
+        <!-- Titulo de la tarea -->
+        <p class="titulo"></p>
+    </mat-toolbar-row>
+    
+    <div class="container-main">
+        <div class="sin-conexion">
+            <span class="spacer"></span>
+            <div class="centro">
+                <p class="titulo">{{ 'pos.factura.nueva' | translate }}</p>
+                <form #searchForm="ngForm" class="formulario">
+                    <div class="campos">
+                        <input type="text" name="nombre" placeholder="{{ 'pos.factura.nombre' | translate }}"
+                            class="detalles" [(ngModel)]="nombre">
+                    </div>
+                    <div class="campos">
+                        <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
+                            class="detalles" [(ngModel)]="direccion">
+                    </div>
+                    <div class="campos">
+                        <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}"
+                            class="detalles" [(ngModel)]="nit">
+                    </div>
+                    <div class="campos">
+                        <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
+                            class="detalles" [(ngModel)]="telefono">
+                    </div>
+                    <div class="campos d-flex">
+                        <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
+                            class="detalles" [(ngModel)]="correo">
+                    </div>
+                </form>
+            </div>
+            <button mat-mini-fab class="guardar" [matTooltip]="'pos.botones.guardar' | translate" (click)="guardar()">
+                <mat-icon>save</mat-icon>
+            </button>
+            <span class="spacer"></span>
+        </div>
     </div>
+    <!-- Mostrar logos -->
+    <!-- <app-barra-logos></app-barra-logos> -->
+    <app-barra-logo-demosoft></app-barra-logo-demosoft>
 </div>
-<!-- Mostrar logos -->
-<!-- <app-barra-logos></app-barra-logos> -->
-<app-barra-logo-demosoft></app-barra-logo-demosoft>

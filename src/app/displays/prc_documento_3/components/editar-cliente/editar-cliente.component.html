@@ -15,15 +15,15 @@
             <form #searchForm="ngForm" class="formulario">
                 <div class="campos">
                     <input type="text" placeholder="{{ 'pos.factura.nombre' | translate }}" class="detalles"
-                        [(ngModel)]="cuenta!.nombre" name="nombre">
+                        [(ngModel)]="cuenta!.factura_Nombre" name="nombre">
                 </div>
                 <div class="campos">
                     <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
-                        class="detalles" [(ngModel)]="cuenta!.direccion">
+                        class="detalles" [(ngModel)]="cuenta!.factura_Direccion">
                 </div>
                 <div class="campos">
                     <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}" class="detalles"
-                        [(ngModel)]="cuenta!.nit">
+                        [(ngModel)]="cuenta!.factura_NIT">
                 </div>
                 <div class="campos">
                     <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
@@ -31,7 +31,7 @@
                 </div>
                 <div class="campos d-flex">
                     <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
-                        class="detalles" [(ngModel)]="cuenta!.correo">
+                        class="detalles" [(ngModel)]="cuenta!.eMail">
                 </div>
             </form>
         </div>

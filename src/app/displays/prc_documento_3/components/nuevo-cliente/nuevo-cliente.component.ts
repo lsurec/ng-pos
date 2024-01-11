@@ -19,6 +19,8 @@ export class NuevoClienteComponent {
   telefono!: number;
   correo!: string;
 
+  isLoading: boolean = false;
+
   constructor(
     private _location: Location,
     private _widgetsService: NotificationsService,
