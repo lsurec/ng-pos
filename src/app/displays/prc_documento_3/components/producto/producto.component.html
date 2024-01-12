@@ -19,7 +19,7 @@
                     <div class="restar" (click)="restar()">
                         <mat-icon class="sumar-restar">remove</mat-icon>
                     </div>
-                    <input class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad" autocomplete="off">
+                    <input class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad" autocomplete="off" (ngModelChange)="changeCantidad()">
                     <div class="sumar" (click)="sumar()">
                         <mat-icon class="sumar-restar">add</mat-icon>
                     </div>
@@ -39,7 +39,8 @@
                     <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
                     <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="productoService. bodega" (ngModelChange)="changeBodega()">
                         <mat-option *ngFor="let bodega of productoService. bodegas" [value]="bodega">
-                            {{bodega.nombre}}
+                            <!--TODO:Translate-->
+                            ({{bodega.bodega}}) {{bodega.nombre}} | Existencia ({{bodega.existencia}})
                         </mat-option>
                     </mat-select>
                 </div>
@@ -55,9 +56,9 @@
             </div>
             <div class="">
                 <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
-                <p class="subtitulo" *ngIf="!modificarPrecio">{{productoService.precioU | currency:' ':'symbol':'2.2-2' }}</p>
+                <p class="subtitulo" *ngIf="!facturaService.editPrice()">{{productoService.precioU | currency:' ':'symbol':'2.2-2' }}</p>
                 <input class="precio-unitario" type="text" name="search" [(ngModel)]="productoService.precioText" autocomplete="off"
-                    *ngIf="modificarPrecio">
+                    *ngIf="facturaService.editPrice()" (ngModelChange)="editPrice()">
             </div>
             <div class="dFlex">
                 <span class="spacer"></span>

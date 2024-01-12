@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { ProductoService } from '../../services/producto.service';
@@ -9,6 +8,9 @@ import { FactorConversionInterface } from '../../interfaces/factor-conversion.in
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { FacturaService } from '../../services/factura.service';
+import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
+import { ProductoInterface } from '../../interfaces/producto.interface';
 
 @Component({
   selector: 'app-producto',
@@ -21,7 +23,6 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class ProductoComponent {
 
   isLoading: boolean = false;
-  modificarPrecio: boolean = false;
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -36,7 +37,56 @@ export class ProductoComponent {
     public productoService: ProductoService,
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
+    public facturaService: FacturaService,
   ) {
+
+  }
+
+
+  calculateTotal() {
+    if (!this.productoService.precio) {
+      this.productoService.total = 0;
+      return;
+    }
+
+    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+
+    this.productoService.total = cantidad! * this.productoService.precio.precioU;
+
+  }
+
+  editPrice() {
+    if (this.convertirTextoANumero(this.productoService.precioText) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      return;
+    }
+
+
+    let precio = this.convertirTextoANumero(this.productoService.precioText);
+
+    if (precio! < this.productoService.precioU) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.");
+      return;
+    }
+
+
+    this.productoService.precio!.precioU = precio!;
+
+    this.calculateTotal();
+
+
+  }
+
+  changeCantidad() {
+    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      return;
+    }
+
+    this.calculateTotal();
 
   }
 
@@ -137,7 +187,8 @@ export class ProductoComponent {
 
     this.isLoading = false;
 
-    //TODO: Calcular total
+    this.calculateTotal();
+
 
   }
 
@@ -150,23 +201,66 @@ export class ProductoComponent {
     this.productoService.precioU = precioU.precioU;
     this.productoService.precioText = precioU.precioU.toString();
 
-    //TODO:Calcular total
+    this.calculateTotal();
+
+  }
+
+
+  convertirTextoANumero(texto: string): number | null {
+    // Verificar si la cadena es un número
+    const esNumero = /^\d+(\.\d+)?$/.test(texto);
+
+    if (esNumero) {
+      // Realizar la conversión a número
+      return parseFloat(texto);
+      // Si quieres convertir a un número entero, puedes usar parseInt(texto) en lugar de parseFloat.
+    } else {
+      // Retornar null si la cadena no es un número
+      return null;
+    }
   }
 
   sumar() {
-    // this.cantidad++;
-    // let unidades: number = this.cantidad;
-    // this.total = this.precioProducto * unidades;
+
+    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      return;
+    }
+
+    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+
+    cantidad!++;
+
+    this.productoService.cantidad = cantidad!.toString();
+
+    this.calculateTotal();
+
+
   }
 
   restar() {
-    // this.cantidad--;
-    // let unidades: number = this.cantidad;
-    // this.total = this.precioProducto * unidades;
 
-    // if (this.cantidad <= 0) {
-    //   this.cantidad = 0;
-    // }
+    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      return;
+    }
+
+    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+
+
+    cantidad!--;
+
+    if (cantidad! <= 0) {
+      cantidad = 0;
+    }
+
+    this.productoService.cantidad = cantidad!.toString();
+
+    this.calculateTotal();
+
+
 
   }
   //cerrar dialogo
@@ -177,17 +271,93 @@ export class ProductoComponent {
   enviar() {
 
 
+    //Validaciones
 
-    // let compra: CompraInterface = {
-    //   producto: this.producto,
-    //   cantidad: this.cantidad,
-    //   precioUnitario: this.precioProducto,
-    //   total: this.total,
-    // }
 
-    // console.log(compra);
+    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("La cantidad debe ser numerica.");
+      return;
 
-    // this.dialogRef.close(compra);
+    }
+
+    if (this.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("La cantidad debe ser mayor a 0.");
+      return;
+    }
+
+    if (this.facturaService.amounts.length > 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("Elimina primero las formas de pago.");
+      return;
+    }
+
+    if (!this.productoService.bodega) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("Selecciona una bodega.");
+      return;
+    }
+
+    if (this.productoService.precios.length > 0 && !this.productoService.precio) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("Selecciona un tipo de precio.");
+      return;
+    }
+
+    if (this.productoService.precio!.precioU < this.productoService.precioU) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.");
+      return;
+    }
+
+
+    if (this.productoService.bodega.existencia == 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("No es posible agregar la transaccion porque la existencia es insuficiente.");
+      return;
+    }
+
+
+    if (this.facturaService.traInternas.length > 0) {
+      let monedaDoc = 0;
+      let monedaTra = 0;
+
+      let firstTra: TraInternaInterface = this.facturaService.traInternas[0];
+
+      monedaDoc = firstTra.precio!.moneda;
+      monedaTra = this.productoService.precio!.moneda;
+
+
+      if (monedaDoc != monedaTra) {
+        //TODO:Translate
+
+        this._notificationsService.openSnackbar("No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.");
+        return;
+      }
+
+    }
+
+
+    this.facturaService.addTransaction(
+      {
+        isChecked: false,
+        bodega: this.productoService.bodega,
+        producto: this.producto,
+        precio: this.productoService.precio!,
+        cantidad: this.convertirTextoANumero(this.productoService.cantidad)!,
+        total: this.productoService.total,
+        cargo: 0,
+        descuento: 0,
+        operaciones: [],
+      }
+    );
+
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Transaccion agregada.");
+
+    this.dialogRef.close();
 
   }
 

@@ -6,15 +6,3 @@ export interface ProductoInterface {
     des_Unidad_Medida: string;
     tipo_Producto:     number;
 }
-
-
-export interface CompraInterface {
-    producto: ProductoInterface
-    cantidad: number,
-    precioUnitario: number;
-    total: number;
-    cargos?: number;
-    descuentos?: number;
-    checked?: boolean;
-}
-
