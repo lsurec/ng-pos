@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { BancosInterface, PagoInterface } from '../../interfaces/pagos.interface';
+import { BancosInterface, CuentaBancoInterface, PagoInterface } from '../../interfaces/pagos.interface';
 import { PagoService } from '../../services/pago.service';
 
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
   styleUrls: ['./pago.component.scss'],
-  providers:[
+  providers: [
     PagoService,
   ]
 })
@@ -31,6 +31,11 @@ export class PagoComponent {
     { id: 4, nombre: "Banco Agromercantil" },
     { id: 5, nombre: "BAC" },
   ];
+
+  cuentasBancarias: CuentaBancoInterface[] = [
+    { numero: 12131415, nombre: "Faby Santizo" },
+    { numero: 15141312, nombre: "Niktéeee Juárez" },
+  ]
 
   tipos: boolean = true;
   efectivo: boolean = false;
@@ -93,6 +98,7 @@ export class PagoComponent {
 
   tipoPago!: string;
   bancoSelect!: BancosInterface;
+  cuentaSelect!: CuentaBancoInterface;
 
   verPago(tipo: PagoInterface) {
 

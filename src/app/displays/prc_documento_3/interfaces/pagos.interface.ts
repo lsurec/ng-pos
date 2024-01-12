@@ -15,5 +15,10 @@ export interface PagoInterface {
     referencia?: string;
     autorizacion?: string;
     banco?: string;
-    checked?: boolean; 
+    checked?: boolean;
+}
+
+export interface CuentaBancoInterface {
+    numero: number;
+    nombre: string;
 }
