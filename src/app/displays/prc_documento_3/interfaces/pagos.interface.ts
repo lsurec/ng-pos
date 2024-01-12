@@ -1,12 +1,3 @@
-// export interface MetodoPagoInterface {
-//     id: number;
-//     nombre: string;
-// }
-
-export interface BancosInterface {
-    id: number;
-    nombre: string;
-}
 
 export interface PagoInterface {
     id: number;
@@ -16,9 +7,4 @@ export interface PagoInterface {
     autorizacion?: string;
     banco?: string;
     checked?: boolean;
-}
-
-export interface CuentaBancoInterface {
-    numero: number;
-    nombre: string;
 }

@@ -45,10 +45,9 @@ export class FacturaComponent implements OnInit {
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-  
-  tabDocummento:boolean = true;
+  tabDocummento:boolean = false;
   tabDetalle:boolean = false;
-  tabPago:boolean = false;
+  tabPago:boolean = true;
 
   constructor(
     private _notificationService: NotificationsService,
