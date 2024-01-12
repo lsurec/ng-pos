@@ -8,7 +8,7 @@ $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra rosada
 $background-botones   : #134895; //resaltar botones azul
-$background-transparent: transparent; //fondo transparennte, 
+$background-transparent: transparent; //fondo transparennte,
 
 //Pantalla de carga centrada
 .progress {
@@ -253,6 +253,7 @@ label {
     padding         : 5px 0px;
     font-size       : 14px;
     cursor          : pointer;
+    min-height      : 30px;
 }
 
 .cambiarTema {
@@ -434,20 +435,21 @@ h2 {
 }
 
 .pTitulo {
-    font-weight  : bold;
-    font-size    : 11px;
-    margin-bottom: 0px;
-    margin-left  : 30px;
-    margin-right : 30px;
+    font-weight: bold;
+    font-size  : 11px;
+    margin     : 0px 30px 0px;
+}
+
+.ayuda {
+    display     : flex;
+    align-items : center;
+    margin-right: 20px;
 }
 
 .pDescripcion {
-    font-size       : 13px;
-    margin-left     : 30px;
-    margin-right    : 30px;
-    margin-top      : 0px;
-    margin-bottom   : 2px;
-    /* border-bottom: 0.8px solid #c4c4c4; */
+    font-size: 13px;
+    margin   : 0px 30px 2px;
+    word-wrap: break-word;
 }
 
 .descripcion-tema {

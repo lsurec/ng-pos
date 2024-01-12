@@ -14,7 +14,9 @@
             "empresa": "Empresa",
             "estacion": "Estación de Trabajo",
             "fecha": "Fecha Servidor",
-            "version": "Versión de Compilación"
+            "version": "Versión de Compilación",
+            "origen": "Origen de Datos",
+            "versionActual": "Versión actual"
         },
         "login": {
             "correo": "Usuario",
@@ -42,7 +44,8 @@
             "oscuro": "Tema Oscuro",
             "claro": "Tema Claro",
             "cambiar": "Más adelante también podrá cambiar el tema de la aplicación según su preferencia.",
-            "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia."
+            "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia.",
+            "ayuda": "Ayuda"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURACION LOCAL",
@@ -114,7 +117,7 @@
             "descripcion": "Descripcion"
         },
         "inputs": {
-            "buscar": "escriba para realizar la busqueda."
+            "buscar": "Escriba para realizar la busqueda."
         },
         "factura": {
             "factura": "Factura",
@@ -124,6 +127,7 @@
             "series": "Series",
             "cliente": "Cliente",
             "buscar": "Buscar",
+            "buscarProductos": "Buscar productos",
             "cf": "C/F",
             "informacion": "Información del cliente",
             "consumidor": "CONSUMIDOR FINAL",

@@ -80,7 +80,15 @@
                 <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
                 <p class="pDescripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
                 <p class="pDescripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
-
+            </div>
+            <p class="separador"></p>
+            <div class="vistaAjustes">
+                <div class="ayuda">
+                    <p class="pTitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                    <span class="spacer"></span>
+                    <mat-icon>navigate_next</mat-icon>
+                </div>
+                <!-- <p class="pDescripcion"> </p> -->
             </div>
             <p class="separador"></p>
         </div>
@@ -119,15 +127,15 @@
                     class="circular-image" alt=""> -->
 
                 <div class="circular-usuario">
-                    <p class="inicial-usuario">{{userName[0]}}</p>
+                    <p class="inicial-usuario">{{user[0]}}</p>
                 </div>
             </div>
-            <p class="userName">{{userName}}</p>
+            <p class="userName">{{user.toUpperCase()}}</p>
             <!-- <p class="userEmail textEncabezado">Administrador@empresa.com.gt</p> -->
 
             <div class="backgroundscreenUser">
                 <div class="containerDatosUser">
-                    <div>
+                    <!-- <div>
                         <p class="pTitulo">{{'pos.home.servidor' | translate}}</p>
                         <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
@@ -136,20 +144,30 @@
                         <p class="pTitulo">{{'pos.home.baseDatos' | translate}}</p>
                         <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
-                    </div>
+                    </div> -->
                     <div>
                         <p class="pTitulo">{{'pos.home.empresa' | translate}}</p>
                         <!-- <p class="pDescripcion">(1) CONBEXSA</p> -->
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                        <p class="pDescripcion">{{empresa}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
                         <p class="pTitulo">{{'pos.home.estacion' | translate}}</p>
                         <!-- <p class="pDescripcion">(6) ADMINISTRACION</p> -->
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                        <p class="pDescripcion">{{estacion}}</p>
                         <p class="separador"></p>
                     </div>
                     <div>
+                        <p class="pTitulo">{{'pos.home.origen' | translate}}</p>
+                        <p class="pDescripcion">{{url}}</p>
+                        <p class="separador"></p>
+                    </div>
+                    <div>
+                        <p class="pTitulo">{{'pos.home.versionActual' | translate}}</p>
+                        <p class="pDescripcion">1.0.0</p>
+                        <p class="separador"></p>
+                    </div>
+                    <!-- <div>
                         <p class="pTitulo">{{'pos.home.fecha' | translate}}</p>
                         <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
@@ -158,7 +176,7 @@
                         <p class="pTitulo">{{'pos.home.version' | translate}}</p>
                         <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
                         <p class="separador"></p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

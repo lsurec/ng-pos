@@ -35,6 +35,9 @@ export class HomeComponent {
   user = PreferencesService.user;
   token = PreferencesService.token;
 
+  empresa: string = PreferencesService.empresa.empresa_Nombre;
+  estacion: string = PreferencesService.estacion.nombre;
+  url: string = PreferencesService.baseUrl;
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
@@ -69,7 +72,6 @@ export class HomeComponent {
   languages: LanguageInterface[] = languagesProvider;
   temaOscuro: boolean = false;
   //Guardar el nombre del usuario
-  userName: string = '';
 
   vistaMenu: string = '';
 
@@ -106,9 +108,6 @@ export class HomeComponent {
       this.viewHome(eventData);
     });
 
-    //obtener nombre de usuario de la sesión
-    // this.userName = UserService.getUser().toUpperCase();
-
     // localStorage.clear();
     // sessionStorage.clear();
 
@@ -137,8 +136,6 @@ export class HomeComponent {
     } else {
       this.tema = 0;
     }
-
-    this.userName = PreferencesService.user.toUpperCase();
   };
 
   //cuando la informacion de los detalles esta vacia
@@ -209,7 +206,7 @@ export class HomeComponent {
   };
   //Cerrar sesion
   async cerrarSesion(): Promise<void> {
-   this._notificationsService.showCloseSesionDialog();
+    this._notificationsService.showCloseSesionDialog();
 
   };
 
@@ -395,19 +392,19 @@ export class HomeComponent {
   };
 
   viewContent(itemMenu: MenuInterface) {
-   
- 
-    
+
+
+
 
     this.clickedItem = itemMenu.id;
     if (itemMenu.children.length == 0) {
 
-      let display:DisplayInterface = itemMenu.display!;
+      let display: DisplayInterface = itemMenu.display!;
 
       this.facturaService.tipoDocumento = display.tipo_Documento;
       this._dataUserService.nameDisplay = display.name;
       this.facturaService.documentoName = display.des_Tipo_Documento ?? "";
-      
+
       //Oculta el contenido de todos los componentes de la lista
       this.components.forEach(component => {
         component.visible = false;
