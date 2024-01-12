@@ -86,17 +86,17 @@
             <div class="dFlex">
                 <p class="textos">{{ 'pos.factura.total' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos">165.00</p>
+                <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}</p>
             </div>
             <div class="dFlex">
                 <p class="textos">{{ 'pos.factura.saldo' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos">165.00</p>
+                <p class="textos">{{facturaService.saldo | currency:' ':'symbol':'2.2-2' }}</p>
             </div>
             <div class="dFlex">
                 <p class="textos">{{ 'pos.factura.cambio' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos">0.00</p>
+                <p class="textos">{{facturaService.cambio | currency:' ':'symbol':'2.2-2' }}</p>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
     <div class="pagos-gregados">
         <div class="pago-agregado">
             <div class="dFlex" *ngIf="facturaService.montos.length > 0">
-                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="selectAllMontos"
                     (ngModelChange)="seleccionar()"></mat-checkbox>
                 <p class="titulo">{{ 'pos.factura.pagos_agregados' | translate }} ({{ facturaService.montos .length}})</p>
                 <span class="spacer"></span>

@@ -9,6 +9,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { BancoInterface } from '../../interfaces/banco.interface';
 import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 import { PagoComponentService } from '../../services/pogo-component.service';
+import { MontoIntreface } from '../../interfaces/monto.interface';
 
 @Component({
   selector: 'app-pago',
@@ -29,13 +30,12 @@ export class PagoComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
   documento: number = this.facturaService.tipoDocumento!;
 
-  eliminarPagos: boolean = false;
+  selectAllMontos: boolean = false;
 
   cuentaSelect?: CuentaBancoInterface;
 
 
   constructor(
-    private _widgetsService: NotificationsService,
     private _translate: TranslateService,
     private _notificationsService: NotificationsService,
     public facturaService: FacturaService,
@@ -236,7 +236,7 @@ export class PagoComponent {
 
     this.facturaService.addMonto(
       {
-        checked: this.eliminarPagos,
+        checked: this.selectAllMontos,
         amount:monto!,
         authorization:auth,
         reference: ref,
@@ -254,36 +254,40 @@ export class PagoComponent {
   }
 
 
-
   seleccionar() {
-    // for (let index = 0; index < this.pagosAgregados.length; index++) {
-    //   const element = this.pagosAgregados[index];
-    //   element.checked = this.eliminarPagos;
-    // }
+    this.facturaService.montos.forEach(element => {
+      element.checked = this.selectAllMontos;
+    });
+    
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarPagosSeleccionados() {
-    // let pagosSeleccionados: PagoInterface[] = this.pagosAgregados.filter((pago) => pago.checked);
+    let montosSeleccionados: MontoIntreface[] = this.facturaService.montos.filter((monto) => monto.checked);
 
-    // if (pagosSeleccionados.length == 0) {
-    //   this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
-    //   return
-    // }
+    if (montosSeleccionados.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
 
-    // let verificador: boolean = await this._notificationsService.openDialogActions(
-    //   {
-    //     title: this._translate.instant('pos.alertas.eliminar'),
-    //     description: this._translate.instant('pos.alertas.perderDatos'),
-    //     verdadero: this._translate.instant('pos.botones.aceptar'),
-    //     falso: this._translate.instant('pos.botones.cancelar'),
-    //   }
-    // );
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
 
-    // if (!verificador) return;
-    // // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
-    // this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
-    // // También puedes realizar otras acciones necesarias aquí
+    if (!verificador) return;
+    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    this.facturaService.montos = this.facturaService.montos.filter((monto) => !monto.checked);
+
+
+    this.facturaService.calculateTotalesPago();
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Montos eliminados correctamente.");
   }
 }
 
