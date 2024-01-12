@@ -1,3 +1,5 @@
+$color-gris : #777; //sombra y texto gris
+
 //sidenav bottom y logos
 
 .head__sidenav__bottom {
@@ -9,6 +11,17 @@
     position   : fixed;
     bottom     : 0;
     width      : 100%;
+}
+
+p {
+    margin: 0px;
+}
+
+.desa {
+    font-size  : 12px;
+    margin     : 0px 10px;
+    font-weight: 400;
+    color      : $color-gris;
 }
 
 .logos {
