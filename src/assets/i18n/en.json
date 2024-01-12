@@ -14,7 +14,9 @@
             "empresa": "Company",
             "estacion": "Workstation",
             "fecha": "Server Date",
-            "version": "Build Version"
+            "version": "Build Version",
+            "origen": "Data Origin",
+            "versionActual": "Current Version"
         },
         "login": {
             "correo": "Username",
@@ -42,7 +44,8 @@
             "oscuro": "Dark Mode",
             "claro": "Light Mode",
             "cambiar": "You will be able to change the application theme according to your preference in the future.",
-            "idioma": "You will be able to change the application language according to your preference in the future."
+            "idioma": "You will be able to change the application language according to your preference in the future.",
+            "ayuda": "Help"
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
@@ -80,7 +83,8 @@
             "tipoPago": "Payment type added correctly",
             "eliminar": "Are you sure?",
             "perderDatos": "If changes haven't been saved, you will lose them forever.",
-            "seleccionar": "Select at least one transaction."
+            "seleccionar": "Select at least one transaction.",
+            "sinCarDes": "No charges or discounts have been added to this transaction."
         },
         "botones": {
             "aceptar": "OK",
@@ -123,6 +127,7 @@
             "series": "Series",
             "cliente": "Client",
             "buscar": "Search",
+            "buscarProductos": "Search products",
             "cf": "C/F",
             "informacion": "Client Information",
             "consumidor": "FINAL CONSUMER",
@@ -142,15 +147,17 @@
             "pagos_agregados": "Payments added",
             "monto": "Amount",
             "autorizacion": "Authorization",
+            "transacciones": "Transactions",
             "referencia": "Reference",
             "bancos": "Banks",
             "banco": "Bank:",
-            "productos_agregados": "Products added",
+            "productos_agregados": "Products Added",
             "precio_unitario": "Unit Price",
             "precio_total": "Total Price",
             "resumen_documento": "Document Summary",
             "productos": "Products",
             "sku": "SKU",
+            "cargoDescuento": "Charge/Discount",
             "subtotal": "Subtotal",
             "cargos": "(+) Charges",
             "descuentos": "(-) Discounts",
@@ -166,7 +173,8 @@
             "registros": "Records",
             "producto": "Product",
             "filtro": "Filter",
-            "cambio": "Change"
+            "cambio": "Change",
+            "cuentas": "Accounts"
         }
     }
 }
