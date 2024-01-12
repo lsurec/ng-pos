@@ -45,7 +45,10 @@ export class FacturaComponent implements OnInit {
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-  tabAcitve = "document"
+  
+  tabDocummento:boolean = true;
+  tabDetalle:boolean = false;
+  tabPago:boolean = false;
 
   constructor(
     private _notificationService: NotificationsService,
@@ -81,6 +84,25 @@ export class FacturaComponent implements OnInit {
     });
 
   }
+
+
+  showDocumento(){
+    this.tabDocummento = true;
+    this.tabDetalle = false;
+    this.tabPago = false;
+  }
+
+  showDetalle(){
+    this.tabDocummento = false;
+    this.tabDetalle = true;
+    this.tabPago = false;
+  }
+  showPago(){
+    this.tabDocummento = false;
+    this.tabDetalle = false;
+    this.tabPago = true;
+  }
+
   ngOnInit(): void {
     this.loadData();
 

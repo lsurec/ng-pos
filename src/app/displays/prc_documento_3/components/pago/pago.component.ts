@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BancosInterface, PagoInterface } from '../../interfaces/pagos.interface';
+import { PagoService } from '../../services/pago.service';
 
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
-  styleUrls: ['./pago.component.scss']
+  styleUrls: ['./pago.component.scss'],
+  providers:[
+    PagoService,
+  ]
 })
 export class PagoComponent {
 
