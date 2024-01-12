@@ -80,7 +80,8 @@
             "tipoPago": "Tipo de pago agregado correctamente",
             "eliminar": "¿Estás seguro?",
             "perderDatos": "Si no se han guardado los cambios, los perderás para siempre.",
-            "seleccionar": "Seleccione por lo menos una transacción."
+            "seleccionar": "Seleccione por lo menos una transacción.",
+            "sinCarDes": "No se han agregado cargos o descuentos a esta transacción."
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -142,6 +143,7 @@
             "pagos_agregados": "Pagos agregados",
             "monto": "Monto",
             "autorizacion": "Autorización",
+            "transacciones": "Transacciones",
             "referencia": "Referencia",
             "bancos": "Bancos",
             "banco": "Banco:",

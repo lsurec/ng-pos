@@ -3,7 +3,8 @@ $background-scrollbar : #134895; //barra azul
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000; //bordes y texto azul
-
+$color-verde          : #25a704;
+$color-rojo           : #ce1414;
 
 .progress {
     padding         : 0px;
@@ -81,32 +82,22 @@ hr {
 }
 
 p {
-    margin: 0px;
-    color : $color-negro;
-}
-
-.busqueda {
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
+    margin     : 0px;
+    color      : $color-negro;
+    font-weight: 400;
 }
 
 .contenido-izquierdo {
-    //corregir ancho del contenedor
-    min-height      : 35px;
-    align-items     : center;
-    // margin-bottom: 5px;
-    width           : 100%;
-    padding-left    : 5px;
-    padding-right   : 5px;
+    min-height   : 35px;
+    align-items  : center;
+    width        : 100%;
+    padding-left : 5px;
+    padding-right: 5px;
 }
 
 .campo-obligatorio {
-    font-size  : 12px;
+    font-size  : 14px;
     font-weight: 450;
-    padding    : 2px 0px;
 }
 
 .obligatorio {
@@ -155,4 +146,30 @@ p {
 
 .textos {
     font-size: 14px;
+}
+
+.detalles-transaccion {
+    width: calc(100% - 40px);
+}
+
+.lista-cargos-descuentos {
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+    padding      : 5px 0px;
+}
+
+.checkbox {
+    width        : auto;
+    padding-right: 5px;
+}
+
+.cargo {
+    font-size: 14px;
+    color    : $color-verde;
+}
+
+.descuento {
+    font-size: 14px;
+    color    : $color-rojo;
 }

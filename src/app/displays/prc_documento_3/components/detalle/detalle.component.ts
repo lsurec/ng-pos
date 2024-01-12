@@ -281,8 +281,14 @@ export class DetalleComponent {
 
   }
 
-  verTansacciones(producto: TraInternaInterface) {
-    let transacciones = this._dialog.open(CargoDescuentoComponent, { data: producto })
+  verTansacciones(transaccion: TraInternaInterface) {
+
+    if (!transaccion.operaciones.length) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinCarDes'));
+      return;
+    }
+
+    let transacciones = this._dialog.open(CargoDescuentoComponent, { data: transaccion })
     transacciones.afterClosed().subscribe(result => {
       if (result) {
       }

@@ -11,13 +11,13 @@ export class CargoDescuentoComponent {
 
   isLoading: boolean = false;
 
-  cargosDescuento!: TraInternaInterface;
+  operaciones!: TraInternaInterface[];
 
   constructor(
     public dialogRef: MatDialogRef<CargoDescuentoComponent>,
     @Inject(MAT_DIALOG_DATA) public transacciones: TraInternaInterface,
   ) {
-    this.cargosDescuento = transacciones;
+    this.operaciones = transacciones.operaciones;
     console.log(transacciones);
   }
 
