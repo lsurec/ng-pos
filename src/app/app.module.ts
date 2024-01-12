@@ -54,6 +54,7 @@ import { ResumenDocumentoComponent } from './displays/prc_documento_3/components
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HistorialComponent } from './displays/prc_documento_3/components/historial/historial.component';
 import { DetalleDocumentoComponent } from './displays/prc_documento_3/components/detalle-documento/detalle-documento.component';
+import { CargoDescuentoComponent } from './displays/prc_documento_3/components/cargo-descuento/cargo-descuento.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { DetalleDocumentoComponent } from './displays/prc_documento_3/components
     ResumenDocumentoComponent,
     HistorialComponent,
     DetalleDocumentoComponent,
+    CargoDescuentoComponent,
   ],
   imports: [
     BrowserModule,

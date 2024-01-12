@@ -15,6 +15,7 @@ import { PrecioInterface } from '../../interfaces/precio.interface';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
+import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 
 @Component({
   selector: 'app-detalle',
@@ -280,6 +281,14 @@ export class DetalleComponent {
 
   }
 
+  verTansacciones(producto: TraInternaInterface) {
+    let transacciones = this._dialog.open(CargoDescuentoComponent, { data: producto })
+    transacciones.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    })
+  }
+
   onOptionChange(optionId: number) {
     this.filtrosProductos = optionId;
   }
@@ -353,7 +362,7 @@ export class DetalleComponent {
 
     //si es por porcentaje
     if (this.tipoDesCar == 1) {
-      
+
       let porcentaje = 0;
       porcentaje = totalTransactions * monto!;
       porcentaje = porcentaje / 100;
@@ -388,7 +397,7 @@ export class DetalleComponent {
 
     //TODO:Translate
     this._notificationsService.openSnackbar(operacion == 1 ? "Cargo agregado correctamente." : "Descuento agregado correctamente.");
-    
+
 
   }
 
@@ -429,7 +438,7 @@ export class DetalleComponent {
     //TODO:Translate
     this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
 
-  
+
   }
 
 }

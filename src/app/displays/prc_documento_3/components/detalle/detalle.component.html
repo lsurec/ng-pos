@@ -84,6 +84,10 @@
                         <p class="info-producto" *ngIf="transaccion.descuento != 0">Descuento: {{transaccion.descuento |
                             currency:' ':'symbol':'2.2-2' }}</p>
                     </div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="verTansacciones(transaccion)">
+                        <mat-icon>format_list_bulleted</mat-icon>
+                    </button>
                 </div>
             </div>
         </div>

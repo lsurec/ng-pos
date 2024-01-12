@@ -1,0 +1,16 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="verDetalle">Cargo y descuentos</p>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+    <div class="contenedor">
+        <div class="dFlex">
+            {{cargosDescuento}}
+        </div>
+    </div>
+</div>
