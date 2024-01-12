@@ -31,6 +31,7 @@ export class FacturaService {
     //Seleccionar todas las transacciones
     selectAllTra: boolean = false;
 
+
     //totales del documento
     //Reiniciar valores
     subtotal: number = 0;
