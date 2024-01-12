@@ -131,17 +131,14 @@ p {
 }
 
 .pagar {
-    padding : 10px 0px;
-    width   : 200px;
-    position: fixed;
-    bottom  : 64px;
-    right   : 25px;
+    padding: 10px 0px;
+    width  : 200px;
 }
 
 .textos {
-    font-size  : 13px;
-    font-weight: 500;
-    color      : $color-azul;
+    font-size  : 15px;
+    font-weight: bold;
+    color      : #000;
 }
 
 .total {
@@ -222,4 +219,12 @@ p {
 
 .info-pago {
     font-size: 12px;
+}
+
+.total-pagar {
+    display : flex;
+    position: fixed;
+    bottom  : 64px;
+    right   : 25px;
+    width   : 100%;
 }

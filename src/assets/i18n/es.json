@@ -151,6 +151,7 @@
             "resumen_documento": "Resumen Documento",
             "productos": "Productos",
             "sku": "SKU",
+            "cargoDescuento": "Cargo/Descuento",
             "subtotal": "Subtotal",
             "cargos": "(+) Cargos",
             "descuentos": "(-) Descuentos",
