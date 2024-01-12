@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
-import { PagoInterface } from '../../interfaces/pagos.interface';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -43,7 +42,7 @@ export class DetalleDocumentoComponent {
     }
   ]
 
-  pagos: PagoInterface[] = [
+  pagos: any[] = [
     {
       id: 1,
       nombre: "EFECTIVO",

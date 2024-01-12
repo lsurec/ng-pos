@@ -25,7 +25,7 @@
 
             <!--Monto-->
             <p class="subtitulo">{{ 'pos.factura.monto' | translate }}</p>
-            <input class="total" type="text" name="search" [(ngModel)]="monto" autocomplete="off">
+            <input class="total" type="text" name="search" [(ngModel)]="pagoComponentService.monto" autocomplete="off">
 
             <!--Autorizacion-->
             <div *ngIf="pagoComponentService.pago!.autorizacion">
@@ -104,10 +104,10 @@
     <!-- PAGOS AGREGADOS -->
     <div class="pagos-gregados">
         <div class="pago-agregado">
-            <div class="dFlex" *ngIf="pagosAgregados.length > 0">
+            <div class="dFlex" *ngIf="facturaService.montos.length > 0">
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
                     (ngModelChange)="seleccionar()"></mat-checkbox>
-                <p class="titulo">{{ 'pos.factura.pagos_agregados' | translate }} ({{pagosAgregados.length}})</p>
+                <p class="titulo">{{ 'pos.factura.pagos_agregados' | translate }} ({{ facturaService.montos .length}})</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="eliminarPagosSeleccionados()">
                     <mat-icon>delete</mat-icon>
@@ -115,17 +115,17 @@
             </div>
         </div>
 
-        <div class="pagos" *ngFor="let pago of pagosAgregados">
+        <div class="pagos" *ngFor="let pago of facturaService.montos">
             <div class="dFlex">
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="pago.checked"></mat-checkbox>
                 <div class="descripcion-pago">
-                    <p class="subtitulo">{{pago.nombre}}</p>
-                    <p class="info-pago">{{ 'pos.factura.monto' | translate }} Q {{pago.monto}}.00</p>
-                    <p class="info-pago" *ngIf="pago.autorizacion">{{ 'pos.factura.autorizacion' | translate }}:
-                        {{pago.autorizacion}}</p>
-                    <p class="info-pago" *ngIf="pago.referencia">{{ 'pos.factura.referencia' | translate }}:
-                        {{pago.referencia}}</p>
-                    <p class="info-pago" *ngIf="pago.banco">{{ 'pos.factura.banco' | translate }}{{pago.banco}}</p>
+                    <p class="subtitulo">{{pago.payment.descripcion}}</p>
+                    <p class="info-pago">{{ 'pos.factura.monto' | translate }} {{pago.amount | currency:' ':'symbol':'2.2-2' }}</p>
+                    <p class="info-pago" *ngIf="pago.payment.autorizacion">{{ 'pos.factura.autorizacion' | translate }}:
+                        {{pago.authorization}}</p>
+                    <p class="info-pago" *ngIf="pago.payment.referencia">{{ 'pos.factura.referencia' | translate }}:
+                        {{pago.reference}}</p>
+                    <p class="info-pago" *ngIf="pago.payment.banco">{{ 'pos.factura.banco' | translate }}{{pago.bank}}</p>
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { PagoInterface } from '../../interfaces/pagos.interface';
 import { PagoService } from '../../services/pago.service';
 import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
 import { FacturaService } from '../../services/factura.service';
@@ -21,13 +20,8 @@ import { PagoComponentService } from '../../services/pogo-component.service';
 })
 export class PagoComponent {
 
-
-  saldo: number = 10;
-
-  monto: string = "0";
   autorizacion!: string;
   referencia!: string
-
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -35,17 +29,9 @@ export class PagoComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
   documento: number = this.facturaService.tipoDocumento!;
 
-  pagosAgregados: PagoInterface[] = [];
   eliminarPagos: boolean = false;
 
   cuentaSelect?: CuentaBancoInterface;
-
-
-  tipos: boolean = true;
-  efectivo: boolean = false;
-  mastercard: boolean = false;
-  visa: boolean = false;
-  cheque: boolean = false;
 
 
   constructor(
@@ -100,7 +86,7 @@ export class PagoComponent {
       return;
     }
 
-    if (this.saldo == 0) {
+    if (this.facturaService.saldo == 0) {
       //TODO:Translate
       this._notificationsService.openSnackbar("El saldo a pagar es 0.");
       return;
@@ -164,84 +150,140 @@ export class PagoComponent {
 
   }
 
+  convertirTextoANumero(texto: string): number | null {
+    // Verificar si la cadena es un número
+    const esNumero = /^\d+(\.\d+)?$/.test(texto);
+
+    if (esNumero) {
+      // Realizar la conversión a número
+      return parseFloat(texto);
+      // Si quieres convertir a un número entero, puedes usar parseInt(texto) en lugar de parseFloat.
+    } else {
+      // Retornar null si la cadena no es un número
+      return null;
+    }
+  }
+
+
   agregarMonto() {
 
+    //validar monto que sea numerico
+
+
+    if (!this.pagoComponentService.monto) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+      return;
+
+    }
+
+
+    if (this.convertirTextoANumero(this.pagoComponentService.monto) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe ser numerica o positiva.");
+      return;
+    }
+
+
+
+    if (this.pagoComponentService.pago!.autorizacion) {
+      if (!this.autorizacion) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        return;
+      }
+
+    }
+
+    if (this.pagoComponentService.pago!.referencia) {
+      if (!this.referencia) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        return;
+      }
+
+    }
+
+
+    if (this.pagoComponentService.pago!.banco) {
+      if (!this.pagoComponentService.banco) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Selecciona un banco para continuar.");
+        return;
+      }
+
+
+      if (this.pagoComponentService.cuentas.length > 0) {
+        if (this.cuentaSelect) {
+          //TODO:translate
+          this._notificationsService.openSnackbar("Selecciona una cuenta para continuar.");
+          return;
+        }
+      }
+    }
+    
+    let monto = this.convertirTextoANumero(this.pagoComponentService.monto);
+    let diference:number = 0;
+
+    //Calcualar si hay diferencia (Cambio)
+    if(monto! > this.facturaService.saldo){
+      diference = monto! - this.facturaService.saldo;
+      monto = this.facturaService.saldo;      
+    }
+
+    let auth:string = this.pagoComponentService.pago!.autorizacion ? this.autorizacion : "";
+    let ref:string = this.pagoComponentService.pago!.referencia ? this.referencia : "";
+
+    this.facturaService.addMonto(
+      {
+        checked: this.eliminarPagos,
+        amount:monto!,
+        authorization:auth,
+        reference: ref,
+        payment: this.pagoComponentService.pago!,
+        bank: this.pagoComponentService.banco,
+        account: this.cuentaSelect,
+        difference: diference, 
+      }
+    );
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Pago agregado correctamente.");
+    this.pagoComponentService.forms = false;
+
   }
-
-
-  verTipos() {
-    this.tipos = true;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.visa = false;
-    this.cheque = false;
-  }
-
-  verEfectivo() {
-    this.efectivo = true;
-    this.tipos = false;
-    this.mastercard = false;
-    this.visa = false;
-    this.cheque = false;
-  }
-
-  verMastercard() {
-    this.mastercard = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.visa = false;
-    this.cheque = false;
-  }
-
-  verVisa() {
-    this.visa = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.cheque = false;
-  }
-
-  verCheque() {
-    this.cheque = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.visa = false;
-  }
-
-  tipoPago!: string;
 
 
 
   seleccionar() {
-    for (let index = 0; index < this.pagosAgregados.length; index++) {
-      const element = this.pagosAgregados[index];
-      element.checked = this.eliminarPagos;
-    }
+    // for (let index = 0; index < this.pagosAgregados.length; index++) {
+    //   const element = this.pagosAgregados[index];
+    //   element.checked = this.eliminarPagos;
+    // }
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarPagosSeleccionados() {
-    let pagosSeleccionados: PagoInterface[] = this.pagosAgregados.filter((pago) => pago.checked);
+    // let pagosSeleccionados: PagoInterface[] = this.pagosAgregados.filter((pago) => pago.checked);
 
-    if (pagosSeleccionados.length == 0) {
-      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
-      return
-    }
+    // if (pagosSeleccionados.length == 0) {
+    //   this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+    //   return
+    // }
 
-    let verificador: boolean = await this._notificationsService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('pos.alertas.perderDatos'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-        falso: this._translate.instant('pos.botones.cancelar'),
-      }
-    );
+    // let verificador: boolean = await this._notificationsService.openDialogActions(
+    //   {
+    //     title: this._translate.instant('pos.alertas.eliminar'),
+    //     description: this._translate.instant('pos.alertas.perderDatos'),
+    //     verdadero: this._translate.instant('pos.botones.aceptar'),
+    //     falso: this._translate.instant('pos.botones.cancelar'),
+    //   }
+    // );
 
-    if (!verificador) return;
-    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
-    this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
-    // También puedes realizar otras acciones necesarias aquí
+    // if (!verificador) return;
+    // // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    // this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
+    // // También puedes realizar otras acciones necesarias aquí
   }
 }
 

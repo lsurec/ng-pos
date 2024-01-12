@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
-import { PagoInterface } from '../../interfaces/pagos.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -46,7 +45,7 @@ export class ResumenDocumentoComponent {
     }
   ]
 
-  pagos: PagoInterface[] = [
+  pagos: any[] = [
     {
       id: 1,
       nombre: "EFECTIVO",
