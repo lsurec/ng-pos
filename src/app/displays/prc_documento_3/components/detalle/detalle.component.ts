@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
-import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
+import {  ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
@@ -30,7 +30,7 @@ export class DetalleComponent {
   token: string = PreferencesService.token;
   empresa: number = PreferencesService.empresa.empresa;
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  documento: number = this._facturaService.tipoDocumento!;
+  documento: number = this.facturaService.tipoDocumento!;
 
   searchText!: string;
   filtrosProductos: number = 1;
@@ -65,14 +65,13 @@ export class DetalleComponent {
   // cantidad!: number;
   // total!: number;
 
-  compras: CompraInterface[] = [];
 
   constructor(
     private _dialog: MatDialog,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     private _productService: ProductService,
-    private _facturaService: FacturaService,
+    public facturaService: FacturaService,
     private _productoService: ProductoService,
 
   ) { }
@@ -94,7 +93,7 @@ export class DetalleComponent {
     let res: ResApiInterface;
 
 
-    this._facturaService.isLoading = true;
+    this.facturaService.isLoading = true;
     //filtro 1 = sku
     if (this.filtrosProductos == 1) {
       res = await this._productService.getProductId(
@@ -114,7 +113,7 @@ export class DetalleComponent {
 
 
     if (!res!.status) {
-      this._facturaService.isLoading = false;
+      this.facturaService.isLoading = false;
 
       this._notificationsService.showErrorAlert(res!);
       return;
@@ -157,7 +156,7 @@ export class DetalleComponent {
 
 
       if (!resBodega.status) {
-        this._facturaService.isLoading = false;
+        this.facturaService.isLoading = false;
         this._notificationsService.showErrorAlert(resBodega);
         return;
       }
@@ -167,7 +166,7 @@ export class DetalleComponent {
 
       //validar que existan bodegas
       if (this._productoService.bodegas.length == 0) {
-        this._facturaService.isLoading = false;
+        this.facturaService.isLoading = false;
         this._notificationsService.openSnackbar("No hay bodegas asignadas a este producto.");
         return;
       }
@@ -189,7 +188,7 @@ export class DetalleComponent {
 
 
         if (!resPrecio.status) {
-          this._facturaService.isLoading = false;
+          this.facturaService.isLoading = false;
 
           this._notificationsService.showErrorAlert(resPrecio);
           return;
@@ -221,7 +220,7 @@ export class DetalleComponent {
 
           if (!resfactor.status) {
 
-            this._facturaService.isLoading = false;
+            this.facturaService.isLoading = false;
 
             this._notificationsService.showErrorAlert(resfactor);
             return;
@@ -259,58 +258,24 @@ export class DetalleComponent {
 
       }
 
-      this._facturaService.isLoading = false;
+      this.facturaService.isLoading = false;
 
 
-      let productoDialog = this._dialog.open(ProductoComponent, { data: productos[0] })
-      productoDialog.afterClosed().subscribe(result => {
-        if (result) {
-          console.log(result);
-
-          let producto: CompraInterface = result;
-
-          let compra: CompraInterface = {
-            producto: producto.producto,
-            cantidad: producto.cantidad,
-            precioUnitario: producto.precioUnitario,
-            total: producto.total,
-          }
-
-          this.compras.push(compra);
-
-        }
-
-      })
+      this._dialog.open(ProductoComponent, { data: productos[0] })
+      
 
       return;
 
     }
 
-    this._facturaService.isLoading = false;
+    this.facturaService.isLoading = false;
 
 
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
     productosDialog.afterClosed().subscribe(result => {
       if (result) {
 
-        let productoDialog2 = this._dialog.open(ProductoComponent, { data: result })
-        productoDialog2.afterClosed().subscribe(result => {
-          if (result) {
-            console.log(result);
-
-            let producto: CompraInterface = result;
-
-            let compra: CompraInterface = {
-              producto: producto.producto,
-              cantidad: producto.cantidad,
-              precioUnitario: producto.precioUnitario,
-              total: producto.total,
-            }
-
-            this.compras.push(compra);
-
-          }
-        })
+        this._dialog.open(ProductoComponent, { data: result })
         // let producto: ProductoInterface = result[0];
         // this.producto = producto;
       }
@@ -328,34 +293,34 @@ export class DetalleComponent {
   }
 
   seleccionar() {
-    for (let index = 0; index < this.compras.length; index++) {
-      const element = this.compras[index];
-      element.checked = this.eliminarPagos;
-    }
+    // for (let index = 0; index < this.compras.length; index++) {
+    //   const element = this.compras[index];
+    //   element.checked = this.eliminarPagos;
+    // }
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarProducto() {
 
-    let comprasSeleccionadas: CompraInterface[] = this.compras.filter((compra) => compra.checked);
+    // let comprasSeleccionadas: CompraInterface[] = this.compras.filter((compra) => compra.checked);
 
-    if (comprasSeleccionadas.length == 0) {
-      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
-      return
-    }
+    // if (comprasSeleccionadas.length == 0) {
+    //   this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+    //   return
+    // }
 
-    let verificador: boolean = await this._notificationsService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('pos.alertas.perderDatos'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-        falso: this._translate.instant('pos.botones.cancelar'),
-      }
-    );
+    // let verificador: boolean = await this._notificationsService.openDialogActions(
+    //   {
+    //     title: this._translate.instant('pos.alertas.eliminar'),
+    //     description: this._translate.instant('pos.alertas.perderDatos'),
+    //     verdadero: this._translate.instant('pos.botones.aceptar'),
+    //     falso: this._translate.instant('pos.botones.cancelar'),
+    //   }
+    // );
 
-    if (!verificador) return;
-    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
-    this.compras = this.compras.filter((compra) => !compra.checked);
+    // if (!verificador) return;
+    // // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    // this.compras = this.compras.filter((compra) => !compra.checked);
     // También puedes realizar otras acciones necesarias aquí
   }
 

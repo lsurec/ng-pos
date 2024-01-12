@@ -59,7 +59,7 @@
     </div>
     <div class="documento">
         <div class="lista-productos">
-            <div class="eliminar" *ngIf="compras.length > 0">
+            <div class="eliminar" *ngIf="facturaService.traInternas.length > 0">
                 <div class="dFlex">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
                         (ngModelChange)="seleccionar()"></mat-checkbox>
@@ -70,15 +70,16 @@
                     </button>
                 </div>
             </div>
-            <div class="producto-seleccionado" *ngFor="let producto of compras">
+            <div class="producto-seleccionado" *ngFor="let transaccion of facturaService.traInternas">
                 <div class="dFlex">
-                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="producto.checked"></mat-checkbox>
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="transaccion.isChecked"></mat-checkbox>
                     <div class="descripcion-producto">
-                        <p class="subtitulo"> {{producto.cantidad}} x {{producto.producto.des_Producto}}</p>
+                        <p class="subtitulo"> {{transaccion.cantidad}} x {{transaccion.producto.des_Producto}}</p>
+                        <p class="subtitulo">SKU: {{transaccion.producto.producto_Id}}</p>
                         <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}
-                            {{producto.precioUnitario}}
+                            {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{producto.total}}</p>
+                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{transaccion.total | currency:' ':'symbol':'2.2-2' }}</p>
                     </div>
                 </div>
             </div>
