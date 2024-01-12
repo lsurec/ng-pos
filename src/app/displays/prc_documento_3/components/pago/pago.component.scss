@@ -11,14 +11,14 @@ $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 $background-scrollbar : #134895; //barra azul
 
 .contenido {
-    display: flex;
+    display   : flex;
+    overflow-y: auto;
+    height    : calc(100vh - 290px);
 }
 
 .detalle-pago {
-    padding   : 00px 25px;
-    // display: flex;
-    height    : calc(100vh - 190px);
-    width     : 50%;
+    padding: 00px 25px;
+    width  : 50%;
 }
 
 .spacer {
@@ -181,16 +181,19 @@ p {
 }
 
 .lista-bancos::-webkit-scrollbar,
+.contenido::-webkit-scrollbar,
 .pagos-gregados::-webkit-scrollbar {
     width: 7px;
 }
 
 .lista-bancos::-webkit-scrollbar-track,
+.contenido::-webkit-scrollbar-track,
 .pagos-gregados::-webkit-scrollbar-track {
     background: $background-oficial;
 }
 
 .lista-bancos::-webkit-scrollbar-thumb,
+.contenido::-webkit-scrollbar-thumb,
 .pagos-gregados::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
@@ -198,11 +201,9 @@ p {
 }
 
 .pagos-gregados {
-    max-height: calc(100vh - 256px);
-    width     : 50%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding   : 10px 0px;
+    width   : 50%;
+    overflow: hidden;
+    padding : 10px 0px;
 }
 
 .pagos {
