@@ -14,6 +14,7 @@ import { PagoComponentService } from './pogo-component.service';
     providedIn: 'root',
 })
 export class FacturaService {
+    
     isLoading: boolean = false;
     tipoDocumento?: number;
     documentoName: string = "";
@@ -48,11 +49,11 @@ export class FacturaService {
 
 
     constructor(
-    private _pagoComponentService:PagoComponentService
+        private _pagoComponentService: PagoComponentService
     ) { }
 
 
-    addMonto(monto:MontoIntreface){
+    addMonto(monto: MontoIntreface) {
         this.montos.push(monto);
         this.calculateTotalesPago();
     }
@@ -77,7 +78,7 @@ export class FacturaService {
         } else {
             this.saldo = this.total - this.pagado;
         }
-        
+
         this._pagoComponentService.monto = parseFloat(this.saldo.toFixed(2)).toString();
 
     }
@@ -152,6 +153,25 @@ export class FacturaService {
         }
 
         return edit;
+    }
+
+    //Proceso fel
+    printFel():boolean {
+
+        let fel: boolean = false;
+
+        for (let i = 0; i < this.parametros.length; i++) {
+            const element = this.parametros[i];
+            //el parametro que indica si genera fel o no es 349
+
+            if (element.parametro == 349) {
+                fel = true;
+                break;
+            }
+        }
+
+
+        return fel;
     }
 
 

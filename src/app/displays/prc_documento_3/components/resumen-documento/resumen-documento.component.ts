@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
+import { FacturaService } from '../../services/factura.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { DocCargoAbono, DocTransaccion } from '../../interfaces/doc-estructura.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -11,63 +15,82 @@ export class ResumenDocumentoComponent {
 
   isLoading: boolean = false;
 
-  productos: ProductoInterface[] = [
-    {
-      producto: 26,
-      unidad_Medida: 1,
-      producto_Id: "ALM03",
-      des_Producto: "VIUDA Y ADOBADO",
-      des_Unidad_Medida: "Unidad",
-      tipo_Producto: 1
-    },
-    {
-      producto: 33,
-      unidad_Medida: 1,
-      producto_Id: "ALM10",
-      des_Producto: "ADOBADO A LA PARRILLA",
-      des_Unidad_Medida: "Unidad",
-      tipo_Producto: 1
-    },
-  ]
+  observacion = "";
 
-  compras: CompraInterface[] = [
-    {
-      producto: this.productos[0],
-      cantidad: 3,
-      precioUnitario: 55.00,
-      total: 165.00,
-    },
-    {
-      producto: this.productos[1],
-      cantidad: 4,
-      precioUnitario: 20.00,
-      total: 80.00,
-    }
-  ]
-
-  pagos: any[] = [
-    {
-      id: 1,
-      nombre: "EFECTIVO",
-      monto: 80,
-    },
-    {
-      id: 1,
-      nombre: "CHEQUE",
-      monto: 165.00,
-      autorizacion: "30393650",
-      referencia: "",
-      banco: "Banco Industrial"
-    }
-  ]
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  documento: number = this.facturaService.tipoDocumento!;
+  serie: string = this.facturaService.serie!.serie_Documento;
 
   constructor(
     private _eventService: EventService,
+    public facturaService: FacturaService,
+    private _notificationService: NotificationsService,
   ) {
   }
 
   goBack() {
     this._eventService.verDocumentoEvent(true);
+  }
+
+  sendDoc() {
+    if (this.facturaService.printFel()) {
+      this.sendDocument()
+    } else {
+      this._notificationService.openSnackbar("La certificacion de docuentos tributarios electronicos no está disponible en este momento.");
+    }
+
+  }
+
+  sendDocument() {
+
+    let pagos: DocCargoAbono[] = [];
+    let transacciones: DocTransaccion[] = [];
+
+    //id transaccion
+    let consecutivo: number = 1;
+
+    //recorre transacciones
+    this.facturaService.traInternas.forEach(transaccion => {
+
+      //id padre
+      let padre: number = consecutivo;
+
+      //cargos
+      let cargos: DocTransaccion[] = [];
+
+      //descuentos
+      let descuentos: DocTransaccion[] = [];
+
+      //buscar cargos y descuentos
+      transaccion.operaciones.forEach(operacion => {
+        //agregar cargo
+        if (operacion.cargo > 0) {
+          //aumentar id
+          consecutivo++;
+
+          // //agregar cargos
+          // cargos.push(
+          //   {
+          //     traConsecutivoInterno: consecutivo,
+          //     traConsecutivoInternoPadre:padre,
+          //     traBodega: transaccion.bodega!.bodega,
+          //     traProducto: transaccion.producto.producto,
+          //     traUnidadMedida: transaccion.producto.unidad_Medida,
+          //     traCantidad:0,
+          //     traTipoCambio:
+          //   }
+          // );
+        }
+      });
+
+
+
+    });
+
+
   }
 
 }
