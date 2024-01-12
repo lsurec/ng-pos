@@ -40,12 +40,13 @@
                 'pos.factura.documento' | translate }}</label>
 
             <input id="tab2" type="radio" name="tabs" [checked]="tabDetalle">
-            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
-                (click)="showDetalle()">{{
+            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}" (click)="showDetalle()">{{
                 'pos.factura.detalle' | translate }}</label>
 
-            <input id="tab3" type="radio" name="tabs" [checked]="tabPago">
-            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)="showPago()">{{
+            <input id="tab3" type="radio" name="tabs" [checked]="tabPago"
+                *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
+            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)="showPago()"
+                *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
                 'pos.factura.pago' | translate }}</label>
 
             <!--Fin Tabs-->
