@@ -7,6 +7,8 @@ import { ParametroInterface } from '../interfaces/parametro.interface';
 import { FormaPagoInterface } from '../interfaces/forma-pago.interface';
 import { ClienteInterface } from '../interfaces/cliente.interface';
 import { TraInternaInterface } from '../interfaces/tra-interna.interface';
+import { MontoIntreface } from '../interfaces/monto.interface';
+import { PagoComponentService } from './pogo-component.service';
 
 @Injectable({
     providedIn: 'root',
@@ -24,8 +26,7 @@ export class FacturaService {
     formasPago: FormaPagoInterface[] = [];
     cuenta?: ClienteInterface;
 
-    // TODO:Montos, agregar interface 
-    amounts: any[] = [];
+    montos: MontoIntreface[] = [];
     traInternas: TraInternaInterface[] = [];
 
     //Seleccionar todas las transacciones
@@ -40,8 +41,46 @@ export class FacturaService {
     total: number = 0;
 
 
+    //Toales pago
+    saldo: number = 0;
+    cambio: number = 0;
+    pagado: number = 0;
 
-    constructor() { }
+
+    constructor(
+    private _pagoComponentService:PagoComponentService
+    ) { }
+
+
+    addMonto(monto:MontoIntreface){
+        this.montos.push(monto);
+        this.calculateTotalesPago();
+    }
+
+    calculateTotalesPago() {
+        //TODO: Guardar documento local (storage)
+        this.saldo = 0;
+        this.cambio = 0;
+        this.pagado = 0;
+
+        this.montos.forEach(element => {
+            this.pagado += element.amount;
+        });
+
+        this.montos.forEach(element => {
+            this.pagado += element.difference;
+        });
+
+        //calcular y cambio y saldo pendiente de pagar
+        if (this.pagado > this.total) {
+            this.cambio = this.pagado - this.total;
+        } else {
+            this.saldo = this.total - this.pagado;
+        }
+        
+        this._pagoComponentService.monto = parseFloat(this.saldo.toFixed(2)).toString();
+
+    }
 
     calculateTotales() {
         //TODO: Guardar documento local (storage)
@@ -71,7 +110,7 @@ export class FacturaService {
 
         this.total = this.cargo + this.descuento + this.subtotal;
 
-        //TODO:Calcular totales en forma de pago
+        this.calculateTotalesPago();
 
     }
 

@@ -341,7 +341,7 @@ export class DetalleComponent {
       return;
     }
 
-    if (this.facturaService.amounts.length > 0) {
+    if (this.facturaService.montos.length > 0) {
       //TODO:translate
       this._notificationsService.openSnackbar("Elimina primero las formas de pago.");
       return;

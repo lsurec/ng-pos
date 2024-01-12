@@ -1,8 +1,15 @@
 import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { BancosInterface, CuentaBancoInterface, PagoInterface } from '../../interfaces/pagos.interface';
 import { PagoService } from '../../services/pago.service';
+import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
+import { FacturaService } from '../../services/factura.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { BancoInterface } from '../../interfaces/banco.interface';
+import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
+import { PagoComponentService } from '../../services/pogo-component.service';
+import { MontoIntreface } from '../../interfaces/monto.interface';
 
 @Component({
   selector: 'app-pago',
@@ -14,215 +21,251 @@ import { PagoService } from '../../services/pago.service';
 })
 export class PagoComponent {
 
-  pagosAgregados: PagoInterface[] = [];
-  eliminarPagos: boolean = false;
-
-  pagos: PagoInterface[] = [
-    { id: 1, nombre: "EFECTIVO" },
-    { id: 2, nombre: "MASTERCARD" },
-    { id: 3, nombre: "VISA" },
-    { id: 4, nombre: "CHEQUE" },
-  ];
-
-  bancos: BancosInterface[] = [
-    { id: 1, nombre: "Banco Industrial" },
-    { id: 2, nombre: "Banco Rural" },
-    { id: 3, nombre: "Banco G&T Continental" },
-    { id: 4, nombre: "Banco Agromercantil" },
-    { id: 5, nombre: "BAC" },
-  ];
-
-  cuentasBancarias: CuentaBancoInterface[] = [
-    { numero: 12131415, nombre: "Faby Santizo" },
-    { numero: 15141312, nombre: "Niktéeee Juárez" },
-  ]
-
-  tipos: boolean = true;
-  efectivo: boolean = false;
-  mastercard: boolean = false;
-  visa: boolean = false;
-  cheque: boolean = false;
-
-  total: number = 165;
   autorizacion!: string;
   referencia!: string
 
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  documento: number = this.facturaService.tipoDocumento!;
+
+  selectAllMontos: boolean = false;
+
+  cuentaSelect?: CuentaBancoInterface;
+
+
   constructor(
-    private _widgetsService: NotificationsService,
     private _translate: TranslateService,
     private _notificationsService: NotificationsService,
-
+    public facturaService: FacturaService,
+    private _pagoService: PagoService,
+    public pagoComponentService: PagoComponentService,
   ) {
 
   }
 
-  verTipos() {
-    this.tipos = true;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.visa = false;
-    this.cheque = false;
+
+  viewPayments() {
+    this.pagoComponentService.forms = false;
   }
 
-  verEfectivo() {
-    this.efectivo = true;
-    this.tipos = false;
-    this.mastercard = false;
-    this.visa = false;
-    this.cheque = false;
-  }
+  async viewForms(payment: FormaPagoInterface) {
 
-  verMastercard() {
-    this.mastercard = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.visa = false;
-    this.cheque = false;
-  }
+    this.pagoComponentService.pago = payment;
 
-  verVisa() {
-    this.visa = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.cheque = false;
-  }
-
-  verCheque() {
-    this.cheque = true;
-    this.tipos = false;
-    this.efectivo = false;
-    this.mastercard = false;
-    this.visa = false;
-  }
-
-  tipoPago!: string;
-  bancoSelect!: BancosInterface;
-  cuentaSelect!: CuentaBancoInterface;
-
-  verPago(tipo: PagoInterface) {
-
-    if (tipo.id == 1 && tipo.nombre == this.pagos[0].nombre) {
-      this.tipoPago = tipo.nombre;
-      this.verEfectivo();
+    //validar que haya una cuenta seleccionada
+    if (!this.facturaService.cuenta) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("Seleccione una cuenta para el documento ante de agregar una forma de pago.");
+      return;
     }
 
-    if (tipo.id == 2 && tipo.nombre == this.pagos[1].nombre) {
-      this.tipoPago = tipo.nombre;
-      this.verMastercard();
+    //validar si la forma de pago es cuenta corriente el suuario debe tener permitias cuentas por cobrar
+    if (!this.facturaService.cuenta.permitir_CxC && payment.cuenta_Corriente) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("La cuenta asignada al documento no tiene permitidas cuentas por cobrar.");
+      return;
     }
 
-    if (tipo.id == 3 && tipo.nombre == this.pagos[2].nombre) {
-      this.tipoPago = tipo.nombre;
-      this.verVisa();
-    }
-
-    if (tipo.id == 4 && tipo.nombre == this.pagos[3].nombre) {
-      this.tipoPago = tipo.nombre;
-      this.verCheque();
-    }
-  }
-
-  pagarEfectivo() {
-
-    if (!this.total) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
-      return
-    } else {
-
-      let pago: PagoInterface = {
-        id: 1,
-        nombre: this.tipoPago,
-        monto: this.total,
-        checked: false
+    //Si la forma de pago es cuenta por cobrar y el usuario tiene permitida la opcion
+    if (payment.cuenta_Corriente && this.facturaService.cuenta.permitir_CxC) {
+      //validar llimite de credito
+      if (this.facturaService.total > (this.facturaService.cuenta.limite_Credito) ?? 0) {
+        //TODO:Translate
+        this._notificationsService.openSnackbar("El total del documento supera el limmite de credito de la cuenta asignada al documento.");
+        return;
       }
-      this.pagosAgregados.push(pago);
-
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
-      this.verTipos();
     }
-  }
 
-  pagarVisa() {
-    if (!this.autorizacion || !this.referencia) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
-      return
-    } else {
 
-      let pago: PagoInterface = {
-        id: 1,
-        nombre: this.tipoPago,
-        monto: this.total,
-        autorizacion: this.autorizacion,
-        referencia: this.referencia
+    //No mostrar formulario si no hay montos pendientes de pago
+    if (this.facturaService.total == 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("El total a pagar es 0.");
+      return;
+    }
+
+    if (this.facturaService.saldo == 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("El saldo a pagar es 0.");
+      return;
+    }
+
+    //si el banco se requiere cargarlos
+    if (payment.banco) {
+
+      this.pagoComponentService.bancos = [];
+
+      this.facturaService.isLoading = true;
+      let resBancos: ResApiInterface = await this._pagoService.getBancos(
+        this.user,
+        this.token,
+        this.empresa,
+      );
+      this.facturaService.isLoading = false;
+
+
+      if (!resBancos.status) {
+        this._notificationsService.showErrorAlert(resBancos);
+        return;
       }
 
-      this.pagosAgregados.push(pago);
-
-      console.log(this.pagosAgregados);
+      this.pagoComponentService.bancos = resBancos.response;
 
 
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
-      this.verTipos();
+    }
+
+
+    this.pagoComponentService.forms = true;
+
+  }
+
+
+  async changeBanco() {
+
+    this.pagoComponentService.cuentas = [];
+
+    this.facturaService.isLoading = true;
+
+
+    let resCuentas: ResApiInterface = await this._pagoService.getCuentasBanco(
+      this.user,
+      this.token,
+      this.empresa,
+      this.pagoComponentService.banco!.banco,
+    );
+
+    this.facturaService.isLoading = false;
+
+    if (!resCuentas.status) {
+      this._notificationsService.showErrorAlert(resCuentas);
+      return;
+    }
+
+    this.pagoComponentService.cuentas = resCuentas.response;
+
+
+
+
+  }
+
+  convertirTextoANumero(texto: string): number | null {
+    // Verificar si la cadena es un número
+    const esNumero = /^\d+(\.\d+)?$/.test(texto);
+
+    if (esNumero) {
+      // Realizar la conversión a número
+      return parseFloat(texto);
+      // Si quieres convertir a un número entero, puedes usar parseInt(texto) en lugar de parseFloat.
+    } else {
+      // Retornar null si la cadena no es un número
+      return null;
     }
   }
 
-  pagarMasterCard() {
-    if (!this.autorizacion || !this.referencia) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
-      return
-    } else {
-      let pago: PagoInterface = {
-        id: 1,
-        nombre: this.tipoPago,
-        monto: this.total,
-        autorizacion: this.autorizacion,
-        referencia: this.referencia
+
+  agregarMonto() {
+
+    //validar monto que sea numerico
+
+
+    if (!this.pagoComponentService.monto) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+      return;
+
+    }
+
+
+    if (this.convertirTextoANumero(this.pagoComponentService.monto) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe ser numerica o positiva.");
+      return;
+    }
+
+
+
+    if (this.pagoComponentService.pago!.autorizacion) {
+      if (!this.autorizacion) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        return;
       }
 
-      this.pagosAgregados.push(pago);
-
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
-      this.verTipos();
     }
-  }
 
-  pagarCheque() {
-    if (!this.referencia) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
-      return
-    }
-    if (!this.referencia || !this.bancoSelect) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.banco'));
-    } else {
-      let pago: PagoInterface = {
-        id: 1,
-        nombre: this.tipoPago,
-        monto: this.total,
-        autorizacion: this.autorizacion,
-        referencia: this.referencia,
-        banco: this.bancoSelect.nombre
+    if (this.pagoComponentService.pago!.referencia) {
+      if (!this.referencia) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        return;
       }
 
-      this.pagosAgregados.push(pago);
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.tipoPago'));
-      this.verTipos();
     }
 
+
+    if (this.pagoComponentService.pago!.banco) {
+      if (!this.pagoComponentService.banco) {
+        //TODO:translate
+        this._notificationsService.openSnackbar("Selecciona un banco para continuar.");
+        return;
+      }
+
+
+      if (this.pagoComponentService.cuentas.length > 0) {
+        if (this.cuentaSelect) {
+          //TODO:translate
+          this._notificationsService.openSnackbar("Selecciona una cuenta para continuar.");
+          return;
+        }
+      }
+    }
+    
+    let monto = this.convertirTextoANumero(this.pagoComponentService.monto);
+    let diference:number = 0;
+
+    //Calcualar si hay diferencia (Cambio)
+    if(monto! > this.facturaService.saldo){
+      diference = monto! - this.facturaService.saldo;
+      monto = this.facturaService.saldo;      
+    }
+
+    let auth:string = this.pagoComponentService.pago!.autorizacion ? this.autorizacion : "";
+    let ref:string = this.pagoComponentService.pago!.referencia ? this.referencia : "";
+
+    this.facturaService.addMonto(
+      {
+        checked: this.selectAllMontos,
+        amount:monto!,
+        authorization:auth,
+        reference: ref,
+        payment: this.pagoComponentService.pago!,
+        bank: this.pagoComponentService.banco,
+        account: this.cuentaSelect,
+        difference: diference, 
+      }
+    );
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Pago agregado correctamente.");
+    this.pagoComponentService.forms = false;
+
   }
+
 
   seleccionar() {
-    for (let index = 0; index < this.pagosAgregados.length; index++) {
-      const element = this.pagosAgregados[index];
-      element.checked = this.eliminarPagos;
-    }
+    this.facturaService.montos.forEach(element => {
+      element.checked = this.selectAllMontos;
+    });
+    
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarPagosSeleccionados() {
-    let pagosSeleccionados: PagoInterface[] = this.pagosAgregados.filter((pago) => pago.checked);
+    let montosSeleccionados: MontoIntreface[] = this.facturaService.montos.filter((monto) => monto.checked);
 
-    if (pagosSeleccionados.length == 0) {
+    if (montosSeleccionados.length == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
@@ -238,8 +281,13 @@ export class PagoComponent {
 
     if (!verificador) return;
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
-    this.pagosAgregados = this.pagosAgregados.filter((pago) => !pago.checked);
-    // También puedes realizar otras acciones necesarias aquí
+    this.facturaService.montos = this.facturaService.montos.filter((monto) => !monto.checked);
+
+
+    this.facturaService.calculateTotalesPago();
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Montos eliminados correctamente.");
   }
 }
 
