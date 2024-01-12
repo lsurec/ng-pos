@@ -22,12 +22,7 @@
                     </div>
                 </form>
             </div>
-            <div class="informacion" *ngIf="producto">
-                <div class="encontrado">
-                    <p> {{producto.des_Producto}} </p>
-                    <p> {{producto.producto_Id}} </p>
-                </div>
-            </div>
+
         </div>
         <span class="spacer"></span>
 
@@ -45,11 +40,12 @@
                         </div>
                     </div>
                     <div class="dFlex">
-                        <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00">
-                        <button mat-mini-fab class="iconoCargo">
+                        <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00"
+                            [(ngModel)]="valueCargoDescuento">
+                        <button mat-mini-fab class="iconoCargo" (click)="cargoDescuento(1)">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-mini-fab class="iconoDescuento">
+                        <button mat-mini-fab class="iconoDescuento" (click)="cargoDescuento(2)">
                             <mat-icon>remove</mat-icon>
                         </button>
                     </div>
@@ -72,14 +68,16 @@
             </div>
             <div class="producto-seleccionado" *ngFor="let transaccion of facturaService.traInternas">
                 <div class="dFlex">
-                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="transaccion.isChecked"></mat-checkbox>
+                    <mat-checkbox class="example-margin" color="primary"
+                        [(ngModel)]="transaccion.isChecked"></mat-checkbox>
                     <div class="descripcion-producto">
                         <p class="subtitulo"> {{transaccion.cantidad}} x {{transaccion.producto.des_Producto}}</p>
                         <p class="subtitulo">SKU: {{transaccion.producto.producto_Id}}</p>
                         <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}
                             {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{transaccion.total | currency:' ':'symbol':'2.2-2' }}</p>
+                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{transaccion.total |
+                            currency:' ':'symbol':'2.2-2' }}</p>
                     </div>
                 </div>
             </div>
@@ -89,21 +87,27 @@
 <div class="total-pagar">
     <span class="spacer"></span>
     <!-- Agregar Pago -->
+    <!--TODO:Translate-->
     <div class="pagar">
+        <div class="dFlex">
+            <p class="textos">Subtotal</p>
+            <span class="spacer"></span>
+            <p class="textos">{{facturaService.subtotal | currency:' ':'symbol':'2.2-2'}}</p>
+        </div>
+        <div class="dFlex">
+            <p class="textos">Cargo</p>
+            <span class="spacer"></span>
+            <p class="textos">{{facturaService.cargo | currency:' ':'symbol':'2.2-2'}} </p>
+        </div>
+        <div class="dFlex">
+            <p class="textos">Descuento</p>
+            <span class="spacer"></span>
+            <p class="textos">{{facturaService.descuento | currency:' ':'symbol':'2.2-2'}}</p>
+        </div>
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.total' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">165.00</p>
-        </div>
-        <div class="dFlex">
-            <p class="textos">{{ 'pos.factura.saldo' | translate }}</p>
-            <span class="spacer"></span>
-            <p class="textos">165.00</p>
-        </div>
-        <div class="dFlex">
-            <p class="textos">{{ 'pos.factura.cambio' | translate }}</p>
-            <span class="spacer"></span>
-            <p class="textos">0.00</p>
+            <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2'}}</p>
         </div>
     </div>
 </div>

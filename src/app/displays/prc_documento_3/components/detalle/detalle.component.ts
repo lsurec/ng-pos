@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
-import {  ProductoInterface } from '../../interfaces/producto.interface';
+import { ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
@@ -26,6 +26,8 @@ import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 })
 export class DetalleComponent {
 
+
+  valueCargoDescuento: string = "";
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -58,12 +60,6 @@ export class DetalleComponent {
       nombre: "Monto",
     },
   ];
-
-
-  producto!: ProductoInterface;
-  // precio!: number;
-  // cantidad!: number;
-  // total!: number;
 
 
   constructor(
@@ -262,7 +258,7 @@ export class DetalleComponent {
 
 
       this._dialog.open(ProductoComponent, { data: productos[0] })
-      
+
 
       return;
 
@@ -292,11 +288,117 @@ export class DetalleComponent {
     this.tipoDesCar = optionId;
   }
 
+
+  convertirTextoANumero(texto: string): number | null {
+    // Verificar si la cadena es un número
+    const esNumero = /^\d+(\.\d+)?$/.test(texto);
+
+    if (esNumero) {
+      // Realizar la conversión a número
+      return parseFloat(texto);
+      // Si quieres convertir a un número entero, puedes usar parseInt(texto) en lugar de parseFloat.
+    } else {
+      // Retornar null si la cadena no es un número
+      return null;
+    }
+  }
+
+
+  cargoDescuento(operacion: number) {
+
+    // operacion 1: cargo; 2: descuento
+
+    //1:porcentaje
+    //2:monto fijo
+
+
+    if (this.convertirTextoANumero(this.valueCargoDescuento) == null) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe ser numerica o positiva.");
+      return;
+    }
+
+    let monto = this.convertirTextoANumero(this.valueCargoDescuento);
+
+    if (monto! <= 0) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe mayor a 0.");
+      return;
+    }
+
+    if (this.facturaService.amounts.length > 0) {
+      //TODO:translate
+      this._notificationsService.openSnackbar("Elimina primero las formas de pago.");
+      return;
+    }
+
+    let prorrateo: number = 0;
+    let totalTransactions: number = 0;
+
+
+    let traCheks: TraInternaInterface[] = this.facturaService.traInternas.filter((transaction) => transaction.isChecked);
+
+    if (traCheks.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
+
+    //total de las transacciones seleccionadas
+    traCheks.forEach(element => {
+      totalTransactions += element.total;
+    });
+
+    //si es por monto 
+    if (this.tipoDesCar == 2) prorrateo = monto! / totalTransactions;
+
+    //si es por porcentaje
+    if (this.tipoDesCar == 1) {
+      
+      let porcentaje = 0;
+      porcentaje = totalTransactions * monto!;
+      porcentaje = porcentaje / 100;
+      prorrateo = porcentaje / totalTransactions;
+    }
+
+    //multiplicar valores
+    this.facturaService.traInternas.forEach(element => {
+
+
+      let cargoDescuento = prorrateo * element.total;
+
+
+      //elemento que se va a agregar
+      if (element.isChecked) {
+        element.operaciones.push(
+          {
+            isChecked: false,
+            producto: element.producto,
+            cantidad: 0,
+            total: 0,
+            cargo: operacion == 1 ? cargoDescuento : 0,
+            descuento: operacion == 2 ? cargoDescuento * -1 : 0,
+            operaciones: []
+          }
+        );
+      }
+
+    });
+
+    this.facturaService.calculateTotales();
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar(operacion == 1 ? "Cargo agregado correctamente." : "Descuento agregado correctamente.");
+    
+
+  }
+
+
+
   seleccionar() {
     this.facturaService.traInternas.forEach(element => {
       element.isChecked = this.facturaService.selectAllTra;
     });
-    
+
   }
 
   // Función para manejar la eliminación de pagos seleccionados
@@ -322,8 +424,12 @@ export class DetalleComponent {
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
     this.facturaService.traInternas = this.facturaService.traInternas.filter((transactions) => !transactions.isChecked);
 
+    this.facturaService.calculateTotales();
+
     //TODO:Translate
     this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
+
+  
   }
 
 }

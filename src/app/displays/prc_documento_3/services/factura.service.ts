@@ -26,19 +26,58 @@ export class FacturaService {
 
     // TODO:Montos, agregar interface 
     amounts: any[] = [];
-    traInternas:TraInternaInterface[] = [];
+    traInternas: TraInternaInterface[] = [];
 
     //Seleccionar todas las transacciones
-    selectAllTra:boolean = false;
+    selectAllTra: boolean = false;
+
+    //totales del documento
+    //Reiniciar valores
+    subtotal: number = 0;
+    cargo: number = 0;
+    descuento: number = 0;
+    total: number = 0;
 
 
 
     constructor() { }
 
-    addTransaction(transaccion:TraInternaInterface){
+    calculateTotales() {
+        //TODO: Guardar documento local (storage)
+        this.subtotal = 0;
+        this.cargo = 0;
+        this.descuento = 0;
+        this.total = 0;
+
+        this.traInternas.forEach(element => {
+            element.cargo = 0;
+            element.descuento = 0;
+
+            element.operaciones.forEach(tra => {
+                element.cargo += tra.cargo;
+                element.descuento += tra.descuento;
+
+            });
+        });
+
+
+        this.traInternas.forEach(element => {
+            this.subtotal += element.total;
+            this.cargo += element.cargo;
+            this.descuento += element.descuento;
+        });
+
+
+        this.total = this.cargo + this.descuento + this.subtotal;
+
+        //TODO:Calcular totales en forma de pago
+
+    }
+
+    addTransaction(transaccion: TraInternaInterface) {
         transaccion.isChecked = this.selectAllTra;
         this.traInternas.push(transaccion);
-        //TODO:Calcular totales
+        this.calculateTotales();
     }
 
     getTextCuenta(): string {
