@@ -61,7 +61,7 @@
         <div class="lista-productos">
             <div class="eliminar" *ngIf="facturaService.traInternas.length > 0">
                 <div class="dFlex">
-                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="eliminarPagos"
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.selectAllTra"
                         (ngModelChange)="seleccionar()"></mat-checkbox>
                     <p class="titulo">{{ 'pos.factura.productos_agregados' | translate }}</p>
                     <span class="spacer"></span>

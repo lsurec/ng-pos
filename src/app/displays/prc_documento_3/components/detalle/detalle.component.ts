@@ -14,6 +14,7 @@ import { ProductoService } from '../../services/producto.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -34,7 +35,6 @@ export class DetalleComponent {
 
   searchText!: string;
   filtrosProductos: number = 1;
-  eliminarPagos: boolean = false;
 
   tipoDesCar: number = 1;
   filtrosBusqueda: FiltroInterface[] = [
@@ -293,35 +293,37 @@ export class DetalleComponent {
   }
 
   seleccionar() {
-    // for (let index = 0; index < this.compras.length; index++) {
-    //   const element = this.compras[index];
-    //   element.checked = this.eliminarPagos;
-    // }
+    this.facturaService.traInternas.forEach(element => {
+      element.isChecked = this.facturaService.selectAllTra;
+    });
+    
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarProducto() {
 
-    // let comprasSeleccionadas: CompraInterface[] = this.compras.filter((compra) => compra.checked);
+    let traCheks: TraInternaInterface[] = this.facturaService.traInternas.filter((transaction) => transaction.isChecked);
 
-    // if (comprasSeleccionadas.length == 0) {
-    //   this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
-    //   return
-    // }
+    if (traCheks.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
 
-    // let verificador: boolean = await this._notificationsService.openDialogActions(
-    //   {
-    //     title: this._translate.instant('pos.alertas.eliminar'),
-    //     description: this._translate.instant('pos.alertas.perderDatos'),
-    //     verdadero: this._translate.instant('pos.botones.aceptar'),
-    //     falso: this._translate.instant('pos.botones.cancelar'),
-    //   }
-    // );
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
 
-    // if (!verificador) return;
-    // // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
-    // this.compras = this.compras.filter((compra) => !compra.checked);
-    // También puedes realizar otras acciones necesarias aquí
+    if (!verificador) return;
+    // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+    this.facturaService.traInternas = this.facturaService.traInternas.filter((transactions) => !transactions.isChecked);
+
+    //TODO:Translate
+    this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
   }
 
 }
