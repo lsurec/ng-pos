@@ -21,6 +21,9 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class ProductoComponent {
 
   isLoading: boolean = false;
+  modificarPrecio: boolean = false;
+  cantidad: number = 1;
+  bodega!: string;
 
   precioProducto: number = 65.00;
 

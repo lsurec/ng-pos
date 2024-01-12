@@ -38,7 +38,7 @@ export class FacturaComponent implements OnInit {
   nuevoCliente: boolean = false;
   actualizarCliente: boolean = false;
   vistaResumen: boolean = false;
-
+  vistaHistorial: boolean = false;
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
@@ -76,6 +76,10 @@ export class FacturaComponent implements OnInit {
       this.verDocumento();
     });
 
+    this._eventService.verHistorial$.subscribe((eventData) => {
+      this.verHistorial();
+    });
+
   }
   ngOnInit(): void {
     this.loadData();
@@ -83,7 +87,7 @@ export class FacturaComponent implements OnInit {
   }
 
 
-    //TODO:Refresh limpia primero toadas las variables
+  //TODO:Refresh limpia primero toadas las variables
   async loadData() {
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
@@ -206,10 +210,6 @@ export class FacturaComponent implements OnInit {
 
   }
 
-
-
-
-
   close(reason: string) {
     this.sidenav.close();
     this.sidenavend.close();
@@ -221,6 +221,7 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.vistaFactura = false;
     this.vistaResumen = false;
+    this.vistaHistorial = false;
   }
 
   verActualizarCliente() {
@@ -228,7 +229,7 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
     this.vistaFactura = false;
     this.vistaResumen = false;
-
+    this.vistaHistorial = false;
   }
 
   verDocumento() {
@@ -236,10 +237,20 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
     this.vistaResumen = false;
+    this.vistaHistorial = false;
   }
 
   verResumen() {
     this.vistaResumen = true;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaHistorial = false;
+  }
+
+  verHistorial() {
+    this.vistaHistorial = true;
+    this.vistaResumen = false;
     this.vistaFactura = false;
     this.actualizarCliente = false;
     this.nuevoCliente = false;

@@ -48,4 +48,12 @@ export class EventService {
         this.verResumen.next(eventData);
     }
 
+    private verHistorial = new Subject<any>();
+
+    verHistorial$ = this.verHistorial.asObservable();
+
+    verHistorialEvent(eventData: boolean) {
+        this.verHistorial.next(eventData);
+    }
+
 }

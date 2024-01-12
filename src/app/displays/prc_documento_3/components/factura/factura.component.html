@@ -1,6 +1,7 @@
 <app-nuevo-cliente *ngIf="!vistaFactura && nuevoCliente"></app-nuevo-cliente>
 <app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta"></app-editar-cliente>
 <app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
+<app-historial *ngIf="!vistaFactura && vistaHistorial"></app-historial>
 
 <app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
 <div *ngIf="!facturaService.isLoading">
@@ -10,14 +11,16 @@
             <button (click)="goBack()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                (click)="loadData()">
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- Titulo de la tarea -->
             <p class="titulo">{{dataUserService.nameDisplay}}</p>
             <span class="spacer"></span>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.reciente' | translate }}">
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.reciente' | translate }}"
+                (click)="verHistorial()">
                 <mat-icon>schedule</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevo' | translate }}">
@@ -55,7 +58,8 @@
             </section>
 
             <section id="content2">
-                <app-detalle></app-detalle>
+                <app-documento></app-documento>
+                <!-- <app-detalle></app-detalle> -->
             </section>
 
             <section id="content3">
