@@ -78,6 +78,11 @@
                         </p>
                         <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{transaccion.total |
                             currency:' ':'symbol':'2.2-2' }}</p>
+                        <!--TODO:Translate-->
+                        <p class="info-producto" *ngIf="transaccion.cargo != 0">Cargo: {{transaccion.cargo |
+                            currency:' ':'symbol':'2.2-2' }}</p>
+                        <p class="info-producto" *ngIf="transaccion.descuento != 0">Descuento: {{transaccion.descuento |
+                            currency:' ':'symbol':'2.2-2' }}</p>
                     </div>
                 </div>
             </div>
