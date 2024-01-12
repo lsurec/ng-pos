@@ -2,6 +2,7 @@ $color-transparent  : transparent; //fondo transparente
 $color-naranja      : #ff6f68; //texto, fondo y bordes
 $color-rosadito     : #ffa34f;
 $color-azul         : #134895;
+$color-negro        : #000;
 $color-bordes       : rgba(0, 0, 0, 0.12); //bordes menu
 $background-naranja : #DF9722; //resaltar naranja
 $color-gris-s       : #777; //sombra y texto gris
@@ -12,7 +13,7 @@ $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 $background-scrollbar : #134895; //barra azul
 
 .detalle-container {
-    height    : calc(100vh - 260px);
+    height    : calc(100vh - 290px);
     overflow-y: auto;
 }
 
@@ -274,7 +275,7 @@ p {
 }
 
 .textos {
-    font-size  : 13px;
-    font-weight: 500;
-    color      : $color-azul;
+    font-size  : 15px;
+    font-weight: bold;
+    color      : $color-negro;
 }
