@@ -53,6 +53,18 @@ export class FacturaService {
     ) { }
 
 
+    resolveTipoTransaccion(tipo:number):number{
+        this.tiposTransaccion.forEach(element => {
+            if(tipo == element.tipo){
+                return element.tipo_Transaccion;
+            }
+            return 0;
+        });
+
+        return 0;
+    }
+
+
     addMonto(monto: MontoIntreface) {
         this.montos.push(monto);
         this.calculateTotalesPago();
