@@ -15,6 +15,8 @@ import { PagoComponentService } from './pogo-component.service';
 })
 export class FacturaService {
 
+  
+
     isLoading: boolean = false;
     tipoDocumento?: number;
     documentoName: string = "";
@@ -51,6 +53,10 @@ export class FacturaService {
     constructor(
         private _pagoComponentService: PagoComponentService
     ) { }
+
+
+
+ 
 
 
     resolveTipoTransaccion(tipo: number): number {

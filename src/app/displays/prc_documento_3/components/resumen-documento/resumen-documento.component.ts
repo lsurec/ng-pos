@@ -30,6 +30,9 @@ export class ResumenDocumentoComponent {
   serie: string = this.facturaService.serie!.serie_Documento;
   tipoCambio: number = PreferencesService.tipoCambio;
 
+
+  consecutivo:number = 0;
+
   constructor(
     private _eventService: EventService,
     public facturaService: FacturaService,
