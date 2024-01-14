@@ -61,10 +61,10 @@
             <div *ngIf="pagoComponentService.banco && pagoComponentService.cuentas.length > 0">
                 <p class="titulo">{{ 'pos.factura.cuentas' | translate }}</p>
                 <div class="lista-cuentas">
-                    <mat-radio-group class="example-radio-group" [(ngModel)]="cuentaSelect">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="pagoComponentService.cuentaSelect">
                         <mat-radio-button class="cuentas"
                             *ngFor="let cuenta of pagoComponentService.cuentas; let i = index" [value]="cuenta"
-                            color="primary" (click)="cuentaSelect = cuenta">
+                            color="primary">
                             <p class="opciones">{{cuenta.descripcion}}</p>
 
                         </mat-radio-button>
@@ -102,14 +102,20 @@
                         {{pago.authorization}}</p>
                     <p class="info-pago" *ngIf="pago.payment.referencia">{{ 'pos.factura.referencia' | translate }}:
                         {{pago.reference}}</p>
-                    <p class="info-pago" *ngIf="pago.payment.banco">{{ 'pos.factura.banco' | translate }}{{pago.bank}}
+                    <p class="info-pago" *ngIf="pago.payment.banco">{{ 'pos.factura.banco' | translate
+                        }}{{pago.bank?.nombre}}
+                        <!--TODO:Translate-->
+
+                    <p class="info-pago" *ngIf="pago.account">{{ 'pos.factura.banco' | translate
+                        }}{{pago.account.descripcion}}
                     </p>
                     <p class="info-pago">{{ 'pos.factura.monto' | translate }} {{pago.amount | currency:'
                         ':'symbol':'2.2-2' }}</p>
-                        <!--TODO:Translate-->
+                    <!--TODO:Translate-->
                     <p class="info-pago" *ngIf="pago.difference>0">Diferencia: {{pago.difference | currency:'
                         ':'symbol':'2.2-2' }}</p>
-                    <p class="info-pago" *ngIf="pago.difference>0">Pago Total: {{pago.amount +pago.difference| currency:'
+                    <p class="info-pago" *ngIf="pago.difference>0">Pago Total: {{pago.amount +pago.difference|
+                        currency:'
                         ':'symbol':'2.2-2' }}</p>
                 </div>
             </div>

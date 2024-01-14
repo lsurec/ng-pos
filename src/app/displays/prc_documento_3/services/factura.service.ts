@@ -14,7 +14,7 @@ import { PagoComponentService } from './pogo-component.service';
     providedIn: 'root',
 })
 export class FacturaService {
-    
+
     isLoading: boolean = false;
     tipoDocumento?: number;
     documentoName: string = "";
@@ -53,13 +53,16 @@ export class FacturaService {
     ) { }
 
 
-    resolveTipoTransaccion(tipo:number):number{
-        this.tiposTransaccion.forEach(element => {
-            if(tipo == element.tipo){
+    resolveTipoTransaccion(tipo: number): number {
+
+        for (let i = 0; i < this.tiposTransaccion.length; i++) {
+            const element = this.tiposTransaccion[i];
+            if (tipo == element.tipo) {
                 return element.tipo_Transaccion;
             }
-            return 0;
-        });
+
+        }
+
 
         return 0;
     }
@@ -168,7 +171,7 @@ export class FacturaService {
     }
 
     //Proceso fel
-    printFel():boolean {
+    printFel(): boolean {
 
         let fel: boolean = false;
 

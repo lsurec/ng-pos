@@ -32,7 +32,6 @@ export class PagoComponent {
 
   selectAllMontos: boolean = false;
 
-  cuentaSelect?: CuentaBancoInterface;
 
 
   constructor(
@@ -214,7 +213,7 @@ export class PagoComponent {
 
 
       if (this.pagoComponentService.cuentas.length > 0) {
-        if (this.cuentaSelect) {
+        if (!this.pagoComponentService.cuentaSelect) {
           //TODO:translate
           this._notificationsService.openSnackbar("Selecciona una cuenta para continuar.");
           return;
@@ -242,13 +241,21 @@ export class PagoComponent {
         reference: ref,
         payment: this.pagoComponentService.pago!,
         bank: this.pagoComponentService.banco,
-        account: this.cuentaSelect,
+        account: this.pagoComponentService.cuentaSelect,
         difference: diference, 
       }
     );
 
     //TODO:Translate
     this._notificationsService.openSnackbar("Pago agregado correctamente.");
+
+    //clear data
+    this.autorizacion = "",
+    this.referencia = "",
+    this.pagoComponentService.cuentas = [];
+    this.pagoComponentService.bancos = [];
+    this.pagoComponentService.banco = undefined;
+    this.pagoComponentService.cuentaSelect = undefined;
     this.pagoComponentService.forms = false;
 
   }

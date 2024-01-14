@@ -4,12 +4,17 @@ import { CompraInterface, ProductoInterface } from '../../interfaces/producto.in
 import { FacturaService } from '../../services/factura.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { DocCargoAbono, DocEstructuraInterface, DocTransaccion } from '../../interfaces/doc-estructura.interface';
+import { PostDocumentInterface } from '../../interfaces/post-document.interface';
+import { DocumentService } from '../../services/document.service';
+import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
 
 @Component({
   selector: 'app-resumen-documento',
   templateUrl: './resumen-documento.component.html',
-  styleUrls: ['./resumen-documento.component.scss']
+  styleUrls: ['./resumen-documento.component.scss'],
+  providers: [
+    DocumentService,
+  ]
 })
 export class ResumenDocumentoComponent {
 
@@ -29,6 +34,7 @@ export class ResumenDocumentoComponent {
     private _eventService: EventService,
     public facturaService: FacturaService,
     private _notificationService: NotificationsService,
+    private _documentService: DocumentService,
   ) {
   }
 
@@ -38,17 +44,17 @@ export class ResumenDocumentoComponent {
 
   sendDoc() {
     if (this.facturaService.printFel()) {
-      this.sendDocument()
-    } else {
       this._notificationService.openSnackbar("La certificacion de docuentos tributarios electronicos no está disponible en este momento.");
+    } else {
+      this.sendDocument()
     }
 
   }
 
-  sendDocument() {
+  async sendDocument() {
 
-    let pagos: DocCargoAbono[] = [];
-    let transacciones: DocTransaccion[] = [];
+    let pagos: CargoAbono[] = [];
+    let transacciones: Transaccion[] = [];
 
     //id transaccion
     let consecutivo: number = 1;
@@ -60,10 +66,10 @@ export class ResumenDocumentoComponent {
       let padre: number = consecutivo;
 
       //cargos
-      let cargos: DocTransaccion[] = [];
+      let cargos: Transaccion[] = [];
 
       //descuentos
-      let descuentos: DocTransaccion[] = [];
+      let descuentos: Transaccion[] = [];
 
       //buscar cargos y descuentos
       transaccion.operaciones.forEach(operacion => {
@@ -72,21 +78,22 @@ export class ResumenDocumentoComponent {
           //aumentar id
           consecutivo++;
 
+
           //agregar cargos
           cargos.push(
             {
-              traConsecutivoInterno: consecutivo,
-              traConsecutivoInternoPadre: padre,
-              traBodega: transaccion.bodega!.bodega,
-              traProducto: transaccion.producto.producto,
-              traUnidadMedida: transaccion.producto.unidad_Medida,
-              traCantidad: 0,
-              traTipoCambio: this.tipoCambio,
-              traMoneda: transaccion.precio!.moneda,
-              traTipoPrecio: transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-              traFactorConversion: !transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-              traTipoTransaccion: this.facturaService.resolveTipoTransaccion(4),
-              traMonto: operacion.cargo,
+              Tra_Consecutivo_Interno: consecutivo,
+              Tra_Consecutivo_Interno_Padre: padre,
+              Tra_Bodega: transaccion.bodega!.bodega,
+              Tra_Producto: transaccion.producto.producto,
+              Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+              Tra_Cantidad: 0,
+              Tra_Tipo_Cambio: this.tipoCambio,
+              Tra_Moneda: transaccion.precio!.moneda,
+              Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
+              Tra_Monto: operacion.cargo,
             }
           );
 
@@ -97,18 +104,18 @@ export class ResumenDocumentoComponent {
           consecutivo++;
           descuentos.push(
             {
-              traConsecutivoInterno: consecutivo,
-              traConsecutivoInternoPadre: padre,
-              traBodega: transaccion.bodega!.bodega,
-              traProducto: transaccion.producto.producto,
-              traUnidadMedida: transaccion.producto.unidad_Medida,
-              traCantidad: 0,
-              traTipoCambio: this.tipoCambio,
-              traMoneda: transaccion.precio!.moneda,
-              traTipoPrecio: transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-              traFactorConversion: !transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-              traTipoTransaccion: this.facturaService.resolveTipoTransaccion(3),
-              traMonto: operacion.cargo,
+              Tra_Consecutivo_Interno: consecutivo,
+              Tra_Consecutivo_Interno_Padre: padre,
+              Tra_Bodega: transaccion.bodega!.bodega,
+              Tra_Producto: transaccion.producto.producto,
+              Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+              Tra_Cantidad: 0,
+              Tra_Tipo_Cambio: this.tipoCambio,
+              Tra_Moneda: transaccion.precio!.moneda,
+              Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
+              Tra_Monto: operacion.cargo,
             }
           );
         }
@@ -118,17 +125,18 @@ export class ResumenDocumentoComponent {
 
       transacciones.push(
         {
-          traConsecutivoInterno: padre,
-          traBodega: transaccion.bodega!.bodega,
-          traProducto: transaccion.producto.producto,
-          traUnidadMedida: transaccion.producto.unidad_Medida,
-          traCantidad: 0,
-          traTipoCambio: this.tipoCambio,
-          traMoneda: transaccion.precio!.moneda,
-          traTipoPrecio: transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-          traFactorConversion: !transaccion.precio!.precio ? transaccion.precio!.id : undefined,
-          traTipoTransaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
-          traMonto: transaccion.cantidad * transaccion.precio!.precioU,
+          Tra_Consecutivo_Interno: padre,
+          Tra_Consecutivo_Interno_Padre: null,
+          Tra_Bodega: transaccion.bodega!.bodega,
+          Tra_Producto: transaccion.producto.producto,
+          Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+          Tra_Cantidad: transaccion.cantidad,
+          Tra_Tipo_Cambio: this.tipoCambio,
+          Tra_Moneda: transaccion.precio!.moneda,
+          Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+          Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+          Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
+          Tra_Monto: transaccion.cantidad * transaccion.precio!.precioU,
         }
 
       );
@@ -150,32 +158,32 @@ export class ResumenDocumentoComponent {
     this.facturaService.montos.forEach(monto => {
       pagos.push(
         {
-          tipoCargoAbono: monto.payment.tipo_Cargo_Abono,
-          monto: monto.amount,
-          cambio: monto.difference,
-          tipoCambio: this.tipoCambio,
-          moneda: transacciones[0].traMoneda,
-          montoMoneda: monto.amount / this.tipoCambio,
-          referencia: monto.reference,
-          autorizacion: monto.authorization,
-          banco: monto.bank?.banco,
-          cuentaBancaria: monto.account?.id_Cuenta_Bancaria,
+          Tipo_Cargo_Abono: monto.payment.tipo_Cargo_Abono,
+          Monto: monto.amount,
+          Cambio: monto.difference,
+          Tipo_Cambio: this.tipoCambio,
+          Moneda: transacciones[0].Tra_Moneda,
+          Monto_Moneda: monto.amount / this.tipoCambio,
+          Referencia: monto.reference,
+          Autorizacion: monto.authorization,
+          Banco: monto.bank?.banco ?? null,
+          Cuenta_Bancaria: monto.account?.id_Cuenta_Bancaria ?? null,
         }
       );
     });
 
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
-    let randomNumber1:number = Math.floor(Math.random() * 9000000) + 1000000;
-    let randomNumber2:number = Math.floor(Math.random() * 9000000) + 1000000;
-   
+    let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
+    let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
+
     // Combinar los dos números para formar uno de 14 dígitos
     let strNum1: string = randomNumber1.toString();
     let strNum2: string = randomNumber2.toString();
-    let combinedStr:string = strNum1 + strNum2;
-    let combinedNum:number = parseInt(combinedStr, 10);
+    let combinedStr: string = strNum1 + strNum2;
+    let combinedNum: number = parseInt(combinedStr, 10);
 
-    let totalCA:number = 0;
+    let totalCA: number = 0;
 
     this.facturaService.montos.forEach(monto => {
       totalCA += monto.amount;
@@ -185,30 +193,49 @@ export class ResumenDocumentoComponent {
     //Obtener fecha y hora actual
     let currentDate: Date = new Date();
 
-    let doc:DocEstructuraInterface = {
-      docCaMonto : totalCA,
-      docTraMonto : this.facturaService.total,
-      docIdCertificador:1, //TODO:Parametrizar certificador
-      docCuentaVendedor: this.facturaService.vendedor!.cuenta_Correntista,
-      docIdDocumentoRef: combinedNum,
-      docCuentaCorrentista: this.facturaService.cuenta!.cuenta_Correntista,
-      docCuentaCta: this.facturaService.cuenta!.cuenta_Cta,
-      docFechaDocumento: currentDate.toISOString(),
-      docTipoDocumento: this.documento,
-      docSerieDocumento: this.serie,
-      docEmpresa:this.empresa,
-      docEstacionTrabajo: this.estacion,
-      docUserName:this.user,
-      docObservacion1: this.observacion,
-      docTipoPago:1, //TODO:Preguntar
-      docElementoAsignado:1,//TODO:Preguntar
-      docTransaccion:transacciones,
-      docCargoAbono:pagos,
+    let doc: Documento = {
 
+      Doc_Tra_Monto: this.facturaService.total,
+      Doc_CA_Monto: totalCA,
+      Doc_ID_Certificador: 1, //TODO:Parametrizar
+      Doc_Cuenta_Correntista_Ref: this.facturaService.vendedor?.cuenta_Correntista ?? null,
+      Doc_ID_Documento_Ref: combinedNum,
+      Doc_FEL_numeroDocumento: null,
+      Doc_FEL_Serie: null,
+      Doc_FEL_UUID: null,
+      Doc_FEL_fechaCertificacion: null,
+      Doc_Fecha_Documento: currentDate.toISOString(),
+      Doc_Cuenta_Correntista: this.facturaService.cuenta!.cuenta_Correntista,
+      Doc_Cuenta_Cta: this.facturaService.cuenta!.cuenta_Cta,
+      Doc_Tipo_Documento: this.documento,
+      Doc_Serie_Documento: this.serie,
+      Doc_Empresa: this.empresa,
+      Doc_Estacion_Trabajo:this.estacion,
+      Doc_UserName:this.user,
+      Doc_Observacion_1:this.observacion,
+      Doc_Tipo_Pago:1, //TODO:preguntar
+      Doc_Elemento_Asignado:1, //TODO:Preguntar
+      Doc_Transaccion:transacciones,
+      Doc_Cargo_Abono:pagos,
+    }
 
+    let document: PostDocumentInterface = {
+      estructura: JSON.stringify(doc),
+      user: this.user,
+    }
+
+    this.isLoading = true;
+    let resDoc = await this._documentService.postDocument(this.token, document);
+    this.isLoading = false;
+
+    if (!resDoc.status) {
+      this._notificationService.showErrorAlert(resDoc);
+      return;
     }
 
 
+
+    this._notificationService.openSnackbar("Documento creado correctamente.");
 
 
   }
