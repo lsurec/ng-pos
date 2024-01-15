@@ -17,6 +17,8 @@ import { TipoTransaccionService } from '../../services/tipos-transaccion.service
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
 import { TranslateService } from '@ngx-translate/core';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 
 @Component({
   selector: 'app-factura',
@@ -42,8 +44,8 @@ export class FacturaComponent implements OnInit {
   vistaHistorial: boolean = false;
 
   user: string = PreferencesService.user;
-  empresa: string = PreferencesService.empresa.empresa_Nombre;
-  estacion: string = PreferencesService.estacion.nombre;
+  empresa: EmpresaInterface = PreferencesService.empresa;
+  estacion: EstacionInterface = PreferencesService.estacion;
   url: string = PreferencesService.baseUrl;
   tipoCambio: number = PreferencesService.tipoCambio;
   tipoDocumento: number = this.facturaService.tipoDocumento!;
