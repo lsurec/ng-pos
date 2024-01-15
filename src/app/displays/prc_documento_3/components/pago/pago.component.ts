@@ -6,10 +6,9 @@ import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
 import { FacturaService } from '../../services/factura.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { BancoInterface } from '../../interfaces/banco.interface';
-import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 import { PagoComponentService } from '../../services/pogo-component.service';
 import { MontoIntreface } from '../../interfaces/monto.interface';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-pago',
@@ -33,17 +32,35 @@ export class PagoComponent {
   selectAllMontos: boolean = false;
 
 
-
   constructor(
     private _translate: TranslateService,
     private _notificationsService: NotificationsService,
     public facturaService: FacturaService,
     private _pagoService: PagoService,
     public pagoComponentService: PagoComponentService,
+    private _eventService: EventService,
+
   ) {
 
   }
 
+
+  //verError
+  verError(res: ResApiInterface) {
+
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
+    this._eventService.verInformeErrorEvent(true);
+  }
 
   viewPayments() {
     this.pagoComponentService.forms = false;
@@ -106,7 +123,7 @@ export class PagoComponent {
 
 
       if (!resBancos.status) {
-        this._notificationsService.showErrorAlert(resBancos);
+        this.verError(resBancos);
         return;
       }
 
@@ -138,7 +155,8 @@ export class PagoComponent {
     this.facturaService.isLoading = false;
 
     if (!resCuentas.status) {
-      this._notificationsService.showErrorAlert(resCuentas);
+      this.verError(resCuentas);
+
       return;
     }
 
@@ -220,29 +238,29 @@ export class PagoComponent {
         }
       }
     }
-    
+
     let monto = this.convertirTextoANumero(this.pagoComponentService.monto);
-    let diference:number = 0;
+    let diference: number = 0;
 
     //Calcualar si hay diferencia (Cambio)
-    if(monto! > this.facturaService.saldo){
+    if (monto! > this.facturaService.saldo) {
       diference = monto! - this.facturaService.saldo;
-      monto = this.facturaService.saldo;      
+      monto = this.facturaService.saldo;
     }
 
-    let auth:string = this.pagoComponentService.pago!.autorizacion ? this.autorizacion : "";
-    let ref:string = this.pagoComponentService.pago!.referencia ? this.referencia : "";
+    let auth: string = this.pagoComponentService.pago!.autorizacion ? this.autorizacion : "";
+    let ref: string = this.pagoComponentService.pago!.referencia ? this.referencia : "";
 
     this.facturaService.addMonto(
       {
         checked: this.selectAllMontos,
-        amount:monto!,
-        authorization:auth,
+        amount: monto!,
+        authorization: auth,
         reference: ref,
         payment: this.pagoComponentService.pago!,
         bank: this.pagoComponentService.banco,
         account: this.pagoComponentService.cuentaSelect,
-        difference: diference, 
+        difference: diference,
       }
     );
 
@@ -251,8 +269,8 @@ export class PagoComponent {
 
     //clear data
     this.autorizacion = "",
-    this.referencia = "",
-    this.pagoComponentService.cuentas = [];
+      this.referencia = "",
+      this.pagoComponentService.cuentas = [];
     this.pagoComponentService.bancos = [];
     this.pagoComponentService.banco = undefined;
     this.pagoComponentService.cuentaSelect = undefined;
@@ -265,7 +283,7 @@ export class PagoComponent {
     this.facturaService.montos.forEach(element => {
       element.checked = this.selectAllMontos;
     });
-    
+
   }
 
   // Función para manejar la eliminación de pagos seleccionados
