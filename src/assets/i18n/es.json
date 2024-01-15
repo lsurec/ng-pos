@@ -177,7 +177,8 @@
             "producto": "Producto",
             "filtro": "Filtro",
             "cambio": "Cambio",
-            "cuentas": "Cuentas"
+            "cuentas": "Cuentas",
+            "docRecientes": "Documentos recientes"
         }
     }
 }

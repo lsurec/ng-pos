@@ -1,13 +1,17 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<div *ngIf="!isLoading">
+<app-detalle-documento *ngIf="!isLoading && !historial && detalleDocumento"></app-detalle-documento>
+<div *ngIf="!isLoading && historial">
     <mat-toolbar-row class="head__sidenav">
         <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
-            (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
+        (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+        <mat-icon>refresh</mat-icon>
+    </button>
         <span class="spacer"></span>
         <!-- Titulo de la tarea -->
-        <p class="titulo">Documentos recientes</p>
+        <p class="titulo">{{ 'pos.factura.docRecientes' | translate }}</p>
         <span class="spacer"></span>
 
     </mat-toolbar-row>
@@ -19,7 +23,7 @@
                     <span class="spacer"></span>
                     <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})</p>
                 </div>
-                <div class="detalle-documento" *ngFor="let documento of documentos">
+                <div class="detalle-documento" *ngFor="let documento of documentos" (click)="verDetalle()">
                     <div class="info-documento">
                         <p class="subtitulo">{{documento.item.consecutivo_Interno}} </p>
                         <p class="fecha-hora">{{documento.item.fecha_Hora}} </p>

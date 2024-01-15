@@ -88,8 +88,11 @@ hr {
     display         : flex;
     padding         : 5px 0px;
     border-top      : 1px solid $color-bordes;
-    // border-bottom: 1px solid $color-bordes;
-    // margin-top   : 5px;
+}
+
+.detalle-documento:hover {
+    cursor          : pointer;
+    background-color: $color-bordes;
 }
 
 .info-documento {

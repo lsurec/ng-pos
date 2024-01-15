@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -7,6 +8,10 @@ import { CompraInterface, ProductoInterface } from '../../interfaces/producto.in
   styleUrls: ['./detalle-documento.component.scss']
 })
 export class DetalleDocumentoComponent {
+
+  constructor(
+    private _eventService: EventService,
+  ) { }
 
   productos: ProductoInterface[] = [
     {
@@ -59,6 +64,7 @@ export class DetalleDocumentoComponent {
   ]
 
   goBack() {
+    this._eventService.verHistorialEvent(true);
   }
 
 }
