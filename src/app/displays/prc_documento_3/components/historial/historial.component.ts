@@ -1,47 +1,159 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
+import { DocumentService } from '../../services/document.service';
+import { FacturaService } from '../../services/factura.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { GetDocInterface } from '../../interfaces/get-doc.interface';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
+import { Documento } from '../../interfaces/doc-estructura.interface';
 
 @Component({
   selector: 'app-historial',
   templateUrl: './historial.component.html',
-  styleUrls: ['./historial.component.scss']
+  styleUrls: ['./historial.component.scss'],
+  providers: [
+    DocumentService,
+    TipoTransaccionService,
+  ]
 })
-export class HistorialComponent {
+export class HistorialComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  documentos: DocumentoResumenInterface[] =
-    [
-      {
-        id: 10209,
-        fecha_hora: "05/10/2023 07:19",
-        saldo: 50.00,
-        cargo: 10.00,
-        descuento: 5.00,
-        total: 55.00
-      },
-      {
-        id: 10210,
-        fecha_hora: "06/10/2023 15:00",
-        saldo: 60.00,
-        cargo: 10.00,
-        descuento: 0.00,
-        total: 70.00
-      },
-      {
-        id: 10211,
-        fecha_hora: "07/10/2023 08:10",
-        saldo: 60.00,
-        cargo: 10.00,
-        descuento: 0.00,
-        total: 70.00
-      }
-    ]
+
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  documento: number = this._facturaService.tipoDocumento!;
+
+  documentos: DocumentoResumenInterface[] = [];
 
   constructor(
     private _eventService: EventService,
+    private _documentService: DocumentService,
+    private _facturaService: FacturaService,
+    private _notificationService: NotificationsService,
+    private _tiposTransaccion: TipoTransaccionService,
   ) {
+  }
+  ngOnInit(): void {
+
+    this.loadData();
+  }
+
+  async loadData() {
+
+    this.isLoading = true;
+
+
+    let resDoc = await this._documentService.getDocument(
+      this.user,
+      this.token,
+      0,
+    )
+
+
+    if (!resDoc.status) {
+    this.isLoading = false;
+
+      this._notificationService.showErrorAlert(resDoc);
+      return;
+    }
+
+    let docs: GetDocInterface[] = resDoc.response;
+
+
+    for (const doc of docs) {
+
+
+      let estructura: Documento = JSON.parse(doc.estructura);
+
+      let resTra = await this._tiposTransaccion.getTipoTransaccion(
+        this.user,
+        this.token,
+        estructura.Doc_Tipo_Documento,
+        estructura.Doc_Serie_Documento,
+        estructura.Doc_Empresa,
+      );
+
+
+      if (!resTra.status) {
+    this.isLoading = false;
+
+        this._notificationService.showErrorAlert(resTra);
+        return;
+      }
+
+      let tiposTra: TipoTransaccionInterface[] = resTra.response;
+
+      //id tipo transaccion cargo
+      let tipoCargo: number = this.resolveTipoTransaccion(4, tiposTra);
+
+      //id tipo transaccion descuento
+      let tipoDescuento: number = this.resolveTipoTransaccion(3, tiposTra);
+
+      //Totales
+      let cargo: number = 0;
+      let descuento: number = 0;
+      let subtotal: number = 0;
+      let total: number = 0;
+
+
+      estructura.Doc_Transaccion.forEach(tra => {
+        //Si no es ni cargo ni desceuntosumar total transaccones
+        if (tra.Tra_Tipo_Transaccion != tipoCargo &&
+          tra.Tra_Tipo_Transaccion != tipoDescuento) {
+          subtotal += tra.Tra_Monto;
+        }
+
+        //sii es cargo sumar cargo
+        if (tra.Tra_Tipo_Transaccion == tipoCargo) {
+          cargo += tra.Tra_Monto;
+        }
+
+        //si es descuento sumar descuento
+        if (tra.Tra_Tipo_Transaccion == tipoDescuento) {
+          descuento += tra.Tra_Monto;
+        }
+      });
+
+
+      //calcular total
+      total = (subtotal + cargo) + descuento;
+
+      this.documentos.push(
+        {
+          item:doc,
+          estructura: estructura,
+          cargo: cargo,
+          descuento: descuento,
+          subtotal: subtotal,
+          total: total,
+        }
+      );
+
+    }
+
+    this.isLoading = false;
+
+
+  }
+
+  resolveTipoTransaccion(tipo: number, tiposTransacciones: TipoTransaccionInterface[]): number {
+
+    for (let i = 0; i < tiposTransacciones.length; i++) {
+      const element = tiposTransacciones[i];
+      if (tipo == element.tipo) {
+        return element.tipo_Transaccion;
+      }
+
+    }
+
+    return 0;
   }
 
   goBack() {
