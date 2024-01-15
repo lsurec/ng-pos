@@ -102,7 +102,7 @@ import { SidenavComponent } from './omponents/sidenav/sidenav.component';
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient) => {
-          return new TranslateHttpLoader(http);
+          return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
         },
         deps: [HttpClient]
       }

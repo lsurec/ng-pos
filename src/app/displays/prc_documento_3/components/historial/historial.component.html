@@ -21,15 +21,15 @@
                 </div>
                 <div class="detalle-documento" *ngFor="let documento of documentos">
                     <div class="info-documento">
-                        <p class="subtitulo">{{documento.id}} </p>
-                        <p class="fecha-hora">{{documento.fecha_hora}} </p>
+                        <p class="subtitulo">{{documento.item.consecutivo_Interno}} </p>
+                        <p class="fecha-hora">{{documento.item.fecha_Hora}} </p>
                     </div>
                     <span class="spacer"></span>
                     <div class="totales">
-                        <p class="saldo">{{documento.saldo}} </p>
-                        <p class="cargo">(+) {{documento.cargo}} </p>
-                        <p class="descuento">(-) {{documento.descuento}} </p>
-                        <p class="total">{{documento.total}} </p>
+                        <p class="saldo">{{documento.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                        <p class="cargo">(+) {{documento.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                        <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }} </p>
+                        <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
                     </div>
                 </div>
             </div>
