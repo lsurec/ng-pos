@@ -73,7 +73,6 @@ export class HomeComponent {
   temaOscuro: boolean = false;
   //Guardar el nombre del usuario
 
-  vistaMenu: string = '';
 
   //Variables para mostrar componentes segun el menu
   components: ComponentesInterface[] = components;
@@ -452,11 +451,7 @@ export class HomeComponent {
   // Cambiar ruta de elemento navegacion del menu.
   changeRouteActive(index: number) {
 
-    if (this.routeMenu.length - 1 == 0) {
-      this.vistaMenu = ''
-    } else {
-      this.vistaMenu = this.routeMenu[index].name;
-    };
+   
 
     if (this.routeMenu.length - 1 > index) {
       //elimina ultimo item seleciconado.

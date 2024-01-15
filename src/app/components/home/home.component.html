@@ -12,7 +12,7 @@
     <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
         <mat-toolbar class="head__sidenav ">
             <span class="spacer"></span>
-            <h6>{{ vistaMenu }}</h6>
+            <h6>{{ routeMenu[routeMenu.length -1].name }}</h6>
             <span class="spacer"></span>
             <button mat-icon-button (click)="close('toggle button')">
                 <mat-icon>close</mat-icon>
@@ -222,7 +222,7 @@
                     <mat-icon>menu</mat-icon>
                 </button>
                 <span class="spacer"></span>
-                <p>{{ vistaMenu }}</p>
+                <p>{{ routeMenu[routeMenu.length -1].name }}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="sidenavend.open()">
                     <mat-icon>menu</mat-icon>
@@ -230,7 +230,7 @@
             </mat-toolbar-row>
         </mat-toolbar>
         <mat-toolbar class="toolbarlarge">
-            <p> {{vistaMenu}} </p>
+            <p> {{routeMenu[routeMenu.length -1].name}} </p>
             <span class="spacer"></span>
             <button mat-icon-button (click)="sidenavend.open()">
                 <mat-icon>menu</mat-icon>
