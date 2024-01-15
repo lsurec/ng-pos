@@ -56,15 +56,26 @@ export class ProductService {
                 //si algo sale mal
                 err => {
 
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
@@ -111,15 +122,26 @@ export class ProductService {
                 //si algo sale mal
                 err => {
 
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
@@ -182,16 +204,26 @@ export class ProductService {
                 },
                 //si algo sale mal
                 err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
@@ -239,15 +271,26 @@ export class ProductService {
                     //si algo sale mal
                     err => {
 
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
+                        try {
+                            let response: ResponseInterface = <ResponseInterface>err.error;
+    
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err.error,
+                                storeProcedure: response.storeProcedure,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        } catch (e) {
+    
+    
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
                         }
-                        resolve(resApi);
                     }
                 )
         }
@@ -293,15 +336,26 @@ export class ProductService {
                 },
                 //si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
@@ -361,15 +415,26 @@ export class ProductService {
                 //si algo sale mal
                 err => {
 
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
@@ -428,15 +493,26 @@ export class ProductService {
                 },
                 //si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err.error;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: err.error,
-                        storeProcedure: response.storeProcedure,
-                        url: err.url,
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err,
+                            url: err.url,
+                        }
+                        resolve(resApi);
                     }
-                    resolve(resApi);
                 }
             )
         }
