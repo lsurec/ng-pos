@@ -100,7 +100,7 @@ import { CargoDescuentoComponent } from './displays/prc_documento_3/components/c
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient) => {
-          return new TranslateHttpLoader(http);
+          return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
         },
         deps: [HttpClient]
       }
