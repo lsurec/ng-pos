@@ -16,6 +16,7 @@ export class PagoComponentService {
     bancos: BancoInterface[] = [];
     cuentas:CuentaBancoInterface[]=[];
     monto:string = "0";
+    cuentaSelect?: CuentaBancoInterface;
 
 
 }

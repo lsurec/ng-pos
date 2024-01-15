@@ -16,6 +16,7 @@ import { CuentaService } from '../../services/cuenta.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-factura',
@@ -45,9 +46,12 @@ export class FacturaComponent implements OnInit {
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-  tabDocummento:boolean = true;
-  tabDetalle:boolean = false;
-  tabPago:boolean = false;
+
+  
+  tabDocummento: boolean = true;
+  tabDetalle: boolean = false;
+  tabPago: boolean = false;
+
 
   constructor(
     private _notificationService: NotificationsService,
@@ -59,6 +63,7 @@ export class FacturaComponent implements OnInit {
     private _tipoTransaccionService: TipoTransaccionService,
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
+    private _translate: TranslateService,
   ) {
 
     this._eventService.verCrear$.subscribe((eventData) => {
@@ -85,31 +90,95 @@ export class FacturaComponent implements OnInit {
   }
 
 
-  showDocumento(){
+  ngOnInit(): void {
+
+
+    this.loadData();
+
+  }
+
+  showDocumento() {
     this.tabDocummento = true;
     this.tabDetalle = false;
     this.tabPago = false;
   }
 
-  showDetalle(){
+  showDetalle() {
     this.tabDocummento = false;
     this.tabDetalle = true;
     this.tabPago = false;
   }
-  showPago(){
+  showPago() {
     this.tabDocummento = false;
     this.tabDetalle = false;
     this.tabPago = true;
   }
 
-  ngOnInit(): void {
-    this.loadData();
+  async newDoc(){
+
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+    
+    this.facturaService.vendedor = undefined;
+    this.facturaService.cuenta = undefined;
+    this.facturaService.montos = [];
+    this.facturaService.traInternas = [];
+    this.facturaService.selectAllTra = false;
+    this.facturaService.subtotal = 0;
+    this.facturaService.cargo = 0;
+    this.facturaService.descuento = 0;
+    this.facturaService.total = 0;
+    this.facturaService.saldo = 0;
+    this.facturaService.cambio = 0;
+    this.facturaService.pagado = 0;
+
+    if(this.facturaService.series.length == 1){
+      this.facturaService.serie = this.facturaService.series[0];
+    }else{
+      this.facturaService.serie = undefined
+    }
+    
+
+
+    this.showDocumento();
 
   }
 
 
-  //TODO:Refresh limpia primero toadas las variables
   async loadData() {
+
+    this.facturaService.series = []
+    this.facturaService.serie = undefined;
+    this.facturaService.vendedores = [];
+    this.facturaService.vendedor = undefined;
+    this.facturaService.tiposTransaccion = [];
+    this.facturaService.parametros = [];
+    this.facturaService.formasPago = [];
+    this.facturaService.cuenta = undefined;
+    this.facturaService.montos = [];
+    this.facturaService.traInternas = [];
+    this.facturaService.selectAllTra = false;
+    this.facturaService.subtotal = 0;
+    this.facturaService.cargo = 0;
+    this.facturaService.descuento = 0;
+    this.facturaService.total = 0;
+    this.facturaService.saldo = 0;
+    this.facturaService.cambio = 0;
+    this.facturaService.pagado = 0;
+
+
+    this.showDocumento();
+
+
+
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
       //TODO: show retry view
@@ -262,6 +331,59 @@ export class FacturaComponent implements OnInit {
   }
 
   verResumen() {
+
+    //Si no hay serie seleccionado mostrar mensaje
+    if (!this.facturaService.serie) {
+      // TODO:Translate
+      this._notificationService.openSnackbar("No se ha seleccionado una serie.");
+      return;
+    }
+
+    //Si no hay cliente seleccioando mostrar mensaje
+    if (!this.facturaService.cuenta) {
+      // TODO:Translate
+      this._notificationService.openSnackbar("No se ha seleccionado un cliente.");
+      return;
+    }
+
+
+    //si hay vendedores debe seleconarse uno
+    if (this.facturaService.vendedores.length > 0) {
+      //Si no hay cliente seleccioando mostrar mensaje
+      if (!this.facturaService.vendedor) {
+        // TODO:Translate
+        this._notificationService.openSnackbar("No se ha seleccionado un vendedor.");
+        return;
+      }
+    }
+
+    //si no hay transacciones mostrar mensaje
+    if (this.facturaService.traInternas.length == 0) {
+      // TODO:Translate
+      this._notificationService.openSnackbar("No se han agregado transacciones.");
+      return;
+    }
+
+    //si hay formas de pago validar quye se agregue alguna
+    if (this.facturaService.serie && this.facturaService.formasPago.length > 0) {
+      if (this.facturaService.montos.length == 0) {
+        // TODO:Translate
+        this._notificationService.openSnackbar("No se ha agregado ningun pago.");
+        return;
+      }
+
+
+      // si no se ha pagado el total mostrar mensaje
+      if (this.facturaService.saldo > 0) {
+        // TODO:Translate
+        this._notificationService.openSnackbar("Tinene un saldo pendiente de pagar.");
+        return;
+      }
+
+    }
+
+
+    //ir a resumen
     this.vistaResumen = true;
     this.vistaFactura = false;
     this.actualizarCliente = false;
