@@ -52,8 +52,9 @@ export class MenuService {
 
                     let resApi: ResApiInterface = {
                         status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        response: err.error,
+                        storeProcedure: response.storeProcedure,
+                        url: err.url,
                     }
                     resolve(resApi);
                 }
@@ -95,14 +96,19 @@ export class MenuService {
                 },
                 //si algo sale mal
                 err => {
+
                     let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        response: err.error,
+                        storeProcedure: response.storeProcedure,
+                        url: err.url,
                     }
                     resolve(resApi);
+
+
+
                 }
             )
         })

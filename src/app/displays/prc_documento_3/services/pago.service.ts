@@ -62,25 +62,14 @@ export class PagoService {
                 //si algo sale mal
                 err => {
 
-                    if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: response.data,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                        return;
-                    }
+                    let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
-                        response: err,
-                        storeProcedure: ""
+                        response: err.error,
+                        storeProcedure: response.storeProcedure,
+                        url: err.url,
                     }
-
                     resolve(resApi);
                 }
             )
@@ -131,25 +120,14 @@ export class PagoService {
                 //si algo sale mal
                 err => {
 
-                    if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: response.data,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                        return;
-                    }
+                    let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
-                        response: err,
-                        storeProcedure: ""
+                        response: err.error,
+                        storeProcedure: response.storeProcedure,
+                        url: err.url,
                     }
-
                     resolve(resApi);
                 }
             )
@@ -207,25 +185,14 @@ export class PagoService {
                 //si algo sale mal
                 err => {
 
-                    if (err.status == 400) {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: response.data,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                        return;
-                    }
+                    let response: ResponseInterface = <ResponseInterface>err.error;
 
                     let resApi: ResApiInterface = {
                         status: false,
-                        response: err,
-                        storeProcedure: ""
+                        response: err.error,
+                        storeProcedure: response.storeProcedure,
+                        url: err.url,
                     }
-
                     resolve(resApi);
                 }
             )

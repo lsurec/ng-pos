@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResApiInterface } from '../interfaces/res-api.interface';
+import { ResponseInterface } from '../interfaces/response.interface';
 
 @Injectable()
 export class HelloService {
@@ -27,14 +28,17 @@ export class HelloService {
 
           resolve(res);
         },
-        (error) => {
+        (err) => {
 
-          let res: ResApiInterface = {
-            response: error,
-            status: false,
-            storeProcedure: "",
+          let response: ResponseInterface = <ResponseInterface>err.error;
+
+          let resApi: ResApiInterface = {
+              status: false,
+              response: err.error,
+              storeProcedure: response.storeProcedure,
+              url: err.url,
           }
-          resolve(res);
+          resolve(resApi);
 
         }
       );
