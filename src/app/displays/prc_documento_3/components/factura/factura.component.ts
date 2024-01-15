@@ -36,12 +36,14 @@ export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
+  regresar!: number;
   cuenta?: ClienteInterface;
   vistaFactura: boolean = true;
   nuevoCliente: boolean = false;
   actualizarCliente: boolean = false;
   vistaResumen: boolean = false;
   vistaHistorial: boolean = false;
+  vistaInforme: boolean = false;
 
   user: string = PreferencesService.user;
   empresa: EmpresaInterface = PreferencesService.empresa;
@@ -49,7 +51,7 @@ export class FacturaComponent implements OnInit {
   url: string = PreferencesService.baseUrl;
   tipoCambio: number = PreferencesService.tipoCambio;
   tipoDocumento: number = this.facturaService.tipoDocumento!;
-  nombreDocumento : string = this.facturaService.documentoName;
+  nombreDocumento: string = this.facturaService.documentoName;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -91,6 +93,10 @@ export class FacturaComponent implements OnInit {
     });
 
     this._eventService.verHistorial$.subscribe((eventData) => {
+      this.verHistorial();
+    });
+
+    this._eventService.verInformeError$.subscribe((eventData) => {
       this.verHistorial();
     });
 
@@ -315,6 +321,7 @@ export class FacturaComponent implements OnInit {
     this.vistaFactura = false;
     this.vistaResumen = false;
     this.vistaHistorial = false;
+    this.vistaInforme = false;
   }
 
   verActualizarCliente() {
@@ -323,6 +330,7 @@ export class FacturaComponent implements OnInit {
     this.vistaFactura = false;
     this.vistaResumen = false;
     this.vistaHistorial = false;
+    this.vistaInforme = false;
   }
 
   verDocumento() {
@@ -331,6 +339,7 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
     this.vistaResumen = false;
     this.vistaHistorial = false;
+    this.vistaInforme = false;
   }
 
   verResumen() {
@@ -392,10 +401,22 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
     this.vistaHistorial = false;
+    this.vistaInforme = false;
   }
 
   verHistorial() {
     this.vistaHistorial = true;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaInforme = false;
+
+  }
+
+  verInformeError() {
+    this.vistaInforme = true;
+    this.vistaHistorial = false;
     this.vistaResumen = false;
     this.vistaFactura = false;
     this.actualizarCliente = false;

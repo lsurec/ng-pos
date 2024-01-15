@@ -16,7 +16,10 @@
             "fecha": "Fecha Servidor",
             "version": "Versión de Compilación",
             "origen": "Origen de Datos",
-            "versionActual": "Versión actual"
+            "versionActual": "Versión actual",
+            "tipoCambio": "Tipo cambio",
+            "tipoDocumento": "Tipo documento",
+            "serieDocumento" : "Serie documento"
         },
         "login": {
             "correo": "Usuario",

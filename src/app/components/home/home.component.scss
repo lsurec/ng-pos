@@ -9,6 +9,7 @@ $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra rosada
 $background-botones   : #134895; //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
+$color-bordes : rgba(0, 0, 0, 0.12); //bordes menu
 
 //Pantalla de carga centrada
 .progress {
@@ -378,16 +379,12 @@ label {
 }
 
 .circular-usuario {
-    background-color: $color-gris-s;
+    background-color: $color-azul;
     margin-top      : 10px;
     width           : 100px;
-    /* Ajusta el ancho deseado */
     height          : 100px;
-    /* Ajusta el alto deseado */
     border-radius   : 50%;
-    /* Establece el radio de borde en 50% para hacerlo circular */
     overflow        : hidden;
-    /* Oculta cualquier contenido que se desborde del área circular */
 }
 
 p {
@@ -399,7 +396,6 @@ p {
     text-align    : center;
     color         : $color-blanco;
     font-size     : 35px;
-    // font-weight: bold;
 }
 
 /* Estilo adicional opcional para centrar la imagen dentro del contenedor circular */
@@ -559,4 +555,31 @@ h2 {
 .rutasMenuPeque:hover {
     cursor: pointer;
     color : $color-azul !important;
+}
+
+//Detalles del usuario
+
+.detalles-usuario {
+    padding      : 0px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+}
+
+.iconos-detalles {
+    color: $color-gris-s;
+}
+
+.detalle {
+    width: calc(100% - 40px);
+}
+
+.subtitulo {
+    font-size: 16px;
+}
+
+.descripcion {
+    color    : $color-gris-s;
+    font-size: 14px;
+    word-wrap: break-word;
 }

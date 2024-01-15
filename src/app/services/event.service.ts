@@ -56,4 +56,12 @@ export class EventService {
         this.verHistorial.next(eventData);
     }
 
+    private verInformeError = new Subject<any>();
+
+    verInformeError$ = this.verInformeError.asObservable();
+
+    verInformeErrorEvent(eventData: boolean) {
+        this.verInformeError.next(eventData);
+    }
+
 }
