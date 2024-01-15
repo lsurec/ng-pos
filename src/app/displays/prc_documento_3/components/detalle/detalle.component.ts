@@ -17,6 +17,7 @@ import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 import { EventService } from 'src/app/services/event.service';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -111,9 +112,11 @@ export class DetalleComponent {
 
 
     if (!res!.status) {
+
       this.facturaService.isLoading = false;
 
-      this._notificationsService.showErrorAlert(res!);
+      this.verError(res!);
+
       return;
     }
 
@@ -155,7 +158,10 @@ export class DetalleComponent {
 
       if (!resBodega.status) {
         this.facturaService.isLoading = false;
-        this._notificationsService.showErrorAlert(resBodega);
+
+        this.verError(resBodega);
+
+
         return;
       }
 
@@ -188,7 +194,8 @@ export class DetalleComponent {
         if (!resPrecio.status) {
           this.facturaService.isLoading = false;
 
-          this._notificationsService.showErrorAlert(resPrecio);
+        this.verError(resBodega);
+          
           return;
         }
 
@@ -220,7 +227,8 @@ export class DetalleComponent {
 
             this.facturaService.isLoading = false;
 
-            this._notificationsService.showErrorAlert(resfactor);
+            this.verError(resBodega);
+
             return;
           }
 
@@ -449,7 +457,20 @@ export class DetalleComponent {
   }
 
   //verError
-  verError() {
+  verError(res: ResApiInterface) {
+
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+
+    PreferencesService.error = error;
     this._eventService.verInformeErrorEvent(true);
   }
 

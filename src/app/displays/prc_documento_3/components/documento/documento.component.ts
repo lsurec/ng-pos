@@ -16,6 +16,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-documento',
@@ -74,7 +75,7 @@ export class DocumentoComponent {
 
     if (!resVendedor.status) {
       this.facturaService.isLoading = false;
-      this._notificationService.showErrorAlert(resVendedor);
+      this.verError(resVendedor);
       return;
     }
 
@@ -96,7 +97,8 @@ export class DocumentoComponent {
 
     if (!resTransaccion.status) {
       this.facturaService.isLoading = false;
-      this._notificationService.showErrorAlert(resTransaccion);
+      this.verError(resTransaccion);
+
       return;
     }
 
@@ -114,7 +116,9 @@ export class DocumentoComponent {
 
     if (!resParametro.status) {
       this.facturaService.isLoading = false;
-      this._notificationService.showErrorAlert(resParametro);
+
+      this.verError(resParametro);
+
       return;
     }
 
@@ -131,7 +135,8 @@ export class DocumentoComponent {
     if (!resFormaPago.status) {
       this.facturaService.isLoading = false;
 
-      this._notificationService.showErrorAlert(resFormaPago);
+      this.verError(resFormaPago);
+
       return;
 
     }
@@ -161,7 +166,7 @@ export class DocumentoComponent {
         telefono: "",
         limite_Credito: 10000000.00,
         permitir_CxC: true,
-        
+
       }
       this._notificationService.openSnackbar("Cuenta seleccioanda.")
 
@@ -170,13 +175,31 @@ export class DocumentoComponent {
     }
   }
 
+  //verError
+  verError(res: ResApiInterface) {
+
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+
+    PreferencesService.error = error;
+    this._eventService.verInformeErrorEvent(true);
+  }
 
 
   // Función de filtrado
   async buscarCliente() {
 
     //Validar que el componente 
-    if(this.searchText){
+    if (this.searchText) {
+      //TODO:Translate
       this._notificationService.openSnackbar("Ingrese por lo menos un caracter para la busqueda.");
       return;
     }
@@ -194,7 +217,9 @@ export class DocumentoComponent {
     this.facturaService.isLoading = false;
 
     if (!resCuenta.status) {
-      this._notificationService.showErrorAlert(resCuenta);
+
+      this.verError(resCuenta);
+
       return;
     }
 

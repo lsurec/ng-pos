@@ -15,7 +15,7 @@ import { PagoComponentService } from './pogo-component.service';
 })
 export class FacturaService {
 
-  
+
 
     isLoading: boolean = false;
     tipoDocumento?: number;
@@ -56,7 +56,7 @@ export class FacturaService {
 
 
 
- 
+
 
 
     resolveTipoTransaccion(tipo: number): number {
