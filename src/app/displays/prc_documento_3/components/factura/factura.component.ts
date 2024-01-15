@@ -1,7 +1,4 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
-import { FiltroInterface } from '../../interfaces/filtro.interface';
-import { Router } from '@angular/router';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
@@ -218,7 +215,7 @@ export class FacturaComponent implements OnInit {
 
     if (!resSeries.status) {
       this.facturaService.isLoading = false;
-      this._notificationService.showErrorAlert(resSeries);
+      this.verError(resSeries);
       return;
     }
 
@@ -241,7 +238,8 @@ export class FacturaComponent implements OnInit {
 
       if (!resVendedor.status) {
         this.facturaService.isLoading = false;
-        this._notificationService.showErrorAlert(resVendedor);
+        this.verError(resVendedor);
+
         return;
       }
 
@@ -263,7 +261,8 @@ export class FacturaComponent implements OnInit {
 
       if (!resTransaccion.status) {
         this.facturaService.isLoading = false;
-        this._notificationService.showErrorAlert(resTransaccion);
+        this.verError(resTransaccion);
+
         return;
       }
 
@@ -281,7 +280,8 @@ export class FacturaComponent implements OnInit {
 
       if (!resParametro.status) {
         this.facturaService.isLoading = false;
-        this._notificationService.showErrorAlert(resParametro);
+        this.verError(resParametro);
+
         return;
       }
 
@@ -298,7 +298,8 @@ export class FacturaComponent implements OnInit {
       if (!resFormaPago.status) {
         this.facturaService.isLoading = false;
 
-        this._notificationService.showErrorAlert(resFormaPago);
+        this.verError(resFormaPago);
+
         return;
 
       }
@@ -437,5 +438,24 @@ export class FacturaComponent implements OnInit {
   close(reason: string) {
     this.sidenavend.close();
   }
+
+
+  //verError
+  verError(res: ResApiInterface) {
+
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
+    this.verInformeError();
+  }
+
 
 }
