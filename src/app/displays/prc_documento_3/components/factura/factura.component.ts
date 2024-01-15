@@ -40,14 +40,11 @@ export class FacturaComponent implements OnInit {
   actualizarCliente: boolean = false;
   vistaResumen: boolean = false;
   vistaHistorial: boolean = false;
+
   //Abrir/Cerrar SideNav
-  @ViewChild('sidenav')
-  sidenav!: MatSidenav;
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-
-  
   tabDocummento: boolean = true;
   tabDetalle: boolean = false;
   tabPago: boolean = false;
@@ -114,7 +111,7 @@ export class FacturaComponent implements OnInit {
     this.tabPago = true;
   }
 
-  async newDoc(){
+  async newDoc() {
 
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
@@ -126,7 +123,7 @@ export class FacturaComponent implements OnInit {
     );
 
     if (!verificador) return;
-    
+
     this.facturaService.vendedor = undefined;
     this.facturaService.cuenta = undefined;
     this.facturaService.montos = [];
@@ -140,12 +137,12 @@ export class FacturaComponent implements OnInit {
     this.facturaService.cambio = 0;
     this.facturaService.pagado = 0;
 
-    if(this.facturaService.series.length == 1){
+    if (this.facturaService.series.length == 1) {
       this.facturaService.serie = this.facturaService.series[0];
-    }else{
+    } else {
       this.facturaService.serie = undefined
     }
-    
+
 
 
     this.showDocumento();
@@ -300,10 +297,6 @@ export class FacturaComponent implements OnInit {
 
   }
 
-  close(reason: string) {
-    this.sidenav.close();
-    this.sidenavend.close();
-  }
 
 
   verNuevoCliente() {
@@ -408,4 +401,10 @@ export class FacturaComponent implements OnInit {
 
     this._eventService.emitCustomEvent(false);
   }
+
+  //Abrir cerrar Sidenav
+  close(reason: string) {
+    this.sidenavend.close();
+  }
+
 }

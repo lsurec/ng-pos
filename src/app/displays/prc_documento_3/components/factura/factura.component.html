@@ -4,10 +4,42 @@
 <app-historial *ngIf="!vistaFactura && vistaHistorial"></app-historial>
 
 <app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
-<div *ngIf="!facturaService.isLoading">
+<mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
 
-    <div class="" *ngIf="vistaFactura">
-        <mat-toolbar-row class="head__sidenav">
+    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+        <mat-toolbar class="barra-cerrar-titulo">
+            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.botones.cerrar' | translate">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <!-- Contenido del sidenav -->
+        <div class="contenido-sidenav">
+            <p>hola</p>
+        </div>
+
+        <!-- Barra de abajo para regresar y salir -->
+        <mat-toolbar class="barra-regresar">
+            <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                <mat-icon>settings</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+        <!-- Barras para titulos y boton de cerrar sidenav -->
+        <mat-toolbar class="toolbarPhone" *ngIf="!facturaService.isLoading">
+            <mat-toolbar-row>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="sidenavend.open()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar class="toolbarlarge" *ngIf="!facturaService.isLoading">
             <button (click)="goBack()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
@@ -30,59 +62,69 @@
                 (click)="verResumen()">
                 <mat-icon>print</mat-icon>
             </button>
-            <div class="circulo-inicial">
+            <div class="circulo-inicial" (click)="sidenavend.open()">
                 <p class="inicial-usuario">A</p>
             </div>
-        </mat-toolbar-row>
+        </mat-toolbar>
 
-        <div class="container-main">
+        <!-- Contenido del componente -->
+        <div class="container_main">
+            <div *ngIf="!facturaService.isLoading">
+                <div class="" *ngIf="vistaFactura">
+                    <div class="container-main">
 
-            <!--Tabs-->
-            <input id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
-            <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}" (click)=" showDocumento()">{{
-                'pos.factura.documento' | translate }}</label>
+                        <!--Tabs-->
+                        <input id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
+                        <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}"
+                            (click)=" showDocumento()">{{
+                            'pos.factura.documento' | translate }}</label>
 
-            <input id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
-            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}" (click)=" showDetalle()">{{
-                'pos.factura.detalle' | translate }}</label>
+                        <input id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
+                        <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
+                            (click)=" showDetalle()">{{
+                            'pos.factura.detalle' | translate }}</label>
 
-            <input id="tab3" type="radio" name="tabs" [checked]=" tabPago"
-                *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
-            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)=" showPago()"
-                *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
-                'pos.factura.pago' | translate }}</label>
+                        <input id="tab3" type="radio" name="tabs" [checked]=" tabPago"
+                            *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
+                        <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)=" showPago()"
+                            *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
+                            'pos.factura.pago' | translate }}</label>
 
-            <!--Fin Tabs-->
+                        <!--Fin Tabs-->
 
-            <!--Content Tabs-->
-            <section id="content1">
-                <!-- <app-pago></app-pago> -->
-                <!-- <app-detalle></app-detalle> -->
-                <app-documento></app-documento>
-            </section>
+                        <!--Content Tabs-->
+                        <section id="content1">
+                            <!-- <app-pago></app-pago> -->
+                            <!-- <app-detalle></app-detalle> -->
+                            <app-documento></app-documento>
+                        </section>
 
-            <section id="content2">
-                <!-- <app-documento></app-documento> -->
-                <app-detalle></app-detalle>
-            </section>
+                        <section id="content2">
+                            <!-- <app-documento></app-documento> -->
+                            <app-detalle></app-detalle>
+                        </section>
 
-            <section id="content3">
-                <app-pago></app-pago>
-            </section>
+                        <section id="content3">
+                            <app-pago></app-pago>
+                        </section>
 
-            <section id="content4">
-            </section>
+                        <section id="content4">
+                        </section>
 
-            <section id="content5">
-            </section>
+                        <section id="content5">
+                        </section>
 
-            <section id="content6">
-            </section>
-            <!--Fin Content Tabs-->
+                        <section id="content6">
+                        </section>
+                        <!--Fin Content Tabs-->
 
+                    </div>
+                    <!-- Mostrar logos -->
+                    <!-- <app-barra-logos></app-barra-logos> -->
+                    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+                </div>
+            </div>
         </div>
-        <!-- Mostrar logos -->
-        <!-- <app-barra-logos></app-barra-logos> -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
-    </div>
-</div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
