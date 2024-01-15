@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-error',
@@ -12,6 +13,8 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 })
 export class ErrorComponent implements OnInit{
 
+  @Input() regresar?: number; // decorate the property with @Input()
+
 
     error!:ErrorInterface;
     user:string = "";
@@ -19,7 +22,8 @@ export class ErrorComponent implements OnInit{
     estacion?:EstacionInterface;
 
   constructor(
-    private _location: Location
+    private _location: Location,
+    private _eventService: EventService,
   ) {
     
   }
@@ -38,7 +42,9 @@ export class ErrorComponent implements OnInit{
 
   //regresar a la pantalla anterior
   goBack() {
-    this._location.back();
+    // this._location.back();
+    this._eventService.verDocumentoEvent(true);
   }
+
 
 }
