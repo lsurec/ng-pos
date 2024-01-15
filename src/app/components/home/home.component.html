@@ -137,57 +137,49 @@
                     </div>
                 </div>
                 <p class="userName">{{user.toUpperCase()}}</p>
-                <!-- <p class="userEmail textEncabezado">Administrador@empresa.com.gt</p> -->
 
-                <div class="backgroundscreenUser">
-                    <div class="containerDatosUser">
-                        <!-- <div>
-                            <p class="pTitulo">{{'pos.home.servidor' | translate}}</p>
-                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                            <p class="separador"></p>
-                        </div>
-                        <div>
-                            <p class="pTitulo">{{'pos.home.baseDatos' | translate}}</p>
-                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                            <p class="separador"></p>
-                        </div> -->
-                        <div>
-                            <p class="pTitulo">{{'pos.home.empresa' | translate}}</p>
-                            <!-- <p class="pDescripcion">(1) CONBEXSA</p> -->
-                            <p class="pDescripcion">{{empresa}}</p>
-                            <p class="separador"></p>
-                        </div>
-                        <div>
-                            <p class="pTitulo">{{'pos.home.estacion' | translate}}</p>
-                            <!-- <p class="pDescripcion">(6) ADMINISTRACION</p> -->
-                            <p class="pDescripcion">{{estacion}}</p>
-                            <p class="separador"></p>
-                        </div>
-                        <div>
-                            <p class="pTitulo">{{'pos.home.origen' | translate}}</p>
-                            <p class="pDescripcion">{{url}}</p>
-                            <p class="separador"></p>
-                        </div>
-                        <div>
-                            <p class="pTitulo">{{'pos.home.versionActual' | translate}}</p>
-                            <p class="pDescripcion">1.0.0</p>
-                            <p class="separador"></p>
-                        </div>
-                        <!-- <div>
-                            <p class="pTitulo">{{'pos.home.fecha' | translate}}</p>
-                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                            <p class="separador"></p>
-                        </div>
-                        <div>
-                            <p class="pTitulo">{{'pos.home.version' | translate}}</p>
-                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                            <p class="separador"></p>
-                        </div> -->
+                <div class="detalles-usuario"></div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">business</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
+                        <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">business</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
+                        <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
+                        <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.origen' | translate}}</p>
+                        <p class="descripcion"> {{url}}</p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.versionActual' | translate}}</p>
+                        <p class="descripcion">1.0.0</p>
                     </div>
                 </div>
             </div>
-
-
 
             <!-- botones detalle usuario, ajustes y salir -->
             <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">

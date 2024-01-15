@@ -19,6 +19,8 @@ import { FacturaService } from 'src/app/displays/prc_documento_3/services/factur
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 
 @Component({
   selector: 'app-home',
@@ -36,8 +38,11 @@ export class HomeComponent implements OnInit {
   user = PreferencesService.user;
   token = PreferencesService.token;
 
-  empresa: string = PreferencesService.empresa.empresa_Nombre;
-  estacion: string = PreferencesService.estacion.nombre;
+  empresa: EmpresaInterface = PreferencesService.empresa;
+  estacion: EstacionInterface = PreferencesService.estacion;
+  tipoDocumento: number = this.facturaService.tipoDocumento!;
+  nombreDocumento: string = this.facturaService.documentoName;
+  tipoCambio: number = PreferencesService.tipoCambio;
   url: string = PreferencesService.baseUrl;
 
   //Abrir/Cerrar SideNav
