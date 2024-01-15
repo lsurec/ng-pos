@@ -19,6 +19,7 @@ export class PreferencesService {
     private static conKey = 'conStr';
     private static conStoragekey = 'conStorageStr';
     private static errorKey = 'error';
+    private static tipoCambioKey = 'tipoCambio';
 
 
    static closeSession(){
@@ -160,6 +161,18 @@ export class PreferencesService {
     static get error(): ErrorInterface {
         let value = sessionStorage.getItem(this.errorKey);
         return JSON.parse(value!);
+    }
+
+    @Input()
+    static set tipoCambio(value: number) {
+        sessionStorage.setItem(this.tipoCambioKey, value.toString());
+    }
+
+    static get tipoCambio(): number {
+        let value = sessionStorage.getItem(this.tipoCambioKey);
+        
+        
+        return parseFloat(value!);
     }
 
 }

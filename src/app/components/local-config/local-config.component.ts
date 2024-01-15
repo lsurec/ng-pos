@@ -12,6 +12,8 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
+import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
+import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
 
 @Component({
   selector: 'app-local-config',
@@ -22,13 +24,14 @@ import { RetryService } from 'src/app/services/retry.service';
     LocalSettingsService,
     NotificationsService,
     LocalSettingsService,
+    TipoCambioService,
   ]
 })
 export class LocalConfigComponent implements OnInit {
   //Declaracion de variables
   nonSelect: string = ''; //frase que indica que no se ha seleccionado empresa o estacion
   isLoading: boolean = false; //pantalla de carga
-  showError:boolean=false;
+  showError: boolean = false;
 
   //empresas y estaciones
   empresas: EmpresaInterface[] = [];
@@ -55,6 +58,7 @@ export class LocalConfigComponent implements OnInit {
     private _notificationsService: NotificationsService,
     private _localSettingsService: LocalSettingsService,
     private _retryService: RetryService,
+    private _tipoCambioService: TipoCambioService,
 
   ) {
 
@@ -133,7 +137,7 @@ export class LocalConfigComponent implements OnInit {
   }
 
 
-  saveSettings() {
+  async saveSettings() {
 
 
     //Validar que se seleccione empresa y estacion
@@ -146,6 +150,32 @@ export class LocalConfigComponent implements OnInit {
 
     PreferencesService.empresa = this.empresaSelect;
     PreferencesService.estacion = this.estacionSelect;
+
+
+    let user = PreferencesService.user;
+    let token = PreferencesService.token;
+
+    this.isLoading = true;
+
+    //Cargar tipo cambio
+    let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+      user,
+      token,
+      PreferencesService.empresa.empresa,
+    );
+
+    this.isLoading = false;
+
+    if (!resTipoCammbio.status) {
+
+      this.isLoading = false;
+      this._notificationsService.showErrorAlert(resTipoCammbio);
+      return;
+    }
+
+    let tipoCambio: TipoCambioInterface[] = resTipoCammbio.response;
+
+    PreferencesService.tipoCambio = tipoCambio[0].tipo_Cambio;
 
     this._router.navigate([RouteNamesService.HOME]);
   }

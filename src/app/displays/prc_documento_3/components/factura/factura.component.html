@@ -23,7 +23,7 @@
                 (click)="verHistorial()">
                 <mat-icon>schedule</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevo' | translate }}">
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevo' | translate }}" (click)="newDoc()">
                 <mat-icon>note_add</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.resumen' | translate }}"
@@ -38,17 +38,17 @@
         <div class="container-main">
 
             <!--Tabs-->
-            <input id="tab1" type="radio" name="tabs" [checked]="tabDocummento">
-            <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}" (click)="showDocumento()">{{
+            <input id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
+            <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}" (click)=" showDocumento()">{{
                 'pos.factura.documento' | translate }}</label>
 
-            <input id="tab2" type="radio" name="tabs" [checked]="tabDetalle">
-            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}" (click)="showDetalle()">{{
+            <input id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
+            <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}" (click)=" showDetalle()">{{
                 'pos.factura.detalle' | translate }}</label>
 
-            <input id="tab3" type="radio" name="tabs" [checked]="tabPago"
+            <input id="tab3" type="radio" name="tabs" [checked]=" tabPago"
                 *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
-            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)="showPago()"
+            <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)=" showPago()"
                 *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
                 'pos.factura.pago' | translate }}</label>
 

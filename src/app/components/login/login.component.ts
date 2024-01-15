@@ -13,6 +13,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
+import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +24,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
     LoginService,
     LocalSettingsService,
     EncryptService,
+    TipoCambioService,
   ]
 })
 export class LoginComponent {
@@ -40,6 +43,7 @@ export class LoginComponent {
     private _localSettingsService: LocalSettingsService,
     private _router: Router,
     private _encryptService: EncryptService,
+    private _tipoCambioService: TipoCambioService,
 
   ) {
 
@@ -122,7 +126,6 @@ export class LoginComponent {
 
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-    this.isLoading = false;
 
     if (!resEstacion.status) {
       this.isLoading = false;
@@ -142,6 +145,26 @@ export class LoginComponent {
     if (empresas.length == 1 && estaciones.length == 1) {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
+
+      //Cargar tipo cambio
+      let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+        user,
+        token,
+        PreferencesService.empresa.empresa,
+      );
+
+      this.isLoading = false;
+
+      if (!resTipoCammbio.status) {
+
+        this.isLoading = false;
+        this._widgetsService.showErrorAlert(resTipoCammbio);
+        return;
+      }
+
+      let tipoCambio: TipoCambioInterface[] = resTipoCammbio.response;
+
+      PreferencesService.tipoCambio = tipoCambio[0].tipo_Cambio;
 
       this._router.navigate([RouteNamesService.HOME]);
       return;
