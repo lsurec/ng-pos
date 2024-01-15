@@ -41,6 +41,17 @@ export class FacturaComponent implements OnInit {
   vistaResumen: boolean = false;
   vistaHistorial: boolean = false;
 
+  user: string = PreferencesService.user;
+  empresa: string = PreferencesService.empresa.empresa_Nombre;
+  estacion: string = PreferencesService.estacion.nombre;
+  url: string = PreferencesService.baseUrl;
+  tipoCambio: number = PreferencesService.tipoCambio;
+  tipoDocumento: number = this.facturaService.tipoDocumento!;
+  nombreDocumento : string = this.facturaService.documentoName;
+  tipoSerie: string = this.facturaService.serie!.serie_Documento;
+  nombreSerie : string = this.facturaService.serie!.descripcion;
+
+
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;

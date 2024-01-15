@@ -14,7 +14,59 @@
         </mat-toolbar>
         <!-- Contenido del sidenav -->
         <div class="contenido-sidenav">
-            <p>hola</p>
+            <div class="espacio-inicial">
+                <span class="spacer"></span>
+                <div class="circular-inicial-grande">
+                    <p class="inicial-usuario-grande">{{user[0]}}</p>
+                </div>
+                <span class="spacer"></span>
+            </div>
+            <div class="espacio-inicial">
+                <span class="spacer"></span>
+                <p class="userName">{{user.toUpperCase()}}</p>
+                <span class="spacer"></span>
+            </div>
+            <!-- <div class="detalles"> -->
+            <div class="detalles-usuario">
+                <mat-icon>business</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Empresa</p>
+                    <p> {{empresa}} </p>
+                </div>
+            </div>
+            <div class="detalles-usuario">
+                <mat-icon>business</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Estacion</p>
+                    <p> {{estacion | titlecase}} </p>
+                </div>
+            </div>
+            <div class="detalles-usuario">
+                <mat-icon>currency_exchange</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Tipo cambio</p>
+                    <p> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                </div>
+            </div>
+            <div class="detalles-usuario">
+                <mat-icon>description</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Tipo documento</p>
+                    <p> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
+                </div>
+            </div>
+            <div class="detalles-usuario">
+                <mat-icon>description</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Tipo serie documento</p>
+                    <p> {{estacion | titlecase}} </p>
+                </div>
+            </div>
         </div>
 
         <!-- Barra de abajo para regresar y salir -->
@@ -63,7 +115,7 @@
                 <mat-icon>print</mat-icon>
             </button>
             <div class="circulo-inicial" (click)="sidenavend.open()">
-                <p class="inicial-usuario">A</p>
+                <p class="inicial-usuario">{{user[0]}}</p>
             </div>
         </mat-toolbar>
 

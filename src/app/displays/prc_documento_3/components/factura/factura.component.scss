@@ -58,22 +58,21 @@ p {
     font-weight: 500;
 }
 
-.titulos:hover {
-    cursor       : pointer;
-    border-bottom: 1px solid $color-azul;
-    font-weight  : 500;
+.subtitulo {
+    font-size  : 16px;
+    font-weight: 500;
+}
+
+.userName {
+    font-size  : 17px;
+    font-weight: bold;
+    height     : 35px;
 }
 
 .seleccionar {
     border-style : none;
     border-bottom: 1px solid $color-bordes;
     font-size    : 12px;
-}
-
-.subtitulo {
-    font-size     : 14px;
-    font-weight   : bold;
-    padding-bottom: 5px;
 }
 
 .mat-mdc-option {
@@ -112,8 +111,8 @@ p {
 
 .circulo-inicial {
     background-color: $color-azul;
-    width           : 30px;
-    height          : 30px;
+    width           : 33px;
+    height          : 33px;
     border-radius   : 50%;
     overflow        : hidden;
     margin          : 0px 5px;
@@ -127,6 +126,30 @@ p {
 .inicial-usuario {
     text-align: center;
     color     : $color-blanco;
+}
+
+//Inicial en grande
+
+.espacio-inicial {
+    width     : 100%;
+    text-align: center;
+    display   : flex;
+}
+
+.circular-inicial-grande {
+    background-color: $color-azul;
+    margin          : 10px 0px;
+    width           : 100px;
+    height          : 100px;
+    border-radius   : 50%;
+    overflow        : hidden;
+}
+
+.inicial-usuario-grande {
+    padding   : 25%;
+    text-align: center;
+    color     : $color-blanco;
+    font-size : 35px;
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
@@ -229,6 +252,17 @@ mat-sidenav {
     height          : calc(100% - 89px) !important;
     padding         : 0px;
     overflow        : auto;
+}
+
+.detalles-usuario {
+    padding      : 0px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+}
+
+.detalle {
+    width: calc(100% - 40px);
 }
 
 /*Fin Toolbar*/
