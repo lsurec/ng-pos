@@ -48,9 +48,6 @@ export class FacturaComponent implements OnInit {
   tipoCambio: number = PreferencesService.tipoCambio;
   tipoDocumento: number = this.facturaService.tipoDocumento!;
   nombreDocumento : string = this.facturaService.documentoName;
-  tipoSerie: string = this.facturaService.serie!.serie_Documento;
-  nombreSerie : string = this.facturaService.serie!.descripcion;
-
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')

@@ -59,12 +59,12 @@
                     <p> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
                 </div>
             </div>
-            <div class="detalles-usuario">
+            <div class="detalles-usuario" *ngIf="facturaService.serie">
                 <mat-icon>description</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
                     <p class="subtitulo">Tipo serie documento</p>
-                    <p> {{estacion | titlecase}} </p>
+                    <p> {{facturaService.serie.descripcion}} ({{facturaService.serie.serie_Documento}}) </p>
                 </div>
             </div>
         </div>
