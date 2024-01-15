@@ -21,4 +21,13 @@ export class RetryService {
   configRetry() {
     this.config.next();
   }
+
+
+  private home = new Subject<void>();
+
+  home$ = this.home.asObservable();
+
+  homeRetry() {
+    this.home.next();
+  }
 }

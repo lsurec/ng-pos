@@ -1,11 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { TranslateService } from '@ngx-translate/core';
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
-import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
-import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
@@ -18,6 +16,9 @@ import { ThemeService } from 'src/app/services/theme.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ import { FacturaService } from 'src/app/displays/prc_documento_3/services/factur
     MenuService,
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   //token y usuario
   user = PreferencesService.user;
@@ -38,6 +39,7 @@ export class HomeComponent {
   empresa: string = PreferencesService.empresa.empresa_Nombre;
   estacion: string = PreferencesService.estacion.nombre;
   url: string = PreferencesService.baseUrl;
+
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
@@ -46,12 +48,6 @@ export class HomeComponent {
 
   //Variables para inputs
   isLoading: boolean = false;
-  vistaActiva: number = 1; //boton de vista activa
-  primerDiaSemana: number = 0;
-
-  //empresas y estaciones de trabajo
-  selectedEmpresa!: EmpresaInterface;
-  selectedEstacion!: EstacionInterface;
 
   //Ver configuraciones y detalles del usuario
   temas: boolean = false;
@@ -61,10 +57,6 @@ export class HomeComponent {
   btnRegresar: boolean = false;
   tema!: number;
 
-  //Subir contenido
-  showGoUpButton: boolean = false;
-  showScrollHeight: number = 400; //En cuantos pixeles se va a mostrar el boton
-  hideScrollHeight: number = 200; //en cuantos se va a ocultar
 
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
@@ -78,6 +70,11 @@ export class HomeComponent {
   components: ComponentesInterface[] = components;
 
   hideHome: boolean = false;
+
+  showError: Boolean = false;
+  name: string = RouteNamesService.HOME;
+  error?: ErrorInterface;
+
 
   //MENU
   clickedItem?: number;
@@ -101,20 +98,16 @@ export class HomeComponent {
     private themeService: ThemeService,
     private _dataUserService: DataUserService,
     public facturaService: FacturaService,
+    private _retryService:RetryService
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
       this.viewHome(eventData);
     });
 
-    // localStorage.clear();
-    // sessionStorage.clear();
 
     //Funcion que carga datos
-    this.loadData();
-
-    //Agregar evento scroll
-    window.addEventListener('scroll', this.scrollEvent, true);
+    this.loadDataMenu();
 
     //Buscar y obtener el leguaje guardado en el servicio  
     let getLanguage = PreferencesService.lang;
@@ -135,18 +128,18 @@ export class HomeComponent {
     } else {
       this.tema = 0;
     }
-  };
+  } 
+  
+  
+  ngOnInit(): void {
+  
+    this._retryService.home$.subscribe(() => {
+      this.showError = false;
+      this.loadDataMenu();
+    });
+  }
+  
 
-  //cuando la informacion de los detalles esta vacia
-  resolveObject(objeto: any): string {
-    if (objeto == null)
-      return this.translate.instant('pos.home.noAsignado');
-    return objeto;
-  };
-
-  capitalizarTexto(texto: string): string {
-    return texto.charAt(0).toUpperCase() + texto.slice(1).toLocaleLowerCase();
-  };
 
   //Abrir cerrar Sidenav
   close(reason: string): void {
@@ -170,39 +163,12 @@ export class HomeComponent {
     this.verDetalles();
   };
 
-  //Cargar datos
-  async loadData(): Promise<void> {
-    //Cargando en true
-    this.isLoading = true;
-    await this.loadDataMenu();
-    //Cargando en false
-    this.isLoading = false;
-  };
 
-  //Escuchando scroll en todos los elementos
-  scrollEvent = (event: any): void => {
-    const number = event.srcElement.scrollTop; //Donde inicia el scroll
 
-    //verificar que el scrool se ejecute dentro de la calse container_main
-    if (event.srcElement.className == "container_main") {
-      //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
-      if (number > this.showScrollHeight) {
-        this.showGoUpButton = true; //MMostatr boton
-      } else if (number < this.hideScrollHeight) {
-        this.showGoUpButton = false; //ocultar boton
-      };
-    };
-  };
-
-  //Evento del scroll
-  ngOnDestroy(): void {
-    window.removeEventListener('scroll', this.scrollEvent, true);
-  };
-
-  //Vista de Calendario
   viewHome(value: boolean): void {
     this.hideHome = value;
   };
+
   //Cerrar sesion
   async cerrarSesion(): Promise<void> {
     this._notificationsService.showCloseSesionDialog();
@@ -217,25 +183,33 @@ export class HomeComponent {
     this.routeMenu = [];
     this.menu = [];
 
-
     let menuData: MenuDataInterface[] = [];
 
+    this.isLoading = true;
 
     let resApp: ResApiInterface = await this._menu.getAplicaciones(this.user, this.token);
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApp.status) {
-      //TODO:Mostrar pantalla reintentar
-      this._notificationsService.showErrorAlert(resApp)
+      this.isLoading = false;
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: resApp.response,
+        storeProcedure: resApp.storeProcedure,
+        url: resApp.url,
+      }
+
       return;
     };
 
     //guardar aplicaciones
     let applications: AplicacionesInterface[] = resApp.response;
 
-
     menuData = [];
-
 
     //crear objetos para guardar Displays de cada aplicacion
     applications.forEach(element => {
@@ -261,8 +235,20 @@ export class HomeComponent {
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
 
-        //TODO:Mostrar pantalla reintentar
-        this._notificationsService.showErrorAlert(resDisplay);
+        
+
+        this.isLoading = false;
+        this.showError = true;
+
+        let dateNow: Date = new Date();
+
+        this.error = {
+          date: dateNow,
+          description: resDisplay.response,
+          storeProcedure: resDisplay.storeProcedure,
+          url: resDisplay.url,
+        }
+
         return;
 
       };
@@ -349,6 +335,7 @@ export class HomeComponent {
     //Asignar recorrido de elementos
     this.addRouteMenu(primerElemento);
 
+    this.isLoading = false;
 
 
   };
@@ -451,7 +438,7 @@ export class HomeComponent {
   // Cambiar ruta de elemento navegacion del menu.
   changeRouteActive(index: number) {
 
-   
+
 
     if (this.routeMenu.length - 1 > index) {
       //elimina ultimo item seleciconado.
@@ -541,8 +528,5 @@ export class HomeComponent {
     this.detallesUsuario = false;
   };
 
-  //Ocultar boton de continuar y mostrarlo cuando se regrese
-  verContinuar(): void {
-    this.btnRegresar = true;
-  };
+
 }
