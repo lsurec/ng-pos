@@ -31,8 +31,12 @@ export class NoConnectedComponent {
         this._retryService.splashRetry();
         break;
 
-        case RouteNamesService.LOCAL_CONFIG:
+      case RouteNamesService.LOCAL_CONFIG:
         this._retryService.configRetry();
+        break;
+
+      case RouteNamesService.HOME:
+        this._retryService.homeRetry();
         break;
 
       default:

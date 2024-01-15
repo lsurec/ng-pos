@@ -1,256 +1,40 @@
-<div *ngFor="let component of components">
-    <ng-container *ngIf="component.visible">
-        <ng-container *ngComponentOutlet="component.componente">
+
+<app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
+<div *ngIf="!showError">
+    <div *ngFor="let component of components">
+        <ng-container *ngIf="component.visible">
+            <ng-container *ngComponentOutlet="component.componente">
+            </ng-container>
         </ng-container>
-    </ng-container>
-</div>
-
-<!-- Patalla de carga -->
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
-
-<mat-sidenav-container *ngIf="!isLoading && !hideHome" class="sidenav_container" (backdropClick)="close('backdrop')">
-    <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-        <mat-toolbar class="head__sidenav ">
-            <span class="spacer"></span>
-            <h6>{{ routeMenu[routeMenu.length -1].name }}</h6>
-            <span class="spacer"></span>
-            <button mat-icon-button (click)="close('toggle button')">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-        <!-- Opciones e vistas -->
-
-        <mat-toolbar class="toolbarNavScreenShort">
-
-            <div *ngFor="let route of routeMenu; let index = index">
-                <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
-                    (click)="changeRouteActive(index)">
-                    <p>{{route.name}}</p>
-                    <p *ngIf="routeMenu.length -1 !=  index"> / </p>
-                </div>
-            </div>
-        </mat-toolbar>
-        <!-- Inicia menu de modulos para pantallas pequeñas -->
-        <div class="containerMenuSshort">
-            <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
-                (mouseleave)="hover=false; indiceSeleccionado = -1">
-                <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
-                    background: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorSelected : 'transparent',
-                    'border-left': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? '6px solid' : '',
-                    'border-color': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? itemMenu.colorMargenSelect : '' 
-                }" (click)="viewContent(itemMenu)" (mouseover)="hover=true; indiceSeleccionado = i">
-                    <p>{{itemMenu.name}}</p>
-                    <!-- <p>ESTO ES UN TEXTO DE PRUEBA PARA MEDIR LA ADAPTACION DE TEXTO PARA EL MENU DE DMOSOFT</p> -->
-                    <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="vistas row">
-            <button [ngClass]="{ 'seleccionado' : vistaActiva === 1 }" (click)="vistaSeleccionada(1)" class="vista">{{
-                'pos.home.vistaTarea' | translate }}</button>
-            <button [ngClass]="{ 'seleccionado' : vistaActiva === 2 }" (click)="vistaSeleccionada(2); calendario(true)"
-                class="vista">{{ 'pos.home.vistaCalendario' | translate }}</button>
-        </div> -->
-    </mat-sidenav>
-    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
-        <mat-toolbar class="head__sidenav">
-            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.botones.cerrar' | translate">
-                <mat-icon>close</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <!-- <span class="spacer" *ngIf="ajustes"></span> -->
-            <!-- nombre de las barras de ajustes -->
-            <div class="nombresAjustes">
-                <label class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</label>
-                <label class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</label>
-                <label class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</label>
-            </div>
-            <span class="spacer"></span>
-            <span class="spacer" *ngIf="ajustes"></span>
-        </mat-toolbar>
-
-        <div class="ajustes" *ngIf="ajustes">
-            <!-- Vista Seleccionar Lenguajes -->
-            <div class="vistaAjustes" (click)="verLenguajes()">
-                <p class="pTitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
-                <p class="pDescripcion">{{getNameByLanguageRegion(activeLang)}}</p>
-            </div>
-            <p class="separador"></p>
-            <div class="vistaAjustes" (click)="verTema()">
-                <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
-                <p class="pDescripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
-                <p class="pDescripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
-            </div>
-            <p class="separador"></p>
-            <div class="vistaAjustes">
-                <div class="ayuda">
-                    <p class="pTitulo">{{'pos.preferencias.ayuda' | translate}}</p>
-                    <span class="spacer"></span>
-                    <mat-icon>navigate_next</mat-icon>
-                </div>
-                <!-- <p class="pDescripcion"> </p> -->
-            </div>
-            <p class="separador"></p>
-        </div>
-
-        <!-- Lenguajes de la aplicacion -->
-        <div class="lenguajes" *ngIf="idiomas">
-            <mat-radio-group class="example-radio-group" [(ngModel)]="idioma">
-                <mat-radio-button class="example-radio-button separador" *ngFor="let item of languages ; let i = index"
-                    [value]="i" color="primary" (click)="changeLang(i)">
-                    {{getNameByLanguageRegion(item)}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <!-- Seleccionar tema -->
-        <div class="lenguajes" *ngIf="temas">
-            <div class="temaOscuro">
-                <mat-icon class="ico-tema">dark_mode</mat-icon>
-                <div class="desc-tema">
-                    <p class="titulo-tema">{{'pos.home.modo' | translate}}</p>
-                    <p class="descripcion-tema">{{'pos.home.descripcionTema' | translate}}</p>
-                </div>
-            </div>
-            <p class="separador"></p>
-
-            <mat-radio-group class="example-radio-group" [(ngModel)]="temaOscuro" (ngModelChange)="toggleTheme()">
-                <mat-radio-button class="example-radio-button separador" color="primary" [value]="true">
-                    {{'pos.home.activo' | translate}}</mat-radio-button>
-                <mat-radio-button class="example-radio-button separador" color="primary" [value]="false">
-                    {{'pos.home.inactivo' | translate}}</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <!-- Mostrar detalles del usuario -->
-        <div class="detallesUsuario" *ngIf="detallesUsuario">
-            <div class="textEncabezado">
-                <!-- <img src="https://img.freepik.com/fotos-premium/hombre-barbudo-seguro-si-mismo-mirando-camara-expresion-seria-hombre-negocios-determinado-sonreir-vistiendo-traje-estilo-oficial-disparo-estudio-interior-aislado-sobre-fondo-gris_416530-26522.jpg"
-                    class="circular-image" alt=""> -->
-
-                <div class="circular-usuario">
-                    <p class="inicial-usuario">{{user[0]}}</p>
-                </div>
-            </div>
-            <p class="userName">{{user.toUpperCase()}}</p>
-            <!-- <p class="userEmail textEncabezado">Administrador@empresa.com.gt</p> -->
-
-            <div class="backgroundscreenUser">
-                <div class="containerDatosUser">
-                    <!-- <div>
-                        <p class="pTitulo">{{'pos.home.servidor' | translate}}</p>
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                        <p class="separador"></p>
-                    </div>
-                    <div>
-                        <p class="pTitulo">{{'pos.home.baseDatos' | translate}}</p>
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                        <p class="separador"></p>
-                    </div> -->
-                    <div>
-                        <p class="pTitulo">{{'pos.home.empresa' | translate}}</p>
-                        <!-- <p class="pDescripcion">(1) CONBEXSA</p> -->
-                        <p class="pDescripcion">{{empresa}}</p>
-                        <p class="separador"></p>
-                    </div>
-                    <div>
-                        <p class="pTitulo">{{'pos.home.estacion' | translate}}</p>
-                        <!-- <p class="pDescripcion">(6) ADMINISTRACION</p> -->
-                        <p class="pDescripcion">{{estacion}}</p>
-                        <p class="separador"></p>
-                    </div>
-                    <div>
-                        <p class="pTitulo">{{'pos.home.origen' | translate}}</p>
-                        <p class="pDescripcion">{{url}}</p>
-                        <p class="separador"></p>
-                    </div>
-                    <div>
-                        <p class="pTitulo">{{'pos.home.versionActual' | translate}}</p>
-                        <p class="pDescripcion">1.0.0</p>
-                        <p class="separador"></p>
-                    </div>
-                    <!-- <div>
-                        <p class="pTitulo">{{'pos.home.fecha' | translate}}</p>
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                        <p class="separador"></p>
-                    </div>
-                    <div>
-                        <p class="pTitulo">{{'pos.home.version' | translate}}</p>
-                        <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
-                        <p class="separador"></p>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- botones detalle usuario, ajustes y salir -->
-        <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
-            <!-- Ver informacion del usuario -->
-            <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
-                <mat-icon>settings</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <!-- Salir o cerrar sesion -->
-            <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
-                <mat-icon>logout</mat-icon>
-            </button>
-        </mat-toolbar>
-        <!-- boton regresar a detalle usuario -->
-        <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-        </mat-toolbar>
-        <!-- botones regresar a ajustes -->
-        <mat-toolbar class="backColorNavBar" *ngIf="idiomas">
-            <button mat-icon-button (click)="verAjustes()">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-        </mat-toolbar>
-        <!-- Regresar tema -->
-        <mat-toolbar class="backColorNavBar" *ngIf="temas">
-            <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-        </mat-toolbar>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row>
-                <button mat-icon-button (click)="sidenav.open()">
-                    <mat-icon>menu</mat-icon>
-                </button>
+    </div>
+    
+    <!-- Patalla de carga -->
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    
+    <mat-sidenav-container *ngIf="!isLoading && !hideHome" class="sidenav_container" (backdropClick)="close('backdrop')">
+        <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="head__sidenav ">
                 <span class="spacer"></span>
-                <p>{{ routeMenu[routeMenu.length -1].name }}</p>
+                <h6>{{ routeMenu[routeMenu.length -1].name }}</h6>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="sidenavend.open()">
-                    <mat-icon>menu</mat-icon>
+                <button mat-icon-button (click)="close('toggle button')">
+                    <mat-icon>close</mat-icon>
                 </button>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-toolbar class="toolbarlarge">
-            <p> {{routeMenu[routeMenu.length -1].name}} </p>
-            <span class="spacer"></span>
-            <button mat-icon-button (click)="sidenavend.open()">
-                <mat-icon>menu</mat-icon>
-            </button>
-        </mat-toolbar>
-        <!--Container-->
-        <div class="container_page">
-            <!-- Inicio Contenedor de rutas navegadas -->
-            <mat-toolbar class="toolbarNavegacion">
+            </mat-toolbar>
+            <!-- Opciones e vistas -->
+    
+            <mat-toolbar class="toolbarNavScreenShort">
+    
                 <div *ngFor="let route of routeMenu; let index = index">
                     <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
                         (click)="changeRouteActive(index)">
-                        <p class="">{{route.name}}</p>
-                        <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
-                        <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
+                        <p>{{route.name}}</p>
+                        <p *ngIf="routeMenu.length -1 !=  index"> / </p>
                     </div>
                 </div>
             </mat-toolbar>
-            <div class="container_start">
-                <!-- NUEVO :) -->
+            <!-- Inicia menu de modulos para pantallas pequeñas -->
+            <div class="containerMenuSshort">
                 <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
                     (mouseleave)="hover=false; indiceSeleccionado = -1">
                     <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
@@ -259,16 +43,236 @@
                         'border-color': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? itemMenu.colorMargenSelect : '' 
                     }" (click)="viewContent(itemMenu)" (mouseover)="hover=true; indiceSeleccionado = i">
                         <p>{{itemMenu.name}}</p>
+                        <!-- <p>ESTO ES UN TEXTO DE PRUEBA PARA MEDIR LA ADAPTACION DE TEXTO PARA EL MENU DE DMOSOFT</p> -->
                         <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
                     </div>
                 </div>
             </div>
-            <!-- Buscador de tareas y tareas encontradas -->
-            <div class="container_main">
+            <!-- <div class="vistas row">
+                <button [ngClass]="{ 'seleccionado' : vistaActiva === 1 }" (click)="vistaSeleccionada(1)" class="vista">{{
+                    'pos.home.vistaTarea' | translate }}</button>
+                <button [ngClass]="{ 'seleccionado' : vistaActiva === 2 }" (click)="vistaSeleccionada(2); calendario(true)"
+                    class="vista">{{ 'pos.home.vistaCalendario' | translate }}</button>
+            </div> -->
+        </mat-sidenav>
+        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="head__sidenav">
+                <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.botones.cerrar' | translate">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <!-- <span class="spacer" *ngIf="ajustes"></span> -->
+                <!-- nombre de las barras de ajustes -->
+                <div class="nombresAjustes">
+                    <label class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</label>
+                    <label class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</label>
+                    <label class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</label>
+                </div>
+                <span class="spacer"></span>
+                <span class="spacer" *ngIf="ajustes"></span>
+            </mat-toolbar>
+    
+            <div class="ajustes" *ngIf="ajustes">
+                <!-- Vista Seleccionar Lenguajes -->
+                <div class="vistaAjustes" (click)="verLenguajes()">
+                    <p class="pTitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
+                    <p class="pDescripcion">{{getNameByLanguageRegion(activeLang)}}</p>
+                </div>
+                <p class="separador"></p>
+                <div class="vistaAjustes" (click)="verTema()">
+                    <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
+                    <p class="pDescripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
+                    <p class="pDescripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+                </div>
+                <p class="separador"></p>
+                <div class="vistaAjustes">
+                    <div class="ayuda">
+                        <p class="pTitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                        <span class="spacer"></span>
+                        <mat-icon>navigate_next</mat-icon>
+                    </div>
+                    <!-- <p class="pDescripcion"> </p> -->
+                </div>
+                <p class="separador"></p>
             </div>
-            <!-- Mostrar logos -->
-            <!-- <app-barra-logos></app-barra-logos> -->
-            <app-barra-logo-demosoft></app-barra-logo-demosoft>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    
+            <!-- Lenguajes de la aplicacion -->
+            <div class="lenguajes" *ngIf="idiomas">
+                <mat-radio-group class="example-radio-group" [(ngModel)]="idioma">
+                    <mat-radio-button class="example-radio-button separador" *ngFor="let item of languages ; let i = index"
+                        [value]="i" color="primary" (click)="changeLang(i)">
+                        {{getNameByLanguageRegion(item)}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!-- Seleccionar tema -->
+            <div class="lenguajes" *ngIf="temas">
+                <div class="temaOscuro">
+                    <mat-icon class="ico-tema">dark_mode</mat-icon>
+                    <div class="desc-tema">
+                        <p class="titulo-tema">{{'pos.home.modo' | translate}}</p>
+                        <p class="descripcion-tema">{{'pos.home.descripcionTema' | translate}}</p>
+                    </div>
+                </div>
+                <p class="separador"></p>
+    
+                <mat-radio-group class="example-radio-group" [(ngModel)]="temaOscuro" (ngModelChange)="toggleTheme()">
+                    <mat-radio-button class="example-radio-button separador" color="primary" [value]="true">
+                        {{'pos.home.activo' | translate}}</mat-radio-button>
+                    <mat-radio-button class="example-radio-button separador" color="primary" [value]="false">
+                        {{'pos.home.inactivo' | translate}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!-- Mostrar detalles del usuario -->
+            <div class="detallesUsuario" *ngIf="detallesUsuario">
+                <div class="textEncabezado">
+                    <!-- <img src="https://img.freepik.com/fotos-premium/hombre-barbudo-seguro-si-mismo-mirando-camara-expresion-seria-hombre-negocios-determinado-sonreir-vistiendo-traje-estilo-oficial-disparo-estudio-interior-aislado-sobre-fondo-gris_416530-26522.jpg"
+                        class="circular-image" alt=""> -->
+    
+                    <div class="circular-usuario">
+                        <p class="inicial-usuario">{{user[0]}}</p>
+                    </div>
+                </div>
+                <p class="userName">{{user.toUpperCase()}}</p>
+                <!-- <p class="userEmail textEncabezado">Administrador@empresa.com.gt</p> -->
+    
+                <div class="backgroundscreenUser">
+                    <div class="containerDatosUser">
+                        <!-- <div>
+                            <p class="pTitulo">{{'pos.home.servidor' | translate}}</p>
+                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                            <p class="separador"></p>
+                        </div>
+                        <div>
+                            <p class="pTitulo">{{'pos.home.baseDatos' | translate}}</p>
+                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                            <p class="separador"></p>
+                        </div> -->
+                        <div>
+                            <p class="pTitulo">{{'pos.home.empresa' | translate}}</p>
+                            <!-- <p class="pDescripcion">(1) CONBEXSA</p> -->
+                            <p class="pDescripcion">{{empresa}}</p>
+                            <p class="separador"></p>
+                        </div>
+                        <div>
+                            <p class="pTitulo">{{'pos.home.estacion' | translate}}</p>
+                            <!-- <p class="pDescripcion">(6) ADMINISTRACION</p> -->
+                            <p class="pDescripcion">{{estacion}}</p>
+                            <p class="separador"></p>
+                        </div>
+                        <div>
+                            <p class="pTitulo">{{'pos.home.origen' | translate}}</p>
+                            <p class="pDescripcion">{{url}}</p>
+                            <p class="separador"></p>
+                        </div>
+                        <div>
+                            <p class="pTitulo">{{'pos.home.versionActual' | translate}}</p>
+                            <p class="pDescripcion">1.0.0</p>
+                            <p class="separador"></p>
+                        </div>
+                        <!-- <div>
+                            <p class="pTitulo">{{'pos.home.fecha' | translate}}</p>
+                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                            <p class="separador"></p>
+                        </div>
+                        <div>
+                            <p class="pTitulo">{{'pos.home.version' | translate}}</p>
+                            <p class="pDescripcion">{{'pos.home.noDidsponible' | translate}}</p>
+                            <p class="separador"></p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+    
+    
+    
+            <!-- botones detalle usuario, ajustes y salir -->
+            <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
+                <!-- Ver informacion del usuario -->
+                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
+                    <mat-icon>settings</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <!-- Salir o cerrar sesion -->
+                <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- boton regresar a detalle usuario -->
+            <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
+                <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- botones regresar a ajustes -->
+            <mat-toolbar class="backColorNavBar" *ngIf="idiomas">
+                <button mat-icon-button (click)="verAjustes()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- Regresar tema -->
+            <mat-toolbar class="backColorNavBar" *ngIf="temas">
+                <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+        </mat-sidenav>
+    
+        <mat-sidenav-content>
+            <mat-toolbar class="toolbarPhone">
+                <mat-toolbar-row>
+                    <button mat-icon-button (click)="sidenav.open()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <p>{{ routeMenu[routeMenu.length -1].name }}</p>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="sidenavend.open()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbarlarge">
+                <p> {{routeMenu[routeMenu.length -1].name}} </p>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="sidenavend.open()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!--Container-->
+            <div class="container_page">
+                <!-- Inicio Contenedor de rutas navegadas -->
+                <mat-toolbar class="toolbarNavegacion">
+                    <div *ngFor="let route of routeMenu; let index = index">
+                        <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
+                            (click)="changeRouteActive(index)">
+                            <p class="">{{route.name}}</p>
+                            <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
+                            <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
+                        </div>
+                    </div>
+                </mat-toolbar>
+                <div class="container_start">
+                    <!-- NUEVO :) -->
+                    <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
+                        (mouseleave)="hover=false; indiceSeleccionado = -1">
+                        <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
+                            background: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorSelected : 'transparent',
+                            'border-left': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? '6px solid' : '',
+                            'border-color': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? itemMenu.colorMargenSelect : '' 
+                        }" (click)="viewContent(itemMenu)" (mouseover)="hover=true; indiceSeleccionado = i">
+                            <p>{{itemMenu.name}}</p>
+                            <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Buscador de tareas y tareas encontradas -->
+                <div class="container_main">
+                </div>
+                <!-- Mostrar logos -->
+                <!-- <app-barra-logos></app-barra-logos> -->
+                <app-barra-logo-demosoft></app-barra-logo-demosoft>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
