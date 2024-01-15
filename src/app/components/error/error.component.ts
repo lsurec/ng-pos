@@ -11,21 +11,20 @@ import { EventService } from 'src/app/services/event.service';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })
-export class ErrorComponent implements OnInit{
+export class ErrorComponent implements OnInit {
 
   @Input() regresar?: number; // decorate the property with @Input()
 
-
-    error!:ErrorInterface;
-    user:string = "";
-    empresa?:EmpresaInterface;
-    estacion?:EstacionInterface;
+  error!: ErrorInterface;
+  user: string = "";
+  empresa?: EmpresaInterface;
+  estacion?: EstacionInterface;
 
   constructor(
     private _location: Location,
     private _eventService: EventService,
   ) {
-    
+
   }
   ngOnInit(): void {
     this.error = PreferencesService.error;
@@ -36,14 +35,21 @@ export class ErrorComponent implements OnInit{
       this.empresa = PreferencesService.empresa;
       this.estacion = PreferencesService.estacion;
     } catch (error) {
-      
+
     }
   }
 
   //regresar a la pantalla anterior
   goBack() {
-    // this._location.back();
-    this._eventService.verDocumentoEvent(true);
+    if (!this.regresar) {
+      this._location.back();
+    }
+
+    if (this.regresar == 1) {
+
+      this._eventService.verDocumentoEvent(true);
+      return;
+    }
   }
 
 

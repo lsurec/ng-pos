@@ -36,7 +36,7 @@ export class FacturaComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
 
-  regresar!: number;
+  regresar: number = 1;
   cuenta?: ClienteInterface;
   vistaFactura: boolean = true;
   nuevoCliente: boolean = false;
