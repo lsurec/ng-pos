@@ -1,19 +1,36 @@
 <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+
+    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+        <mat-toolbar class="head__sidenav">
+            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.botones.cerrar' | translate">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <!-- Contenido del sidenav -->
+        <div class="contenido-sidenav">
+            <p>hola</p>
+        </div>
+
+        <!-- Barra de abajo para regresar y salir -->
+        <mat-toolbar class="barra-regresar">
+            <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                <mat-icon>settings</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav>
     <mat-sidenav-content>
+
+        <!-- Barras para titulos y boton de cerrar sidenav -->
         <mat-toolbar class="toolbarPhone">
             <mat-toolbar-row>
-                <button mat-icon-button (click)="sidenav.open()">
-                    <mat-icon>menu</mat-icon>
-                </button>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="sidenavend.open()">
                     <mat-icon>menu</mat-icon>
                 </button>
-            </mat-toolbar-row>
-            <mat-toolbar-row>
-
-                <span class="spacer"></span>
-
             </mat-toolbar-row>
         </mat-toolbar>
         <mat-toolbar class="toolbarlarge">
@@ -22,36 +39,12 @@
                 <mat-icon>menu</mat-icon>
             </button>
         </mat-toolbar>
-        <!--Container-->
-        <div class="container_page">
-            <div class="container_main">
-                <p>content</p>
-            </div>
+
+        <!-- Contenido del componente -->
+        <div class="container_main">
+
         </div>
+
     </mat-sidenav-content>
-    <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-        <mat-toolbar class="head__sidenav ">
-            <span class="spacer"></span>
-            <h6>Encabezado</h6>
-            <span class="spacer"></span>
-            <button mat-icon-button (click)="close('toggle button')">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-        <div class="container-fluid">
-            <p>content start vivsible here</p>
-        </div>
-    </mat-sidenav>
-    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
 
-        <mat-toolbar class="head__sidenav ">
-            <button mat-icon-button (click)="close('toggle button')">
-                <mat-icon>close</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <h6>Encabezado</h6>
-            <span class="spacer"></span>
-        </mat-toolbar>
-
-    </mat-sidenav>
 </mat-sidenav-container>

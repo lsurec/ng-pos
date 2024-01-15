@@ -37,13 +37,14 @@ mat-sidenav {
 }
 
 .sidenav_container {
-    display       : flex;
-    flex-direction: column;
-    position      : absolute;
-    top           : 0;
-    bottom        : 0;
-    left          : 0;
-    right         : 0;
+    display         : flex;
+    flex-direction  : column;
+    position        : absolute;
+    top             : 0;
+    bottom          : 0;
+    left            : 0;
+    right           : 0;
+    background-color: $background-oficial;
 }
 
 /*Fin SideNav*/
@@ -60,7 +61,9 @@ mat-sidenav {
 
 .toolbarPhone,
 .toolbarlarge {
-    position: fixed !important;
+    position        : fixed !important;
+    background-color: $background-oficial;
+    border-bottom   : 1px solid $borde-toolbar;
 }
 
 @media screen and (max-width: 767px) {
@@ -118,7 +121,9 @@ mat-sidenav {
 }
 
 .head__sidenav {
-    height: 44px !important;
+    height          : 44px !important;
+    background-color: $background-oficial;
+    border-bottom   : 1px solid $borde-toolbar;
 }
 
 /*Fin Contendo derecho*/
@@ -129,4 +134,20 @@ mat-sidenav {
 
 p {
     margin-bottom: 0px;
+}
+
+.contenido-sidenav {
+    background-color: $background-oficial;
+    height          : calc(100% - 89px) !important;
+    padding         : 0px;
+    overflow        : auto;
+}
+
+//barra de abajo
+.barra-regresar {
+    background: #FEF5E7;
+    color     : #000000;
+    height    : 40px !important;
+    padding   : 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
