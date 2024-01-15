@@ -59,8 +59,16 @@ p {
 }
 
 .subtitulo {
-    font-size  : 16px;
-    font-weight: 500;
+    font-size: 16px;
+}
+
+.descripcion {
+    color    : $color-gris-s;
+    font-size: 14px;
+}
+
+.iconos-detalles {
+    color: $color-gris-s;
 }
 
 .userName {

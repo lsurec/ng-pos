@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
     private themeService: ThemeService,
     private _dataUserService: DataUserService,
     public facturaService: FacturaService,
-    private _retryService:RetryService
+    private _retryService: RetryService
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -128,17 +128,17 @@ export class HomeComponent implements OnInit {
     } else {
       this.tema = 0;
     }
-  } 
-  
-  
+  }
+
+
   ngOnInit(): void {
-  
+
     this._retryService.home$.subscribe(() => {
       this.showError = false;
       this.loadDataMenu();
     });
   }
-  
+
 
 
   //Abrir cerrar Sidenav
@@ -160,10 +160,7 @@ export class HomeComponent implements OnInit {
     this.activeLang = languagesProvider[lang];
     this.translate.use(this.activeLang.lang);
     PreferencesService.lang = JSON.stringify(lang);
-    this.verDetalles();
   };
-
-
 
   viewHome(value: boolean): void {
     this.hideHome = value;
@@ -235,7 +232,7 @@ export class HomeComponent implements OnInit {
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
 
-        
+
 
         this.isLoading = false;
         this.showError = true;
@@ -486,7 +483,6 @@ export class HomeComponent implements OnInit {
       PreferencesService.theme = '0';
       this.tema = 0;
     }
-    this.verDetalles();
   }
 
   //Mostrar pantalla de "AJUSTES" y mantener ocultas todas las demas
