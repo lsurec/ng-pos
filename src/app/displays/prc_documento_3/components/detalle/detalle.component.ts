@@ -16,6 +16,7 @@ import { FactorConversionInterface } from '../../interfaces/factor-conversion.in
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-detalle',
@@ -70,7 +71,7 @@ export class DetalleComponent {
     private _productService: ProductService,
     public facturaService: FacturaService,
     private _productoService: ProductoService,
-
+    private _eventService: EventService,
   ) { }
 
 
@@ -445,6 +446,11 @@ export class DetalleComponent {
     this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
 
 
+  }
+
+  //verError
+  verError() {
+    this._eventService.verInformeErrorEvent(true);
   }
 
 }

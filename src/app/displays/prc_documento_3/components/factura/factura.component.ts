@@ -97,7 +97,7 @@ export class FacturaComponent implements OnInit {
     });
 
     this._eventService.verInformeError$.subscribe((eventData) => {
-      this.verHistorial();
+      this.verInformeError();
     });
 
   }
