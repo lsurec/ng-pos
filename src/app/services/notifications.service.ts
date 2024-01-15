@@ -59,12 +59,12 @@ export class NotificationsService {
             {
                 title: this._translate.instant('pos.alertas.salioMal'),
                 description: this._translate.instant('pos.alertas.error'),
-                verdadero: this._translate.instant('pos.botones.informe'),
-                falso: this._translate.instant('pos.botones.aceptar'),
+                verdadero:  this._translate.instant('pos.botones.aceptar'),
+                falso: this._translate.instant('pos.botones.informe'),
             }
         );
 
-        if (!verificador) return;
+        if (verificador) return;
 
 
         let dateNow: Date = new Date();
