@@ -282,18 +282,13 @@ export class DetalleComponent {
 
   }
 
-  verTansacciones(transaccion: TraInternaInterface) {
+  verTansacciones(index: number) {
 
-    if (!transaccion.operaciones.length) {
+    if (this.facturaService.traInternas[index].operaciones.length == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinCarDes'));
       return;
     }
-
-    let transacciones = this._dialog.open(CargoDescuentoComponent, { data: transaccion })
-    transacciones.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    })
+    this._dialog.open(CargoDescuentoComponent, { data: index })
   }
 
   onOptionChange(optionId: number) {
