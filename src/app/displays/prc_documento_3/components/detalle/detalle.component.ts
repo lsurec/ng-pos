@@ -38,7 +38,7 @@ export class DetalleComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
   documento: number = this.facturaService.tipoDocumento!;
 
-  searchText!: string;
+  searchText: string = "";
   filtrosProductos: number = 1;
 
   tipoDesCar: number = 1;
@@ -76,17 +76,17 @@ export class DetalleComponent {
   ) { }
 
 
-  async buscarProducto(filtro: string) {
+  async buscarProducto() {
 
     //TODO:Translate
     //validar que siempre hay nun texto para buscar
-    if (!filtro) {
+    if (!this.searchText) {
       this._notificationsService.openSnackbar("Ingresa un texto para la busqueda.")
       return;
     }
 
     //eliminar espacios al final de la cadena
-    filtro = filtro.trim()
+    this.searchText = this.searchText.trim()
 
 
     let res: ResApiInterface;
@@ -97,7 +97,7 @@ export class DetalleComponent {
     if (this.filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
-        filtro,
+        this.searchText,
       );
     }
 
@@ -105,7 +105,7 @@ export class DetalleComponent {
     if (this.filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
-        filtro,
+        this.searchText,
       );
     }
 

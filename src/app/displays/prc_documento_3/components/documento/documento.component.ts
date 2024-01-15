@@ -198,7 +198,7 @@ export class DocumentoComponent {
   async buscarCliente() {
 
     //Validar que el componente 
-    if (this.searchText) {
+    if (!this.searchText) {
       //TODO:Translate
       this._notificationService.openSnackbar("Ingrese por lo menos un caracter para la busqueda.");
       return;
