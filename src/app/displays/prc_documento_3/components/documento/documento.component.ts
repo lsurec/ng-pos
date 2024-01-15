@@ -173,7 +173,14 @@ export class DocumentoComponent {
 
 
   // Función de filtrado
-  async buscarCliente(terminoBusqueda: string) {
+  async buscarCliente() {
+
+    //Validar que el componente 
+    if(this.searchText){
+      this._notificationService.openSnackbar("Ingrese por lo menos un caracter para la busqueda.");
+      return;
+    }
+
     // Limpiar la lista de registros antes de cada búsqueda
     this.facturaService.isLoading = true;
 
@@ -181,7 +188,7 @@ export class DocumentoComponent {
       this.user,
       this.token,
       this.empresa,
-      terminoBusqueda,
+      this.searchText,
     );
 
     this.facturaService.isLoading = false;
