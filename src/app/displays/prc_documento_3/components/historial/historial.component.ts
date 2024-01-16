@@ -35,7 +35,7 @@ export class HistorialComponent implements OnInit {
   documento: number = this._facturaService.tipoDocumento!;
 
   documentos: DocumentoResumenInterface[] = [];
-  docSelect?:DocumentoResumenInterface;
+  docSelect!:DocumentoResumenInterface;
 
   constructor(
     private _eventService: EventService,
