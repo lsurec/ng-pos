@@ -80,24 +80,28 @@
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos"> {{facturaService.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                                    <p class="textos-total"> {{facturaService.subtotal | currency:' ':'symbol':'2.2-2'
+                                        }} </p>
                                 </div>
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos"> {{facturaService.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                                    <p class="textos-total"> {{facturaService.cargo | currency:' ':'symbol':'2.2-2' }}
+                                    </p>
                                 </div>
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos"> {{facturaService.descuento | currency:' ':'symbol':'2.2-2' }}
+                                    <p class="textos-total"> {{facturaService.descuento | currency:' ':'symbol':'2.2-2'
+                                        }}
                                     </p>
                                 </div>
                                 <hr>
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}</p>
+                                    <p class="textos-total">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}
+                                    </p>
 
                                 </div>
                             </div>
@@ -108,12 +112,14 @@
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.contado' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos">{{facturaService.pagado | currency:' ':'symbol':'2.2-2' }}</p>
+                                    <p class="textos-total">{{facturaService.pagado | currency:' ':'symbol':'2.2-2' }}
+                                    </p>
                                 </div>
                                 <div class="dFlex">
                                     <p class="subtitulo">{{ 'pos.factura.cambio' | translate }}</p>
                                     <span class="spacer"></span>
-                                    <p class="textos"> {{facturaService.cambio | currency:' ':'symbol':'2.2-2' }} </p>
+                                    <p class="textos-total"> {{facturaService.cambio | currency:' ':'symbol':'2.2-2' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +135,7 @@
                             <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
                                 }}</button>
                             <span class="spacer"></span>
-                            <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.agregar' | translate
+                            <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.confirmar' | translate
                                 }}</button>
                         </div>
                     </div>

@@ -123,7 +123,9 @@
             "cuentaActualizada": "Se actualizó la cuenta, pero ocurrió un error al seleccionarla.",
             "cuentaActualizadaSeleccionada": "Cuenta actualizada y seleccionada correctamente.",
             "cuentaCreada": "Se creó la cuenta, pero ocurrió un error al seleccionarla.",
-            "cuentaCreadaSeleccionada": "Cuenta creada y seleccionada correctamente."
+            "cuentaCreadaSeleccionada": "Cuenta creada y seleccionada correctamente.",
+            "docEncontrado": "Documento encontrado",
+            "recuperar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?."
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -143,7 +145,8 @@
             "reciente": "Recientes",
             "agregar": "Agregar",
             "imprimir": "Imprimir",
-            "nuevoDoc": "Nuevo documento"
+            "nuevoDoc": "Nuevo documento",
+            "confirmar": "Confirmar"
         },
         "error": {
             "informe": "Informe de error",

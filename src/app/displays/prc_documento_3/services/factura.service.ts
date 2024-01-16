@@ -12,6 +12,7 @@ import { PagoComponentService } from './pogo-component.service';
 import { DocLocalInterface } from '../interfaces/doc-local.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root',
@@ -55,6 +56,7 @@ export class FacturaService {
     constructor(
         private _pagoComponentService: PagoComponentService,
         private _notificationsService: NotificationsService,
+        private _translate: TranslateService,
     ) { }
 
 
@@ -134,8 +136,8 @@ export class FacturaService {
         let verificador = await this._notificationsService.openDialogActions(
             {
                 //TODO:Translate
-                title: "Documento encontrado",
-                description: "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
+                title: this._translate.instant('pos.alertas.docEncontrado'),
+                description: this._translate.instant('pos.alertas.recuperar'),
             }
         );
 

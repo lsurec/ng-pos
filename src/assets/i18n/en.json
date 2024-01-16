@@ -123,7 +123,9 @@
             "cuentaActualizada": "The account was updated, but an error occurred when selecting it.",
             "cuentaActualizadaSeleccionada": "Account updated and selected correctly.",
             "cuentaCreada": "Account created, but an error occurred while selecting it.",
-            "cuentaCreadaSeleccionada": "Account created and selected successfully."
+            "cuentaCreadaSeleccionada": "Account created and selected successfully.",
+            "docEncontrado": "Document found",
+            "recuperar": "An unconfirmed document was detected. Do you want to load the found document?"
         },
         "botones": {
             "aceptar": "OK",
@@ -143,7 +145,8 @@
             "reciente": "Recent",
             "agregar": "Add",
             "imprimir": "Print",
-            "nuevoDoc": "New Document"
+            "nuevoDoc": "New Document",
+            "confirmar": "Confirm"
         },
         "error": {
             "informe": "Error Report",
