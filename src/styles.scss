@@ -1,10 +1,67 @@
+$color-blanco         : #ffffff;
+$bordes               : #c4c4c4;
+// $fondo-oscuro      : #121212;
+$fondo-oscuro         : #302f2f;
+
 html,
 body {
-    height             : 100%;
-    // background-color: #FFF3E0 !important;
-    background-color   : #FEF5E7 !important;
-    font-family        : 'Playfair Display', serif;
+    height          : 100%;
+    background-color: #FEF5E7 !important;
+    font-family     : 'Playfair Display', serif;
 }
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+/* Importa los estilos de Angular Material */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+//Define los estilos específicos del tema oscuro 
+.dark-theme {
+    background-color: #121212; //Fondo oscuro
+    color           : $color-blanco; // Texto claro en fondo oscuro
+}
+
+//Aplica el tema oscuro a elementos específicos si es necesario 
+.dark-theme .container_start,
+.dark-theme .toolbarNavegacion {
+    background-color: $fondo-oscuro !important;
+    color           : $color-blanco;
+}
+
+//FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
+.dark-theme .container_start {
+    background-color: $fondo-oscuro !important;
+    color           : $color-blanco;
+}
+
+//FONDOS EN COLOR GRIS 
+.dark-theme .container_start,
+.dark-theme .container_main {
+    background-color: $fondo-oscuro !important;
+}
+
+//TEXTOS EN COLOR BLANCO
+.dark-theme .contenedorModulo {
+    color: $color-blanco !important;
+}
+
+//BORDE IZQUIERDO
+.dark-theme .container_start {
+    border-right: 1px solid $bordes !important;
+}
+
+//BORDE ABAJO
+.dark-theme .toolbarNavegacion {
+    border-bottom: 1px solid $bordes !important;
+}
+
+.dark-theme .itemRouteActive,
+.dark-theme .contenedorModulo {
+    color: $color-blanco !important;
+}
+
+.dark-theme .itemRouteActive:hover {
+    color : $color-blanco !important;
+    cursor: pointer;
+}
