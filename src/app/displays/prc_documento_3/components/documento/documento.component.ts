@@ -46,7 +46,7 @@ export class DocumentoComponent {
 
   constructor(
     private _dialog: MatDialog,
-    private translate: TranslateService,
+    private _translate: TranslateService,
     private _eventService: EventService,
     public facturaService: FacturaService,
     private _cuentaService: CuentaService,
@@ -168,7 +168,7 @@ export class DocumentoComponent {
         permitir_CxC: true,
 
       }
-      this._notificationService.openSnackbar("Cuenta seleccioanda.")
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
 
     } else {
       this.facturaService.cuenta = undefined;
@@ -199,8 +199,7 @@ export class DocumentoComponent {
 
     //Validar que el componente 
     if (!this.searchText) {
-      //TODO:Translate
-      this._notificationService.openSnackbar("Ingrese por lo menos un caracter para la busqueda.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
 
@@ -228,7 +227,7 @@ export class DocumentoComponent {
 
     //si no hay coicidencias mostrar mensaje
     if (cuentas.length == 0) {
-      this._notificationService.openSnackbar("No hay coincidencias para la busqueda.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
       return;
     }
 
@@ -236,7 +235,7 @@ export class DocumentoComponent {
     //si solo hay uno seleccioanrlo
     if (cuentas.length == 1) {
       this.facturaService.cuenta = cuentas[0];
-      this._notificationService.openSnackbar("Cuenta seleccioanda.")
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
 
       return;
     }
@@ -248,9 +247,8 @@ export class DocumentoComponent {
 
         let cliente: ClienteInterface = result[0];
         this.facturaService.cuenta = cliente;
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
 
-        //TODO:transalate
-        this._notificationService.openSnackbar("Cuenta seleccioanda.")
       }
     })
   }

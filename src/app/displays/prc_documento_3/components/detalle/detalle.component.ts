@@ -78,10 +78,9 @@ export class DetalleComponent {
 
   async buscarProducto() {
 
-    //TODO:Translate
     //validar que siempre hay nun texto para buscar
     if (!this.searchText) {
-      this._notificationsService.openSnackbar("Ingresa un texto para la busqueda.")
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
 
@@ -125,7 +124,7 @@ export class DetalleComponent {
 
 
     if (productos.length == 0) {
-      this._notificationsService.openSnackbar("No hay coincidencias para la busqueda");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
       return;
     }
 
@@ -171,7 +170,7 @@ export class DetalleComponent {
       //validar que existan bodegas
       if (this._productoService.bodegas.length == 0) {
         this.facturaService.isLoading = false;
-        this._notificationsService.openSnackbar("No hay bodegas asignadas a este producto.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
         return;
       }
 
@@ -194,8 +193,8 @@ export class DetalleComponent {
         if (!resPrecio.status) {
           this.facturaService.isLoading = false;
 
-        this.verError(resBodega);
-          
+          this.verError(resBodega);
+
           return;
         }
 
@@ -332,22 +331,19 @@ export class DetalleComponent {
 
 
     if (this.convertirTextoANumero(this.valueCargoDescuento) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.valorNumerico'));
       return;
     }
 
     let monto = this.convertirTextoANumero(this.valueCargoDescuento);
 
     if (monto! <= 0) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe mayor a 0.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.mayorCero'));
       return;
     }
 
     if (this.facturaService.montos.length > 0) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("Elimina primero las formas de pago.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.eliminarPagos'));
       return;
     }
 
@@ -406,7 +402,7 @@ export class DetalleComponent {
     this.facturaService.calculateTotales();
 
     //TODO:Translate
-    this._notificationsService.openSnackbar(operacion == 1 ? "Cargo agregado correctamente." : "Descuento agregado correctamente.");
+    this._notificationsService.openSnackbar(operacion == 1 ? this._translate.instant('pos.alertas.cargo') : this._translate.instant('pos.alertas.descuento'));
 
 
   }
@@ -445,9 +441,7 @@ export class DetalleComponent {
 
     this.facturaService.calculateTotales();
 
-    //TODO:Translate
-    this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
-
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionesEliminadas'));
 
   }
 
