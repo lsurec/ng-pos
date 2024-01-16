@@ -179,11 +179,11 @@ export class PreferencesService {
 
     @Input()
     static set documento(value: string) {
-        sessionStorage.setItem(this.documentkey, value.toString());
+        localStorage.setItem(this.documentkey, value.toString());
     }
 
     static get documento(): string {
-        let value = sessionStorage.getItem(this.documentkey);
+        let value = localStorage.getItem(this.documentkey);
 
         if (!value) return "";
         return value;

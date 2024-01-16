@@ -54,14 +54,14 @@ export class FacturaService {
 
     constructor(
         private _pagoComponentService: PagoComponentService,
-        private _notificationsService:NotificationsService,
+        private _notificationsService: NotificationsService,
     ) { }
 
 
     async loadDocDave() {
 
         let localDoc = PreferencesService.documento;
-        
+
         //si no hay un documento guardado no hacer nada
         if (!localDoc) {
             return;
@@ -135,11 +135,11 @@ export class FacturaService {
             {
                 //TODO:Translate
                 title: "Documento encontrado",
-                description:"Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
+                description: "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
             }
         );
 
-        if (verificador) return;
+        if (!verificador) return;
 
 
         //Cargar documento
@@ -191,7 +191,6 @@ export class FacturaService {
     }
 
     calculateTotalesPago() {
-        //TODO: Guardar documento local (storage)
         this.saldo = 0;
         this.cambio = 0;
         this.pagado = 0;
@@ -213,12 +212,15 @@ export class FacturaService {
 
         this._pagoComponentService.monto = parseFloat(this.saldo.toFixed(2)).toString();
 
+
+
+        this.saveDocLocal();
+
     }
 
 
 
     calculateTotales() {
-        //TODO: Guardar documento local (storage)
         this.subtotal = 0;
         this.cargo = 0;
         this.descuento = 0;
