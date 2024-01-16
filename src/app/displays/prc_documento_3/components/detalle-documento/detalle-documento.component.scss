@@ -70,9 +70,8 @@ hr {
 .cliente-vendedor,
 .productos-pagos,
 .pago {
-    display   : flex;
-    border-top: 1px solid $color-bordes;
-    padding   : 10px 0px;
+    display: flex;
+    padding: 10px 0px;
 }
 
 .tipo-serie-documento {
@@ -112,15 +111,15 @@ hr {
 }
 
 .detalles-lista,
-.informacion{
+.informacion {
     width  : 48%;
     padding: 10px 0px 5px;
 }
 
 .tipo-serie {
-    width  : 48%;
-    padding: 10px 0px 5px;
-    border-bottom: 1px solid $color-bordes ;
+    width        : 48%;
+    padding      : 10px 0px 5px;
+    border-bottom: 1px solid $color-bordes;
 }
 
 .descripciones {

@@ -19,14 +19,14 @@
                 <div class="informacion">
                     <p class="subtitulo-borde">{{'pos.home.tipoDocumento' | translate}}</p>
                     <div class="descripciones">
-                        <p class="textos">Factura (1)</p>
+                        <p class="textos">{{documento ?? estructura.estructura.Doc_Tipo_Documento}}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
                 <div class="informacion">
                     <p class="subtitulo-borde ">{{'pos.home.serieDocumento' | translate}}</p>
                     <div class="descripciones">
-                        <p class="textos">FMR (2)</p>
+                        <p class="textos">{{serie ?? estructura.estructura.Doc_Serie_Documento}}</p>
                     </div>
                 </div>
             </div>
@@ -35,14 +35,14 @@
                 <div class="informacion">
                     <p class="subtitulo-borde">{{'pos.home.empresa' | translate}}</p>
                     <div class="descripciones">
-                        <p class="textos">Empresa 1</p>
+                        <p class="textos">{{empresa ?? estructura.estructura.Doc_Empresa}}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
                 <div class="informacion">
                     <p class="subtitulo-borde ">{{'pos.home.estacion' | translate}}</p>
                     <div class="descripciones">
-                        <p class="textos">Estacion 2</p>
+                        <p class="textos">{{estacion ?? estructura.estructura.Doc_Estacion_Trabajo}}</p>
                     </div>
                 </div>
             </div>

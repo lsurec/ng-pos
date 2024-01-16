@@ -24,7 +24,8 @@ import { SerieService } from '../../services/serie.service';
 })
 export class DetalleDocumentoComponent implements OnInit {
 
-  @Input() estructura: DocumentoResumenInterface | undefined;
+  @Input()
+  estructura!: DocumentoResumenInterface;
   regresar: number = 6;
   verError: boolean = false;
   isLoading: boolean = false;
@@ -34,16 +35,17 @@ export class DetalleDocumentoComponent implements OnInit {
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
 
-  empresa?: EmpresaInterface;
-  estacion?: EstacionInterface;
-  serie?: SerieInterface;
+  empresa?: string ;
+  estacion?: string ;
+  serie?: string ;
+  documento?:string ;
 
   constructor(
     private _eventService: EventService,
     private _localSettingService: LocalSettingsService,
     private _notificationsServie: NotificationsService,
     private _translate: TranslateService,
-    private _serieService:SerieService,
+    private _serieService: SerieService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -54,6 +56,7 @@ export class DetalleDocumentoComponent implements OnInit {
     this.loadData()
 
   }
+
 
   async loadData() {
 
@@ -67,16 +70,16 @@ export class DetalleDocumentoComponent implements OnInit {
     let serieDoc: string = objDoc.Doc_Serie_Documento;
 
 
+    this.isLoading = true;
 
-
-    let resEmpresa:ResApiInterface = await this._localSettingService.getEmpresas(
+    let resEmpresa: ResApiInterface = await this._localSettingService.getEmpresas(
       this.user,
       this.token,
     );
 
     if (!resEmpresa.status) {
 
-      //TODO:siloading
+      this.isLoading = false;
 
       let verificador = await this._notificationsServie.openDialogActions(
         {
@@ -95,25 +98,26 @@ export class DetalleDocumentoComponent implements OnInit {
 
     }
 
-    let empresas:EmpresaInterface[] = resEmpresa.response;
-    
+    let empresas: EmpresaInterface[] = resEmpresa.response;
+
     for (let i = 0; i < empresas.length; i++) {
       const element = empresas[i];
-      if(element.empresa == empresaId){
-        this.empresa = element;
+      if (element.empresa == empresaId) {
+        this.empresa = `${element.empresa_Nombre} (${empresaId})`;
         break;
       }
     }
 
-    let resEstacion:ResApiInterface = await this._localSettingService.getEstaciones(
+    let resEstacion: ResApiInterface = await this._localSettingService.getEstaciones(
       this.user,
       this.token
     );
 
-    
+
     if (!resEstacion.status) {
 
-      //TODO:siloading
+      this.isLoading = false;
+
 
       let verificador = await this._notificationsServie.openDialogActions(
         {
@@ -133,20 +137,65 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    let estaciones:EstacionInterface[] = resEstacion.response;
+    let estaciones: EstacionInterface[] = resEstacion.response;
 
     for (let i = 0; i < estaciones.length; i++) {
       const element = estaciones[i];
-      if(element.estacion_Trabajo == estacionId){
-        this.estacion = element;
+      if (element.estacion_Trabajo == estacionId) {
+        this.estacion = `${element.descripcion} (${estacionId})`;
         break;
       }
     }
 
 
-    // let resSerie:ResApiInterface = 
+    let resSerie: ResApiInterface = await this._serieService.getSerie(
+      this.user,
+      this.token,
+      tipoDoc,
+      empresaId,
+      estacionId,
+    );
+
+
+    if (!resSerie.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resSerie);
+
+      return;
+
+    }
+
 
     
+    let series: SerieInterface[] = resSerie.response;
+
+    for (let i = 0; i < series.length; i++) {
+      const element = series[i];
+      if (element.serie_Documento == serieDoc) {
+        this.documento = `${element.des_Tipo_Documento} (${tipoDoc})`
+        this.serie = `${element.descripcion} (${serieDoc})`;
+        break;
+      }
+    }
+
+
+    this.isLoading = false;
+
+
 
 
   }
@@ -206,8 +255,8 @@ export class DetalleDocumentoComponent implements OnInit {
     this._eventService.verHistorialEvent(true);
   }
 
-   mostrarError(res:ResApiInterface) {
-    
+  mostrarError(res: ResApiInterface) {
+
     let dateNow: Date = new Date();
 
     let error = {
