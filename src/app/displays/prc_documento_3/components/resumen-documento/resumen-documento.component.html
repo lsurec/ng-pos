@@ -1,136 +1,148 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
-<div *ngIf="!isLoading">
-
-    <mat-toolbar-row class="head__sidenav">
-        <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
-            (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <span class="spacer"></span>
-        <!-- Titulo de la tarea -->
-        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
-        <span class="spacer"></span>
-
-    </mat-toolbar-row>
-    <div class="container-main">
-        <div class="container">
-            <div class="d-flex">
-                <div class="detalle-resumen">
-                    <div class="informacion">
-                        <p class="subtitulo-borde ">{{ 'pos.factura.cliente' | translate }}</p>
-                        <div class="descripciones">
-                            <p class="textos">{{ 'pos.factura.nit' | translate }}{{facturaService.cuenta?.factura_NIT}}
-                            </p>
-                            <p class="textos">{{ 'pos.factura.nombre' | translate }}
-                                {{facturaService.cuenta?.factura_Nombre}}</p>
-                            <p class="textos">{{ 'pos.factura.direccion' | translate }}
-                                {{facturaService.cuenta?.factura_Direccion}}</p>
-                        </div>
-                    </div>
-                    <div class="informacion" *ngIf="facturaService.formasPago.length > 0">
-                        <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
-                        <div class="descripciones">
-                            <p class="textos">{{facturaService.vendedor?.nom_Cuenta_Correntista}}</p>
-                        </div>
-                    </div>
-                    <div class="detalles-lista">
-                        <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
-                        <div class="descripcion-producto" *ngFor="let transaction of facturaService.traInternas">
-                            <p class="textos">{{transaction.cantidad}} x {{transaction.producto.des_Producto}}</p>
-                            <p class="textos">{{ 'pos.factura.sku' | translate }} {{transaction.producto.producto_Id}}
-                            </p>
-                            <p class="textos">{{ 'pos.factura.productos' | translate }} {{transaction.precio?.precioU |
-                                currency:' ':'symbol':'2.2-2' }}</p>
-                            <p class="textos">{{ 'pos.factura.total' | translate }} {{transaction.total | currency:'
-                                ':'symbol':'2.2-2' }} </p>
-                            <!--TODO:Translate-->
-                            <p class="textos">Cargos: {{transaction.cargo | currency:' ':'symbol':'2.2-2' }} </p>
-                            <p class="textos">Descuentos: {{transaction.descuento | currency:' ':'symbol':'2.2-2' }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="detalles-lista">
-                        <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
-                        <div class="descripcion-pago" *ngFor="let monto of facturaService.montos">
-                            <p class="textos">{{monto.payment.descripcion}}</p>
-                            <p class="textos" *ngIf="monto.payment.autorizacion">{{ 'pos.factura.autorizacion' |
-                                translate }}
-                                {{monto.authorization}}</p>
-                            <p class="textos" *ngIf="monto.payment.referencia">{{ 'pos.factura.referencia' | translate
-                                }}
-                                {{monto.reference}}</p>
-                            <p class="textos" *ngIf="monto.payment.banco">{{ 'pos.factura.banco' | translate }}
-                                {{monto.bank?.nombre}} </p>
-                            <!--TODO:Translate-->
-                            <p class="textos" *ngIf="monto.account">Cuenta:
-                                {{monto.account.descripcion}} </p>
-                            <p class="textos">{{ 'pos.factura.monto' | translate }} {{monto.amount | currency:'
-                                ':'symbol':'2.2-2' }}</p>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="informacion">
-                        <div class="descripcion-total">
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos"> {{facturaService.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
-                            </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos"> {{facturaService.cargo | currency:' ':'symbol':'2.2-2' }} </p>
-                            </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos"> {{facturaService.descuento | currency:' ':'symbol':'2.2-2' }} </p>
-                            </div>
-                            <hr>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}</p>
-
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <div *ngIf="!isLoading">
+        <mat-toolbar-row class="head__sidenav">
+            <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
+                (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <!-- Titulo de la tarea -->
+            <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
+            <span class="spacer"></span>
+            <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
+                (click)="mostrarError()">
+                <mat-icon>error</mat-icon>
+            </button>
+        </mat-toolbar-row>
+        <div class="container-main">
+            <div class="container">
+                <div class="d-flex">
+                    <div class="detalle-resumen">
+                        <div class="informacion">
+                            <p class="subtitulo-borde ">{{ 'pos.factura.cliente' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">{{ 'pos.factura.nit' | translate
+                                    }}{{facturaService.cuenta?.factura_NIT}}
+                                </p>
+                                <p class="textos">{{ 'pos.factura.nombre' | translate }}
+                                    {{facturaService.cuenta?.factura_Nombre}}</p>
+                                <p class="textos">{{ 'pos.factura.direccion' | translate }}
+                                    {{facturaService.cuenta?.factura_Direccion}}</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="informacion">
-                        <div class="descripcion-total">
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.contado' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos">{{facturaService.pagado | currency:' ':'symbol':'2.2-2' }}</p>
+                        <div class="informacion" *ngIf="facturaService.formasPago.length > 0">
+                            <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">{{facturaService.vendedor?.nom_Cuenta_Correntista}}</p>
                             </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.cambio' | translate }}</p>
-                                <span class="spacer"></span>
-                                <p class="textos"> {{facturaService.cambio | currency:' ':'symbol':'2.2-2' }} </p>
+                        </div>
+                        <div class="detalles-lista">
+                            <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
+                            <div class="descripcion-producto" *ngFor="let transaction of facturaService.traInternas">
+                                <p class="textos">{{transaction.cantidad}} x {{transaction.producto.des_Producto}}</p>
+                                <p class="textos">{{ 'pos.factura.sku' | translate }}
+                                    {{transaction.producto.producto_Id}}
+                                </p>
+                                <p class="textos">{{ 'pos.factura.productos' | translate }}
+                                    {{transaction.precio?.precioU |
+                                    currency:' ':'symbol':'2.2-2' }}</p>
+                                <p class="textos">{{ 'pos.factura.total' | translate }} {{transaction.total | currency:'
+                                    ':'symbol':'2.2-2' }} </p>
+                                <!--TODO:Translate-->
+                                <p class="textos">Cargos: {{transaction.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                                <p class="textos">Descuentos: {{transaction.descuento | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-lista">
+                            <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
+                            <div class="descripcion-pago" *ngFor="let monto of facturaService.montos">
+                                <p class="textos">{{monto.payment.descripcion}}</p>
+                                <p class="textos" *ngIf="monto.payment.autorizacion">{{ 'pos.factura.autorizacion' |
+                                    translate }}
+                                    {{monto.authorization}}</p>
+                                <p class="textos" *ngIf="monto.payment.referencia">{{ 'pos.factura.referencia' |
+                                    translate
+                                    }}
+                                    {{monto.reference}}</p>
+                                <p class="textos" *ngIf="monto.payment.banco">{{ 'pos.factura.banco' | translate }}
+                                    {{monto.bank?.nombre}} </p>
+                                <!--TODO:Translate-->
+                                <p class="textos" *ngIf="monto.account">Cuenta:
+                                    {{monto.account.descripcion}} </p>
+                                <p class="textos">{{ 'pos.factura.monto' | translate }} {{monto.amount | currency:'
+                                    ':'symbol':'2.2-2' }}</p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="informacion">
+                            <div class="descripcion-total">
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos"> {{facturaService.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                                </div>
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos"> {{facturaService.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                                </div>
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos"> {{facturaService.descuento | currency:' ':'symbol':'2.2-2' }}
+                                    </p>
+                                </div>
+                                <hr>
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}</p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="informacion">
+                            <div class="descripcion-total">
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.contado' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos">{{facturaService.pagado | currency:' ':'symbol':'2.2-2' }}</p>
+                                </div>
+                                <div class="dFlex">
+                                    <p class="subtitulo">{{ 'pos.factura.cambio' | translate }}</p>
+                                    <span class="spacer"></span>
+                                    <p class="textos"> {{facturaService.cambio | currency:' ':'symbol':'2.2-2' }} </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <span class="spacer"></span>
-                <div class="detalle-resumen">
-                    <div class="informacion">
-                        <textarea class="observacion"
-                            placeholder="{{ 'pos.factura.observacion' | translate }}" [(ngModel)]="observacion"></textarea>
-                    </div>
+                    <span class="spacer"></span>
+                    <div class="detalle-resumen">
+                        <div class="informacion">
+                            <textarea class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"
+                                [(ngModel)]="observacion"></textarea>
+                        </div>
 
-                    <div class="dFlex">
-                        <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate }}</button>
-                        <span class="spacer"></span>
-                        <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.agregar' | translate }}</button>
+                        <div class="dFlex">
+                            <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
+                                }}</button>
+                            <span class="spacer"></span>
+                            <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.agregar' | translate
+                                }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Mostrar logos -->
-    <!-- <app-barra-logos></app-barra-logos> -->
-    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <!-- Mostrar logos -->
+        <!-- <app-barra-logos></app-barra-logos> -->
+        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+    </div>
 </div>

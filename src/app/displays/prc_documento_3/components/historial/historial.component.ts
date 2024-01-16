@@ -24,6 +24,8 @@ export class HistorialComponent implements OnInit {
   isLoading: boolean = false;
   historial: boolean = true;
   detalleDocumento: boolean = false;
+  regresar: number = 5;
+  verError: boolean = false;
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -43,6 +45,10 @@ export class HistorialComponent implements OnInit {
 
     this._eventService.verHistorial$.subscribe((eventData) => {
       this.verHistorial();
+    });
+
+    this._eventService.regresarHistorial$.subscribe((eventData) => {
+      this.verError = false;
     });
   }
   ngOnInit(): void {
@@ -175,5 +181,9 @@ export class HistorialComponent implements OnInit {
   verHistorial() {
     this.detalleDocumento = false;
     this.historial = true;
+  }
+
+  mostrarError() {
+    this.verError = true;
   }
 }

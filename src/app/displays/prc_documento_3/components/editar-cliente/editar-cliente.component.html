@@ -1,52 +1,60 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
-<div *ngIf="!isLoading">
-    <mat-toolbar-row class="head__sidenav">
-        <button mat-icon-button aria-label matTooltip="{{'pos.botones.regresarAnterior' | translate}}"
-            (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <span class="spacer"></span>
-        <!-- Titulo de la tarea -->
-        <p class="titulo"></p>
-    </mat-toolbar-row>
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <div *ngIf="!isLoading">
+        <mat-toolbar-row class="head__sidenav">
+            <button mat-icon-button aria-label matTooltip="{{'pos.botones.regresarAnterior' | translate}}"
+                (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-icon-button aria-label matTooltip="{{'pos.botones.regresarAnterior' | translate}}"
+                (click)="verSalioMal()">
+                <mat-icon>error</mat-icon>
+            </button>
+            <!-- Titulo de la tarea -->
+            <p class="titulo"></p>
+        </mat-toolbar-row>
 
-    <div class="container-main">
-        <div class="sin-conexion">
-            <span class="spacer"></span>
-            <div class="centro">
-                <p class="titulo">{{ 'pos.factura.actualizar' | translate }}</p>
-                <form #searchForm="ngForm" class="formulario" (ngSubmit)="guardar()">
-                    <div class="campos">
-                        <input type="text" placeholder="{{ 'pos.factura.nombre' | translate }}" class="detalles"
-                            [(ngModel)]="nombre" name="nombre">
-                    </div>
-                    <div class="campos">
-                        <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
-                            class="detalles" [(ngModel)]="direccion">
-                    </div>
-                    <div class="campos">
-                        <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}" class="detalles"
-                            [(ngModel)]="nit">
-                    </div>
-                    <div class="campos">
-                        <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
-                            class="detalles" [(ngModel)]="telefono">
-                    </div>
-                    <div class="campos d-flex">
-                        <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
-                            class="detalles" [(ngModel)]="correo">
-                    </div>
-                    <div class="dFlex">
-                        <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' | translate }}</button>
-                        <span class="spacer"></span>
-                        <button mat-stroked-button type="submit">{{ 'pos.botones.aceptar' | translate }}</button>
-                    </div>
-                </form>
+        <div class="container-main">
+            <div class="sin-conexion">
+                <span class="spacer"></span>
+                <div class="centro">
+                    <p class="titulo">{{ 'pos.factura.actualizar' | translate }}</p>
+                    <form #searchForm="ngForm" class="formulario" (ngSubmit)="guardar()">
+                        <div class="campos">
+                            <input type="text" placeholder="{{ 'pos.factura.nombre' | translate }}" class="detalles"
+                                [(ngModel)]="nombre" name="nombre">
+                        </div>
+                        <div class="campos">
+                            <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
+                                class="detalles" [(ngModel)]="direccion">
+                        </div>
+                        <div class="campos">
+                            <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}"
+                                class="detalles" [(ngModel)]="nit">
+                        </div>
+                        <div class="campos">
+                            <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
+                                class="detalles" [(ngModel)]="telefono">
+                        </div>
+                        <div class="campos d-flex">
+                            <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
+                                class="detalles" [(ngModel)]="correo">
+                        </div>
+                        <div class="dFlex">
+                            <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' |
+                                translate }}</button>
+                            <span class="spacer"></span>
+                            <button mat-stroked-button type="submit">{{ 'pos.botones.aceptar' | translate }}</button>
+                        </div>
+                    </form>
+                </div>
+                <span class="spacer"></span>
             </div>
-            <span class="spacer"></span>
         </div>
+        <!-- Mostrar logos -->
+        <!-- <app-barra-logos></app-barra-logos> -->
+        <app-barra-logo-demosoft></app-barra-logo-demosoft>
     </div>
-    <!-- Mostrar logos -->
-    <!-- <app-barra-logos></app-barra-logos> -->
-    <app-barra-logo-demosoft></app-barra-logo-demosoft>
 </div>

@@ -19,6 +19,8 @@ import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estruct
 export class ResumenDocumentoComponent {
 
   isLoading: boolean = false;
+  regresar: number = 4;
+  verError: boolean = false;
 
   observacion = "";
 
@@ -31,7 +33,7 @@ export class ResumenDocumentoComponent {
   tipoCambio: number = PreferencesService.tipoCambio;
 
 
-  consecutivo:number = 0;
+  consecutivo: number = 0;
 
   constructor(
     private _eventService: EventService,
@@ -39,10 +41,18 @@ export class ResumenDocumentoComponent {
     private _notificationService: NotificationsService,
     private _documentService: DocumentService,
   ) {
+
+    this._eventService.regresarResumen$.subscribe((eventData) => {
+      this.verError = false;
+    });
   }
 
   goBack() {
     this._eventService.verDocumentoEvent(true);
+  }
+
+  mostrarError() {
+    this.verError = true;
   }
 
   sendDoc() {
@@ -213,13 +223,13 @@ export class ResumenDocumentoComponent {
       Doc_Tipo_Documento: this.documento,
       Doc_Serie_Documento: this.serie,
       Doc_Empresa: this.empresa,
-      Doc_Estacion_Trabajo:this.estacion,
-      Doc_UserName:this.user,
-      Doc_Observacion_1:this.observacion,
-      Doc_Tipo_Pago:1, //TODO:preguntar
-      Doc_Elemento_Asignado:1, //TODO:Preguntar
-      Doc_Transaccion:transacciones,
-      Doc_Cargo_Abono:pagos,
+      Doc_Estacion_Trabajo: this.estacion,
+      Doc_UserName: this.user,
+      Doc_Observacion_1: this.observacion,
+      Doc_Tipo_Pago: 1, //TODO:preguntar
+      Doc_Elemento_Asignado: 1, //TODO:Preguntar
+      Doc_Transaccion: transacciones,
+      Doc_Cargo_Abono: pagos,
     }
 
     let document: PostDocumentInterface = {

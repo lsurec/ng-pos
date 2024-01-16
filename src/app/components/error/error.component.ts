@@ -45,9 +45,33 @@ export class ErrorComponent implements OnInit {
       this._location.back();
     }
 
+    //desde documento
     if (this.regresar == 1) {
-
       this._eventService.verDocumentoEvent(true);
+      return;
+    }
+
+    //desde editar cuenta
+    if (this.regresar == 2) {
+      this._eventService.regresarEditarClienteEvent(true);
+      return;
+    }
+
+    //desde crear nueva cuenta
+    if (this.regresar == 3) {
+      this._eventService.regresarNuevaCuentaEvent(true);
+      return;
+    }
+
+    //desde resumen del documento
+    if (this.regresar == 4) {
+      this._eventService.regresarResumenEvent(true);
+      return;
+    }
+
+    //desde historial 
+    if (this.regresar == 5) {
+      this._eventService.regresarHistorialEvent(true);
       return;
     }
   }
