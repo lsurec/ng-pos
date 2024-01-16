@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
-import { RouteNamesService } from 'src/app/services/route.names.service';
 import { EventService } from 'src/app/services/event.service';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista';
 import { CuentaService } from '../../services/cuenta.service';
@@ -103,7 +100,7 @@ export class NuevoClienteComponent {
     //Si el servicio falló
     if (!resCuenta.status) {
       this.isLoading = false;
-      this._notificationsService.showErrorAlert(resCuenta);
+      this.mostrarError(resCuenta);
       return;
     }
 
@@ -122,7 +119,7 @@ export class NuevoClienteComponent {
 
       //TODO: translate
       this._notificationsService.openSnackbar("Se creo la cuenta, pero ocurrió un error al seleccioanarla.");
-      console.error(infoCuenta);
+      this.mostrarError(infoCuenta);
 
       return;
     }
@@ -171,7 +168,19 @@ export class NuevoClienteComponent {
     this._eventService.verDocumentoEvent(true);
   }
 
-  mostrarError() {
+  mostrarError(res:ResApiInterface) {
+    
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
     this.verError = true;
   }
 

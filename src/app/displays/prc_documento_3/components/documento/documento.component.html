@@ -49,7 +49,7 @@
             <div class="dFlex">
                 <p class="titulo">{{facturaService.getTextCuenta() | titlecase}}</p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="actualizar()" [matTooltip]="'pos.factura.actualizar' | translate">
+                <button *ngIf="!switchState" mat-icon-button (click)="actualizar()" [matTooltip]="'pos.factura.actualizar' | translate">
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>
