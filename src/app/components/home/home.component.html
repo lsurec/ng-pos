@@ -75,26 +75,37 @@
 
             <div class="ajustes" *ngIf="ajustes">
                 <!-- Vista Seleccionar Lenguajes -->
-                <div class="vistaAjustes" (click)="verLenguajes()">
-                    <p class="pTitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
-                    <p class="pDescripcion">{{getNameByLanguageRegion(activeLang)}}</p>
+                <div class="configuraciones" (click)="verLenguajes()">
+                    <mat-icon class="iconos-detalles">language</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
+                        <p class="descripcion">{{getNameByLanguageRegion(activeLang)}}</p>
+                    </div>
                 </div>
-                <p class="separador"></p>
-                <div class="vistaAjustes" (click)="verTema()">
-                    <p class="pTitulo">{{'pos.preferencias.tema' | translate}}</p>
-                    <p class="pDescripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
-                    <p class="pDescripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+                <!-- <p class="separador"></p> -->
+                <div class="configuraciones" (click)="verTema()">
+                    <mat-icon class="iconos-detalles" *ngIf="tema == 0">light_mode</mat-icon>
+                    <mat-icon class="iconos-detalles" *ngIf="tema == 1">dark_mode</mat-icon>
+
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.preferencias.tema' | translate}}</p>
+                        <p class="descripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
+                        <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+                    </div>
                 </div>
-                <p class="separador"></p>
-                <div class="vistaAjustes">
-                    <div class="ayuda">
-                        <p class="pTitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                <!-- <p class="separador"></p> -->
+                <div class="configuraciones">
+                    <mat-icon class="iconos-detalles">info</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle d-flex">
+                        <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
                         <span class="spacer"></span>
                         <mat-icon>navigate_next</mat-icon>
                     </div>
-                    <!-- <p class="pDescripcion"> </p> -->
                 </div>
-                <p class="separador"></p>
+                <!-- <p class="separador"></p> -->
             </div>
 
             <!-- Lenguajes de la aplicacion -->
@@ -207,7 +218,7 @@
             </mat-toolbar>
             <!-- Regresar tema -->
             <mat-toolbar class="backColorNavBar" *ngIf="temas">
-                <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
+                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
             </mat-toolbar>

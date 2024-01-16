@@ -3,6 +3,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-blanco         : #fff; //resaltar texto blanco
 $color-gris           : #666666; //texto gris
 $color-gris-s         : #777; //sombra y texto gris
+$color-naranja        : #df9722;
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
@@ -257,6 +258,16 @@ label {
     min-height      : 30px;
 }
 
+
+.configuraciones {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+    cursor       : pointer;
+    min-height   : 50px;
+}
+
 .cambiarTema {
 
     width           : 100%;
@@ -392,10 +403,10 @@ p {
 }
 
 .inicial-usuario {
-    padding       : 25%;
-    text-align    : center;
-    color         : $color-blanco;
-    font-size     : 35px;
+    padding   : 25%;
+    text-align: center;
+    color     : $color-blanco;
+    font-size : 35px;
 }
 
 /* Estilo adicional opcional para centrar la imagen dentro del contenedor circular */
@@ -564,7 +575,14 @@ h2 {
     border-bottom: 1px solid $color-bordes;
     display      : flex;
     align-items  : center;
+    cursor       : pointer;
 }
+
+// .detalles-usuario:hover {
+//     background-color: $color-azul;
+//     border-left     : 5px solid $color-naranja;
+//     color           : $color-blanco;
+// }
 
 .iconos-detalles {
     color: $color-gris-s;

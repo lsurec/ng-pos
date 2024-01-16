@@ -494,7 +494,7 @@ export class HomeComponent implements OnInit {
   verAjustes(): void {
     this.ajustes = true;
     this.detallesUsuario = false;
-
+    this.temas = false;
     this.idiomas = false;
   };
 

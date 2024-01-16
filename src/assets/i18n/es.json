@@ -18,8 +18,8 @@
             "origen": "Origen de Datos",
             "versionActual": "Versión actual",
             "tipoCambio": "Tipo de Cambio",
-            "tipoDocumento": "Tipo de Documento",
-            "serieDocumento": "Serie de Documento"
+            "tipoDocumento": "Tipo Documento",
+            "serieDocumento": "Serie Documento"
         },
         "login": {
             "correo": "Usuario",
