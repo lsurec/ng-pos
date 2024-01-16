@@ -1,16 +1,21 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="verDetalle">{{ 'pos.factura.seleccionar' | translate }}</p>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="dFlex">
+        <!-- <div class="dFlex">
             <span class="spacer"></span>
-            <!-- Titulo -->
             <p class="verDetalle">{{ 'pos.factura.seleccionar' | translate }}</p>
             <span class="spacer"></span>
-            <!-- Cerrar dialogo -->
             <span class="close" (click)="closeDialog()">&times;</span>
         </div>
-        <hr>
+        <hr> -->
         <div class="contenido-izquierdo">
             <div class="dFlex">
                 <span class="spacer"></span>
