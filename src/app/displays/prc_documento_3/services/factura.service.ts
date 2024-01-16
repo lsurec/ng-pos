@@ -9,12 +9,14 @@ import { ClienteInterface } from '../interfaces/cliente.interface';
 import { TraInternaInterface } from '../interfaces/tra-interna.interface';
 import { MontoIntreface } from '../interfaces/monto.interface';
 import { PagoComponentService } from './pogo-component.service';
+import { DocLocalInterface } from '../interfaces/doc-local.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class FacturaService {
-
 
 
     isLoading: boolean = false;
@@ -51,12 +53,123 @@ export class FacturaService {
 
 
     constructor(
-        private _pagoComponentService: PagoComponentService
+        private _pagoComponentService: PagoComponentService,
+        private _notificationsService:NotificationsService,
     ) { }
 
 
+    async loadDocDave() {
+
+        let localDoc = PreferencesService.documento;
+        
+        //si no hay un documento guardado no hacer nada
+        if (!localDoc) {
+            return;
+        }
+
+        let doc: DocLocalInterface = JSON.parse(localDoc);
+
+        //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
+        if (doc.documento != this.tipoDocumento) {
+            return;
+        }
+
+        //si el suario del documento guardado y el usuario de la sesion no coinciden
+        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) {
+            return;
+        }
+
+        //si las empresas son distinitas no cargar el documento
+        if (doc.empresa.empresa != PreferencesService.empresa.empresa) {
+            return;
+        }
+
+        //si las estaciones son distinitas no cargar el documento
+        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) {
+            return;
+        }
+
+        //validar serie solo si existe en el documento guardado
+        if (doc.serie) {
 
 
+            //evaluar series de la sesion si existen
+            if (this.series.length > 0) {
+                //si ya hay una serie seleccionada validar que sea la misma del documento
+                if (this.serie) {
+                    //si las series son distinitas no hacer nada
+                    if (this.serie.serie_Documento != doc.serie.serie_Documento) {
+                        return;
+                    }
+
+
+                }
+
+                let existSerie: boolean = false;
+
+                //si no hay serie seleccionada bucsar la serie guardada en las series disponibles
+                for (let i = 0; i < this.series.length; i++) {
+                    //serie de la iteracion
+                    const element = this.series[i];
+                    //si se encunetra la serie guardada se puede asignar al documento
+                    if (element.serie_Documento == doc.serie.serie_Documento) {
+                        existSerie = true;
+                        break;
+                    }
+                }
+
+                //si la serie no existe no cargar el documento guardado
+                if (!existSerie) {
+                    return;
+                }
+            } else {
+                //si no hay series no cargar el documento guardado
+                return;
+            }
+
+
+        }
+
+        //Dialogo para cargar documento guardado
+        let verificador = await this._notificationsService.openDialogActions(
+            {
+                //TODO:Translate
+                title: "Documento encontrado",
+                description:"Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
+            }
+        );
+
+        if (verificador) return;
+
+
+        //Cargar documento
+        this.serie = doc.serie;
+        this.cuenta = doc.cliente;
+        this.vendedor = doc.vendedor;
+        this.traInternas = doc.detalles;
+        this.montos = doc.pagos;
+
+        this.calculateTotales();
+
+
+    }
+
+
+    saveDocLocal() {
+        let doc: DocLocalInterface = {
+            user: PreferencesService.user,
+            empresa: PreferencesService.empresa,
+            estacion: PreferencesService.estacion,
+            cliente: this.cuenta,
+            vendedor: this.vendedor,
+            serie: this.serie,
+            documento: this.tipoDocumento!,
+            detalles: this.traInternas,
+            pagos: this.montos,
+        }
+
+        PreferencesService.documento = JSON.stringify(doc);
+    }
 
 
     resolveTipoTransaccion(tipo: number): number {
@@ -66,9 +179,7 @@ export class FacturaService {
             if (tipo == element.tipo) {
                 return element.tipo_Transaccion;
             }
-
         }
-
 
         return 0;
     }
@@ -103,6 +214,8 @@ export class FacturaService {
         this._pagoComponentService.monto = parseFloat(this.saldo.toFixed(2)).toString();
 
     }
+
+
 
     calculateTotales() {
         //TODO: Guardar documento local (storage)
