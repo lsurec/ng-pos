@@ -72,15 +72,13 @@ export class PagoComponent {
 
     //validar que haya una cuenta seleccionada
     if (!this.facturaService.cuenta) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Seleccione una cuenta para el documento ante de agregar una forma de pago.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarCuenta'));
       return;
     }
 
     //validar si la forma de pago es cuenta corriente el suuario debe tener permitias cuentas por cobrar
     if (!this.facturaService.cuenta.permitir_CxC && payment.cuenta_Corriente) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cuenta asignada al documento no tiene permitidas cuentas por cobrar.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noCuentasPorCobrar'));
       return;
     }
 
@@ -88,23 +86,19 @@ export class PagoComponent {
     if (payment.cuenta_Corriente && this.facturaService.cuenta.permitir_CxC) {
       //validar llimite de credito
       if (this.facturaService.total > (this.facturaService.cuenta.limite_Credito) ?? 0) {
-        //TODO:Translate
-        this._notificationsService.openSnackbar("El total del documento supera el limmite de credito de la cuenta asignada al documento.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.superaLimite'));
         return;
       }
     }
 
-
     //No mostrar formulario si no hay montos pendientes de pago
     if (this.facturaService.total == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("El total a pagar es 0.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.totalPagar'));
       return;
     }
 
     if (this.facturaService.saldo == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("El saldo a pagar es 0.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.saldoPagar'));
       return;
     }
 
@@ -188,16 +182,14 @@ export class PagoComponent {
 
 
     if (!this.pagoComponentService.monto) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
       return;
 
     }
 
 
     if (this.convertirTextoANumero(this.pagoComponentService.monto) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("El valor para el cargo o descuento debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.valorNumerico'));
       return;
     }
 
@@ -205,8 +197,7 @@ export class PagoComponent {
 
     if (this.pagoComponentService.pago!.autorizacion) {
       if (!this.autorizacion) {
-        //TODO:translate
-        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
         return;
       }
 
@@ -214,8 +205,7 @@ export class PagoComponent {
 
     if (this.pagoComponentService.pago!.referencia) {
       if (!this.referencia) {
-        //TODO:translate
-        this._notificationsService.openSnackbar("Rellena el formulario para continuar.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
         return;
       }
 
@@ -224,16 +214,14 @@ export class PagoComponent {
 
     if (this.pagoComponentService.pago!.banco) {
       if (!this.pagoComponentService.banco) {
-        //TODO:translate
-        this._notificationsService.openSnackbar("Selecciona un banco para continuar.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarBanco'));
         return;
       }
 
 
       if (this.pagoComponentService.cuentas.length > 0) {
         if (!this.pagoComponentService.cuentaSelect) {
-          //TODO:translate
-          this._notificationsService.openSnackbar("Selecciona una cuenta para continuar.");
+          this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cuetaBanco'));
           return;
         }
       }
@@ -264,8 +252,7 @@ export class PagoComponent {
       }
     );
 
-    //TODO:Translate
-    this._notificationsService.openSnackbar("Pago agregado correctamente.");
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.pagoAgregado'));
 
     //clear data
     this.autorizacion = "",
@@ -311,8 +298,7 @@ export class PagoComponent {
 
     this.facturaService.calculateTotalesPago();
 
-    //TODO:Translate
-    this._notificationsService.openSnackbar("Montos eliminados correctamente.");
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.montosEliminados'));
   }
 }
 

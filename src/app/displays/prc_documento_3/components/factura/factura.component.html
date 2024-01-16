@@ -94,14 +94,14 @@
             <!-- Titulo de la tarea -->
             <p class="titulo">{{dataUserService.nameDisplay}}</p>
             <span class="spacer"></span>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.reciente' | translate }}"
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
                 (click)="verHistorial()">
                 <mat-icon>schedule</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevo' | translate }}" (click)="newDoc()">
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
                 <mat-icon>note_add</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.resumen' | translate }}"
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
                 (click)="verResumen()">
                 <mat-icon>print</mat-icon>
             </button>

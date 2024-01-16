@@ -137,8 +137,7 @@ export class LoginComponent {
     estaciones = resEstacion.response;
 
     if (estaciones.length == 0 || empresas.length == 0) {
-      //TODO:translate
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`);
+      this._widgetsService.openSnackbar(`${this.translate.instant('pos.alerta.configuracion')} ${user}`);
       return;
     }
 

@@ -88,8 +88,7 @@ export class EditarClienteComponent implements OnInit {
 
     //Validar correo
     if (!this.validarCorreo(this.correo)) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("El correo ingresado no es valido");
+      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
       return;
     }
 
@@ -141,8 +140,7 @@ export class EditarClienteComponent implements OnInit {
 
     if (!infoCuenta.response) {
 
-      //TODO: translate
-      this._notificationsService.openSnackbar("Se actualizó la cuenta, pero ocurrió un error al seleccioanarla.");
+      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
       console.error(infoCuenta);
 
       return;
@@ -151,8 +149,7 @@ export class EditarClienteComponent implements OnInit {
     let cuentas: ClienteInterface[] = infoCuenta.response;
 
     if (cuentas.length == 0) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("Se actualizó la cuenta, pero ocurrió un error al seleccioanarla.");
+      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
       return;
     }
 
@@ -161,8 +158,7 @@ export class EditarClienteComponent implements OnInit {
       //seleccionar cuenta
       this._facturaService.cuenta = cuentas[0];
 
-      //TODO translate
-      this._notificationsService.openSnackbar("Cuenta actualizada y seleccioanda correctamente.");
+      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
       //regresar
       this._eventService.verDocumentoEvent(true);
@@ -177,8 +173,7 @@ export class EditarClienteComponent implements OnInit {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
 
-        //TODO translate
-        this._notificationsService.openSnackbar("Cuenta actualizada y seleccioanda correctamente.");
+        this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
         //regresar
         this._eventService.verDocumentoEvent(true);

@@ -38,13 +38,13 @@ export class ApiComponent {
   }
 
 
-  goBack(){}
+  goBack() { }
 
   async save() {
 
 
     if (!this.url) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'))
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
       return;
     }
 
@@ -59,8 +59,7 @@ export class ApiComponent {
 
     // Si no contiene "/api/", mostrar un mensaje y devolver undefined
     if (!containsApi) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.url.noValida'))
-
+      this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
       return;
     }
 
@@ -106,16 +105,11 @@ export class ApiComponent {
       return;
     }
 
-    //TODO:transalate
-    this._widgetsService.openSnackbar("Url configurada correctamente.");
-
-
+    this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.urlCorrecta'));
 
     PreferencesService.baseUrl = result;
 
     this._router.navigate([RouteNamesService.LOGIN]);
-
-
   }
 
 }
