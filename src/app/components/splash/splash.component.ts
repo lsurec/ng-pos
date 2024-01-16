@@ -154,9 +154,7 @@ export class SplashComponent implements OnInit {
 
     if (estaciones.length == 0 || empresas.length == 0) {
       this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
-
-      //TODO:translate
-      this._widgetsService.openSnackbar(`No se encontraron empresas o estaciones de trabajo para el usuario: ${user}`);
+      this._widgetsService.openSnackbar(`${this.translate.instant('pos.alerta.configuracion')} ${user}`);
       return;
     }
 
@@ -191,7 +189,7 @@ export class SplashComponent implements OnInit {
         return;
       }
 
-      let tipoCambio:TipoCambioInterface[] = resTipoCammbio.response;
+      let tipoCambio: TipoCambioInterface[] = resTipoCammbio.response;
 
       PreferencesService.tipoCambio = tipoCambio[0].tipo_Cambio;
 

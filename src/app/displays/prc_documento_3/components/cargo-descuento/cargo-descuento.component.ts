@@ -14,7 +14,7 @@ export class CargoDescuentoComponent {
 
   isLoading: boolean = false;
   transacciones: boolean = false;
-  
+
   constructor(
     public dialogRef: MatDialogRef<CargoDescuentoComponent>,
     @Inject(MAT_DIALOG_DATA) public index: number,
@@ -55,10 +55,7 @@ export class CargoDescuentoComponent {
 
     this.facturaService.calculateTotales();
 
-    //TODO:Translate
-    this._notificationsService.openSnackbar("Transaciones eliminadas correctamente.");
-
-
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionesEliminadas'));
   }
 
   seleccionar() {

@@ -400,11 +400,7 @@ export class DetalleComponent {
     });
 
     this.facturaService.calculateTotales();
-
-    //TODO:Translate
     this._notificationsService.openSnackbar(operacion == 1 ? this._translate.instant('pos.alertas.cargo') : this._translate.instant('pos.alertas.descuento'));
-
-
   }
 
 

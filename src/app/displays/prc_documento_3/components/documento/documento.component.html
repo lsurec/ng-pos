@@ -5,7 +5,7 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.series' | translate }}"
+            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
@@ -77,8 +77,8 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.vendedor' | translate }}"
-                [(ngModel)]="facturaService.vendedor" (ngModelChange)="changeVendedor()">
+            <mat-select name="estado" class="seleccionar"
+                placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor">
                 <mat-option *ngFor="let vendedor of facturaService.vendedores" [value]="vendedor">
                     {{vendedor.nom_Cuenta_Correntista}}
                 </mat-option>

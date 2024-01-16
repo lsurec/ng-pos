@@ -7,6 +7,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { PostDocumentInterface } from '../../interfaces/post-document.interface';
 import { DocumentService } from '../../services/document.service';
 import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -40,6 +41,8 @@ export class ResumenDocumentoComponent {
     public facturaService: FacturaService,
     private _notificationService: NotificationsService,
     private _documentService: DocumentService,
+    private _translate: TranslateService,
+
   ) {
 
     this._eventService.regresarResumen$.subscribe((eventData) => {
@@ -57,7 +60,7 @@ export class ResumenDocumentoComponent {
 
   sendDoc() {
     if (this.facturaService.printFel()) {
-      this._notificationService.openSnackbar("La certificacion de docuentos tributarios electronicos no está disponible en este momento.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {
       this.sendDocument()
     }
@@ -246,13 +249,7 @@ export class ResumenDocumentoComponent {
       return;
     }
 
-
-
-    this._notificationService.openSnackbar("Documento creado correctamente.");
-
-
+    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
   }
-
-
 
 }
