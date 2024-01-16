@@ -3,20 +3,46 @@ import { CompraInterface, ProductoInterface } from '../../interfaces/producto.in
 import { EventService } from 'src/app/services/event.service';
 import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
 import { Documento } from '../../interfaces/doc-estructura.interface';
+import { LocalSettingsService } from 'src/app/services/local-settings.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { SerieInterface } from '../../interfaces/serie.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { SerieService } from '../../services/serie.service';
 
 @Component({
   selector: 'app-detalle-documento',
   templateUrl: './detalle-documento.component.html',
-  styleUrls: ['./detalle-documento.component.scss']
+  styleUrls: ['./detalle-documento.component.scss'],
+  providers: [
+    LocalSettingsService,
+    SerieService,
+  ]
 })
 export class DetalleDocumentoComponent implements OnInit {
 
-  @Input() estructura: DocumentoResumenInterface | undefined; 
+  @Input() estructura: DocumentoResumenInterface | undefined;
   regresar: number = 6;
   verError: boolean = false;
 
+  valueCargoDescuento: string = "";
+
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+
+  empresa?: EmpresaInterface;
+  estacion?: EstacionInterface;
+  serie?: SerieInterface;
+
   constructor(
     private _eventService: EventService,
+    private _localSettingService: LocalSettingsService,
+    private _notificationsServie: NotificationsService,
+    private _translate: TranslateService,
+    private _serieService:SerieService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -25,25 +51,103 @@ export class DetalleDocumentoComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loadData()
-    
+
   }
 
-  async loadData(){
-    
+  async loadData() {
+
     console.log(this.estructura);
 
-    let objDoc :Documento = this.estructura!.estructura;
+    let objDoc: Documento = this.estructura!.estructura;
 
-    let empresa:number =objDoc.Doc_Empresa;
-    let estacion:number = objDoc.Doc_Estacion_Trabajo;
-    let tipoDoc:number = objDoc.Doc_Tipo_Documento;
+    let empresaId: number = objDoc.Doc_Empresa;
+    let estacionId: number = objDoc.Doc_Estacion_Trabajo;
+    let tipoDoc: number = objDoc.Doc_Tipo_Documento;
     let serieDoc: string = objDoc.Doc_Serie_Documento;
 
 
+
+
+    let resEmpresa:ResApiInterface = await this._localSettingService.getEmpresas(
+      this.user,
+      this.token,
+    );
+
+    if (!resEmpresa.status) {
+
+      //TODO:siloading
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resEmpresa);
+
+      return;
+
+    }
+
+    let empresas:EmpresaInterface[] = resEmpresa.response;
+    
+    for (let i = 0; i < empresas.length; i++) {
+      const element = empresas[i];
+      if(element.empresa == empresaId){
+        this.empresa = element;
+        break;
+      }
+    }
+
+    let resEstacion:ResApiInterface = await this._localSettingService.getEstaciones(
+      this.user,
+      this.token
+    );
+
+    
+    if (!resEstacion.status) {
+
+      //TODO:siloading
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resEstacion);
+
+      return;
+
+    }
+
+
+    let estaciones:EstacionInterface[] = resEstacion.response;
+
+    for (let i = 0; i < estaciones.length; i++) {
+      const element = estaciones[i];
+      if(element.estacion_Trabajo == estacionId){
+        this.estacion = element;
+        break;
+      }
+    }
+
+
+    // let resSerie:ResApiInterface = 
+
     
 
 
-    
   }
 
   productos: ProductoInterface[] = [
@@ -101,7 +205,19 @@ export class DetalleDocumentoComponent implements OnInit {
     this._eventService.verHistorialEvent(true);
   }
 
-  mostrarError(){
+   mostrarError(res:ResApiInterface) {
+    
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
     this.verError = true;
   }
 
