@@ -67,11 +67,16 @@ hr {
     align-items: center;
 }
 
-.cliente-vendedor,
-.productos-pagos,
-.pago {
+.cliente-vendedor {
     display: flex;
     padding: 10px 0px;
+}
+
+.productos-pagos,
+.pago {
+    display   : flex;
+    padding   : 10px 0px;
+    border-top: 1px solid $color-bordes;
 }
 
 .tipo-serie-documento {
