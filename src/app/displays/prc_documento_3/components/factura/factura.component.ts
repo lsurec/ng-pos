@@ -351,15 +351,13 @@ export class FacturaComponent implements OnInit {
 
     //Si no hay serie seleccionado mostrar mensaje
     if (!this.facturaService.serie) {
-      // TODO:Translate
-      this._notificationService.openSnackbar("No se ha seleccionado una serie.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinSerie'));
       return;
     }
 
     //Si no hay cliente seleccioando mostrar mensaje
     if (!this.facturaService.cuenta) {
-      // TODO:Translate
-      this._notificationService.openSnackbar("No se ha seleccionado un cliente.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCliente'));
       return;
     }
 
@@ -368,37 +366,30 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.vendedores.length > 0) {
       //Si no hay cliente seleccioando mostrar mensaje
       if (!this.facturaService.vendedor) {
-        // TODO:Translate
-        this._notificationService.openSnackbar("No se ha seleccionado un vendedor.");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor'));
         return;
       }
     }
 
     //si no hay transacciones mostrar mensaje
     if (this.facturaService.traInternas.length == 0) {
-      // TODO:Translate
-      this._notificationService.openSnackbar("No se han agregado transacciones.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinTransacciones'));
       return;
     }
 
     //si hay formas de pago validar quye se agregue alguna
     if (this.facturaService.serie && this.facturaService.formasPago.length > 0) {
       if (this.facturaService.montos.length == 0) {
-        // TODO:Translate
-        this._notificationService.openSnackbar("No se ha agregado ningun pago.");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinPagos'));
         return;
       }
-
 
       // si no se ha pagado el total mostrar mensaje
       if (this.facturaService.saldo > 0) {
-        // TODO:Translate
-        this._notificationService.openSnackbar("Tinene un saldo pendiente de pagar.");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.saldoPendiente'));
         return;
       }
-
     }
-
 
     //ir a resumen
     this.vistaResumen = true;
@@ -416,7 +407,6 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
     this.vistaInforme = false;
-
   }
 
   verInformeError() {
@@ -427,7 +417,6 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
   }
-
 
   goBack(): void {
     // this.newItemEvent.emit(false);

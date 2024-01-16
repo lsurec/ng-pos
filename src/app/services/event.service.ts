@@ -64,4 +64,35 @@ export class EventService {
         this.verInformeError.next(eventData);
     }
 
+    private regresarEditarCliente = new Subject<any>();
+
+    regresarEditarCliente$ = this.regresarEditarCliente.asObservable();
+
+    regresarEditarClienteEvent(eventData: boolean) {
+        this.regresarEditarCliente.next(eventData);
+    }
+
+    private regresarNuevaCuenta = new Subject<any>();
+
+    regresarNuevaCuenta$ = this.regresarNuevaCuenta.asObservable();
+
+    regresarNuevaCuentaEvent(eventData: boolean) {
+        this.regresarNuevaCuenta.next(eventData);
+    }
+
+    private regresarResumen = new Subject<any>();
+
+    regresarResumen$ = this.regresarResumen.asObservable();
+
+    regresarResumenEvent(eventData: boolean) {
+        this.regresarResumen.next(eventData);
+    }
+
+    private regresarHistorial = new Subject<any>();
+
+    regresarHistorial$ = this.regresarHistorial.asObservable();
+
+    regresarHistorialEvent(eventData: boolean) {
+        this.regresarHistorial.next(eventData);
+    }
 }

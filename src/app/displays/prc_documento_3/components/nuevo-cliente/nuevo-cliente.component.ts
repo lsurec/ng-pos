@@ -27,8 +27,10 @@ export class NuevoClienteComponent {
   nit!: string;
   telefono!: string;
   correo!: string;
+  regresar: number = 3;
 
   isLoading: boolean = false;
+  verError: boolean = false;
 
   constructor(
     private _notificationsService: NotificationsService,
@@ -37,6 +39,9 @@ export class NuevoClienteComponent {
     private _cuentaService: CuentaService,
     private _facturaService: FacturaService,
   ) {
+    this._eventService.regresarNuevaCuenta$.subscribe((eventData) => {
+      this.verError = false;
+    });
   }
 
 
@@ -148,7 +153,7 @@ export class NuevoClienteComponent {
     cuentas.forEach(element => {
       if (element.factura_NIT == cuenta.nit) {
         //seleccionar cuenta
-        this._facturaService.cuenta =element;
+        this._facturaService.cuenta = element;
 
         //TODO translate
         this._notificationsService.openSnackbar("Cuenta creada y seleccioanda correctamente.");
@@ -164,6 +169,10 @@ export class NuevoClienteComponent {
 
   goBack() {
     this._eventService.verDocumentoEvent(true);
+  }
+
+  mostrarError() {
+    this.verError = true;
   }
 
 }

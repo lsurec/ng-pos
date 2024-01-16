@@ -32,7 +32,7 @@
                 <mat-icon class="iconos-detalles">business</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
-                    <p class="subtitulo">Empresa</p>
+                    <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
                     <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}}) </p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <mat-icon class="iconos-detalles">business</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
-                    <p class="subtitulo">Estacion</p>
+                    <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
                     <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}}) </p>
                 </div>
             </div>
@@ -48,15 +48,15 @@
                 <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
-                    <p class="subtitulo">Tipo cambio</p>
+                    <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
                     <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
                 </div>
             </div>
-            <div class="detalles-usuario">
+            <div class="detalles-usuario" *ngIf="facturaService.documentoName">
                 <mat-icon class="iconos-detalles">description</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
-                    <p class="subtitulo">Tipo documento</p>
+                    <p class="subtitulo">{{'pos.home.tipoDocumento' | translate}}</p>
                     <p class="descripcion"> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
                 </div>
             </div>
@@ -64,23 +64,12 @@
                 <mat-icon class="iconos-detalles">description</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
-                    <p class="subtitulo">Tipo serie documento</p>
+                    <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
                     <p class="descripcion"> {{facturaService.serie.descripcion}}
                         ({{facturaService.serie.serie_Documento}}) </p>
                 </div>
             </div>
         </div>
-
-        <!-- Barra de abajo para regresar y salir -->
-        <mat-toolbar class="barra-regresar">
-            <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
-                <mat-icon>settings</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
-                <mat-icon>logout</mat-icon>
-            </button>
-        </mat-toolbar>
     </mat-sidenav>
     <mat-sidenav-content>
 

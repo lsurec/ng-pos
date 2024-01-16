@@ -8,39 +8,39 @@
             "temaAplicacion": "TEMA DE LA APLICACIÓN",
             "noAsignado": "No asignado",
             "aplicaciones": "Aplicaciones",
-            "noDidsponible": "No Disponible",
+            "noDisponible": "No Disponible",
             "servidor": "Servidor",
             "baseDatos": "Base de Datos",
             "empresa": "Empresa",
             "estacion": "Estación de Trabajo",
-            "fecha": "Fecha Servidor",
+            "fecha": "Fecha de Servidor",
             "version": "Versión de Compilación",
             "origen": "Origen de Datos",
             "versionActual": "Versión actual",
-            "tipoCambio": "Tipo cambio",
-            "tipoDocumento": "Tipo documento",
-            "serieDocumento" : "Serie documento"
+            "tipoCambio": "Tipo de Cambio",
+            "tipoDocumento": "Tipo de Documento",
+            "serieDocumento": "Serie de Documento"
         },
         "login": {
             "correo": "Usuario",
             "contrasena": "Contraseña",
             "ver": "Ver contraseña",
             "ocultar": "Ocultar contraseña",
-            "recordar": "Recordar mis datos.",
-            "iniciar": "INICIAR SESION"
+            "recordar": "Recordar mis datos",
+            "iniciar": "INICIAR SESIÓN"
         },
         "progress": {
             "cargar": "Cargando...",
-            "esperar": "Por favor espere...",
+            "esperar": "Por favor, espere...",
             "error": "404",
             "linea1": "NO SE HAN ENCONTRADO REGISTROS",
-            "linea2": "Es posible que lo que está buscando se haya eliminado o no está disponible temporalmente.",
-            "linea3": "Intente realizar una busqueda.",
+            "linea2": "Es posible que lo que está buscando se haya eliminado o no esté disponible temporalmente.",
+            "linea3": "Intente realizar una búsqueda.",
             "construccion": "SITIO EN CONSTRUCCIÓN"
         },
         "ajustes": {
             "ajustesT": "AJUSTES",
-            "idiomaT": "IDIOMA DE LA APLICACION"
+            "idiomaT": "IDIOMA DE LA APLICACIÓN"
         },
         "preferencias": {
             "tema": "TEMA DE LA APLICACIÓN",
@@ -51,20 +51,20 @@
             "ayuda": "Ayuda"
         },
         "configuracionLocal": {
-            "titulo": "CONFIGURACION LOCAL",
+            "titulo": "CONFIGURACIÓN LOCAL",
             "empresas": "Empresas",
-            "estaciones": "Estacion de Trabajo",
+            "estaciones": "Estación de Trabajo",
             "registros": "Registros",
             "empresa": "Empresa",
             "localidad": "Localidad",
-            "cambiar": "Para realizar cambios en la Configuracion Local, deberá cerrar sesión y volver a iniciar.",
+            "cambiar": "Para realizar cambios en la Configuración Local, deberá cerrar sesión y volver a iniciar.",
             "inicio": "Regresar a la página de inicio.",
-            "sinEmpresas": "No hay empresas disponibles, comuniquese con el Departamento de Soporte.",
-            "sinEstaciones": "No hay estaciones de trabajo disponibles, comuniquese con el Departamento de Soporte."
+            "sinEmpresas": "No hay empresas disponibles, comuníquese con el Departamento de Soporte.",
+            "sinEstaciones": "No hay estaciones de trabajo disponibles, comuníquese con el Departamento de Soporte."
         },
         "toolTip": {
-            "regresar": "regresar al menú principal",
-            "regresarAnterior": "regresar pagina anterior"
+            "regresar": "Regresar al menú principal",
+            "regresarAnterior": "Regresar a la página anterior"
         },
         "url": {
             "url": "Url Apis",
@@ -80,14 +80,31 @@
             "completar": "Por favor completa todos los campos para continuar.",
             "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo",
             "incorrecto": "Usuario o contraseña incorrectos",
-            "error": "No se pudo completar el proceso de conexión al servicio. por favor, inténtalo de nuevo más tarde. ",
+            "error": "No se pudo completar el proceso de conexión al servicio. Por favor, inténtalo de nuevo más tarde.",
             "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: ",
             "banco": "Seleccione una cuenta de banco para continuar.",
             "tipoPago": "Tipo de pago agregado correctamente",
             "eliminar": "¿Estás seguro?",
             "perderDatos": "Si no se han guardado los cambios, los perderás para siempre.",
             "seleccionar": "Seleccione por lo menos una transacción.",
-            "sinCarDes": "No se han agregado cargos o descuentos a esta transacción."
+            "sinCarDes": "No se han agregado cargos o descuentos a esta transacción.",
+            "ingreseCaracter": "Ingrese por lo menos un carácter para la búsqueda.",
+            "cuentaSeleccionada": "Cuenta seleccionada.",
+            "sinCoincidencias": "No hay coincidencias para la búsqueda.",
+            "sinDisplay": "No se ha asignado un tipo de documento al display. Comunícate con el departamento de soporte.",
+            "sinSerie": "No se ha seleccionado una serie.",
+            "sinCliente": "No se ha seleccionado un cliente.",
+            "sinVendedor": "No se ha seleccionado un vendedor.",
+            "sinTransacciones": "No se han agregado transacciones.",
+            "sinPagos": "No se ha agregado ningún pago.",
+            "saldoPendiente": "Tiene un saldo pendiente de pagar.",
+            "sinBodegas": "No hay bodegas asignadas a este producto.",
+            "valorNumerico": "El valor para el cargo o descuento debe ser numérico o positivo.",
+            "mayorCero": "El valor para el cargo o descuento debe ser mayor a 0.",
+            "eliminarPagos": "Elimina primero las formas de pago.",
+            "cargo": "Cargo agregado correctamente.",
+            "descuento": "Descuento agregado correctamente.",
+            "transaccionesEliminadas": "Transacciones eliminadas correctamente."
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -99,7 +116,7 @@
             "cambiar": "Cambiar",
             "guardar": "Guardar",
             "informe": "Ver informe",
-            "salir": "Cerrar sesion",
+            "salir": "Cerrar sesión",
             "reintentar": "Reintentar",
             "resumen": "Resumen",
             "nuevo": "Nuevo",
@@ -112,15 +129,15 @@
             "usuario": "Usuario",
             "fecha": "Fecha",
             "documento": "Documento",
-            "serie": "Serie documento",
+            "serie": "Serie de documento",
             "empresa": "Empresa",
             "estacion": "Estación de trabajo",
             "servicio": "Servicio origen",
             "origen": "DB Origen",
-            "descripcion": "Descripcion"
+            "descripcion": "Descripción"
         },
         "inputs": {
-            "buscar": "Escriba para realizar la busqueda."
+            "buscar": "Escriba para realizar la búsqueda."
         },
         "factura": {
             "factura": "Factura",
@@ -140,9 +157,9 @@
             "vendedor": "Vendedor",
             "seleccionar": "Seleccionar Cliente",
             "encontrados": "Clientes encontrados:",
-            "telefono": "TELEFONO",
+            "telefono": "TELÉFONO",
             "correo": "CORREO",
-            "direccion": "DIRECCION",
+            "direccion": "DIRECCIÓN",
             "nueva": "Nueva cuenta",
             "actualizar": "Actualizar cuenta",
             "formas_pago": "Formas de pago",
@@ -177,7 +194,8 @@
             "producto": "Producto",
             "filtro": "Filtro",
             "cambio": "Cambio",
-            "cuentas": "Cuentas"
+            "cuentas": "Cuentas",
+            "docRecientes": "Documentos recientes"
         }
     }
 }

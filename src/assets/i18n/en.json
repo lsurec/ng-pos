@@ -8,7 +8,7 @@
             "temaAplicacion": "APPLICATION THEME",
             "noAsignado": "Not Assigned",
             "aplicaciones": "Applications",
-            "noDidsponible": "Not Available",
+            "noDisponible": "Not Available",
             "servidor": "Server",
             "baseDatos": "Database",
             "empresa": "Company",
@@ -16,7 +16,10 @@
             "fecha": "Server Date",
             "version": "Build Version",
             "origen": "Data Origin",
-            "versionActual": "Current Version"
+            "versionActual": "Current Version",
+            "tipoCambio": "Exchange Rate",
+            "tipoDocumento": "Document Type",
+            "serieDocumento": "Document Series"
         },
         "login": {
             "correo": "Username",
@@ -84,7 +87,24 @@
             "eliminar": "Are you sure?",
             "perderDatos": "If changes haven't been saved, you will lose them forever.",
             "seleccionar": "Select at least one transaction.",
-            "sinCarDes": "No charges or discounts have been added to this transaction."
+            "sinCarDes": "No charges or discounts have been added to this transaction.",
+            "ingreseCaracter": "Enter at least one character for the search.",
+            "cuentaSeleccionada": "Selected account.",
+            "sinCoincidencias": "No matches for the search.",
+            "sinDisplay": "No document type assigned to the display. Contact support.",
+            "sinSerie": "No series selected.",
+            "sinCliente": "No client selected.",
+            "sinVendedor": "No seller selected.",
+            "sinTransacciones": "No transactions added.",
+            "sinPagos": "No payments added.",
+            "saldoPendiente": "You have a pending balance to pay.",
+            "sinBodegas": "No warehouses assigned to this product.",
+            "valorNumerico": "The value for charge or discount must be numeric or positive.",
+            "mayorCero": "The value for charge or discount must be greater than 0.",
+            "eliminarPagos": "Delete payment methods first.",
+            "cargo": "Charge added correctly.",
+            "descuento": "Discount added correctly.",
+            "transaccionesEliminadas": "Transactions deleted correctly."
         },
         "botones": {
             "aceptar": "OK",
@@ -169,12 +189,13 @@
             "descripcion": "Description",
             "bodega": "Warehouse",
             "tipo_precio": "Price Type",
-            "productos_encontrados": "Products Found",
+            "productos_encontrados": "Found Products",
             "registros": "Records",
             "producto": "Product",
             "filtro": "Filter",
             "cambio": "Change",
-            "cuentas": "Accounts"
+            "cuentas": "Accounts",
+            "docRecientes": "Recent Documents"
         }
     }
 }

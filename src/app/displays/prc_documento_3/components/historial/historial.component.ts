@@ -22,7 +22,10 @@ import { Documento } from '../../interfaces/doc-estructura.interface';
 export class HistorialComponent implements OnInit {
 
   isLoading: boolean = false;
-
+  historial: boolean = true;
+  detalleDocumento: boolean = false;
+  regresar: number = 5;
+  verError: boolean = false;
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -39,6 +42,14 @@ export class HistorialComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _tiposTransaccion: TipoTransaccionService,
   ) {
+
+    this._eventService.verHistorial$.subscribe((eventData) => {
+      this.verHistorial();
+    });
+
+    this._eventService.regresarHistorial$.subscribe((eventData) => {
+      this.verError = false;
+    });
   }
   ngOnInit(): void {
 
@@ -46,6 +57,8 @@ export class HistorialComponent implements OnInit {
   }
 
   async loadData() {
+
+    this.documentos = [];
 
     this.isLoading = true;
 
@@ -58,7 +71,7 @@ export class HistorialComponent implements OnInit {
 
 
     if (!resDoc.status) {
-    this.isLoading = false;
+      this.isLoading = false;
 
       this._notificationService.showErrorAlert(resDoc);
       return;
@@ -82,7 +95,7 @@ export class HistorialComponent implements OnInit {
 
 
       if (!resTra.status) {
-    this.isLoading = false;
+        this.isLoading = false;
 
         this._notificationService.showErrorAlert(resTra);
         return;
@@ -127,7 +140,7 @@ export class HistorialComponent implements OnInit {
 
       this.documentos.push(
         {
-          item:doc,
+          item: doc,
           estructura: estructura,
           cargo: cargo,
           descuento: descuento,
@@ -158,5 +171,19 @@ export class HistorialComponent implements OnInit {
 
   goBack() {
     this._eventService.verDocumentoEvent(true);
+  }
+
+  verDetalle() {
+    this.detalleDocumento = true;
+    this.historial = false;
+  }
+
+  verHistorial() {
+    this.detalleDocumento = false;
+    this.historial = true;
+  }
+
+  mostrarError() {
+    this.verError = true;
   }
 }

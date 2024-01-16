@@ -17,13 +17,13 @@ import { FacturaService } from '../../services/factura.service';
   selector: 'app-editar-cliente',
   templateUrl: './editar-cliente.component.html',
   styleUrls: ['./editar-cliente.component.scss'],
-  providers:[
+  providers: [
     CuentaService
   ]
 })
 export class EditarClienteComponent implements OnInit {
   @Input() cuenta?: ClienteInterface; // decorate the property with @Input()
-
+  regresar: number = 2;
 
   nombre?: string;
   direccion?: string;
@@ -32,6 +32,7 @@ export class EditarClienteComponent implements OnInit {
   correo?: string;
 
   isLoading: boolean = false;
+  verError: boolean = false;
 
   constructor(
     private _location: Location,
@@ -39,26 +40,34 @@ export class EditarClienteComponent implements OnInit {
     private translate: TranslateService,
     private _router: Router,
     private _eventService: EventService,
-    private _cuentaService:CuentaService,
-    public _facturaService:FacturaService,
+    private _cuentaService: CuentaService,
+    public _facturaService: FacturaService,
 
   ) {
-    
+    this._eventService.regresarEditarCliente$.subscribe((eventData) => {
+      this.verError = false;
+    });
+
   }
+
   ngOnInit(): void {
 
-    
+
     this.nombre = this.cuenta?.factura_Nombre,
-    this.direccion = this.cuenta?.factura_Direccion,
-    this.nit =this.cuenta?.factura_NIT,
-    this.telefono= this.cuenta?.telefono,
-    this.correo = this.cuenta?.eMail;
-    
+      this.direccion = this.cuenta?.factura_Direccion,
+      this.nit = this.cuenta?.factura_NIT,
+      this.telefono = this.cuenta?.telefono,
+      this.correo = this.cuenta?.eMail;
+
   }
 
   //regresar a la pantalla anterior
   goBack() {
     this._eventService.verDocumentoEvent(true);
+  }
+
+  verSalioMal() {
+    this.verError = true;
   }
 
   validarCorreo(correo: string): boolean {
@@ -72,7 +81,7 @@ export class EditarClienteComponent implements OnInit {
   async guardar() {
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
       console.log("validacion");
-      
+
       this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
@@ -166,7 +175,7 @@ export class EditarClienteComponent implements OnInit {
     cuentas.forEach(element => {
       if (element.factura_NIT == cuenta.nit) {
         //seleccionar cuenta
-        this._facturaService.cuenta =element;
+        this._facturaService.cuenta = element;
 
         //TODO translate
         this._notificationsService.openSnackbar("Cuenta actualizada y seleccioanda correctamente.");
