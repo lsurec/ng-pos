@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { EventService } from 'src/app/services/event.service';
-import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista';
+import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { CuentaService } from '../../services/cuenta.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';

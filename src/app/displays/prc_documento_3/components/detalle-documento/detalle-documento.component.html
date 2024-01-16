@@ -8,7 +8,7 @@
         </button>
         <span class="spacer"></span>
         <!-- Titulo de la tarea -->
-        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
+        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }} ({{estructura.item.consecutivo_Interno}})</p>
         <span class="spacer"></span>
         
     </mat-toolbar-row>
@@ -50,17 +50,23 @@
             <div class="cliente-vendedor">
                 <div class="informacion">
                     <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
-                    <div class="descripciones">
-                        <p class="textos">{{ 'pos.factura.nit' | translate }} 12345678-9</p>
-                        <p class="textos">{{ 'pos.factura.nombre' | translate }} Cliente 1</p>
-                        <p class="textos">{{ 'pos.factura.direccion' | translate }} Tecpan</p>
+                    <div class="descripciones" *ngIf="client">
+                        <p class="textos">{{ 'pos.factura.nit' | translate }}: {{client.factura_NIT}}</p>
+                        <p class="textos">{{ 'pos.factura.nombre' | translate }}: {{client.factura_Nombre}}</p>
+                        <p class="textos">{{ 'pos.factura.direccion' | translate }}: {{client.factura_Direccion}}</p>
+                    </div>
+
+                    <div class="descripciones" *ngIf="!client">
+                        <!--TODO:Translate-->
+                        <p class="textos">{{ 'pos.factura.nit' | translate }} No disponible.</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
-                <div class="informacion">
+                <div class="informacion" *ngIf="estructura.estructura.Doc_Cuenta_Correntista_Ref">
                     <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">DEMOSOFT</p>
+                        <!--TODO:Translate-->
+                        <p class="textos">{{vendedor ?? 'No disponible.'}}</p>
                     </div>
                 </div>
             </div>

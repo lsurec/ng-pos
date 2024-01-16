@@ -124,6 +124,8 @@ export class DetalleComponent {
 
 
     if (productos.length == 0) {
+      this.facturaService.isLoading = false;
+
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
       return;
     }

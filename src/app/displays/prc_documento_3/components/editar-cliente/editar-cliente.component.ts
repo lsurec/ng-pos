@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista';
+import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';

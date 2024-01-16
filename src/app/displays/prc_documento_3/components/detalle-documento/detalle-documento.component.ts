@@ -14,6 +14,12 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { SerieService } from '../../services/serie.service';
 import { CuentaService } from '../../services/cuenta.service';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
+import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { VendedorInterface } from '../../interfaces/vendedor.interface';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
+import { DetalleTransaccionInterface } from '../../interfaces/detalle-transaccion.interface';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -23,6 +29,7 @@ import { ResponseInterface } from 'src/app/interfaces/response.interface';
     LocalSettingsService,
     SerieService,
     CuentaService,
+    TipoTransaccionService,
   ]
 })
 export class DetalleDocumentoComponent implements OnInit {
@@ -38,10 +45,14 @@ export class DetalleDocumentoComponent implements OnInit {
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
 
-  empresa?: string ;
-  estacion?: string ;
-  serie?: string ;
-  documento?:string ;
+  empresa?: string;
+  estacion?: string;
+  serie?: string;
+  documento?: string;
+  vendedor?: string;
+
+  client?: ClienteInterface;
+  transacciones: DetalleTransaccionInterface[] = [];
 
   constructor(
     private _eventService: EventService,
@@ -49,7 +60,9 @@ export class DetalleDocumentoComponent implements OnInit {
     private _notificationsServie: NotificationsService,
     private _translate: TranslateService,
     private _serieService: SerieService,
-    private _cuentaService:CuentaService,
+    private _cuentaService: CuentaService,
+    private _tipoTraService: TipoTransaccionService,
+    private _productoService: ProductService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -183,7 +196,7 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    
+
     let series: SerieInterface[] = resSerie.response;
 
     for (let i = 0; i < series.length; i++) {
@@ -196,13 +209,13 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    let resName:ResApiInterface = await  this._cuentaService.getNombreCuenta(
+    let resName: ResApiInterface = await this._cuentaService.getNombreCuenta(
       this.token,
       idCuenta,
-    ); 
+    );
 
 
-    
+
     if (!resName.status) {
 
       this.isLoading = false;
@@ -225,9 +238,211 @@ export class DetalleDocumentoComponent implements OnInit {
 
     }
 
-    let name:ResponseInterface = resName.response;
+    let name: ResponseInterface = resName.response;
 
-    
+    let resClient: ResApiInterface = await this._cuentaService.getClient(
+      this.user,
+      this.token,
+      empresaId,
+      name.data,
+    );
+
+    if (!resClient.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resClient);
+
+      return;
+
+    }
+
+    let clients: ClienteInterface[] = resClient.response;
+
+
+    for (let i = 0; i < clients.length; i++) {
+      const element = clients[i];
+      if (element.cuenta_Correntista == idCuenta) {
+        this.client = element;
+        break;
+      }
+
+    }
+
+
+    if (objDoc.Doc_Cuenta_Correntista_Ref) {
+
+      let resCuentaRef: ResApiInterface = await this._cuentaService.getSeller(
+        this.user,
+        this.token,
+        tipoDoc,
+        serieDoc,
+        empresaId,
+      );
+
+      if (!resCuentaRef.status) {
+
+        this.isLoading = false;
+
+
+        let verificador = await this._notificationsServie.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.aceptar'),
+            falso: this._translate.instant('pos.botones.informe'),
+          }
+        );
+
+        if (verificador) return;
+
+        this.mostrarError(resCuentaRef);
+
+        return;
+
+      }
+
+      let vendedores: VendedorInterface[] = resCuentaRef.response;
+
+      for (let i = 0; i < vendedores.length; i++) {
+        const element = vendedores[i];
+
+        if (element.cuenta_Correntista == objDoc.Doc_Cuenta_Correntista_Ref) {
+          this.vendedor = element.nom_Cuenta_Correntista;
+          break;
+        }
+
+      }
+
+    }
+
+
+    let resTipoTra: ResApiInterface = await this._tipoTraService.getTipoTransaccion(
+      this.user,
+      this.token,
+      tipoDoc,
+      serieDoc,
+      empresaId,
+    );
+
+
+    if (!resTipoTra.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resTipoTra);
+
+      return;
+
+    }
+
+
+
+    this.transacciones = [];
+
+
+    for (const tra of objDoc.Doc_Transaccion) {
+
+      let resSku: ResApiInterface = await this._productoService.getSku(
+        this.token,
+        tra.Tra_Producto,
+        tra.Tra_Unidad_Medida,
+      );
+
+
+      if (!resSku.status) {
+
+        this.isLoading = false;
+
+
+        let verificador = await this._notificationsServie.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.aceptar'),
+            falso: this._translate.instant('pos.botones.informe'),
+          }
+        );
+
+        if (verificador) return;
+
+        this.mostrarError(resSku);
+
+        return;
+
+      }
+
+
+      let sku: ResponseInterface = resSku.response;
+
+
+      let resProducto: ResApiInterface = await this._productoService.getProductId(
+        this.token,
+        sku.data,
+      );
+
+
+      if (!resProducto.status) {
+
+        this.isLoading = false;
+
+
+        let verificador = await this._notificationsServie.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.aceptar'),
+            falso: this._translate.instant('pos.botones.informe'),
+          }
+        );
+
+        if (verificador) return;
+
+        this.mostrarError(resProducto);
+
+        return;
+
+      }
+
+      let productos:ProductoInterface[] = resProducto.response;
+      
+      
+      for (let i = 0; i < productos.length; i++) {
+        const element = productos[i];
+
+        // if(){
+
+        // }
+        
+      }
+
+
+    }
+
 
 
     this.isLoading = false;
@@ -236,6 +451,9 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
   }
+
+
+ 
 
   productos: ProductoInterface[] = [
     {
