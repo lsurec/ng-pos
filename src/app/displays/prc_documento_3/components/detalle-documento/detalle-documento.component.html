@@ -1,5 +1,6 @@
 <app-error *ngIf="verError" [regresar]="regresar"></app-error>
-<div *ngIf="!verError">
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<div *ngIf="!verError && !isLoading">
     <mat-toolbar-row class="head__sidenav">
         <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
             (click)="goBack()">
@@ -17,12 +18,34 @@
     <div class="container-main">
         <div class="container">
             <div class="tipo-serie-documento">
-                <div class="tipo-serie">
-                    <p class="subtitulo">Tipo documento: </p>
+                <div class="informacion">
+                    <p class="subtitulo-borde">{{'pos.home.tipoDocumento' | translate}}</p>
+                    <div class="descripciones">
+                        <p class="textos">Factura (1)</p>
+                    </div>
                 </div>
                 <span class="spacer"></span>
-                <div class="tipo-serie">
-                    <p class="subtitulo">{{'pos.home.serieDocumento' | translate}} (3)</p>
+                <div class="informacion">
+                    <p class="subtitulo-borde ">{{'pos.home.serieDocumento' | translate}}</p>
+                    <div class="descripciones">
+                        <p class="textos">FMR (2)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cliente-vendedor">
+                <div class="informacion">
+                    <p class="subtitulo-borde">{{'pos.home.empresa' | translate}}</p>
+                    <div class="descripciones">
+                        <p class="textos">Empresa 1</p>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+                <div class="informacion">
+                    <p class="subtitulo-borde ">{{'pos.home.estacion' | translate}}</p>
+                    <div class="descripciones">
+                        <p class="textos">Estacion 2</p>
+                    </div>
                 </div>
             </div>
 

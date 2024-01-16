@@ -14,7 +14,7 @@ export class DetalleDocumentoComponent implements OnInit {
   @Input() estructura: DocumentoResumenInterface | undefined; 
   regresar: number = 6;
   verError: boolean = false;
-
+  isLoading: boolean = false;
   constructor(
     private _eventService: EventService,
   ) {
