@@ -40,6 +40,10 @@ export class HistorialComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _tiposTransaccion: TipoTransaccionService,
   ) {
+
+    this._eventService.verHistorial$.subscribe((eventData) => {
+      this.verHistorial();
+    });
   }
   ngOnInit(): void {
 
@@ -166,5 +170,10 @@ export class HistorialComponent implements OnInit {
   verDetalle() {
     this.detalleDocumento = true;
     this.historial = false;
+  }
+
+  verHistorial() {
+    this.detalleDocumento = false;
+    this.historial = true;
   }
 }

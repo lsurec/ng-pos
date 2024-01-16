@@ -64,6 +64,7 @@ export class DetalleDocumentoComponent {
   ]
 
   goBack() {
+    // this._eventService.emitCustomEvent(true);
     this._eventService.verHistorialEvent(true);
   }
 
