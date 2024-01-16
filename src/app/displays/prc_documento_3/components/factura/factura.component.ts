@@ -159,7 +159,7 @@ export class FacturaComponent implements OnInit {
 
 
     this.showDocumento();
-    this.facturaService.saveDocLocal();
+    PreferencesService.documento = "";
 
   }
 

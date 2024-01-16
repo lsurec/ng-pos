@@ -41,39 +41,41 @@ export class ErrorComponent implements OnInit {
 
   //regresar a la pantalla anterior
   goBack() {
-    if (!this.regresar) {
-      this._location.back();
+
+    switch (this.regresar) {
+      case 1:
+        //desde documento
+        this._eventService.verDocumentoEvent(true);
+        break;
+
+      case 2:
+        //desde editar cuenta
+        this._eventService.regresarEditarClienteEvent(true);
+        break;
+
+      case 3:
+        //desde crear nueva cuenta
+        this._eventService.regresarNuevaCuentaEvent(true);
+        break;
+
+      case 4:
+        //desde resumen del documento
+        this._eventService.regresarResumenEvent(true);
+        break;
+
+      case 5:
+        //desde historial 
+        this._eventService.regresarHistorialEvent(true);
+        break;
+
+      default:
+        this._location.back();
+
+        break;
     }
 
-    //desde documento
-    if (this.regresar == 1) {
-      this._eventService.verDocumentoEvent(true);
-      return;
-    }
 
-    //desde editar cuenta
-    if (this.regresar == 2) {
-      this._eventService.regresarEditarClienteEvent(true);
-      return;
-    }
 
-    //desde crear nueva cuenta
-    if (this.regresar == 3) {
-      this._eventService.regresarNuevaCuentaEvent(true);
-      return;
-    }
-
-    //desde resumen del documento
-    if (this.regresar == 4) {
-      this._eventService.regresarResumenEvent(true);
-      return;
-    }
-
-    //desde historial 
-    if (this.regresar == 5) {
-      this._eventService.regresarHistorialEvent(true);
-      return;
-    }
   }
 
 
