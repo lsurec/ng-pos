@@ -66,7 +66,20 @@ export class EditarClienteComponent implements OnInit {
     this._eventService.verDocumentoEvent(true);
   }
 
-  verSalioMal() {
+
+  mostrarError(res:ResApiInterface) {
+    
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
     this.verError = true;
   }
 
@@ -124,7 +137,7 @@ export class EditarClienteComponent implements OnInit {
     //Si el servicio falló
     if (!resCuenta.status) {
       this.isLoading = false;
-      this._notificationsService.showErrorAlert(resCuenta);
+      this.mostrarError(resCuenta);
       return;
     }
 
@@ -143,7 +156,7 @@ export class EditarClienteComponent implements OnInit {
 
       //TODO: translate
       this._notificationsService.openSnackbar("Se actualizó la cuenta, pero ocurrió un error al seleccioanarla.");
-      console.error(infoCuenta);
+      this.mostrarError(infoCuenta);
 
       return;
     }
