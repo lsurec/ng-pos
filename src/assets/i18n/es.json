@@ -224,7 +224,8 @@
             "docRecientes": "Documentos recientes",
             "diferencia": "Diferencia:",
             "pagoTotal": "Pago Total:",
-            "existencia": "Existencia"
+            "existencia": "Existencia",
+            "receptor": "Receptor"
         }
     }
 }
