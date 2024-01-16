@@ -9,6 +9,7 @@ import { GetDocInterface } from '../../interfaces/get-doc.interface';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 import { Documento } from '../../interfaces/doc-estructura.interface';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 
 @Component({
   selector: 'app-historial',
@@ -73,7 +74,9 @@ export class HistorialComponent implements OnInit {
     if (!resDoc.status) {
       this.isLoading = false;
 
-      this._notificationService.showErrorAlert(resDoc);
+      this.mostrarError(resDoc);
+      
+
       return;
     }
 
@@ -97,7 +100,7 @@ export class HistorialComponent implements OnInit {
       if (!resTra.status) {
         this.isLoading = false;
 
-        this._notificationService.showErrorAlert(resTra);
+        this.mostrarError(resTra);
         return;
       }
 
@@ -183,7 +186,20 @@ export class HistorialComponent implements OnInit {
     this.historial = true;
   }
 
-  mostrarError() {
+ 
+  mostrarError(res:ResApiInterface) {
+    
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
     this.verError = true;
   }
 }
