@@ -9,9 +9,17 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class DetalleDocumentoComponent {
 
+  regresar: number = 6;
+  verError: boolean = false;
+
   constructor(
     private _eventService: EventService,
-  ) { }
+  ) {
+
+    this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
+      this.verError = false;
+    });
+  }
 
   productos: ProductoInterface[] = [
     {
@@ -66,6 +74,10 @@ export class DetalleDocumentoComponent {
   goBack() {
     // this._eventService.emitCustomEvent(true);
     this._eventService.verHistorialEvent(true);
+  }
+
+  mostrarError(){
+    this.verError = true;
   }
 
 }

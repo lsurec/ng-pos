@@ -95,4 +95,12 @@ export class EventService {
     regresarHistorialEvent(eventData: boolean) {
         this.regresarHistorial.next(eventData);
     }
+
+    private regresarResumenDocHistorial = new Subject<any>();
+
+    regresarResumenDocHistorial$ = this.regresarResumenDocHistorial.asObservable();
+
+    regresarResumenDocHistorialEvent(eventData: boolean) {
+        this.regresarResumenDocHistorial.next(eventData);
+    }
 }

@@ -67,6 +67,10 @@ export class ErrorComponent implements OnInit {
         //desde historial 
         this._eventService.regresarHistorialEvent(true);
         break;
+      case 6:
+        //desde documento abierto desde historial 
+        this._eventService.regresarResumenDocHistorialEvent(true);
+        break;
 
       default:
         this._location.back();
