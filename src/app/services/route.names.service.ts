@@ -5,18 +5,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class RouteNamesService {
-  static readonly SPLASH = 'splash';
-  static readonly LANGUAGE = 'lang';
-  static readonly THEME = 'theme';
-  static readonly LOGIN = 'login';
-  static readonly HOME = 'home';
-  static readonly LOCAL_CONFIG = 'local-config';
-  static readonly API = 'api';
-  static readonly NOT_FOUND = 'not-found';
-  static readonly ERROR = 'error';
-  static readonly NO_CONNECTED = 'no-conexion';
-  static readonly DOC = 'doc';
-  static readonly NEW_ACCOUNT = 'new-account';
+  static readonly SPLASH: string = 'splash';
+  static readonly LANGUAGE: string = 'lang';
+  static readonly THEME: string = 'theme';
+  static readonly LOGIN: string = 'login';
+  static readonly HOME: string = 'home';
+  static readonly LOCAL_CONFIG: string = 'local-config';
+  static readonly API: string = 'api';
+  static readonly NOT_FOUND: string = 'not-found';
+  static readonly ERROR: string = 'error';
+  static readonly NO_CONNECTED: string = 'no-conexion';
+  static readonly DOC: string = 'doc';
+  static readonly NEW_ACCOUNT: string = 'new-account';
 
   // Agrega más nombres de rutas según sea necesario
 

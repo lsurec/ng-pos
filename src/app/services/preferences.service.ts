@@ -7,22 +7,23 @@ import { ErrorInterface } from "../interfaces/error.interface";
 export class PreferencesService {
 
 
-    private static userKey = 'user';
-    private static userStorageKey = 'userStorage';
-    private static tokenKey = 'token';
-    private static tokenStorageKey = 'tokenStorage';
-    private static languageKey = 'language';
-    private static empresaKey = 'empresa';
-    private static estacionKey = 'estacion';
-    private static temaKey = 'tema';
-    private static urlKey = 'url';
-    private static conKey = 'conStr';
-    private static conStoragekey = 'conStorageStr';
-    private static errorKey = 'error';
-    private static tipoCambioKey = 'tipoCambio';
+    private static readonly userKey = 'user';
+    private static readonly userStorageKey: string = 'userStorage';
+    private static readonly tokenKey: string = 'token';
+    private static readonly tokenStorageKey: string = 'tokenStorage';
+    private static readonly languageKey: string = 'language';
+    private static readonly empresaKey: string = 'empresa';
+    private static readonly estacionKey: string = 'estacion';
+    private static readonly temaKey: string = 'tema';
+    private static readonly urlKey: string = 'url';
+    private static readonly conKey: string = 'conStr';
+    private static readonly conStoragekey: string = 'conStorageStr';
+    private static readonly errorKey: string = 'error';
+    private static readonly tipoCambioKey: string = 'tipoCambio';
+    private static readonly documentkey: string = 'document';
 
 
-   static closeSession(){
+    static closeSession() {
         localStorage.removeItem(PreferencesService.tokenStorageKey);
         sessionStorage.removeItem(PreferencesService.tokenKey);
 
@@ -170,9 +171,22 @@ export class PreferencesService {
 
     static get tipoCambio(): number {
         let value = sessionStorage.getItem(this.tipoCambioKey);
-        
-        
+
+
         return parseFloat(value!);
+    }
+
+
+    @Input()
+    static set documento(value: string) {
+        localStorage.setItem(this.documentkey, value.toString());
+    }
+
+    static get documento(): string {
+        let value = localStorage.getItem(this.documentkey);
+
+        if (!value) return "";
+        return value;
     }
 
 }

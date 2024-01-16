@@ -159,6 +159,7 @@ export class FacturaComponent implements OnInit {
 
 
     this.showDocumento();
+    this.facturaService.saveDocLocal();
 
   }
 
@@ -312,6 +313,7 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = false;
 
+    this.facturaService.loadDocDave();
 
 
   }

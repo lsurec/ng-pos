@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DialogActionInterface } from "../interfaces/dialog-actions";
+import { DialogActionInterface } from "../interfaces/dialog-actions.interface";
 import { DialogActionsComponent } from "../components/dialog-actions/dialog-actions.component";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";

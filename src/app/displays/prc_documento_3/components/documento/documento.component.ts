@@ -31,6 +31,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 })
 export class DocumentoComponent {
 
+
   @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
@@ -55,6 +56,12 @@ export class DocumentoComponent {
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
   ) {
+  }
+
+
+  changeVendedor() {
+    this.facturaService.saveDocLocal();
+
   }
 
   async changeSerie() {
@@ -84,6 +91,8 @@ export class DocumentoComponent {
     //si solo hay un vendedor seleccionarlo por defecto
     if (this.facturaService.vendedores.length == 1) {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
+      this.facturaService.saveDocLocal();
+
     }
 
     //Buscar tipos transaccion
@@ -123,6 +132,9 @@ export class DocumentoComponent {
     }
 
     this.facturaService.parametros = resParametro.response;
+
+    this.facturaService.montos = [];
+    this.facturaService.traInternas = [];
 
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
@@ -167,11 +179,17 @@ export class DocumentoComponent {
         limite_Credito: 10000000.00,
         permitir_CxC: true,
 
+
       }
+      
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
+      this.facturaService.saveDocLocal();
+
 
     } else {
       this.facturaService.cuenta = undefined;
+      this.facturaService.saveDocLocal();
+
     }
   }
 
@@ -236,6 +254,7 @@ export class DocumentoComponent {
     if (cuentas.length == 1) {
       this.facturaService.cuenta = cuentas[0];
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
+      this.facturaService.saveDocLocal();
 
       return;
     }
@@ -247,10 +266,15 @@ export class DocumentoComponent {
 
         let cliente: ClienteInterface = result[0];
         this.facturaService.cuenta = cliente;
+        
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
+        this.facturaService.saveDocLocal();
 
       }
     })
+
+
+
   }
 
   agregarCliente() {
