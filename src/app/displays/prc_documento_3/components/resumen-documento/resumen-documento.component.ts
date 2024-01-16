@@ -8,6 +8,7 @@ import { PostDocumentInterface } from '../../interfaces/post-document.interface'
 import { DocumentService } from '../../services/document.service';
 import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -54,7 +55,20 @@ export class ResumenDocumentoComponent {
     this._eventService.verDocumentoEvent(true);
   }
 
-  mostrarError() {
+
+  mostrarError(res:ResApiInterface) {
+    
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    PreferencesService.error = error;
     this.verError = true;
   }
 
@@ -245,7 +259,7 @@ export class ResumenDocumentoComponent {
     this.isLoading = false;
 
     if (!resDoc.status) {
-      this._notificationService.showErrorAlert(resDoc);
+      this.mostrarError(resDoc);
       return;
     }
 
