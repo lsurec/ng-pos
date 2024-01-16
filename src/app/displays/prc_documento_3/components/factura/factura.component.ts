@@ -191,8 +191,10 @@ export class FacturaComponent implements OnInit {
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
-      //TODO: show retry view
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinDisplay'));
+      this.verError({
+        response: this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinDisplay')),
+        status:false,
+      })
       return;
     }
 
