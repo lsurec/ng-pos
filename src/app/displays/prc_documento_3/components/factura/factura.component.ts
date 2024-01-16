@@ -192,7 +192,7 @@ export class FacturaComponent implements OnInit {
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
       this.verError({
-        response: this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinDisplay')),
+        response: "No se ha asigando un tipo de documento al display. Comunicate con el departamento de soporte.",
         status:false,
       })
       return;
