@@ -221,7 +221,10 @@
             "filtro": "Filtro",
             "cambio": "Cambio",
             "cuentas": "Cuentas",
-            "docRecientes": "Documentos recientes"
+            "docRecientes": "Documentos recientes",
+            "diferencia": "Diferencia:",
+            "pagoTotal": "Pago Total:",
+            "existencia": "Existencia"
         }
     }
 }

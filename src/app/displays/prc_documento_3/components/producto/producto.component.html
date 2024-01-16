@@ -40,7 +40,7 @@
                     <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="productoService. bodega" (ngModelChange)="changeBodega()">
                         <mat-option *ngFor="let bodega of productoService. bodegas" [value]="bodega">
                             <!--TODO:Translate-->
-                            ({{bodega.bodega}}) {{bodega.nombre}} | Existencia ({{bodega.existencia}})
+                            ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }} ({{bodega.existencia}})
                         </mat-option>
                     </mat-select>
                 </div>

@@ -104,17 +104,17 @@
                         {{pago.reference}}</p>
                     <p class="info-pago" *ngIf="pago.payment.banco">{{ 'pos.factura.banco' | translate
                         }}{{pago.bank?.nombre}}
-                        <!--TODO:Translate-->
-
                     <p class="info-pago" *ngIf="pago.account">{{ 'pos.factura.banco' | translate
                         }}{{pago.account.descripcion}}
                     </p>
                     <p class="info-pago">{{ 'pos.factura.monto' | translate }} {{pago.amount | currency:'
                         ':'symbol':'2.2-2' }}</p>
-                    <!--TODO:Translate-->
-                    <p class="info-pago" *ngIf="pago.difference>0">Diferencia: {{pago.difference | currency:'
+                    <p class="info-pago" *ngIf="pago.difference>0">{{ 'pos.factura.diferencia' | translate}}
+                        {{pago.difference | currency:'
                         ':'symbol':'2.2-2' }}</p>
-                    <p class="info-pago" *ngIf="pago.difference>0">Pago Total: {{pago.amount +pago.difference|
+                    <p class="info-pago" *ngIf="pago.difference>0">{{ 'pos.factura.pagoTotal' | translate}}
+                        {{pago.amount
+                        +pago.difference|
                         currency:'
                         ':'symbol':'2.2-2' }}</p>
                 </div>
