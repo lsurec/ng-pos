@@ -12,6 +12,8 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { SerieService } from '../../services/serie.service';
+import { CuentaService } from '../../services/cuenta.service';
+import { ResponseInterface } from 'src/app/interfaces/response.interface';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -20,6 +22,7 @@ import { SerieService } from '../../services/serie.service';
   providers: [
     LocalSettingsService,
     SerieService,
+    CuentaService,
   ]
 })
 export class DetalleDocumentoComponent implements OnInit {
@@ -46,6 +49,7 @@ export class DetalleDocumentoComponent implements OnInit {
     private _notificationsServie: NotificationsService,
     private _translate: TranslateService,
     private _serieService: SerieService,
+    private _cuentaService:CuentaService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -60,7 +64,6 @@ export class DetalleDocumentoComponent implements OnInit {
 
   async loadData() {
 
-    console.log(this.estructura);
 
     let objDoc: Documento = this.estructura!.estructura;
 
@@ -68,7 +71,7 @@ export class DetalleDocumentoComponent implements OnInit {
     let estacionId: number = objDoc.Doc_Estacion_Trabajo;
     let tipoDoc: number = objDoc.Doc_Tipo_Documento;
     let serieDoc: string = objDoc.Doc_Serie_Documento;
-
+    let idCuenta: number = objDoc.Doc_Cuenta_Correntista;
 
     this.isLoading = true;
 
@@ -191,6 +194,40 @@ export class DetalleDocumentoComponent implements OnInit {
         break;
       }
     }
+
+
+    let resName:ResApiInterface = await  this._cuentaService.getNombreCuenta(
+      this.token,
+      idCuenta,
+    ); 
+
+
+    
+    if (!resName.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resName);
+
+      return;
+
+    }
+
+    let name:ResponseInterface = resName.response;
+
+    
 
 
     this.isLoading = false;
