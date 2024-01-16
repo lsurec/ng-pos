@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { EventService } from 'src/app/services/event.service';
+import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
+import { Documento } from '../../interfaces/doc-estructura.interface';
 
 @Component({
   selector: 'app-detalle-documento',
   templateUrl: './detalle-documento.component.html',
   styleUrls: ['./detalle-documento.component.scss']
 })
-export class DetalleDocumentoComponent {
+export class DetalleDocumentoComponent implements OnInit {
 
+  @Input() estructura: DocumentoResumenInterface | undefined; 
   regresar: number = 6;
   verError: boolean = false;
 
@@ -19,6 +22,28 @@ export class DetalleDocumentoComponent {
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
       this.verError = false;
     });
+  }
+  ngOnInit(): void {
+    this.loadData()
+    
+  }
+
+  async loadData(){
+    
+    console.log(this.estructura);
+
+    let objDoc :Documento = this.estructura!.estructura;
+
+    let empresa:number =objDoc.Doc_Empresa;
+    let estacion:number = objDoc.Doc_Estacion_Trabajo;
+    let tipoDoc:number = objDoc.Doc_Tipo_Documento;
+    let serieDoc: string = objDoc.Doc_Serie_Documento;
+
+
+    
+
+
+    
   }
 
   productos: ProductoInterface[] = [

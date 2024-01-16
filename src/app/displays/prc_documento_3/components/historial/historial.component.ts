@@ -35,12 +35,12 @@ export class HistorialComponent implements OnInit {
   documento: number = this._facturaService.tipoDocumento!;
 
   documentos: DocumentoResumenInterface[] = [];
+  docSelect?:DocumentoResumenInterface;
 
   constructor(
     private _eventService: EventService,
     private _documentService: DocumentService,
     private _facturaService: FacturaService,
-    private _notificationService: NotificationsService,
     private _tiposTransaccion: TipoTransaccionService,
   ) {
 
@@ -177,6 +177,7 @@ export class HistorialComponent implements OnInit {
   }
 
   verDetalle() {
+    
     this.detalleDocumento = true;
     this.historial = false;
   }
