@@ -234,7 +234,8 @@
             "diferencia": "Diferencia:",
             "pagoTotal": "Pago Total:",
             "existencia": "Existencia",
-            "receptor": "Receptor"
+            "receptor": "Receptor",
+            "cuenta": "Cuenta:"
         }
     }
 }

@@ -206,8 +206,8 @@ mat-sidenav {
     }
 
     .container_main {
-        width     : 100%;
-        /* padding: 20px; */
+        width : 100%;
+        height: calc(100% - 34px);
     }
 }
 
@@ -571,7 +571,7 @@ h2 {
 //Detalles del usuario
 
 .detalles-usuario {
-    padding      : 0px 15px;
+    padding      : 5px 15px;
     border-bottom: 1px solid $color-bordes;
     display      : flex;
     align-items  : center;
