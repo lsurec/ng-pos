@@ -475,7 +475,6 @@ export class DetalleDocumentoComponent implements OnInit {
 
       if (element.Banco) {
 
-        console.log("buscabnd0 obancos");
 
 
         let resBancos: ResApiInterface = await this._pagoService.getBancos(
@@ -551,9 +550,6 @@ export class DetalleDocumentoComponent implements OnInit {
           }
 
           let cuentasBanco: CuentaBancoInterface[] = resCuentaBanco.response;
-
-          console.log(cuentasBanco);
-          
 
 
           for (let i = 0; i < cuentasBanco.length; i++) {
