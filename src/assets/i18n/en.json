@@ -236,7 +236,8 @@
             "pagoTotal": "Total Payment:",
             "existencia": "Existence",
             "receptor": "Receiver",
-            "cuenta": "Account:"
+            "cuenta": "Account:",
+            "noDisponible": "Not Available"
         }
     }
 }

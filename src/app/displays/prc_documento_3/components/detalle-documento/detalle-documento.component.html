@@ -58,16 +58,14 @@
                     </div>
 
                     <div class="descripciones" *ngIf="!client">
-                        <!--TODO:Translate-->
-                        <p class="textos">{{ 'pos.factura.nit' | translate }} No disponible.</p>
+                        <p class="textos">{{ 'pos.factura.nit' | translate }} {{ 'pos.factura.noDisponible' | translate }}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
                 <div class="informacion" *ngIf="estructura.estructura.Doc_Cuenta_Correntista_Ref">
                     <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
                     <div class="descripciones">
-                        <!--TODO:Translate-->
-                        <p class="textos">{{vendedor ?? 'No disponible.'}}</p>
+                        <p class="textos">{{vendedor ?? 'pos.factura.noDisponible' | translate}}</p>
                     </div>
                 </div>
             </div>
