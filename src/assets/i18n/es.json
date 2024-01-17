@@ -135,7 +135,8 @@
             "noPrecioMenor": "El precio no puede ser menor al precio autorizado. Comuníquese con el encargado de inventarios.",
             "existenciaInsuficiente": "No es posible agregar la transacción porque la existencia es insuficiente.",
             "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
-            "transaccionAgregada": "Transacción agregada."
+            "transaccionAgregada": "Transacción agregada.",
+            "noObtuvoCuenta": "No se pudo obetener la cuenta asociada al documento."
         },
         "botones": {
             "aceptar": "Aceptar",

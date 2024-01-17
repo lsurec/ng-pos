@@ -135,7 +135,8 @@
             "noPrecioMenor": "The price cannot be lower than the authorized price. Contact the inventory manager.",
             "existenciaInsuficiente": "It is not possible to add the transaction because the stock is insufficient.",
             "monedaDistinta": "The transaction cannot be added because the currency is different from existing transactions.",
-            "transaccionAgregada": "Transaction added."
+            "transaccionAgregada": "Transaction added.",
+            "noObtuvoCuenta": "The account associated with the document could not be obtained."
         },
         "botones": {
             "aceptar": "OK",

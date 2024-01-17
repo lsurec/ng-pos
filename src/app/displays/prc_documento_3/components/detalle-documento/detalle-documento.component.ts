@@ -223,7 +223,7 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    
+
 
     let resName: ResApiInterface = await this._cuentaService.getNombreCuenta(
       this.token,
@@ -298,9 +298,9 @@ export class DetalleDocumentoComponent implements OnInit {
 
       }
 
-    }else{
-      //TODO:Translate
-      this._notificationsServie.openSnackbar("No se pudo obetener la cuenta asociada al documento");
+    } else {
+      this._notificationsServie.openSnackbar(this._translate.instant('pos.alertas.noObtuvoCuenta'));
+
     }
 
 
