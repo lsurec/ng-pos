@@ -64,7 +64,7 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 
 .login-right input[type="submit"]:hover {
     background: $color-naranja;
-    color     : $color-negro;
+    color     : $color-blanco;
 }
 
 .login-right h3 {
@@ -121,7 +121,7 @@ p {
 
 .cambiar {
     text-align: left !important;
-    display: flex;
+    display   : flex;
 }
 
 .spacer {

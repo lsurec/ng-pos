@@ -33,7 +33,7 @@ $color-negro          : #000; //bordes y texto azul
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial !important;
+    background-color: $background-oficial;
     padding         : 0px 15px;
     border-bottom   : 1px solid $color-bordes;
 }

@@ -6,6 +6,10 @@ $iconos                  : #c4c4c4;
 $radio-buttons           : #ffffff;
 // $borde-no-seleccionado: #797272;
 $borde-no-seleccionado   : #635f5f;
+$color-naranja           : #df9722;
+$seleccionado            : #635f5f;
+$placeholder             : #e3ebfcb7;
+
 
 html,
 body {
@@ -42,7 +46,9 @@ body {
 .dark-theme #notfound,
 .dark-theme .seleccionar,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel,
-.dark-theme .container-main {
+.dark-theme .container-main,
+.dark-theme .dialog,
+.dark-theme .informacion {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }
@@ -63,7 +69,9 @@ body {
 //FONDOS EN COLOR GRIS 
 .dark-theme .container_start,
 .dark-theme .container_main,
-.dark-theme .mat-drawer-inner-container {
+.dark-theme .mat-drawer-inner-container,
+.dark-theme .bancos:hover,
+.dark-theme .centrar {
     background-color: $fondo-oscuro !important;
 }
 
@@ -73,10 +81,15 @@ body {
 .dark-theme .mat-mdc-radio-button .mdc-form-field,
 .dark-theme p,
 .dark-theme h2,
+.dark-theme h4,
 .dark-theme .mat-mdc-option .mdc-list-item__primary-text,
 .dark-theme .barra-de-busqueda,
 .dark-theme .mat-mdc-select-arrow svg,
-.dark-theme .detalles {
+.dark-theme .detalles,
+.dark-theme .barra-monto,
+.dark-theme .sumar,
+.dark-theme .cantidad,
+.dark-theme .restar {
     color: $color-blanco !important;
 }
 
@@ -101,16 +114,25 @@ body {
 .dark-theme .backColorNavBar,
 .dark-theme .logos,
 .dark-theme .detalle-documento,
-.dark-theme .productos-pagos {
+.dark-theme .productos-pagos,
+.dark-theme .documento,
+.dark-theme .contenido {
     border-top: 1px solid $bordes !important;
 }
 
 .dark-theme .itemRouteActive,
 .dark-theme .contenedorModulo,
 .dark-theme .descripcion,
-.dark-theme .mat-mdc-button .mdc-button__label,
+.dark-theme .mat-mdc-mini-fab .mat-icon,
+.mat-mdc-mini-fab .material-icons,
+// .mdc-button .mdc-button__label
 .dark-theme .mat-mdc-select-value-text,
-.dark-theme label {
+.dark-theme label,
+.dark-theme .observacion,
+.dark-theme .close,
+.dark-theme .total,
+.dark-theme .iconoCargo,
+.dark-theme .iconoDescuento {
     color: $color-blanco !important;
 }
 
@@ -129,10 +151,10 @@ body {
     font-weight: 550;
 }
 
-.dark-theme input:checked+.pestana {
-    border-bottom: 1px solid $bordes !important;
-    border-right : 1px solid $bordes !important;
-    border-left  : 1px solid $bordes !important;
+.dark-theme input::placeholder,
+.dark-theme .mat-mdc-select-placeholder,
+.dark-theme textarea::placeholder {
+    color: $placeholder !important;
 }
 
 .dark-theme .pestana {
@@ -140,6 +162,32 @@ body {
     border-right : 1px solid $borde-no-seleccionado !important;
     border-left  : 1px solid $borde-no-seleccionado !important;
 }
+
+.dark-theme .titulo-pestana:checked+.pestana {
+    color: $color-blanco !important;
+}
+
+.dark-theme .pestana:hover {
+    color : $color-naranja !important;
+    cursor: pointer;
+}
+
+//BORDES DE BOTONES
+.dark-theme button:not(:disabled),
+.dark-theme .barra-monto,
+.dark-theme .total,
+.dark-theme .centro {
+    border-color: $bordes !important;
+}
+
+.dark-theme .pestana {
+    color: $bordes !important;
+}
+
+.dark-theme .detalles:hover {
+    border-bottom: 1px solid $color-naranja !important;
+}
+
 
 //radio buttons
 
