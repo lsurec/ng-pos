@@ -520,6 +520,8 @@ export class DetalleDocumentoComponent implements OnInit {
         if (this.banco && element.Cuenta_Bancaria) {
 
 
+
+
           let resCuentaBanco = await this._pagoService.getCuentasBanco(
             this.user,
             this.token,

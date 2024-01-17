@@ -145,7 +145,7 @@ export class ResumenDocumentoComponent {
               Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
-              Tra_Monto: operacion.cargo,
+              Tra_Monto: operacion.descuento,
             }
           );
         }

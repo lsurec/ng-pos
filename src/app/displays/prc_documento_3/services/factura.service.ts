@@ -145,9 +145,38 @@ export class FacturaService {
 
 
         //Cargar documento
-        this.serie = doc.serie;
+
+        if (doc.serie) {
+            for (let i = 0; i < this.series.length; i++) {
+                const element = this.series[i];
+
+                if (element.serie_Documento == doc.serie.serie_Documento) {
+                    this.serie = element;
+                    break;
+                }
+
+            }
+
+        }
+
+        console.log(doc.vendedor);
+        
+
+        if (doc.vendedor) {
+            console.log(this.vendedor);
+            
+            for (let i = 0; i < this.vendedores.length; i++) {
+                const element = this.vendedores[i];
+                if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
+                    this.vendedor = element;
+                }
+            }
+        }
+
+
+
+
         this.cuenta = doc.cliente;
-        this.vendedor = doc.vendedor;
         this.traInternas = doc.detalles;
         this.montos = doc.pagos;
 

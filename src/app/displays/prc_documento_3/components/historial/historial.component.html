@@ -29,7 +29,7 @@
                     <div class="detalle-documento" *ngFor="let documento of documentos" (click)="verDetalle(); docSelect = documento">
                         <div class="info-documento">
                             <p class="subtitulo">{{documento.item.consecutivo_Interno}} </p>
-                            <p class="fecha-hora">{{documento.item.fecha_Hora | date}} </p>
+                            <p class="fecha-hora">{{documento.item.fecha_Hora |  date: 'dd/MM/yyyy HH:mm'}} </p>
                         </div>
                         <span class="spacer"></span>
                         <div class="totales">

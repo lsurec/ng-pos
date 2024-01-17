@@ -78,7 +78,7 @@
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
             <mat-select name="estado" class="seleccionar"
-                placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor">
+                placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor" (ngModelChange)="changeVendedor()">
                 <mat-option *ngFor="let vendedor of facturaService.vendedores" [value]="vendedor">
                     {{vendedor.nom_Cuenta_Correntista}}
                 </mat-option>
