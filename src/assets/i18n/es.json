@@ -236,7 +236,8 @@
             "pagoTotal": "Pago Total:",
             "existencia": "Existencia",
             "receptor": "Receptor",
-            "cuenta": "Cuenta:"
+            "cuenta": "Cuenta:",
+            "noDisponible": "No Disponible"
         }
     }
 }
