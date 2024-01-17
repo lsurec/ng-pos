@@ -155,7 +155,8 @@
             "agregar": "Add",
             "imprimir": "Print",
             "nuevoDoc": "New Document",
-            "confirmar": "Confirm"
+            "confirmar": "Confirm",
+            "inicio": "Home"
         },
         "error": {
             "informe": "Error Report",

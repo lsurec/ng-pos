@@ -41,7 +41,7 @@
                                 <p class="textos">{{ 'pos.factura.sku' | translate }}
                                     {{transaction.producto.producto_Id}}
                                 </p>
-                                <p class="textos">{{ 'pos.factura.productos' | translate }}
+                                <p class="textos">{{ 'pos.factura.precio_unitario' | translate }}
                                     {{transaction.precio?.precioU |
                                     currency:' ':'symbol':'2.2-2' }}</p>
                                 <p class="textos">{{ 'pos.factura.total' | translate }} {{transaction.total | currency:'
