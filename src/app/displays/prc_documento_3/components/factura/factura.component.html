@@ -83,8 +83,8 @@
             </mat-toolbar-row>
         </mat-toolbar>
         <mat-toolbar class="toolbarlarge" *ngIf="!facturaService.isLoading">
-            <button (click)="goBack()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
+            <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>home</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
                 (click)="loadData()">
