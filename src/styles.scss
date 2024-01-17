@@ -2,6 +2,8 @@ $color-blanco         : #ffffff;
 $bordes               : #c4c4c4;
 // $fondo-oscuro      : #121212;
 $fondo-oscuro         : #302f2f;
+$iconos               : #c4c4c4;
+$radio-buttons: #ffffff;
 
 html,
 body {
@@ -24,9 +26,19 @@ body {
 
 //Aplica el tema oscuro a elementos específicos si es necesario 
 .dark-theme .container_start,
-.dark-theme .toolbarNavegacion {
+.dark-theme .toolbarNavegacion,
+.dark-theme .toolbarlarge,
+.dark-theme mat-toolbar-row,
+.dark-theme .head__sidenav,
+.dark-theme .detallesUsuario,
+.dark-theme .mat-toolbar,
+.dark-theme .backColorNavBar,
+.dark-theme .ajustes,
+.dark-theme .lenguajes,
+.dark-theme .acciones,
+.dark-theme .contenido-sidenav {
     background-color: $fondo-oscuro !important;
-    color           : $color-blanco;
+    color           : $color-blanco !important;
 }
 
 //FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
@@ -37,12 +49,17 @@ body {
 
 //FONDOS EN COLOR GRIS 
 .dark-theme .container_start,
-.dark-theme .container_main {
+.dark-theme .container_main,
+.dark-theme .mat-drawer-inner-container {
     background-color: $fondo-oscuro !important;
 }
 
 //TEXTOS EN COLOR BLANCO
-.dark-theme .contenedorModulo {
+.dark-theme .contenedorModulo,
+.dark-theme .desa,
+.dark-theme .mat-mdc-radio-button .mdc-form-field,
+.dark-theme p,
+.dark-theme h2 {
     color: $color-blanco !important;
 }
 
@@ -52,16 +69,57 @@ body {
 }
 
 //BORDE ABAJO
-.dark-theme .toolbarNavegacion {
+.dark-theme .toolbarNavegacion,
+.dark-theme .toolbarlarge,
+.dark-theme .head__sidenav,
+.dark-theme .detalles-usuario,
+.dark-theme .configuraciones,
+.dark-theme .barra-cerrar-titulo,
+.dark-theme .input-container {
     border-bottom: 1px solid $bordes !important;
 }
 
+//BORDE ARRIBA
+.dark-theme .backColorNavBar,
+.dark-theme .logos {
+    border-top: 1px solid $bordes !important;
+}
+
 .dark-theme .itemRouteActive,
-.dark-theme .contenedorModulo {
+.dark-theme .contenedorModulo,
+.dark-theme .descripcion,
+.dark-theme .mat-mdc-button .mdc-button__label {
     color: $color-blanco !important;
 }
 
 .dark-theme .itemRouteActive:hover {
     color : $color-blanco !important;
     cursor: pointer;
+}
+
+.dark-theme .iconos-detalles {
+    color: $iconos !important;
+}
+
+.dark-theme .subtitulo {
+    font-weight: 550;
+}
+
+//radio buttons
+
+.dark-theme .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+    border-color: $radio-buttons !important;
+}
+
+.dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
+    border-color: $radio-buttons !important;
+}
+
+.dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
+    border-color: $radio-buttons !important;
+}
+
+.dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
+    border-color: $radio-buttons !important;
+
 }
