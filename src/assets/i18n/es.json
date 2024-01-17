@@ -119,6 +119,7 @@
             "certificacionNoDisponible": "La certificacion de docuentos tributarios electronicos no está disponible en este momento.",
             "urlCorrecta": "Url configurada correctamente.",
             "noValida": "URL no válida.",
+            "urlCopiada": "Url copiada al portapapeles.",
             "correoNoValido": "El correo ingresado no es válido",
             "cuentaActualizada": "Se actualizó la cuenta, pero ocurrió un error al seleccionarla.",
             "cuentaActualizadaSeleccionada": "Cuenta actualizada y seleccionada correctamente.",

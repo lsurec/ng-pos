@@ -35,12 +35,11 @@ export class ApiComponent {
 
   copyToClipboard() {
     this._clipboardService.copyToClipboard(PreferencesService.baseUrl);
-    //TODO:Translate
-    this._notificationService.openSnackbar("Url copiada al portapapeles.");
+    this._notificationService.openSnackbar(this.translate.instant('pos.alertas.urlCopiada'));
   }
 
 
-  goBack() { 
+  goBack() {
 
     this._location.back()
   }
@@ -49,7 +48,7 @@ export class ApiComponent {
 
 
     if (!this.url) {
-      this._notificationService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
+      this._notificationService.openSnackbar(this.translate.instant('pos.alertas.noValida'));
       return;
     }
 
@@ -64,7 +63,7 @@ export class ApiComponent {
 
     // Si no contiene "/api/", mostrar un mensaje y devolver undefined
     if (!containsApi) {
-      this._notificationService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
+      this._notificationService.openSnackbar(this.translate.instant('pos.alertas.noValida'));
       return;
     }
 
@@ -110,7 +109,7 @@ export class ApiComponent {
       return;
     }
 
-    this._notificationService.openSnackbar(this.translate.instant('pos.alerta.urlCorrecta'));
+    this._notificationService.openSnackbar(this.translate.instant('pos.alertas.urlCorrecta'));
 
     PreferencesService.baseUrl = result;
 
