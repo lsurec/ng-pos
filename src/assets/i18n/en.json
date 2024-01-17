@@ -238,7 +238,8 @@
             "existencia": "Existence",
             "receptor": "Receiver",
             "cuenta": "Account:",
-            "noDisponible": "Not Available"
+            "noDisponible": "Not Available",
+            "porcentaje": "Percentage"
         }
     }
 }

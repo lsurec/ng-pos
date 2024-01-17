@@ -49,18 +49,18 @@ export class DetalleComponent {
     },
     {
       id: 2,
-      nombre: "Descripción",
+      nombre: this._translate.instant('pos.factura.descripcion'),
     },
   ];
 
   tipos: FiltroInterface[] = [
     {
       id: 1,
-      nombre: "Porcentaje",
+      nombre: this._translate.instant('pos.factura.porcentaje'),
     },
     {
       id: 2,
-      nombre: "Monto",
+      nombre: this._translate.instant('pos.factura.monto'),
     },
   ];
 
@@ -174,8 +174,8 @@ export class DetalleComponent {
       if (!resBodega.status) {
 
         this.facturaService.isLoading = false;
-  
-  
+
+
         let verificador = await this._notificationsService.openDialogActions(
           {
             title: this._translate.instant('pos.alertas.salioMal'),
@@ -184,13 +184,13 @@ export class DetalleComponent {
             falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
-  
+
         if (!verificador) return;
-  
+
         this.verError(resBodega);
-  
+
         return;
-  
+
       }
 
       this._productoService.bodegas = resBodega.response;
@@ -222,8 +222,8 @@ export class DetalleComponent {
         if (!resPrecio.status) {
 
           this.facturaService.isLoading = false;
-    
-    
+
+
           let verificador = await this._notificationsService.openDialogActions(
             {
               title: this._translate.instant('pos.alertas.salioMal'),
@@ -232,13 +232,13 @@ export class DetalleComponent {
               falso: this._translate.instant('pos.botones.aceptar'),
             }
           );
-    
+
           if (!verificador) return;
-    
+
           this.verError(resPrecio);
-    
+
           return;
-    
+
         }
 
         let precios: PrecioInterface[] = resPrecio.response;
@@ -268,7 +268,7 @@ export class DetalleComponent {
           if (!resfactor.status) {
 
             this.facturaService.isLoading = false;
-      
+
             let verificador = await this._notificationsService.openDialogActions(
               {
                 title: this._translate.instant('pos.alertas.salioMal'),
@@ -277,13 +277,13 @@ export class DetalleComponent {
                 falso: this._translate.instant('pos.botones.aceptar'),
               }
             );
-      
+
             if (!verificador) return;
-      
+
             this.verError(resfactor);
-      
+
             return;
-      
+
           }
 
 

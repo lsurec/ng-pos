@@ -69,6 +69,12 @@ hr {
     align-items: center;
 }
 
+.registros {
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 10px;
+}
+
 .titulo {
     font-size  : 14px;
     text-align : center;
@@ -85,9 +91,9 @@ hr {
 }
 
 .detalle-documento {
-    display         : flex;
-    padding         : 5px 0px;
-    border-top      : 1px solid $color-bordes;
+    display   : flex;
+    padding   : 5px 0px;
+    border-top: 1px solid $color-bordes;
 }
 
 .detalle-documento:hover {
