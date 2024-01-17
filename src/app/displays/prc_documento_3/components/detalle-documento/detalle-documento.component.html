@@ -8,9 +8,10 @@
         </button>
         <span class="spacer"></span>
         <!-- Titulo de la tarea -->
-        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }} ({{estructura.item.consecutivo_Interno}})</p>
+        <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }} ({{estructura.item.consecutivo_Interno}})
+        </p>
         <span class="spacer"></span>
-        
+
     </mat-toolbar-row>
 
     <div class="container-main">
@@ -74,17 +75,19 @@
             <div class="productos-pagos">
                 <div class="detalles-lista">
                     <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
-                    <div class="descripcion-producto" *ngFor="let compra of compras">
-                        <p class="textos">{{compra.cantidad}} x {{compra.producto.des_Producto}}</p>
-                        <p class="textos">{{ 'pos.factura.sku' | translate }} {{compra.producto.producto_Id}}</p>
-                        <p class="textos">{{ 'pos.factura.productos' | translate }} {{compra.precioUnitario}}</p>
-                        <p class="textos">{{ 'pos.factura.total' | translate }} {{compra.total}} </p>
+                    <div class="descripcion-producto" *ngFor="let transaccion of transacciones">
+                        <p class="textos">{{transaccion.canitdad}} x {{transaccion.producto.des_Producto}}</p>
+                        <p class="textos">{{ 'pos.factura.sku' | translate }} {{transaccion.producto.producto_Id}}</p>
+                        <p class="textos">{{ 'pos.factura.productos' | translate }} {{(transaccion.total /
+                            transaccion.canitdad) | currency:' ':'symbol':'2.2-2' }}</p>
+                        <p class="textos">{{ 'pos.factura.total' | translate }} {{transaccion.total | currency:'
+                            ':'symbol':'2.2-2' }} </p>
                     </div>
                 </div>
                 <span class="spacer"></span>
                 <div class="detalles-lista">
                     <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
-                    <div class="descripcion-pago" *ngFor="let pago of pagos">
+                    <div class="descripcion-pago" *ngFor="let pago of cargoAbono">
                         <p class="textos">{{pago.nombre}}</p>
                         <p class="textos">{{ 'pos.factura.monto' | translate }} Q {{pago.monto}}</p>
                         <p class="textos" *ngIf="pago.autorizacion">{{ 'pos.factura.autorizacion' | translate }}

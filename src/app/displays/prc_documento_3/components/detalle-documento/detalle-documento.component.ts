@@ -20,6 +20,11 @@ import { TipoTransaccionService } from '../../services/tipos-transaccion.service
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 import { DetalleTransaccionInterface } from '../../interfaces/detalle-transaccion.interface';
 import { ProductService } from '../../services/product.service';
+import { PagoService } from '../../services/pago.service';
+import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
+import { MontoIntreface } from '../../interfaces/monto.interface';
+import { BancoInterface } from '../../interfaces/banco.interface';
+import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -30,6 +35,8 @@ import { ProductService } from '../../services/product.service';
     SerieService,
     CuentaService,
     TipoTransaccionService,
+    ProductService,
+    PagoService,
   ]
 })
 export class DetalleDocumentoComponent implements OnInit {
@@ -53,6 +60,7 @@ export class DetalleDocumentoComponent implements OnInit {
 
   client?: ClienteInterface;
   transacciones: DetalleTransaccionInterface[] = [];
+  cargoAbono: MontoIntreface[] = [];
 
   constructor(
     private _eventService: EventService,
@@ -63,6 +71,7 @@ export class DetalleDocumentoComponent implements OnInit {
     private _cuentaService: CuentaService,
     private _tipoTraService: TipoTransaccionService,
     private _productoService: ProductService,
+    private _pagoService: PagoService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -428,20 +437,190 @@ export class DetalleDocumentoComponent implements OnInit {
 
       }
 
-      let productos:ProductoInterface[] = resProducto.response;
-      
-      
+      let productos: ProductoInterface[] = resProducto.response;
+
+
       for (let i = 0; i < productos.length; i++) {
         const element = productos[i];
 
-        // if(){
+        if (tra.Tra_Producto == element.producto) {
+          this.transacciones.push(
+            {
+              canitdad: tra.Tra_Cantidad,
+              producto: element,
+              total: tra.Tra_Monto,
+            }
+          );
 
-        // }
-        
+          break;
+        }
+
+      }
+
+    }
+
+
+    let resPagos: ResApiInterface = await this._pagoService.getFormas(
+      this.token,
+      empresaId,
+      serieDoc,
+      tipoDoc
+    );
+
+
+    if (!resPagos.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.informe'),
+        }
+      );
+
+      if (verificador) return;
+
+      this.mostrarError(resPagos);
+
+      return;
+
+    }
+
+
+    let pagos: FormaPagoInterface[] = resPagos.response;
+
+
+    for (const element of objDoc.Doc_Cargo_Abono) {
+
+
+      let banco: BancoInterface;
+      let cuentaBanco: CuentaBancoInterface;
+
+      if (element.Banco) {
+
+        let resBancos: ResApiInterface = await this._pagoService.getBancos(
+          this.user,
+          this.token,
+          empresaId,
+        );
+
+
+
+        if (!resBancos.status) {
+
+          this.isLoading = false;
+
+
+          let verificador = await this._notificationsServie.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.aceptar'),
+              falso: this._translate.instant('pos.botones.informe'),
+            }
+          );
+
+          if (verificador) return;
+
+          this.mostrarError(resBancos);
+
+          return;
+
+        }
+
+        let bancos: BancoInterface[] = resBancos.response;
+
+
+
+        for (let i = 0; i < bancos.length; i++) {
+          const item = bancos[i];
+          if (item.banco == element.Banco) {
+            banco = item;
+            break;
+          }
+        }
+
+        if (banco! && element.Cuenta_Bancaria) {
+
+          let resCuentaBanco = await this._pagoService.getCuentasBanco(
+            this.user,
+            this.token,
+            empresaId,
+            banco.banco,
+          );
+
+          if (!resCuentaBanco.status) {
+
+            this.isLoading = false;
+
+
+            let verificador = await this._notificationsServie.openDialogActions(
+              {
+                title: this._translate.instant('pos.alertas.salioMal'),
+                description: this._translate.instant('pos.alertas.error'),
+                verdadero: this._translate.instant('pos.botones.aceptar'),
+                falso: this._translate.instant('pos.botones.informe'),
+              }
+            );
+
+            if (verificador) return;
+
+            this.mostrarError(resCuentaBanco);
+
+            return;
+
+          }
+
+          let cuentasBanco: CuentaBancoInterface[] = resCuentaBanco.response;
+
+
+          for (let i = 0; i < cuentasBanco.length; i++) {
+            const cBanco = cuentasBanco[i];
+
+            if (cBanco.cuenta_Bancaria == element.Cuenta_Bancaria) {
+
+              cuentaBanco = cBanco;
+
+              break;
+            }
+
+          }
+
+
+        }
+
+
       }
 
 
+      for (let i = 0; i < pagos.length; i++) {
+        const pago = pagos[i];
+
+
+        this.cargoAbono.push(
+          {
+            amount: element.Monto,
+            authorization: element.Autorizacion ?? "",
+            checked: false,
+            difference: element.Cambio,
+            payment: pago,
+            reference: element.Referencia ?? "",
+            account: cuentaBanco!,
+            bank: banco! ,
+          }
+        )
+
+        break;
+
+
+      }
+
     }
+
 
 
 
@@ -453,57 +632,6 @@ export class DetalleDocumentoComponent implements OnInit {
   }
 
 
- 
-
-  productos: ProductoInterface[] = [
-    {
-      producto: 26,
-      unidad_Medida: 1,
-      producto_Id: "ALM03",
-      des_Producto: "VIUDA Y ADOBADO",
-      des_Unidad_Medida: "Unidad",
-      tipo_Producto: 1
-    },
-    {
-      producto: 33,
-      unidad_Medida: 1,
-      producto_Id: "ALM10",
-      des_Producto: "ADOBADO A LA PARRILLA",
-      des_Unidad_Medida: "Unidad",
-      tipo_Producto: 1
-    },
-  ]
-
-  compras: CompraInterface[] = [
-    {
-      producto: this.productos[0],
-      cantidad: 3,
-      precioUnitario: 55.00,
-      total: 165.00,
-    },
-    {
-      producto: this.productos[1],
-      cantidad: 4,
-      precioUnitario: 20.00,
-      total: 80.00,
-    }
-  ]
-
-  pagos: any[] = [
-    {
-      id: 1,
-      nombre: "EFECTIVO",
-      monto: 80,
-    },
-    {
-      id: 1,
-      nombre: "CHEQUE",
-      monto: 165.00,
-      autorizacion: "30393650",
-      referencia: "",
-      banco: "Banco Industrial"
-    }
-  ]
 
   goBack() {
     // this._eventService.emitCustomEvent(true);
