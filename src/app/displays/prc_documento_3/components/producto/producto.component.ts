@@ -11,6 +11,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { FacturaService } from '../../services/factura.service';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { ProductoInterface } from '../../interfaces/producto.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-producto',
@@ -38,6 +39,7 @@ export class ProductoComponent {
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
     public facturaService: FacturaService,
+    private _translate: TranslateService,
   ) {
 
   }
@@ -57,8 +59,7 @@ export class ProductoComponent {
 
   editPrice() {
     if (this.convertirTextoANumero(this.productoService.precioText) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
@@ -66,8 +67,7 @@ export class ProductoComponent {
     let precio = this.convertirTextoANumero(this.productoService.precioText);
 
     if (precio! < this.productoService.precioU) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noPrecioMenor'));
       return;
     }
 
@@ -81,8 +81,7 @@ export class ProductoComponent {
 
   changeCantidad() {
     if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
@@ -223,8 +222,7 @@ export class ProductoComponent {
   sumar() {
 
     if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
@@ -242,8 +240,7 @@ export class ProductoComponent {
   restar() {
 
     if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
-      //TODO:translate
-      this._notificationsService.openSnackbar("La cantidad debe ser numerica o positiva.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
@@ -269,52 +266,41 @@ export class ProductoComponent {
   }
 
   enviar() {
-
-
     //Validaciones
 
-
     if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad debe ser numerica.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadNumerica'));
       return;
-
     }
 
     if (this.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad debe ser mayor a 0.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadMayor'));
       return;
     }
 
     if (this.facturaService.montos.length > 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Elimina primero las formas de pago.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.eliminarPagos'));
       return;
     }
 
     if (!this.productoService.bodega) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Selecciona una bodega.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarBodega'));
       return;
     }
 
     if (this.productoService.precios.length > 0 && !this.productoService.precio) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Selecciona un tipo de precio.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarTipoPrecio'));
       return;
     }
 
     if (this.productoService.precio!.precioU < this.productoService.precioU) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noPrecioMenor'));
       return;
     }
 
 
     if (this.productoService.bodega.existencia == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No es posible agregar la transaccion porque la existencia es insuficiente.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.existenciaInsuficiente'));
       return;
     }
 
@@ -330,9 +316,7 @@ export class ProductoComponent {
 
 
       if (monedaDoc != monedaTra) {
-        //TODO:Translate
-
-        this._notificationsService.openSnackbar("No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.monedaDistinta'));
         return;
       }
 
@@ -353,9 +337,7 @@ export class ProductoComponent {
       }
     );
 
-
-    //TODO:Translate
-    this._notificationsService.openSnackbar("Transaccion agregada.");
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 
     this.dialogRef.close();
 
