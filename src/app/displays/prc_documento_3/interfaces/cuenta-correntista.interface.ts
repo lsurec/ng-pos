@@ -1,5 +1,5 @@
 export interface CuentaCorrentistaInterface {
-    id:        number;
+    cuenta:        number;
     nombre:    string;
     direccion: string;
     telefono:  string;

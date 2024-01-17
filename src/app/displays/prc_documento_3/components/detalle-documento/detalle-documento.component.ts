@@ -318,7 +318,6 @@ export class DetalleDocumentoComponent implements OnInit {
 
       if (!resCuentaRef.status) {
 
-        console.log("Error en vendedor");
 
 
         this.isLoading = false;
@@ -571,9 +570,6 @@ export class DetalleDocumentoComponent implements OnInit {
             if (cBanco.cuenta_Bancaria == element.Cuenta_Bancaria) {
 
               this.cuentaBanco = cBanco;
-
-              console.log(cuentasBanco);
-
 
               break;
             }

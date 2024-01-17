@@ -112,12 +112,13 @@ export class EditarClienteComponent implements OnInit {
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
       direccion: this.direccion,
-      id: this.cuenta!.cuenta_Correntista,
+      cuenta: this.cuenta!.cuenta_Correntista,
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono
     }
 
+    
 
     let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;
