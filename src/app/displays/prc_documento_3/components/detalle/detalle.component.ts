@@ -17,7 +17,6 @@ import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 import { EventService } from 'src/app/services/event.service';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-detalle',

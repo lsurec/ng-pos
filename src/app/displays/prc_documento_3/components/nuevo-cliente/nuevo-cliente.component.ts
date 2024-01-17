@@ -75,7 +75,7 @@ export class NuevoClienteComponent {
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
       direccion: this.direccion,
-      id: 0,
+      cuenta: 0,
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono

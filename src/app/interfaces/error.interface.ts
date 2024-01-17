@@ -1,6 +1,6 @@
 export interface ErrorInterface {
     date: Date;
-    description: string;
+    description: any;
     url?: string;
     storeProcedure?: string;
 }
