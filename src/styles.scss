@@ -1,9 +1,11 @@
-$color-blanco         : #ffffff;
-$bordes               : #c4c4c4;
+$color-blanco            : #ffffff;
+$bordes                  : #c4c4c4;
 // $fondo-oscuro      : #121212;
-$fondo-oscuro         : #302f2f;
-$iconos               : #c4c4c4;
-$radio-buttons        : #ffffff;
+$fondo-oscuro            : #302f2f;
+$iconos                  : #c4c4c4;
+$radio-buttons           : #ffffff;
+// $borde-no-seleccionado: #797272;
+$borde-no-seleccionado   : #635f5f;
 
 html,
 body {
@@ -73,7 +75,8 @@ body {
 .dark-theme h2,
 .dark-theme .mat-mdc-option .mdc-list-item__primary-text,
 .dark-theme .barra-de-busqueda,
-.dark-theme .mat-mdc-select-arrow svg {
+.dark-theme .mat-mdc-select-arrow svg,
+.dark-theme .detalles {
     color: $color-blanco !important;
 }
 
@@ -124,6 +127,18 @@ body {
 
 .dark-theme .subtitulo {
     font-weight: 550;
+}
+
+.dark-theme input:checked+label {
+    border-bottom: 1px solid $bordes !important;
+    border-right : 1px solid $bordes !important;
+    border-left  : 1px solid $bordes !important;
+}
+
+label {
+    border-bottom: 1px solid $borde-no-seleccionado !important;
+    border-right : 1px solid $borde-no-seleccionado !important;
+    border-left  : 1px solid $borde-no-seleccionado !important;
 }
 
 //radio buttons

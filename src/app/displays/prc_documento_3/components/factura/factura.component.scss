@@ -329,16 +329,36 @@ main {
     height: 100%;
 }
 
-section {
+// section {
+//     display   : none;
+//     border-top: 1px solid $color-bordes;
+// }
+
+.contenido-seleccionado {
     display   : none;
     border-top: 1px solid $color-bordes;
 }
 
-input {
+// input {
+//     display: none;
+// }
+
+.titulo-pestana {
     display: none;
+
 }
 
-label {
+// label {
+//     display    : inline-block;
+//     margin     : 0 0 -1px;
+//     padding    : 15px 25px;
+//     font-weight: 500;
+//     text-align : center;
+//     color      : $color-pestanas;
+//     border     : 2px solid transparent;
+// }
+
+.pestana {
     display    : inline-block;
     margin     : 0 0 -1px;
     padding    : 15px 25px;
@@ -348,70 +368,127 @@ label {
     border     : 2px solid transparent;
 }
 
-label:before {
+// label:before {
+//     font-family : fontawesome;
+//     font-weight : normal;
+//     margin-right: 10px;
+// }
+
+.pestana::before {
     font-family : fontawesome;
     font-weight : normal;
     margin-right: 10px;
 }
 
-label[for*='1']:before {
+// label[for*='1']:before {
+//     content: '\f15b';
+// }
+
+.pestana[for*='1']:before {
     content: '\f15b';
 }
 
-label[for*='2']:before {
+// label[for*='2']:before {
+//     content: '\f07a';
+// }
+
+.pestana[for*='2']:before {
     content: '\f07a';
 }
 
-label[for*='3']:before {
+// label[for*='3']:before {
+//     content: '\f0d6';
+// }
+
+.pestana[for*='3']:before {
     content: '\f0d6';
 }
 
-label[for*='4']:before {
+// label[for*='4']:before {
+//     content: '\f01c';
+// }
+
+pestana[for*='4']:before {
     content: '\f01c';
 }
 
-label[for*='5']:before {
-    content: '\f01c';
-}
+// label[for*='5']:before {
+//     content: '\f01c';
+// }
 
 label[for*='6']:before {
     content: '\f002';
 }
 
-label:hover {
+// label:hover {
+//     color : #888;
+//     cursor: pointer;
+// }
+
+.pestana:hover {
     color : #888;
     cursor: pointer;
 }
 
-input:checked+label {
+// input:checked+label {
+//     color        : $color-azul;
+//     border       : 1px solid $color-bordes;
+//     border-top   : 3px solid orange;
+//     border-bottom: 0px;
+// }
+
+.titulo-pestana:checked+.pestana {
     color        : $color-azul;
     border       : 1px solid $color-bordes;
     border-top   : 3px solid orange;
     border-bottom: 0px;
 }
 
-#tab1:checked~#content1,
-#tab2:checked~#content2,
-#tab3:checked~#content3,
-#tab4:checked~#content4,
-#tab5:checked~#content5,
-#tab6:checked~#content6 {
+// #tab1:checked~#content1,
+// #tab2:checked~#content2,
+// #tab3:checked~#content3,
+// #tab4:checked~#content4,
+// #tab5:checked~#content5,
+// #tab6:checked~#content6 {
+//     display: block;
+// }
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3 {
     display: block;
 }
 
+// @media screen and (max-width: 650px) {
+//     label {
+//         font-size: 0;
+//     }
+
+//     label:before {
+//         margin   : 0;
+//         font-size: 18px;
+//     }
+// }
+
+// @media screen and (max-width: 400px) {
+//     label {
+//         padding: 15px;
+//     }
+// }
+
 @media screen and (max-width: 650px) {
-    label {
+    .pestana {
         font-size: 0;
     }
 
-    label:before {
+    .pestana:before {
         margin   : 0;
         font-size: 18px;
     }
 }
 
 @media screen and (max-width: 400px) {
-    label {
+    .pestana {
         padding: 15px;
     }
 }

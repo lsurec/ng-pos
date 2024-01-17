@@ -115,47 +115,53 @@
             <div *ngIf="!facturaService.isLoading">
                 <div class="container-main">
                     <!--Tabs-->
-                    <input id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
-                    <label for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}"
-                        (click)=" showDocumento()">{{
-                        'pos.factura.documento' | translate }}</label>
+                    <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
+                    <div class="pestana" for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}"
+                        (click)=" showDocumento()">
+                        {{'pos.factura.documento' | translate }}
+                    </div>
 
-                    <input id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
-                    <label for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}" (click)=" showDetalle()">{{
-                        'pos.factura.detalle' | translate }}</label>
+                    <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
+                    <div class="pestana" for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
+                        (click)=" showDetalle()">{{
+                        'pos.factura.detalle' | translate }}
+                    </div>
 
-                    <input id="tab3" type="radio" name="tabs" [checked]=" tabPago"
+                    <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]=" tabPago"
                         *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
-                    <label for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}" (click)=" showPago()"
-                        *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
-                        'pos.factura.pago' | translate }}</label>
+
+                    <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
+                        (click)=" showPago()" *ngIf="facturaService.serie && facturaService.formasPago.length > 0">{{
+                        'pos.factura.pago' | translate }}
+
+                    </div>
 
                     <!--Fin Tabs-->
 
                     <!--Content Tabs-->
-                    <section id="content1">
+                    <section id="content1" class="content1 contenido-seleccionado">
                         <!-- <app-pago></app-pago> -->
                         <!-- <app-detalle></app-detalle> -->
                         <app-documento></app-documento>
                     </section>
 
-                    <section id="content2">
+                    <section id="content2" class="content2 contenido-seleccionado">
                         <!-- <app-documento></app-documento> -->
                         <app-detalle></app-detalle>
                     </section>
 
-                    <section id="content3">
+                    <section id="content3" class="content3 contenido-seleccionado">
                         <app-pago></app-pago>
                     </section>
 
-                    <section id="content4">
+                    <!-- <section id="content4">
                     </section>
 
                     <section id="content5">
                     </section>
 
                     <section id="content6">
-                    </section>
+                    </section> -->
                     <!--Fin Content Tabs-->
                 </div>
                 <!-- Mostrar logos -->
