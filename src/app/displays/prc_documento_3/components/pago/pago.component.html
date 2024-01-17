@@ -31,7 +31,7 @@
             <div *ngIf="pagoComponentService.pago!.autorizacion">
                 <p class="subtitulo">{{ 'pos.factura.autorizacion' | translate }}</p>
                 <input class="total" type="text" name="search"
-                    placeholder="{{ 'pos.factura.autorizacion' | translate }}" [(ngModel)]="autorizacion"
+                    placeholder="{{ 'pos.factura.autorizacion' | translate }}" [(ngModel)]="pagoComponentService.autorizacion"
                     autocomplete="off">
             </div>
 
@@ -40,7 +40,7 @@
                 <p class="subtitulo">{{ 'pos.factura.referencia' | translate }}</p>
 
                 <input class="total" type="text" name="search" placeholder="{{ 'pos.factura.referencia' | translate }}"
-                    [(ngModel)]="referencia" autocomplete="off">
+                    [(ngModel)]="pagoComponentService.referencia" autocomplete="off">
             </div>
 
             <!--Bancos-->

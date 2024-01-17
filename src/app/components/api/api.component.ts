@@ -24,7 +24,7 @@ export class ApiComponent {
 
   constructor(
     private _router: Router,
-    private _widgetsService: NotificationsService,
+    private _notificationService: NotificationsService,
     private _helloService: HelloService,
     private translate: TranslateService,
     private _clipboardService: ClipboardService,
@@ -35,6 +35,8 @@ export class ApiComponent {
 
   copyToClipboard() {
     this._clipboardService.copyToClipboard(PreferencesService.baseUrl);
+    //TODO:Translate
+    this._notificationService.openSnackbar("Url copiada al portapapeles.");
   }
 
 
@@ -47,7 +49,7 @@ export class ApiComponent {
 
 
     if (!this.url) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
+      this._notificationService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
       return;
     }
 
@@ -62,7 +64,7 @@ export class ApiComponent {
 
     // Si no contiene "/api/", mostrar un mensaje y devolver undefined
     if (!containsApi) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
+      this._notificationService.openSnackbar(this.translate.instant('pos.alerta.noValida'));
       return;
     }
 
@@ -80,7 +82,7 @@ export class ApiComponent {
 
     if (!res.status) {
 
-      let verificador = await this._widgetsService.openDialogActions(
+      let verificador = await this._notificationService.openDialogActions(
         {
           title: this.translate.instant('pos.alertas.salioMal'),
           description: this.translate.instant('pos.alertas.error'),
@@ -108,7 +110,7 @@ export class ApiComponent {
       return;
     }
 
-    this._widgetsService.openSnackbar(this.translate.instant('pos.alerta.urlCorrecta'));
+    this._notificationService.openSnackbar(this.translate.instant('pos.alerta.urlCorrecta'));
 
     PreferencesService.baseUrl = result;
 
