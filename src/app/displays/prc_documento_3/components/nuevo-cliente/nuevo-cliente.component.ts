@@ -30,11 +30,12 @@ export class NuevoClienteComponent {
   verError: boolean = false;
 
   constructor(
-    private _notificationsService: NotificationsService,
+    private _notificationsServie: NotificationsService,
     private translate: TranslateService,
     private _eventService: EventService,
     private _cuentaService: CuentaService,
     private _facturaService: FacturaService,
+    private _translate: TranslateService,
   ) {
     this._eventService.regresarNuevaCuenta$.subscribe((eventData) => {
       this.verError = false;
@@ -58,13 +59,13 @@ export class NuevoClienteComponent {
 
     //validar formulario
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
 
     //Validar correo
     if (!this.validarCorreo(this.correo)) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
       return;
     }
 
@@ -98,9 +99,25 @@ export class NuevoClienteComponent {
 
     //Si el servicio falló
     if (!resCuenta.status) {
+
       this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(resCuenta);
+
       return;
+
     }
 
     //buscar informacin de la cuenta  creada
@@ -115,8 +132,22 @@ export class NuevoClienteComponent {
 
 
     if (!infoCuenta.response) {
+      this.isLoading = false;
 
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaCreada'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaCreada'));
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(infoCuenta);
 
       return;
@@ -125,7 +156,7 @@ export class NuevoClienteComponent {
     let cuentas: ClienteInterface[] = infoCuenta.response;
 
     if (cuentas.length == 0) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaCreada'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaCreada'));
       return;
     }
 
@@ -134,7 +165,7 @@ export class NuevoClienteComponent {
       //seleccionar cuenta
       this._facturaService.cuenta = cuentas[0];
 
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
 
       //regresar
       this._eventService.verDocumentoEvent(true);
@@ -148,7 +179,7 @@ export class NuevoClienteComponent {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
 
-        this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+        this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
 
         //regresar
         this._eventService.verDocumentoEvent(true);
@@ -163,8 +194,8 @@ export class NuevoClienteComponent {
     this._eventService.verDocumentoEvent(true);
   }
 
-  mostrarError(res:ResApiInterface) {
-    
+  mostrarError(res: ResApiInterface) {
+
     let dateNow: Date = new Date();
 
     let error = {

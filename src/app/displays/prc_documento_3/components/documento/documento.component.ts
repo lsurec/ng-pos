@@ -80,11 +80,31 @@ export class DocumentoComponent {
       this.empresa,
     )
 
+
     if (!resVendedor.status) {
+
       this.facturaService.isLoading = false;
+
+
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(resVendedor);
+
       return;
+
     }
+
 
     this.facturaService.vendedores = resVendedor.response;
 
@@ -105,10 +125,25 @@ export class DocumentoComponent {
     );
 
     if (!resTransaccion.status) {
+
       this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(resTransaccion);
 
       return;
+
     }
 
     this.facturaService.tiposTransaccion = resTransaccion.response;
@@ -124,11 +159,27 @@ export class DocumentoComponent {
     )
 
     if (!resParametro.status) {
+
       this.facturaService.isLoading = false;
+
+
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
 
       this.verError(resParametro);
 
       return;
+
     }
 
     this.facturaService.parametros = resParametro.response;
@@ -144,14 +195,31 @@ export class DocumentoComponent {
       this.documento,
     );
 
+
     if (!resFormaPago.status) {
+
       this.facturaService.isLoading = false;
+
+
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
 
       this.verError(resFormaPago);
 
       return;
 
     }
+
     this.facturaService.isLoading = false;
 
 
@@ -181,7 +249,7 @@ export class DocumentoComponent {
 
 
       }
-      
+
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
 
@@ -193,7 +261,6 @@ export class DocumentoComponent {
     }
   }
 
-  //verError
   verError(res: ResApiInterface) {
 
     let dateNow: Date = new Date();
@@ -235,11 +302,27 @@ export class DocumentoComponent {
 
     if (!resCuenta.status) {
 
+      this.facturaService.isLoading = false;
+
+
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(resCuenta);
 
       return;
-    }
 
+    }
     let cuentas: ClienteInterface[] = resCuenta.response;
 
 
@@ -266,7 +349,7 @@ export class DocumentoComponent {
 
         let cliente: ClienteInterface = result[0];
         this.facturaService.cuenta = cliente;
-        
+
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
         this.facturaService.saveDocLocal();
 

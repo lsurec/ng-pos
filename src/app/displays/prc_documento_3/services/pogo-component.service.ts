@@ -17,6 +17,8 @@ export class PagoComponentService {
     cuentas:CuentaBancoInterface[]=[];
     monto:string = "0";
     cuentaSelect?: CuentaBancoInterface;
+    autorizacion: string = "";
+    referencia: string = ""
 
 
 }

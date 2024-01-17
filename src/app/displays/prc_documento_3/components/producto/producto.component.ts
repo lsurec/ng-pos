@@ -117,7 +117,8 @@ export class ProductoComponent {
     if (!resPrecio.status) {
       this.isLoading = false;
 
-      this._notificationsService.showErrorAlert(resPrecio);
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
+      console.log(resPrecio);
       return;
     }
 
@@ -148,8 +149,8 @@ export class ProductoComponent {
       if (!resfactor.status) {
 
         this.isLoading = false;
-
-        this._notificationsService.showErrorAlert(resfactor);
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
+        console.log(resfactor);
         return;
       }
 

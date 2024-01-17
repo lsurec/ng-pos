@@ -20,8 +20,7 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class PagoComponent {
 
-  autorizacion!: string;
-  referencia!: string
+
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -45,7 +44,6 @@ export class PagoComponent {
   }
 
 
-  //verError
   verError(res: ResApiInterface) {
 
     let dateNow: Date = new Date();
@@ -117,8 +115,23 @@ export class PagoComponent {
 
 
       if (!resBancos.status) {
+
+        this.facturaService.isLoading = false;
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+  
+        if (!verificador) return;
+  
         this.verError(resBancos);
+  
         return;
+  
       }
 
       this.pagoComponentService.bancos = resBancos.response;
@@ -149,9 +162,25 @@ export class PagoComponent {
     this.facturaService.isLoading = false;
 
     if (!resCuentas.status) {
+
+      this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(resCuentas);
 
       return;
+
     }
 
     this.pagoComponentService.cuentas = resCuentas.response;
@@ -196,7 +225,7 @@ export class PagoComponent {
 
 
     if (this.pagoComponentService.pago!.autorizacion) {
-      if (!this.autorizacion) {
+      if (!this.pagoComponentService.autorizacion) {
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
         return;
       }
@@ -204,7 +233,7 @@ export class PagoComponent {
     }
 
     if (this.pagoComponentService.pago!.referencia) {
-      if (!this.referencia) {
+      if (!this.pagoComponentService.referencia) {
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
         return;
       }
@@ -236,8 +265,8 @@ export class PagoComponent {
       monto = this.facturaService.saldo;
     }
 
-    let auth: string = this.pagoComponentService.pago!.autorizacion ? this.autorizacion : "";
-    let ref: string = this.pagoComponentService.pago!.referencia ? this.referencia : "";
+    let auth: string = this.pagoComponentService.pago!.autorizacion ? this.pagoComponentService.autorizacion : "";
+    let ref: string = this.pagoComponentService.pago!.referencia ? this.pagoComponentService.referencia : "";
 
     this.facturaService.addMonto(
       {
@@ -255,8 +284,8 @@ export class PagoComponent {
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.pagoAgregado'));
 
     //clear data
-    this.autorizacion = "",
-      this.referencia = "",
+    this.pagoComponentService.autorizacion = "",
+      this.pagoComponentService.referencia = "",
       this.pagoComponentService.cuentas = [];
     this.pagoComponentService.bancos = [];
     this.pagoComponentService.banco = undefined;
