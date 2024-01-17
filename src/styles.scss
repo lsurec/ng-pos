@@ -3,7 +3,7 @@ $bordes               : #c4c4c4;
 // $fondo-oscuro      : #121212;
 $fondo-oscuro         : #302f2f;
 $iconos               : #c4c4c4;
-$radio-buttons: #ffffff;
+$radio-buttons        : #ffffff;
 
 html,
 body {
@@ -36,10 +36,21 @@ body {
 .dark-theme .ajustes,
 .dark-theme .lenguajes,
 .dark-theme .acciones,
-.dark-theme .contenido-sidenav {
+.dark-theme .contenido-sidenav,
+.dark-theme #notfound,
+.dark-theme .seleccionar,
+.dark-theme .mdc-menu-surface.mat-mdc-select-panel,
+.dark-theme .container-main {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }
+
+.dark-theme .progress {
+    background-color: $fondo-oscuro !important;
+    color           : $color-blanco !important;
+    padding         : 0px !important;
+}
+
 
 //FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
 .dark-theme .container_start {
@@ -59,7 +70,10 @@ body {
 .dark-theme .desa,
 .dark-theme .mat-mdc-radio-button .mdc-form-field,
 .dark-theme p,
-.dark-theme h2 {
+.dark-theme h2,
+.dark-theme .mat-mdc-option .mdc-list-item__primary-text,
+.dark-theme .barra-de-busqueda,
+.dark-theme .mat-mdc-select-arrow svg {
     color: $color-blanco !important;
 }
 
@@ -75,20 +89,25 @@ body {
 .dark-theme .detalles-usuario,
 .dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,
-.dark-theme .input-container {
+.dark-theme .input-container,
+.dark-theme .seleccionar {
     border-bottom: 1px solid $bordes !important;
 }
 
 //BORDE ARRIBA
 .dark-theme .backColorNavBar,
-.dark-theme .logos {
+.dark-theme .logos,
+.dark-theme .detalle-documento,
+.dark-theme .productos-pagos {
     border-top: 1px solid $bordes !important;
 }
 
 .dark-theme .itemRouteActive,
 .dark-theme .contenedorModulo,
 .dark-theme .descripcion,
-.dark-theme .mat-mdc-button .mdc-button__label {
+.dark-theme .mat-mdc-button .mdc-button__label,
+.dark-theme .mat-mdc-select-value-text,
+.dark-theme label {
     color: $color-blanco !important;
 }
 
@@ -97,7 +116,9 @@ body {
     cursor: pointer;
 }
 
-.dark-theme .iconos-detalles {
+.dark-theme .iconos-detalles,
+.dark-theme .iconoLupa,
+.dark-theme button:not(:disabled) {
     color: $iconos !important;
 }
 
