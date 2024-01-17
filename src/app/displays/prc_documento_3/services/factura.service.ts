@@ -159,11 +159,9 @@ export class FacturaService {
 
         }
 
-        console.log(doc.vendedor);
         
 
         if (doc.vendedor) {
-            console.log(this.vendedor);
             
             for (let i = 0; i < this.vendedores.length; i++) {
                 const element = this.vendedores[i];

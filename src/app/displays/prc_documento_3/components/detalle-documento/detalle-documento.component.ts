@@ -223,6 +223,8 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
+    
+
     let resName: ResApiInterface = await this._cuentaService.getNombreCuenta(
       this.token,
       idCuenta,
@@ -231,6 +233,8 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
     if (!resName.status) {
+
+
 
       this.isLoading = false;
 
@@ -253,45 +257,53 @@ export class DetalleDocumentoComponent implements OnInit {
 
     let name: ResponseInterface = resName.response;
 
-    let resClient: ResApiInterface = await this._cuentaService.getClient(
-      this.user,
-      this.token,
-      empresaId,
-      name.data,
-    );
-
-    if (!resClient.status) {
-
-      this.isLoading = false;
-
-      let verificador = await this._notificationsServie.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
+    if (name.data) {
+      let resClient: ResApiInterface = await this._cuentaService.getClient(
+        this.user,
+        this.token,
+        empresaId,
+        name.data,
       );
 
-      if (!verificador) return;
+      if (!resClient.status) {
 
-      this.mostrarError(resClient);
+        this.isLoading = false;
 
-      return;
+        let verificador = await this._notificationsServie.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
 
-    }
+        if (!verificador) return;
 
-    let clients: ClienteInterface[] = resClient.response;
+        this.mostrarError(resClient);
 
+        return;
 
-    for (let i = 0; i < clients.length; i++) {
-      const element = clients[i];
-      if (element.cuenta_Correntista == idCuenta) {
-        this.client = element;
-        break;
       }
 
+      let clients: ClienteInterface[] = resClient.response;
+
+
+      for (let i = 0; i < clients.length; i++) {
+        const element = clients[i];
+        if (element.cuenta_Correntista == idCuenta) {
+          this.client = element;
+          break;
+        }
+
+      }
+
+    }else{
+      //TODO:Translate
+      this._notificationsServie.openSnackbar("No se pudo obetener la cuenta asociada al documento");
     }
+
+
 
 
     if (objDoc.Doc_Cuenta_Correntista_Ref) {
@@ -305,6 +317,9 @@ export class DetalleDocumentoComponent implements OnInit {
       );
 
       if (!resCuentaRef.status) {
+
+        console.log("Error en vendedor");
+
 
         this.isLoading = false;
 

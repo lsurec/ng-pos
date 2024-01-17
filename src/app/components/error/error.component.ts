@@ -31,6 +31,8 @@ export class ErrorComponent implements OnInit {
     this.user = PreferencesService.user;
     //TODO: SI no hay usuario traducir texto
 
+    
+
     try {
       this.empresa = PreferencesService.empresa;
       this.estacion = PreferencesService.estacion;

@@ -201,6 +201,9 @@ export class CuentaService {
                 //si algo sale mal
                 err => {
 
+                    console.log(err);
+                    
+
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;
 
@@ -214,12 +217,27 @@ export class CuentaService {
                     } catch (e) {
 
 
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err,
-                            url: err.url,
+                        //TODO: resolver en todos
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
                         }
-                        resolve(resApi);
+
+
                     }
                 }
             )
