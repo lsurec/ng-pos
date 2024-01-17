@@ -129,13 +129,13 @@ body {
     font-weight: 550;
 }
 
-.dark-theme input:checked+label {
+.dark-theme input:checked+.pestana {
     border-bottom: 1px solid $bordes !important;
     border-right : 1px solid $bordes !important;
     border-left  : 1px solid $bordes !important;
 }
 
-label {
+.pestana {
     border-bottom: 1px solid $borde-no-seleccionado !important;
     border-right : 1px solid $borde-no-seleccionado !important;
     border-left  : 1px solid $borde-no-seleccionado !important;
