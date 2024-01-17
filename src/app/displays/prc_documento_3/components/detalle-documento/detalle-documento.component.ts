@@ -62,6 +62,11 @@ export class DetalleDocumentoComponent implements OnInit {
   transacciones: DetalleTransaccionInterface[] = [];
   cargoAbono: MontoIntreface[] = [];
 
+  
+
+  banco?: BancoInterface;
+  cuentaBanco?: CuentaBancoInterface;
+
   constructor(
     private _eventService: EventService,
     private _localSettingService: LocalSettingsService,
@@ -338,39 +343,6 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    let resTipoTra: ResApiInterface = await this._tipoTraService.getTipoTransaccion(
-      this.user,
-      this.token,
-      tipoDoc,
-      serieDoc,
-      empresaId,
-    );
-
-
-    if (!resTipoTra.status) {
-
-      this.isLoading = false;
-
-
-      let verificador = await this._notificationsServie.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
-        }
-      );
-
-      if (verificador) return;
-
-      this.mostrarError(resTipoTra);
-
-      return;
-
-    }
-
-
-
     this.transacciones = [];
 
 
@@ -497,17 +469,20 @@ export class DetalleDocumentoComponent implements OnInit {
     for (const element of objDoc.Doc_Cargo_Abono) {
 
 
-      let banco: BancoInterface;
-      let cuentaBanco: CuentaBancoInterface;
+      this.cuentaBanco = undefined;
+      this.banco = undefined;
+
 
       if (element.Banco) {
+
+        console.log("buscabnd0 obancos");
+
 
         let resBancos: ResApiInterface = await this._pagoService.getBancos(
           this.user,
           this.token,
           empresaId,
         );
-
 
 
         if (!resBancos.status) {
@@ -535,22 +510,22 @@ export class DetalleDocumentoComponent implements OnInit {
         let bancos: BancoInterface[] = resBancos.response;
 
 
-
         for (let i = 0; i < bancos.length; i++) {
           const item = bancos[i];
           if (item.banco == element.Banco) {
-            banco = item;
+            this.banco = item;
             break;
           }
         }
 
-        if (banco! && element.Cuenta_Bancaria) {
+        if (this.banco && element.Cuenta_Bancaria) {
+
 
           let resCuentaBanco = await this._pagoService.getCuentasBanco(
             this.user,
             this.token,
             empresaId,
-            banco.banco,
+            this.banco.banco,
           );
 
           if (!resCuentaBanco.status) {
@@ -577,13 +552,19 @@ export class DetalleDocumentoComponent implements OnInit {
 
           let cuentasBanco: CuentaBancoInterface[] = resCuentaBanco.response;
 
+          console.log(cuentasBanco);
+          
+
 
           for (let i = 0; i < cuentasBanco.length; i++) {
             const cBanco = cuentasBanco[i];
 
             if (cBanco.cuenta_Bancaria == element.Cuenta_Bancaria) {
 
-              cuentaBanco = cBanco;
+              this.cuentaBanco = cBanco;
+
+              console.log(cuentasBanco);
+              
 
               break;
             }
@@ -601,6 +582,8 @@ export class DetalleDocumentoComponent implements OnInit {
         const pago = pagos[i];
 
 
+       if(element.Tipo_Cargo_Abono == pago.tipo_Cargo_Abono){
+
         this.cargoAbono.push(
           {
             amount: element.Monto,
@@ -609,12 +592,13 @@ export class DetalleDocumentoComponent implements OnInit {
             difference: element.Cambio,
             payment: pago,
             reference: element.Referencia ?? "",
-            account: cuentaBanco!,
-            bank: banco! ,
+            account: this.cuentaBanco,
+            bank: this.banco,
           }
         )
-
         break;
+       }
+
 
 
       }

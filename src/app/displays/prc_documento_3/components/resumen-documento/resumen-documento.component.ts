@@ -197,7 +197,7 @@ export class ResumenDocumentoComponent {
           Referencia: monto.reference,
           Autorizacion: monto.authorization,
           Banco: monto.bank?.banco ?? null,
-          Cuenta_Bancaria: monto.account?.id_Cuenta_Bancaria ?? null,
+          Cuenta_Bancaria: monto.account?.cuenta_Bancaria ?? null,
         }
       );
     });

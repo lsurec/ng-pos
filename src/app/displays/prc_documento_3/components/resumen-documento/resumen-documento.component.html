@@ -66,7 +66,6 @@
                                     {{monto.reference}}</p>
                                 <p class="textos" *ngIf="monto.payment.banco">{{ 'pos.factura.banco' | translate }}
                                     {{monto.bank?.nombre}} </p>
-                                <!--TODO:Translate-->
                                 <p class="textos" *ngIf="monto.account">{{ 'pos.factura.cuenta' | translate }}
                                     {{monto.account.descripcion}} </p>
                                 <p class="textos">{{ 'pos.factura.monto' | translate }} {{monto.amount | currency:'
