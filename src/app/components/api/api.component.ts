@@ -38,7 +38,10 @@ export class ApiComponent {
   }
 
 
-  goBack() { }
+  goBack() { 
+
+    this._location.back()
+  }
 
   async save() {
 
