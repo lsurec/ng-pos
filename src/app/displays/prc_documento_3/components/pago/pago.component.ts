@@ -45,7 +45,6 @@ export class PagoComponent {
   }
 
 
-  //verError
   verError(res: ResApiInterface) {
 
     let dateNow: Date = new Date();
@@ -117,8 +116,23 @@ export class PagoComponent {
 
 
       if (!resBancos.status) {
+
+        this.facturaService.isLoading = false;
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+  
+        if (!verificador) return;
+  
         this.verError(resBancos);
+  
         return;
+  
       }
 
       this.pagoComponentService.bancos = resBancos.response;
@@ -149,9 +163,25 @@ export class PagoComponent {
     this.facturaService.isLoading = false;
 
     if (!resCuentas.status) {
+
+      this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(resCuentas);
 
       return;
+
     }
 
     this.pagoComponentService.cuentas = resCuentas.response;

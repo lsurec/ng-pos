@@ -9,6 +9,7 @@ import { ProductoService } from '../../services/producto.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -32,6 +33,7 @@ export class ProductosEncontradosComponent {
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
     private _productoService: ProductoService,
+    private _translate: TranslateService,
   ) {
     this.productos = productosEncontrados;
   }
@@ -57,7 +59,9 @@ export class ProductosEncontradosComponent {
 
     if (!resBodega.status) {
       this.isLoading = false;
-      this._notificationsService.showErrorAlert(resBodega);
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
+      console.log(resBodega);
+
       return;
     }
 
@@ -89,7 +93,9 @@ export class ProductosEncontradosComponent {
       if (!resPrecio.status) {
         this.isLoading = false;
 
-        this._notificationsService.showErrorAlert(resPrecio);
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
+        console.log(resPrecio);
+
         return;
       }
 
@@ -121,7 +127,8 @@ export class ProductosEncontradosComponent {
 
           this.isLoading = false;
 
-          this._notificationsService.showErrorAlert(resfactor);
+          this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
+          console.log(resfactor);
           return;
         }
 

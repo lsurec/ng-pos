@@ -62,7 +62,7 @@ export class DetalleDocumentoComponent implements OnInit {
   transacciones: DetalleTransaccionInterface[] = [];
   cargoAbono: MontoIntreface[] = [];
 
-  
+
 
   banco?: BancoInterface;
   cuentaBanco?: CuentaBancoInterface;
@@ -115,12 +115,12 @@ export class DetalleDocumentoComponent implements OnInit {
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resEmpresa);
 
@@ -153,12 +153,12 @@ export class DetalleDocumentoComponent implements OnInit {
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resEstacion);
 
@@ -196,12 +196,12 @@ export class DetalleDocumentoComponent implements OnInit {
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resSerie);
 
@@ -234,17 +234,16 @@ export class DetalleDocumentoComponent implements OnInit {
 
       this.isLoading = false;
 
-
       let verificador = await this._notificationsServie.openDialogActions(
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resName);
 
@@ -265,17 +264,16 @@ export class DetalleDocumentoComponent implements OnInit {
 
       this.isLoading = false;
 
-
       let verificador = await this._notificationsServie.openDialogActions(
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resClient);
 
@@ -315,12 +313,12 @@ export class DetalleDocumentoComponent implements OnInit {
           {
             title: this._translate.instant('pos.alertas.salioMal'),
             description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.informe'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
 
-        if (verificador) return;
+        if (!verificador) return;
 
         this.mostrarError(resCuentaRef);
 
@@ -364,12 +362,12 @@ export class DetalleDocumentoComponent implements OnInit {
           {
             title: this._translate.instant('pos.alertas.salioMal'),
             description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.informe'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
 
-        if (verificador) return;
+        if (!verificador) return;
 
         this.mostrarError(resSku);
 
@@ -396,12 +394,12 @@ export class DetalleDocumentoComponent implements OnInit {
           {
             title: this._translate.instant('pos.alertas.salioMal'),
             description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.informe'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
 
-        if (verificador) return;
+        if (!verificador) return;
 
         this.mostrarError(resProducto);
 
@@ -449,12 +447,12 @@ export class DetalleDocumentoComponent implements OnInit {
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-          falso: this._translate.instant('pos.botones.informe'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
 
-      if (verificador) return;
+      if (!verificador) return;
 
       this.mostrarError(resPagos);
 
@@ -493,12 +491,12 @@ export class DetalleDocumentoComponent implements OnInit {
             {
               title: this._translate.instant('pos.alertas.salioMal'),
               description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.aceptar'),
-              falso: this._translate.instant('pos.botones.informe'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
             }
           );
 
-          if (verificador) return;
+          if (!verificador) return;
 
           this.mostrarError(resBancos);
 
@@ -533,18 +531,16 @@ export class DetalleDocumentoComponent implements OnInit {
 
             this.isLoading = false;
 
-
             let verificador = await this._notificationsServie.openDialogActions(
               {
                 title: this._translate.instant('pos.alertas.salioMal'),
                 description: this._translate.instant('pos.alertas.error'),
-                verdadero: this._translate.instant('pos.botones.aceptar'),
-                falso: this._translate.instant('pos.botones.informe'),
+                verdadero: this._translate.instant('pos.botones.informe'),
+                falso: this._translate.instant('pos.botones.aceptar'),
               }
             );
 
-            if (verificador) return;
-
+            if (!verificador) return;
             this.mostrarError(resCuentaBanco);
 
             return;
@@ -562,7 +558,7 @@ export class DetalleDocumentoComponent implements OnInit {
               this.cuentaBanco = cBanco;
 
               console.log(cuentasBanco);
-              
+
 
               break;
             }
@@ -580,22 +576,22 @@ export class DetalleDocumentoComponent implements OnInit {
         const pago = pagos[i];
 
 
-       if(element.Tipo_Cargo_Abono == pago.tipo_Cargo_Abono){
+        if (element.Tipo_Cargo_Abono == pago.tipo_Cargo_Abono) {
 
-        this.cargoAbono.push(
-          {
-            amount: element.Monto,
-            authorization: element.Autorizacion ?? "",
-            checked: false,
-            difference: element.Cambio,
-            payment: pago,
-            reference: element.Referencia ?? "",
-            account: this.cuentaBanco,
-            bank: this.banco,
-          }
-        )
-        break;
-       }
+          this.cargoAbono.push(
+            {
+              amount: element.Monto,
+              authorization: element.Autorizacion ?? "",
+              checked: false,
+              difference: element.Cambio,
+              payment: pago,
+              reference: element.Referencia ?? "",
+              account: this.cuentaBanco,
+              bank: this.banco,
+            }
+          )
+          break;
+        }
 
 
 

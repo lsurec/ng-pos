@@ -259,8 +259,25 @@ export class ResumenDocumentoComponent {
     this.isLoading = false;
 
     if (!resDoc.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(resDoc);
+
       return;
+
     }
 
     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));

@@ -114,11 +114,25 @@ export class DetalleComponent {
 
       this.facturaService.isLoading = false;
 
+
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.verError(res!);
 
       return;
-    }
 
+    }
 
     let productos: ProductoInterface[] = res!.response;
 
@@ -158,12 +172,25 @@ export class DetalleComponent {
 
 
       if (!resBodega.status) {
+
         this.facturaService.isLoading = false;
-
+  
+  
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+  
+        if (!verificador) return;
+  
         this.verError(resBodega);
-
-
+  
         return;
+  
       }
 
       this._productoService.bodegas = resBodega.response;
@@ -193,11 +220,25 @@ export class DetalleComponent {
 
 
         if (!resPrecio.status) {
+
           this.facturaService.isLoading = false;
-
-          this.verError(resBodega);
-
+    
+    
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+    
+          if (!verificador) return;
+    
+          this.verError(resPrecio);
+    
           return;
+    
         }
 
         let precios: PrecioInterface[] = resPrecio.response;
@@ -227,10 +268,22 @@ export class DetalleComponent {
           if (!resfactor.status) {
 
             this.facturaService.isLoading = false;
-
-            this.verError(resBodega);
-
+      
+            let verificador = await this._notificationsService.openDialogActions(
+              {
+                title: this._translate.instant('pos.alertas.salioMal'),
+                description: this._translate.instant('pos.alertas.error'),
+                verdadero: this._translate.instant('pos.botones.informe'),
+                falso: this._translate.instant('pos.botones.aceptar'),
+              }
+            );
+      
+            if (!verificador) return;
+      
+            this.verError(resfactor);
+      
             return;
+      
           }
 
 
@@ -443,7 +496,6 @@ export class DetalleComponent {
 
   }
 
-  //verError
   verError(res: ResApiInterface) {
 
     let dateNow: Date = new Date();

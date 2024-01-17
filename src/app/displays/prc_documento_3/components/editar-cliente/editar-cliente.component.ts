@@ -36,12 +36,13 @@ export class EditarClienteComponent implements OnInit {
 
   constructor(
     private _location: Location,
-    private _notificationsService: NotificationsService,
+    private _notificationsServie: NotificationsService,
     private translate: TranslateService,
     private _router: Router,
     private _eventService: EventService,
     private _cuentaService: CuentaService,
     public _facturaService: FacturaService,
+    private _translate: TranslateService,
 
   ) {
     this._eventService.regresarEditarCliente$.subscribe((eventData) => {
@@ -67,8 +68,8 @@ export class EditarClienteComponent implements OnInit {
   }
 
 
-  mostrarError(res:ResApiInterface) {
-    
+  mostrarError(res: ResApiInterface) {
+
     let dateNow: Date = new Date();
 
     let error = {
@@ -95,13 +96,13 @@ export class EditarClienteComponent implements OnInit {
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
       console.log("validacion");
 
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
 
     //Validar correo
     if (!this.validarCorreo(this.correo)) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
       return;
     }
 
@@ -134,11 +135,29 @@ export class EditarClienteComponent implements OnInit {
 
 
     //Si el servicio falló
+
     if (!resCuenta.status) {
+
       this.isLoading = false;
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(resCuenta);
+
       return;
+
     }
+
 
     //buscar informacin de la cuenta  creada
     let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
@@ -153,16 +172,33 @@ export class EditarClienteComponent implements OnInit {
 
     if (!infoCuenta.response) {
 
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
+      this.isLoading = false;
+
+
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(infoCuenta);
 
       return;
+
+
     }
 
     let cuentas: ClienteInterface[] = infoCuenta.response;
 
     if (cuentas.length == 0) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
       return;
     }
 
@@ -171,7 +207,7 @@ export class EditarClienteComponent implements OnInit {
       //seleccionar cuenta
       this._facturaService.cuenta = cuentas[0];
 
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
       //regresar
       this._eventService.verDocumentoEvent(true);
@@ -186,7 +222,7 @@ export class EditarClienteComponent implements OnInit {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
 
-        this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
+        this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
         //regresar
         this._eventService.verDocumentoEvent(true);

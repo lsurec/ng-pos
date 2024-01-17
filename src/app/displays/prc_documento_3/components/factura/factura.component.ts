@@ -192,6 +192,7 @@ export class FacturaComponent implements OnInit {
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
+      //TODO:translate
       this.verError({
         response: "No se ha asigando un tipo de documento al display. Comunicate con el departamento de soporte.",
         status:false,

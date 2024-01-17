@@ -10,6 +10,7 @@ import { TipoTransaccionService } from '../../services/tipos-transaccion.service
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 import { Documento } from '../../interfaces/doc-estructura.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-historial',
@@ -42,6 +43,8 @@ export class HistorialComponent implements OnInit {
     private _documentService: DocumentService,
     private _facturaService: FacturaService,
     private _tiposTransaccion: TipoTransaccionService,
+    private _notificationsServie: NotificationsService,
+    private _translate:TranslateService,
   ) {
 
     this._eventService.verHistorial$.subscribe((eventData) => {
@@ -72,12 +75,25 @@ export class HistorialComponent implements OnInit {
 
 
     if (!resDoc.status) {
+
       this.isLoading = false;
 
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
       this.mostrarError(resDoc);
-      
 
       return;
+
     }
 
     let docs: GetDocInterface[] = resDoc.response;
@@ -97,12 +113,27 @@ export class HistorialComponent implements OnInit {
       );
 
 
-      if (!resTra.status) {
-        this.isLoading = false;
+     if (!resTra.status) {
 
-        this.mostrarError(resTra);
-        return;
-      }
+            this.isLoading = false;
+
+
+            let verificador = await this._notificationsServie.openDialogActions(
+              {
+                title: this._translate.instant('pos.alertas.salioMal'),
+                description: this._translate.instant('pos.alertas.error'),
+                verdadero: this._translate.instant('pos.botones.informe'),
+                falso: this._translate.instant('pos.botones.aceptar'),
+              }
+            );
+      
+            if (!verificador) return;
+
+            this.mostrarError(resTra);
+
+            return;
+
+          }
 
       let tiposTra: TipoTransaccionInterface[] = resTra.response;
 
