@@ -44,9 +44,9 @@
                                     currency:' ':'symbol':'2.2-2' }}</p>
                                 <p class="textos">{{ 'pos.factura.total' | translate }} {{transaction.total | currency:'
                                     ':'symbol':'2.2-2' }} </p>
-                                <p class="textos">{{ 'pos.factura.cargos' | translate }} {{transaction.cargo |
+                                <p class="textos" *ngIf="transaction.cargo > 0">{{ 'pos.factura.cargos' | translate }} {{transaction.cargo |
                                     currency:' ':'symbol':'2.2-2' }} </p>
-                                <p class="textos">{{ 'pos.factura.descuentos' | translate }} {{transaction.descuento |
+                                <p class="textos" *ngIf="transaction.descuento > 0">{{ 'pos.factura.descuentos' | translate }} {{transaction.descuento |
                                     currency:' ':'symbol':'2.2-2' }}
                                 </p>
                             </div>
