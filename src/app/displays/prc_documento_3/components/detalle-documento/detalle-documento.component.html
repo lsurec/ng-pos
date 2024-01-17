@@ -78,12 +78,12 @@
                     <div class="descripcion-producto" *ngFor="let transaccion of transacciones">
                         <p class="textos">{{transaccion.canitdad}} x {{transaccion.producto.des_Producto}}</p>
                         <p class="textos">{{ 'pos.factura.sku' | translate }} {{transaccion.producto.producto_Id}}</p>
-                        <p class="textos">{{ 'pos.factura.productos' | translate }} {{transaccion.canitdad == 0 ? "00.00" :
+                        <p class="textos">{{ 'pos.factura.precio_unitario' | translate }} {{transaccion.canitdad == 0 ? "00.00" :
                             (transaccion.total /
                             transaccion.canitdad) | currency:' ':'symbol':'2.2-2' }}</p>
                         <p class="textos">{{ 'pos.factura.total' | translate }} {{transaccion.total | currency:'
                             ':'symbol':'2.2-2' }} </p>
-                    </div>
+                    
                 </div>
                 <span class="spacer"></span>
                 <div class="detalles-lista">
