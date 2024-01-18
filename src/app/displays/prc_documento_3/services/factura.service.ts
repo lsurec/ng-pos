@@ -1,65 +1,65 @@
 
-import { Injectable } from '@angular/core';
-import { SerieInterface } from '../interfaces/serie.interface';
-import { VendedorInterface } from '../interfaces/vendedor.interface';
-import { TipoTransaccionInterface } from '../interfaces/tipo-transaccion.interface';
-import { ParametroInterface } from '../interfaces/parametro.interface';
-import { FormaPagoInterface } from '../interfaces/forma-pago.interface';
 import { ClienteInterface } from '../interfaces/cliente.interface';
-import { TraInternaInterface } from '../interfaces/tra-interna.interface';
-import { MontoIntreface } from '../interfaces/monto.interface';
-import { PagoComponentService } from './pago-component.service';
 import { DocLocalInterface } from '../interfaces/doc-local.interface';
-import { PreferencesService } from 'src/app/services/preferences.service';
+import { FormaPagoInterface } from '../interfaces/forma-pago.interface';
+import { Injectable } from '@angular/core';
+import { MontoIntreface } from '../interfaces/monto.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { PagoComponentService } from './pago-component.service';
+import { ParametroInterface } from '../interfaces/parametro.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { SerieInterface } from '../interfaces/serie.interface';
+import { TipoTransaccionInterface } from '../interfaces/tipo-transaccion.interface';
+import { TraInternaInterface } from '../interfaces/tra-interna.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { VendedorInterface } from '../interfaces/vendedor.interface';
 
 @Injectable({
     providedIn: 'root',
 })
+
+
+//Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
 
-    isLoading: boolean = false;
-    tipoDocumento?: number;
-    documentoName: string = "";
-    series: SerieInterface[] = []
-    serie?: SerieInterface;
-    vendedores: VendedorInterface[] = [];
-    vendedor?: VendedorInterface;
-    tiposTransaccion: TipoTransaccionInterface[] = [];
-    parametros: ParametroInterface[] = [];
-    formasPago: FormaPagoInterface[] = [];
-    cuenta?: ClienteInterface;
+    isLoading: boolean = false; //Pantalla de carga
+    tipoDocumento?: number; //Tipo de documento
+    documentoName: string = ""; //Descripcion tipo de documento
+    series: SerieInterface[] = [] //Series disponibles para un odcumento
+    serie?: SerieInterface; //Serie seleccionada
+    vendedores: VendedorInterface[] = []; //vendedores disponibles (cuenta conrrentista ref)
+    vendedor?: VendedorInterface; //Vndedor seleccionado (cuenta correntista ref)
+    tiposTransaccion: TipoTransaccionInterface[] = []; //Tipos de transaccion disponibles
+    parametros: ParametroInterface[] = []; //parametros para el usuario disponobles
+    formasPago: FormaPagoInterface[] = []; //formas de pago disponibles
+    cuenta?: ClienteInterface; //cuenta seleccionada para el documento 
 
-    montos: MontoIntreface[] = [];
-    traInternas: TraInternaInterface[] = [];
+    montos: MontoIntreface[] = []; //Pagos agregados al documento
+    traInternas: TraInternaInterface[] = []; //Transacciones agregadas al documento
 
-    //Seleccionar todas las transacciones
-    selectAllTra: boolean = false;
-
+    selectAllTra: boolean = false; //Seleccionar todas las transacciones
 
     //totales del documento
-    //Reiniciar valores
-    subtotal: number = 0;
+    subtotal: number = 0; 
     cargo: number = 0;
     descuento: number = 0;
     total: number = 0;
-
 
     //Toales pago
     saldo: number = 0;
     cambio: number = 0;
     pagado: number = 0;
 
-
     constructor(
+        //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
         private _notificationsService: NotificationsService,
         private _translate: TranslateService,
     ) { }
 
 
+    //cargar documento guardado en el strorage
     async loadDocDave() {
 
         let localDoc = PreferencesService.documento;
@@ -69,6 +69,7 @@ export class FacturaService {
             return;
         }
 
+        //str to object para documento estructura
         let doc: DocLocalInterface = JSON.parse(localDoc);
 
         //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
@@ -107,6 +108,7 @@ export class FacturaService {
 
                 }
 
+                //Existe la serie?
                 let existSerie: boolean = false;
 
                 //si no hay serie seleccionada bucsar la serie guardada en las series disponibles
@@ -115,6 +117,7 @@ export class FacturaService {
                     const element = this.series[i];
                     //si se encunetra la serie guardada se puede asignar al documento
                     if (element.serie_Documento == doc.serie.serie_Documento) {
+                        //la bodega existe
                         existSerie = true;
                         break;
                     }
@@ -146,10 +149,13 @@ export class FacturaService {
 
         //Cargar documento
 
+        //buscar serie guardada en las series disponobles
         if (doc.serie) {
             for (let i = 0; i < this.series.length; i++) {
+
                 const element = this.series[i];
 
+                //Asignar serie guardada
                 if (element.serie_Documento == doc.serie.serie_Documento) {
                     this.serie = element;
                     break;
@@ -160,11 +166,13 @@ export class FacturaService {
         }
 
         
-
+        //Buscar vendedor asigando en el documento guardado
         if (doc.vendedor) {
             
             for (let i = 0; i < this.vendedores.length; i++) {
                 const element = this.vendedores[i];
+            
+                //Asignaer vendedor guardado
                 if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
                     this.vendedor = element;
                 }
@@ -172,40 +180,43 @@ export class FacturaService {
         }
 
 
+        this.cuenta = doc.cliente; //asignar cliente
+        this.traInternas = doc.detalles; //asignar detalles
+        this.montos = doc.pagos; //asignar pagos
 
 
-        this.cuenta = doc.cliente;
-        this.traInternas = doc.detalles;
-        this.montos = doc.pagos;
-
+        //calcular totales del documento y pagos
         this.calculateTotales();
-
 
     }
 
-
+    //guardar documento en storage
     saveDocLocal() {
+        //objeto con todos los datos de un documento
         let doc: DocLocalInterface = {
-            user: PreferencesService.user,
-            empresa: PreferencesService.empresa,
-            estacion: PreferencesService.estacion,
-            cliente: this.cuenta,
-            vendedor: this.vendedor,
-            serie: this.serie,
-            documento: this.tipoDocumento!,
-            detalles: this.traInternas,
-            pagos: this.montos,
+            user: PreferencesService.user, //usuario de la sesion
+            empresa: PreferencesService.empresa, //empresa de la sesion
+            estacion: PreferencesService.estacion, //estacion de la sesion
+            cliente: this.cuenta, //cliente seleccionado (cuenta correntista)
+            vendedor: this.vendedor, //vendedor seleccionado (cuenta correntista ref)
+            serie: this.serie, //serie seleccionada
+            documento: this.tipoDocumento!, //tipo de documento que se está haciendo
+            detalles: this.traInternas, //transacciones agregadas al documento
+            pagos: this.montos, //formas de pago (cargo abono) agregadas al documento
         }
 
+        //guardar documento en preferencias
         PreferencesService.documento = JSON.stringify(doc);
     }
 
-
+    //Buscar tipo transaccion
     resolveTipoTransaccion(tipo: number): number {
 
+        //buscar tipo de trabsaccion dependientdo del tipo de producto
         for (let i = 0; i < this.tiposTransaccion.length; i++) {
             const element = this.tiposTransaccion[i];
             if (tipo == element.tipo) {
+                //Devolver tipo de transaccion correspondiente al tipo de producto
                 return element.tipo_Transaccion;
             }
         }
