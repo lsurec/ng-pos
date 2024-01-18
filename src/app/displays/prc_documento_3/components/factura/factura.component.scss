@@ -222,7 +222,7 @@ mat-sidenav {
 }
 
 .toolbarPhone,
-.toolbarlarge {
+.toolbar-large {
     // position        : fixed !important;
     background-color: $background-oficial;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
@@ -245,7 +245,7 @@ mat-sidenav {
 }
 
 @media screen and (max-width: 767px) {
-    .toolbarlarge {
+    .toolbar-large  {
         display         : none !important;
         background-color: $background-oficial;
     }
