@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ClipboardService {
   copyToClipboard(value: string): void {
+
+    //crecar elemento en el DOM
     const textarea = document.createElement('textarea');
     textarea.value = value;
 

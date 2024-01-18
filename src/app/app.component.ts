@@ -12,7 +12,7 @@ import { ThemeService } from './services/theme.service';
 })
 export class AppComponent {
 
-  //Idiomas disponibles de la aplicacion
+  //Idiomas disponibles para la aplicacion
   languages: LanguageInterface[] = languagesProvider;
   activeLang: LanguageInterface;
   idioma: number = indexDefaultLang;
@@ -21,8 +21,6 @@ export class AppComponent {
     private translate: TranslateService,
     private _themeService: ThemeService
   ) {
-    // localStorage.clear();
-    // sessionStorage.clear();
 
     //Buscar y obtener el leguaje guardado en el servicio  
     let getLanguage = PreferencesService.lang;
@@ -38,7 +36,6 @@ export class AppComponent {
 
 
     //buscar y asignar tema
-    
     if (PreferencesService.theme == '1') {
       this._themeService.isDarkTheme = true;
       this._themeService.updateTheme();
