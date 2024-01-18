@@ -7,16 +7,16 @@ import { RouteNamesService } from 'src/app/services/route.names.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-   constructor( private _router: Router) {}
+export class ApiGuard implements CanActivate {
+  constructor( private _router: Router) {}
 
   canActivate(): boolean {
-    //permite ver una ruta solo si existe un token en la sesion
-    if (PreferencesService.token) {
+    //permite ver una pantalla solo si existe una url configurasa
+    if (PreferencesService.baseUrl) {
       return true;
     } else {
-      //Si no hay in token dirige al login
-      this._router.navigate([RouteNamesService.LOGIN]); 
+      //si no hay una url dirige a la pantalla de configuracion
+      this._router.navigate([RouteNamesService.API]); 
       return false;
     }
   }

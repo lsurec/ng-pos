@@ -14,6 +14,7 @@ import { DocumentoComponent } from "./displays/prc_documento_3/components/docume
 import { NuevoClienteComponent } from "./displays/prc_documento_3/components/nuevo-cliente/nuevo-cliente.component";
 import { LoginGuard } from "./guards/login/login.guard";
 import { AuthGuard } from "./guards/auth/auth.guard";
+import { ApiGuard } from "./guards/api/api.guard";
 
 type PathMatch = "full" | "prefix" | undefined;
 
@@ -22,7 +23,7 @@ const appRoutes = [
     { path: RouteNamesService.SPLASH, component: SplashComponent },
     { path: RouteNamesService.LANGUAGE, component: LangComponent },
     { path: RouteNamesService.THEME, component: ThemeComponent },
-    { path: RouteNamesService.API, component: ApiComponent },
+    { path: RouteNamesService.API, component: ApiComponent, canActivate:[LoginGuard] },
     { path: RouteNamesService.LOCAL_CONFIG, component: LocalConfigComponent, canActivate: [AuthGuard] },
     { path: RouteNamesService.NOT_FOUND, component: NotFoundComponent },
     { path: RouteNamesService.HOME, component: HomeComponent, canActivate: [AuthGuard] },
@@ -30,7 +31,7 @@ const appRoutes = [
     { path: RouteNamesService.NO_CONNECTED, component: NoConnectedComponent },
     { path: RouteNamesService.DOC, component: DocumentoComponent , canActivate: [AuthGuard]},
     { path: RouteNamesService.NEW_ACCOUNT, component: NuevoClienteComponent, canActivate: [AuthGuard] },
-    { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [LoginGuard] },
+    { path: RouteNamesService.LOGIN, component: LoginComponent, canActivate: [ApiGuard, LoginGuard] },
     { path: '', redirectTo: RouteNamesService.SPLASH, pathMatch: 'full' as PathMatch },
     { path: '**', redirectTo: RouteNamesService.LOGIN, pathMatch: 'full' as PathMatch },
 

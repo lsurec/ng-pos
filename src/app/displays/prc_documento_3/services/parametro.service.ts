@@ -12,7 +12,7 @@ export class ParametroService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner los parametros disponobles para el usuario
     private _getParametro(
         user: string,
         token: string,
@@ -37,7 +37,7 @@ export class ParametroService {
         return this._http.get(`${this._urlBase}parametro`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner los parametros disponobles para el usuario
     getParametro(
         user: string,
         token: string,

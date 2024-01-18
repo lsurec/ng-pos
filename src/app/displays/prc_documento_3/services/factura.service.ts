@@ -8,7 +8,7 @@ import { FormaPagoInterface } from '../interfaces/forma-pago.interface';
 import { ClienteInterface } from '../interfaces/cliente.interface';
 import { TraInternaInterface } from '../interfaces/tra-interna.interface';
 import { MontoIntreface } from '../interfaces/monto.interface';
-import { PagoComponentService } from './pogo-component.service';
+import { PagoComponentService } from './pago-component.service';
 import { DocLocalInterface } from '../interfaces/doc-local.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { NotificationsService } from 'src/app/services/notifications.service';

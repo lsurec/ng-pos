@@ -6,7 +6,7 @@ import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
 import { FacturaService } from '../../services/factura.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { PagoComponentService } from '../../services/pogo-component.service';
+import { PagoComponentService } from '../../services/pago-component.service';
 import { MontoIntreface } from '../../interfaces/monto.interface';
 import { EventService } from 'src/app/services/event.service';
 
@@ -61,6 +61,14 @@ export class PagoComponent {
   }
 
   viewPayments() {
+    this.facturaService.calculateTotales();
+    this.pagoComponentService.autorizacion = "",
+      this.pagoComponentService.referencia = "",
+      this.pagoComponentService.cuentas = [];
+    this.pagoComponentService.bancos = [];
+    this.pagoComponentService.banco = undefined;
+    this.pagoComponentService.cuentaSelect = undefined;
+    this.pagoComponentService.forms = false;
     this.pagoComponentService.forms = false;
   }
 
@@ -125,13 +133,13 @@ export class PagoComponent {
             falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
-  
+
         if (!verificador) return;
-  
+
         this.verError(resBancos);
-  
+
         return;
-  
+
       }
 
       this.pagoComponentService.bancos = resBancos.response;

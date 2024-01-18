@@ -7,14 +7,15 @@ import { BodegaProductoInterface } from '../interfaces/bodega-produto.interface'
 })
 export class ProductoService{
   
-    total:number = 0;
-    precios: UnitarioInterface[] = [];
-    precio?:UnitarioInterface;
-    bodegas:BodegaProductoInterface[]=[];
-    bodega?:BodegaProductoInterface;
-    cantidad:string = "1";
-    precioU:number = 0;
-    precioText:string = "0";
+    //Datos para el dialogo de productos
+    total:number = 0; //total de la transaccion (cantidad * precio)
+    precios: UnitarioInterface[] = []; //Tipos de precios disponobles
+    precio?:UnitarioInterface; //precio seleccionado 
+    bodegas:BodegaProductoInterface[]=[]; //Bodegas disponobles para el producto
+    bodega?:BodegaProductoInterface; //Bodega seleccionada
+    cantidad:string = "1"; //Cantidad del producto
+    precioU:number = 0; //Precio unitario
+    precioText:string = "0"; //precio unitario modificable
 
 
 

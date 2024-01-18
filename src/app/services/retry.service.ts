@@ -5,7 +5,11 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
+//eventos para pantalla volver a cargar
 export class RetryService {
+
+  ///volver a cargar en la pantlla splash
   private splash = new Subject<void>();
 
   splash$ = this.splash.asObservable();
@@ -14,6 +18,7 @@ export class RetryService {
     this.splash.next();
   }
 
+  //Volver a cargar desde configuracion local
   private config = new Subject<void>();
 
   config$ = this.config.asObservable();
@@ -23,6 +28,7 @@ export class RetryService {
   }
 
 
+  //volver a cargar el home
   private home = new Subject<void>();
 
   home$ = this.home.asObservable();

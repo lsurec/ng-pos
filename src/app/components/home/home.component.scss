@@ -545,8 +545,12 @@ h2 {
     color: #134895;
 }
 
+.toolbarNavegacion[_ngcontent-erl-c58]{
+    background: red !important;
+}
+
 .toolbarNavScreenShort {
-    background-color: #f0f0f0;
+    background-color: red !important;
     height          : auto;
     padding-left    : 5px;
     overflow-x      : auto;

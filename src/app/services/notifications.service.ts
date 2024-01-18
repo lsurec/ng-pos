@@ -88,7 +88,7 @@ export class NotificationsService {
 
     }
 
-    //dialofo para cerrr sesion
+    //dialogo para cerrar sesion
     async showCloseSesionDialog() {
         let verificador: boolean = await this.openDialogActions(
             {

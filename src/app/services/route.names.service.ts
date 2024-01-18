@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class RouteNamesService {
+  
+  //Nombres de las rutas
   static readonly SPLASH: string = 'splash';
   static readonly LANGUAGE: string = 'lang';
   static readonly THEME: string = 'theme';
@@ -18,7 +20,6 @@ export class RouteNamesService {
   static readonly DOC: string = 'doc';
   static readonly NEW_ACCOUNT: string = 'new-account';
 
-  // Agrega más nombres de rutas según sea necesario
 
   constructor() { }
 }

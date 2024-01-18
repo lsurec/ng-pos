@@ -13,7 +13,7 @@ export class TipoTransaccionService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner los tipos de transaccion disponibles
     private _getTipoTransaccion(
         user: string,
         token: string,
@@ -36,7 +36,7 @@ export class TipoTransaccionService {
         return this._http.get(`${this._urlBase}Serie/transaccion/tipo`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner los tipos de transaccion disponibles
     getTipoTransaccion(
         user: string,
         token: string,

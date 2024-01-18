@@ -5,13 +5,16 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class ThemeService {
+    //tema configurado: falso = claro; true = oscuro
     isDarkTheme: boolean = false;
 
+    //cambiar tema
     toggleTheme(): void {
         this.isDarkTheme = !this.isDarkTheme;
         this.updateTheme();
     }
 
+    //actualizar tema
     updateTheme(): void {
         const body = document.body; //tiene toda la aplicacion 
         if (this.isDarkTheme) {
