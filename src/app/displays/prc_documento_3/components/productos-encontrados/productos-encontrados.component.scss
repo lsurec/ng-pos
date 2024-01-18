@@ -157,8 +157,9 @@ p {
 
 @media screen and (max-width: 767px) {
 
-    .dialog {
-        width  : 100%;
+    .dialog,
+    .progress {
+        width  : 100% !important;
         padding: 10px 10px 15px 15px;
     }
 
