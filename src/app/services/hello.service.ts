@@ -43,12 +43,26 @@ export class HelloService {
         } catch (e) {
 
 
-            let resApi: ResApiInterface = {
-                status: false,
-                response: err,
-                url: err.url,
+            try {
+                let message = err.message;
+
+                let resApi: ResApiInterface = {
+                    status: false,
+                    response: message,
+                    url: err.url,
+                }
+                resolve(resApi);
+
+            } catch (ex) {
+                let resApi: ResApiInterface = {
+                    status: false,
+                    response: err,
+                    url: err.url,
+                }
+                resolve(resApi);
             }
-            resolve(resApi);
+
+
         }
 
         }
