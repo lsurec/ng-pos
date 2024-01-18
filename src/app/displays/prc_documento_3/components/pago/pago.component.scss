@@ -198,9 +198,10 @@ p {
 }
 
 .pagos-gregados {
-    width   : 50%;
-    overflow: hidden;
-    padding : 10px 0px;
+    width     : 50%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding   : 10px 0px;
 }
 
 .pagos {

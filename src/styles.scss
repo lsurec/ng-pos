@@ -9,7 +9,10 @@ $borde-no-seleccionado   : #635f5f;
 $color-naranja           : #df9722;
 $seleccionado            : #635f5f;
 $placeholder             : #e3ebfcb7;
-
+$scrollbars              : $borde-no-seleccionado;
+$color-azul              : #2764bd;
+$color-verde             : #44ff14;
+$color-rojo              : #f93c3c;
 
 html,
 body {
@@ -30,14 +33,18 @@ body {
     color           : $color-blanco; // Texto claro en fondo oscuro
 }
 
+.dark-theme .toolbarNavegacion {
+    background-color: $borde-no-seleccionado !important;
+    color           : $color-blanco !important;
+}
+
 //Aplica el tema oscuro a elementos específicos si es necesario 
 .dark-theme .container_start,
-.dark-theme .toolbarNavegacion,
 .dark-theme .toolbarlarge,
 .dark-theme mat-toolbar-row,
 .dark-theme .head__sidenav,
 .dark-theme .detallesUsuario,
-.dark-theme .mat-toolbar,
+.dark-theme .toolbar-large,
 .dark-theme .backColorNavBar,
 .dark-theme .ajustes,
 .dark-theme .lenguajes,
@@ -99,8 +106,7 @@ body {
 }
 
 //BORDE ABAJO
-.dark-theme .toolbarNavegacion,
-.dark-theme .toolbarlarge,
+.dark-theme .toolbar-large,
 .dark-theme .head__sidenav,
 .dark-theme .detalles-usuario,
 .dark-theme .configuraciones,
@@ -116,7 +122,8 @@ body {
 .dark-theme .detalle-documento,
 .dark-theme .productos-pagos,
 .dark-theme .documento,
-.dark-theme .contenido {
+.dark-theme .contenido,
+.dark-theme .pago {
     border-top: 1px solid $bordes !important;
 }
 
@@ -132,7 +139,8 @@ body {
 .dark-theme .close,
 .dark-theme .total,
 .dark-theme .iconoCargo,
-.dark-theme .iconoDescuento {
+.dark-theme .iconoDescuento,
+.dark-theme .informacion-tema {
     color: $color-blanco !important;
 }
 
@@ -155,6 +163,20 @@ body {
 .dark-theme .mat-mdc-select-placeholder,
 .dark-theme textarea::placeholder {
     color: $placeholder !important;
+}
+
+//cargo-decuento-saldo
+
+.dark-theme .saldo {
+    color: $color-azul !important;
+}
+
+.dark-theme .cargo {
+    color: $color-verde !important;
+}
+
+.dark-theme .descuento {
+    color: $color-rojo !important;
 }
 
 .dark-theme .pestana {
@@ -188,6 +210,11 @@ body {
     border-bottom: 1px solid $color-naranja !important;
 }
 
+//Borde blanco para totales
+.dark-theme .total-barra {
+    border-top: 1px solid $color-blanco !important;
+}
+
 
 //radio buttons
 
@@ -206,4 +233,50 @@ body {
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
     border-color: $radio-buttons !important;
 
+}
+
+//scrolls 
+
+.dark-theme .container-main::-webkit-scrollbar,
+.dark-theme .container-main::-webkit-scrollbar-track,
+.dark-theme .container_main::-webkit-scrollbar,
+.dark-theme .container_main::-webkit-scrollbar-track,
+.dark-theme .toolbarNavScreenShort::-webkit-scrollbar,
+.dark-theme .toolbarNavScreenShort::-webkit-scrollbar-track,
+.dark-theme .container_start::-webkit-scrollbar,
+.dark-theme .container_start::-webkit-scrollbar-track,
+.dark-theme .localidades::-webkit-scrollbar,
+.dark-theme .localidades::-webkit-scrollbar-track,
+.dark-theme .empresas::-webkit-scrollbar,
+.dark-theme .empresas::-webkit-scrollbar-track,
+.dark-theme .contenido::-webkit-scrollbar,
+.dark-theme .contenido::-webkit-scrollbar-track,
+.dark-theme .dialog::-webkit-scrollbar,
+.dark-theme .dialog::-webkit-scrollbar-track,
+.dark-theme .detalle-container::-webkit-scrollbar,
+.dark-theme .detalle-container::-webkit-scrollbar-track,
+.dark-theme .lista-bancos::-webkit-scrollbar,
+.dark-theme .lista-bancos::-webkit-scrollbar-track,
+.dark-theme .contenido::-webkit-scrollbar,
+.dark-theme .contenido::-webkit-scrollbar-track,
+.dark-theme .pagos-gregados::-webkit-scrollbar,
+.dark-theme .pagos-gregados::-webkit-scrollbar-track {
+    background-color: $fondo-oscuro !important;
+}
+
+//Color barra scroll
+
+.dark-theme .localidades::-webkit-scrollbar-thumb,
+.dark-theme .empresas::-webkit-scrollbar-thumb,
+.dark-theme .contenido::-webkit-scrollbar-thumb,
+.dark-theme .container_main::-webkit-scrollbar-thumb,
+.dark-theme .toolbarNavScreenShort::-webkit-scrollbar-thumb,
+.dark-theme .container_start::-webkit-scrollbar-thumb,
+.dark-theme .container-main::-webkit-scrollbar-thumb,
+.dark-theme .dialog::-webkit-scrollbar-thumb,
+.dark-theme .detalle-container::-webkit-scrollbar-thumb,
+.dark-theme .lista-bancos::-webkit-scrollbar-thumb,
+.dark-theme .contenido::-webkit-scrollbar-thumb,
+.dark-theme .pagos-gregados::-webkit-scrollbar-thumb {
+    background-color: $scrollbars !important;
 }
