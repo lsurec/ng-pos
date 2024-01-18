@@ -226,7 +226,7 @@ mat-sidenav {
     // position        : fixed !important;
     background-color: $background-oficial;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
-    padding         : 0px 16px;
+    padding         : 0px 10px;
 }
 
 //barra de abajo
@@ -245,7 +245,7 @@ mat-sidenav {
 }
 
 @media screen and (max-width: 767px) {
-    .toolbar-large  {
+    .toolbar-large {
         display         : none !important;
         background-color: $background-oficial;
     }

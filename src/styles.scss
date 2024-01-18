@@ -33,7 +33,8 @@ body {
     color           : $color-blanco; // Texto claro en fondo oscuro
 }
 
-.dark-theme .toolbarNavegacion {
+.dark-theme .toolbarNavegacion,
+.dark-theme .toolbarNavScreenShort {
     background-color: $borde-no-seleccionado !important;
     color           : $color-blanco !important;
 }

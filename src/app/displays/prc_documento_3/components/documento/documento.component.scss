@@ -160,3 +160,22 @@ hr {
     padding    : 2px 1px;
     font-weight: 500;
 }
+
+//Pantallas peque;as 
+
+@media screen and (max-width: 767px) {
+
+    .documento {
+        display: block !important;
+        padding: 10px 20px !important;
+    }
+
+    .cliente,
+    .serie-vendedor,
+    .informacion,
+    .buscar-cliente {
+        width: 100% !important;
+    }
+
+
+}

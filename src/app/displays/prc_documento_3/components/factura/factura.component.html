@@ -76,9 +76,35 @@
         <!-- Barras para titulos y boton de cerrar sidenav -->
         <mat-toolbar class="toolbarPhone" *ngIf="!facturaService.isLoading">
             <mat-toolbar-row>
+                <button mat-icon-button color="transparent" (click)="goBack()">
+                    <mat-icon>home</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                    (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="sidenavend.open()">
-                    <mat-icon>menu</mat-icon>
+                <p class="titulo">{{dataUserService.nameDisplay}}</p>
+                <span class="spacer"></span>
+                <div class="circulo-inicial" (click)="sidenavend.open()">
+                    <p class="inicial-usuario">{{user[0]}}</p>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar class="toolbarPhone" *ngIf="!facturaService.isLoading">
+            <mat-toolbar-row>
+                <span class="spacer"></span>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
+                    (click)="verHistorial()">
+                    <mat-icon>schedule</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
+                    (click)="newDoc()">
+                    <mat-icon>note_add</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                    (click)="verResumen()">
+                    <mat-icon>print</mat-icon>
                 </button>
             </mat-toolbar-row>
         </mat-toolbar>
