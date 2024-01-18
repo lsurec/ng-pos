@@ -13,7 +13,7 @@ export class ProductService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner el sku de un producto enviando el id
     private _getSku(
         token: string,
         producto: number,
@@ -30,7 +30,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/sku/${producto}/${um}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner el sku de un producto enviando el id
     getSku(
         token: string,
         producto: number,
@@ -96,87 +96,7 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
-    private _getDescripcion(
-        token: string,
-        producto: number,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/descripcion/${producto}`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa
-    getDescripcion(
-        token: string,
-        producto: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getDescripcion(
-                token,
-                producto
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner las bodegas y existencias en las que está un producto
     private _getBodegaProducto(
         user: string,
         token: string,
@@ -201,7 +121,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Bodega/producto`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa  para obtner las bodegas y existencias en las que está un producto
     getBodegaProducto(
         user: string,
         token: string,
@@ -272,7 +192,7 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado  para obtner los productos en una busqueda por sku
     private _getProductId(
         token: string,
         id: string,
@@ -288,7 +208,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/buscar/id/${id}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner los productos en una busqueda por sku
     getProductId(
         token: string,
         id: string,
@@ -353,7 +273,7 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner los prodictos en una busqueda por descripcion
     private _getProductDesc(
         token: string,
         descripcion: string,
@@ -369,7 +289,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/buscar/descripcion/${descripcion}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner los prodictos en una busqueda por descripcion
     getProductDesc(
         token: string,
         descripcion: string,
@@ -432,7 +352,7 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner los tipos de precios para un producto
     private _getPrecios(
         user: string,
         token: string,
@@ -455,7 +375,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/precios`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner los tipos de precios para un producto
     getPrecios(
         user: string,
         token: string,
@@ -525,7 +445,7 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner el factor de conversion para un producto
     private _getFactorConversion(
         user: string,
         token: string,
@@ -548,7 +468,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/factor/conversion`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner el factor de conversion para un producto
     getFactorConversion(
         user: string,
         token: string,

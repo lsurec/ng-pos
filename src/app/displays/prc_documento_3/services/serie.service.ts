@@ -12,7 +12,7 @@ export class SerieService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado par aobtener las series disponibles para un documento
     private _getSerie(
         user: string,
         token: string,
@@ -35,7 +35,7 @@ export class SerieService {
         return this._http.get(`${this._urlBase}Serie`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa par aobtener las series disponibles para un documento
     getSerie(
         user: string,
         token: string,

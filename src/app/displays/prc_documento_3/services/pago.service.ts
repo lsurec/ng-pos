@@ -12,7 +12,7 @@ export class PagoService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtener las formas de pago
     private _getFormas(
         token: string,
         empresa: number,
@@ -34,7 +34,7 @@ export class PagoService {
         return this._http.get(`${this._urlBase}Pago/formas`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtener las formas de pago
     getFormas(
         token: string,
         empresa: number,
@@ -102,7 +102,7 @@ export class PagoService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtener los bancos disponibles en una empresa
     private _getBancos(
         user: string,
         token: string,
@@ -121,7 +121,7 @@ export class PagoService {
         return this._http.get(`${this._urlBase}Pago/bancos`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtener los bancos disponibles en una empresa
     getBancos(
         user: string,
         token: string,
@@ -184,7 +184,7 @@ export class PagoService {
     }
 
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner las cuentas bancarias disponibles para un banco 
     private _getCuentasBanco(
         user: string,
         token: string,
@@ -205,7 +205,7 @@ export class PagoService {
         return this._http.get(`${this._urlBase}Pago/banco/cuentas`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner las cuentas bancarias disponibles para un banco 
     getCuentasBanco(
         user: string,
         token: string,

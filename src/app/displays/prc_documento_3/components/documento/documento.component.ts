@@ -244,8 +244,8 @@ export class DocumentoComponent {
         direccion_1_Cuenta_Cta: "Ciudad",
         eMail: "",
         telefono: "",
-        limite_Credito: 10000000.00,
-        permitir_CxC: true,
+        limite_Credito: 0,
+        permitir_CxC: false,
 
 
       }

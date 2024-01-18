@@ -11,10 +11,12 @@ export class ApiGuard implements CanActivate {
   constructor( private _router: Router) {}
 
   canActivate(): boolean {
+    //permite ver una pantalla solo si existe una url configurasa
     if (PreferencesService.baseUrl) {
       return true;
     } else {
-      this._router.navigate([RouteNamesService.API]); // Redirige a la página principal si ya está autenticado
+      //si no hay una url dirige a la pantalla de configuracion
+      this._router.navigate([RouteNamesService.API]); 
       return false;
     }
   }

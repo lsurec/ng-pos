@@ -3,10 +3,12 @@ import { EmpresaInterface } from "../interfaces/empresa.interface";
 import { EstacionInterface } from "../interfaces/estacion.interface";
 import { ErrorInterface } from "../interfaces/error.interface";
 
+//Serviico para guardar y obtner datos guardados en el storage (Preferencias de usuario)
 @Injectable()
 export class PreferencesService {
 
 
+    //Llaves para los valores del storage
     private static readonly userKey = 'user';
     private static readonly userStorageKey: string = 'userStorage';
     private static readonly tokenKey: string = 'token';
@@ -23,13 +25,14 @@ export class PreferencesService {
     private static readonly documentkey: string = 'document';
 
 
+    //Borrar datos al cerrar sesion
     static closeSession() {
         localStorage.removeItem(PreferencesService.tokenStorageKey);
         sessionStorage.removeItem(PreferencesService.tokenKey);
 
     }
 
-    //lenguaje
+    //lenguaje de la aplicacion
     @Input()
     static set lang(value: string) {
         localStorage.setItem(this.languageKey, value);
@@ -53,7 +56,7 @@ export class PreferencesService {
         return value;
     }
 
-    //token de la secion
+    //token de la sesion
     @Input()
     static set token(value: string) {
         sessionStorage.setItem(this.tokenKey, value);
@@ -65,6 +68,7 @@ export class PreferencesService {
         return value;
     }
 
+    //usuario permanente
     @Input()
     static set userStorage(value: string) {
         localStorage.setItem(this.userStorageKey, value);
@@ -76,7 +80,7 @@ export class PreferencesService {
         return value;
     }
 
-
+    //usuario de la sesion 
     @Input()
     static set user(value: string) {
         sessionStorage.setItem(this.userKey, value);
@@ -89,6 +93,7 @@ export class PreferencesService {
     }
 
 
+    //empresa seleccionada
     @Input()
     static set empresa(value: EmpresaInterface) {
         sessionStorage.setItem(this.empresaKey, JSON.stringify(value));
@@ -99,6 +104,7 @@ export class PreferencesService {
         return JSON.parse(value!);
     }
 
+    //estacion seleccionada
     @Input()
     static set estacion(value: EstacionInterface) {
         sessionStorage.setItem(this.estacionKey, JSON.stringify(value));
@@ -109,6 +115,7 @@ export class PreferencesService {
         return JSON.parse(value!);
     }
 
+    //thema seleccionado para la aplicacion
     @Input()
     static set theme(value: string) {
         localStorage.setItem(this.temaKey, value);
@@ -120,6 +127,7 @@ export class PreferencesService {
         return value;
     }
 
+    //url para los servicios 
     @Input()
     static set baseUrl(value: string) {
         localStorage.setItem(this.urlKey, value);
@@ -132,6 +140,7 @@ export class PreferencesService {
     }
 
 
+    //cadena de conexion ara fel permanente
     @Input()
     static set conStorageStr(value: string) {
         localStorage.setItem(this.conStoragekey, value);
@@ -143,6 +152,7 @@ export class PreferencesService {
         return value;
     }
 
+    //cadena de conexion para fel de la sesion
     @Input()
     static set conStr(value: string) {
         sessionStorage.setItem(this.conKey, value);
@@ -154,6 +164,7 @@ export class PreferencesService {
         return value;
     }
 
+    //informe de error
     @Input()
     static set error(value: ErrorInterface) {
         sessionStorage.setItem(this.errorKey, JSON.stringify(value));
@@ -164,6 +175,7 @@ export class PreferencesService {
         return JSON.parse(value!);
     }
 
+    //tipo cambio obtenido
     @Input()
     static set tipoCambio(value: number) {
         sessionStorage.setItem(this.tipoCambioKey, value.toString());
@@ -176,7 +188,7 @@ export class PreferencesService {
         return parseFloat(value!);
     }
 
-
+    //documento local guardado
     @Input()
     static set documento(value: string) {
         localStorage.setItem(this.documentkey, value.toString());

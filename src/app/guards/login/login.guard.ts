@@ -11,10 +11,12 @@ export class LoginGuard implements CanActivate {
   constructor( private _router: Router) {}
 
   canActivate(): boolean {
+    //Deja ver una pantalla solo si no hay un token en la sesion
     if (!PreferencesService.token) {
       return true;
     } else {
-      this._router.navigate([RouteNamesService.HOME]); // Redirige a la página principal si ya está autenticado
+      //si hay un token navega al home
+      this._router.navigate([RouteNamesService.HOME]); 
       return false;
     }
   }

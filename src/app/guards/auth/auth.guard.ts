@@ -11,10 +11,12 @@ export class AuthGuard implements CanActivate {
    constructor( private _router: Router) {}
 
   canActivate(): boolean {
+    //permite ver una ruta solo si existe un token en la sesion
     if (PreferencesService.token) {
       return true;
     } else {
-      this._router.navigate([RouteNamesService.LOGIN]); // Redirige a la página de inicio de sesión si no está autenticado
+      //Si no hay in token dirige al login
+      this._router.navigate([RouteNamesService.LOGIN]); 
       return false;
     }
   }

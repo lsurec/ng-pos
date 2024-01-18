@@ -13,7 +13,7 @@ export class TipoCambioService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtener el tipo de cambio
     private _getTipoCambio(user: string, token: string, empresa: number) {
 
         let headers = new HttpHeaders(
@@ -28,7 +28,7 @@ export class TipoCambioService {
         return this._http.get(`${this._urlBase}tipocambio`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtener el tipo de cambio
     getTipoCambio(user: string, token: string, empresa: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getTipoCambio(user, token, empresa).subscribe(
