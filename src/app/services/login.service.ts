@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { UserInterface } from "../interfaces/user.interface";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { ResponseInterface } from "../interfaces/response.interface";
-import { urlApi } from "../providers/api.provider";
 import { PreferencesService } from "./preferences.service";
 
 @Injectable()
@@ -17,7 +16,7 @@ export class LoginService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar consumo privado
+    //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
     private _postLogin(credenciales: UserInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(credenciales); //JSON to String
@@ -27,7 +26,7 @@ export class LoginService {
 
     }
 
-    //funcion asyncrona con promise
+    //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
     postLogin(credenciales: UserInterface): Promise<ResApiInterface> {
         //consumo primer servicio
         return new Promise((resolve, reject) => {
@@ -59,12 +58,26 @@ export class LoginService {
                     } catch (e) {
 
 
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err,
-                            url: err.url,
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
                         }
-                        resolve(resApi);
+
+
                     }
                 }
             )

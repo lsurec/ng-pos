@@ -9,12 +9,13 @@ export class HelloService {
 
   constructor(private http: HttpClient) { }
 
+  //consumo api
   private _getHello(apiUrl: string): Observable<HttpResponse<any>> {
     // Realiza una solicitud GET y devuelve la respuesta completa (incluido el código de estado)
     return this.http.get<any>(`${apiUrl}hello`, { observe: 'response' });
   }
 
-
+  //Api de pruebas, fevuleve un mensaje
   getHello(apiUrl: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this._getHello(apiUrl).subscribe(
@@ -43,12 +44,26 @@ export class HelloService {
         } catch (e) {
 
 
-            let resApi: ResApiInterface = {
-                status: false,
-                response: err,
-                url: err.url,
+            try {
+                let message = err.message;
+
+                let resApi: ResApiInterface = {
+                    status: false,
+                    response: message,
+                    url: err.url,
+                }
+                resolve(resApi);
+
+            } catch (ex) {
+                let resApi: ResApiInterface = {
+                    status: false,
+                    response: err,
+                    url: err.url,
+                }
+                resolve(resApi);
             }
-            resolve(resApi);
+
+
         }
 
         }

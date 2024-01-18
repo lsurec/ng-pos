@@ -6,15 +6,18 @@ import * as CryptoJS from 'crypto-js';
 })
 export class EncryptService {
 
-  private secretKey: string = 'demo874894874857.ds4746s'; // Cambia esto por tu clave secreta
+  //Clave secreta para encriptar datos
+  private secretKey: string = 'demo874894874857.ds4746s'; 
 
   constructor() { }
 
+  //Devuleve una cadena encriptada
   encrypt(data: any): string {
     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
     return encryptedData;
   }
 
+  //Vule a una cadena normal una encriptada
   decrypt(encryptedData: string): any {
     const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, this.secretKey);
     const decryptedData = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));

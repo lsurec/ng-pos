@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class DataUserService {
 
+  //Nombre del display al que se está navegando
   nameDisplay: string = "";
 
 
