@@ -216,3 +216,32 @@ p {
     border-bottom: 1px solid $color-bordes;
     font-size    : 12px;
 }
+
+.bodega-tipo-precio {
+    display    : flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+
+    .dialog {
+        width  : 100%;
+        padding: 10px 10px 15px 15px;
+    }
+
+    .contenedor {
+        padding: 0px !important;
+    }
+
+    .verDetalle {
+        font-size: 15px !important;
+    }
+
+    .bodega-tipo-precio {
+        display: block !important;
+    }
+
+    .menus {
+        width: 100% !important;
+    }
+}

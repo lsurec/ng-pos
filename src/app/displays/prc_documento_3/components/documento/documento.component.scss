@@ -8,8 +8,24 @@ $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 
 .documento {
-    padding: 10px 25px;
-    display: flex;
+    padding   : 10px 25px;
+    display   : flex;
+    height    : calc(100vh - 190px);
+    overflow-y: auto;
+}
+
+.documento::-webkit-scrollbar {
+    width: 7px;
+}
+
+.documento::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.documento::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
 }
 
 .serie-vendedor,
@@ -168,6 +184,7 @@ hr {
     .documento {
         display: block !important;
         padding: 10px 20px !important;
+        height : calc(100vh - 240px) !important;
     }
 
     .cliente,

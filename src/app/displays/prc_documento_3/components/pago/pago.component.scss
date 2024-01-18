@@ -13,11 +13,12 @@ $background-scrollbar : #134895; //barra azul
 .contenido {
     display   : flex;
     overflow-y: auto;
+    overflow-x: hidden;
     height    : calc(100vh - 290px);
 }
 
 .detalle-pago {
-    padding: 00px 25px;
+    padding: 0px 25px;
     width  : 50%;
 }
 
@@ -228,4 +229,33 @@ p {
     bottom  : 64px;
     right   : 25px;
     width   : 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .contenido {
+        display: block !important;
+        height : calc(100vh - 300px) !important;
+    }
+
+    .informacion,
+    .detalle-pago,
+    .pagos,
+    .pago-agregado {
+        width: 100% !important;
+    }
+
+    .pagos-gregados {
+        padding: 0px 25px 10px;
+        width  : 100% !important;
+    }
+
+    .textos {
+        font-size: 12px !important;
+    }
+
+    .total-pagar {
+        bottom: 55px !important;
+        right : 20px !important;
+    }
+
 }
