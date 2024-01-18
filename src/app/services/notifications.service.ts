@@ -1,19 +1,21 @@
-import { Injectable } from "@angular/core";
 import { DialogActionInterface } from "../interfaces/dialog-actions.interface";
 import { DialogActionsComponent } from "../components/dialog-actions/dialog-actions.component";
+import { ErrorInterface } from "../interfaces/error.interface";
+import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { TranslateService } from "@ngx-translate/core";
-import { ErrorInterface } from "../interfaces/error.interface";
 import { PreferencesService } from "./preferences.service";
+import { ResApiInterface } from "../interfaces/res-api.interface";
 import { RouteNamesService } from "./route.names.service";
 import { Router } from "@angular/router";
-import { ResApiInterface } from "../interfaces/res-api.interface";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({
     providedIn: 'root'
 })
 
+
+//serivicio para notificaciones en cul quir parte del proyecto
 export class NotificationsService {
 
     //Inicializar snack
@@ -33,7 +35,7 @@ export class NotificationsService {
 
 
 
-    //Abrir dialogo antes de cerrar sesion o salir
+    //Abrir dialogo de confirmacion, devuelve falso o verdadero dependiendo de la opcion seleccioanda
     openDialogActions(data: DialogActionInterface): Promise<boolean> {
         return new Promise((resolve, reject) => {
             const dialogRef = this._dialog.open(DialogActionsComponent, {
@@ -54,6 +56,7 @@ export class NotificationsService {
         });
     }
 
+    //Muestra mmensaje de eror, y navega a  pantalla de informe de errores
     async showErrorAlert(res: ResApiInterface) {
         let verificador = await this.openDialogActions(
             {
@@ -67,6 +70,7 @@ export class NotificationsService {
         if (!verificador) return;
 
 
+        //si la opcion seleccioanda es "ver informe"
         let dateNow: Date = new Date();
 
         let error: ErrorInterface = {
@@ -78,10 +82,13 @@ export class NotificationsService {
         }
 
         PreferencesService.error = error;
+
+        //navhegar a pantalla para ver el informe de error
         this._router.navigate([RouteNamesService.ERROR]);
 
     }
 
+    //dialofo para cerrr sesion
     async showCloseSesionDialog() {
         let verificador: boolean = await this.openDialogActions(
             {
@@ -94,6 +101,7 @@ export class NotificationsService {
 
         if (!verificador) return;
 
+        //limpiar datos de la sesion
         PreferencesService.closeSession();
 
         //Regresar a Login

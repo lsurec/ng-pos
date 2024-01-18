@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { urlApi } from "../providers/api.provider";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { PreferencesService } from "./preferences.service";
@@ -17,6 +16,7 @@ export class MenuService {
 
     }
 
+    //obtner las aplicaciones asignadas a un uusaior
     private _getAplicaciones(user: string, token: string) {
         //configurar headers
         let headers = new HttpHeaders(
@@ -30,6 +30,7 @@ export class MenuService {
         return this._http.get(`${this._urlBase}Application/${user}`, { headers: headers });
     }
 
+    //obtner las aplicaciones asignadas a un uusaior
     // funcion asyncrona con promise
     getAplicaciones(user: string, token: string): Promise<ResApiInterface> {
         //consumo del primer servicio
@@ -87,6 +88,7 @@ export class MenuService {
         })
     }
 
+    //Obtner los displays de una aplicacion asignadas a un usuairo
     private _getDisplays(user: string, token: string, application: number,) {
 
         //configurar headers
@@ -103,6 +105,8 @@ export class MenuService {
         return this._http.get(`${this._urlBase}display`, { headers: headers });
     }
 
+    
+    //Obtner los displays de una aplicacion asignadas a un usuairo
     // funcion asyncrona con promise
     getDisplays(user: string, token: string, application: number,): Promise<ResApiInterface> {
         //consumo del primer servicio

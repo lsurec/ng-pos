@@ -14,7 +14,7 @@ export class LocalSettingsService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getEmpresas(user: string, token: string) {
 
         let headers = new HttpHeaders(
@@ -27,7 +27,7 @@ export class LocalSettingsService {
         return this._http.get(`${this._urlBase}empresa/${user}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa  para obtener las empresas
     getEmpresas(user: string, token: string): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getEmpresas(user, token,).subscribe(
@@ -84,7 +84,7 @@ export class LocalSettingsService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtner las estaciones de trabajo
     private _getEstaciones(user: string, token: string) {
         //confgurar headers
 
@@ -97,7 +97,7 @@ export class LocalSettingsService {
         return this._http.get(`${this._urlBase}estacion/${user}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtner las estaciones de trabajo
     getEstaciones(user: string, token: string): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getEstaciones(user, token,).subscribe(
