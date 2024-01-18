@@ -240,7 +240,12 @@
             "receptor": "Receiver",
             "cuenta": "Account:",
             "noDisponible": "Not Available",
-            "porcentaje": "Percentage"
+            "porcentaje": "Percentage",
+            "sinPrecios": "No prices available.",
+            "presentaciones": "Presentations",
+            "seleccionarBodega": "Select a warehouse.",
+            "seleccionarTipoPrecio": "Select price type.",
+            "seleccionarPresentacion": "Select presentation."
         }
     }
 }

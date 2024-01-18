@@ -34,14 +34,14 @@
                 <p> {{producto.des_Producto}} </p>
                 <span class="spacer"></span>
             </div>
-            <div class="dFlex">
+            <div class="bodega-tipo-precio">
 
                 <div class="menus">
                     <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
-                    <mat-select name="estado" class="bodegas" placeholder="BODEGA" [(ngModel)]="productoService. bodega"
-                        (ngModelChange)="changeBodega()">
+                    <mat-select name="estado" class="bodegas"
+                        placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
+                        [(ngModel)]="productoService. bodega" (ngModelChange)="changeBodega()">
                         <mat-option *ngFor="let bodega of productoService. bodegas" [value]="bodega">
-                            <!--TODO:Translate-->
                             ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }}
                             ({{bodega.existencia}})
                         </mat-option>
@@ -51,16 +51,15 @@
                 <div class="menus">
                     <div *ngIf="productoService.precios.length == 0">
                         <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
-                        <!--TODO:Translate-->
 
-                        <p class="subtitulo">No hay precios disponibles</p>
+                        <p class="subtitulo">{{ 'pos.factura.sinPrecios' | translate }}</p>
 
                     </div>
                     <div *ngIf="productoService.precios.length > 0">
                         <div *ngIf="productoService.precios[0].precio">
                             <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
-                            <!--TODO:Translate-->
-                            <mat-select name="estado" class="bodegas" placeholder="TIPO PRECIO"
+                            <mat-select name="estado" class="bodegas"
+                                placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
                                 [(ngModel)]="productoService. precio">
                                 <mat-option *ngFor="let precio of productoService. precios" [value]="precio">
                                     {{precio.descripcion}}
@@ -68,12 +67,9 @@
                             </mat-select>
                         </div>
                         <div *ngIf="!productoService.precios[0].precio">
-                            <!--TODO:Translate-->
-
-                            <p class="subtitulo">PRESENTACIONES</p>
-                            <!--TODO:Translate-->
-
-                            <mat-select name="estado" class="bodegas" placeholder="PRESENTACIONES"
+                            <p class="subtitulo">{{ 'pos.factura.presentaciones' | translate }}</p>
+                            <mat-select name="estado" class="bodegas"
+                                placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
                                 [(ngModel)]="productoService. precio">
                                 <mat-option *ngFor="let precio of productoService. precios" [value]="precio">
                                     {{precio.descripcion}}

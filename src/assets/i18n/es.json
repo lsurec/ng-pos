@@ -240,7 +240,12 @@
             "receptor": "Receptor",
             "cuenta": "Cuenta:",
             "noDisponible": "No Disponible",
-            "porcentaje": "Porcentaje"
+            "porcentaje": "Porcentaje",
+            "sinPrecios": "No hay precios disponibles.",
+            "presentaciones": "Presentaciones",
+            "seleccionarBodega": "Seleccionar una bodega.",
+            "seleccionarTipoPrecio": "Seleccionar tipo precio.",
+            "seleccionarPresentacion": "Seleccionar presentación."
         }
     }
 }
