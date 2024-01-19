@@ -35,13 +35,13 @@ body {
 }
 
 // .dark-theme .toolbarNavegacion,
-.dark-theme .toolbarNavScreenShort {
+.dark-theme .toolbarNavScreenShort,
+.dark-theme .toolbarNavegacion {
     background-color: $borde-no-seleccionado !important;
     color           : $color-blanco !important;
 }
 
-.dark-theme .producto-seleccionado,
-.dark-theme .toolbarNavegacion {
+.dark-theme .producto-seleccionado {
     background-color: $navegacion !important;
 }
 
@@ -114,7 +114,7 @@ body {
 
 //BORDE ABAJO
 .dark-theme .toolbar-large,
-.dark-theme .head__sidenav,
+// .dark-theme .head__sidenav,
 .dark-theme .detalles-usuario,
 .dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,

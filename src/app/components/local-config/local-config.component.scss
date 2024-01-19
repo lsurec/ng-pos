@@ -21,20 +21,29 @@ $color-naranja        : #df9722;
         display: block !important;
     }
 
-    .detalles,
+    .detalles-configuracion,
     .estaciones-trabajo {
         width: 100% !important;
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 767px) {
     .titulos-menu {
-        display: block !important;
+        display   : block !important;
+        margin-top: 40px !important;
     }
 
-    .detalles,
     .estaciones-trabajo {
+        width : 100% !important;
+        margin: 30px 0px !important;
+    }
+
+    .detalles-configuracion {
         width: 100% !important;
+    }
+
+    .container-main {
+        height: 100% !important;
     }
 }
 
@@ -90,6 +99,7 @@ p {
     align-items: center !important;
     overflow   : auto;
     width      : 100%;
+    height     : calc(100vh - 128px);
 }
 
 .estaciones-trabajo {
@@ -116,7 +126,7 @@ p {
     text-align: right !important;
 }
 
-.detalles {
+.detalles-configuracion {
     display: flex;
     width  : 100%;
 }
@@ -148,10 +158,8 @@ p {
 
 .boton-guardar {
     position        : fixed;
-    z-index         : 1000;
-    bottom          : 75px;
-    right           : 60px;
-    font-size       : 20px;
+    bottom          : 80px;
+    right           : 20px;
     background-color: $color-azul;
 }
 
