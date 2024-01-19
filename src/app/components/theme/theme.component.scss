@@ -66,7 +66,7 @@ $idioma-seleccionado  : #5d6d6c;
     font-weight: 500;
 }
 
-.detalles {
+.detalles-themas {
     display: flex;
     width  : 100%;
 }
@@ -82,25 +82,13 @@ $idioma-seleccionado  : #5d6d6c;
     color           : $color-blanco;
 }
 
-
-@media screen and (max-width: 365px) {
-    .titulos-menu {
-        display: block !important;
-    }
-
-    .detalles,
-    .estaciones-trabajo {
-        width: 100% !important;
-    }
-}
-
 @media screen and (max-width: 450px) {
     .titulos-menu {
         display: block !important;
     }
 
-    .detalles,
-    .estaciones-trabajo {
+    .detalles-themas,
+    .temas-disponibles {
         width: 100% !important;
     }
 }
@@ -125,7 +113,7 @@ p {
     display    : flex;
 }
 
-.estaciones-trabajo {
+.temas-disponibles {
     width      : 80%;
     align-items: center;
 }
@@ -143,7 +131,7 @@ p {
     text-align: right !important;
 }
 
-.detalles {
+.detalles-themas {
     display: flex;
     width  : 100%;
 }
@@ -288,9 +276,9 @@ p {
     margin: 20px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 930px) {
     .img_empresas {
-        height: 100px;
+        height: 140px !important;
         margin: 10px;
     }
 }
@@ -299,5 +287,26 @@ p {
     .img_empresas {
         height: 50px;
         margin: 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .img_empresas {
+        height: 100px !important;
+        margin: 10px;
+    }
+
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles-themas,
+    .temas-disponibles {
+        padding: 5px 0px !important;
+        width  : 100% !important;
+    }
+
+    .realizar-cambio {
+        margin: 0px 30px !important;
     }
 }

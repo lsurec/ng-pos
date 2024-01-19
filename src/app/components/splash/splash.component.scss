@@ -10,3 +10,10 @@
 img {
     height: 350px;
 }
+
+@media screen and (max-width: 767px) {
+
+    img{
+        height: 180px !important;
+    }
+}

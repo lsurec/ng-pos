@@ -35,7 +35,7 @@ $idioma-seleccionado  : #5d6d6c;
     font-weight: 500;
 }
 
-.detalles {
+.detalles-lenguajes {
     display: flex;
     width  : 100%;
 }
@@ -112,7 +112,7 @@ p {
         display: block !important;
     }
 
-    .detalles,
+    .detalles-lenguajes,
     .estaciones-trabajo {
         width: 100% !important;
     }
@@ -123,7 +123,7 @@ p {
         display: block !important;
     }
 
-    .detalles,
+    .detalles-lenguajes,
     .estaciones-trabajo {
         width: 100% !important;
     }
@@ -136,4 +136,21 @@ p {
 .idioma-seleccionado {
     background-color: $idioma-seleccionado;
     color           : $color-blanco;
+}
+
+@media screen and (max-width: 767px) {
+    .titulos-menu {
+        display: block !important;
+    }
+
+    .detalles-lenguajes,
+    .estaciones-trabajo {
+        width: 100% !important;
+    }
+
+    .informacion-tema {
+        width : 100% !important;
+        margin: 10px 20px !important;
+
+    }
 }
