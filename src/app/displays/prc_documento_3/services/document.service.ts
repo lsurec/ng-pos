@@ -13,7 +13,7 @@ export class DocumentService {
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado pra obtener lo sultimos 10 docummentos hechos
     private _getDocument(
         user: string,
         token: string,
@@ -33,7 +33,7 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa pra obtener lo sultimos 10 docummentos hechos
     getDocument(
 
         user: string,
@@ -97,7 +97,7 @@ export class DocumentService {
     }
 
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para crear un nuevo documento
     private _postDocument(
         token: string,
         document: PostDocumentInterface
@@ -119,7 +119,7 @@ export class DocumentService {
 
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para crear un nuevo documento
     postDocument(
         token: string,
         document: PostDocumentInterface

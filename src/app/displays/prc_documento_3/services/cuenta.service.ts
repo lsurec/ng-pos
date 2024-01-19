@@ -8,14 +8,13 @@ import { ResponseInterface } from 'src/app/interfaces/response.interface';
 @Injectable()
 export class CuentaService {
 
-
     private _urlBase: string = PreferencesService.baseUrl;
 
     //inicializar http
     constructor(private _http: HttpClient) {
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
     private _postCuenta(
         user: string,
         token: string,
@@ -43,7 +42,7 @@ export class CuentaService {
 
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
     postCuenta(
         user: string,
         token: string,
@@ -180,7 +179,7 @@ export class CuentaService {
     }
 
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para buscar una cuenta (cuenta correntista)
     private _getClient(
         user: string,
         token: string,
@@ -201,7 +200,7 @@ export class CuentaService {
         return this._http.get(`${this._urlBase}Cuenta/cliente`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para buscar una cuenta (cuenta correntista)
     getClient(
         user: string,
         token: string,
@@ -270,7 +269,7 @@ export class CuentaService {
         )
     }
 
-    //funcion que va a realizar el consumo privado
+    //funcion que va a realizar el consumo privado para obtener cuenta correntista ref
     private _getSeller(
         user: string,
         token: string,
@@ -293,7 +292,7 @@ export class CuentaService {
         return this._http.get(`${this._urlBase}Cuenta/vendedor`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa
+    //funcion asyncrona con promesa para obtener cuenta correntista ref
     getSeller(
         user: string,
         token: string,

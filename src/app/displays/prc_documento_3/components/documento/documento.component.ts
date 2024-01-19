@@ -35,8 +35,6 @@ export class DocumentoComponent {
   @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
-  searchText!: string;
-
 
   user: string = PreferencesService.user;
   token: string = PreferencesService.token;
@@ -283,7 +281,7 @@ export class DocumentoComponent {
   async buscarCliente() {
 
     //Validar que el componente 
-    if (!this.searchText) {
+    if (!this.facturaService.searchClient) {
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
@@ -295,7 +293,7 @@ export class DocumentoComponent {
       this.user,
       this.token,
       this.empresa,
-      this.searchText,
+      this.facturaService.searchClient,
     );
 
     this.facturaService.isLoading = false;
@@ -303,8 +301,6 @@ export class DocumentoComponent {
     if (!resCuenta.status) {
 
       this.facturaService.isLoading = false;
-
-
 
 
       let verificador = await this._notificationService.openDialogActions(
@@ -323,6 +319,7 @@ export class DocumentoComponent {
       return;
 
     }
+
     let cuentas: ClienteInterface[] = resCuenta.response;
 
 
@@ -336,6 +333,7 @@ export class DocumentoComponent {
     //si solo hay uno seleccioanrlo
     if (cuentas.length == 1) {
       this.facturaService.cuenta = cuentas[0];
+      this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
 
@@ -349,6 +347,7 @@ export class DocumentoComponent {
 
         let cliente: ClienteInterface = result[0];
         this.facturaService.cuenta = cliente;
+        this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
 
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
         this.facturaService.saveDocLocal();
