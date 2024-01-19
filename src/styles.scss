@@ -13,7 +13,8 @@ $scrollbars              : $borde-no-seleccionado;
 $color-azul              : #2764bd;
 $color-verde             : #44ff14;
 $color-rojo              : #f93c3c;
-$navegacion              : rgba(0, 0, 0, 0.12);
+$producto                : rgba(0, 0, 0, 0.12);
+$navegacion              : #252323;
 
 html,
 body {
@@ -37,12 +38,12 @@ body {
 // .dark-theme .toolbarNavegacion,
 .dark-theme .toolbarNavScreenShort,
 .dark-theme .toolbarNavegacion {
-    background-color: $borde-no-seleccionado !important;
+    background-color: $navegacion !important;
     color           : $color-blanco !important;
 }
 
 .dark-theme .producto-seleccionado {
-    background-color: $navegacion !important;
+    background-color: $producto !important;
 }
 
 //Aplica el tema oscuro a elementos específicos si es necesario 
