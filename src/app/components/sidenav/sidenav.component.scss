@@ -151,3 +151,14 @@ p {
     padding   : 0px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
+
+mat-accordion {
+    box-shadow: none !important;
+}
+
+.detalles_acordeon_oculto {
+    margin          : 10px 15px;
+    width           : 90%;
+    background-color: $background-oficial !important;
+    padding         : 0px;
+}

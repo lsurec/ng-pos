@@ -43,6 +43,23 @@
         <!-- Contenido del componente -->
         <div class="container_main">
 
+            <mat-accordion class="mat-expansion">
+                <mat-expansion-panel (opened)="desplegarDetalles = true" (closed)="desplegarDetalles = false"
+                    class="color_fondo">
+                    <mat-expansion-panel-header class="color_fondo">
+                        <mat-panel-description>
+                            {{ 'crm.detalles.detalles' | translate }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
+
+
+
+
         </div>
 
     </mat-sidenav-content>
