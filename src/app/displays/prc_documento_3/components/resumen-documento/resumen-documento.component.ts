@@ -1,14 +1,13 @@
+import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
 import { Component } from '@angular/core';
+import { DocumentService } from '../../services/document.service';
 import { EventService } from 'src/app/services/event.service';
-import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { FacturaService } from '../../services/factura.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { PreferencesService } from 'src/app/services/preferences.service';
 import { PostDocumentInterface } from '../../interfaces/post-document.interface';
-import { DocumentService } from '../../services/document.service';
-import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
-import { TranslateService } from '@ngx-translate/core';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -20,24 +19,23 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 })
 export class ResumenDocumentoComponent {
 
-  isLoading: boolean = false;
-  regresar: number = 4;
-  verError: boolean = false;
+  isLoading: boolean = false; //pantalla de carga
+  readonly regresar: number = 4; //id de la pantalla
+  verError: boolean = false; //ocultar y mostrar pantalla de error
 
-  observacion = "";
+  observacion = ""; //input para agreagar una observacion
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  documento: number = this.facturaService.tipoDocumento!;
-  serie: string = this.facturaService.serie!.serie_Documento;
-  tipoCambio: number = PreferencesService.tipoCambio;
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
+  documento: number = this.facturaService.tipoDocumento!; //documento de la sesion
+  serie: string = this.facturaService.serie!.serie_Documento; //serie de la sesion
+  tipoCambio: number = PreferencesService.tipoCambio; //tipo cambio dispoible
 
-
-  consecutivo: number = 0;
 
   constructor(
+    //instancias de los servicios necesarios
     private _eventService: EventService,
     public facturaService: FacturaService,
     private _notificationService: NotificationsService,
@@ -46,20 +44,25 @@ export class ResumenDocumentoComponent {
 
   ) {
 
+    //suscripcion a eventos del hijo (pantalla error)
     this._eventService.regresarResumen$.subscribe((eventData) => {
       this.verError = false;
     });
   }
 
+  //Regresar al modulo de facturacion (tabs)
   goBack() {
     this._eventService.verDocumentoEvent(true);
   }
 
 
-  mostrarError(res:ResApiInterface) {
-    
+  //visualizar pantalla de error
+  mostrarError(res: ResApiInterface) {
+
+    //fecha actual
     let dateNow: Date = new Date();
 
+    //Detalles del error
     let error = {
       date: dateNow,
       description: res.response,
@@ -68,22 +71,32 @@ export class ResumenDocumentoComponent {
 
     }
 
+    //guardar error en preferencias
     PreferencesService.error = error;
+
+    //ver pantalla de error
     this.verError = true;
   }
 
+  //Confirmar documento
   sendDoc() {
+    //Si se permite fel entrar al proceso
     if (this.facturaService.printFel()) {
+      //alerta FEL no disponible
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {
+      //Enviar documento a tbl_documento estructura
       this.sendDocument()
     }
 
   }
 
+  //Creacion del documnto en tbl_documento estructura
   async sendDocument() {
 
+    //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
+    //transacciones para el docummento
     let transacciones: Transaccion[] = [];
 
     //id transaccion
@@ -105,9 +118,9 @@ export class ResumenDocumentoComponent {
       transaccion.operaciones.forEach(operacion => {
         //agregar cargo
         if (operacion.cargo > 0) {
-          //aumentar id
-          consecutivo++;
 
+          //aumnetar id de la transaccion
+          consecutivo++;
 
           //agregar cargos
           cargos.push(
@@ -131,7 +144,10 @@ export class ResumenDocumentoComponent {
 
         //Agregar descuentos
         if (operacion.descuento < 0) {
+
+          //aumnetar id de la transaccion
           consecutivo++;
+
           descuentos.push(
             {
               Tra_Consecutivo_Interno: consecutivo,
@@ -152,7 +168,7 @@ export class ResumenDocumentoComponent {
 
       });
 
-
+      //agregar transacion (que no sea cargo o descuento)
       transacciones.push(
         {
           Tra_Consecutivo_Interno: padre,
@@ -172,19 +188,23 @@ export class ResumenDocumentoComponent {
       );
 
 
+      //agregar cargos al documento
       cargos.forEach(cargo => {
         transacciones.push(cargo);
       });
 
 
+      //agegar descuentos   al documento
       descuentos.forEach(descuento => {
         transacciones.push(descuento);
       });
 
+      //aumnetar id de la transaccion
       consecutivo++;
 
     });
 
+    //agreagar cargo abono a la estructrura
     this.facturaService.montos.forEach(monto => {
       pagos.push(
         {
@@ -211,8 +231,11 @@ export class ResumenDocumentoComponent {
     let strNum1: string = randomNumber1.toString();
     let strNum2: string = randomNumber2.toString();
     let combinedStr: string = strNum1 + strNum2;
+
+    //ref id
     let combinedNum: number = parseInt(combinedStr, 10);
 
+    //total cargo abono
     let totalCA: number = 0;
 
     this.facturaService.montos.forEach(monto => {

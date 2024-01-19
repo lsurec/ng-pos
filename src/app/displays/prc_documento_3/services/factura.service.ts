@@ -22,6 +22,8 @@ import { VendedorInterface } from '../interfaces/vendedor.interface';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
+    searchClient:string = ""; //input busqueda cliente
+    searchProduct:string = ""; //input busqueda producto
 
     isLoading: boolean = false; //Pantalla de carga
     tipoDocumento?: number; //Tipo de documento
@@ -41,7 +43,7 @@ export class FacturaService {
     selectAllTra: boolean = false; //Seleccionar todas las transacciones
 
     //totales del documento
-    subtotal: number = 0; 
+    subtotal: number = 0;
     cargo: number = 0;
     descuento: number = 0;
     total: number = 0;
@@ -165,13 +167,13 @@ export class FacturaService {
 
         }
 
-        
+
         //Buscar vendedor asigando en el documento guardado
         if (doc.vendedor) {
-            
+
             for (let i = 0; i < this.vendedores.length; i++) {
                 const element = this.vendedores[i];
-            
+
                 //Asignaer vendedor guardado
                 if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
                     this.vendedor = element;
@@ -221,24 +223,32 @@ export class FacturaService {
             }
         }
 
+        //si no encontró el tipo de producto retorna 0
         return 0;
     }
 
-
+    //agregar forma de pago
     addMonto(monto: MontoIntreface) {
+        //agregar forma de pago
         this.montos.push(monto);
+
+        //calcular pagos
         this.calculateTotalesPago();
     }
 
+    //calcular totales de pago
     calculateTotalesPago() {
+        //TOTALES
         this.saldo = 0;
         this.cambio = 0;
         this.pagado = 0;
 
+        //Buscar cuanto se ha pagado en la lista de pagos
         this.montos.forEach(element => {
             this.pagado += element.amount;
         });
 
+        //Buscar cuanto se ha pagado en la lista de pagos
         this.montos.forEach(element => {
             this.pagado += element.difference;
         });
@@ -250,103 +260,133 @@ export class FacturaService {
             this.saldo = this.total - this.pagado;
         }
 
+        //Agregar saldo pendiente a la variebale del input monto en pago
         this._pagoComponentService.monto = parseFloat(this.saldo.toFixed(2)).toString();
 
-
-
+        //guardar documento en el storage
         this.saveDocLocal();
 
     }
 
 
-
+    //calcular total del documetno
     calculateTotales() {
+        //Totales del documento
         this.subtotal = 0;
         this.cargo = 0;
         this.descuento = 0;
         this.total = 0;
 
+        //Recorrer todas las transacciones par calcular cargos y descuentos
         this.traInternas.forEach(element => {
+
+            //calcular los cargos y descuentos de la transaccion
             element.cargo = 0;
             element.descuento = 0;
 
+            //buscar cargos y descuentos
             element.operaciones.forEach(tra => {
+
+            //calcular los cargos y descuentos
                 element.cargo += tra.cargo;
                 element.descuento += tra.descuento;
 
             });
         });
 
-
+        //Recorrer todas las transacciones par calcular subtotal del documento
         this.traInternas.forEach(element => {
+            //Calcular totales
             this.subtotal += element.total;
             this.cargo += element.cargo;
             this.descuento += element.descuento;
         });
 
 
+        //calcular gran total en base a cargos, descuntos y subtotal
         this.total = this.cargo + this.descuento + this.subtotal;
 
+        //clacluar totales en los pagos
         this.calculateTotalesPago();
 
     }
 
+    //agregar transaccion al docummento
     addTransaction(transaccion: TraInternaInterface) {
+
+        //agregar a la transaccion el estado del checkboz para seleccionar trnbsacciones
         transaccion.isChecked = this.selectAllTra;
+
+        //Agregar transaccion
         this.traInternas.push(transaccion);
+
+        //calcluar totales
         this.calculateTotales();
     }
 
+    //Obtner texto para cuentas en parametors
     getTextCuenta(): string {
+        //texto por defecto
         let name: string = "Cuenta";
 
+        //recorrer lista de parametros
         for (let i = 0; i < this.parametros.length; i++) {
             const parametro = this.parametros[i];
 
             //buscar el nombre en el parametro 57
             if (parametro.parametro == 57) {
-                name = parametro.pa_Caracter ?? "Cuenta";
+                // si nombre es nulo agregar el texto por defecto
+                name = parametro.pa_Caracter ?? name;
                 break;
             }
 
         }
 
+        //retornar texto
         return name;
 
     }
 
+    //Validar si se puede Modificar el precio
     editPrice(): boolean {
+        //Permitir modificar el precio
         let edit: boolean = false;
 
+        //recorrer lista de parametros
         for (let i = 0; i < this.parametros.length; i++) {
             const param = this.parametros[i];
 
             //buscar parametro para editar el precio (351)
             if (param.parametro == 351) {
+                //si piede esitarse el precio
                 edit = true;
                 break;
             }
         }
 
+        //retornar true o false
         return edit;
     }
 
-    //Proceso fel
+    //Validar si el proceso fel peude hacerse
     printFel(): boolean {
 
+        //Se permite fel?
         let fel: boolean = false;
 
+        //recorrer todos los parametros disponibles
         for (let i = 0; i < this.parametros.length; i++) {
             const element = this.parametros[i];
-            //el parametro que indica si genera fel o no es 349
 
+            //el parametro que indica si genera fel o no es 349
             if (element.parametro == 349) {
+                //Sí es permitido el proceso fel
                 fel = true;
                 break;
             }
         }
 
-
+        //Retornar true o false
         return fel;
     }
 
