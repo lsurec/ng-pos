@@ -207,6 +207,8 @@ export class EditarClienteComponent implements OnInit {
 
       //seleccionar cuenta
       this._facturaService.cuenta = cuentas[0];
+      this._facturaService.searchClient = this._facturaService.cuenta.factura_Nombre;
+
 
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
@@ -222,6 +224,9 @@ export class EditarClienteComponent implements OnInit {
       if (element.factura_NIT == cuenta.nit) {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
+
+      this._facturaService.searchClient = this._facturaService.cuenta.factura_Nombre;
+        
 
         this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 
