@@ -226,7 +226,7 @@ mat-sidenav {
     // position        : fixed !important;
     background-color: $background-oficial;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
-    padding         : 0px 10px;
+    padding         : 0px;
 }
 
 //barra de abajo
@@ -252,6 +252,7 @@ mat-sidenav {
 
     .toolbarPhone {
         display: block !important;
+        width  : 100% !important;
     }
 }
 
@@ -491,4 +492,11 @@ label[for*='6']:before {
     .pestana {
         padding: 15px;
     }
+}
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
 }

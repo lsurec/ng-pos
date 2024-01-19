@@ -76,7 +76,8 @@
                     <div class="descripcion-producto" *ngFor="let transaccion of transacciones">
                         <p class="textos">{{transaccion.canitdad}} x {{transaccion.producto.des_Producto}}</p>
                         <p class="textos">{{ 'pos.factura.sku' | translate }} {{transaccion.producto.producto_Id}}</p>
-                        <p class="textos">{{ 'pos.factura.precio_unitario' | translate }} {{transaccion.canitdad == 0 ? "00.00" :
+                        <p class="textos">{{ 'pos.factura.precio_unitario' | translate }} {{transaccion.canitdad == 0 ?
+                            "00.00" :
                             (transaccion.total /
                             transaccion.canitdad) | currency:' ':'symbol':'2.2-2' }}</p>
                         <p class="textos">{{ 'pos.factura.total' | translate }} {{transaccion.total | currency:'
@@ -109,31 +110,30 @@
                 <span class="spacer"></span>
                 <div class="descripcion-total">
                     <div class="dFlex">
-                        <p class="subtitulo">{{ 'pos.factura.subtotal' | translate }}</p>
+                        <p class="subtitulo-total">{{ 'pos.factura.subtotal' | translate }}</p>
                         <span class="spacer"></span>
                         <p class="textos-total"> {{estructura.subtotal | currency:' ':'symbol':'2.2-2'
                             }} </p>
                     </div>
                     <div class="dFlex">
-                        <p class="subtitulo">{{ 'pos.factura.cargos' | translate }}</p>
+                        <p class="subtitulo-total">{{ 'pos.factura.cargos' | translate }}</p>
                         <span class="spacer"></span>
                         <p class="textos-total"> {{estructura.cargo | currency:' ':'symbol':'2.2-2' }}
                         </p>
                     </div>
                     <div class="dFlex">
-                        <p class="subtitulo">{{ 'pos.factura.descuentos' | translate }}</p>
+                        <p class="subtitulo-total">{{ 'pos.factura.descuentos' | translate }}</p>
                         <span class="spacer"></span>
                         <p class="textos-total"> {{estructura.descuento | currency:' ':'symbol':'2.2-2'
                             }}
                         </p>
                     </div>
-                    <hr>
-                    <div class="dFlex">
-                        <p class="subtitulo">{{ 'pos.factura.total' | translate }}</p>
+                    <!-- <hr> -->
+                    <div class="dFlex total-barra">
+                        <p class="subtitulo-total">{{ 'pos.factura.total' | translate }}</p>
                         <span class="spacer"></span>
                         <p class="textos-total">{{estructura.total | currency:' ':'symbol':'2.2-2' }}
                         </p>
-
                     </div>
                 </div>
             </div>

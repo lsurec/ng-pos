@@ -90,7 +90,8 @@ hr {
     font-weight: 500;
 }
 
-.subtitulo {
+.subtitulo,
+.subtitulo-total {
     font-size  : 14px;
     font-weight: 500;
 }
@@ -148,4 +149,26 @@ hr {
 .textos-total {
     font-size  : 13px;
     font-weight: bold;
+}
+
+.total-barra {
+    border-top: 1px solid $color-negro;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .cliente-vendedor,
+    .productos-pagos,
+    .tipo-serie-documento {
+        display: block !important;
+    }
+
+    .informacion, .detalles-lista {
+        width: 100% !important;
+    }
+
+    .subtitulo-total {
+        font-size: 12px !important;
+    }
 }

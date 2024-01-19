@@ -59,3 +59,9 @@ p {
     width    : auto;
     font-size: 100px;
 }
+
+@media screen and (max-width: 767px) {
+    .container-main {
+        padding: 0px 20px;
+    }
+}

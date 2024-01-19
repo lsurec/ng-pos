@@ -12,6 +12,7 @@ $background-oficial : #FEF5E7; //fondo Demosoft
     float     : left;
     background: $background-oficial;
     overflow  : auto;
+    padding   : 0px 15px;
 }
 
 
@@ -126,4 +127,18 @@ p {
 
 .spacer {
     flex: 1 1 auto;
+}
+
+.centrar-login {
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .centrar-login {
+        margin-top: 40px !important;
+    }
+}
+
+p {
+    margin: 0px;
 }

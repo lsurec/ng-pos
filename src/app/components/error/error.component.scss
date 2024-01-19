@@ -47,8 +47,8 @@ mat-icon {
     background-color: $background-oficial;
     text-align      : center;
     width           : 100%;
-    overflow-y      : none;
-    overflow-x      : auto;
+    overflow-y      : auto;
+    overflow-x      : hidden;
 }
 
 .head__sidenav {
@@ -102,6 +102,7 @@ mat-icon {
 
 .informacion {
     font-size: 14px;
+    word-wrap: break-word;
 }
 
 .display-flex {
@@ -115,4 +116,19 @@ mat-icon {
     right           : 60px;
     font-size       : 20px;
     background-color: $color-azul;
+}
+
+@media screen and (max-width: 767px) {
+    .display-flex {
+        display: block !important;
+    }
+
+    .descripcion-error-doble {
+        width: 100% !important;
+    }
+
+    .lista-detalles {
+        width: 95% !important;
+    }
+
 }

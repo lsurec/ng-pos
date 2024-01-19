@@ -173,3 +173,20 @@ p {
     font-size: 14px;
     color    : $color-rojo;
 }
+
+@media screen and (max-width: 767px) {
+
+    .dialog,
+    .progress {
+        width  : 100% !important;
+        padding: 10px 10px 15px 15px;
+    }
+
+    .contenedor {
+        padding: 0px !important;
+    }
+
+    .verDetalle {
+        font-size: 15px !important;
+    }
+}
