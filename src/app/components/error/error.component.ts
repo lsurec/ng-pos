@@ -31,7 +31,7 @@ export class ErrorComponent implements OnInit {
     this.user = PreferencesService.user;
     //TODO: SI no hay usuario traducir texto
 
-    
+
 
     try {
       this.empresa = PreferencesService.empresa;
@@ -73,7 +73,10 @@ export class ErrorComponent implements OnInit {
         //desde documento abierto desde historial 
         this._eventService.regresarResumenDocHistorialEvent(true);
         break;
-
+      case 7:
+        //desde error de configuracion seleccionada
+        this._eventService.regresarConfiguracionSeleccionadaEvent(true);
+        break;
       default:
         this._location.back();
 

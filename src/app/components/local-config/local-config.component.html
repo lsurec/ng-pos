@@ -3,6 +3,10 @@
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
     <mat-toolbar-row class="head__sidenav">
+        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+        (click)="loadData()">
+        <mat-icon>refresh</mat-icon>
+    </button>
         <span class="spacer"></span>
         <button mat-icon-button aria-label (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
             <mat-icon>logout</mat-icon>

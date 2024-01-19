@@ -56,6 +56,7 @@ import { HistorialComponent } from './displays/prc_documento_3/components/histor
 import { DetalleDocumentoComponent } from './displays/prc_documento_3/components/detalle-documento/detalle-documento.component';
 import { CargoDescuentoComponent } from './displays/prc_documento_3/components/cargo-descuento/cargo-descuento.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { SelectedConfigurationComponent } from './components/selected-configuration/selected-configuration.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     DetalleDocumentoComponent,
     CargoDescuentoComponent,
     SidenavComponent,
+    SelectedConfigurationComponent,
   ],
   imports: [
     BrowserModule,
