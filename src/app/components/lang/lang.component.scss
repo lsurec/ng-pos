@@ -52,7 +52,6 @@ p {
     text-align : center;
     display    : flex;
     align-items: center;
-    height     : 50px;
     padding-top: 10px;
 }
 
@@ -152,5 +151,9 @@ p {
         width : 100% !important;
         margin: 10px 20px !important;
 
+    }
+
+    .realizar-cambio{
+        margin: 0px 10px !important;
     }
 }

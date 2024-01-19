@@ -38,20 +38,21 @@ p {
 }
 
 .img_demosoft {
-    height      : 40px;
+    height      : 50px;
     margin-right: 20px;
     margin-left : 20px;
 }
 
 @media screen and (max-width: 600px) {
     .img_empresas {
-        height: 60px;
+        height: 45px !important;
         margin: 10px;
     }
 
     .desa {
-        font-size: 8px !important;
-        margin   : 0px !important;
+        font-size : 8px !important;
+        margin    : 0px !important;
+        text-align: center !important;
     }
 
     .img_demosoft {
@@ -62,7 +63,7 @@ p {
 @media screen and (max-width: 280px) {
     .img_empresas {
         height: 45px;
-        margin: 5px;
+        margin: 10px;
     }
 }
 

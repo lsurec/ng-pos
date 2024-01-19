@@ -1,5 +1,5 @@
 <app-progress *ngIf="isLoading"></app-progress>
-<div class="main" *ngIf="!isLoading">
+<div *ngIf="!isLoading">
     <div class="centrar">
         <div class="container-main">
             <div class="cambios-cerrar" *ngIf="!urlStorage">
@@ -20,7 +20,7 @@
                 <span class="spacer"></span>
             </div>
 
-            <div class="cambios-cerrar" *ngIf="urlStorage">
+            <div class="copiar-url" *ngIf="urlStorage">
                 <span class="spacer"></span>
                 <p class="url">{{ urlStorage }}</p>
                 <!-- <span class="spacer"></span> -->
@@ -28,18 +28,15 @@
                     <mat-icon>content_copy</mat-icon>
                 </button>
                 <span class="spacer"></span>
-
             </div>
 
             <form #urlForm="ngForm" (ngSubmit)="save()">
 
                 <div class="contenido-url">
-                    <div class="titulos-menu">
-                        <div class="dFlex">
-                            <span class="spacer"></span>
-                            <input type="text" class="informacion-tema" placeholder="URL" name="url" [(ngModel)]="url">
-                            <span class="spacer"></span>
-                        </div>
+                    <div class="dFlex">
+                        <span class="spacer"></span>
+                        <input type="text" class="url-apis" placeholder="URL" name="url" [(ngModel)]="url">
+                        <span class="spacer"></span>
                     </div>
                 </div>
                 <div class="cambios-cerrar" *ngIf="!urlStorage">
@@ -48,9 +45,10 @@
                     <span class="spacer"></span>
                 </div>
 
-                <div class="cambios-cerrar" *ngIf="urlStorage">
+                <div class="dFlex" *ngIf="urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button  type="button" (click)="goBack()">{{'pos.botones.cancelar' | translate}}</button>
+                    <button mat-stroked-button type="button" (click)="goBack()">{{'pos.botones.cancelar' |
+                        translate}}</button>
                     <span class="spacer"></span>
                     <button mat-stroked-button type="submit">{{'pos.botones.cambiar' |
                         translate}}</button>

@@ -18,6 +18,7 @@ $idioma-seleccionado  : #5d6d6c;
     display    : flex;
     align-items: center;
     height     : calc(100vh - 64px) !important;
+    overflow   : hidden !important;
 }
 
 .contenido-url {
@@ -31,8 +32,14 @@ $idioma-seleccionado  : #5d6d6c;
     text-align : center;
     display    : flex;
     align-items: center;
-    height     : 50px;
     padding-top: 10px;
+}
+
+.copiar-url {
+    text-align : center;
+    display    : flex;
+    align-items: center;
+    margin     : 0px 20px;
 }
 
 .titulo {
@@ -55,16 +62,13 @@ p {
     margin-bottom: 0px;
 }
 
-.titulos-menu {
-    width: 100%;
-}
-
 .dFlex {
-    display: flex;
-    width  : 100%;
+    display    : flex;
+    width      : 100%;
+    align-items: center;
 }
 
-.informacion-tema {
+.url-apis {
     height       : 45px;
     width        : 50%;
     background   : none;
@@ -77,17 +81,28 @@ p {
     padding      : 0px 15px;
 }
 
-// .informacion-tema {
-//     width        : 50%;
-//     cursor       : pointer;
-//     text-align   : center !important;
-//     border       : 1px solid $color-bordes;
-//     margin       : 10px 0px;
-//     border-radius: 10px;
-//     border-style : none;
-// }
-
 .opciones {
     padding: 10px;
     width  : 100%;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .url-apis,
+    .titulo {
+        width : calc(100% - 60px) !important;
+        margin: 0px 10px !important;
+    }
+
+    .url {
+        width    : 85% !important;
+        margin   : 0px !important;
+        word-wrap: break-word !important;
+    }
+
+    .copiar-url {
+        margin: 20px 20px 10px !important;
+    }
+
 }
