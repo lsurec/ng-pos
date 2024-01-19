@@ -1,15 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { ProductoInterface } from '../../interfaces/producto.interface';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ProductoComponent } from '../producto/producto.component';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { ProductService } from '../../services/product.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { ProductoService } from '../../services/producto.service';
-import { PrecioInterface } from '../../interfaces/precio.interface';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
-import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PrecioInterface } from '../../interfaces/precio.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ProductoService } from '../../services/producto.service';
+import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UnitarioInterface } from '../../interfaces/unitario.interface';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -19,22 +18,23 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductosEncontradosComponent {
 
-  productos: ProductoInterface[] = [];
-  isLoading: boolean = false;
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  productos: ProductoInterface[] = []; //lista de productos encontrados
+  isLoading: boolean = false; //pantalla de carga
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //tokem de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
   constructor(
+    //Instancias de los servicios qeu se van  a usar
     public dialogRef: MatDialogRef<ProductosEncontradosComponent>,
     @Inject(MAT_DIALOG_DATA) public productosEncontrados: ProductoInterface[],
-    private _dialog: MatDialog,
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
     private _productoService: ProductoService,
     private _translate: TranslateService,
   ) {
+    //porudtcos disponibles
     this.productos = productosEncontrados;
   }
 
@@ -43,8 +43,10 @@ export class ProductosEncontradosComponent {
     this.dialogRef.close();
   }
 
+  //seleccionar producto
   async setProduct(product: ProductoInterface) {
 
+    
     this.isLoading = true;
     //buscar bodegas del produxto
     let resBodega = await this._productService.getBodegaProducto(
@@ -57,14 +59,15 @@ export class ProductosEncontradosComponent {
     );
 
 
+    //si algo salio mal
     if (!resBodega.status) {
       this.isLoading = false;
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
-      console.log(resBodega);
-
+      console.error(resBodega);
       return;
     }
 
+    //bodegas disponibles
     this._productoService.bodegas = resBodega.response;
 
     //validar que existan bodegas
@@ -90,17 +93,20 @@ export class ProductosEncontradosComponent {
       );
 
 
+      // /7si algo salio  mal
       if (!resPrecio.status) {
         this.isLoading = false;
 
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
-        console.log(resPrecio);
+        console.error(resPrecio);
 
         return;
       }
 
+      //precios disponibles
       let precios: PrecioInterface[] = resPrecio.response;
 
+      //obejto precio interno
       precios.forEach(element => {
         this._productoService.precios.push(
           {
@@ -123,19 +129,22 @@ export class ProductosEncontradosComponent {
           product.unidad_Medida,
         );
 
+        //si algo salio mla
         if (!resfactor.status) {
 
           this.isLoading = false;
 
           this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
-          console.log(resfactor);
+          console.error(resfactor);
           return;
         }
 
 
+        //factores de conversion disponibles
         let factores: FactorConversionInterface[] = resfactor.response;
 
 
+        //objeto precio interno
         factores.forEach(element => {
           this._productoService.precios.push(
             {
@@ -150,9 +159,10 @@ export class ProductosEncontradosComponent {
 
       }
 
-      //si no hay precos ni factores
-
+      //si solo hay una precio disp0onible
       if (this._productoService.precios.length == 1) {
+
+        ///seleccionar precio por defecto
 
         let precioU: UnitarioInterface = this._productoService.precios[0];
 
@@ -164,8 +174,10 @@ export class ProductosEncontradosComponent {
 
     }
 
+
     this.isLoading = false;
 
+    //cerrar dialogo
     this.dialogRef.close(product);
 
   }
