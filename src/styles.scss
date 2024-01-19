@@ -63,7 +63,8 @@ body {
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel,
 .dark-theme .container-main,
 .dark-theme .dialog,
-.dark-theme .informacion {
+.dark-theme .informacion,
+.dark-theme .head__sidenav_config {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }
@@ -115,7 +116,7 @@ body {
 
 //BORDE ABAJO
 .dark-theme .toolbar-large,
-// .dark-theme .head__sidenav,
+.dark-theme .head__sidenav_config,
 .dark-theme .detalles-usuario,
 .dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,

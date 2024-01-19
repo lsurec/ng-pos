@@ -118,4 +118,14 @@ export class EventService {
     regresarResumenDocHistorialEvent(eventData: boolean) {
         this.regresarResumenDocHistorial.next(eventData);
     }
+
+
+    //eventos para regresae a la pantalla detalle de un documento previammente hecho
+    private regresarConfiguracionSeleccionada = new Subject<any>();
+
+    regresarConfiguracionSeleccionada$ = this.regresarConfiguracionSeleccionada.asObservable();
+
+    regresarConfiguracionSeleccionadaEvent(eventData: boolean) {
+        this.regresarConfiguracionSeleccionada.next(eventData);
+    }
 }
