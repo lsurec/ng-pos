@@ -1,17 +1,17 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DetalleComponent } from '../detalle/detalle.component';
+import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
+import { FacturaService } from '../../services/factura.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PrecioInterface } from '../../interfaces/precio.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ProductoInterface } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
-import { PrecioInterface } from '../../interfaces/precio.interface';
-import { UnitarioInterface } from '../../interfaces/unitario.interface';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { FacturaService } from '../../services/factura.service';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
-import { ProductoInterface } from '../../interfaces/producto.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { UnitarioInterface } from '../../interfaces/unitario.interface';
 
 @Component({
   selector: 'app-producto',
@@ -23,16 +23,17 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductoComponent {
 
-  isLoading: boolean = false;
+  isLoading: boolean = false; //pantalla de carga
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  user: string = PreferencesService.user; //Usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
 
 
   constructor(
+    //Servicios que se van a utilizar
     public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public producto: ProductoInterface,
     public productoService: ProductoService,
@@ -44,34 +45,41 @@ export class ProductoComponent {
 
   }
 
-
+  //Calcular totral de la transaccion
   calculateTotal() {
+    //SI no hau precio seleccionado no calcular
     if (!this.productoService.precio) {
       this.productoService.total = 0;
       return;
     }
 
+    //convertir cantidad de texto a numerica
     let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
 
+    //Calcular el total (cantidad * precio seleccionado)
     this.productoService.total = cantidad! * this.productoService.precio.precioU;
 
   }
 
+  //editar precii
   editPrice() {
+    //verificar que la cantidad sea numerica
     if (this.convertirTextoANumero(this.productoService.precioText) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
-
+    //converti precio string a numero
     let precio = this.convertirTextoANumero(this.productoService.precioText);
 
+    //Verificar que elprecio no sea menor al autorizado
     if (precio! < this.productoService.precioU) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noPrecioMenor'));
       return;
     }
 
 
+    //Agregar precio editado
     this.productoService.precio!.precioU = precio!;
 
     this.calculateTotal();
