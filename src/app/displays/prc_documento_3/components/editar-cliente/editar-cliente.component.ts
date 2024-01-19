@@ -1,16 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { RouteNamesService } from 'src/app/services/route.names.service';
-import { Location } from '@angular/common';
-import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
-import { NotificationsService } from 'src/app/services/notifications.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';
+import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -22,29 +19,32 @@ import { FacturaService } from '../../services/factura.service';
   ]
 })
 export class EditarClienteComponent implements OnInit {
-  @Input() cuenta?: ClienteInterface; // decorate the property with @Input()
-  regresar: number = 2;
+  @Input() cuenta?: ClienteInterface; //Ceunta que se va a editar 
+  readonly regresar: number = 2; //id de la pantalla
 
+  //datos de la cuenta que se va a editar
   nombre?: string;
   direccion?: string;
   nit?: string;
   telefono?: string;
   correo?: string;
 
-  isLoading: boolean = false;
-  verError: boolean = false;
+  isLoading: boolean = false; //pantalla de carga0
+  verError: boolean = false; //informe de errores
 
   constructor(
-    private _location: Location,
+    //Instancias de los servicios
     private _notificationsServie: NotificationsService,
     private translate: TranslateService,
-    private _router: Router,
     private _eventService: EventService,
     private _cuentaService: CuentaService,
     public _facturaService: FacturaService,
     private _translate: TranslateService,
 
   ) {
+    //suscriopciona  eventos desde commponentes hijo
+
+    //ocultar pantalla de error
     this._eventService.regresarEditarCliente$.subscribe((eventData) => {
       this.verError = false;
     });
@@ -53,12 +53,12 @@ export class EditarClienteComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    this.nombre = this.cuenta?.factura_Nombre,
-      this.direccion = this.cuenta?.factura_Direccion,
-      this.nit = this.cuenta?.factura_NIT,
-      this.telefono = this.cuenta?.telefono,
-      this.correo = this.cuenta?.eMail;
+    //datos de la cuenta que se va a actualizar
+    this.nombre = this.cuenta?.factura_Nombre;
+    this.direccion = this.cuenta?.factura_Direccion;
+    this.nit = this.cuenta?.factura_NIT;
+    this.telefono = this.cuenta?.telefono;
+    this.correo = this.cuenta?.eMail;
 
   }
 
@@ -67,11 +67,13 @@ export class EditarClienteComponent implements OnInit {
     this._eventService.verDocumentoEvent(true);
   }
 
-
+  //mostrar pantalla de informe de errores
   mostrarError(res: ResApiInterface) {
 
+    //Fecha y hora actual
     let dateNow: Date = new Date();
 
+    //informe de error
     let error = {
       date: dateNow,
       description: res.response,
@@ -80,10 +82,14 @@ export class EditarClienteComponent implements OnInit {
 
     }
 
+    //guardar error
     PreferencesService.error = error;
+
+    //mostrar pantalla de error
     this.verError = true;
   }
 
+  //Validar correo electronico
   validarCorreo(correo: string): boolean {
     // Expresión regular para validar correos electrónicos
     const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -92,9 +98,11 @@ export class EditarClienteComponent implements OnInit {
     return expresionRegular.test(correo);
   };
 
+  //Editar cliente
   async guardar() {
+
+    //validar formulario
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
-      console.log("validacion");
 
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
@@ -106,9 +114,8 @@ export class EditarClienteComponent implements OnInit {
       return;
     }
 
-    //Crear cuenta
-
-    //nueva cuneta
+    
+    //objeto cuenta
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
       direccion: this.direccion,
@@ -118,15 +125,15 @@ export class EditarClienteComponent implements OnInit {
       telefono: this.telefono
     }
 
-    
 
+    //dtaos de la sesion
     let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;
     let empresa: number = PreferencesService.empresa.empresa;
 
     this.isLoading = true;
 
-    //Usar servicio crear cuenta
+    //Usar servicio para actualizar cuenta
     let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
       user,
       token,
@@ -136,7 +143,6 @@ export class EditarClienteComponent implements OnInit {
 
 
     //Si el servicio falló
-
     if (!resCuenta.status) {
 
       this.isLoading = false;
@@ -160,7 +166,7 @@ export class EditarClienteComponent implements OnInit {
     }
 
 
-    //buscar informacin de la cuenta  creada
+    //buscar informacin de la cuenta  actualizada
     let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
       user,
       token,
@@ -170,7 +176,7 @@ export class EditarClienteComponent implements OnInit {
 
     this.isLoading = false;
 
-
+      //si algo salio mal
     if (!infoCuenta.response) {
 
       this.isLoading = false;
@@ -196,13 +202,16 @@ export class EditarClienteComponent implements OnInit {
 
     }
 
+    //coinicdencias encontradas
     let cuentas: ClienteInterface[] = infoCuenta.response;
 
+    //si no se enontro ninguna coincidencia 
     if (cuentas.length == 0) {
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizada'));
       return;
     }
 
+    //si sooo hay una coicidencia seleccionarla
     if (cuentas.length == 1) {
 
       //seleccionar cuenta
@@ -219,14 +228,15 @@ export class EditarClienteComponent implements OnInit {
 
     }
 
-
+    //si hay mas coincidencias 
     cuentas.forEach(element => {
+      //Seleccionar la primera donde el nit sea igual 
       if (element.factura_NIT == cuenta.nit) {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
 
-      this._facturaService.searchClient = this._facturaService.cuenta.factura_Nombre;
-        
+        this._facturaService.searchClient = this._facturaService.cuenta.factura_Nombre;
+
 
         this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaActualizadaSeleccionada'));
 

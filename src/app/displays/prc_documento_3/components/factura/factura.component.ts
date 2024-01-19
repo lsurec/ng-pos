@@ -1,21 +1,21 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { MatSidenav } from '@angular/material/sidenav';
-import { EventService } from 'src/app/services/event.service';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
-import { DataUserService } from '../../services/data-user.service';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { components } from 'src/app/providers/componentes.provider';
-import { FacturaService } from '../../services/factura.service';
-import { SerieService } from '../../services/serie.service';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaService } from '../../services/cuenta.service';
-import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
-import { ParametroService } from '../../services/parametro.service';
-import { PagoService } from '../../services/pago.service';
-import { TranslateService } from '@ngx-translate/core';
+import { DataUserService } from '../../services/data-user.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { EventService } from 'src/app/services/event.service';
+import { FacturaService } from '../../services/factura.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PagoService } from '../../services/pago.service';
+import { ParametroService } from '../../services/parametro.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { SerieService } from '../../services/serie.service';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-factura',
@@ -31,35 +31,33 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 })
 export class FacturaComponent implements OnInit {
 
-  @Output() newItemEvent = new EventEmitter<boolean>();
+  readonly regresar: number = 1; //id de la pnatalla
+  cuenta?: ClienteInterface; //cuenta que se va a editar 
+  vistaFactura: boolean = true; //mostrar mmodulo (tabs)
+  nuevoCliente: boolean = false;  //mostrar pantalla para crear cuenta correntista
+  actualizarCliente: boolean = false; //mostrar pantalla para actualizar cunata correntista
+  vistaResumen: boolean = false;  //ver confirmacion del documento
+  vistaHistorial: boolean = false;  //ver historial de docuemmntos recientes
+  vistaInforme: boolean = false; //ver informe de errores
 
-  regresar: number = 1;
-  cuenta?: ClienteInterface;
-  vistaFactura: boolean = true;
-  nuevoCliente: boolean = false;
-  actualizarCliente: boolean = false;
-  vistaResumen: boolean = false;
-  vistaHistorial: boolean = false;
-  vistaInforme: boolean = false;
-
-  user: string = PreferencesService.user;
-  empresa: EmpresaInterface = PreferencesService.empresa;
-  estacion: EstacionInterface = PreferencesService.estacion;
-  url: string = PreferencesService.baseUrl;
-  tipoCambio: number = PreferencesService.tipoCambio;
-  tipoDocumento: number = this.facturaService.tipoDocumento!;
-  nombreDocumento: string = this.facturaService.documentoName;
+  user: string = PreferencesService.user; //usuario de la sesion
+  empresa: EmpresaInterface = PreferencesService.empresa; //empresa de la sesion0
+  estacion: EstacionInterface = PreferencesService.estacion; //estacion de la sesion
+  tipoCambio: number = PreferencesService.tipoCambio; ///tipo cambio disponioble
+  tipoDocumento?: number = this.facturaService.tipoDocumento; //tipo docuemnto seleccionado
+  nombreDocumento: string = this.facturaService.documentoName; //Descripcion del tipo de documento
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-  tabDocummento: boolean = true;
-  tabDetalle: boolean = false;
-  tabPago: boolean = false;
+  tabDocummento: boolean = true; //contorlador para la pestaña documento
+  tabDetalle: boolean = false;  //controlador para la pestaña de detalle
+  tabPago: boolean = false; //Contorlador para la pestaña de pago
 
 
   constructor(
+    //Instancia de los servicios que se van a utilizar
     private _notificationService: NotificationsService,
     private _eventService: EventService,
     public dataUserService: DataUserService,
@@ -72,27 +70,35 @@ export class FacturaComponent implements OnInit {
     private _translate: TranslateService,
   ) {
 
+    //sucripcion a eventos desde componentes hijo
+
+    //Ver pantalla crear cuenta correntista
     this._eventService.verCrear$.subscribe((eventData) => {
       this.verNuevoCliente();
     });
 
+    //ver pantalla actualizar cuenta correntista
     this._eventService.verActualizar$.subscribe((eventData) => {
       this.cuenta = eventData;
       this.verActualizarCliente();
     });
 
+    //ver modulo factura
     this._eventService.verDocumento$.subscribe((eventData) => {
       this.verDocumento();
     });
 
+    //ver modulo factura
     this._eventService.verResumen$.subscribe((eventData) => {
       this.verDocumento();
     });
 
+    //Ver pantalla de hisrorial de documentos
     this._eventService.verHistorial$.subscribe((eventData) => {
       this.verHistorial();
     });
 
+    //Ver pantalla de informe de errores
     this._eventService.verInformeError$.subscribe((eventData) => {
       this.verInformeError();
     });
@@ -102,30 +108,36 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    //cargar datos necearios al inicio de la aplicacion
     this.loadData();
 
   }
 
+  //mostrar pestaña doccumento
   showDocumento() {
     this.tabDocummento = true;
     this.tabDetalle = false;
     this.tabPago = false;
   }
 
+  //mostrar pestaña detalle
   showDetalle() {
     this.tabDocummento = false;
     this.tabDetalle = true;
     this.tabPago = false;
   }
+
+  //mostrar pestaña pagos
   showPago() {
     this.tabDocummento = false;
     this.tabDetalle = false;
     this.tabPago = true;
   }
 
+  //nuevo documento
   async newDoc() {
 
+    //Dialofo de confirmacion
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
@@ -137,58 +149,74 @@ export class FacturaComponent implements OnInit {
 
     if (!verificador) return;
 
-    this.facturaService.vendedor = undefined;
-    this.facturaService.cuenta = undefined;
-    this.facturaService.montos = [];
-    this.facturaService.traInternas = [];
-    this.facturaService.selectAllTra = false;
-    this.facturaService.subtotal = 0;
-    this.facturaService.cargo = 0;
-    this.facturaService.descuento = 0;
-    this.facturaService.total = 0;
-    this.facturaService.saldo = 0;
-    this.facturaService.cambio = 0;
-    this.facturaService.pagado = 0;
+    //limpiar todos los datos relacionados al documennto
+    this.facturaService.cuenta = undefined; //cuneta correntista seleccionada
+    this.facturaService.montos = []; //cargo abonos agregaods al documento
+    this.facturaService.traInternas = []; //transacciones agregadas al documento
+    this.facturaService.selectAllTra = false; //sleeccionar todas las transaciones (false)
+    this.facturaService.subtotal = 0; //reniciar subtotal del documento
+    this.facturaService.cargo = 0;  //reiniciar cargos el documento
+    this.facturaService.descuento = 0;  //reiniciar descuentos del documento
+    this.facturaService.total = 0;  //reiniciar toral del documenmto
+    this.facturaService.saldo = 0;  //reiniciar saldo del documento
+    this.facturaService.cambio = 0; //reiniciar cambio del documento
+    this.facturaService.pagado = 0; //reiniciar monto pagado del
 
+
+    //si hay solo una serie disponoble
     if (this.facturaService.series.length == 1) {
+      //seleccionar la serie
       this.facturaService.serie = this.facturaService.series[0];
     } else {
+      //si hay mas de una no seleccionar ninguna
       this.facturaService.serie = undefined
     }
 
+    //si solo un vendedor dipsonible
+    if(this.facturaService.vendedores.length == 1){
+      //seleccionar el vendedor
+      this.facturaService.vendedor = this.facturaService.vendedores[0];
 
+    }else{
+      //si hay mas de uno no sleccionarlo
+      this.facturaService.vendedor = undefined; //
 
+    }
+
+    //Mostrar tab documento (primer pestaña)
     this.showDocumento();
+
+    //limpiar documento local 
     PreferencesService.documento = "";
 
   }
 
-
+  //cargar datos necesarios
   async loadData() {
 
-    this.facturaService.series = []
-    this.facturaService.serie = undefined;
-    this.facturaService.vendedores = [];
-    this.facturaService.vendedor = undefined;
-    this.facturaService.tiposTransaccion = [];
-    this.facturaService.parametros = [];
-    this.facturaService.formasPago = [];
-    this.facturaService.cuenta = undefined;
-    this.facturaService.montos = [];
-    this.facturaService.traInternas = [];
-    this.facturaService.selectAllTra = false;
-    this.facturaService.subtotal = 0;
-    this.facturaService.cargo = 0;
-    this.facturaService.descuento = 0;
-    this.facturaService.total = 0;
-    this.facturaService.saldo = 0;
-    this.facturaService.cambio = 0;
-    this.facturaService.pagado = 0;
+    //limpiar datos del modulo
+    this.facturaService.series = [] //Vaciar series
+    this.facturaService.serie = undefined;  //no seleccionar serie
+    this.facturaService.vendedores = [];  //Vaciar lista cuenta correntista ref
+    this.facturaService.vendedor = undefined; //no seleccionar cuenta correntusta ref
+    this.facturaService.tiposTransaccion = [];  //limpiar tipos de transaccion
+    this.facturaService.parametros = [];  //limpiar parametros
+    this.facturaService.formasPago = [];  //limpiar formas de pago
+    this.facturaService.cuenta = undefined; //no seleccionar cuenta correntista
+    this.facturaService.montos = [];  //limpiar cargo abono agregados al documento
+    this.facturaService.traInternas = []; //limpoiar transaciones agregadas al documento
+    this.facturaService.selectAllTra = false; //No seleccionar todas las transacciones
+    this.facturaService.subtotal = 0; //reniciar subtotla del documento
+    this.facturaService.cargo = 0;  //reiniciar cargos del documento
+    this.facturaService.descuento = 0;  //reiniciar descuentos del documento
+    this.facturaService.total = 0;  //reinicar total del documento
+    this.facturaService.saldo = 0;  //reiniciar saldo por pagar del documento
+    this.facturaService.cambio = 0; //reniciare cambio del documento
+    this.facturaService.pagado = 0; //reinciiar montos oagados del documento
 
 
+    //Seleccionar primera pestaña (petssña documento)
     this.showDocumento();
-
-
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
@@ -200,7 +228,8 @@ export class FacturaComponent implements OnInit {
       return;
     }
 
-    let user: string = PreferencesService.user;
+    //Datos de la sesion
+    let user: string = PreferencesService.user; 
     let token: string = PreferencesService.token;
     let empresa: number = PreferencesService.empresa.empresa;
     let estacion: number = PreferencesService.estacion.estacion_Trabajo;
@@ -217,12 +246,14 @@ export class FacturaComponent implements OnInit {
       estacion,
     );
 
+      //si algo salio al
     if (!resSeries.status) {
       this.facturaService.isLoading = false;
       this.verError(resSeries);
       return;
     }
 
+    //Series disponobles
     this.facturaService.series = resSeries.response;
 
     //si solo hay una serie seleccionarla por defecto;
@@ -240,6 +271,7 @@ export class FacturaComponent implements OnInit {
         empresa,
       )
 
+      //si algo salió mal mostrar error
       if (!resVendedor.status) {
         this.facturaService.isLoading = false;
         this.verError(resVendedor);
@@ -247,6 +279,7 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
+      //cuntas correntista ref disponibles
       this.facturaService.vendedores = resVendedor.response;
 
       //si solo hay un vendedor seleccionarlo por defecto
@@ -263,6 +296,7 @@ export class FacturaComponent implements OnInit {
         empresa,
       );
 
+      //si algo salio mal
       if (!resTransaccion.status) {
         this.facturaService.isLoading = false;
         this.verError(resTransaccion);
@@ -270,6 +304,7 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
+      //tioos de trabnsaccion disponibles
       this.facturaService.tiposTransaccion = resTransaccion.response;
 
       //Buscar parametros del documento
@@ -282,6 +317,7 @@ export class FacturaComponent implements OnInit {
         estacion,
       )
 
+      //si algo salio mal
       if (!resParametro.status) {
         this.facturaService.isLoading = false;
         this.verError(resParametro);
@@ -289,6 +325,7 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
+      //Parammetros disponibles
       this.facturaService.parametros = resParametro.response;
 
       //Buscar formas de pago
@@ -299,6 +336,7 @@ export class FacturaComponent implements OnInit {
         documento,
       );
 
+      //si algo salio mal
       if (!resFormaPago.status) {
         this.facturaService.isLoading = false;
 
@@ -308,19 +346,19 @@ export class FacturaComponent implements OnInit {
 
       }
 
+      //Formas de pago disponobles
       this.facturaService.formasPago = resFormaPago.response;
 
     }
 
     this.facturaService.isLoading = false;
 
+    //cargar documento guardado localmente
     this.facturaService.loadDocDave();
-
-
   }
 
 
-
+  //ver oabtalal crear cuenta correntista
   verNuevoCliente() {
     this.nuevoCliente = true;
     this.actualizarCliente = false;
@@ -330,6 +368,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
   }
 
+  //ver pabtralla editar cuenta coprrenitsta
   verActualizarCliente() {
     this.actualizarCliente = true;
     this.nuevoCliente = false;
@@ -339,6 +378,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
   }
 
+  //ver modulo de factura
   verDocumento() {
     this.vistaFactura = true;
     this.actualizarCliente = false;
@@ -348,6 +388,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
   }
 
+  //Confirmar documento
   verResumen() {
 
     //Si no hay serie seleccionado mostrar mensaje
@@ -401,6 +442,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
   }
 
+  //ver histirial de documentos recienetes
   verHistorial() {
     this.vistaHistorial = true;
     this.vistaResumen = false;
@@ -410,6 +452,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
   }
 
+  //ver informe de erroes
   verInformeError() {
     this.vistaInforme = true;
     this.vistaHistorial = false;
@@ -419,8 +462,8 @@ export class FacturaComponent implements OnInit {
     this.nuevoCliente = false;
   }
 
+  //regresear a menu (pantalla de inicio)
   goBack(): void {
-    // this.newItemEvent.emit(false);
     components.forEach(element => {
       element.visible = false;
     });
@@ -437,8 +480,10 @@ export class FacturaComponent implements OnInit {
   //verError
   verError(res: ResApiInterface) {
 
+    //fehca y hora ctual
     let dateNow: Date = new Date();
 
+    //informe de error
     let error = {
       date: dateNow,
       description: res.response,
@@ -447,9 +492,11 @@ export class FacturaComponent implements OnInit {
 
     }
 
+    //guardar error
     PreferencesService.error = error;
+
+    //ver pantlla d error
     this.verInformeError();
   }
-
 
 }

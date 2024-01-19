@@ -1,13 +1,13 @@
+import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { Component } from '@angular/core';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { EventService } from 'src/app/services/event.service';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { CuentaService } from '../../services/cuenta.service';
+import { EventService } from 'src/app/services/event.service';
+import { FacturaService } from '../../services/factura.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { ClienteInterface } from '../../interfaces/cliente.interface';
-import { FacturaService } from '../../services/factura.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nuevo-cliente',
@@ -19,17 +19,21 @@ import { FacturaService } from '../../services/factura.service';
 })
 export class NuevoClienteComponent {
 
-  nombre!: string;
+  //datos para la nueva cuenta
+  nombre!: string;  
   direccion!: string;
   nit!: string;
   telefono!: string;
   correo!: string;
   regresar: number = 3;
-
+  
+  //Pantalla de carga
   isLoading: boolean = false;
+  //ver informe de errores
   verError: boolean = false;
 
   constructor(
+    //instancias de los servicios necesarios
     private _notificationsServie: NotificationsService,
     private translate: TranslateService,
     private _eventService: EventService,
@@ -37,13 +41,16 @@ export class NuevoClienteComponent {
     private _facturaService: FacturaService,
     private _translate: TranslateService,
   ) {
+
+    //suscripcion a sventos desde componente hijo
+    //eventos desde infrome de arror
     this._eventService.regresarNuevaCuenta$.subscribe((eventData) => {
       this.verError = false;
     });
   }
 
 
-
+  //funcion que valida que un correo ee¿lectronico sea valido
   validarCorreo(correo: string): boolean {
     // Expresión regular para validar correos electrónicos
     const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -52,10 +59,9 @@ export class NuevoClienteComponent {
     return expresionRegular.test(correo);
   };
 
+  //ceear nueva cuenta
   async guardar() {
 
-
-    //TODO:Reportes de error
 
     //validar formulario
     if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
@@ -69,8 +75,6 @@ export class NuevoClienteComponent {
       return;
     }
 
-    //Crear cuenta
-
     //nueva cuneta
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
@@ -82,9 +86,9 @@ export class NuevoClienteComponent {
     }
 
 
-    let user: string = PreferencesService.user;
-    let token: string = PreferencesService.token;
-    let empresa: number = PreferencesService.empresa.empresa;
+    let user: string = PreferencesService.user; //usuario de la sesion
+    let token: string = PreferencesService.token; //token de la sesion
+    let empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
 
     this.isLoading = true;
 
@@ -130,7 +134,7 @@ export class NuevoClienteComponent {
 
     this.isLoading = false;
 
-
+      // si falló la buqueda de la cuenta creada
     if (!infoCuenta.response) {
       this.isLoading = false;
 
@@ -153,13 +157,16 @@ export class NuevoClienteComponent {
       return;
     }
 
+    //coincidencias con la cuenta creada
     let cuentas: ClienteInterface[] = infoCuenta.response;
 
+    //si no se encontró ninguna cuenta
     if (cuentas.length == 0) {
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.cuentaCreada'));
       return;
     }
 
+    // si solo se encontró una coincidencia
     if (cuentas.length == 1) {
 
       //seleccionar cuenta
@@ -174,8 +181,9 @@ export class NuevoClienteComponent {
 
     }
 
-
+    //Si hay mas de una coincidencia
     cuentas.forEach(element => {
+      //Busar la primera cuenta que tenga el mismo nit
       if (element.factura_NIT == cuenta.nit) {
         //seleccionar cuenta
         this._facturaService.cuenta = element;
@@ -192,14 +200,18 @@ export class NuevoClienteComponent {
 
   }
 
+  //regresar a modulo de facturacion
   goBack() {
     this._eventService.verDocumentoEvent(true);
   }
 
+  //mostrar pantalla de informe de error
   mostrarError(res: ResApiInterface) {
 
+    //fecha y hora actual
     let dateNow: Date = new Date();
 
+    //infrome de error
     let error = {
       date: dateNow,
       description: res.response,
@@ -208,7 +220,10 @@ export class NuevoClienteComponent {
 
     }
 
+    //guardar error
     PreferencesService.error = error;
+    
+    //ver pantalla de informe de errores
     this.verError = true;
   }
 

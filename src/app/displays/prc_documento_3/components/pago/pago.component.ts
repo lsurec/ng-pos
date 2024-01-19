@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { PagoService } from '../../services/pago.service';
-import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
-import { FacturaService } from '../../services/factura.service';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { PagoComponentService } from '../../services/pago-component.service';
-import { MontoIntreface } from '../../interfaces/monto.interface';
 import { EventService } from 'src/app/services/event.service';
+import { FacturaService } from '../../services/factura.service';
+import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
+import { MontoIntreface } from '../../interfaces/monto.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PagoComponentService } from '../../services/pago-component.service';
+import { PagoService } from '../../services/pago.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-pago',
@@ -20,18 +20,18 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class PagoComponent {
 
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion 
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //Estacion de la sesion
+  documento: number = this.facturaService.tipoDocumento!; //Tipo de documento del modulo
 
-
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  documento: number = this.facturaService.tipoDocumento!;
-
+  //seleccionar toas lasnformas de apgo agregadas
   selectAllMontos: boolean = false;
 
 
   constructor(
+    //Instacnias de los servicios
     private _translate: TranslateService,
     private _notificationsService: NotificationsService,
     public facturaService: FacturaService,
@@ -43,11 +43,13 @@ export class PagoComponent {
 
   }
 
-
+  //ver pantalla informe de error
   verError(res: ResApiInterface) {
 
+    //fehc y hora ctual
     let dateNow: Date = new Date();
 
+    //informe del error
     let error = {
       date: dateNow,
       description: res.response,
@@ -56,27 +58,33 @@ export class PagoComponent {
 
     }
 
+    //guardar erorr
     PreferencesService.error = error;
+
+    //ver informe de error
     this._eventService.verInformeErrorEvent(true);
   }
 
+  //ver formas de pago
   viewPayments() {
-    this.facturaService.calculateTotales();
-    this.pagoComponentService.autorizacion = "",
-      this.pagoComponentService.referencia = "",
-      this.pagoComponentService.cuentas = [];
-    this.pagoComponentService.bancos = [];
-    this.pagoComponentService.banco = undefined;
-    this.pagoComponentService.cuentaSelect = undefined;
-    this.pagoComponentService.forms = false;
-    this.pagoComponentService.forms = false;
+    //reiniciar vlores
+    this.facturaService.calculateTotales(); //valvulat tor¿toales
+    this.pagoComponentService.autorizacion = ""; //campo autorizacion en blanco
+    this.pagoComponentService.referencia = ""; //campo refrencia en blanco
+    this.pagoComponentService.cuentas = []; //Vaciar ceuntas bancarias
+    this.pagoComponentService.bancos = []; //vaciar bancos diponibles
+    this.pagoComponentService.banco = undefined; //banco seleccionado vacio
+    this.pagoComponentService.cuentaSelect = undefined; //ceunta bancaria seleccionad avacia
+    this.pagoComponentService.forms = false; //oculatar formularios
   }
 
+  //ver fommulario para la forma de pago
   async viewForms(payment: FormaPagoInterface) {
 
+    //seleccionar forma de poago
     this.pagoComponentService.pago = payment;
 
-    //validar que haya una cuenta seleccionada
+    //validar que haya una cuenta correntista seleccionada
     if (!this.facturaService.cuenta) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarCuenta'));
       return;
@@ -103,6 +111,7 @@ export class PagoComponent {
       return;
     }
 
+    //validar que haya un saldo pendiente de pago
     if (this.facturaService.saldo == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.saldoPagar'));
       return;
@@ -111,17 +120,21 @@ export class PagoComponent {
     //si el banco se requiere cargarlos
     if (payment.banco) {
 
+      //linmpoiar lista de bancos
       this.pagoComponentService.bancos = [];
 
       this.facturaService.isLoading = true;
+
+      //Buscar bancos disponibles
       let resBancos: ResApiInterface = await this._pagoService.getBancos(
         this.user,
         this.token,
         this.empresa,
       );
+
       this.facturaService.isLoading = false;
 
-
+      // si alfo salio mal
       if (!resBancos.status) {
 
         this.facturaService.isLoading = false;
@@ -147,19 +160,21 @@ export class PagoComponent {
 
     }
 
-
+    //ver formulario para la forma de pago
     this.pagoComponentService.forms = true;
 
   }
 
 
+  //Cambiar de banco
   async changeBanco() {
 
+    //limpiar lista dew cuentas bancarias
     this.pagoComponentService.cuentas = [];
 
     this.facturaService.isLoading = true;
 
-
+    //buscar cuentas bancarias
     let resCuentas: ResApiInterface = await this._pagoService.getCuentasBanco(
       this.user,
       this.token,
@@ -169,6 +184,7 @@ export class PagoComponent {
 
     this.facturaService.isLoading = false;
 
+    //si algo salio mal
     if (!resCuentas.status) {
 
       this.facturaService.isLoading = false;
@@ -191,13 +207,11 @@ export class PagoComponent {
 
     }
 
+    //Cuentas bancarias disponibles
     this.pagoComponentService.cuentas = resCuentas.response;
-
-
-
-
   }
 
+  //converit un texto a nummero+
   convertirTextoANumero(texto: string): number | null {
     // Verificar si la cadena es un número
     const esNumero = /^\d+(\.\d+)?$/.test(texto);
@@ -212,26 +226,24 @@ export class PagoComponent {
     }
   }
 
-
+  //agregar una forma de pago
   agregarMonto() {
 
-    //validar monto que sea numerico
-
-
+    //validar exitsa un mono
     if (!this.pagoComponentService.monto) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
       return;
 
     }
 
-
+    //validar que el monto sea numerico
     if (this.convertirTextoANumero(this.pagoComponentService.monto) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.valorNumerico'));
       return;
     }
 
 
-
+    //si la autorizacion es requerida validar que se agregada
     if (this.pagoComponentService.pago!.autorizacion) {
       if (!this.pagoComponentService.autorizacion) {
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
@@ -240,15 +252,15 @@ export class PagoComponent {
 
     }
 
+    //si la referencia es reuqerida validar que sea agregada
     if (this.pagoComponentService.pago!.referencia) {
       if (!this.pagoComponentService.referencia) {
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.completarFormulario'));
         return;
       }
-
     }
 
-
+    //Si la forma de poago requiere banco validar que esté seleccionadop
     if (this.pagoComponentService.pago!.banco) {
       if (!this.pagoComponentService.banco) {
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionarBanco'));
@@ -256,6 +268,7 @@ export class PagoComponent {
       }
 
 
+      //si el banco es requerido y existen cuentas bancarias validar que se seleccione uno
       if (this.pagoComponentService.cuentas.length > 0) {
         if (!this.pagoComponentService.cuentaSelect) {
           this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cuetaBanco'));
@@ -264,7 +277,10 @@ export class PagoComponent {
       }
     }
 
+    //converitr monto a numero
     let monto = this.convertirTextoANumero(this.pagoComponentService.monto);
+
+    //Cambio
     let diference: number = 0;
 
     //Calcualar si hay diferencia (Cambio)
@@ -273,9 +289,14 @@ export class PagoComponent {
       monto = this.facturaService.saldo;
     }
 
+    //auroizacion vacia si no se reuqiere
     let auth: string = this.pagoComponentService.pago!.autorizacion ? this.pagoComponentService.autorizacion : "";
+
+    //referencia vacia si no se requiere
     let ref: string = this.pagoComponentService.pago!.referencia ? this.pagoComponentService.referencia : "";
 
+
+    //agregar cargo abono
     this.facturaService.addMonto(
       {
         checked: this.selectAllMontos,
@@ -289,12 +310,13 @@ export class PagoComponent {
       }
     );
 
+
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.pagoAgregado'));
 
-    //clear data
-    this.pagoComponentService.autorizacion = "",
-      this.pagoComponentService.referencia = "",
-      this.pagoComponentService.cuentas = [];
+    //despues de agregar la forma de pago limpiar todos los datos relacionados para evitar datos incorrectos
+    this.pagoComponentService.autorizacion = "";
+    this.pagoComponentService.referencia = "";
+    this.pagoComponentService.cuentas = [];
     this.pagoComponentService.bancos = [];
     this.pagoComponentService.banco = undefined;
     this.pagoComponentService.cuentaSelect = undefined;
@@ -303,22 +325,26 @@ export class PagoComponent {
   }
 
 
+  //seleccionar o no, todas las formmas de pago
   seleccionar() {
     this.facturaService.montos.forEach(element => {
-      element.checked = this.selectAllMontos;
+      element.checked = this.selectAllMontos; //asiganer valor del checkbox a las formas de pago
     });
 
   }
 
   // Función para manejar la eliminación de pagos seleccionados
   async eliminarPagosSeleccionados() {
+    //buscar formas de pagos seleccioandas
     let montosSeleccionados: MontoIntreface[] = this.facturaService.montos.filter((monto) => monto.checked);
 
+    //Alerta al intentar eliminar pagos sin tener seleccionada ninguna
     if (montosSeleccionados.length == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
 
+    //Dialogo de confirmacion
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
@@ -332,9 +358,9 @@ export class PagoComponent {
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
     this.facturaService.montos = this.facturaService.montos.filter((monto) => !monto.checked);
 
-
+    //calcular totales
     this.facturaService.calculateTotalesPago();
-
+      
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.montosEliminados'));
   }
 }
