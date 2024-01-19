@@ -1,15 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { ProductoInterface } from '../../interfaces/producto.interface';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ProductoComponent } from '../producto/producto.component';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { ProductService } from '../../services/product.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { ProductoService } from '../../services/producto.service';
-import { PrecioInterface } from '../../interfaces/precio.interface';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
-import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PrecioInterface } from '../../interfaces/precio.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ProductoService } from '../../services/producto.service';
+import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UnitarioInterface } from '../../interfaces/unitario.interface';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -19,17 +18,16 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductosEncontradosComponent {
 
-  productos: ProductoInterface[] = [];
-  isLoading: boolean = false;
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  productos: ProductoInterface[] = []; //lista de productos encontrados
+  isLoading: boolean = false; //pantalla de carga
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //tokem de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
   constructor(
     public dialogRef: MatDialogRef<ProductosEncontradosComponent>,
     @Inject(MAT_DIALOG_DATA) public productosEncontrados: ProductoInterface[],
-    private _dialog: MatDialog,
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
     private _productoService: ProductoService,
