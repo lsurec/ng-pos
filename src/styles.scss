@@ -149,7 +149,11 @@ body {
 .dark-theme .total,
 .dark-theme .iconoCargo,
 .dark-theme .iconoDescuento,
-.dark-theme .informacion-tema {
+.dark-theme .informacion-tema,
+.dark-theme .mat-expansion-panel-header-description,
+.dark-theme .mat-expansion-panel-header-description,
+.mat-expansion-indicator::after,
+.dark-theme .chip {
     color: $color-blanco !important;
 }
 
@@ -246,8 +250,8 @@ body {
 
 //scrolls 
 
-.dark-theme .documento::-webkit-scrollbar, 
-.dark-theme .documento::-webkit-scrollbar-track, 
+.dark-theme .documento::-webkit-scrollbar,
+.dark-theme .documento::-webkit-scrollbar-track,
 .dark-theme .container-main::-webkit-scrollbar,
 .dark-theme .container-main::-webkit-scrollbar-track,
 .dark-theme .container_main::-webkit-scrollbar,
@@ -275,11 +279,11 @@ body {
     background-color: $fondo-oscuro !important;
 }
 
-    
-    
-    //Color barra scroll
-    
-.dark-theme .documento::-webkit-scrollbar-thumb, 
+
+
+//Color barra scroll
+
+.dark-theme .documento::-webkit-scrollbar-thumb,
 .dark-theme .localidades::-webkit-scrollbar-thumb,
 .dark-theme .empresas::-webkit-scrollbar-thumb,
 .dark-theme .contenido::-webkit-scrollbar-thumb,
