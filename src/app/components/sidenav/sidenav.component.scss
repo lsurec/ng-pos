@@ -61,7 +61,7 @@ mat-sidenav {
 
 .toolbarPhone,
 .toolbarlarge {
-    position        : fixed !important;
+    // position        : fixed !important;
     background-color: $background-oficial;
     border-bottom   : 1px solid $borde-toolbar;
 }
@@ -103,9 +103,10 @@ mat-sidenav {
 
 .container_main {
     width   : 100%;
-    height  : 100%;
+    height  : calc(100% - 64px);
     float   : left;
     overflow: auto;
+    padding : 20px 0px;
 }
 
 
@@ -117,6 +118,10 @@ mat-sidenav {
 
     .container_main {
         width: 100%;
+    }
+
+    .acordeon_oculto {
+        display: block !important;
     }
 }
 
@@ -156,9 +161,18 @@ mat-accordion {
     box-shadow: none !important;
 }
 
-.detalles_acordeon_oculto {
-    margin          : 10px 15px;
-    width           : 90%;
+.acordeon {
+    background-color: $background-transparent;
+    width           : 400px;
+}
+
+.mat-expansion-panel-body {
+    padding         : 0 !important;
     background-color: $background-oficial !important;
-    padding         : 0px;
+    margin          : 0px -20px;
+    border-radius   : 0px !important;
+}
+
+.acordeon_oculto {
+    display: none;
 }

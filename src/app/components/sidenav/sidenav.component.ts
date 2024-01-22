@@ -9,7 +9,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class SidenavComponent {
 
   //abirir y cerrar el mat expander
-  desplegarDetalles: boolean = false;
+  desplegarCarDes: boolean = false;
 
   //Abrir/Cerrar SideNav
   // @ViewChild('sidenav')

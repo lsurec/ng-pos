@@ -43,22 +43,19 @@
         <!-- Contenido del componente -->
         <div class="container_main">
 
-            <mat-accordion class="mat-expansion">
-                <mat-expansion-panel (opened)="desplegarDetalles = true" (closed)="desplegarDetalles = false"
-                    class="color_fondo">
-                    <mat-expansion-panel-header class="color_fondo">
-                        <mat-panel-description>
-                            {{ 'crm.detalles.detalles' | translate }}
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-
-                </mat-expansion-panel>
-            </mat-accordion>
-
-
-
-
-
+            <div class="acordeon_oculto">
+                <mat-accordion class="mat-expansion">
+                    <mat-expansion-panel (opened)="desplegarCarDes = true" (closed)="desplegarCarDes = false"
+                        class="acordeon">
+                        <mat-expansion-panel-header>
+                            <mat-panel-description>
+                                {{ 'pos.factura.cargoDescuento' | translate }}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>holaaaaaaaaa</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
 
         </div>
 
