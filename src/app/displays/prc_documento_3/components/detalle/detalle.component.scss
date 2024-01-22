@@ -323,4 +323,31 @@ p {
         bottom: 55px !important;
         right : 20px !important;
     }
+
+    .acordeon_oculto {
+        display: block !important;
+    }
+
+    .transacciones {
+        display: none !important;
+    }
+}
+
+mat-accordion {
+    box-shadow: none !important;
+}
+
+.acordeon {
+    background-color: $background-transparent;
+}
+
+.mat-expansion-panel-body {
+    padding         : 0 !important;
+    background-color: $background-oficial !important;
+    margin          : 0px -20px;
+    border-radius   : 0px !important;
+}
+
+.acordeon_oculto {
+    display: none;
 }

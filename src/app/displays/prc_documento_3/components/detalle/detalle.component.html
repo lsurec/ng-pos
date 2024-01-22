@@ -28,34 +28,71 @@
         <span class="spacer"></span>
 
         <div class="producto">
+            <!-- Acordeon de transacciones -->
             <div class="informacion">
-                <div class="filtros-transacciones">
-                    <p class="subtitulo">{{ 'pos.factura.cargoDescuento' | translate }}</p>
-                    <span class="spacer"></span>
-                    <div class="dFlex">
+                <div class="acordeon_oculto">
+                    <mat-accordion class="mat-expansion">
+                        <mat-expansion-panel (opened)="desplegarCarDes = true" (closed)="desplegarCarDes = false"
+                            class="acordeon">
+                            <mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    {{ 'pos.factura.cargoDescuento' | translate }}
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="dFlex">
+                                <p class="subtitulo">{{ 'pos.factura.cargoDescuento' | translate }}</p>
+                                <span class="spacer"></span>
+                                <div *ngFor="let option of tipos">
+                                    <div class="chip" [class.selected]="option.id === tipoDesCar"
+                                        (click)="onOptionCarDes(option.id)">{{
+                                        option.nombre }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dFlex">
+                                <input class="barra-monto" type="search" name="search" autocomplete="off"
+                                    placeholder="00.00" [(ngModel)]="valueCargoDescuento">
+                                <button mat-mini-fab class="iconoCargo" (click)="cargoDescuento(1)">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                <button mat-mini-fab class="iconoDescuento" (click)="cargoDescuento(2)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+            <div class="transacciones">
+                <div class="informacion">
+                    <div class="filtros-transacciones">
+                        <p class="subtitulo">{{ 'pos.factura.cargoDescuento' | translate }}</p>
                         <span class="spacer"></span>
-                        <div *ngFor="let option of tipos">
-                            <div class="chip" [class.selected]="option.id === tipoDesCar"
-                                (click)="onOptionCarDes(option.id)">{{
-                                option.nombre }}
+                        <div class="dFlex">
+                            <span class="spacer"></span>
+                            <div *ngFor="let option of tipos">
+                                <div class="chip" [class.selected]="option.id === tipoDesCar"
+                                    (click)="onOptionCarDes(option.id)">{{
+                                    option.nombre }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="dFlex">
-                    <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00"
-                        [(ngModel)]="valueCargoDescuento">
-                    <button mat-mini-fab class="iconoCargo" (click)="cargoDescuento(1)">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                    <button mat-mini-fab class="iconoDescuento" (click)="cargoDescuento(2)">
-                        <mat-icon>remove</mat-icon>
-                    </button>
+                    <div class="dFlex">
+                        <input class="barra-monto" type="search" name="search" autocomplete="off" placeholder="00.00"
+                            [(ngModel)]="valueCargoDescuento">
+                        <button mat-mini-fab class="iconoCargo" (click)="cargoDescuento(1)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button mat-mini-fab class="iconoDescuento" (click)="cargoDescuento(2)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class=".documento-sin-borde">
+    <div class="documento-sin-borde">
         <div class="lista-productos">
             <div class="eliminar" *ngIf="facturaService.traInternas.length > 0">
                 <div class="dFlex">
