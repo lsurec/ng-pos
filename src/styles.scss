@@ -64,7 +64,8 @@ body {
 .dark-theme .container-main,
 .dark-theme .dialog,
 .dark-theme .informacion,
-.dark-theme .head__sidenav_config {
+.dark-theme .head__sidenav_config,
+.dark-theme .barra-cerrar-titulo {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }
