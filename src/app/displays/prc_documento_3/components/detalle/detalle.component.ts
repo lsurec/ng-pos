@@ -28,7 +28,8 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class DetalleComponent {
 
-
+  //abirir y cerrar el mat expander
+  desplegarCarDes: boolean = false;
   valueCargoDescuento: string = "";
 
   user: string = PreferencesService.user;
