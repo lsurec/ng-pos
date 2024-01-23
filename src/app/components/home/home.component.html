@@ -1,4 +1,5 @@
 <app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
+<app-printer-configuration *ngIf="impresora && hideHome"></app-printer-configuration>
 <div *ngIf="!showError">
     <div *ngFor="let component of components">
         <ng-container *ngIf="component.visible">
@@ -9,6 +10,7 @@
 
     <!-- Patalla de carga -->
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
+
 
     <mat-sidenav-container *ngIf="!isLoading && !hideHome" class="sidenav_container"
         (backdropClick)="close('backdrop')">
@@ -105,7 +107,16 @@
                         <mat-icon>navigate_next</mat-icon>
                     </div>
                 </div>
-                <!-- <p class="separador"></p> -->
+                <!-- TODO: traducir  -->
+                <div class="configuraciones" (click)="verConfiguracion()">
+                    <mat-icon class="iconos-detalles">print</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">IMPRESORA</p>
+                        <p class="descripcion">Impresora:{{imprimir}}</p>
+                        <p class="descripcion">Formato TM-U</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Lenguajes de la aplicacion -->

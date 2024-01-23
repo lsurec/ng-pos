@@ -57,6 +57,7 @@ import { DetalleDocumentoComponent } from './displays/prc_documento_3/components
 import { CargoDescuentoComponent } from './displays/prc_documento_3/components/cargo-descuento/cargo-descuento.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SelectedConfigurationComponent } from './components/selected-configuration/selected-configuration.component';
+import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import { SelectedConfigurationComponent } from './components/selected-configurat
     CargoDescuentoComponent,
     SidenavComponent,
     SelectedConfigurationComponent,
+    PrinterConfigurationComponent,
   ],
   imports: [
     BrowserModule,

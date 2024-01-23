@@ -23,6 +23,7 @@ export class PreferencesService {
     private static readonly errorKey: string = 'error';
     private static readonly tipoCambioKey: string = 'tipoCambio';
     private static readonly documentkey: string = 'document';
+    private static readonly vistaPrevia: string = 'vistaPrevia';
 
 
     //Borrar datos al cerrar sesion
@@ -201,4 +202,15 @@ export class PreferencesService {
         return value;
     }
 
+    //vista previa 
+    @Input()
+    static set imprimir(value: string) {
+        localStorage.setItem(this.vistaPrevia, value);
+    }
+
+    static get imprimir(): string {
+        let value = localStorage.getItem(this.vistaPrevia);
+        if (!value) return "";
+        return value;
+    }
 }

@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
   nombreDocumento: string = this.facturaService.documentoName;
   tipoCambio: number = PreferencesService.tipoCambio;
   url: string = PreferencesService.baseUrl;
+  imprimir: string = PreferencesService.imprimir;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
@@ -54,6 +55,8 @@ export class HomeComponent implements OnInit {
   //Variables para inputs
   isLoading: boolean = false;
 
+  impresora: boolean = false;
+  regresar: number = 1;
   //Ver configuraciones y detalles del usuario
   temas: boolean = false;
   detallesUsuario: boolean = true;
@@ -110,6 +113,10 @@ export class HomeComponent implements OnInit {
       this.viewHome(eventData);
     });
 
+    this._eventService.regresarHomedesdeImpresoras$.subscribe((eventData) => {
+      this.impresora = false;
+      this.hideHome =  false;
+    });
 
     //Funcion que carga datos
     this.loadDataMenu();
@@ -529,5 +536,10 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
   };
 
+  verConfiguracion() {
+    this.sidenavend.close(); //cerrar menu 
+    this.hideHome = true; 
+    this.impresora = true; //ver impresora
+  }
 
 }
