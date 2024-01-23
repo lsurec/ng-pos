@@ -7,9 +7,9 @@
 
     <div class="contenido">
         <div class="titulos-menu">
-            <div class="detalles-lenguajes" *ngFor="let item of languages; let i = index" (click)="changeLang(i)">
+            <div class="detalles-lenguajes" *ngFor="let item of languages; let i = index">
                 <span class="spacer"></span>
-                <div class="informacion-tema">
+                <div class="informacion-tema" (click)="changeLang(i)">
                     <div class="seleccionado d-flex" [ngClass]="{'idioma-seleccionado': idioma === i}">
                         <button mat-icon-button>
                             <mat-icon>language</mat-icon>
