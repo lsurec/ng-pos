@@ -23,6 +23,7 @@ export class ResumenDocumentoComponent {
   readonly regresar: number = 4; //id de la pantalla
   verError: boolean = false; //ocultar y mostrar pantalla de error
 
+  volver: number = 2;
   observacion = ""; //input para agreagar una observacion
 
   user: string = PreferencesService.user; //usuario de la sesion
@@ -33,6 +34,7 @@ export class ResumenDocumentoComponent {
   serie: string = this.facturaService.serie!.serie_Documento; //serie de la sesion
   tipoCambio: number = PreferencesService.tipoCambio; //tipo cambio dispoible
 
+  verVistaPrevia: boolean = false;
 
   constructor(
     //instancias de los servicios necesarios
@@ -48,6 +50,11 @@ export class ResumenDocumentoComponent {
     this._eventService.regresarResumen$.subscribe((eventData) => {
       this.verError = false;
     });
+    //regreesar desde configuracion de la impresora con vista previa activa
+    this._eventService.regresarResumen$.subscribe((eventData) => {
+      this.verVistaPrevia = false;
+    });
+
   }
 
   //Regresar al modulo de facturacion (tabs)
@@ -79,14 +86,30 @@ export class ResumenDocumentoComponent {
   }
 
   //Confirmar documento
-  sendDoc() {
-    //Si se permite fel entrar al proceso
-    if (this.facturaService.printFel()) {
-      //alerta FEL no disponible
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+  async sendDoc() {
+    // //Si se permite fel entrar al proceso
+    // if (this.facturaService.printFel()) {
+    //   //alerta FEL no disponible
+    //   this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+    // } else {
+    //   //Enviar documento a tbl_documento estructura
+    //   this.sendDocument()
+    // }
+
+    if (PreferencesService.vistaPrevia == '0') {
+      console.log("abirir ialogo de imprimiendo");
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: "Imprimiendo",
+          description: "El documento se esta imprimiendo.",
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
     } else {
-      //Enviar documento a tbl_documento estructura
-      this.sendDocument()
+      console.log("mostar configiracion de impresora");
+      this.verVistaPrevia = true;
     }
 
   }

@@ -56,7 +56,8 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
 
   impresora: boolean = false;
-  regresar: number = 1;
+  volver: number = 1;
+
   //Ver configuraciones y detalles del usuario
   temas: boolean = false;
   detallesUsuario: boolean = true;
@@ -108,6 +109,7 @@ export class HomeComponent implements OnInit {
     public facturaService: FacturaService,
     private _retryService: RetryService
   ) {
+    console.log(this.imprimir);
 
     this._eventService.customEvent$.subscribe((eventData) => {
       this.viewHome(eventData);
@@ -115,7 +117,7 @@ export class HomeComponent implements OnInit {
 
     this._eventService.regresarHomedesdeImpresoras$.subscribe((eventData) => {
       this.impresora = false;
-      this.hideHome =  false;
+      this.hideHome = false;
     });
 
     //Funcion que carga datos
@@ -538,7 +540,7 @@ export class HomeComponent implements OnInit {
 
   verConfiguracion() {
     this.sidenavend.close(); //cerrar menu 
-    this.hideHome = true; 
+    this.hideHome = true;
     this.impresora = true; //ver impresora
   }
 

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ImpresoraFormatoInterface } from 'src/app/interfaces/impre-form.interface';
 import { EventService } from 'src/app/services/event.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-printer-configuration',
@@ -46,36 +47,89 @@ export class PrinterConfigurationComponent {
     },
   ]
 
-  impresora?: ImpresoraFormatoInterface;
-  formato?: ImpresoraFormatoInterface;
-  vistaPrevia: boolean = false;
-  cantidad: number = 1;
+  @Input() volver?: number;
+
+  impresora?: ImpresoraFormatoInterface; //impresora para imprimir
+  formato?: ImpresoraFormatoInterface; //formato de impresion
+  vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
+  isLoading: boolean = false; //pantalla de carga
+  copias: number = 1; //cantidad de copias a imprimir
+  readonly regresar: number = 8; //id de la pantalla
+  verError: boolean = false; //ocultar y mostrar pantalla de error
+
 
   constructor(
     private _eventService: EventService,
+    private _location: Location,
 
   ) {
+
+    //veriicar si hay impresora y marcarla
+    if (!PreferencesService.imprimir) {
+      console.log('no hay impresora');
+    } else {
+      for (let index = 0; index < this.tipos.length; index++) {
+        const element = this.tipos[index];
+        if (element.nombre.toLowerCase() == this.tipos[index].nombre.toLowerCase()) {
+
+          this.impresora = element;
+        }
+      }
+    }
+    //asignar un formato
+    this.formato = this.formatos[0];
+
+    if (!PreferencesService.vistaPrevia) {
+      console.log('sin vista previa');
+    } else {
+      if (PreferencesService.vistaPrevia == '1')
+        this.vistaPrevia = true;
+    }
   }
 
   //regresar a home
   goBack() {
-    this._eventService.regresarHomedesdeImpresorasEvent(true);
+
+    switch (this.volver) {
+      case 1:
+        //desde home
+        this._eventService.regresarHomedesdeImpresorasEvent(true);
+        break;
+
+      case 2:
+        //desde resumen del documento     
+        this._eventService.regresarResumenEvent(true);
+        break;
+      default:
+        this._location.back();
+        break;
+    }
   }
 
   restar() {
-    this.cantidad!--;
+    this.copias!--;
 
-    if (this.cantidad! <= 0) {
-      this.cantidad = 1;
+    if (this.copias! <= 0) {
+      this.copias = 1;
     }
   }
 
   sumar() {
-    this.cantidad!++;
+    this.copias!++;
   }
 
   guardar() {
-    PreferencesService.imprimir = this.impresora!.nombre;
+    PreferencesService.imprimir = this.impresora!.nombre; //nombre de la impresora seleccionada
+    if (!this.vistaPrevia) {
+      PreferencesService.vistaPrevia = '0';
+    } else {
+      PreferencesService.vistaPrevia = '1';
+    }
+  }
+
+  ver() {
+    console.log(PreferencesService.imprimir);
+    console.log(PreferencesService.vistaPrevia);
   }
 
 }

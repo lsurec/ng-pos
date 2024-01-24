@@ -136,4 +136,12 @@ export class EventService {
     regresarHomedesdeImpresorasEvent(eventData: boolean) {
         this.regresarHomedesdeImpresoras.next(eventData);
     }
+
+    private regresarDesdeImpresion = new Subject<any>();
+
+    regresarDesdeImpresion$ = this.regresarDesdeImpresion.asObservable();
+
+    regresarDesdeImpresionEvent(eventData: boolean) {
+        this.regresarDesdeImpresion.next(eventData);
+    }
 }

@@ -1,5 +1,5 @@
 <app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
-<app-printer-configuration *ngIf="impresora && hideHome"></app-printer-configuration>
+<app-printer-configuration *ngIf="impresora && hideHome" [volver]="volver"></app-printer-configuration>
 <div *ngIf="!showError">
     <div *ngFor="let component of components">
         <ng-container *ngIf="component.visible">
@@ -113,8 +113,7 @@
                     <span class="spacer"></span>
                     <div class="detalle">
                         <p class="subtitulo">IMPRESORA</p>
-                        <p class="descripcion">Impresora:{{imprimir}}</p>
-                        <p class="descripcion">Formato TM-U</p>
+                        <p class="descripcion">{{imprimir}} (TM-U) </p>
                     </div>
                 </div>
             </div>

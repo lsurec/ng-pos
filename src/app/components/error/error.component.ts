@@ -77,6 +77,10 @@ export class ErrorComponent implements OnInit {
         //desde error de configuracion seleccionada
         this._eventService.regresarConfiguracionSeleccionadaEvent(true);
         break;
+      case 8:
+        //desde error de configuracion seleccionada
+        this._eventService.regresarDesdeImpresionEvent(true);
+        break;
       default:
         this._location.back();
 
