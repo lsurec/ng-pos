@@ -60,7 +60,7 @@
                             <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
                             <mat-select name="estado" class="bodegas"
                                 placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
-                                [(ngModel)]="productoService. precio">
+                                [(ngModel)]="productoService. precio" (ngModelChange)="changePrice()">
                                 <mat-option *ngFor="let precio of productoService. precios" [value]="precio">
                                     {{precio.descripcion}}
                                 </mat-option>
@@ -70,7 +70,7 @@
                             <p class="subtitulo">{{ 'pos.factura.presentaciones' | translate }}</p>
                             <mat-select name="estado" class="bodegas"
                                 placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
-                                [(ngModel)]="productoService. precio">
+                                [(ngModel)]="productoService. precio" (ngModelChange)="changePrice()">
                                 <mat-option *ngFor="let precio of productoService. precios" [value]="precio">
                                     {{precio.descripcion}}
                                 </mat-option>

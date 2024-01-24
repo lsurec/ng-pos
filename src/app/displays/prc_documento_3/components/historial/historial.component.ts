@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/services/event.service';
+import { Documento } from '../../interfaces/doc-estructura.interface';
 import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
 import { DocumentService } from '../../services/document.service';
+import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { GetDocInterface } from '../../interfaces/get-doc.interface';
-import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
-import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
-import { Documento } from '../../interfaces/doc-estructura.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
+import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -23,61 +23,67 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HistorialComponent implements OnInit {
 
-  isLoading: boolean = false;
-  historial: boolean = true;
-  detalleDocumento: boolean = false;
-  regresar: number = 5;
-  verError: boolean = false;
+  isLoading: boolean = false; //Pantalla de carga
+  historial: boolean = true;   //ver hisytorial
+  detalleDocumento: boolean = false; //ver detalle de un docuento
+  readonly regresar: number = 5; //id de la pantlla
+  verError: boolean = false; // Ver pamtalla informe de errores
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  documento: number = this._facturaService.tipoDocumento!;
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token;   //token de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;  //Estacion de la sesion
 
-  documentos: DocumentoResumenInterface[] = [];
-  docSelect!:DocumentoResumenInterface;
+  documentos: DocumentoResumenInterface[] = []; //documentos del historial
+  docSelect!: DocumentoResumenInterface; //documento seleccionado
 
   constructor(
+    //instancias de los servicios necearios
     private _eventService: EventService,
     private _documentService: DocumentService,
-    private _facturaService: FacturaService,
     private _tiposTransaccion: TipoTransaccionService,
     private _notificationsServie: NotificationsService,
-    private _translate:TranslateService,
+    private _translate: TranslateService,
   ) {
 
+    //Suscripcion a eventos desde componente shijo
+
+    //Evento para mostla lista de documentos
     this._eventService.verHistorial$.subscribe((eventData) => {
       this.verHistorial();
     });
 
+    //Coulatr informe de error
     this._eventService.regresarHistorial$.subscribe((eventData) => {
       this.verError = false;
     });
   }
-  ngOnInit(): void {
 
+
+  ngOnInit(): void {
+    //cargar datos al inicio
     this.loadData();
   }
 
+  //cargar datos necesarios
   async loadData() {
 
+    //Vaciar lista de documentos si existen anteriores
     this.documentos = [];
 
     this.isLoading = true;
 
-
+    //Obntner ultimos documentos relizados
     let resDoc = await this._documentService.getDocument(
       this.user,
       this.token,
       0,
     )
 
-
+    //si algo salio mal
     if (!resDoc.status) {
 
       this.isLoading = false;
-
 
       let verificador = await this._notificationsServie.openDialogActions(
         {
@@ -96,14 +102,16 @@ export class HistorialComponent implements OnInit {
 
     }
 
+    //documentos encontrados
     let docs: GetDocInterface[] = resDoc.response;
 
-
+    //Recorrer la lista oara calcular totales
     for (const doc of docs) {
 
-
+      //Converitr estructira json str a un objeto JSON
       let estructura: Documento = JSON.parse(doc.estructura);
 
+      //Buscar lostipos de transaccion de un documento recuperado
       let resTra = await this._tiposTransaccion.getTipoTransaccion(
         this.user,
         this.token,
@@ -112,29 +120,30 @@ export class HistorialComponent implements OnInit {
         estructura.Doc_Empresa,
       );
 
+      //Si algo salio mal
+      if (!resTra.status) {
 
-     if (!resTra.status) {
-
-            this.isLoading = false;
+        this.isLoading = false;
 
 
-            let verificador = await this._notificationsServie.openDialogActions(
-              {
-                title: this._translate.instant('pos.alertas.salioMal'),
-                description: this._translate.instant('pos.alertas.error'),
-                verdadero: this._translate.instant('pos.botones.informe'),
-                falso: this._translate.instant('pos.botones.aceptar'),
-              }
-            );
-      
-            if (!verificador) return;
-
-            this.mostrarError(resTra);
-
-            return;
-
+        let verificador = await this._notificationsServie.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
           }
+        );
 
+        if (!verificador) return;
+
+        this.mostrarError(resTra);
+
+        return;
+
+      }
+
+      //tipos de transaccion del documento
       let tiposTra: TipoTransaccionInterface[] = resTra.response;
 
       //id tipo transaccion cargo
@@ -150,8 +159,9 @@ export class HistorialComponent implements OnInit {
       let total: number = 0;
 
 
+      //recorrer las transacciones del documento
       estructura.Doc_Transaccion.forEach(tra => {
-        //Si no es ni cargo ni desceuntosumar total transaccones
+        //Si no es ni cargo ni desceunto sumar total transaccones
         if (tra.Tra_Tipo_Transaccion != tipoCargo &&
           tra.Tra_Tipo_Transaccion != tipoDescuento) {
           subtotal += tra.Tra_Monto;
@@ -172,6 +182,7 @@ export class HistorialComponent implements OnInit {
       //calcular total
       total = (subtotal + cargo) + descuento;
 
+      //Agrgar transacion a una interfaz propia
       this.documentos.push(
         {
           item: doc,
@@ -190,39 +201,51 @@ export class HistorialComponent implements OnInit {
 
   }
 
+  //devolver el tipo de trnsaccion correspondiente a un tipo producto
   resolveTipoTransaccion(tipo: number, tiposTransacciones: TipoTransaccionInterface[]): number {
 
+    //recorrer los tipos de transacicion
     for (let i = 0; i < tiposTransacciones.length; i++) {
+
       const element = tiposTransacciones[i];
+
+      //si el tipo de producto recino coincide con el de un tipo de transaccions 
       if (tipo == element.tipo) {
+        //devolver tipo de transaccion
         return element.tipo_Transaccion;
       }
 
     }
 
+    //Si no se ecnuntra el rtipo de transacicon devuleve 0
     return 0;
   }
 
+  //regresar a modulo de facturacion
   goBack() {
     this._eventService.verDocumentoEvent(true);
   }
 
+  //ver detalle de un documento
   verDetalle() {
-    
+
     this.detalleDocumento = true;
     this.historial = false;
   }
 
+  //ver la lista de documntos del hisytorial
   verHistorial() {
     this.detalleDocumento = false;
     this.historial = true;
   }
 
- 
-  mostrarError(res:ResApiInterface) {
-    
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
     let dateNow: Date = new Date();
 
+    //informe de error
     let error = {
       date: dateNow,
       description: res.response,
@@ -231,7 +254,10 @@ export class HistorialComponent implements OnInit {
 
     }
 
+    //guardra error
     PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
     this.verError = true;
   }
 }

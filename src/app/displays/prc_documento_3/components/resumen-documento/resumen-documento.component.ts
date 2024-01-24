@@ -273,8 +273,8 @@ export class ResumenDocumentoComponent {
     //Obtener fecha y hora actual
     let currentDate: Date = new Date();
 
+    //documento estructura
     let doc: Documento = {
-
       Doc_Tra_Monto: this.facturaService.total,
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar
@@ -299,15 +299,19 @@ export class ResumenDocumentoComponent {
       Doc_Cargo_Abono: pagos,
     }
 
+    //onjeto para el api
     let document: PostDocumentInterface = {
       estructura: JSON.stringify(doc),
       user: this.user,
     }
 
     this.isLoading = true;
+    //consumo del servico para crear el documento
     let resDoc = await this._documentService.postDocument(this.token, document);
+
     this.isLoading = false;
 
+    //Si algo salió mal mostrar error
     if (!resDoc.status) {
 
       this.isLoading = false;
@@ -330,6 +334,7 @@ export class ResumenDocumentoComponent {
 
     }
 
+    //Si todo está correcto mostrar alerta
     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
   }
 
