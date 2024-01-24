@@ -8,10 +8,27 @@ $color-azul           : #134895; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 
+.container-main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
 .container-main {
-    height : calc(100vh - 128px) !important;
-    width  : 100%;
-    padding: 0px;
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    padding   : 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .progress {
@@ -66,10 +83,20 @@ p {
 
 .copias-cantidad {
     padding: 15px 0px;
+    width  : 45%;
+    display: flex;
 }
+
+// .copias {
+// }
 
 .titulo {
     font-weight: 500;
+}
+
+.subtitulo {
+    font-size  : 15px;
+    font-weight: 550;
 }
 
 .opciones {
@@ -98,15 +125,19 @@ p {
 }
 
 .icono-ayuda {
-    margin: 0px 5px;
-    cursor: pointer;
+    margin   : 0px 5px;
+    cursor   : pointer;
+    color    : $color-gris;
+    font-size: 15px;
+    align-items: center;
+    display: flex;
 }
 
 .b-b {
     border-top: none !important;
 }
 
-.seleccionado {
+.seleccionar-opcion {
     padding-left: 10px;
     text-align  : left;
     border-top  : 1px solid $color-bordes;
@@ -123,8 +154,21 @@ p {
 }
 
 @media screen and (max-width: 767px) {
-    .centro {
-        width: 85% !important;
+
+    .centro,
+    .impresoras,
+    .formatos,
+    .copias-cantidad {
+        width: 100% !important;
+    }
+
+    .impresoras-formatos,
+    .copias-cantidad {
+        display: block !important;
+    }
+
+    .restar, .sumar, .cantidad {
+        width: 36% !important;
     }
 }
 
@@ -142,6 +186,16 @@ p {
     width       : 40px;
     display     : flex;
     align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .sumar-restar {
@@ -165,4 +219,11 @@ p {
     color        : $color-azul;
     width        : 40px;
     text-align   : center;
+}
+
+.alerta {
+    font-size : 14px;
+    padding   : 10px 0px;
+    color     : $color-gris;
+    text-align: justify;
 }

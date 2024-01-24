@@ -3,7 +3,7 @@
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
         <mat-toolbar-row class="head__sidenav">
-            <button mat-icon-button aria-label matTooltip="regresar" (click)="goBack()">
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <span class="spacer"></span>

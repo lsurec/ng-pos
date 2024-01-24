@@ -19,7 +19,8 @@
             "versionActual": "Current Version",
             "tipoCambio": "Exchange Rate",
             "tipoDocumento": "Document Type",
-            "serieDocumento": "Document Series"
+            "serieDocumento": "Document Series",
+            "impresoras": "PRINTERS"
         },
         "login": {
             "correo": "Username",
@@ -245,7 +246,21 @@
             "presentaciones": "Presentations",
             "seleccionarBodega": "Select a warehouse.",
             "seleccionarTipoPrecio": "Select price type.",
-            "seleccionarPresentacion": "Select presentation."
+            "seleccionarPresentacion": "Select presentation.",
+            "configurar_impresora": "Configure Printer",
+            "ayuda": "Help",
+            "impresoras_disponibles": "Available Printers",
+            "impresora": "Printer",
+            "formatos_disponibles": "Available Formats",
+            "formato": "Format",
+            "copias": "Copies",
+            "numero_copias": "Number of copies to be printed",
+            "impresion_directa": "Direct Printing",
+            "marcar_impresion": "If you check the box, you will always see this screen",
+            "imprimir_prueba": "Print Test",
+            "imprimir_documento": "Print Document",
+            "sin_impresoras": "No printers available.",
+            "sin_formatos": "No formats available."
         }
     }
 }

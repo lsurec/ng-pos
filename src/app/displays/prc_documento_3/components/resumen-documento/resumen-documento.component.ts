@@ -23,7 +23,8 @@ export class ResumenDocumentoComponent {
   readonly regresar: number = 4; //id de la pantalla
   verError: boolean = false; //ocultar y mostrar pantalla de error
 
-  volver: number = 2;
+  volver: number = 2;//volver a resumen desde configurar impresora
+  idPantalla: number = 1;
   observacion = ""; //input para agreagar una observacion
 
   user: string = PreferencesService.user; //usuario de la sesion

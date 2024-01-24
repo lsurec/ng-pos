@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 })
 export class PrinterConfigurationComponent {
 
-  tipos: ImpresoraFormatoInterface[] = [
+  impresoras: ImpresoraFormatoInterface[] = [
     {
       id: 1,
       nombre: "Impresora térmica",
@@ -27,7 +27,7 @@ export class PrinterConfigurationComponent {
       nombre: "Impresora láser",
       checked: false
     }
-  ]
+  ];
 
   formatos: ImpresoraFormatoInterface[] = [
     {
@@ -48,6 +48,7 @@ export class PrinterConfigurationComponent {
   ]
 
   @Input() volver?: number;
+  @Input() pantalla?: number;
 
   impresora?: ImpresoraFormatoInterface; //impresora para imprimir
   formato?: ImpresoraFormatoInterface; //formato de impresion
@@ -68,9 +69,9 @@ export class PrinterConfigurationComponent {
     if (!PreferencesService.imprimir) {
       console.log('no hay impresora');
     } else {
-      for (let index = 0; index < this.tipos.length; index++) {
-        const element = this.tipos[index];
-        if (element.nombre.toLowerCase() == this.tipos[index].nombre.toLowerCase()) {
+      for (let index = 0; index < this.impresoras.length; index++) {
+        const element = this.impresoras[index];
+        if (element.nombre.toLowerCase() == this.impresoras[index].nombre.toLowerCase()) {
 
           this.impresora = element;
         }

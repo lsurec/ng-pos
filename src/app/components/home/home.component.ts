@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
 
   impresora: boolean = false;
   volver: number = 1;
+  idPantalla: number = 0;
 
   //Ver configuraciones y detalles del usuario
   temas: boolean = false;

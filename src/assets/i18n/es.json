@@ -19,7 +19,8 @@
             "versionActual": "Versión actual",
             "tipoCambio": "Tipo de Cambio",
             "tipoDocumento": "Tipo Documento",
-            "serieDocumento": "Serie Documento"
+            "serieDocumento": "Serie Documento",
+            "impresoras": "IMPRESORAS"
         },
         "login": {
             "correo": "Usuario",
@@ -245,7 +246,21 @@
             "presentaciones": "Presentaciones",
             "seleccionarBodega": "Seleccionar una bodega.",
             "seleccionarTipoPrecio": "Seleccionar tipo precio.",
-            "seleccionarPresentacion": "Seleccionar presentación."
+            "seleccionarPresentacion": "Seleccionar presentación.",
+            "configurar_impresora": "Configurar impresora",
+            "ayuda": "Ayuda",
+            "impresoras_disponibles": "Impresoras disponibles",
+            "impresora": "Impresora",
+            "formatos_disponibles": "Formatos disponibles",
+            "formato": "Formato",
+            "copias": "Copias",
+            "numero_copias": "Número de copias que se imprimirán",
+            "impresion_directa": "Impresión directa",
+            "marcar_impresion": "Si marcas la casilla, siempre verás esta pantalla",
+            "imprimir_prueba": "Imprimir Prueba",
+            "imprimir_documento": "Imprimir Documento",
+            "sin_impresoras": "No hay impresoras disponibles.",
+            "sin_formatos": "No hay formatos disponibles."
         }
     }
 }
