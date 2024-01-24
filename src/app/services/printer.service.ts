@@ -20,7 +20,7 @@ export class PrinterService {
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getPrinters(user: string, token: string): Promise<ResApiInterface> {
+    getPrinters(): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPrinters().subscribe(
                 //si esta correcto
@@ -28,7 +28,7 @@ export class PrinterService {
 
                     let resApi: ResApiInterface = {
                         status: true,
-                        response: res,
+                        response: res.body,
                     }
                     resolve(resApi);
                 },

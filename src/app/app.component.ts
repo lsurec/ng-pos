@@ -4,11 +4,14 @@ import { PreferencesService } from './services/preferences.service';
 import { LanguageInterface } from './interfaces/language.interface';
 import { languagesProvider, indexDefaultLang } from './providers/languages.provider';
 import { ThemeService } from './services/theme.service';
+import { PrinterService } from './services/printer.service';
+import { ResApiInterface } from './interfaces/res-api.interface';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers:[PrinterService]
 })
 export class AppComponent {
 
@@ -19,8 +22,12 @@ export class AppComponent {
 
   constructor(
     private translate: TranslateService,
-    private _themeService: ThemeService
+    private _themeService: ThemeService,
+    private _printerService:PrinterService,
   ) {
+    
+
+    this.loadData();
 
     //Buscar y obtener el leguaje guardado en el servicio  
     let getLanguage = PreferencesService.lang;
@@ -41,6 +48,12 @@ export class AppComponent {
       this._themeService.updateTheme();
     }
 
+  }
+
+  async loadData(){
+    let resApi:ResApiInterface =  await this._printerService.getPrinters();
+    console.log(resApi.response);
+    
   }
 
   
