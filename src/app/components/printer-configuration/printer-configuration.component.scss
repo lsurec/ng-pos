@@ -67,7 +67,7 @@ p {
 }
 
 .centro {
-    padding: 15px;
+    padding: 15px 25px;
     width  : 100%;
 }
 
@@ -87,8 +87,9 @@ p {
     display: flex;
 }
 
-// .copias {
-// }
+.copias {
+    display: flex;
+}
 
 .titulo {
     font-weight: 500;
@@ -125,12 +126,12 @@ p {
 }
 
 .icono-ayuda {
-    margin   : 0px 5px;
-    cursor   : pointer;
-    color    : $color-gris;
-    font-size: 15px;
+    margin     : 5px;
+    cursor     : pointer;
+    color      : $color-gris;
+    font-size  : 15px;
     align-items: center;
-    display: flex;
+    display    : flex;
 }
 
 .b-b {
@@ -151,6 +152,7 @@ p {
 .seleccionar-impresora {
     text-align: center !important;
     border    : 1px solid $color-bordes;
+    margin    : 5px 0px;
 }
 
 @media screen and (max-width: 767px) {
@@ -163,12 +165,29 @@ p {
     }
 
     .impresoras-formatos,
-    .copias-cantidad {
+    .copias-cantidad,
+    .copias {
         display: block !important;
     }
 
-    .restar, .sumar, .cantidad {
+    .restar,
+    .sumar,
+    .cantidad {
         width: 36% !important;
+    }
+
+    .copias-cantidad {
+        padding: 3px 0px 5px !important;
+    }
+
+    .imprimir {
+        width: 100% !important;
+    }
+
+    .impresoras,
+    .formatos {
+        padding-bottom: 10px !important;
+        border-bottom : 1px solid $color-bordes;
     }
 }
 

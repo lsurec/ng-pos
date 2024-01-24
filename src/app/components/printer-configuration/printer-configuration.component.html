@@ -50,42 +50,54 @@
                         <span class="spacer"></span>
                     </div>
                 </div>
-                <div class="copias-cantidad">
-                    <div class="copias">
-                        <div class="dFlex">
-                            <p class="subtitulo">{{'pos.factura.copias' | translate}}</p>
-                            <mat-icon class="icono-ayuda"
-                                matTooltip="{{'pos.factura.numero_copias' | translate}}">help_outline</mat-icon>
-                        </div>
-                        <div class="dFlex">
-                            <div class="restar" (click)="restar()">
-                                <mat-icon class="sumar-restar">remove</mat-icon>
+                <div class="impresoras-formatos">
+                    <div class="copias-cantidad">
+                        <div class="copias">
+                            <div class="dFlex">
+                                <p class="subtitulo">{{'pos.factura.copias' | translate}}</p>
+                                <mat-icon class="icono-ayuda"
+                                    matTooltip="{{'pos.factura.numero_copias' | translate}}">help_outline</mat-icon>
                             </div>
-                            <input class="cantidad" type="text" name="search" [(ngModel)]="copias" autocomplete="off">
-                            <div class="sumar" (click)="sumar()">
-                                <mat-icon class="sumar-restar">add</mat-icon>
+                            <div class="dFlex">
+                                <!-- <p class="subtitulo">{{'pos.factura.copias' | translate}}</p>
+                                <mat-icon class="icono-ayuda"
+                                    matTooltip="{{'pos.factura.numero_copias' | translate}}">help_outline</mat-icon> -->
+                                <div class="restar" (click)="restar()">
+                                    <mat-icon class="sumar-restar">remove</mat-icon>
+                                </div>
+                                <input class="cantidad" type="text" name="search" [(ngModel)]="copias"
+                                    autocomplete="off">
+                                <div class="sumar" (click)="sumar()">
+                                    <mat-icon class="sumar-restar">add</mat-icon>
+                                </div>
+                                <span class="spacer"></span>
                             </div>
-                            <span class="spacer"></span>
                         </div>
                     </div>
                     <span class="spacer"></span>
-                    <div class="dFlex">
-                        <mat-checkbox class="example-margin" color="primary" [(ngModel)]="vistaPrevia"></mat-checkbox>
-                        <p class="subtitulo">{{'pos.factura.impresion_directa' | translate}}</p>
-                        <mat-icon class="icono-ayuda"
-                            matTooltip="{{'pos.factura.marcar_impresion' | translate}}">help_outline</mat-icon>
+                    <div class="copias-cantidad">
+                        <div class="copias">
+                            <div class="dFlex">
+                                <mat-checkbox class="example-margin" color="primary"
+                                    [(ngModel)]="vistaPrevia"></mat-checkbox>
+                                <p class="subtitulo">{{'pos.factura.impresion_directa' | translate}}</p>
+                                <mat-icon class="icono-ayuda"
+                                    matTooltip="{{'pos.factura.marcar_impresion' | translate}}">help_outline</mat-icon>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="dFlex" *ngIf="pantalla == 0">
                     <span class="spacer"></span>
-                    <button mat-stroked-button (click)="guardar()">{{'pos.factura.imprimir_prueba' |
+                    <button mat-stroked-button (click)="guardar()" class="imprimir">{{'pos.factura.imprimir_prueba' |
                         translate}}</button>
                     <span class="spacer"></span>
                 </div>
                 <div class="dFlex" *ngIf="pantalla == 1">
                     <span class="spacer"></span>
-                    <button mat-stroked-button (click)="ver()">{{'pos.factura.imprimir_documento' | translate}}</button>
+                    <button mat-stroked-button (click)="ver()" class="imprimir">{{'pos.factura.imprimir_documento' |
+                        translate}}</button>
                     <span class="spacer"></span>
                 </div>
             </div>

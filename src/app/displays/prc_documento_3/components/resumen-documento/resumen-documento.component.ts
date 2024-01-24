@@ -88,15 +88,17 @@ export class ResumenDocumentoComponent {
 
   //Confirmar documento
   async sendDoc() {
-    // //Si se permite fel entrar al proceso
-    // if (this.facturaService.printFel()) {
-    //   //alerta FEL no disponible
-    //   this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
-    // } else {
-    //   //Enviar documento a tbl_documento estructura
-    //   this.sendDocument()
-    // }
+    //Si se permite fel entrar al proceso
+    if (this.facturaService.printFel()) {
+      //alerta FEL no disponible
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+    } else {
+      //Enviar documento a tbl_documento estructura
+      this.sendDocument()
+    }
 
+
+    //abre dialoogo de impresion o pantalla de configuracion
     if (PreferencesService.vistaPrevia == '0') {
       console.log("abirir ialogo de imprimiendo");
 
@@ -109,6 +111,7 @@ export class ResumenDocumentoComponent {
       );
 
     } else {
+      //ver vista previa de impresion
       console.log("mostar configiracion de impresora");
       this.verVistaPrevia = true;
     }
