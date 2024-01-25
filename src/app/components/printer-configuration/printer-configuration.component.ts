@@ -53,6 +53,7 @@ export class PrinterConfigurationComponent {
   impresora?: ImpresoraFormatoInterface; //impresora para imprimir
   formato?: ImpresoraFormatoInterface; //formato de impresion
   vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
+  imprimirNavegador: boolean = false; //para activar la impresion desde el navegador
   isLoading: boolean = false; //pantalla de carga
   copias: number = 1; //cantidad de copias a imprimir
   readonly regresar: number = 8; //id de la pantalla

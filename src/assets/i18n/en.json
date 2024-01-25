@@ -159,7 +159,8 @@
             "imprimir": "Print",
             "nuevoDoc": "New Document",
             "confirmar": "Confirm",
-            "inicio": "Home"
+            "inicio": "Home",
+            "listo": "Ready"
         },
         "error": {
             "informe": "Error Report",
@@ -260,7 +261,8 @@
             "imprimir_prueba": "Print Test",
             "imprimir_documento": "Print Document",
             "sin_impresoras": "No printers available.",
-            "sin_formatos": "No formats available."
+            "sin_formatos": "No formats available.",
+            "impresion_navegador": "Use browser printing"
         }
     }
 }

@@ -84,6 +84,11 @@
                                 <mat-icon class="icono-ayuda"
                                     matTooltip="{{'pos.factura.marcar_impresion' | translate}}">help_outline</mat-icon>
                             </div>
+                            <div class="dFlex">
+                                <mat-checkbox class="example-margin" color="primary"
+                                    [(ngModel)]="imprimirNavegador"></mat-checkbox>
+                                <p class="subtitulo">{{'pos.factura.impresion_navegador' | translate}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

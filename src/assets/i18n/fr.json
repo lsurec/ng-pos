@@ -159,7 +159,8 @@
             "imprimir": "Imprimer",
             "nuevoDoc": "Nouveau document",
             "confirmar": "Confirmer",
-            "inicio": "Accueil"
+            "inicio": "Accueil",
+            "listo": "Prêt"
         },
         "error": {
             "informe": "Rapport d'erreur",
@@ -260,7 +261,8 @@
             "imprimir_prueba": "Imprimer un essai",
             "imprimir_documento": "Imprimer le document",
             "sin_impresoras": "Aucune imprimante disponible.",
-            "sin_formatos": "Aucun format disponible."
+            "sin_formatos": "Aucun format disponible.",
+            "impresion_navegador": "Utiliser l'impression du navigateur"
         }
     }
 }

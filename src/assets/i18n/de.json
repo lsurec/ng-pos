@@ -159,7 +159,8 @@
             "imprimir": "Drucken",
             "nuevoDoc": "Neues Dokument",
             "confirmar": "Bestätigen",
-            "inicio": "Startseite"
+            "inicio": "Startseite",
+            "listo": "Bereit"
         },
         "error": {
             "informe": "Fehlerbericht",
@@ -260,7 +261,8 @@
             "imprimir_prueba": "Testseite drucken",
             "imprimir_documento": "Dokument drucken",
             "sin_impresoras": "Keine Drucker verfügbar.",
-            "sin_formatos": "Keine Formate verfügbar."
+            "sin_formatos": "Keine Formate verfügbar.",
+            "impresion_navegador": "Browser-Druck verwenden"
         }
     }
 }

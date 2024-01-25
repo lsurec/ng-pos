@@ -1,5 +1,6 @@
 <app-error *ngIf="verError" [regresar]="regresar"></app-error>
-<app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver" [pantalla]="idPantalla"></app-printer-configuration>
+<app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver"
+    [pantalla]="idPantalla"></app-printer-configuration>
 <div *ngIf="!verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
@@ -134,7 +135,6 @@
                         </div>
 
                         <div class="informacion">
-
                             <div class="dFlex">
                                 <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
                                     }}</button>
@@ -144,8 +144,8 @@
                             </div>
                         </div>
                         <div class="informacion">
-
                             <div class="dFlex">
+                                <button mat-stroked-button>{{ 'pos.botones.listo' | translate}}</button>
                                 <span class="spacer"></span>
                                 <button mat-stroked-button>{{ 'pos.botones.imprimir' | translate}}</button>
                             </div>
