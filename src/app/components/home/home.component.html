@@ -77,6 +77,14 @@
             </mat-toolbar>
 
             <div class="ajustes" *ngIf="ajustes">
+                <div class="configuraciones" (click)="verConfiguracion()">
+                    <mat-icon class="iconos-detalles">print</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.impresoras' | translate}}</p>
+                        <p class="descripcion">{{imprimir}} (TM-U) </p>
+                    </div>
+                </div>
                 <!-- Vista Seleccionar Lenguajes -->
                 <div class="configuraciones" (click)="verLenguajes()">
                     <mat-icon class="iconos-detalles">language</mat-icon>
@@ -106,14 +114,6 @@
                         <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
                         <span class="spacer"></span>
                         <mat-icon>navigate_next</mat-icon>
-                    </div>
-                </div>
-                <div class="configuraciones" (click)="verConfiguracion()">
-                    <mat-icon class="iconos-detalles">print</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.impresoras' | translate}}</p>
-                        <p class="descripcion">{{imprimir}} (TM-U) </p>
                     </div>
                 </div>
             </div>
