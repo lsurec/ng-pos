@@ -23,10 +23,11 @@
                         <mat-radio-group class="example-radio-group seleccionar-impresora" [(ngModel)]="impresora">
                             <mat-radio-button class="seleccionar-opcion" *ngFor="let tipo of impresoras; let i = index"
                                 [ngClass]="i == 0 ? 'b-b':''" [value]="tipo" color="primary" (click)="impresora = tipo">
-                                <p class="opciones">{{tipo.nombre}}</p>
+                                <p class="opciones">{{tipo}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <p>{{'pos.factura.impresora' | translate}}: {{impresora?.nombre}}</p>
+                        <!--TODO:translate-->
+                        <p>{{'pos.factura.impresora' | translate}}: {{impresora ?? "No seleccionado" }}</p>
                     </div>
                     <div class="impresoras dFlex" *ngIf="impresoras.length == 0">
                         <span class="spacer"></span>

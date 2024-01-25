@@ -19,9 +19,9 @@ export class AppComponent {
 
   constructor(
     private translate: TranslateService,
-    private _themeService: ThemeService
-  ) {
+    private _themeService: ThemeService,
 
+  ) {
     //Buscar y obtener el leguaje guardado en el servicio  
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
@@ -34,7 +34,6 @@ export class AppComponent {
       this.translate.setDefaultLang(this.activeLang.lang);
     };
 
-
     //buscar y asignar tema
     if (PreferencesService.theme == '1') {
       this._themeService.isDarkTheme = true;
@@ -43,5 +42,4 @@ export class AppComponent {
 
   }
 
-  
 }
