@@ -48,7 +48,8 @@
                                 <p class="opciones">{{tipo.nombre}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <p>{{'pos.factura.formato' | translate}}: {{formato.nombre}}</p>
+                        <p>{{'pos.factura.formato' | translate}}: {{formato.nombre ?? 'pos.factura.noSeleccionada' |
+                            translate }}</p>
                     </div>
                     <div class="formatos dFlex" *ngIf="formatos.length == 0">
                         <span class="spacer"></span>
