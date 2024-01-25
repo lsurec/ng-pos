@@ -16,7 +16,7 @@
         <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.ayuda' | translate }}">
             <mat-icon>help_outline</mat-icon>
         </button>
-       
+
     </mat-toolbar-row>
     <div class="container-main">
         <div class="contenido">
@@ -24,14 +24,15 @@
                 <div class="impresoras-formatos">
                     <div class="impresoras" *ngIf="impresoras.length > 0">
                         <p class="titulo">{{'pos.factura.impresoras_disponibles' | translate}}</p>
-                        <mat-radio-group class="example-radio-group seleccionar-impresora" [(ngModel)]="impresora" (ngModelChange)="selectPrint()">
+                        <mat-radio-group class="example-radio-group seleccionar-impresora" [(ngModel)]="impresora"
+                            (ngModelChange)="selectPrint()">
                             <mat-radio-button class="seleccionar-opcion" *ngFor="let tipo of impresoras; let i = index"
                                 [ngClass]="i == 0 ? 'b-b':''" [value]="tipo" color="primary">
                                 <p class="opciones">{{tipo}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <!--TODO:translate-->
-                        <p>{{'pos.factura.impresora' | translate}}: {{impresora ?? "No seleccionada" }}</p>
+                        <p>{{'pos.factura.impresora' | translate}}: {{impresora ?? 'pos.factura.noSeleccionada' |
+                            translate }}</p>
                     </div>
                     <div class="impresoras dFlex" *ngIf="impresoras.length == 0">
                         <span class="spacer"></span>
@@ -47,7 +48,7 @@
                                 <p class="opciones">{{tipo.nombre}}</p>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <p>{{'pos.factura.formato' | translate}}: {{formato?.nombre}}</p>
+                        <p>{{'pos.factura.formato' | translate}}: {{formato.nombre}}</p>
                     </div>
                     <div class="formatos dFlex" *ngIf="formatos.length == 0">
                         <span class="spacer"></span>
