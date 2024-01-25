@@ -64,6 +64,12 @@ export class PrinterConfigurationComponent implements OnInit {
 
   ) {
 
+    //evento para regresar desde error 
+
+    this._eventService.regresarDesdeImpresion$.subscribe((eventData) => {
+      this.verError = false;
+    });
+
     // //veriicar si hay impresora y marcarla
     // if (!PreferencesService.imprimir) {
     //   console.log('no hay impresora');
@@ -86,23 +92,23 @@ export class PrinterConfigurationComponent implements OnInit {
     //     this.vistaPrevia = true;
     // }
   }
-  
+
   ngOnInit(): void {
 
     this.loadData();
   }
 
 
-  
+
 
   async loadData() {
-    
+
     this.isLoading = true;
     let resApi: ResApiInterface = await this._printerService.getPrinters();
 
     this.isLoading = false;
 
-    
+
   }
   logo_empresa: any;
   imageBase64: any;
@@ -137,7 +143,7 @@ export class PrinterConfigurationComponent implements OnInit {
     let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
 
-   let divider =  {
+    let divider = {
       layout: 'headerLineOnly',
       table: {
         widths: ['100%'],
@@ -274,7 +280,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
         },
         divider,
-       
+
 
         {
           layout: 'headerLineOnly',
@@ -324,7 +330,7 @@ export class PrinterConfigurationComponent implements OnInit {
           table: {
             widths: ['50%', '50%',],
             body: [
-             
+
               [
 
                 //TODO:translate
@@ -350,24 +356,24 @@ export class PrinterConfigurationComponent implements OnInit {
         },
 
         {
-          margin:[0,20,0,0],
-          text:'---------------------------------------------------------------',
-          style:'center',
+          margin: [0, 20, 0, 0],
+          text: '---------------------------------------------------------------',
+          style: 'center',
         },
-      
+
         {
-          text:'Power By',
-          style:'center',
+          text: 'Power By',
+          style: 'center',
         },
-      
+
         {
-          text:'Desarrollo Moderno de Software S.A.',
-          style:'center',
+          text: 'Desarrollo Moderno de Software S.A.',
+          style: 'center',
         },
-      
+
         {
-          text:'www.demosoft.com.gt',
-          style:'center',
+          text: 'www.demosoft.com.gt',
+          style: 'center',
         },
         // {
         //   image: this.logo_empresa,
@@ -375,7 +381,7 @@ export class PrinterConfigurationComponent implements OnInit {
         //   alignment: 'center',
         // },
 
-        
+
 
       ],
       styles: {
@@ -519,4 +525,8 @@ export class PrinterConfigurationComponent implements OnInit {
     console.log(PreferencesService.vistaPrevia);
   }
 
+  error() {
+    this.verError = true;
+
+  }
 }
