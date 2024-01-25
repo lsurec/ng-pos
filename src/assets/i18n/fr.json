@@ -19,7 +19,8 @@
             "versionActual": "Version Actuelle",
             "tipoCambio": "Taux de Change",
             "tipoDocumento": "Type de Document",
-            "serieDocumento": "Série de Document"
+            "serieDocumento": "Série de Document",
+            "impresoras": "IMPRIMANTES"
         },
         "login": {
             "correo": "Utilisateur",
@@ -158,7 +159,8 @@
             "imprimir": "Imprimer",
             "nuevoDoc": "Nouveau document",
             "confirmar": "Confirmer",
-            "inicio": "Accueil"
+            "inicio": "Accueil",
+            "listo": "Prêt"
         },
         "error": {
             "informe": "Rapport d'erreur",
@@ -245,7 +247,22 @@
             "presentaciones": "Présentations",
             "seleccionarBodega": "Sélectionner un entrepôt.",
             "seleccionarTipoPrecio": "Sélectionner le type de prix.",
-            "seleccionarPresentacion": "Sélectionner la présentation."
+            "seleccionarPresentacion": "Sélectionner la présentation.",
+            "configurar_impresora": "Configurer l'imprimante",
+            "ayuda": "Aide",
+            "impresoras_disponibles": "Imprimantes disponibles",
+            "impresora": "Imprimante",
+            "formatos_disponibles": "Formats disponibles",
+            "formato": "Format",
+            "copias": "Copies",
+            "numero_copias": "Nombre de copies à imprimer",
+            "impresion_directa": "Impression directe",
+            "marcar_impresion": "Si vous cochez la case, vous verrez toujours cet écran",
+            "imprimir_prueba": "Imprimer un essai",
+            "imprimir_documento": "Imprimer le document",
+            "sin_impresoras": "Aucune imprimante disponible.",
+            "sin_formatos": "Aucun format disponible.",
+            "impresion_navegador": "Utiliser l'impression du navigateur"
         }
     }
 }

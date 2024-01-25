@@ -1,0 +1,248 @@
+$color-naranja        : #df9722;
+$color-negro          : #000000;
+$color-blanco         : #fff;
+$color-gris           : #c1bfbf;
+$color-azul           : #134895;
+$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+
+.container-main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.container-main {
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    padding   : 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $background-oficial;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $background-oficial;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $color-bordes;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.contenido {
+    display: flex;
+    height : 100%;
+}
+
+.centro {
+    padding: 15px 25px;
+    width  : 100%;
+}
+
+.impresoras-formatos {
+    display: flex;
+    width  : 100%;
+}
+
+.impresoras,
+.formatos {
+    width: 45%;
+}
+
+.copias-cantidad {
+    padding: 15px 0px;
+    width  : 45%;
+    display: flex;
+}
+
+.copias {
+    display: flex;
+}
+
+.titulo {
+    font-weight: 500;
+}
+
+.subtitulo {
+    font-size  : 15px;
+    font-weight: 550;
+}
+
+.opciones {
+    padding  : 5px 10px 5px 0px;
+    font-size: 12px;
+    width    : 100%;
+}
+
+.opciones:hover {
+    color      : $color-azul;
+    font-weight: 500;
+    cursor     : pointer;
+}
+
+.example-radio-group {
+    padding-bottom: 4px;
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+}
+
+.example-radio-button {
+    margin: 5px;
+    width : 100%;
+}
+
+.icono-ayuda {
+    margin     : 5px;
+    cursor     : pointer;
+    color      : $color-gris;
+    font-size  : 15px;
+    align-items: center;
+    display    : flex;
+}
+
+.b-b {
+    border-top: none !important;
+}
+
+.seleccionar-opcion {
+    padding-left: 10px;
+    text-align  : left;
+    border-top  : 1px solid $color-bordes;
+    width       : 100% !important;
+    align-items : center;
+    font-size   : 12px;
+    font-weight : 500;
+    cursor      : pointer;
+}
+
+.seleccionar-impresora {
+    text-align: center !important;
+    border    : 1px solid $color-bordes;
+    margin    : 5px 0px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .centro,
+    .impresoras,
+    .formatos,
+    .copias-cantidad {
+        width: 100% !important;
+    }
+
+    .impresoras-formatos,
+    .copias-cantidad,
+    .copias {
+        display: block !important;
+    }
+
+    .restar,
+    .sumar,
+    .cantidad {
+        width: 36% !important;
+    }
+
+    .copias-cantidad {
+        padding: 3px 0px 5px !important;
+    }
+
+    .imprimir {
+        width: 100% !important;
+    }
+
+    .impresoras,
+    .formatos {
+        padding-bottom: 10px !important;
+        border-bottom : 1px solid $color-bordes;
+    }
+}
+
+//CANTIDAD
+
+.sumar,
+.restar {
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $color-bordes;
+    color       : $color-azul;
+    width       : 40px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width     : 100%;
+    text-align: center;
+}
+
+.sumar-restar:hover {
+    cursor: pointer;
+}
+
+.cantidad {
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $color-bordes;
+    border-bottom: 0.5px solid $color-bordes;
+    color        : $color-azul;
+    width        : 40px;
+    text-align   : center;
+}
+
+.alerta {
+    font-size : 14px;
+    padding   : 10px 0px;
+    color     : $color-gris;
+    text-align: justify;
+}

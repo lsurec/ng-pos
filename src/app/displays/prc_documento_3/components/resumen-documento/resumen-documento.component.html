@@ -1,5 +1,7 @@
 <app-error *ngIf="verError" [regresar]="regresar"></app-error>
-<div *ngIf="!verError">
+<app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver"
+    [pantalla]="idPantalla"></app-printer-configuration>
+<div *ngIf="!verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
         <mat-toolbar-row class="head__sidenav">
@@ -8,7 +10,6 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <span class="spacer"></span>
-            <!-- Titulo de la tarea -->
             <p class="titulo">{{ 'pos.factura.resumen_documento' | translate }}</p>
             <span class="spacer"></span>
         </mat-toolbar-row>
@@ -19,9 +20,11 @@
                         <div class="informacion">
                             <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
                             <div class="descripciones">
-                                <p class="textos">{{ 'pos.factura.nit' | translate}} {{facturaService.cuenta?.factura_NIT}}
+                                <p class="textos">{{ 'pos.factura.nit' | translate}}
+                                    {{facturaService.cuenta?.factura_NIT}}
                                 </p>
-                                <p class="textos">{{ 'pos.factura.nombre' | translate }} {{facturaService.cuenta?.factura_Nombre}}</p>
+                                <p class="textos">{{ 'pos.factura.nombre' | translate }}
+                                    {{facturaService.cuenta?.factura_Nombre}}</p>
                                 <p class="textos">{{ 'pos.factura.direccion' | translate }}
                                     {{facturaService.cuenta?.factura_Direccion}}</p>
                             </div>
@@ -44,9 +47,11 @@
                                     currency:' ':'symbol':'2.2-2' }}</p>
                                 <p class="textos">{{ 'pos.factura.total' | translate }} {{transaction.total | currency:'
                                     ':'symbol':'2.2-2' }} </p>
-                                <p class="textos" *ngIf="transaction.cargo != 0">{{ 'pos.factura.cargos' | translate }} {{transaction.cargo |
+                                <p class="textos" *ngIf="transaction.cargo != 0">{{ 'pos.factura.cargos' | translate }}
+                                    {{transaction.cargo |
                                     currency:' ':'symbol':'2.2-2' }} </p>
-                                <p class="textos" *ngIf="transaction.descuento != 0">{{ 'pos.factura.descuentos' | translate }} {{transaction.descuento |
+                                <p class="textos" *ngIf="transaction.descuento != 0">{{ 'pos.factura.descuentos' |
+                                    translate }} {{transaction.descuento |
                                     currency:' ':'symbol':'2.2-2' }}
                                 </p>
                             </div>
@@ -129,12 +134,21 @@
                                 [(ngModel)]="observacion"></textarea>
                         </div>
 
-                        <div class="dFlex">
-                            <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
-                                }}</button>
-                            <span class="spacer"></span>
-                            <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.confirmar' | translate
-                                }}</button>
+                        <div class="informacion">
+                            <div class="dFlex">
+                                <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
+                                    }}</button>
+                                <span class="spacer"></span>
+                                <button mat-stroked-button (click)="sendDoc()">{{ 'pos.botones.confirmar' | translate
+                                    }}</button>
+                            </div>
+                        </div>
+                        <div class="informacion">
+                            <div class="dFlex">
+                                <button mat-stroked-button>{{ 'pos.botones.listo' | translate}}</button>
+                                <span class="spacer"></span>
+                                <button mat-stroked-button>{{ 'pos.botones.imprimir' | translate}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>

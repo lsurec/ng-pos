@@ -123,7 +123,8 @@ body {
 .dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,
 .dark-theme .input-container,
-.dark-theme .seleccionar {
+.dark-theme .seleccionar,
+.dark-theme .head__sidenav {
     border-bottom: 1px solid $bordes !important;
 }
 
@@ -133,8 +134,8 @@ body {
 .dark-theme .detalle-documento,
 .dark-theme .productos-pagos,
 .dark-theme .documento,
-.dark-theme .contenido,
-.dark-theme .pago {
+.dark-theme .pago,
+.dark-theme .seleccionar-opcion {
     border-top: 1px solid $bordes !important;
 }
 
@@ -213,7 +214,11 @@ body {
 .dark-theme button:not(:disabled),
 .dark-theme .barra-monto,
 .dark-theme .total,
-.dark-theme .centro {
+.dark-theme .centro, 
+.dark-theme .seleccionar-impresora,
+.dark-theme .restar,
+.dark-theme .sumar,
+.dark-theme .cantidad {
     border-color: $bordes !important;
 }
 
