@@ -262,7 +262,8 @@
             "imprimir_documento": "Imprimir Documento",
             "sin_impresoras": "No hay impresoras disponibles.",
             "sin_formatos": "No hay formatos disponibles.",
-            "impresion_navegador": "Usar impresion del navegador"
+            "impresion_navegador": "Usar impresion del navegador",
+            "noSeleccionada": "No seleccionado."
         }
     }
 }
