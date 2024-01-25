@@ -1,6 +1,6 @@
 <app-error *ngIf="verError" [regresar]="regresar"></app-error>
 <app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver"
-    [pantalla]="idPantalla"></app-printer-configuration>
+    [pantalla]="idPantalla" [consecutivo]="consecutivoDoc"></app-printer-configuration>
 <div *ngIf="!verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
@@ -134,7 +134,7 @@
                                 [(ngModel)]="observacion"></textarea>
                         </div>
 
-                        <div class="informacion">
+                        <div class="informacion" *ngIf="consecutivoDoc == -1">
                             <div class="dFlex">
                                 <button mat-stroked-button (click)="goBack()">{{ 'pos.botones.cancelar' | translate
                                     }}</button>
@@ -143,11 +143,11 @@
                                     }}</button>
                             </div>
                         </div>
-                        <div class="informacion">
+                        <div class="informacion" *ngIf="consecutivoDoc != -1">
                             <div class="dFlex">
-                                <button mat-stroked-button>{{ 'pos.botones.listo' | translate}}</button>
+                                <button mat-stroked-button (click)="goBack()" > {{ 'pos.botones.listo' | translate}}</button>
                                 <span class="spacer"></span>
-                                <button mat-stroked-button>{{ 'pos.botones.imprimir' | translate}}</button>
+                                <button mat-stroked-button (click)="printDoc()" >{{ 'pos.botones.imprimir' | translate}}</button>
                             </div>
                         </div>
                     </div>

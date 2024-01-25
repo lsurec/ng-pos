@@ -1,5 +1,5 @@
 import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
     DocumentService,
   ]
 })
-export class ResumenDocumentoComponent {
+export class ResumenDocumentoComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga
   readonly regresar: number = 4; //id de la pantalla
@@ -36,6 +36,8 @@ export class ResumenDocumentoComponent {
   tipoCambio: number = PreferencesService.tipoCambio; //tipo cambio dispoible
 
   verVistaPrevia: boolean = false;
+
+  consecutivoDoc:number = -1;
 
   constructor(
     //instancias de los servicios necesarios
@@ -56,6 +58,10 @@ export class ResumenDocumentoComponent {
       this.verVistaPrevia = false;
     });
 
+  }
+  ngOnInit(): void {
+    // console.log(this.consecutivoDoc);
+    
   }
 
   //Regresar al modulo de facturacion (tabs)
@@ -98,24 +104,32 @@ export class ResumenDocumentoComponent {
     }
 
 
-    //abre dialoogo de impresion o pantalla de configuracion
-    if (PreferencesService.vistaPrevia == '0') {
-      console.log("abirir ialogo de imprimiendo");
+   
 
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: "Imprimiendo",
-          description: "El documento se esta imprimiendo.",
-          verdadero: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
+  }
 
-    } else {
-      //ver vista previa de impresion
-      console.log("mostar configiracion de impresora");
-      this.verVistaPrevia = true;
-    }
+  printDoc(){
 
+    this.verVistaPrevia = true;
+
+    //  return;
+    // //abre dialoogo de impresion o pantalla de configuracion
+    // if (PreferencesService.vistaPrevia == '0') {
+    //   console.log("abirir ialogo de imprimiendo");
+
+    //   let verificador = await this._notificationService.openDialogActions(
+    //     {
+    //       title: "Imprimiendo",
+    //       description: "El documento se esta imprimiendo.",
+    //       verdadero: this._translate.instant('pos.botones.aceptar'),
+    //     }
+    //   );
+
+    // } else {
+    //   //ver vista previa de impresion
+    //   console.log("mostar configiracion de impresora");
+    //   this.verVistaPrevia = true;
+    // }
   }
 
   //Creacion del documnto en tbl_documento estructura
@@ -334,8 +348,18 @@ export class ResumenDocumentoComponent {
 
     }
 
+
+
+
+    this.consecutivoDoc = resDoc.response.data;
+
+
     //Si todo está correcto mostrar alerta
     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
   }
+
+
+
+
 
 }
