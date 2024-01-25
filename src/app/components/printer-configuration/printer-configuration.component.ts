@@ -26,7 +26,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
   impresoras: string[] = [];
   impresora?: string; //impresora para imprimir
-  
+
   logo_empresa: any;
   imageBase64: any;
 
@@ -36,13 +36,14 @@ export class PrinterConfigurationComponent implements OnInit {
       nombre: "Ticket 80 mm (TMU)",
       checked: false
     },
-    
+
   ]
+
+  formato: ImpresoraFormatoInterface = this.formatos[0]; //formato de impresion
 
   @Input() volver?: number;
   @Input() pantalla?: number;
 
-  formato?: ImpresoraFormatoInterface; //formato de impresion
   vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
   imprimirNavegador: boolean = false; //para activar la impresion desde el navegador
   isLoading: boolean = false; //pantalla de carga
@@ -56,8 +57,8 @@ export class PrinterConfigurationComponent implements OnInit {
     private _location: Location,
     private _printerService: PrinterService,
     private _http: HttpClient,
-   private _translate:TranslateService,
-   private _notificationService:NotificationsService,
+    private _translate: TranslateService,
+    private _notificationService: NotificationsService,
 
   ) {
 
@@ -67,27 +68,6 @@ export class PrinterConfigurationComponent implements OnInit {
       this.verError = false;
     });
 
-    // //veriicar si hay impresora y marcarla
-    // if (!PreferencesService.imprimir) {
-    //   console.log('no hay impresora');
-    // } else {
-    //   for (let index = 0; index < this.impresoras.length; index++) {
-    //     const element = this.impresoras[index];
-    //     if (element.nombre.toLowerCase() == this.impresoras[index].nombre.toLowerCase()) {
-
-    //       this.impresora = element;
-    //     }
-    //   }
-    // }
-    // //asignar un formato
-    // this.formato = this.formatos[0];
-
-    // if (!PreferencesService.vistaPrevia) {
-    //   console.log('sin vista previa');
-    // } else {
-    //   if (PreferencesService.vistaPrevia == '1')
-    //     this.vistaPrevia = true;
-    // }
   }
 
   ngOnInit(): void {
@@ -97,7 +77,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
 
 
-  selectPrint(){
+  selectPrint() {
     PreferencesService.impresora = this.impresora!;
   }
 
@@ -136,14 +116,14 @@ export class PrinterConfigurationComponent implements OnInit {
 
     for (let i = 0; i < this.impresoras.length; i++) {
       const impresora = this.impresoras[i];
-      if(PreferencesService.impresora == impresora){
+      if (PreferencesService.impresora == impresora) {
         this.impresora = impresora;
         break;
       }
-      
+
     }
 
-    
+
 
   }
 
@@ -167,6 +147,10 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
   async imprimir() {
+
+    if(this.impresora){
+
+    }
 
 
     await this.generateBase64('/assets/logo_demosoft.png');
@@ -546,21 +530,13 @@ export class PrinterConfigurationComponent implements OnInit {
     this.copias!++;
   }
 
-  guardar() {
-    // PreferencesService.imprimir = this.impresora!.nombre; //nombre de la impresora seleccionada
-    // if (!this.vistaPrevia) {
-    //   PreferencesService.vistaPrevia = '0';
-    // } else {
-    //   PreferencesService.vistaPrevia = '1';
-    // }
-  }
 
   ver() {
     // console.log(PreferencesService.imprimir);
     console.log(PreferencesService.vistaPrevia);
   }
 
-  showError(res:ResApiInterface) {
+  showError(res: ResApiInterface) {
 
     // fecha actual
     let dateNow: Date = new Date();
