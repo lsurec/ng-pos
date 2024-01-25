@@ -217,11 +217,11 @@ export class PreferencesService {
     }
 
     @Input()
-    static set imprimir(value: string) {
+    static set impresora(value: string) {
         localStorage.setItem(this.impresoraKey, value);
     }
 
-    static get imprimir(): string {
+    static get impresora(): string {
         let value = localStorage.getItem(this.impresoraKey);
         if (!value) return "";
         return value;

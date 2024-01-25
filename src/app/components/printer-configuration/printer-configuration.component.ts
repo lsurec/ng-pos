@@ -9,6 +9,8 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -25,29 +27,23 @@ export class PrinterConfigurationComponent implements OnInit {
   impresoras: string[] = [];
   impresora?: string; //impresora para imprimir
 
+  logo_empresa: any;
+  imageBase64: any;
 
   formatos: ImpresoraFormatoInterface[] = [
     {
       id: 1,
-      nombre: "TM-U",
+      nombre: "Ticket 80 mm (TMU)",
       checked: false
     },
-    {
-      id: 1,
-      nombre: "A-06",
-      checked: false
-    },
-    {
-      id: 1,
-      nombre: "A-04",
-      checked: false
-    },
+
   ]
+
+  formato: ImpresoraFormatoInterface = this.formatos[0]; //formato de impresion
 
   @Input() volver?: number;
   @Input() pantalla?: number;
 
-  formato?: ImpresoraFormatoInterface; //formato de impresion
   vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
   imprimirNavegador: boolean = false; //para activar la impresion desde el navegador
   isLoading: boolean = false; //pantalla de carga
@@ -61,6 +57,8 @@ export class PrinterConfigurationComponent implements OnInit {
     private _location: Location,
     private _printerService: PrinterService,
     private _http: HttpClient,
+    private _translate: TranslateService,
+    private _notificationService: NotificationsService,
 
   ) {
 
@@ -70,27 +68,6 @@ export class PrinterConfigurationComponent implements OnInit {
       this.verError = false;
     });
 
-    // //veriicar si hay impresora y marcarla
-    // if (!PreferencesService.imprimir) {
-    //   console.log('no hay impresora');
-    // } else {
-    //   for (let index = 0; index < this.impresoras.length; index++) {
-    //     const element = this.impresoras[index];
-    //     if (element.nombre.toLowerCase() == this.impresoras[index].nombre.toLowerCase()) {
-
-    //       this.impresora = element;
-    //     }
-    //   }
-    // }
-    // //asignar un formato
-    // this.formato = this.formatos[0];
-
-    // if (!PreferencesService.vistaPrevia) {
-    //   console.log('sin vista previa');
-    // } else {
-    //   if (PreferencesService.vistaPrevia == '1')
-    //     this.vistaPrevia = true;
-    // }
   }
 
   ngOnInit(): void {
@@ -100,6 +77,10 @@ export class PrinterConfigurationComponent implements OnInit {
 
 
 
+  selectPrint() {
+    PreferencesService.impresora = this.impresora!;
+  }
+
 
   async loadData() {
 
@@ -108,10 +89,44 @@ export class PrinterConfigurationComponent implements OnInit {
 
     this.isLoading = false;
 
+    if (!resApi.status) {
+
+      this.isLoading = false;
+
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.showError(resApi);
+
+      return;
+
+    }
+
+    this.impresoras = resApi.response;
+
+
+    for (let i = 0; i < this.impresoras.length; i++) {
+      const impresora = this.impresoras[i];
+      if (PreferencesService.impresora == impresora) {
+        this.impresora = impresora;
+        break;
+      }
+
+    }
+
+
 
   }
-  logo_empresa: any;
-  imageBase64: any;
+
 
   async generateBase64(source: string): Promise<void> {
     this.imageBase64 = "";
@@ -132,6 +147,10 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
   async imprimir() {
+
+    if(this.impresora){
+
+    }
 
 
     await this.generateBase64('/assets/logo_demosoft.png');
@@ -511,21 +530,29 @@ export class PrinterConfigurationComponent implements OnInit {
     this.copias!++;
   }
 
-  guardar() {
-    // PreferencesService.imprimir = this.impresora!.nombre; //nombre de la impresora seleccionada
-    // if (!this.vistaPrevia) {
-    //   PreferencesService.vistaPrevia = '0';
-    // } else {
-    //   PreferencesService.vistaPrevia = '1';
-    // }
-  }
 
   ver() {
-    console.log(PreferencesService.imprimir);
+    // console.log(PreferencesService.imprimir);
     console.log(PreferencesService.vistaPrevia);
   }
 
-  error() {
+  showError(res: ResApiInterface) {
+
+    // fecha actual
+    let dateNow: Date = new Date();
+
+    //Detalles del error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardar error en preferencias
+    PreferencesService.error = error;
+
     this.verError = true;
 
   }

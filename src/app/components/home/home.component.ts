@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   nombreDocumento: string = this.facturaService.documentoName;
   tipoCambio: number = PreferencesService.tipoCambio;
   url: string = PreferencesService.baseUrl;
-  imprimir: string = PreferencesService.imprimir;
+  imprimir: string = PreferencesService.impresora;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenav')
