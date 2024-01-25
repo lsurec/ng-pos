@@ -148,8 +148,9 @@ export class PrinterConfigurationComponent implements OnInit {
 
   async imprimir() {
 
-    if(this.impresora){
-
+    if(!this.impresora && !this.formato){
+      //TODO:Translate
+      this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
 
@@ -192,7 +193,7 @@ export class PrinterConfigurationComponent implements OnInit {
         keywords: 'tck, sale',
       },
       pageSize: {
-        width: 130.77,
+        width: 226.77,
         height: 'auto',
       },
       pageMargins: [5.66, 0, 5.66, 5.66],
@@ -481,15 +482,42 @@ export class PrinterConfigurationComponent implements OnInit {
 
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
     pdfDocGenerator.getBlob(async (blob) => {
       // ...
-      var pdfFile = new File([blob], 'doc_tmu.pdf', { type: 'application/pdf' });
+      var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
-      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, "MHT-POS80", 1);
+      this.isLoading = true;
 
-      console.log(resPrint);
+      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, 1);
+
+      this.isLoading = false;
 
 
+      if (!resPrint.status) {
+
+        this.isLoading = false;
+  
+  
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+  
+        if (!verificador) return;
+  
+        this.showError(resPrint);
+  
+        return;
+  
+      }
+
+      //TODO:Translate
+      this._notificationService.openSnackbar("Documento procesado exitosamente.");
     });
 
 
