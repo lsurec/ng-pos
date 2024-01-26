@@ -13,12 +13,158 @@ export class DocumentService {
     constructor(private _http: HttpClient) {
     }
 
+
      //funcion que va a realizar el consumo privado para obtener las empresas
-     private _getEncabezados(
+     private _getPagos(user: string, token: string, doc:number) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "consecutivo": doc,
+                "user": user,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Documento/pagos`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getPagos(user: string, token: string, doc:number): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getPagos(user, token,doc).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        }
+        )
+    }
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getDetalles(user: string, token: string, doc: number) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "consecutivo": doc,
+                "user": user,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Documento/detalles`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getDetalles(user: string, token: string, doc: number): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getDetalles(user, token, doc).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        }
+        )
+    }
+
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getEncabezados(
         user: string,
-         token: string,
-         doc: number,
-        ) {
+        token: string,
+        doc: number,
+    ) {
 
         let headers = new HttpHeaders(
             {
@@ -34,12 +180,12 @@ export class DocumentService {
 
     //funcion asyncrona con promesa  para obtener las empresas
     getEncabezados(
-        user: string, 
+        user: string,
         token: string,
         doc: number,
-        ): Promise<ResApiInterface> {
+    ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getEncabezados(user, token,doc).subscribe(
+            this._getEncabezados(user, token, doc).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res.body;

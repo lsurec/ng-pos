@@ -12,7 +12,8 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
-import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado_print_interface';
+import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
+import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -233,6 +234,34 @@ export class PrinterConfigurationComponent implements OnInit {
 
     let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
+    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+      this.user,
+      this.token,
+      this.consecutivo!,
+    );
+
+    if (!resDetalles.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.showError(resDetalles);
+
+      return;
+
+    }
+
+    let detalles: DetallePrintInterface[] = resDetalles.response;
 
     
 
