@@ -8,6 +8,12 @@ import { PostDocumentInterface } from '../../interfaces/post-document.interface'
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Item, Montos, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
+import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
+import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
+import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
+import { ClienteInterface } from '../../interfaces/cliente.interface';
+import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -37,7 +43,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
   verVistaPrevia: boolean = false;
 
-  consecutivoDoc:number = -1;
+  consecutivoDoc: number = -1;
+  docPrint?: DocPrintModel;
 
   constructor(
     //instancias de los servicios necesarios
@@ -61,7 +68,7 @@ export class ResumenDocumentoComponent implements OnInit {
   }
   ngOnInit(): void {
     // console.log(this.consecutivoDoc);
-    
+
   }
 
   //Regresar al modulo de facturacion (tabs)
@@ -104,13 +111,276 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-   
+
 
   }
 
-  printDoc(){
+  async printDoc() {
 
     this.verVistaPrevia = true;
+    this.isLoading = true;
+
+    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+    if (!resEncabezado.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resEncabezado);
+
+      return;
+
+    }
+
+    let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
+
+    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+    if (!resDetalles.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resDetalles);
+
+      return;
+
+    }
+
+    let detalles: DetallePrintInterface[] = resDetalles.response;
+
+    let resPagos: ResApiInterface = await this._documentService.getPagos(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+
+    if (!resPagos.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resPagos);
+
+      return;
+
+    }
+
+    this.isLoading = false;
+
+    let pagos: PagoPrintInterface[] = resPagos.response;
+
+
+
+    if (encabezados.length == 0) {
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(
+        //TODO:translate
+        {
+          response: "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
+          status: false,
+          storeProcedure: resEncabezado.storeProcedure,
+        }
+      );
+
+      return;
+    }
+
+
+    let encabezado: EncabezadoPrintInterface = encabezados[0];
+
+    let empresa: Empresa = {
+      direccion: encabezado.empresa_Direccion ?? "",
+      nit: encabezado.empresa_Nit ?? "",
+      nombre: encabezado.empresa_Nombre ?? "",
+      razonSocial: encabezado.razon_Social ?? "",
+      tel: encabezado.empresa_Telefono ?? "",
+    }
+
+
+    let isFel: boolean = this.facturaService.printFel();
+
+    let documento: DocumentoData = {
+      //TODO:TRANSLATE
+      titulo: encabezado.tipo_Documento?.toUpperCase()!,
+      descripcion: isFel ? "FEL DOCUMENTO TRIBUTARIO ELECTRONICO" : "DOCUMENTO GENERICO",
+      fechaCert: isFel ? encabezado.feL_fechaCertificacion : "",
+      serie: isFel ? encabezado.feL_Serie : "",
+      no: isFel ? encabezado.feL_numeroDocumento : "",
+      autorizacion: isFel ? encabezado.feL_UUID : "",
+      noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
+    }
+
+    let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
+
+
+    let currentDate: Date = new Date();
+
+    let cliente: Cliente = {
+      nombre: cuenta?.factura_Nombre ?? "",
+      direccion: cuenta?.factura_Direccion ?? "",
+      nit: cuenta?.factura_NIT ?? "",
+      tel: cuenta?.telefono ?? "",
+      fecha: currentDate,
+    }
+
+    let cargo: number = 0;
+    let descuento: number = 0;
+    let subtotal: number = 0;
+    let total: number = 0;
+
+    let items: Item[] = [];
+
+
+    detalles.forEach(detail => {
+      let tipoTra: number = this.findTipoProducto(detail.tipo_Transaccion);
+
+      if (tipoTra == 4) {
+        //4 cargo
+        cargo += detail.monto;
+      } else if (tipoTra == 3) {
+        //5 descuento
+        descuento += detail.monto;
+      } else {
+        //cualquier otro
+        subtotal += detail.monto;
+      }
+
+      items.push(
+        {
+          descripcion: detail.des_Producto,
+          cantidad: detail.cantidad,
+          unitario: tipoTra == 3
+            ? "- ${detail.montoUMTipoMoneda}"
+            : detail.monto_U_M_Tipo_Moneda,
+          total: tipoTra == 3
+            ? "- ${detail.montoTotalTipoMoneda}"
+            : detail.monto_Total_Tipo_Moneda,
+        }
+      );
+    });
+
+    total += (subtotal + cargo) + descuento;
+
+    let montos: Montos = {
+      subtotal: subtotal,
+      cargos: cargo,
+      descuentos: descuento,
+      total: total,
+      totalLetras: encabezado.monto_Letras!.toUpperCase(),
+    }
+
+    let pagosP: Pago[] = [];
+
+    pagos.forEach(pago => {
+
+      pagosP.push(
+        {
+          tipoPago: pago.fDes_Tipo_Cargo_Abono,
+          monto: pago.monto,
+          pago: pago.monto + pago.cambio,
+          cambio: pago.cambio,
+        }
+      );
+    });
+
+
+    let vendedor: string = "";
+
+    if (this.facturaService.vendedores.length > 0) {
+      vendedor = this.facturaService.vendedor!.nom_Cuenta_Correntista;
+    }
+
+    let certificador: Certificador;
+
+    if (isFel) {
+      certificador = {
+        nit: encabezado.certificador_DTE_NIT!,
+        nombre: encabezado.certificador_DTE_Nombre!,
+      }
+    }
+
+
+
+    //TODO:Translate
+    let mensajes: string[] = [
+      //TODO: Mostrar frase
+      // "**Sujeto a pagos trimestrales**",
+      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+    ];
+
+    let poweredBy: PoweredBy = {
+      nombre: "Desarrollo Moderno de Software S.A.",
+      website: "www.demosoft.com.gt",
+    }
+
+
+    this.docPrint = {
+      empresa: empresa,
+      documento: documento,
+      cliente: cliente,
+      items: items,
+      montos: montos,
+      pagos: pagosP,
+      vendedor: vendedor,
+      certificador: certificador!,
+      observacion: this.observacion,
+      mensajes: mensajes,
+      poweredBy: poweredBy,
+    }
+
+
+
 
     //  return;
     // //abre dialoogo de impresion o pantalla de configuracion
@@ -131,6 +401,27 @@ export class ResumenDocumentoComponent implements OnInit {
     //   this.verVistaPrevia = true;
     // }
   }
+
+
+  findTipoProducto(tipoTra: number) {
+
+    let transacciones: TipoTransaccionInterface[] = this.facturaService.tiposTransaccion;
+
+
+
+    //buscar tipo de trabsaccion dependientdo del tipo de producto
+    for (let i = 0; i < transacciones.length; i++) {
+      const element = transacciones[i];
+      if (tipoTra == element.tipo) {
+        //Devolver tipo de transaccion correspondiente al tipo de producto
+        return element.tipo_Transaccion;
+      }
+    }
+
+    //si no encontró el tipo de producto retorna 0
+    return 0;
+  }
+
 
   //Creacion del documnto en tbl_documento estructura
   async sendDocument() {

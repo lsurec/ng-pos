@@ -14,6 +14,11 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
 import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
 import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
+import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
+import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Item, Montos, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
+import { ClienteInterface } from 'src/app/displays/prc_documento_3/interfaces/cliente.interface';
+import { TipoTransaccionInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-transaccion.interface';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -49,7 +54,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
   @Input() volver?: number;
   @Input() pantalla?: number;
-  @Input() consecutivo?: number;
+  @Input() document?: DocPrintModel;
 
   vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
   imprimirNavegador: boolean = false; //para activar la impresion desde el navegador
@@ -65,7 +70,8 @@ export class PrinterConfigurationComponent implements OnInit {
     private _printerService: PrinterService,
     private _translate: TranslateService,
     private _notificationService: NotificationsService,
-    private _documentService:DocumentService,
+    private _documentService: DocumentService,
+    private _facturaService: FacturaService,
 
   ) {
 
@@ -139,14 +145,14 @@ export class PrinterConfigurationComponent implements OnInit {
 
   async imprimir() {
 
-    if(!this.impresora && !this.formato){
+    if (!this.impresora && !this.formato) {
       //TODO:Translate
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
 
-   
-    const  docDefinition =  await this._printerService.getTestTemplate(); 
+
+    const docDefinition = await this._printerService.getTestTemplate();
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
@@ -164,7 +170,7 @@ export class PrinterConfigurationComponent implements OnInit {
       if (!resPrint.status) {
 
         this.isLoading = false;
-  
+
         let verificador = await this._notificationService.openDialogActions(
           {
             title: this._translate.instant('pos.alertas.salioMal'),
@@ -173,13 +179,13 @@ export class PrinterConfigurationComponent implements OnInit {
             falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
-  
+
         if (!verificador) return;
-  
+
         this.showError(resPrint);
-  
+
         return;
-  
+
       }
 
       //TODO:Translate
@@ -197,76 +203,19 @@ export class PrinterConfigurationComponent implements OnInit {
 
   async printDoc() {
 
-    if(!this.impresora && !this.formato){
+    if (!this.impresora && !this.formato) {
       //TODO:Translate
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
-
-    this.isLoading = true;
-    
-    let resEncabezado:ResApiInterface = await this._documentService.getEncabezados(
-      this.user,
-      this.token,
-      this.consecutivo!,
-    );
-    
-    if (!resEncabezado.status) {
-
-      this.isLoading = false;
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.showError(resEncabezado);
-
-      return;
-
-    }
-
-    let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
-
-    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
-      this.user,
-      this.token,
-      this.consecutivo!,
-    );
-
-    if (!resDetalles.status) {
-
-      this.isLoading = false;
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.showError(resDetalles);
-
-      return;
-
-    }
-
-    let detalles: DetallePrintInterface[] = resDetalles.response;
-
+    console.log(this.document);
     
 
-    
+
+
   }
+
+
 
   showError(res: ResApiInterface) {
 
@@ -290,35 +239,35 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
 
-    //regresar a home
-    goBack() {
+  //regresar a home
+  goBack() {
 
-      switch (this.volver) {
-        case 1:
-          //desde home
-          this._eventService.regresarHomedesdeImpresorasEvent(true);
-          break;
-  
-        case 2:
-          //desde resumen del documento     
-          this._eventService.regresarResumenEvent(true);
-          break;
-        default:
-          this._location.back();
-          break;
-      }
+    switch (this.volver) {
+      case 1:
+        //desde home
+        this._eventService.regresarHomedesdeImpresorasEvent(true);
+        break;
+
+      case 2:
+        //desde resumen del documento     
+        this._eventService.regresarResumenEvent(true);
+        break;
+      default:
+        this._location.back();
+        break;
     }
-  
-    restar() {
-      this.copias!--;
-  
-      if (this.copias! <= 0) {
-        this.copias = 1;
-      }
+  }
+
+  restar() {
+    this.copias!--;
+
+    if (this.copias! <= 0) {
+      this.copias = 1;
     }
-  
-    sumar() {
-      this.copias!++;
-    }
-  
+  }
+
+  sumar() {
+    this.copias!++;
+  }
+
 }

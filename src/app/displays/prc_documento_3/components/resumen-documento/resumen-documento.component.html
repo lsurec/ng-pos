@@ -1,6 +1,6 @@
 <app-error *ngIf="verError" [regresar]="regresar"></app-error>
 <app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver"
-    [pantalla]="idPantalla" [consecutivo]="consecutivoDoc"></app-printer-configuration>
+    [pantalla]="idPantalla" [document]="docPrint"></app-printer-configuration>
 <div *ngIf="!verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
