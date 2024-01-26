@@ -3,6 +3,7 @@ import { urlApi } from '../providers/api.provider';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResApiInterface } from '../interfaces/res-api.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { DocPrintModel } from '../interfaces/doc-print.interface';
 
 @Injectable()
 export class PrinterService {
@@ -127,23 +128,435 @@ export class PrinterService {
     private async _generateBase64(source: string): Promise<void> {
         this._imageBase64 = "";
         return new Promise((resolve, reject) => {
-          this._http.get(source, { responseType: 'blob' })
-            .subscribe(res => {
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                var base64data = reader.result;
-                this._imageBase64 = base64data;
-                //   console.log(base64data);
-                resolve();
-              }
-              reader.readAsDataURL(res);
-              //console.log(res);
-            });
+            this._http.get(source, { responseType: 'blob' })
+                .subscribe(res => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        var base64data = reader.result;
+                        this._imageBase64 = base64data;
+                        //   console.log(base64data);
+                        resolve();
+                    }
+                    reader.readAsDataURL(res);
+                    //console.log(res);
+                });
         });
-      }
+    }
 
 
-   async getTestTemplate() {
+    async getReport(doc: DocPrintModel) {
+
+        await this._generateBase64('/assets/empresa.png');
+        this._logo_empresa = this._imageBase64;
+
+        let date: Date = doc.cliente.fecha;
+
+        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+        let transacciones: any[] = [];
+
+        doc.items.forEach(item => {
+            transacciones.push(
+                [
+                    { text: item.cantidad, style: 'normalText', },
+                    { text: item.descripcion, style: 'normalText' },
+                    { text: item.unitario, style: 'endText', },
+                    { text: item.total, style: 'endText', },
+                ],
+
+            );
+        });
+
+        console.log(transacciones);
+        
+
+        let pagos: any[] = [];
+
+        doc.pagos.forEach(pago => {
+            pagos.push(
+                {
+                    text: pago.tipoPago,
+                    style: 'endTextBold',
+                },
+                {
+                    table: {
+                        widths: ['50%', '50%',],
+                        body: [
+
+                            [
+
+                                //TODO:translate
+                                { text: 'Recibido:', style: 'normalText', },
+                                { text: pago.pago, style: 'endText', },
+
+                            ],
+                            [
+                                //TODO:translate
+                                { text: 'Monto:', style: 'normalText' },
+                                { text: pago.monto, style: 'endText', },
+
+                            ],
+                            [
+                                //TODO:translate
+                                { text: 'Cambio: ', style: 'normalText' },
+                                { text: pago.cambio, style: 'endText', },
+                            ],
+
+                        ],
+                    },
+                    layout: 'noBorders',
+                },
+            );
+
+        });
+
+
+        let divider = {
+            layout: 'headerLineOnly',
+            table: {
+                widths: ['100%'],
+                headerRows: 1,
+                body: [
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                ]
+            }
+        };
+
+
+        var docDefinition: TDocumentDefinitions = {
+            info: {
+                title: doc.documento.titulo,
+                author: 'Demosoft',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                //DATOS EMPRESA
+                {
+                    image: this._logo_empresa,
+                    fit: [161.73, 76.692],
+                    alignment: 'center',
+                },
+                {
+                    text: doc.empresa.razonSocial,
+                    style: 'centerBold',
+                    margin: [0, 10, 0, 0],
+                },
+                {
+                    text: doc.empresa.nombre,
+                    style: 'centerBold',
+                },
+                {
+                    text: doc.empresa.direccion,
+                    style: 'centerBold',
+                },
+                {
+                    //TODO:Translate
+                    text: `NIT: ${doc.empresa.nit}`,
+                    style: 'centerBold',
+                },
+                {
+                    //TODO:Translate
+                    text: `TEl: ${doc.empresa.tel}`,
+                    style: 'centerBold',
+                },
+                {
+                    text: doc.documento.titulo,
+                    style: 'centerBold',
+                    margin: [0, 10, 0, 0],
+
+                },
+                {
+                    text: doc.documento.descripcion,
+                    style: 'centerBold',
+                },
+                {
+                    //TODO:Translate
+                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    style: 'center',
+                    margin: [0, 10, 0, 0],
+
+                },
+                //TODO:Agregar datos de certificacion
+
+
+                //CLiente
+                {
+                    //TODO:Translate
+                    text: `Cliente:`,
+                    style: 'center',
+                    margin: [0, 10, 0, 0],
+
+                },
+                {
+                    //TODO:Translate
+                    text: `Nombre: ${doc.cliente.nombre}`,
+                    style: 'center',
+                },
+                {
+                    //TODO:Translate
+                    text: `NIT: ${doc.cliente.nit}`,
+                    style: 'center',
+                },
+
+                {
+                    //TODO:Translate
+                    text: `Direccion: ${doc.cliente.direccion}`,
+                    style: 'center',
+                },
+
+                {
+                    //TODO:Translate
+                    text: `Tel: ${doc.cliente.tel}`,
+                    style: 'center',
+                },
+                {
+                    table: {
+                        widths: ['50%', '50%',],
+                        body: [
+                            [
+                                //TODO:translate
+                                { text: 'FECHA: ' + fecha, style: 'center' },
+                                { text: 'HORA: ' + hora, style: 'center', },
+                            ],
+
+                        ],
+                    },
+                    layout: 'noBorders',
+                },
+                //TABLA PRODUCTOS
+                {
+                    layout: 'headerLineOnly',
+                    margin: [0, 10, 0, 0],
+                    table: {
+
+                        widths: ['15%', '45%', '15%', '25%'],
+                        headerRows: 1,
+
+                        body: [
+
+                            [
+                                //TODO:Translate
+                                { text: 'CANT.', style: 'normalTextBold' },
+                                { text: 'DESCRIPCION', style: 'normalTextBold' },
+                                { text: 'P/U', style: 'endTextBold' },
+                                { text: 'MONTO', style: 'endTextBold' },
+                            ],
+
+                            ...transacciones
+
+                        ],
+                    },
+
+                },
+                divider,
+                {
+                    layout: 'headerLineOnly',
+                    table: {
+
+                        widths: ['50%', '50%'],
+
+                        body: [
+
+                            [
+                                //TODO:Translate
+                                { text: 'Sub-Total:', style: 'normalTextBold' },
+                                { text: doc.montos.subtotal, style: 'endTextBold' },
+
+                            ],
+                            [
+                                //TODO:Translate
+                                { text: 'Cargos:', style: 'normalTextBold' },
+                                { text: doc.montos.cargos, style: 'endTextBold' },
+
+                            ],
+                            [
+                                //TODO:Translate
+                                { text: 'Descuentos:', style: 'normalTextBold' },
+                                { text: doc.montos.descuentos, style: 'endTextBold' },
+
+                            ],
+
+                        ],
+                    },
+
+
+                },
+                divider,
+
+
+                {
+                    layout: 'headerLineOnly',
+                    table: {
+
+                        widths: ['50%', '50%'],
+
+                        body: [
+
+                            [
+                                //TODO:Translate
+                                {
+                                    text: 'TOTAL',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: doc.montos.total,
+                                    style: 'endTextBold'
+                                },
+
+                            ],
+                        ],
+                    },
+
+
+                },
+                {
+                    text: doc.montos.totalLetras,
+                    style: 'normalText',
+                    alignment: 'justify',
+                },
+                divider,
+
+                {
+                    margin: [0, 10],
+
+                    text: 'DETALLE PAGOS:',
+                    style: 'centerBold',
+                },
+
+                ...pagos,
+
+                //TODO:Agregar informacion del certificador
+
+                {
+                    margin: [0, 10],
+                    text: doc.mensajes[0],
+                    style: 'centerBold',
+                },
+
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+                // {
+                //   image: this.logo_empresa,
+                //   fit: [141.73, 56.692],
+                //   alignment: 'center',
+                // },
+
+
+
+            ],
+            styles: {
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                centerBold: {
+                    fontSize: 8,
+                    alignment: 'center',
+                    bold: true,
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+                endText: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                endTextBold: {
+                    fontSize: 8,
+                    alignment: 'right',
+                    bold: true,
+                },
+                header: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'center',
+                },
+                tHeaderLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tHeaderValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                tProductsHeader: {
+                    fontSize: 8.5,
+                    bold: true,
+                },
+                tProductsBody: {
+                    fontSize: 8,
+                },
+                tTotals: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'right',
+                },
+                tClientLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tClientValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                text: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                link: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                    alignment: 'center',
+                },
+            },
+        };
+
+        return docDefinition;
+    }
+
+
+    async getTestTemplate() {
 
         await this._generateBase64('/assets/logo_demosoft.png');
         this._logo_empresa = this._imageBase64;

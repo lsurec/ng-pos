@@ -37,19 +37,19 @@ export interface Empresa {
   
   // montos.interface.ts
   export interface Montos {
-    subtotal: number;
-    cargos: number;
-    descuentos: number;
-    total: number;
+    subtotal: string;
+    cargos: string;
+    descuentos: string;
+    total: string;
     totalLetras: string;
   }
   
   // pago.interface.ts
   export interface Pago {
     tipoPago: string;
-    pago: number;
-    monto: number;
-    cambio: number;
+    pago: string;
+    monto: string;
+    cambio: string;
   }
   
   // certificador.interface.ts

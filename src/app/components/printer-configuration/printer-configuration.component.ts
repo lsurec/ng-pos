@@ -208,9 +208,48 @@ export class PrinterConfigurationComponent implements OnInit {
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
-    console.log(this.document);
-    
+    const docDefinition = await this._printerService.getReport(this.document!);
 
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
+    // pdfMake.createPdf(docDefinition).open();
+
+    // return;
+    pdfDocGenerator.getBlob(async (blob) => {
+      // ...
+      var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+      this.isLoading = true;
+
+      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, 1);
+
+      this.isLoading = false;
+
+
+      if (!resPrint.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.showError(resPrint);
+
+        return;
+
+      }
+
+      //TODO:Translate
+      this._notificationService.openSnackbar("Documento procesado exitosamente.");
+    });
 
 
   }

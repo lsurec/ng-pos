@@ -14,6 +14,7 @@ import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.in
 import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -21,6 +22,7 @@ import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.inte
   styleUrls: ['./resumen-documento.component.scss'],
   providers: [
     DocumentService,
+    CurrencyPipe,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -53,6 +55,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _documentService: DocumentService,
     private _translate: TranslateService,
+    private currencyPipe: CurrencyPipe,
 
   ) {
 
@@ -301,10 +304,10 @@ export class ResumenDocumentoComponent implements OnInit {
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
           unitario: tipoTra == 3
-            ? "- ${detail.montoUMTipoMoneda}"
+            ? `- ${detail.monto_U_M_Tipo_Moneda}`
             : detail.monto_U_M_Tipo_Moneda,
           total: tipoTra == 3
-            ? "- ${detail.montoTotalTipoMoneda}"
+            ? `- ${detail.monto_Total_Tipo_Moneda}`
             : detail.monto_Total_Tipo_Moneda,
         }
       );
@@ -313,10 +316,10 @@ export class ResumenDocumentoComponent implements OnInit {
     total += (subtotal + cargo) + descuento;
 
     let montos: Montos = {
-      subtotal: subtotal,
-      cargos: cargo,
-      descuentos: descuento,
-      total: total,
+      subtotal: this.currencyPipe.transform(subtotal, ' ', 'symbol', '2.2-2')!,
+      cargos: this.currencyPipe.transform(cargo, ' ', 'symbol', '2.2-2')!,
+      descuentos: this.currencyPipe.transform(descuento, ' ', 'symbol', '2.2-2')!,
+      total: this.currencyPipe.transform(total, ' ', 'symbol', '2.2-2')!,
       totalLetras: encabezado.monto_Letras!.toUpperCase(),
     }
 
@@ -327,9 +330,9 @@ export class ResumenDocumentoComponent implements OnInit {
       pagosP.push(
         {
           tipoPago: pago.fDes_Tipo_Cargo_Abono,
-          monto: pago.monto,
-          pago: pago.monto + pago.cambio,
-          cambio: pago.cambio,
+          monto: this.currencyPipe.transform(pago.monto, ' ', 'symbol', '2.2-2')!,
+          pago: this.currencyPipe.transform((pago.monto + pago.cambio), ' ', 'symbol', '2.2-2')!,
+          cambio: this.currencyPipe.transform(pago.cambio, ' ', 'symbol', '2.2-2')!,
         }
       );
     });
