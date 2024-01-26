@@ -11,6 +11,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
+import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado_print_interface';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -19,14 +21,18 @@ import { NotificationsService } from 'src/app/services/notifications.service';
   selector: 'app-printer-configuration',
   templateUrl: './printer-configuration.component.html',
   styleUrls: ['./printer-configuration.component.scss'],
-  providers: [PrinterService],
+  providers: [
+    PrinterService,
+    DocumentService,
+  ],
 
 })
 export class PrinterConfigurationComponent implements OnInit {
 
   impresoras: string[] = [];
   impresora?: string; //impresora para imprimir
-
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
 
 
   formatos: ImpresoraFormatoInterface[] = [
@@ -56,9 +62,9 @@ export class PrinterConfigurationComponent implements OnInit {
     private _eventService: EventService,
     private _location: Location,
     private _printerService: PrinterService,
-    private _http: HttpClient,
     private _translate: TranslateService,
     private _notificationService: NotificationsService,
+    private _documentService:DocumentService,
 
   ) {
 
@@ -140,11 +146,6 @@ export class PrinterConfigurationComponent implements OnInit {
 
    
     const  docDefinition =  await this._printerService.getTestTemplate(); 
-    
-
-    // pdfMake.createPdf(docDefinition).print();
-
-
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
@@ -162,7 +163,6 @@ export class PrinterConfigurationComponent implements OnInit {
       if (!resPrint.status) {
 
         this.isLoading = false;
-  
   
         let verificador = await this._notificationService.openDialogActions(
           {
@@ -192,41 +192,51 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
 
-  //regresar a home
-  goBack() {
 
-    switch (this.volver) {
-      case 1:
-        //desde home
-        this._eventService.regresarHomedesdeImpresorasEvent(true);
-        break;
 
-      case 2:
-        //desde resumen del documento     
-        this._eventService.regresarResumenEvent(true);
-        break;
-      default:
-        this._location.back();
-        break;
+  async printDoc() {
+
+    if(!this.impresora && !this.formato){
+      //TODO:Translate
+      this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
-  }
 
-  restar() {
-    this.copias!--;
 
-    if (this.copias! <= 0) {
-      this.copias = 1;
+    this.isLoading = true;
+    
+    let resEncabezado:ResApiInterface = await this._documentService.getEncabezados(
+      this.user,
+      this.token,
+      this.consecutivo!,
+    );
+    
+    if (!resEncabezado.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.showError(resEncabezado);
+
+      return;
+
     }
-  }
 
-  sumar() {
-    this.copias!++;
-  }
+    let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
 
-  ver() {
-    // console.log(PreferencesService.imprimir);
-    console.log(PreferencesService.vistaPrevia);
+    
+
+    
   }
 
   showError(res: ResApiInterface) {
@@ -249,4 +259,37 @@ export class PrinterConfigurationComponent implements OnInit {
     this.verError = true;
 
   }
+
+
+    //regresar a home
+    goBack() {
+
+      switch (this.volver) {
+        case 1:
+          //desde home
+          this._eventService.regresarHomedesdeImpresorasEvent(true);
+          break;
+  
+        case 2:
+          //desde resumen del documento     
+          this._eventService.regresarResumenEvent(true);
+          break;
+        default:
+          this._location.back();
+          break;
+      }
+    }
+  
+    restar() {
+      this.copias!--;
+  
+      if (this.copias! <= 0) {
+        this.copias = 1;
+      }
+    }
+  
+    sumar() {
+      this.copias!++;
+    }
+  
 }
