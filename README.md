@@ -32,43 +32,47 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 
 * Idioma de la aplicación.
 
-* Tema de la aplicación.
+* Tema de la aplicación (claro y oscuro).
 
 * Configuración inicial del Origen de Datos.
 
 * Inicio de sesión.
 
-* Configuracion local.
+* Sesiones permanentes.
 
-* Pantalla princial (Home).
+* Posibilidad de trabajar con varias empresas y sucursales (estaciones de trabajo).
 
-* Menú de aplicaciones.
-
-* Detalles de Usuario.
-
-* Ajustes.
+* Menú de árbol (Módulos de la aplicación).
 
 * Configuración de impresora.
 
-* Módulo de Facturación.
+* Módulo de facturación.
 
-* Historial de documentos.
+* Búsqueda de clientes.
 
-* Imprimir documento.
+* Creación de nuevos clientes.
 
-* Documento.
+* Series para un documento.
 
-* Nueva cuenta.
+* Seleccionar vendedores.
 
-* Actualizar cuenta.
+* Búsqueda de productos.
 
-* Detalle del documento.
+* Tipos de precios en productos.
 
-* Productos encontrados.
+* Bodegas para productos.
 
-* Formulario de Producto.
+* Cargos y descuentos.
 
-* Cargo abono.
+* Formas de pago múltiples.
+
+* Certificación de documentos (DTEs).
+
+* Impresión de documentos.
+
+* Historial de documentos emitidos.
+
+* Autoguardado local de documentos.
 
 ## Vista Previa.
 
