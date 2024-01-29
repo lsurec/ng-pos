@@ -4,21 +4,15 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { Location } from '@angular/common';
 import { ImpresoraFormatoInterface } from 'src/app/interfaces/impre-form.interface';
 import { PrinterService } from 'src/app/services/printer.service';
-import { HttpClient } from '@angular/common/http';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
-import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
-import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
-import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
-import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Item, Montos, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
+import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
-import { ClienteInterface } from 'src/app/displays/prc_documento_3/interfaces/cliente.interface';
-import { TipoTransaccionInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-transaccion.interface';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -59,7 +53,7 @@ export class PrinterConfigurationComponent implements OnInit {
   vistaPrevia: boolean = false; //ver vista previa de configuraciones de la impresion
   imprimirNavegador: boolean = false; //para activar la impresion desde el navegador
   isLoading: boolean = false; //pantalla de carga
-  copias: number = 1; //cantidad de copias a imprimir
+  copias: string = "1"; //cantidad de copias a imprimir
   readonly regresar: number = 8; //id de la pantalla
   verError: boolean = false; //ocultar y mostrar pantalla de error
 
@@ -70,9 +64,6 @@ export class PrinterConfigurationComponent implements OnInit {
     private _printerService: PrinterService,
     private _translate: TranslateService,
     private _notificationService: NotificationsService,
-    private _documentService: DocumentService,
-    private _facturaService: FacturaService,
-
   ) {
 
     //evento para regresar desde error 
@@ -84,6 +75,14 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+    if (!PreferencesService.copies) {
+      this.copias = "1";
+      PreferencesService.copies = this.copias;
+    } else {
+      this.copias = PreferencesService.copies;
+    }
 
     this.loadData();
   }
@@ -143,13 +142,28 @@ export class PrinterConfigurationComponent implements OnInit {
 
 
 
-  async imprimir() {
+  async printTest() {
 
     if (!this.impresora && !this.formato) {
       //TODO:Translate
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
+
+    this.isLoading = true;
+
+    let isOnline: ResApiInterface = await this._printerService.getStatusPrint(this.impresora!);
+
+
+    if (!isOnline.status) {
+      this.isLoading = false;
+
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.impresora!}  no se encuentra disponible.`);
+      return;
+
+    }
 
 
     const docDefinition = await this._printerService.getTestTemplate();
@@ -160,9 +174,8 @@ export class PrinterConfigurationComponent implements OnInit {
       // ...
       var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
-      this.isLoading = true;
-
-      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, 1);
+      //TODO:copias
+      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, PreferencesService.copies);
 
       this.isLoading = false;
 
@@ -221,7 +234,11 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this.isLoading = true;
 
-      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, 1);
+      let resPrint: ResApiInterface = await this._printerService.postPrint(
+        pdfFile,
+        this.impresora!,
+        PreferencesService.copies
+      );
 
       this.isLoading = false;
 
@@ -298,15 +315,66 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
   restar() {
-    this.copias!--;
 
-    if (this.copias! <= 0) {
-      this.copias = 1;
+    //verifica que la cantidad sea numerica
+    if (UtilitiesService.convertirTextoANumero(this.copias) == null) {
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
+      return;
     }
+
+    //cantidad numerica
+    let cantidad = UtilitiesService.convertirTextoANumero(this.copias);
+
+
+    //disminuir cantidad en 1
+    cantidad!--;
+
+    //si es menor o igual a uno, volver a 1 y mostrar
+    if (cantidad! <= 1) {
+      cantidad = 1;
+    }
+
+    //guarda la nueva cantidad
+    this.copias = cantidad!.toString();
+
+    PreferencesService.copies = this.copias;
+
   }
 
   sumar() {
-    this.copias!++;
+
+    //verifica que la cantidad sea numerica
+    if (UtilitiesService.convertirTextoANumero(this.copias) == null) {
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
+      return;
+    }
+
+    //canitdad en numero
+    let cantidad = UtilitiesService.convertirTextoANumero(this.copias);
+
+    //aumentar cantidad
+    cantidad!++;
+
+    //nueva cantidad
+    this.copias = cantidad!.toString();
+
+    PreferencesService.copies = this.copias;
+
+
+  }
+
+  changeCopies() {
+
+    //verificar que la cantidad sea numerica
+    if (UtilitiesService.convertirTextoANumero(this.copias) == null) {
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
+      return;
+    }
+
+    //calcular total de la trnsaccion
+
+    PreferencesService.copies = this.copias;
+
   }
 
 }

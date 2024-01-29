@@ -17,6 +17,49 @@ export class PrinterService {
     }
 
     //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getStatusPrint(
+
+        printer: string,
+    ) {
+
+        return this._http.get(`${this._urlBase}${this._port}/api/printer/online/${printer}`, { observe: 'response' });
+
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getStatusPrint(
+        printer: string,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getStatusPrint(printer).subscribe(
+                //si esta correcto
+                res => {
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: res.body,
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+
+                    console.log(err);
+                    
+
+                    let resApi: ResApiInterface = {
+                        status: false,
+                        response: err.error,
+                        url: err.url,
+                    }
+                    resolve(resApi);
+                }
+            )
+        }
+        )
+    }
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatus(
 
         port: number,
@@ -59,7 +102,7 @@ export class PrinterService {
     private _postPrint(
         file: File,
         printer: string,
-        copies: number,
+        copies: string,
     ) {
         const formData = new FormData();
         formData.append('files', file);
@@ -77,7 +120,7 @@ export class PrinterService {
     postPrint(
         file: File,
         printer: string,
-        copies: number,): Promise<ResApiInterface> {
+        copies: string,): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postPrint(
                 file,
