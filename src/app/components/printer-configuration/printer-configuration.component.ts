@@ -84,7 +84,38 @@ export class PrinterConfigurationComponent implements OnInit {
       this.copias = PreferencesService.copies;
     }
 
+    if(!PreferencesService.localPrint){
+      this.imprimirNavegador=false;
+    }else{
+      this.imprimirNavegador = true;
+    }
+
+
+    if(!PreferencesService.vistaPrevia){
+      this.vistaPrevia = false;
+    }else{
+      this.vistaPrevia = true;
+    }
+
+
     this.loadData();
+  }
+
+
+  preview(){
+    if(this.vistaPrevia){
+      PreferencesService.vistaPrevia = "1";
+    }else{
+      PreferencesService.vistaPrevia = "";
+    }
+  }
+
+  localPrint(){
+    if(this.imprimirNavegador){
+      PreferencesService.localPrint = "1";
+    }else{
+      PreferencesService.localPrint = "";
+    }
   }
 
 

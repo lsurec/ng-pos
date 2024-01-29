@@ -50,14 +50,14 @@
                         <div class="copias">
                             <div class="dFlex">
                                 <mat-checkbox class="example-margin" color="primary"
-                                    [(ngModel)]="vistaPrevia"></mat-checkbox>
+                                    [(ngModel)]="vistaPrevia" (ngModelChange)="preview()"></mat-checkbox>
                                 <p class="subtitulo">{{'pos.factura.impresion_directa' | translate}}</p>
                                 <mat-icon class="icono-ayuda"
                                     matTooltip="{{'pos.factura.marcar_impresion' | translate}}">help_outline</mat-icon>
                             </div>
                             <div class="dFlex">
                                 <mat-checkbox class="example-margin" color="primary"
-                                    [(ngModel)]="imprimirNavegador"></mat-checkbox>
+                                    [(ngModel)]="imprimirNavegador" (ngModelChange)="localPrint()"></mat-checkbox>
                                 <p class="subtitulo">{{'pos.factura.impresion_navegador' | translate}}</p>
                                 <mat-icon class="icono-ayuda"
                                     matTooltip="{{'pos.factura.marcar_impre_navegador' | translate}}">help_outline</mat-icon>
