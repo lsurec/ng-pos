@@ -62,7 +62,7 @@ export class PrinterService {
     //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatus(
 
-        port: number,
+        port: string,
     ) {
 
         return this._http.get(`${this._urlBase}${port}/api/Printer/status`, { observe: 'response' });
@@ -71,7 +71,7 @@ export class PrinterService {
 
     //funcion asyncrona con promesa  para obtener las empresas
     getStatus(
-        port: number,
+        port: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getStatus(port).subscribe(

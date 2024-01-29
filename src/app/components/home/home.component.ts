@@ -548,10 +548,10 @@ export class HomeComponent implements OnInit {
     if (!PreferencesService.port) {
       this.isLoading = true;
 
-      let resStatus5000: ResApiInterface = await this._printService.getStatus(5000);
+      let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
 
       if (!resStatus5000.status) {
-        let resStatus5001: ResApiInterface = await this._printService.getStatus(5001);
+        let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
 
         if (!resStatus5001.status) {
 

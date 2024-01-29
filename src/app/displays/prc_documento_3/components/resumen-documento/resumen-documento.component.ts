@@ -59,7 +59,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private _documentService: DocumentService,
     private _translate: TranslateService,
     private currencyPipe: CurrencyPipe,
-    private _printService:PrinterService,
+    private _printService: PrinterService,
 
   ) {
 
@@ -124,7 +124,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
   async printDoc() {
 
-    this.verVistaPrevia = true;
     this.isLoading = true;
 
     let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
@@ -386,80 +385,144 @@ export class ResumenDocumentoComponent implements OnInit {
       poweredBy: poweredBy,
     }
 
-    
 
-  //Verificar que ya se haya configurado antes 
-  if (!PreferencesService.port) {
-    this.isLoading = true;
 
-    let resStatus5000: ResApiInterface = await this._printService.getStatus(5000);
+    //Verificar que ya se haya configurado antes 
+    if (!PreferencesService.port) {
+      this.isLoading = true;
 
-    if (!resStatus5000.status) {
-      let resStatus5001: ResApiInterface = await this._printService.getStatus(5001);
+      let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
 
-      if (!resStatus5001.status) {
+      if (!resStatus5000.status) {
+        let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
+
+        if (!resStatus5001.status) {
+
+          this.isLoading = false;
+          //TODO:Translate
+          this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+
+
+          const docDefinition = await this._printService.getReport(this.docPrint);
+
+          pdfMake.createPdf(docDefinition).print();
+
+          return;
+        } else {
+
+          PreferencesService.port = "5001";
+        }
+
+      } else {
+        PreferencesService.port = "5000";
+      }
+
+      this.isLoading = false;
+
+
+      this.verVistaPrevia = true;
+
+    } else {
+
+
+      if (PreferencesService.localPrint) {
+        this.isLoading = false;
+        const docDefinition = await this._printService.getReport(this.docPrint);
+
+        pdfMake.createPdf(docDefinition).print();
+
+        return;
+      }
+
+      if (PreferencesService.vistaPrevia) {
 
         this.isLoading = false;
-        //TODO:Translate
-        this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+        this.verVistaPrevia = true;
+        return;
 
+      }
+
+
+      let resStatus: ResApiInterface = await this._printService.getStatus(PreferencesService.port);
+
+      if (!resStatus.status) {
+        this.isLoading = false;
+        this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
 
         const docDefinition = await this._printService.getReport(this.docPrint);
 
         pdfMake.createPdf(docDefinition).print();
 
-
         return;
-      } else {
 
-        PreferencesService.port = "5001";
-        this.isLoading = false;
       }
 
 
-    } else {
-      PreferencesService.port = "5000";
-      this.isLoading = false;
+      let isOnline: ResApiInterface = await this._printService.getStatusPrint(PreferencesService.impresora);
+
+
+      if (!isOnline.status) {
+        this.isLoading = false;
+
+
+        //TODO:Translate
+        this._notificationService.openSnackbar(`${PreferencesService.impresora}  no se encuentra disponible.`);
+        return;
+
+      }
+
+      const docDefinition = await this._printService.getReport(this.docPrint);
+
+      const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
+
+      // return;
+      pdfDocGenerator.getBlob(async (blob) => {
+        // ...
+        var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+        this.isLoading = true;
+
+        let resPrint: ResApiInterface = await this._printService.postPrint(
+          pdfFile,
+          PreferencesService.impresora,
+          PreferencesService.copies
+        );
+
+        this.isLoading = false;
+
+
+        if (!resPrint.status) {
+
+          this.isLoading = false;
+
+          let verificador = await this._notificationService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.mostrarError(resPrint);
+
+          return;
+
+        }
+
+        //TODO:Translate
+        this._notificationService.openSnackbar("Documento procesado exitosamente.");
+      });
+
     }
 
-    this.isLoading = false;
+
   }
 
 
-
-        // //TODO:Translate
-        // this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
-
-
-        // const docDefinition = await this._printService.getReport(this.docPrint);
-
-        // const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    
-        // pdfMake.createPdf(docDefinition).print();
-
-
-        // return;
-
-
-    //  return;
-    // //abre dialoogo de impresion o pantalla de configuracion
-    // if (PreferencesService.vistaPrevia == '0') {
-    //   console.log("abirir ialogo de imprimiendo");
-
-    //   let verificador = await this._notificationService.openDialogActions(
-    //     {
-    //       title: "Imprimiendo",
-    //       description: "El documento se esta imprimiendo.",
-    //       verdadero: this._translate.instant('pos.botones.aceptar'),
-    //     }
-    //   );
-
-    // } else {
-    //   //ver vista previa de impresion
-    //   console.log("mostar configiracion de impresora");
-    //   this.verVistaPrevia = true;
-    // }
-  }
 
 
   findTipoProducto(tipoTra: number) {

@@ -247,13 +247,32 @@ export class PrinterConfigurationComponent implements OnInit {
 
   async printDoc() {
 
+    this.isLoading = true;
+
+
+    let resStatus:ResApiInterface = await this._printerService.getStatus(PreferencesService.port);
+
+    if(!resStatus.status){
+      this.isLoading = false;
+      this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+
+      const docDefinition = await this._printerService.getReport(this.document!);
+
+      pdfMake.createPdf(docDefinition).print();
+
+      return;
+
+
+    }
+
     if (!this.impresora && !this.formato) {
+      this.isLoading = false;
       //TODO:Translate
+
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
 
-    this.isLoading = true;
 
     let isOnline: ResApiInterface = await this._printerService.getStatusPrint(this.impresora!);
 
@@ -269,6 +288,9 @@ export class PrinterConfigurationComponent implements OnInit {
     }
 
     const docDefinition = await this._printerService.getReport(this.document!);
+
+
+  
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
