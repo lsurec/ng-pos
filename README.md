@@ -30,45 +30,45 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 
 ## Caracteristicas 
 
-Idioma de la aplicación.
+* Idioma de la aplicación.
 
-Tema de la aplicación.
+* Tema de la aplicación.
 
-Configuración inicial del Origen de Datos.
+* Configuración inicial del Origen de Datos.
 
-Inicio de sesión.
+* Inicio de sesión.
 
-Configuracion local.
+* Configuracion local.
 
-Pantalla princial (Home).
+* Pantalla princial (Home).
 
-Menú de aplicaciones.
+* Menú de aplicaciones.
 
-Detalles de Usuario.
+* Detalles de Usuario.
 
-Ajustes.
+* Ajustes.
 
-Configuración de impresora.
+* Configuración de impresora.
 
-Módulo de Facturación.
+* Módulo de Facturación.
 
-Historial de documentos.
+* Historial de documentos.
 
-Imprimir documento.
+* Imprimir documento.
 
-Documento.
+* Documento.
 
-Nueva cuenta.
+* Nueva cuenta.
 
-Actualizar cuenta.
+* Actualizar cuenta.
 
-Detalle del documento.
+* Detalle del documento.
 
-Productos encontrados.
+* Productos encontrados.
 
-Formulario de Producto.
+* Formulario de Producto.
 
-Cargo abono.
+* Cargo abono.
 
 ## Vista Previa.
 
