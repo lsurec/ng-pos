@@ -44,7 +44,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
   ]
 
-  formato: ImpresoraFormatoInterface = this.formatos[0]; //formato de impresion
+  formato?: ImpresoraFormatoInterface = this.formatos[0]; //formato de impresion
 
   @Input() volver?: number;
   @Input() pantalla?: number;
