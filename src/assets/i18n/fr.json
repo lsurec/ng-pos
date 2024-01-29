@@ -263,7 +263,8 @@
             "sin_impresoras": "Aucune imprimante disponible.",
             "sin_formatos": "Aucun format disponible.",
             "impresion_navegador": "Utiliser l'impression du navigateur",
-            "noSeleccionada": "Non sélectionnée."
+            "noSeleccionada": "Non sélectionnée.",
+            "marcar_impre_navegador": "Si vous cochez cette case, l'impression du navigateur sera utilisée et vos paramètres seront ignorés."
         }
     }
 }
