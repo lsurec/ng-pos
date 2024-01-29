@@ -1,27 +1,83 @@
-# NgPos
+# Punto de ventas (POS) Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6.
+Aplicacion web con Angular y .NET CORE.
 
-## Development server
+Esta aplicación es una solución integral de punto de venta (POS) diseñada para facilitar y optimizar la gestión de un negocio. Con características avanzadas como la capacidad de certificar documentos electrónicos (DTEs), imprimir documentos, entre muchas otras funciones. La aplicación es una herramienta completa para agilizar las operaciones y mejorar la experiencia de los clientes.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Caracteristicas 
 
-## Code scaffolding
+### Idioma de la aplicación.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![screenshot](screenshot/idioma.png)
 
-## Build
+### Tema de la aplicación.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![screenshot](screenshot/tema.png)
 
-## Running unit tests
+### Configuración inicial del Origen de Datos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![screenshot](screenshot/url.png)
 
-## Running end-to-end tests
+### Inicio de sesión
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![screenshot](screenshot/login.png)
 
-## Further help
+### Configuracion local.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![screenshot](screenshot/configuracionLocal.png)
+
+### Pantalla princial (Home)
+
+![screenshot](screenshot/home.png)
+
+### Detalles de Usuario
+
+![screenshot](screenshot/detallesUsuario.png)
+
+### Ajustes
+
+![screenshot](screenshot/ajustes.png)
+
+### Configuración de impresora.
+
+![screenshot](screenshot/configuracionImpresora.png)
+
+### Módulo de Factura.
+
+![screenshot](screenshot/factura.png)
+
+### Documentos recientes.
+
+![screenshot](screenshot/historial.png)
+
+### Imprimir.
+
+![screenshot](screenshot/imprimir.png)
+
+### Documento.
+
+![screenshot](screenshot/factura.png)
+
+#### Nueva cuenta.
+
+![screenshot](screenshot/cuenta.png)
+
+#### Actualizar cuenta.
+
+![screenshot](screenshot/actualizarCuenta.png)
+
+### Detalle.
+
+![screenshot](screenshot/detalle.png)
+
+### Productos encontrados.
+
+![screenshot](screenshot/productosEncontrados.png)
+
+### Formulario de Producto.
+
+![screenshot](screenshot/productosEncontrados.png)
+
+### Pago.
+
+![screenshot](screenshot/pago.png)
