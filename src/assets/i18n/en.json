@@ -263,7 +263,8 @@
             "sin_impresoras": "No printers available.",
             "sin_formatos": "No formats available.",
             "impresion_navegador": "Use browser printing",
-            "noSeleccionada": "Not selected."
+            "noSeleccionada": "Not selected.",
+            "marcar_impre_navegador": "If you check this box, the browser's printing will be used, and your settings will be ignored."
         }
     }
 }
