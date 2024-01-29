@@ -27,6 +27,7 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
     - [Productos encontrados.](#productos-encontrados)
     - [Formulario de Producto.](#formulario-de-producto)
     - [Cargo abono.](#cargo-abono)
+- [Configuraciones del proyecto.](#configuraciones-del-proyecto)
   - [Cómo implementar un nuevo idioma para la aplicación.](#cómo-implementar-un-nuevo-idioma-para-la-aplicación)
 
 ## Caracteristicas 
@@ -157,6 +158,7 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 
 <!-- aquiiiiiiiiiii -->
 
+# Configuraciones del proyecto.
 
 ## Cómo implementar un nuevo idioma para la aplicación.
 
