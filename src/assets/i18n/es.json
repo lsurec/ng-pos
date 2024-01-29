@@ -263,7 +263,8 @@
             "sin_impresoras": "No hay impresoras disponibles.",
             "sin_formatos": "No hay formatos disponibles.",
             "impresion_navegador": "Usar impresion del navegador",
-            "noSeleccionada": "No seleccionado."
+            "noSeleccionada": "No seleccionado.",
+            "marcar_impre_navegador" : "Si marcas esta casilla se usará la impresión del navegador y tus configuraciones serán ignoradas."
         }
     }
 }
