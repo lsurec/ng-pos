@@ -26,6 +26,7 @@ export class PreferencesService {
     private static readonly previewKey: string = 'preview';
     private static readonly impresoraKey: string = 'impresora';
     private static readonly printServiceKey: string = 'printlocal';
+    private static readonly portKey: string = 'port';
 
 
     //Borrar datos al cerrar sesion
@@ -234,6 +235,17 @@ export class PreferencesService {
 
     static get localPrint(): string {
         let value = localStorage.getItem(this.printServiceKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set port(value: string) {
+        localStorage.setItem(this.portKey, value);
+    }
+
+    static get port(): string {
+        let value = localStorage.getItem(this.portKey);
         if (!value) return "";
         return value;
     }
