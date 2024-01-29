@@ -1,27 +1,46 @@
-# NgPos
+# Punto de ventas (POS) Web App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6.
+Aplicacion web con Angular y .NET CORE.
 
-## Development server
+Esta aplicación es una solución integral de punto de venta (POS) diseñada para facilitar y optimizar la gestión de un negocio. Con características avanzadas como la capacidad de certificar documentos electrónicos (DTEs), imprimir documentos, entre muchas otras funciones. La aplicación es una herramienta completa para agilizar las operaciones y mejorar la experiencia de los clientes.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Caracteristicas 
 
-## Code scaffolding
+### Idioma de la aplicación.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+TODO: agregar capturas.
 
-## Build
+### Tema de la aplicación.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+TODO: agregar capturas.
 
-## Running unit tests
+### Configuración inicial del Origen de Datos
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+TODO: agregar capturas.
 
-## Running end-to-end tests
+### Inicio de Sesion
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+TODO: agregar capturas.
 
-## Further help
+### Configuracion local.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+TODO: agregar capturas.
+
+### Pantalla princial (Home)
+
+TODO: agregar capturas.
+
+
+
+
+
+
+<div style="display: flex;">
+  <img src="screenshot/Login.png" alt="Screenshot" style="width:78%;">
+  <img src="screenshot/loginResponsive.png" alt="Screenshot" style="width: 20%;">
+</div>
+
+
+### Pantalla principal
+
+Vista después de iniciar sesión.
