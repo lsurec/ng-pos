@@ -221,6 +221,22 @@ export class PrinterConfigurationComponent implements OnInit {
       this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
     }
 
+
+    this.isLoading = true;
+
+    let isOnline: ResApiInterface = await this._printerService.getStatusPrint(this.impresora!);
+
+
+    if (!isOnline.status) {
+      this.isLoading = false;
+
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.impresora!}  no se encuentra disponible.`);
+      return;
+
+    }
+
     const docDefinition = await this._printerService.getReport(this.document!);
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
