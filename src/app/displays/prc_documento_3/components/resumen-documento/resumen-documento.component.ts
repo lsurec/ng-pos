@@ -15,6 +15,8 @@ import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 import { CurrencyPipe } from '@angular/common';
+import { PrinterService } from 'src/app/services/printer.service';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -23,6 +25,7 @@ import { CurrencyPipe } from '@angular/common';
   providers: [
     DocumentService,
     CurrencyPipe,
+    PrinterService,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -56,6 +59,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private _documentService: DocumentService,
     private _translate: TranslateService,
     private currencyPipe: CurrencyPipe,
+    private _printService:PrinterService,
 
   ) {
 
@@ -384,6 +388,57 @@ export class ResumenDocumentoComponent implements OnInit {
 
     
 
+  //Verificar que ya se haya configurado antes 
+  if (!PreferencesService.port) {
+    this.isLoading = true;
+
+    let resStatus5000: ResApiInterface = await this._printService.getStatus(5000);
+
+    if (!resStatus5000.status) {
+      let resStatus5001: ResApiInterface = await this._printService.getStatus(5001);
+
+      if (!resStatus5001.status) {
+
+        this.isLoading = false;
+        //TODO:Translate
+        this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+
+
+        const docDefinition = await this._printService.getReport(this.docPrint);
+
+        pdfMake.createPdf(docDefinition).print();
+
+
+        return;
+      } else {
+
+        PreferencesService.port = "5001";
+        this.isLoading = false;
+      }
+
+
+    } else {
+      PreferencesService.port = "5000";
+      this.isLoading = false;
+    }
+
+    this.isLoading = false;
+  }
+
+
+
+        // //TODO:Translate
+        // this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+
+
+        // const docDefinition = await this._printService.getReport(this.docPrint);
+
+        // const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    
+        // pdfMake.createPdf(docDefinition).print();
+
+
+        // return;
 
 
     //  return;
