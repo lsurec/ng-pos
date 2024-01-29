@@ -8,39 +8,76 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 
 ### Idioma de la aplicación.
 
-TODO: agregar capturas.
+![screenshot](screenshot/idioma.png)
 
 ### Tema de la aplicación.
 
-TODO: agregar capturas.
+![screenshot](screenshot/tema.png)
 
 ### Configuración inicial del Origen de Datos
 
-TODO: agregar capturas.
+![screenshot](screenshot/url.png)
 
-### Inicio de Sesion
+### Inicio de sesión
 
-TODO: agregar capturas.
+![screenshot](screenshot/login.png)
 
 ### Configuracion local.
 
-TODO: agregar capturas.
+![screenshot](screenshot/configuracionLocal.png)
 
 ### Pantalla princial (Home)
 
-TODO: agregar capturas.
+![screenshot](screenshot/home.png)
 
+### Detalles de Usuario
 
+![screenshot](screenshot/detallesUsuario.png)
 
+### Ajustes
 
+![screenshot](screenshot/ajustes.png)
 
+### Configuración de impresora.
 
-<div style="display: flex;">
-  <img src="screenshot/Login.png" alt="Screenshot" style="width:78%;">
-  <img src="screenshot/loginResponsive.png" alt="Screenshot" style="width: 20%;">
-</div>
+![screenshot](screenshot/configuracionImpresora.png)
 
+### Módulo de Factura.
 
-### Pantalla principal
+![screenshot](screenshot/factura.png)
 
-Vista después de iniciar sesión.
+### Documentos recientes.
+
+![screenshot](screenshot/historial.png)
+
+### Imprimir.
+
+![screenshot](screenshot/imprimir.png)
+
+### Documento.
+
+![screenshot](screenshot/factura.png)
+
+#### Nueva cuenta.
+
+![screenshot](screenshot/cuenta.png)
+
+#### Actualizar cuenta.
+
+![screenshot](screenshot/actualizarCuenta.png)
+
+### Detalle.
+
+![screenshot](screenshot/detalle.png)
+
+### Productos encontrados.
+
+![screenshot](screenshot/productosEncontrados.png)
+
+### Formulario de Producto.
+
+![screenshot](screenshot/productosEncontrados.png)
+
+### Pago.
+
+![screenshot](screenshot/pago.png)
