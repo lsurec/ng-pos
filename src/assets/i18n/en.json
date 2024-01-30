@@ -258,7 +258,7 @@
             "copias": "Copies",
             "numero_copias": "Number of copies to be printed",
             "impresion_directa": "Direct Printing",
-            "marcar_impresion": "If you check the box, you will always see this screen",
+            "marcar_impresion": "If you check the box, you will not see this screen.",
             "imprimir_prueba": "Print Test",
             "imprimir_documento": "Print Document",
             "sin_impresoras": "No printers available.",
