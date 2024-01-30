@@ -231,9 +231,8 @@ export class ResumenDocumentoComponent implements OnInit {
       if (!verificador) return;
 
       this.mostrarError(
-        //TODO:translate
         {
-          response: "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
+          response: this._translate.instant('pos.factura.sin_encabezados'),
           status: false,
           storeProcedure: resEncabezado.storeProcedure,
         }
@@ -257,9 +256,8 @@ export class ResumenDocumentoComponent implements OnInit {
     let isFel: boolean = this.facturaService.printFel();
 
     let documento: DocumentoData = {
-      //TODO:TRANSLATE
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
-      descripcion: isFel ? "FEL DOCUMENTO TRIBUTARIO ELECTRONICO" : "DOCUMENTO GENERICO",
+      descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
       fechaCert: isFel ? encabezado.feL_fechaCertificacion : "",
       serie: isFel ? encabezado.feL_Serie : "",
       no: isFel ? encabezado.feL_numeroDocumento : "",
@@ -291,7 +289,7 @@ export class ResumenDocumentoComponent implements OnInit {
     detalles.forEach(detail => {
 
 
-      if (detail.cantidad == 0 && detail.monto >  0) {
+      if (detail.cantidad == 0 && detail.monto > 0) {
         //4 cargo
         cargo += detail.monto;
       } else if (detail.cantidad == 0 && detail.monto < 0) {
@@ -306,7 +304,7 @@ export class ResumenDocumentoComponent implements OnInit {
         {
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto / detail.cantidad : detail.monto , ' ', 'symbol', '2.2-2')!,
+          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
         }
       );
@@ -352,13 +350,10 @@ export class ResumenDocumentoComponent implements OnInit {
       }
     }
 
-
-
-    //TODO:Translate
     let mensajes: string[] = [
       //TODO: Mostrar frase
       // "**Sujeto a pagos trimestrales**",
-      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+      this._translate.instant('pos.factura.sin_devoluciones')
     ];
 
     let poweredBy: PoweredBy = {
@@ -395,8 +390,8 @@ export class ResumenDocumentoComponent implements OnInit {
         if (!resStatus5001.status) {
 
           this.isLoading = false;
-          //TODO:Translate
-          this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
 
           const docDefinition = await this._printService.getReport(this.docPrint);
@@ -443,7 +438,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       if (!resStatus.status) {
         this.isLoading = false;
-        this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
         const docDefinition = await this._printService.getReport(this.docPrint);
 
@@ -460,9 +455,7 @@ export class ResumenDocumentoComponent implements OnInit {
       if (!isOnline.status) {
         this.isLoading = false;
 
-
-        //TODO:Translate
-        this._notificationService.openSnackbar(`${PreferencesService.impresora}  no se encuentra disponible.`);
+        this._notificationService.openSnackbar(`${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`);
         return;
 
       }
@@ -508,9 +501,8 @@ export class ResumenDocumentoComponent implements OnInit {
           return;
 
         }
+        this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
-        //TODO:Translate
-        this._notificationService.openSnackbar("Documento procesado exitosamente.");
       });
 
     }

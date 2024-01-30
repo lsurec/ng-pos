@@ -272,9 +272,9 @@
             "recibido": "Recibido:",
             "tel": "Tel.",
             "no_interno": "No. Interno:",
-            "fecha": "Fecha",
-            "hora": "Hora",
-            "cant": "Cant",
+            "fecha": "Fecha: ",
+            "hora": "Hora: ",
+            "cant": "Cant: ",
             "p_u": "P/U",
             "cargo": "Cargos:",
             "descuento": "Descuentos:",
@@ -283,7 +283,11 @@
             "efectivo": "Efectivo",
             "cambio_efectivo": "Cambio:",
             "sin_conexion_servicio": "No fue posible establecer conexión con el servicio de impresión. Verifique que el servicio esté disponible o que el sistema operativo sea compatible.",
-            "sin_tipo_documento": "No se ha asignado un tipo de documento al display. Comunícate con el departamento de soporte."
+            "sin_tipo_documento": "No se ha asignado un tipo de documento al display. Comunícate con el departamento de soporte.",
+            "sin_encabezados": "No se han encontrado encabezados para la impresión del documento. Verifique el procedimiento almacenado.",
+            "fel": "FEL DOCUMENTO TRIBUTARIO ELECTRÓNICO",
+            "documento_generico": "DOCUMENTO GENÉRICO",
+            "sin_devoluciones": "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
         }
     }
 }

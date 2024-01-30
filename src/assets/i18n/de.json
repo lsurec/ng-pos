@@ -272,9 +272,9 @@
             "recibido": "Empfangen",
             "tel": "Tel.",
             "no_interno": "Interne Nr.:",
-            "fecha": "Datum",
-            "hora": "Uhrzeit",
-            "cant": "Menge",
+            "fecha": "Datum: ",
+            "hora": "Uhrzeit: ",
+            "cant": "Menge: ",
             "p_u": "Stückpreis",
             "cargo": "Zuschläge:",
             "descuento": "Rabatte:",
@@ -283,7 +283,11 @@
             "efectivo": "Bargeld",
             "cambio_efectivo": "Rückgeld:",
             "sin_conexion_servicio": "Es konnte keine Verbindung zum Druckdienst hergestellt werden. Überprüfen Sie, ob der Dienst verfügbar ist oder das Betriebssystem kompatibel ist.",
-            "sin_tipo_documento": "Für das Display wurde kein Dokumenttyp zugewiesen. Bitte kontaktieren Sie den Support."
+            "sin_tipo_documento": "Für das Display wurde kein Dokumenttyp zugewiesen. Bitte kontaktieren Sie den Support.",
+            "sin_encabezados": "Es wurden keine Überschriften für den Druck des Dokuments gefunden. Überprüfen Sie den gespeicherten Prozedur.",
+            "fel": "FEL ELEKTRONISCHE STEUERDOKUMENT",
+            "documento_generico": "GENERISCHES DOKUMENT",
+            "sin_devoluciones": "*KEINE ÄNDERUNGEN ODER RÜCKERSTATTUNGEN AKZEPTIERT*"
         }
     }
 }

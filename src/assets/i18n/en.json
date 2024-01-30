@@ -272,9 +272,9 @@
             "recibido": "Received",
             "tel": "Tel.",
             "no_interno": "Internal No.:",
-            "fecha": "Date",
-            "hora": "Time",
-            "cant": "Qty",
+            "fecha": "Date: ",
+            "hora": "Time: ",
+            "cant": "Qty: ",
             "p_u": "Unit Price",
             "cargo": "Charges:",
             "descuento": "Discounts:",
@@ -283,7 +283,11 @@
             "efectivo": "Cash",
             "cambio_efectivo": "Change:",
             "sin_conexion_servicio": "Unable to establish a connection to the printing service. Verify that the service is available or that the operating system is compatible.",
-            "sin_tipo_documento": "No document type assigned to the display. Contact the support department."
+            "sin_tipo_documento": "No document type assigned to the display. Contact the support department.",
+            "sin_encabezados": "No headers found for document printing. Check the stored procedure.",
+            "fel": "FEL ELECTRONIC TAX DOCUMENT",
+            "documento_generico": "GENERIC DOCUMENT",
+            "sin_devoluciones": "*NO CHANGES OR RETURNS ACCEPTED*"
         }
     }
 }

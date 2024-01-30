@@ -272,9 +272,9 @@
             "recibido": "Reçu",
             "tel": "Tél.",
             "no_interno": "N° Interne :",
-            "fecha": "Date",
-            "hora": "Heure",
-            "cant": "Qté",
+            "fecha": "Date: ",
+            "hora": "Heure: ",
+            "cant": "Qté: ",
             "p_u": "P/U",
             "cargo": "Frais :",
             "descuento": "Remises :",
@@ -283,7 +283,11 @@
             "efectivo": "Espèces",
             "cambio_efectivo": "Monnaie rendue :",
             "sin_conexion_servicio": "Impossible d'établir une connexion avec le service d'impression. Vérifiez que le service est disponible ou que le système d'exploitation est compatible.",
-            "sin_tipo_documento": "Aucun type de document n'a été attribué à l'affichage. Veuillez contacter le service d'assistance."
+            "sin_tipo_documento": "Aucun type de document n'a été attribué à l'affichage. Veuillez contacter le service d'assistance.",
+            "sin_encabezados": "Aucun en-tête trouvé pour l'impression du document. Vérifiez la procédure stockée.",
+            "fel": "DOCUMENT TRIBUTAIRE ÉLECTRONIQUE FEL",
+            "documento_generico": "DOCUMENT GÉNÉRIQUE",
+            "sin_devoluciones": "*AUCUN CHANGEMENT NI REMBOURSEMENT ACCEPTÉ*"
         }
     }
 }

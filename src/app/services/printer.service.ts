@@ -377,22 +377,22 @@ export class PrinterService {
 
                 //CLiente
                 {
-                    text: `${this._translate.instant('pos.factura.cliente')}`,
+                    text: `${this._translate.instant('pos.factura.cliente').toUpperCase()}:`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
 
                 },
                 {
-                    text: `${this._translate.instant('pos.factura.nombre')} ${doc.cliente.nombre}`,
+                    text: `${this._translate.instant('pos.factura.nombre')} :  ${doc.cliente.nombre}`,
                     style: 'center',
                 },
                 {
-                    text: `${this._translate.instant('pos.factura.nit')} ${doc.cliente.nit}`,
+                    text: `${this._translate.instant('pos.factura.nit')} :  ${doc.cliente.nit}`,
                     style: 'center',
                 },
 
                 {
-                    text: `${this._translate.instant('pos.factura.direccion')} ${doc.cliente.direccion}`,
+                    text: `${this._translate.instant('pos.factura.direccion')} : ${doc.cliente.direccion}`,
                     style: 'center',
                 },
 
