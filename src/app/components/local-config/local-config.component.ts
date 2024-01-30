@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+//Utilidades de angular.
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+//Sercicios utilzados
 import { TranslateService } from '@ngx-translate/core';
-import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
-import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
-import { LanguageInterface } from 'src/app/interfaces/language.interface';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
-import { LocalSettingsService } from 'src/app/services/local-settings.service';
+import { RetryService } from 'src/app/services/retry.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
-import { RetryService } from 'src/app/services/retry.service';
+import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
+//Interfaces utilizadas
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { LanguageInterface } from 'src/app/interfaces/language.interface';
+//Providers utilizados
+import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 
 @Component({
   selector: 'app-local-config',
@@ -41,28 +45,26 @@ export class LocalConfigComponent implements OnInit {
   empresaSelect?: EmpresaInterface;
   estacionSelect?: EstacionInterface;
 
-
-  regresar: boolean = true;
-
   //Idiomas disponibles de la aplicacion
   languages: LanguageInterface[] = languagesProvider;
   idioma: number = indexDefaultLang;
 
-  error?: ErrorInterface;
-  name = RouteNamesService.LOCAL_CONFIG;
+  error?: ErrorInterface; //Guardar error
+  name: string = RouteNamesService.LOCAL_CONFIG; //identificador de pantalla, para saber desde que pantalla se esta regresando.
 
   constructor(
     //Instancia de servicios a utilizar
     private _router: Router,
-    private translate: TranslateService,
+    private _retryService: RetryService,
+    private _translate: TranslateService,
+    private _tipoCambioService: TipoCambioService,
     private _notificationsService: NotificationsService,
     private _localSettingsService: LocalSettingsService,
-    private _retryService: RetryService,
-    private _tipoCambioService: TipoCambioService,
-
   ) {
 
   }
+
+  //Activa evento 
   ngOnInit(): void {
     this.loadData();
 
@@ -72,90 +74,90 @@ export class LocalConfigComponent implements OnInit {
     });
   }
 
-  async loadData() {
-    let user = PreferencesService.user;
-    let token = PreferencesService.token;
+  //Consumir servicios de empresas y estaciones
+  async loadData(): Promise<void> {
+    //Usuario y token para realizar el consumo
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
 
-
+    //cargar pantalla
     this.isLoading = true;
-    // //Consumo de servicios
+    //Consumo de servicios
     let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
 
-      this.isLoading = false;
-      this.showError = true;
+      this.isLoading = false; //detener la pantalla de carga
+      this.showError = true; //ver el error
 
-      let dateNow: Date = new Date();
+      let dateNow: Date = new Date(); //fecha del error
 
+      //crear error
       this.error = {
         date: dateNow,
         description: resEmpresas.response,
         storeProcedure: resEmpresas.storeProcedure,
         url: resEmpresas.url,
-
       }
-
       return;
     }
-
 
     //Guardar Emoresas obtenidas
     this.empresas = resEmpresas.response;
 
+    //Consumo del servicio de Estaciones de trabajo.
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-    this.isLoading = false;
+    this.isLoading = false; //cargar pantalla
 
     if (!resEstacion.status) {
-      this.showError = true;
+      this.showError = true; //ver el error
 
-      let dateNow: Date = new Date();
+      let dateNow: Date = new Date(); //fecha del error
 
+      //crear error
       this.error = {
         date: dateNow,
         description: resEstacion.response,
         storeProcedure: resEstacion.storeProcedure,
         url: resEstacion.url,
-
       }
 
       return;
     }
 
+    //Guardar las estaciones de trabajo
     this.estaciones = resEstacion.response;
 
-
+    //Si solo hay una empresa disponible seleccionarla por defecto
     if (this.estaciones.length == 1) {
       this.estacionSelect = this.estaciones[0];
     }
 
+    //Si solo hay una estacion de trabajo disponible seleccionarla por defecto
     if (this.empresas.length == 1) {
       this.empresaSelect = this.empresas[0];
     }
 
   }
 
-
-  async saveSettings() {
-
+  //Guardar la configuracion seleccionada
+  async saveSettings(): Promise<void> {
 
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
-      this._notificationsService.openSnackbar(this.translate.instant('pos.alertas.debeSeleccionar'));
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.debeSeleccionar'));
       return;
     };
 
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
-
     PreferencesService.empresa = this.empresaSelect;
     PreferencesService.estacion = this.estacionSelect;
 
+    let user: string = PreferencesService.user;
+    let token: string = PreferencesService.token;
 
-    let user = PreferencesService.user;
-    let token = PreferencesService.token;
-
-    this.isLoading = true;
+    this.isLoading = true; //cargar pantalla
 
     //Cargar tipo cambio
     let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
@@ -164,24 +166,26 @@ export class LocalConfigComponent implements OnInit {
       PreferencesService.empresa.empresa,
     );
 
-    this.isLoading = false;
+    this.isLoading = false; //detener la carga de la pantalla
 
     if (!resTipoCammbio.status) {
-
-      this.isLoading = false;
+      this.isLoading = false; //detener la carga de la pantalla
       this._notificationsService.showErrorAlert(resTipoCammbio);
       return;
     }
 
+    //Tipo de cambio que existe.
     let tipoCambio: TipoCambioInterface[] = resTipoCammbio.response;
-
+    //lo guarda en las preferencias del usuario.
     PreferencesService.tipoCambio = tipoCambio[0].tipo_Cambio;
 
+    //Si todo esta correcto navega a Home
     this._router.navigate([RouteNamesService.HOME]);
   }
 
-  async cerrarSesion() {
-    //Cerrar sesion
+  //Cerrar sesion
+  async cerrarSesion(): Promise<void> {
+    //Abre el dialogo para confirmar el cierre de sesion 
     this._notificationsService.showCloseSesionDialog();
   }
 
