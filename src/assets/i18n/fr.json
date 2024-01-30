@@ -258,7 +258,7 @@
             "copias": "Copies",
             "numero_copias": "Nombre de copies à imprimer",
             "impresion_directa": "Impression directe",
-            "marcar_impresion": "Si vous cochez la case, vous verrez toujours cet écran",
+            "marcar_impresion": "Si vous cochez la case, vous ne verrez pas cet écran",
             "imprimir_prueba": "Imprimer un essai",
             "imprimir_documento": "Imprimer le document",
             "sin_impresoras": "Aucune imprimante disponible.",

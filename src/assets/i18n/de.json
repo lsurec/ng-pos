@@ -258,7 +258,7 @@
             "copias": "Kopien",
             "numero_copias": "Anzahl der zu druckenden Kopien",
             "impresion_directa": "Direktdruck",
-            "marcar_impresion": "Wenn Sie das Kontrollkästchen aktivieren, wird dieses Fenster immer angezeigt",
+            "marcar_impresion": "Wenn Sie das Kontrollkästchen aktivieren, wird dieser Bildschirm nicht angezeigt",
             "imprimir_prueba": "Testseite drucken",
             "imprimir_documento": "Dokument drucken",
             "sin_impresoras": "Keine Drucker verfügbar.",

@@ -258,7 +258,7 @@
             "copias": "Copias",
             "numero_copias": "Número de copias que se imprimirán",
             "impresion_directa": "Impresión directa",
-            "marcar_impresion": "Si marcas la casilla, siempre verás esta pantalla",
+            "marcar_impresion": "Si marcas la casilla, no verás esta pantalla",
             "imprimir_prueba": "Imprimir Prueba",
             "imprimir_documento": "Imprimir Documento",
             "sin_impresoras": "No hay impresoras disponibles.",
