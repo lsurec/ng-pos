@@ -436,16 +436,24 @@ export class ResumenDocumentoComponent implements OnInit {
 
       let resStatus: ResApiInterface = await this._printService.getStatus(PreferencesService.port);
 
+
       if (!resStatus.status) {
+
+
         this.isLoading = false;
-        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
-        const docDefinition = await this._printService.getReport(this.docPrint);
+        this._notificationService.openSnackbarAction(
+          this._translate.instant('pos.alertas.sin_servicio_impresion'),
+          "Imprimir", //TODO:Translate
+          async () => {
+            const docDefinition = await this._printService.getReport(this.docPrint!);
 
-        pdfMake.createPdf(docDefinition).print();
+            pdfMake.createPdf(docDefinition).print();
+          }
+        );
+
 
         return;
-
       }
 
 
@@ -456,6 +464,18 @@ export class ResumenDocumentoComponent implements OnInit {
         this.isLoading = false;
 
         this._notificationService.openSnackbar(`${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`);
+
+        this._notificationService.openSnackbarAction(
+          `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
+          "Imprimir", //TODO:Translate
+          async () => {
+            const docDefinition = await this._printService.getReport(this.docPrint!);
+
+            pdfMake.createPdf(docDefinition).print();
+          }
+        );
+
+
         return;
 
       }

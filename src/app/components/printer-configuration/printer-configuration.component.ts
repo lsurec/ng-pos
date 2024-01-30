@@ -267,6 +267,8 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this._notificationService.openSnackbar(this._translate.instant('pos.factura.selecciona_impresora_formato'));
 
+      
+
     }
 
 
@@ -277,7 +279,17 @@ export class PrinterConfigurationComponent implements OnInit {
     if (!isOnline.status) {
       this.isLoading = false;
 
-      this._notificationService.openSnackbar(`${this.impresora!} ${this._translate.instant('pos.factura.no_disponible')}`);
+
+      this._notificationService.openSnackbarAction(
+        this._translate.instant(`${this.impresora!} ${this._translate.instant('pos.factura.no_disponible')}`),
+        "Imprimir", //TODO:Translate
+        async () => {
+          const docDefinition = await this._printerService.getReport(this.document!);
+
+          pdfMake.createPdf(docDefinition).print();
+        }
+      );
+
       return;
 
     }
