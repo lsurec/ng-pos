@@ -289,12 +289,12 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     detalles.forEach(detail => {
-      let tipoTra: number = this.findTipoProducto(detail.tipo_Transaccion);
 
-      if (tipoTra == 4) {
+
+      if (detail.cantidad == 0 && detail.monto >  0) {
         //4 cargo
         cargo += detail.monto;
-      } else if (tipoTra == 3) {
+      } else if (detail.cantidad == 0 && detail.monto < 0) {
         //5 descuento
         descuento += detail.monto;
       } else {
@@ -306,12 +306,8 @@ export class ResumenDocumentoComponent implements OnInit {
         {
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: tipoTra == 3
-            ? `- ${detail.monto_U_M_Tipo_Moneda}`
-            : detail.monto_U_M_Tipo_Moneda,
-          total: tipoTra == 3
-            ? `- ${detail.monto_Total_Tipo_Moneda}`
-            : detail.monto_Total_Tipo_Moneda,
+          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto / detail.cantidad : detail.monto , ' ', 'symbol', '2.2-2')!,
+          total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
         }
       );
     });
@@ -434,7 +430,7 @@ export class ResumenDocumentoComponent implements OnInit {
         return;
       }
 
-      if (PreferencesService.vistaPrevia) {
+      if (!PreferencesService.vistaPrevia) {
 
         this.isLoading = false;
         this.verVistaPrevia = true;
