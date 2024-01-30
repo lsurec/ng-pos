@@ -5,6 +5,7 @@ import { ResApiInterface } from '../interfaces/res-api.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { PreferencesService } from './preferences.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class PrinterService {
@@ -13,7 +14,9 @@ export class PrinterService {
     private _port: string = PreferencesService.port;
 
     //inicializar http
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient,
+        private _translate: TranslateService,
+    ) {
     }
 
     //funcion que va a realizar el consumo privado para obtener las empresas
@@ -45,7 +48,7 @@ export class PrinterService {
                 err => {
 
                     console.log(err);
-                    
+
 
                     let resApi: ResApiInterface = {
                         status: false,
@@ -271,21 +274,15 @@ export class PrinterService {
                         body: [
 
                             [
-
-                                //TODO:translate
-                                { text: 'Recibido:', style: 'normalText', },
+                                { text: this._translate.instant('pos.factura.recibido'), style: 'normalText', },
                                 { text: pago.pago, style: 'endText', },
-
                             ],
                             [
-                                //TODO:translate
-                                { text: 'Monto:', style: 'normalText' },
+                                { text: this._translate.instant('pos.factura.recibido'), style: 'normalText' },
                                 { text: pago.monto, style: 'endText', },
-
                             ],
                             [
-                                //TODO:translate
-                                { text: 'Cambio: ', style: 'normalText' },
+                                { text: this._translate.instant('pos.factura.cambio_efectivo'), style: 'normalText' },
                                 { text: pago.cambio, style: 'endText', },
                             ],
 
@@ -352,13 +349,11 @@ export class PrinterService {
                     style: 'centerBold',
                 },
                 {
-                    //TODO:Translate
-                    text: `NIT: ${doc.empresa.nit}`,
+                    text: `${this._translate.instant('pos.factura.nit')} ${doc.empresa.nit}`,
                     style: 'centerBold',
                 },
                 {
-                    //TODO:Translate
-                    text: `TEl: ${doc.empresa.tel}`,
+                    text: `${this._translate.instant('pos.factura.tel')} ${doc.empresa.tel}`,
                     style: 'centerBold',
                 },
                 {
@@ -372,8 +367,7 @@ export class PrinterService {
                     style: 'centerBold',
                 },
                 {
-                    //TODO:Translate
-                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
 
@@ -383,32 +377,27 @@ export class PrinterService {
 
                 //CLiente
                 {
-                    //TODO:Translate
-                    text: `Cliente:`,
+                    text: `${this._translate.instant('pos.factura.cliente')}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
 
                 },
                 {
-                    //TODO:Translate
-                    text: `Nombre: ${doc.cliente.nombre}`,
+                    text: `${this._translate.instant('pos.factura.nombre')} ${doc.cliente.nombre}`,
                     style: 'center',
                 },
                 {
-                    //TODO:Translate
-                    text: `NIT: ${doc.cliente.nit}`,
-                    style: 'center',
-                },
-
-                {
-                    //TODO:Translate
-                    text: `Direccion: ${doc.cliente.direccion}`,
+                    text: `${this._translate.instant('pos.factura.nit')} ${doc.cliente.nit}`,
                     style: 'center',
                 },
 
                 {
-                    //TODO:Translate
-                    text: `Tel: ${doc.cliente.tel}`,
+                    text: `${this._translate.instant('pos.factura.direccion')} ${doc.cliente.direccion}`,
+                    style: 'center',
+                },
+
+                {
+                    text: `${this._translate.instant('pos.factura.tel')} ${doc.cliente.tel}`,
                     style: 'center',
                 },
                 {
@@ -416,9 +405,8 @@ export class PrinterService {
                         widths: ['50%', '50%',],
                         body: [
                             [
-                                //TODO:translate
-                                { text: 'FECHA: ' + fecha, style: 'center' },
-                                { text: 'HORA: ' + hora, style: 'center', },
+                                { text: this._translate.instant('pos.factura.fecha').toUpperCase() + fecha, style: 'center' },
+                                { text: this._translate.instant('pos.factura.hora').toUpperCase() + hora, style: 'center', },
                             ],
 
                         ],
@@ -437,11 +425,10 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
-                                { text: 'CANT.', style: 'normalTextBold' },
-                                { text: 'DESCRIPCION', style: 'normalTextBold' },
-                                { text: 'P/U', style: 'endTextBold' },
-                                { text: 'MONTO', style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
                             ],
 
                             ...transacciones
@@ -460,20 +447,17 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
-                                { text: 'Sub-Total:', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.subtotal'), style: 'normalTextBold' },
                                 { text: doc.montos.subtotal, style: 'endTextBold' },
 
                             ],
                             [
-                                //TODO:Translate
-                                { text: 'Cargos:', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.cargo'), style: 'normalTextBold' },
                                 { text: doc.montos.cargos, style: 'endTextBold' },
 
                             ],
                             [
-                                //TODO:Translate
-                                { text: 'Descuentos:', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descuento'), style: 'normalTextBold' },
                                 { text: doc.montos.descuentos, style: 'endTextBold' },
 
                             ],
@@ -495,9 +479,8 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
                                 {
-                                    text: 'TOTAL',
+                                    text: this._translate.instant('pos.factura.total').toUpperCase(),
                                     style: 'normalTextBold'
                                 },
                                 {
@@ -521,7 +504,7 @@ export class PrinterService {
                 {
                     margin: [0, 10],
 
-                    text: 'DETALLE PAGOS:',
+                    text: this._translate.instant('pos.factura.detalle_pagos'),
                     style: 'centerBold',
                 },
 
@@ -675,8 +658,7 @@ export class PrinterService {
 
         var docDefinition: TDocumentDefinitions = {
             info: {
-                //TODO:translate
-                title: 'TICKET DE PRUEBA',
+                title: this._translate.instant('pos.factura.ticket_prueba'),
                 author: 'Demosoft',
                 subject: 'ticket',
                 keywords: 'tck, sale',
@@ -702,8 +684,7 @@ export class PrinterService {
                     text: 'DEMOSOFT S.A.', style: 'centerBold'
                 },
                 {
-                    //TODO:translate
-                    text: 'TICKET DE PRUEBA',
+                    text: this._translate.instant('pos.factura.ticket_prueba'),
                     style: 'centerBold',
                     margin: [0, 10, 0, 2.25],
                 },
@@ -714,9 +695,8 @@ export class PrinterService {
                         widths: ['50%', '50%',],
                         body: [
                             [
-                                //TODO:translate
-                                { text: 'FECHA: ' + fecha, style: 'center' },
-                                { text: 'HORA: ' + hora, style: 'center', },
+                                { text: this._translate.instant('pos.factura.fecha').toUpperCase() + fecha, style: 'center' },
+                                { text: this._translate.instant('pos.factura.hora').toUpperCase() + hora, style: 'center', },
                             ],
 
                         ],
@@ -735,11 +715,10 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
-                                { text: 'CANT.', style: 'normalTextBold' },
-                                { text: 'DESCRIPCION', style: 'normalTextBold' },
-                                { text: 'P/U', style: 'endTextBold' },
-                                { text: 'MONTO', style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
                             ],
 
                             [
@@ -763,26 +742,17 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
-                                { text: 'Sub-Total.', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.subtotal'), style: 'normalTextBold' },
                                 { text: '00.00', style: 'endTextBold' },
-
                             ],
                             [
-                                //TODO:Translate
-                                { text: 'Cargos', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.cargo'), style: 'normalTextBold' },
                                 { text: '00.00', style: 'endTextBold' },
-
                             ],
                             [
-                                //TODO:Translate
-                                { text: 'Descuentos.', style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descuento'), style: 'normalTextBold' },
                                 { text: '00.00', style: 'endTextBold' },
-
                             ],
-
-
-
                         ],
                     },
 
@@ -800,9 +770,8 @@ export class PrinterService {
                         body: [
 
                             [
-                                //TODO:Translate
                                 {
-                                    text: 'TOTAL',
+                                    text: this._translate.instant('pos.factura.total').toUpperCase(),
                                     style: 'normalTextBold'
                                 },
                                 {
@@ -826,12 +795,12 @@ export class PrinterService {
                 {
                     margin: [0, 10],
 
-                    text: 'DETALLE PAGOS:',
+                    text: this._translate.instant('pos.factura.detalle_pagos'),
                     style: 'centerBold',
                 },
 
                 {
-                    text: 'EFECTIVO',
+                    text: this._translate.instant('pos.factura.efectivo'),
                     style: 'endTextBold',
                 },
 
@@ -841,21 +810,15 @@ export class PrinterService {
                         body: [
 
                             [
-
-                                //TODO:translate
-                                { text: 'Recibido:', style: 'normalText', },
+                                { text: this._translate.instant('pos.factura.recibido'), style: 'normalText', },
                                 { text: '00.00', style: 'endText', },
-
                             ],
                             [
-                                //TODO:translate
-                                { text: 'Monto:', style: 'normalText' },
+                                { text: this._translate.instant('pos.factura.monto'), style: 'normalText' },
                                 { text: '00.00', style: 'endText', },
-
                             ],
                             [
-                                //TODO:translate
-                                { text: 'Cambio: ', style: 'normalText' },
+                                { text: this._translate.instant('pos.factura.cambio'), style: 'normalText' },
                                 { text: '00.00', style: 'endText', },
                             ],
 

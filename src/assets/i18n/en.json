@@ -137,7 +137,8 @@
             "existenciaInsuficiente": "It is not possible to add the transaction because the stock is insufficient.",
             "monedaDistinta": "The transaction cannot be added because the currency is different from existing transactions.",
             "transaccionAgregada": "Transaction added.",
-            "noObtuvoCuenta": "The account associated with the document could not be obtained."
+            "noObtuvoCuenta": "The account associated with the document could not be obtained.",
+            "sin_servicio_impresion": "The printing service is not available at the moment."
         },
         "botones": {
             "aceptar": "OK",
@@ -264,7 +265,25 @@
             "sin_formatos": "No formats available.",
             "impresion_navegador": "Use browser printing",
             "noSeleccionada": "Not selected.",
-            "marcar_impre_navegador": "If you check this box, the browser's printing will be used, and your settings will be ignored."
+            "marcar_impre_navegador": "If you check this box, the browser's printing will be used, and your settings will be ignored.",
+            "selecciona_impresora_formato": "Select a printer and a format to print.",
+            "no_disponible": "Not available.",
+            "documento_procesado": "Document processed successfully.",
+            "recibido": "Received",
+            "tel": "Tel.",
+            "no_interno": "Internal No.:",
+            "fecha": "Date",
+            "hora": "Time",
+            "cant": "Qty",
+            "p_u": "Unit Price",
+            "cargo": "Charges:",
+            "descuento": "Discounts:",
+            "ticket_prueba": "TEST TICKET",
+            "detalle_pagos": "PAYMENT DETAILS:",
+            "efectivo": "Cash",
+            "cambio_efectivo": "Change:",
+            "sin_conexion_servicio": "Unable to establish a connection to the printing service. Verify that the service is available or that the operating system is compatible.",
+            "sin_tipo_documento": "No document type assigned to the display. Contact the support department."
         }
     }
 }

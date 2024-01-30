@@ -84,16 +84,16 @@ export class PrinterConfigurationComponent implements OnInit {
       this.copias = PreferencesService.copies;
     }
 
-    if(!PreferencesService.localPrint){
-      this.imprimirNavegador=false;
-    }else{
+    if (!PreferencesService.localPrint) {
+      this.imprimirNavegador = false;
+    } else {
       this.imprimirNavegador = true;
     }
 
 
-    if(!PreferencesService.vistaPrevia){
+    if (!PreferencesService.vistaPrevia) {
       this.vistaPrevia = false;
-    }else{
+    } else {
       this.vistaPrevia = true;
     }
 
@@ -102,18 +102,18 @@ export class PrinterConfigurationComponent implements OnInit {
   }
 
 
-  preview(){
-    if(this.vistaPrevia){
+  preview() {
+    if (this.vistaPrevia) {
       PreferencesService.vistaPrevia = "1";
-    }else{
+    } else {
       PreferencesService.vistaPrevia = "";
     }
   }
 
-  localPrint(){
-    if(this.imprimirNavegador){
+  localPrint() {
+    if (this.imprimirNavegador) {
       PreferencesService.localPrint = "1";
-    }else{
+    } else {
       PreferencesService.localPrint = "";
     }
   }
@@ -176,8 +176,7 @@ export class PrinterConfigurationComponent implements OnInit {
   async printTest() {
 
     if (!this.impresora && !this.formato) {
-      //TODO:Translate
-      this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.factura.selecciona_impresora_formato'));
     }
 
 
@@ -189,9 +188,7 @@ export class PrinterConfigurationComponent implements OnInit {
     if (!isOnline.status) {
       this.isLoading = false;
 
-
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.impresora!}  no se encuentra disponible.`);
+      this._notificationService.openSnackbar(`${this.impresora!}  ${this._translate.instant('pos.factura.no_disponible')}`);
       return;
 
     }
@@ -232,8 +229,8 @@ export class PrinterConfigurationComponent implements OnInit {
 
       }
 
-      //TODO:Translate
-      this._notificationService.openSnackbar("Documento procesado exitosamente.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+
     });
 
 
@@ -250,11 +247,11 @@ export class PrinterConfigurationComponent implements OnInit {
     this.isLoading = true;
 
 
-    let resStatus:ResApiInterface = await this._printerService.getStatus(PreferencesService.port);
+    let resStatus: ResApiInterface = await this._printerService.getStatus(PreferencesService.port);
 
-    if(!resStatus.status){
+    if (!resStatus.status) {
       this.isLoading = false;
-      this._notificationService.openSnackbar("El servicio de impresion no se encuentra disponible en este momento.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
       const docDefinition = await this._printerService.getReport(this.document!);
 
@@ -267,9 +264,9 @@ export class PrinterConfigurationComponent implements OnInit {
 
     if (!this.impresora && !this.formato) {
       this.isLoading = false;
-      //TODO:Translate
 
-      this._notificationService.openSnackbar("Selecciona una impresora y un formato para poder imprimir.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.factura.selecciona_impresora_formato'));
+
     }
 
 
@@ -280,9 +277,7 @@ export class PrinterConfigurationComponent implements OnInit {
     if (!isOnline.status) {
       this.isLoading = false;
 
-
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.impresora!}  no se encuentra disponible.`);
+      this._notificationService.openSnackbar(`${this.impresora!} ${this._translate.instant('pos.factura.no_disponible')}`);
       return;
 
     }
@@ -290,7 +285,7 @@ export class PrinterConfigurationComponent implements OnInit {
     const docDefinition = await this._printerService.getReport(this.document!);
 
 
-  
+
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
@@ -333,8 +328,8 @@ export class PrinterConfigurationComponent implements OnInit {
 
       }
 
-      //TODO:Translate
-      this._notificationService.openSnackbar("Documento procesado exitosamente.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+
     });
 
 

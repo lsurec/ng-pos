@@ -137,7 +137,8 @@
             "existenciaInsuficiente": "Die Transaktion kann nicht hinzugefügt werden, da der Bestand nicht ausreicht.",
             "monedaDistinta": "Die Transaktion kann nicht hinzugefügt werden, da die Währung von den vorhandenen Transaktionen abweicht.",
             "transaccionAgregada": "Transaktion hinzugefügt.",
-            "noObtuvoCuenta": "Das mit dem Dokument verbundene Konto konnte nicht abgerufen werden."
+            "noObtuvoCuenta": "Das mit dem Dokument verbundene Konto konnte nicht abgerufen werden.",
+            "sin_servicio_impresion": "Der Druckdienst ist derzeit nicht verfügbar."
         },
         "botones": {
             "aceptar": "Akzeptieren",
@@ -264,7 +265,25 @@
             "sin_formatos": "Keine Formate verfügbar.",
             "impresion_navegador": "Browser-Druck verwenden",
             "noSeleccionada": "Nicht ausgewählt.",
-            "marcar_impre_navegador": "Wenn Sie dieses Kästchen markieren, wird der Browser-Druck verwendet und Ihre Einstellungen werden ignoriert."
+            "marcar_impre_navegador": "Wenn Sie dieses Kästchen markieren, wird der Browser-Druck verwendet und Ihre Einstellungen werden ignoriert.",
+            "selecciona_impresora_formato": "Wählen Sie einen Drucker und ein Format aus, um zu drucken.",
+            "no_disponible": "Nicht verfügbar.",
+            "documento_procesado": "Dokument erfolgreich verarbeitet.",
+            "recibido": "Empfangen",
+            "tel": "Tel.",
+            "no_interno": "Interne Nr.:",
+            "fecha": "Datum",
+            "hora": "Uhrzeit",
+            "cant": "Menge",
+            "p_u": "Stückpreis",
+            "cargo": "Zuschläge:",
+            "descuento": "Rabatte:",
+            "ticket_prueba": "TEST-TICKET",
+            "detalle_pagos": "ZAHLUNGSDATEN:",
+            "efectivo": "Bargeld",
+            "cambio_efectivo": "Rückgeld:",
+            "sin_conexion_servicio": "Es konnte keine Verbindung zum Druckdienst hergestellt werden. Überprüfen Sie, ob der Dienst verfügbar ist oder das Betriebssystem kompatibel ist.",
+            "sin_tipo_documento": "Für das Display wurde kein Dokumenttyp zugewiesen. Bitte kontaktieren Sie den Support."
         }
     }
 }

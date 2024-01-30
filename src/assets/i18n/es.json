@@ -137,7 +137,8 @@
             "existenciaInsuficiente": "No es posible agregar la transacción porque la existencia es insuficiente.",
             "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
             "transaccionAgregada": "Transacción agregada.",
-            "noObtuvoCuenta": "No se pudo obetener la cuenta asociada al documento."
+            "noObtuvoCuenta": "No se pudo obetener la cuenta asociada al documento.",
+            "sin_servicio_impresion": "El servicio de impresión no se encuentra disponible en este momento."
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -264,7 +265,25 @@
             "sin_formatos": "No hay formatos disponibles.",
             "impresion_navegador": "Usar impresion del navegador",
             "noSeleccionada": "No seleccionado.",
-            "marcar_impre_navegador" : "Si marcas esta casilla se usará la impresión del navegador y tus configuraciones serán ignoradas."
+            "marcar_impre_navegador": "Si marcas esta casilla se usará la impresión del navegador y tus configuraciones serán ignoradas.",
+            "selecciona_impresora_formato": "Selecciona una impresora y un formato para poder imprimir.",
+            "no_disponible": "No se encuentra disponible.",
+            "documento_procesado": "Documento procesado exitosamente.",
+            "recibido": "Recibido:",
+            "tel": "Tel.",
+            "no_interno": "No. Interno:",
+            "fecha": "Fecha",
+            "hora": "Hora",
+            "cant": "Cant",
+            "p_u": "P/U",
+            "cargo": "Cargos:",
+            "descuento": "Descuentos:",
+            "ticket_prueba": "TICKET DE PRUEBA",
+            "detalle_pagos": "DETALLE PAGOS:",
+            "efectivo": "Efectivo",
+            "cambio_efectivo": "Cambio:",
+            "sin_conexion_servicio": "No fue posible establecer conexión con el servicio de impresión. Verifique que el servicio esté disponible o que el sistema operativo sea compatible.",
+            "sin_tipo_documento": "No se ha asignado un tipo de documento al display. Comunícate con el departamento de soporte."
         }
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { TranslateService } from '@ngx-translate/core';
+
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
@@ -22,6 +22,7 @@ import { RetryService } from 'src/app/services/retry.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { PrinterService } from 'src/app/services/printer.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -104,7 +105,7 @@ export class HomeComponent implements OnInit {
   constructor(
     //Declaracion de variables privadas
     private _menu: MenuService,
-    private translate: TranslateService,
+    private _translate: TranslateService,
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
     private themeService: ThemeService,
@@ -131,12 +132,12 @@ export class HomeComponent implements OnInit {
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
-      this.translate.setDefaultLang(this.activeLang.lang);
+      this._translate.setDefaultLang(this.activeLang.lang);
     } else {
       //sino se encuentra asignar el idioma por defecto
       this.idioma = +getLanguage;
       this.activeLang = languagesProvider[this.idioma];
-      this.translate.setDefaultLang(this.activeLang.lang);
+      this._translate.setDefaultLang(this.activeLang.lang);
     };
 
     this.temaOscuro = themeService.isDarkTheme;
@@ -176,7 +177,7 @@ export class HomeComponent implements OnInit {
   changeLang(lang: number): void {
     this.idioma = lang;
     this.activeLang = languagesProvider[lang];
-    this.translate.use(this.activeLang.lang);
+    this._translate.use(this.activeLang.lang);
     PreferencesService.lang = JSON.stringify(lang);
   };
 
@@ -342,7 +343,7 @@ export class HomeComponent implements OnInit {
       id: 0,
       idFather: null,
       idChild: null,
-      name: this.translate.instant('pos.home.aplicaciones'), //TODO: translate
+      name: this._translate.instant('pos.home.aplicaciones'),
       route: '',
       children: this.menu,
     };
@@ -555,9 +556,7 @@ export class HomeComponent implements OnInit {
 
         if (!resStatus5001.status) {
 
-          //TODO:Translate
-          this._notificationsService.openSnackbar("El servicio de impresion no se encuntra disponible en este momento.");
-
+          this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
           this.isLoading = false;
           this.showError = true;

@@ -137,7 +137,8 @@
             "existenciaInsuficiente": "Impossible d'ajouter la transaction car l'existence est insuffisante.",
             "monedaDistinta": "La transaction ne peut pas être ajoutée car la monnaie est différente des transactions existantes.",
             "transaccionAgregada": "Transaction ajoutée.",
-            "noObtuvoCuenta": "Impossible d'obtenir le compte associé au document."
+            "noObtuvoCuenta": "Impossible d'obtenir le compte associé au document.",
+            "sin_servicio_impresion": "Le service d'impression n'est pas disponible pour le moment."
         },
         "botones": {
             "aceptar": "Accepter",
@@ -264,7 +265,25 @@
             "sin_formatos": "Aucun format disponible.",
             "impresion_navegador": "Utiliser l'impression du navigateur",
             "noSeleccionada": "Non sélectionnée.",
-            "marcar_impre_navegador": "Si vous cochez cette case, l'impression du navigateur sera utilisée et vos paramètres seront ignorés."
+            "marcar_impre_navegador": "Si vous cochez cette case, l'impression du navigateur sera utilisée et vos paramètres seront ignorés.",
+            "selecciona_impresora_formato": "Sélectionnez une imprimante et un format pour pouvoir imprimer.",
+            "no_disponible": "Non disponible.",
+            "documento_procesado": "Document traité avec succès.",
+            "recibido": "Reçu",
+            "tel": "Tél.",
+            "no_interno": "N° Interne :",
+            "fecha": "Date",
+            "hora": "Heure",
+            "cant": "Qté",
+            "p_u": "P/U",
+            "cargo": "Frais :",
+            "descuento": "Remises :",
+            "ticket_prueba": "TICKET DE TEST",
+            "detalle_pagos": "DÉTAIL DES PAIEMENTS :",
+            "efectivo": "Espèces",
+            "cambio_efectivo": "Monnaie rendue :",
+            "sin_conexion_servicio": "Impossible d'établir une connexion avec le service d'impression. Vérifiez que le service est disponible ou que le système d'exploitation est compatible.",
+            "sin_tipo_documento": "Aucun type de document n'a été attribué à l'affichage. Veuillez contacter le service d'assistance."
         }
     }
 }
