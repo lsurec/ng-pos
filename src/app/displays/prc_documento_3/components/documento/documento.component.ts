@@ -1,12 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
-import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
-import { RouteNamesService } from 'src/app/services/route.names.service';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
@@ -16,7 +12,6 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-documento',

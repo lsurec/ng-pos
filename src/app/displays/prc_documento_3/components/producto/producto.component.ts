@@ -12,6 +12,7 @@ import { ProductService } from '../../services/product.service';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-producto',
@@ -54,7 +55,7 @@ export class ProductoComponent {
     }
 
     //convertir cantidad de texto a numerica
-    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+    let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
 
     //Calcular el total (cantidad * precio seleccionado)
     this.productoService.total = cantidad! * this.productoService.precio.precioU;
@@ -64,13 +65,13 @@ export class ProductoComponent {
   //editar precii
   editPrice() {
     //verificar que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.precioText) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.precioText) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
     //converti precio string a numero
-    let precio = this.convertirTextoANumero(this.productoService.precioText);
+    let precio = UtilitiesService.convertirTextoANumero(this.productoService.precioText);
 
     //Verificar que elprecio no sea menor al autorizado
     if (precio! < this.productoService.precioU) {
@@ -92,7 +93,7 @@ export class ProductoComponent {
   changeCantidad() {
 
     //verificar que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
@@ -215,7 +216,7 @@ export class ProductoComponent {
 
 
     //verificar que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
@@ -229,32 +230,18 @@ export class ProductoComponent {
 
   }
 
-  //convierte un string a numero si es valido
-  convertirTextoANumero(texto: string): number | null {
-    // Verificar si la cadena es un número
-    const esNumero = /^\d+(\.\d+)?$/.test(texto);
-
-    if (esNumero) {
-      // Realizar la conversión a número
-      return parseFloat(texto);
-      // Si quieres convertir a un número entero, puedes usar parseInt(texto) en lugar de parseFloat.
-    } else {
-      // Retornar null si la cadena no es un número
-      return null;
-    }
-  }
 
   // /7aumenta en uno la cantidad
   sumar() {
 
     //verifica que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
     //canitdad en numero
-    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+    let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
 
     //aumentar cantidad
     cantidad!++;
@@ -272,13 +259,13 @@ export class ProductoComponent {
   restar() {
 
     //verifica que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadPositiva'));
       return;
     }
 
     //cantidad numerica
-    let cantidad = this.convertirTextoANumero(this.productoService.cantidad);
+    let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
 
 
     //disminuir cantidad en 1
@@ -307,13 +294,13 @@ export class ProductoComponent {
     //Validaciones
 
     //verificar que la cantidad sea numerica
-    if (this.convertirTextoANumero(this.productoService.cantidad) == null) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadNumerica'));
       return;
     }
 
     //verificar que la cantidad sea mayor a 0
-    if (this.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadMayor'));
       return;
     }
@@ -376,7 +363,7 @@ export class ProductoComponent {
         bodega: this.productoService.bodega,
         producto: this.producto,
         precio: this.productoService.precio!,
-        cantidad: this.convertirTextoANumero(this.productoService.cantidad)!,
+        cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
         total: this.productoService.total,
         cargo: 0,
         descuento: 0,
@@ -384,7 +371,7 @@ export class ProductoComponent {
       }
     );
 
-      //Transacion agregada
+    //Transacion agregada
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 
     this.dialogRef.close();

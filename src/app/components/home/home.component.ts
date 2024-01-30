@@ -21,6 +21,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { PrinterService } from 'src/app/services/printer.service';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,7 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
   providers: [
     NotificationsService,
     MenuService,
+    PrinterService,
   ]
 })
 export class HomeComponent implements OnInit {
@@ -108,7 +110,8 @@ export class HomeComponent implements OnInit {
     private themeService: ThemeService,
     private _dataUserService: DataUserService,
     public facturaService: FacturaService,
-    private _retryService: RetryService
+    private _retryService: RetryService,
+    private _printService: PrinterService,
   ) {
     console.log(this.imprimir);
 
@@ -539,8 +542,51 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
   };
 
-  verConfiguracion() {
-    this.sidenavend.close(); //cerrar menu 
+  async verConfiguracion() {
+
+    //verificar si es posible utilizar el servicio
+    if (!PreferencesService.port) {
+      this.isLoading = true;
+
+      let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
+
+      if (!resStatus5000.status) {
+        let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
+
+        if (!resStatus5001.status) {
+
+          //TODO:Translate
+          this._notificationsService.openSnackbar("El servicio de impresion no se encuntra disponible en este momento.");
+
+
+          this.isLoading = false;
+          this.showError = true;
+
+          let dateNow: Date = new Date();
+
+          this.error = {
+            date: dateNow,
+            description: "No fue posible establecer conexion con el servicio de impresion, verifique que el servicio este disponible o que el sistema operativo sea compatible.",
+          }
+
+          return;
+        } else {
+
+          PreferencesService.port = "5001";
+          this.isLoading = false;
+        }
+
+
+      } else {
+        PreferencesService.port = "5000";
+        this.isLoading = false;
+      }
+
+      this.isLoading = false;
+    }
+
+
+    // this.sidenavend.close(); //cerrar menu 
     this.hideHome = true;
     this.impresora = true; //ver impresora
   }
