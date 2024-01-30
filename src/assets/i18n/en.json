@@ -275,7 +275,7 @@
             "fecha": "Date: ",
             "hora": "Time: ",
             "cant": "Qty: ",
-            "p_u": "Unit Price",
+            "p_u": "U/P",
             "cargo": "Charges:",
             "descuento": "Discounts:",
             "ticket_prueba": "TEST TICKET",
