@@ -282,7 +282,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this._notificationService.openSnackbarAction(
         this._translate.instant(`${this.impresora!} ${this._translate.instant('pos.factura.no_disponible')}`),
-        "Imprimir", //TODO:Translate
+        this._translate.instant('pos.botones.imprimir'), 
         async () => {
           const docDefinition = await this._printerService.getReport(this.document!);
 

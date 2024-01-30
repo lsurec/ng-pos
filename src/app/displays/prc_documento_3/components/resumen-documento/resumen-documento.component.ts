@@ -444,7 +444,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
         this._notificationService.openSnackbarAction(
           this._translate.instant('pos.alertas.sin_servicio_impresion'),
-          "Imprimir", //TODO:Translate
+          this._translate.instant('pos.botones.imprimir'),
           async () => {
             const docDefinition = await this._printService.getReport(this.docPrint!);
 
@@ -467,7 +467,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
         this._notificationService.openSnackbarAction(
           `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
-          "Imprimir", //TODO:Translate
+          this._translate.instant('pos.botones.imprimir'),
           async () => {
             const docDefinition = await this._printService.getReport(this.docPrint!);
 
