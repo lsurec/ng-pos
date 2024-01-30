@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+//Utilidades de angular
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+//Servicios utilizados
 import { TranslateService } from '@ngx-translate/core';
-import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
-import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { LoginService } from 'src/app/services/login.service';
+import { EncryptService } from 'src/app/services/encrypt.service';
+import { RouteNamesService } from 'src/app/services/route.names.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { LocalSettingsService } from 'src/app/services/local-settings.service';
+import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
+//Interfaces utilizadas
+import { UserInterface } from 'src/app/interfaces/user.interface';
 import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { UserInterface } from 'src/app/interfaces/user.interface';
-import { EncryptService } from 'src/app/services/encrypt.service';
-import { LocalSettingsService } from 'src/app/services/local-settings.service';
-import { LoginService } from 'src/app/services/login.service';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { RouteNamesService } from 'src/app/services/route.names.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
-import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
 
 @Component({
@@ -21,6 +23,7 @@ import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [
+    //Inyeccion de servicios
     LoginService,
     LocalSettingsService,
     EncryptService,
@@ -37,24 +40,22 @@ export class LoginComponent {
   mostrarTexto: boolean = false; //ver clave
 
   constructor(
-    private translate: TranslateService,
-    private _loginService: LoginService,
-    private _widgetsService: NotificationsService,
-    private _localSettingsService: LocalSettingsService,
+    //Instancia de servicios y variables privadas
     private _router: Router,
+    private _loginService: LoginService,
+    private _translate: TranslateService,
     private _encryptService: EncryptService,
+    private _widgetsService: NotificationsService,
     private _tipoCambioService: TipoCambioService,
-
+    private _localSettingsService: LocalSettingsService,
   ) {
-
   }
-
 
   //Validar usuario y contraseña
   async login(): Promise<void> {
-
+    //Sino hay usuario ni contrase;a mostrar notificacion de que debe completar
     if (!this.nombreInput || !this.claveInput) {
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.completar'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.completar'));
       return
     }
     //Interface de credenciales
@@ -86,7 +87,7 @@ export class LoginComponent {
     if (!resLogin.success) {
 
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this.translate.instant('pos.alertas.incorrecto'));
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.incorrecto'));
       return;
     };
 
@@ -137,7 +138,7 @@ export class LoginComponent {
     estaciones = resEstacion.response;
 
     if (estaciones.length == 0 || empresas.length == 0) {
-      this._widgetsService.openSnackbar(`${this.translate.instant('pos.alerta.configuracion')} ${user}`);
+      this._widgetsService.openSnackbar(`${this._translate.instant('pos.alerta.configuracion')} ${user}`);
       return;
     }
 
@@ -177,12 +178,12 @@ export class LoginComponent {
     this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
   };
 
-  cambiarUrl() {
+  cambiarUrl(): void {
     this._router.navigate([RouteNamesService.API]);
 
   }
 
-  api() {
+  api(): void {
     this._router.navigate([RouteNamesService.API]);
   }
 
