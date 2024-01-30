@@ -233,7 +233,7 @@ El archivo objeto completo debería verse de la siguiente manera:
 }
 ```
 
-1. En la carpeta [i18n](src/assets/i18n) ubicada en la carpeta [assets](src/assets) 
+2. En la carpeta [i18n](src/assets/i18n) ubicada en la carpeta [assets](src/assets) 
  crear un archivo **.json** para el idioma que se quiera agregar, para nombrar los archivos se debe tomar el código ISO del idioma , por ejemplo: **en.json** para el idioma Inglés.
 
 ![screenshot](screenshot/assets.png)
@@ -241,7 +241,9 @@ El archivo objeto completo debería verse de la siguiente manera:
 3. El contenido del archivo deberá ser el mismo json que los otros archivos ya existentes, con la diferencia que el valor de las propiedades debe ser la traducción de los textos al idioma que se quiera agregar, tome como base el archivo es.json que corresponde al idioma original del proyecto (Español).
 
 Ejemplo del archivo **es.json** con traucciones en Español
+
 ![screenshot](screenshot/espaniolJson.png)
 
 Ejemplo del archivo **en.json** con traucciones en Inglés
+
 ![screenshot](screenshot/inglesJson.png)
