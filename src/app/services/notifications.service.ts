@@ -33,6 +33,18 @@ export class NotificationsService {
         this._snackBar.open(message, this._translate.instant('pos.alertas.ok'), { duration: 5 * 1000 })
     }
 
+    openSnackbarAction(
+        message: string,
+        action: string,
+        funcion: Function,
+    ) {
+        let snackBarRef = this._snackBar.open(message, action, { duration: 5000 });
+
+        snackBarRef.onAction().subscribe(() => {
+            funcion();
+        });
+    }
+
 
 
     //Abrir dialogo de confirmacion, devuelve falso o verdadero dependiendo de la opcion seleccioanda
