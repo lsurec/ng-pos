@@ -125,16 +125,19 @@ export class LoginComponent {
     //Guardar Emoresas obtenidas
     empresas = resEmpresas.response;
 
+    //Consumo de servcicio que tiene las estaciones de trabajo
     let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
-
+    //Si algo sale mal
     if (!resEstacion.status) {
+      //detener pantalla de carga
       this.isLoading = false;
-      this._widgetsService.showErrorAlert(resEstacion);
 
+      this._widgetsService.showErrorAlert(resEstacion);
       return;
     }
 
+    //si tod esta bien, guardar la respuesta del servicio 
     estaciones = resEstacion.response;
 
     if (estaciones.length == 0 || empresas.length == 0) {
