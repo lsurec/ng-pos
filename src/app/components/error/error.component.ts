@@ -1,10 +1,15 @@
+//Utilidades de Angular
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
+
+//Servicios utilzados
+import { EventService } from 'src/app/services/event.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
+
+//Interfaces utilizadas
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
-import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-error',
@@ -13,26 +18,28 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class ErrorComponent implements OnInit {
 
-  @Input() regresar?: number; // decorate the property with @Input()
+  @Input() regresar?: number; //identificador para saber desde donde activa el evento para regresar.
 
-  error!: ErrorInterface;
-  user: string = "";
+  error!: ErrorInterface; //guardar el error 
+  user: string = ""; //nombre del usuario que inicio sesion.
+  //empresas y estaciones
   empresa?: EmpresaInterface;
   estacion?: EstacionInterface;
 
   constructor(
+    //Instancia de servicios
     private _location: Location,
     private _eventService: EventService,
   ) {
-
   }
+
+  //Obtiene el error que va a mostrarse
   ngOnInit(): void {
     this.error = PreferencesService.error;
     this.user = PreferencesService.user;
     //TODO: SI no hay usuario traducir texto
 
-
-
+    //Evitar el error sino hay estaciones despues del login
     try {
       this.empresa = PreferencesService.empresa;
       this.estacion = PreferencesService.estacion;
@@ -86,10 +93,6 @@ export class ErrorComponent implements OnInit {
 
         break;
     }
-
-
-
   }
-
 
 }

@@ -100,8 +100,6 @@ export class HomeComponent implements OnInit {
   indiceSeleccionado: number = 0;
   // Mostrar componente datos de usuario
 
-
-
   constructor(
     //Declaracion de variables privadas
     private _menu: MenuService,
@@ -114,6 +112,7 @@ export class HomeComponent implements OnInit {
     private _retryService: RetryService,
     private _printService: PrinterService,
   ) {
+
     console.log(this.imprimir);
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -251,8 +250,6 @@ export class HomeComponent implements OnInit {
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {
 
-
-
         this.isLoading = false;
         this.showError = true;
 
@@ -284,8 +281,6 @@ export class HomeComponent implements OnInit {
       //generar estructira de arbol
       item.children.forEach(display => {
 
-
-
         let itemMenu: MenuInterface = {
           id: display.user_Display,
           name: display.name,
@@ -309,11 +304,7 @@ export class HomeComponent implements OnInit {
           hijos.push(itemMenu);
 
         }
-
       });
-
-
-
 
       // agregar itemms a la lista propia
       this.menu.push(
@@ -352,14 +343,9 @@ export class HomeComponent implements OnInit {
     this.addRouteMenu(primerElemento);
 
     this.isLoading = false;
-
-
   };
 
-
   ordenarNodos(padres: MenuInterface[], hijos: MenuInterface[]): MenuInterface[] {
-
-
     //recorer los nodos principales
 
     for (let index = 0; index < padres.length; index++) {
@@ -379,24 +365,16 @@ export class HomeComponent implements OnInit {
           //Reoetir el proceso con lo shijos restantes hasta que no hayan mas hijos
           this.ordenarNodos(padre.children, hijos);
         }
-
       }
     }
-
-
-
-
     return padres;
   }
 
-  addRouteMenu(menu: MenuInterface) {
+  addRouteMenu(menu: MenuInterface): void {
     this.routeMenu.push(menu)
   };
 
-  viewContent(itemMenu: MenuInterface) {
-
-
-
+  viewContent(itemMenu: MenuInterface): void {
 
     this.clickedItem = itemMenu.id;
     if (itemMenu.children.length == 0) {
@@ -452,10 +430,7 @@ export class HomeComponent implements OnInit {
   };
 
   // Cambiar ruta de elemento navegacion del menu.
-  changeRouteActive(index: number) {
-
-
-
+  changeRouteActive(index: number): void {
     if (this.routeMenu.length - 1 > index) {
       //elimina ultimo item seleciconado.
       this.routeMenu.splice(this.routeMenu.length - 1, 1)
@@ -469,7 +444,7 @@ export class HomeComponent implements OnInit {
   };
 
   //Asigna los nodos padres e hijos.
-  asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]) {
+  asignarNodos(padres: MenuInterface[], hijos: MenuInterface[]): MenuInterface[] {
     for (let indexPadre = 0; indexPadre < padres.length; indexPadre++) {
       const padre: MenuInterface = padres[indexPadre];
       for (let indexHijo = 0; indexHijo < hijos.length; indexHijo++) {
@@ -512,7 +487,7 @@ export class HomeComponent implements OnInit {
     this.idiomas = false;
   };
 
-  verTema() {
+  verTema(): void {
     this.temas = true;
     this.ajustes = false;
     this.detallesUsuario = false;
@@ -543,26 +518,32 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
   };
 
-  async verConfiguracion() {
+  async verConfiguracion(): Promise<void> {
 
     //verificar si es posible utilizar el servicio
     if (!PreferencesService.port) {
+      //Cargar pantalla
       this.isLoading = true;
+      //hay dos puertos disponibles
 
+      //verifica si el servicio puede ser utilizado en el puerto 5000
       let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
-
+      //si no exite el servicio en el puerto 5000
       if (!resStatus5000.status) {
+        //Verifica si el servicio puede ser utilizado en el puerto 5001
         let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
-
+        //sino existe el servicio en el puerto 5001
         if (!resStatus5001.status) {
 
+          //Muestra notificacion de que el servicio no esta disponible en ese momento
           this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
-          this.isLoading = false;
-          this.showError = true;
+          this.isLoading = false; //Parar pantalla de carga
+          this.showError = true; //Ver error
 
-          let dateNow: Date = new Date();
+          let dateNow: Date = new Date(); //fecha del error
 
+          //Crear error
           this.error = {
             date: dateNow,
             description: "No fue posible establecer conexion con el servicio de impresion, verifique que el servicio este disponible o que el sistema operativo sea compatible.",
@@ -571,20 +552,18 @@ export class HomeComponent implements OnInit {
           return;
         } else {
 
+          ///si encontro el servicio en el puerto 5001
           PreferencesService.port = "5001";
           this.isLoading = false;
         }
-
-
       } else {
+        ///si encontro el servicio en el puerto 5000
         PreferencesService.port = "5000";
         this.isLoading = false;
       }
-
+      //detener la pantalla de carga
       this.isLoading = false;
     }
-
-
     // this.sidenavend.close(); //cerrar menu 
     this.hideHome = true;
     this.impresora = true; //ver impresora
