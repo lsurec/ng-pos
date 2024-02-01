@@ -148,6 +148,7 @@ export class ProductoComponent {
           descripcion: element.des_Tipo_Precio,
           precio: true,
           moneda: element.moneda,
+          orden: element.tipo_Precio_Orden,
         }
       );
     });
@@ -185,21 +186,35 @@ export class ProductoComponent {
             descripcion: element.des_Tipo_Precio,
             precio: false,
             moneda: element.moneda,
+            orden:element.tipo_Precio_Orden,
           }
         );
       });
 
     }
-
     if (this.productoService.precios.length == 1) {
 
-      //si solo hay un precio seleccionarlo por defecto
       let precioU: UnitarioInterface = this.productoService.precios[0];
 
       this.productoService.precio = precioU;
       this.productoService.total = precioU.precioU;
       this.productoService.precioU = precioU.precioU;
       this.productoService.precioText = precioU.precioU.toString();
+
+    } else if (this.productoService.precios.length > 1) {
+      for (let i = 0; i < this.productoService.precios.length; i++) {
+        const element = this.productoService.precios[i];
+        if (element.orden) {
+          this.productoService.precio = element;
+          this.productoService.total = element.precioU;
+          this.productoService.precioU = element.precioU;
+          this.productoService.precioText = element.precioU.toString();
+
+        }
+        break;
+
+      }
+
     }
 
 

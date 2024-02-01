@@ -46,7 +46,7 @@ export class ProductosEncontradosComponent {
   //seleccionar producto
   async setProduct(product: ProductoInterface) {
 
-    
+
     this.isLoading = true;
     //buscar bodegas del produxto
     let resBodega = await this._productService.getBodegaProducto(
@@ -115,6 +115,8 @@ export class ProductosEncontradosComponent {
             descripcion: element.des_Tipo_Precio,
             precio: true,
             moneda: element.moneda,
+            orden: element.tipo_Precio_Orden,
+
           }
         );
       });
@@ -153,16 +155,14 @@ export class ProductosEncontradosComponent {
               descripcion: element.des_Tipo_Precio,
               precio: false,
               moneda: element.moneda,
+              orden: element.tipo_Precio_Orden,
             }
           );
         });
 
       }
 
-      //si solo hay una precio disp0onible
       if (this._productoService.precios.length == 1) {
-
-        ///seleccionar precio por defecto
 
         let precioU: UnitarioInterface = this._productoService.precios[0];
 
@@ -170,16 +170,30 @@ export class ProductosEncontradosComponent {
         this._productoService.total = precioU.precioU;
         this._productoService.precioU = precioU.precioU;
         this._productoService.precioText = precioU.precioU.toString();
+
+      } else if (this._productoService.precios.length > 1) {
+        for (let i = 0; i < this._productoService.precios.length; i++) {
+          const element = this._productoService.precios[i];
+          if (element.orden) {
+            this._productoService.precio = element;
+            this._productoService.total = element.precioU;
+            this._productoService.precioU = element.precioU;
+            this._productoService.precioText = element.precioU.toString();
+
+          }
+          break;
+
+        }
+
       }
+
+
+      this.isLoading = false;
+
+      //cerrar dialogo
+      this.dialogRef.close(product);
 
     }
 
-
-    this.isLoading = false;
-
-    //cerrar dialogo
-    this.dialogRef.close(product);
-
   }
-
 }

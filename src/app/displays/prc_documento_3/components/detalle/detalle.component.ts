@@ -251,6 +251,7 @@ export class DetalleComponent {
               descripcion: element.des_Tipo_Precio,
               precio: true,
               moneda: element.moneda,
+              orden:element.precio_Orden,
             }
           );
         });
@@ -298,6 +299,7 @@ export class DetalleComponent {
                 descripcion: element.des_Tipo_Precio,
                 precio: false,
                 moneda: element.moneda,
+                orden:element.tipo_Precio_Orden,
               }
             );
           });
@@ -314,6 +316,20 @@ export class DetalleComponent {
           this._productoService.total = precioU.precioU;
           this._productoService.precioU = precioU.precioU;
           this._productoService.precioText = precioU.precioU.toString();
+
+        } else if (this._productoService.precios.length > 1) {
+          for (let i = 0; i < this._productoService.precios.length; i++) {
+            const element = this._productoService.precios[i];
+            if (element.orden) {
+              this._productoService.precio = element;
+              this._productoService.total = element.precioU;
+              this._productoService.precioU = element.precioU;
+              this._productoService.precioText = element.precioU.toString();
+
+            }
+            break;
+
+          }
         }
 
       }
