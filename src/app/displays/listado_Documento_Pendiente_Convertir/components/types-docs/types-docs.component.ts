@@ -7,19 +7,22 @@ import { GlobalConvertService } from '../../services/global-convert.service';
   styleUrls: ['./types-docs.component.scss']
 })
 export class TypesDocsComponent implements OnInit {
+  isLoading: boolean = false; //pantalla de carga
+  showError: boolean = false;
+
 
   /**
    *
    */
   constructor(
-    private _globalConvertSrevice:GlobalConvertService,
+    private _globalConvertSrevice: GlobalConvertService,
 
   ) {
-    
+
   }
   ngOnInit(): void {
     console.log(this._globalConvertSrevice.screen);
-    
+
   }
 
 }
