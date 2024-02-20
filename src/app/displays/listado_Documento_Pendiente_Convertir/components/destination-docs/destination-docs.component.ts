@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./destination-docs.component.scss']
 })
 export class DestinationDocsComponent {
-
+  isLoading: boolean = false; //pantalla de carga
+  showError: boolean = false;
 }

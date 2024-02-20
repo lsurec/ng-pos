@@ -63,7 +63,9 @@ import { OriginDocsComponent } from './displays/listado_Documento_Pendiente_Conv
 import { DestinationDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/destination-docs/destination-docs.component';
 import { ConvertDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/convert-docs/convert-docs.component';
 import { DetailsDestDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/details-dest-docs/details-dest-docs.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -138,7 +140,10 @@ import { DetailsDestDocsComponent } from './displays/listado_Documento_Pendiente
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
   providers: [
     // DataUserService,

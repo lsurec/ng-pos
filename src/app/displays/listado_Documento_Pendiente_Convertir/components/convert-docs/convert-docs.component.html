@@ -1,1 +1,44 @@
-<p>convert-docs works!</p>
+<!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
+<app-no-connected *ngIf="showError"></app-no-connected>
+
+<div *ngIf="!showError">
+
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+    <div *ngIf="!isLoading">
+        <mat-toolbar class="toolbarPhone">
+            <mat-toolbar-row>
+                <button mat-icon-button aria-label class="flecha-regresar"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <p class="titulo">Titulo</p>
+
+                <span class="spacer"></span>
+                <button mat-icon-button>
+                    <mat-icon>error</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar class="toolbarlarge">
+            <button mat-icon-button aria-label class="flecha-regresar"
+                matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <p class="titulo">{{ 'pos.error.informe' | translate }}</p>
+
+            <span class="spacer"></span>
+            <button mat-icon-button>
+                <mat-icon>error</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="container_main">
+
+        </div>
+
+        <!-- Mostrar logos -->
+        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+    </div>
+
+</div>

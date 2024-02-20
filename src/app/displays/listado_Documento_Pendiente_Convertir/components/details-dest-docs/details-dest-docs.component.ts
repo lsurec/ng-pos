@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class DetailsDestDocsComponent {
 
+  isLoading: boolean = false; //pantalla de carga
+  showError: boolean = false;
+
 }

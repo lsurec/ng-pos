@@ -1,18 +1,20 @@
 <!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
 <app-no-connected *ngIf="showError"></app-no-connected>
 
+<app-origin-docs *ngIf="origen" [tipo]="tipo"></app-origin-docs>
+
 <div *ngIf="!showError">
 
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
-    <div *ngIf="!isLoading">
+    <div *ngIf="!isLoading && !origen">
         <mat-toolbar class="toolbarPhone">
             <mat-toolbar-row>
                 <button mat-icon-button aria-label class="flecha-regresar"
                     matTooltip="{{ 'pos.botones.regresar' | translate }}">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
-                <p class="titulo">Titulo</p>
+                <p class="titulo">Listado de cotizaciones</p>
 
                 <span class="spacer"></span>
                 <button mat-icon-button>
@@ -25,16 +27,30 @@
                 matTooltip="{{ 'pos.botones.regresar' | translate }}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <p class="titulo">{{ 'pos.error.informe' | translate }}</p>
+            <p class="titulo">Listado de cotizaciones</p>
 
             <span class="spacer"></span>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="verError()">
                 <mat-icon>error</mat-icon>
             </button>
         </mat-toolbar>
 
         <div class="container_main">
 
+            <p class="textosBold14">Registros ({{cotizaciones.length}})</p>
+
+            <!-- <div class="dFlex">
+                <span class="spacer"></span>
+                <p>Registros (9)</p>
+            </div> -->
+
+            <div class="lista-cotizaciones" *ngFor="let cotizacion of cotizaciones; let index = index">
+                <div class="cotizacion" (click)="irTipoCotizacion(index)">
+                    <p class="textos14"> {{cotizacion}} </p>
+                    <span class="spacer"></span>
+                    <mat-icon>arrow_right</mat-icon>
+                </div>
+            </div>
         </div>
 
         <!-- Mostrar logos -->

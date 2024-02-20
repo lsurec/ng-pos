@@ -1,1 +1,73 @@
-<p>origin-docs works!</p>
+<!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
+<app-no-connected *ngIf="showError"></app-no-connected>
+
+<div *ngIf="!showError">
+
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+    <div *ngIf="!isLoading">
+        <mat-toolbar class="toolbarPhone">
+            <mat-toolbar-row>
+                <button mat-icon-button aria-label class="flecha-regresar"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
+                <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+
+                <span class="spacer"></span>
+                <button mat-icon-button>
+                    <mat-icon>error</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar class="toolbarlarge">
+            <button mat-icon-button aria-label class="flecha-regresar"
+                matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
+            <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+
+
+            <span class="spacer"></span>
+            <button mat-icon-button>
+                <mat-icon>error</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="container_main">
+
+            <div class="filtros">
+                <div class="fechas">
+                    <mat-form-field class="transparent-field">
+                        <mat-label>Fecha Ini:</mat-label>
+                        <input matInput [matDatepicker]="picker">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <span class="spacer"></span>
+
+                    <mat-form-field class="transparent-field">
+                        <mat-label>Fecha Fin:</mat-label>
+                        <input matInput [matDatepicker]="pickerFinal">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerFinal></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+                <div class="orden">
+
+                </div>
+
+
+            </div>
+
+            <!-- Mostrar logos -->
+            <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        </div>
+
+    </div>

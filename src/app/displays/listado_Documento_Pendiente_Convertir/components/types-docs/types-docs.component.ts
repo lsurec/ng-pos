@@ -9,11 +9,15 @@ import { GlobalConvertService } from '../../services/global-convert.service';
 export class TypesDocsComponent implements OnInit {
   isLoading: boolean = false; //pantalla de carga
   showError: boolean = false;
+  origen: boolean = false;
+  tipo!: number;
 
 
-  /**
-   *
-   */
+  cotizaciones: string[] = [
+    "Restaurante (14)",
+    "Cotización a Cliente (20)"
+  ]
+
   constructor(
     private _globalConvertSrevice: GlobalConvertService,
 
@@ -22,6 +26,21 @@ export class TypesDocsComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this._globalConvertSrevice.screen);
+
+  }
+
+  verError() {
+    this.showError = false;
+  }
+
+  irTipoCotizacion(index: number) {
+    // guardar el tipo de cotizacion para mostar el titulo
+    if (index == 0) this.tipo = 1;
+    if (index == 1) this.tipo = 2;
+
+    this.origen = true;
+
+    console.log(this.tipo);
 
   }
 

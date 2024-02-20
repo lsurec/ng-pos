@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./convert-docs.component.scss']
 })
 export class ConvertDocsComponent {
-  
+  isLoading: boolean = false; //pantalla de carga
+  showError: boolean = false;
 }
