@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalConvertService } from '../../services/global-convert.service';
 
 @Component({
   selector: 'app-types-docs',
@@ -6,8 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./types-docs.component.scss']
 })
 export class TypesDocsComponent implements OnInit {
+
+  /**
+   *
+   */
+  constructor(
+    private _globalConvertSrevice:GlobalConvertService,
+
+  ) {
+    
+  }
   ngOnInit(): void {
-    console.log("Desde listado tipos cot origen");
+    console.log(this._globalConvertSrevice.screen);
     
   }
 

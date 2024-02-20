@@ -23,6 +23,7 @@ import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { PrinterService } from 'src/app/services/printer.service';
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Component({
   selector: 'app-home',
@@ -111,9 +112,8 @@ export class HomeComponent implements OnInit {
     public facturaService: FacturaService,
     private _retryService: RetryService,
     private _printService: PrinterService,
+    private _globalConvertSrevice:GlobalConvertService,
   ) {
-
-    console.log(this.imprimir);
 
     this._eventService.customEvent$.subscribe((eventData) => {
       this.viewHome(eventData);
@@ -396,12 +396,14 @@ export class HomeComponent implements OnInit {
       if (itemMenu.route == "Listado_Documento_Pendiente_Convertir") {
 
         //TODO:Load type docs
-        let typeDOcs: string[] = ["scd"];
+        let typeDOcs: string[] = ["scd","ac"];
+        // let typeDOcs: string[] = ["scd"];
 
         if (typeDOcs.length == 1) {
           for (let i = 0; i < components.length; i++) {
             const element = components[i];
             if (element.id == "list_cot") {
+              this._globalConvertSrevice.screen = "list_cot";
               this.components[i].visible = true;
               return;
 
@@ -413,6 +415,7 @@ export class HomeComponent implements OnInit {
           for (let i = 0; i < components.length; i++) {
             const element = components[i];
             if (element.id == "tipos_cot") {
+              this._globalConvertSrevice.screen = "tipos_cot";
               this.components[i].visible = true;
               return;
 
