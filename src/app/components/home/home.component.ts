@@ -406,6 +406,7 @@ export class HomeComponent implements OnInit {
           this.token,
         );
 
+        this.isLoading = false;
         if (!res.status) {
 
           this.isLoading = false; //Parar pantalla de carga

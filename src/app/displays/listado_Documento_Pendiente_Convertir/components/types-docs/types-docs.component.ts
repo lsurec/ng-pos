@@ -8,7 +8,7 @@ import { GlobalConvertService } from '../../services/global-convert.service';
 })
 export class TypesDocsComponent implements OnInit {
   isLoading: boolean = false; //pantalla de carga
-  showError: boolean = false;
+  showError: boolean = true;
   origen: boolean = false;
   tipo!: number;
 
