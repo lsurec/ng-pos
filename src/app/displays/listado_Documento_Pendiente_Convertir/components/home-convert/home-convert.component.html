@@ -1,0 +1,11 @@
+<app-error *ngIf="showError"></app-error>
+<ng-container *ngIf="!showError">
+    <app-progress *ngIf="isLoading"></app-progress>
+    <ng-container *ngIf="!isLoading">
+        <app-types-docs *ngIf="verTiposDocConversion"></app-types-docs>
+        <app-origin-docs *ngIf="verDocOrigen"></app-origin-docs>
+        <app-destination-docs *ngIf="verDocDestino"></app-destination-docs>
+        <app-convert-docs *ngIf="verDocConversion"></app-convert-docs>
+        <app-details-dest-docs *ngIf="verDetalleDocConversion"></app-details-dest-docs>
+    </ng-container>
+</ng-container>

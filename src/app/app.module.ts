@@ -66,6 +66,7 @@ import { DetailsDestDocsComponent } from './displays/listado_Documento_Pendiente
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { HomeConvertComponent } from './displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     DestinationDocsComponent,
     ConvertDocsComponent,
     DetailsDestDocsComponent,
+    HomeConvertComponent,
   ],
   imports: [
     BrowserModule,

@@ -419,7 +419,7 @@ export class HomeComponent implements OnInit {
             date: dateNow,
             description: res.response,
             storeProcedure: res.storeProcedure,
-            url:res.url, 
+            url: res.url,
           }
 
           return;
@@ -428,31 +428,17 @@ export class HomeComponent implements OnInit {
 
         this._globalConvertService.docs = [];
         this._globalConvertService.docs = res.response;
+        // this._globalConvertService.docs.splice(1,1);
 
 
-        if ( this._globalConvertService.docs.length == 1) {
-          this._globalConvertService.docSelect = this._globalConvertService.docs[0];
+        if (this._globalConvertService.docs.length == 1) {
+          //TODO:cargar docuentos origen (pendientes de recepcionar)
+          //mostarr los documentos de origen
+          this._globalConvertService.screen = "list_cot";
 
-          for (let i = 0; i < components.length; i++) {
-            const element = components[i];
-            if (element.id == "list_cot") {
-              this._globalConvertService.screen = "list_cot";
-              this.components[i].visible = true;
-              return;
-            }
-          }
-        }
+        } else {
+          this._globalConvertService.screen = "tipos_cot";
 
-        if ( this._globalConvertService.docs.length > 1) {
-          for (let i = 0; i < components.length; i++) {
-            const element = components[i];
-            if (element.id == "tipos_cot") {
-              this._globalConvertService.screen = "tipos_cot";
-              this.components[i].visible = true;
-              return;
-
-            }
-          }
         }
 
       }

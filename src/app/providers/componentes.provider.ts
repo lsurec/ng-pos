@@ -1,5 +1,6 @@
 import { InConstructionComponent } from "../components/in-construction/in-construction.component";
 import { SelectedConfigurationComponent } from "../components/selected-configuration/selected-configuration.component";
+import { HomeConvertComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component";
 import { OriginDocsComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/origin-docs/origin-docs.component";
 import { TypesDocsComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/types-docs/types-docs.component";
 import { FacturaComponent } from "../displays/prc_documento_3/components/factura/factura.component";
@@ -22,13 +23,9 @@ export const components: ComponentesInterface[] = [
         visible: false,
     },
     {
-        id: "tipos_cot",
-        componente: TypesDocsComponent,
+        id: "Listado_Documento_Pendiente_Convertir",
+        componente: HomeConvertComponent,
         visible: false,
     },
-    {
-        id: "list_cot",
-        componente: OriginDocsComponent,
-        visible: false,
-    }
+   
 ]
