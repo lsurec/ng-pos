@@ -6,6 +6,15 @@ import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interf
     providedIn: 'root',
 })
 export class GlobalConvertService{
+
+
+    isLoading: boolean = false; //pantalla de carga
+    showError: boolean = false;
+    verTiposDocConversion: boolean = false;
+    verDocOrigen: boolean = false;
+    verDocDestino: boolean = false;
+    verDocConversion: boolean = false;
+    verDetalleDocConversion: boolean = false;
   
     docSelect?:TypesDocConvertInterface;
     docs :TypesDocConvertInterface[] = [];

@@ -7,9 +7,7 @@ import { GlobalConvertService } from '../../services/global-convert.service';
   styleUrls: ['./types-docs.component.scss']
 })
 export class TypesDocsComponent implements OnInit {
-  isLoading: boolean = false; //pantalla de carga
-  showError: boolean = false;
-  origen: boolean = false;
+
   tipo!: number;
 
 
@@ -26,19 +24,27 @@ export class TypesDocsComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this._globalConvertSrevice.screen);
+    console.log("tipos");
+
 
   }
 
   verError() {
-    this.showError = false;
   }
 
   irTipoCotizacion(index: number) {
+
+      this._globalConvertSrevice.showError = false;
+      this._globalConvertSrevice.verTiposDocConversion = false;
+      this._globalConvertSrevice.verDocOrigen = true;
+      this._globalConvertSrevice.verDocDestino = false;
+      this._globalConvertSrevice.verDocConversion = false;
+      this._globalConvertSrevice.verDetalleDocConversion = false;
+
+    return;
     // guardar el tipo de cotizacion para mostar el titulo
     if (index == 0) this.tipo = 1;
     if (index == 1) this.tipo = 2;
-
-    this.origen = true;
 
     console.log(this.tipo);
 
