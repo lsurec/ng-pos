@@ -24,6 +24,8 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { PrinterService } from 'src/app/services/printer.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
+import { TypesDocConvertInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/types-doc-convert.interface';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +36,7 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
     NotificationsService,
     MenuService,
     PrinterService,
+    ReceptionService,
   ]
 })
 export class HomeComponent implements OnInit {
@@ -112,7 +115,8 @@ export class HomeComponent implements OnInit {
     public facturaService: FacturaService,
     private _retryService: RetryService,
     private _printService: PrinterService,
-    private _globalConvertSrevice:GlobalConvertService,
+    private _globalConvertService: GlobalConvertService,
+    private _receptionService: ReceptionService,
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -374,7 +378,7 @@ export class HomeComponent implements OnInit {
     this.routeMenu.push(menu)
   };
 
-  viewContent(itemMenu: MenuInterface): void {
+  async viewContent(itemMenu: MenuInterface): Promise<void> {
 
     this.clickedItem = itemMenu.id;
     if (itemMenu.children.length == 0) {
@@ -395,38 +399,62 @@ export class HomeComponent implements OnInit {
 
       if (itemMenu.route == "Listado_Documento_Pendiente_Convertir") {
 
-        //TODO:Load type docs
-        let typeDOcs: string[] = ["scd","ac"];
-        // let typeDOcs: string[] = ["scd"];
+        this.isLoading = true;
 
-        if (typeDOcs.length == 1) {
+        let res: ResApiInterface = await this._receptionService.getTiposDoc(
+          this.user,
+          this.token,
+        );
+
+        if (!res.status) {
+
+          this.isLoading = false; //Parar pantalla de carga
+          this.showError = true; //Ver error
+
+          let dateNow: Date = new Date(); //fecha del error
+
+          //Crear error
+          this.error = {
+            date: dateNow,
+            description: res.response,
+            storeProcedure: res.storeProcedure,
+            url:res.url, 
+          }
+
+          return;
+
+        }
+
+        this._globalConvertService.docs = [];
+        this._globalConvertService.docs = res.response;
+
+
+        if ( this._globalConvertService.docs.length == 1) {
+          this._globalConvertService.docSelect = this._globalConvertService.docs[0];
+
           for (let i = 0; i < components.length; i++) {
             const element = components[i];
             if (element.id == "list_cot") {
-              this._globalConvertSrevice.screen = "list_cot";
+              this._globalConvertService.screen = "list_cot";
               this.components[i].visible = true;
               return;
-
             }
           }
         }
 
-        if (typeDOcs.length > 1) {
+        if ( this._globalConvertService.docs.length > 1) {
           for (let i = 0; i < components.length; i++) {
             const element = components[i];
             if (element.id == "tipos_cot") {
-              this._globalConvertSrevice.screen = "tipos_cot";
+              this._globalConvertService.screen = "tipos_cot";
               this.components[i].visible = true;
               return;
 
             }
           }
         }
-        
-      }
 
-      console.log("no paso");
-      
+      }
 
 
       //recorremos la lista qeu tiene todos los componentes
