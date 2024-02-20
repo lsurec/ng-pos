@@ -58,6 +58,11 @@ import { CargoDescuentoComponent } from './displays/prc_documento_3/components/c
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SelectedConfigurationComponent } from './components/selected-configuration/selected-configuration.component';
 import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
+import { TypesDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/types-docs/types-docs.component';
+import { OriginDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/origin-docs/origin-docs.component';
+import { DestinationDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/destination-docs/destination-docs.component';
+import { ConvertDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/convert-docs/convert-docs.component';
+import { DetailsDestDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/details-dest-docs/details-dest-docs.component';
 
 
 @NgModule({
@@ -96,6 +101,11 @@ import { PrinterConfigurationComponent } from './components/printer-configuratio
     SidenavComponent,
     SelectedConfigurationComponent,
     PrinterConfigurationComponent,
+    TypesDocsComponent,
+    OriginDocsComponent,
+    DestinationDocsComponent,
+    ConvertDocsComponent,
+    DetailsDestDocsComponent,
   ],
   imports: [
     BrowserModule,

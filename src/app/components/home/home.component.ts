@@ -392,6 +392,40 @@ export class HomeComponent implements OnInit {
 
       this.hideHome = true;
 
+
+      if (itemMenu.route == "Listado_Documento_Pendiente_Convertir") {
+
+        //TODO:Load type docs
+        let typeDOcs: string[] = ["scd"];
+
+        if (typeDOcs.length == 1) {
+          for (let i = 0; i < components.length; i++) {
+            const element = components[i];
+            if (element.id == "list_cot") {
+              this.components[i].visible = true;
+              return;
+
+            }
+          }
+        }
+
+        if (typeDOcs.length > 1) {
+          for (let i = 0; i < components.length; i++) {
+            const element = components[i];
+            if (element.id == "tipos_cot") {
+              this.components[i].visible = true;
+              return;
+
+            }
+          }
+        }
+        
+      }
+
+      console.log("no paso");
+      
+
+
       //recorremos la lista qeu tiene todos los componentes
       for (let index = 0; index < this.components.length; index++) {
         const selectedComponent = this.components[index];
