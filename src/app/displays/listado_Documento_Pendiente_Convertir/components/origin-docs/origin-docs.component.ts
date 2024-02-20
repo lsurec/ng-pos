@@ -10,25 +10,31 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 })
 export class OriginDocsComponent implements OnInit {
 
+  @Input() tipo?: number = 2;
   isLoading: boolean = false; //pantalla de carga
   showError: boolean = false;
-
-
   fechaIni: Date = new Date();
   fechaFin: Date = new Date();
 
+  ascendente: boolean = true;
+  descendente: boolean = false;
 
-  volver: number = 2; //volver a lista de tipos de documentos
 
 
-  @Input() tipo?: number = 2;
+  filtro!: string;
+
+  filtros: string[] = [
+    "Id documento",
+    "Fecha"
+  ]
 
   constructor(
     private _globalConvertSrevice: GlobalConvertService,
     private _adapter: DateAdapter<any>, date: DateAdapter<Date>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
   ) {
-    this.setLangPicker()
+    this.setLangPicker();
+    this.filtro = this.filtros[0];
   }
   ngOnInit(): void {
     console.log(this._globalConvertSrevice.screen);
@@ -40,5 +46,22 @@ export class OriginDocsComponent implements OnInit {
     this._locale = "es-ES";
     this._adapter.setLocale(this._locale);
   }
+
+
+  ordenar() {
+
+    if (this.ascendente) {
+      console.log("de manera asendente");
+    }
+
+    if (this.descendente) {
+      console.log("de manera descendente");
+    }
+
+    this.ascendente = !this.ascendente;
+    this.descendente = !this.descendente;
+  }
+
+
 
 }

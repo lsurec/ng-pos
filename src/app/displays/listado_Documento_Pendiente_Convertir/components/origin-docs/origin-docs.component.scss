@@ -122,7 +122,9 @@ p {
 }
 
 .filtros {
-    display: flex;
+    display    : flex;
+    width      : 100%;
+    align-items: center;
 }
 
 .fechas {
@@ -132,7 +134,26 @@ p {
 }
 
 .ordenar {
-    display: flex;
-    width  : 45%;
+    width      : 40%;
+    display    : flex;
+    align-items: center;
+}
 
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $color-bordes;
+    font-size    : 12px;
+}
+
+.mat-mdc-select {
+    display: inline-block;
+    width  : 100%;
+    outline: none;
+    height : 30px;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
 }

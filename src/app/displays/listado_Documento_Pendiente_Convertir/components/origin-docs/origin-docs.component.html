@@ -43,7 +43,6 @@
                     <mat-form-field class="transparent-field">
                         <mat-label>Fecha Ini:</mat-label>
                         <input matInput [matDatepicker]="picker">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -53,16 +52,27 @@
                     <mat-form-field class="transparent-field">
                         <mat-label>Fecha Fin:</mat-label>
                         <input matInput [matDatepicker]="pickerFinal">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
                         <mat-datepicker #pickerFinal></mat-datepicker>
                     </mat-form-field>
+                </div>
+                <span class="spacer"></span>
+                <div class="ordenar">
+                    <mat-select name="orden" class="seleccionar" placeholder="Ordenar por:" [(ngModel)]="filtro">
+                        <mat-option *ngFor="let filtro of filtros" [value]="filtro">
+                            {{filtro}}
+                        </mat-option>
+                    </mat-select>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="ordenar()" *ngIf="ascendente && !descendente">
+                        <mat-icon>north</mat-icon>
+                    </button>
+
+                    <button mat-icon-button (click)="ordenar()" *ngIf="descendente && !ascendente">
+                        <mat-icon>south</mat-icon>
+                    </button>
 
                 </div>
-                <div class="orden">
-
-                </div>
-
 
             </div>
 
