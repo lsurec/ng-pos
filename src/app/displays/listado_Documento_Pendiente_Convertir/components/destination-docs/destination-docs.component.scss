@@ -115,3 +115,32 @@ p {
     font-weight: bold;
     font-size  : 16px;
 }
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.lista-documentos {
+    width: 50%;
+}
+
+.destino {
+    width      : 100%;
+    cursor     : pointer;
+    display    : flex;
+    align-items: center;
+    padding    : 10px;
+    border     : solid 1px $color-bordes;
+    margin     : 10px 0px;
+}
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBold14 {
+    font-size    : 14px;
+    font-weight  : 550;
+    padding-right: 5px;
+}

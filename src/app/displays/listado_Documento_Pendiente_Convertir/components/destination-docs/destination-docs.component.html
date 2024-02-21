@@ -13,18 +13,43 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlarge">
-    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
+        matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <p class="titulo">Documento destino</p>
 
     <span class="spacer"></span>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(11)">
         <mat-icon>error</mat-icon>
     </button>
 </mat-toolbar>
 
 <div class="container_main">
+
+    <div class="d-flex">
+        <span class="spacer"></span>
+
+        <div class="lista-documentos">
+            <div class="d-flex">
+                <span class="spacer"></span>
+                <p class="textosBold14">Registros ({{documentosDestino.length}})</p>
+            </div>
+            <div *ngFor="let destino of documentosDestino; let index = index">
+                <div class="destino">
+                    <p class="textosBold14">Documento: </p>
+                    <p class="textos14"> Factura </p>
+                    <span class="spacer"></span>
+
+                    <p class="textosBold14">Serie: </p>
+                    <p class="textos14"> Fac M </p>
+                </div>
+            </div>
+        </div>
+        <span class="spacer"></span>
+
+    </div>
+
 
 </div>
 

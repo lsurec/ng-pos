@@ -100,6 +100,10 @@ export class ErrorComponent implements OnInit {
         //desde error de documento origen
         this._globalConvertSrevice.mostrarDocOrigen();
         break;
+      case 11:
+        //desde error de documento destino 
+        this._globalConvertSrevice.mostrarDocDestino();
+        break;
       default:
         this._location.back();
 
