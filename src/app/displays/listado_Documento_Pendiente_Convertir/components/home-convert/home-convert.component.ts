@@ -10,11 +10,6 @@ import { EventService } from 'src/app/services/event.service';
 export class HomeConvertComponent implements OnInit {
 
 
-
-
-  /**
-   *
-   */
   constructor(public globalConvertService: GlobalConvertService,
   ) { }
 

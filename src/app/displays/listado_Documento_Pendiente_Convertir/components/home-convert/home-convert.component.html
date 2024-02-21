@@ -1,4 +1,4 @@
-<app-error *ngIf="globalConvertService.showError"></app-error>
+<app-error *ngIf="globalConvertService.showError" [regresar]="globalConvertService.regresar"></app-error>
 <ng-container *ngIf="!globalConvertService.showError">
     <app-progress *ngIf="globalConvertService.isLoading"></app-progress>
     <ng-container *ngIf="!globalConvertService.isLoading">

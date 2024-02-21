@@ -31,7 +31,7 @@ export class OriginDocsComponent implements OnInit {
   ]
 
   constructor(
-    private _globalConvertSrevice: GlobalConvertService,
+    public globalConvertSrevice: GlobalConvertService,
     private _adapter: DateAdapter<any>, date: DateAdapter<Date>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _eventService: EventService,
@@ -41,7 +41,7 @@ export class OriginDocsComponent implements OnInit {
     this.filtro = this.filtros[0];
   }
   ngOnInit(): void {
-    console.log(this._globalConvertSrevice.screen);
+    console.log(this.globalConvertSrevice.screen);
 
   }
 
@@ -67,7 +67,7 @@ export class OriginDocsComponent implements OnInit {
   }
 
   backPage() {
-    if (!this._globalConvertSrevice.screen) {
+    if (!this.globalConvertSrevice.screen) {
       this.backScreen();
       return;
     }
@@ -88,12 +88,12 @@ export class OriginDocsComponent implements OnInit {
 
 
   backScreen() {
-    this._globalConvertSrevice.showError = false;
-    this._globalConvertSrevice.verTiposDocConversion = true;
-    this._globalConvertSrevice.verDocOrigen = false;
-    this._globalConvertSrevice.verDocDestino = false;
-    this._globalConvertSrevice.verDocConversion = false;
-    this._globalConvertSrevice.verDetalleDocConversion = false;
+    this.globalConvertSrevice.showError = false;
+    this.globalConvertSrevice.verTiposDocConversion = true;
+    this.globalConvertSrevice.verDocOrigen = false;
+    this.globalConvertSrevice.verDocDestino = false;
+    this.globalConvertSrevice.verDocConversion = false;
+    this.globalConvertSrevice.verDetalleDocConversion = false;
 
   }
 

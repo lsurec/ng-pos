@@ -6,7 +6,7 @@ import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interf
     providedIn: 'root',
 })
 export class GlobalConvertService {
-
+    regresar: number = 0;
 
     isLoading: boolean = false; //pantalla de carga
     showError: boolean = false;
@@ -21,7 +21,6 @@ export class GlobalConvertService {
     screen: string = "";
     //vacio regresar a TypesDocsComponent
     //si tiene algo regresar a hoe
-
 
     mostrarTiposDoc() {
         this.verTiposDocConversion = true;
@@ -43,7 +42,8 @@ export class GlobalConvertService {
         this.verDetalleDocConversion = false;
     }
 
-    mostrarError() {
+    mostrarError(idPantalla: number) {
+        this.regresar = idPantalla;
         this.showError = true;
         this.isLoading = false;
         this.verDocOrigen = false;

@@ -10,6 +10,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Component({
   selector: 'app-error',
@@ -30,6 +31,8 @@ export class ErrorComponent implements OnInit {
     //Instancia de servicios
     private _location: Location,
     private _eventService: EventService,
+    private _globalConvertSrevice: GlobalConvertService,
+
   ) {
   }
 
@@ -87,6 +90,15 @@ export class ErrorComponent implements OnInit {
       case 8:
         //desde error de configuracion seleccionada
         this._eventService.regresarDesdeImpresionEvent(true);
+        break;
+
+      case 9:
+        //desde error de tipos de documentos
+        this._globalConvertSrevice.mostrarTiposDoc();
+        break;
+      case 10:
+        //desde error de documento origen
+        this._globalConvertSrevice.mostrarDocOrigen();
         break;
       default:
         this._location.back();
