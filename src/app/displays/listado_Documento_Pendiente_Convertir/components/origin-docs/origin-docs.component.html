@@ -1,83 +1,104 @@
-<!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
-<app-no-connected *ngIf="showError"></app-no-connected>
+<mat-toolbar class="toolbarPhone">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label class="flecha-regresar"
+            matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
+        <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
 
-<div *ngIf="!showError">
+        <span class="spacer"></span>
+        <button mat-icon-button>
+            <mat-icon>error</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="toolbarlarge">
+    <button mat-icon-button (click)="backPage() " class="flecha-regresar"
+        matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
+    <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
 
-    <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
-    <div *ngIf="!isLoading">
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row>
-                <button mat-icon-button aria-label class="flecha-regresar"
-                    matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-                <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(10)">
+        <mat-icon>error</mat-icon>
+    </button>
+</mat-toolbar>
 
-                <span class="spacer"></span>
-                <button mat-icon-button>
-                    <mat-icon>error</mat-icon>
-                </button>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-toolbar class="toolbarlarge">
-            <button mat-icon-button (click)="backPage() " class="flecha-regresar"
-                matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-            <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+<div class="container_main">
 
+    <div class="filtros">
+        <div class="fechas">
+            <mat-form-field class="transparent-field">
+                <mat-label>Fecha Ini:</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
             <span class="spacer"></span>
-            <button mat-icon-button (click)="globalConvertSrevice.mostrarError(10)">
-                <mat-icon>error</mat-icon>
+
+            <mat-form-field class="transparent-field">
+                <mat-label>Fecha Fin:</mat-label>
+                <input matInput [matDatepicker]="pickerFinal">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFinal></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <span class="spacer"></span>
+        <div class="ordenar">
+            <mat-select name="orden" class="seleccionar" placeholder="Ordenar por:" [(ngModel)]="filtro">
+                <mat-option *ngFor="let filtro of filtros" [value]="filtro">
+                    {{filtro}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="ordenar()" *ngIf="ascendente && !descendente">
+                <mat-icon>north</mat-icon>
             </button>
-        </mat-toolbar>
 
-        <div class="container_main">
+            <button mat-icon-button (click)="ordenar()" *ngIf="descendente && !ascendente">
+                <mat-icon>south</mat-icon>
+            </button>
 
-            <div class="filtros">
-                <div class="fechas">
-                    <mat-form-field class="transparent-field">
-                        <mat-label>Fecha Ini:</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-
-                    <span class="spacer"></span>
-
-                    <mat-form-field class="transparent-field">
-                        <mat-label>Fecha Fin:</mat-label>
-                        <input matInput [matDatepicker]="pickerFinal">
-                        <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerFinal></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <span class="spacer"></span>
-                <div class="ordenar">
-                    <mat-select name="orden" class="seleccionar" placeholder="Ordenar por:" [(ngModel)]="filtro">
-                        <mat-option *ngFor="let filtro of filtros" [value]="filtro">
-                            {{filtro}}
-                        </mat-option>
-                    </mat-select>
-                    <span class="spacer"></span>
-                    <button mat-icon-button (click)="ordenar()" *ngIf="ascendente && !descendente">
-                        <mat-icon>north</mat-icon>
-                    </button>
-
-                    <button mat-icon-button (click)="ordenar()" *ngIf="descendente && !ascendente">
-                        <mat-icon>south</mat-icon>
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- Mostrar logos -->
-            <app-barra-logo-demosoft></app-barra-logo-demosoft>
         </div>
 
     </div>
+
+    <!-- <div class="d-flex">
+        <span class="spacer"></span> -->
+
+    <div class="lista-documentos" *ngFor="let documento of documentosOrigen">
+
+        <div class="dFlex">
+            <p class="textosBold14">Id documento: {{documento.id}}</p>
+            <span class="spacer"></span>
+            <p class="textosBold14">Usuario: {{documento.usuario}}</p>
+        </div>
+
+        <div class="documentos-origen" (click)="globalConvertSrevice.mostrarDocDestino()">
+            <div class="dFlex">
+                <p class="textosBold14">Fecha hora: </p>
+                <span class="spacer"></span>
+                <p class="textos14">{{documento.fechaHora}}</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">Fecha documento: </p>
+                <span class="spacer"></span>
+                <p class="textos14">{{documento.fechaDoc}}</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold16">Serie documento: </p>
+                <p class="textos14">{{documento.serie}} </p>
+            </div>
+        </div>
+    </div>
+
+    <span class="spacer"></span>
+    <!-- </div> -->
+</div>
+<!-- Mostrar logos -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>

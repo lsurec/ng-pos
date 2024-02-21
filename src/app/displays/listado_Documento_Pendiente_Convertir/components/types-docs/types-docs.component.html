@@ -30,14 +30,24 @@
 
 <div class="container_main">
 
-    <p class="textosBold14">Registros ({{cotizaciones.length}})</p>
+    <div class="d-flex">
+        <span class="spacer"></span>
 
-    <div class="lista-cotizaciones" *ngFor="let cotizacion of cotizaciones; let index = index">
-        <div class="cotizacion" (click)="irTipoCotizacion(index)">
-            <p class="textos14"> {{cotizacion}} </p>
-            <span class="spacer"></span>
-            <mat-icon>arrow_right</mat-icon>
+        <div class="lista-cotizaciones">
+            <div class="d-flex">
+                <span class="spacer"></span>
+                <p class="textosBold14">Registros ({{cotizaciones.length}})</p>
+            </div>
+            <div *ngFor="let cotizacion of cotizaciones; let index = index">
+                <div class="cotizacion" (click)="irTipoCotizacion(index)">
+                    <p class="textos14"> {{cotizacion}} </p>
+                    <span class="spacer"></span>
+                    <mat-icon>arrow_right</mat-icon>
+                </div>
+            </div>
         </div>
+        <span class="spacer"></span>
+
     </div>
 </div>
 

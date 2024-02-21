@@ -3,6 +3,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-blanco         : #fff; //resaltar texto blanco
 $color-gris           : #666666; //texto gris
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
+$seleccionado         : rgba(0, 0, 0, 0.12);
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris-2         : #777; //sombra y texto gris
 $background-oficial   : #FEF5E7; //fondo Demosoft
@@ -122,9 +123,10 @@ p {
 }
 
 .filtros {
-    display    : flex;
-    width      : 100%;
-    align-items: center;
+    display      : flex;
+    width        : 100%;
+    align-items  : center;
+    border-bottom: 1px solid $color-bordes;
 }
 
 .fechas {
@@ -156,4 +158,34 @@ p {
     min-height: 30px;
     color     : $color-azul;
     font-size : 13px;
+}
+
+.lista-documentos {
+    width        : 100%;
+    padding      : 10px 0px;
+    border-bottom: 1px solid $color-bordes;
+}
+
+.documentos-origen {
+    width           : 100%;
+    padding         : 10px 20px;
+    margin          : 5px 0px;
+    border          : 1px solid $color-bordes;
+    cursor          : pointer;
+    background-color: $seleccionado;
+}
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBold14 {
+    font-size  : 14px;
+    font-weight: 550;
+}
+
+.textosBold16 {
+    padding-right: 5px;
+    font-size    : 16px;
+    font-weight  : 600;
 }

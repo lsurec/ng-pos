@@ -15,7 +15,20 @@ export class TypesDocsComponent implements OnInit {
 
   cotizaciones: string[] = [
     "Restaurante (14)",
-    "Cotización a Cliente (20)"
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+    "Restaurante (14)",
+    "Cotización a Cliente (20)",
+
   ]
 
   constructor(

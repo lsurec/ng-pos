@@ -21,13 +21,42 @@ export class OriginDocsComponent implements OnInit {
   ascendente: boolean = true;
   descendente: boolean = false;
 
-
-
   filtro!: string;
 
   filtros: string[] = [
     "Id documento",
     "Fecha"
+  ]
+
+  documentosOrigen: any[] = [
+    {
+      id: 10,
+      fechaHora: "14/02/2024 10:41:41",
+      fechaDoc: "14/02/2024",
+      usuario: "SOPORTE01",
+      serie: "COT (1)",
+    },
+    {
+      id: 14,
+      fechaHora: "15/02/2024 10:41:41",
+      fechaDoc: "15/02/2024",
+      usuario: "SA",
+      serie: "COT (1)",
+    },
+    {
+      id: 16,
+      fechaHora: "17/02/2024 10:41:41",
+      fechaDoc: "14/02/2024",
+      usuario: "SOPORTE01",
+      serie: "COT (1)",
+    },
+    {
+      id: 22,
+      fechaHora: "21/02/2024 10:41:41",
+      fechaDoc: "15/02/2024",
+      usuario: "SA",
+      serie: "COT (1)",
+    }
   ]
 
   constructor(

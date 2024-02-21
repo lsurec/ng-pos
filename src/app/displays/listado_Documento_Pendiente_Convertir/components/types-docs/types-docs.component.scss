@@ -122,10 +122,11 @@ p {
 }
 
 .lista-cotizaciones {
-    width  : 50%;
+    width: 50%;
 }
 
 .cotizacion {
+    width      : 100%;
     cursor     : pointer;
     display    : flex;
     align-items: center;
