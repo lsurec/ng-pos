@@ -32,21 +32,29 @@
 
     <div class="filtros">
         <div class="fechas">
-            <mat-form-field class="transparent-field">
-                <mat-label>Fecha Ini:</mat-label>
-                <input matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
+            <form class="calendarios">
+            <p class="textosBold14">Fecha Ini:</p>
+                <div class="input-group">
+                    <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker #d="ngbDatepicker"
+                        (ngModelChange)="sincronizarFechas()" />
+                    <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()" type="button">
+                        <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                    </button>
+                </div>
+            </form>
             <span class="spacer"></span>
 
-            <mat-form-field class="transparent-field">
-                <mat-label>Fecha Fin:</mat-label>
-                <input matInput [matDatepicker]="pickerFinal">
-                <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFinal></mat-datepicker>
-            </mat-form-field>
+            <form class="calendarios">
+            <p class="textosBold14">Fecha Fin:</p>
+
+                <div class="input-group">
+                    <input class="form-control" name="dp2" [(ngModel)]="fechaFinal" ngbDatepicker #d2="ngbDatepicker"
+                        [minDate]="fechaInicial!" />
+                    <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
+                        <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                    </button>
+                </div>
+            </form>
         </div>
         <span class="spacer"></span>
         <div class="ordenar">
@@ -67,9 +75,6 @@
         </div>
 
     </div>
-
-    <!-- <div class="d-flex">
-        <span class="spacer"></span> -->
 
     <div class="lista-documentos" *ngFor="let documento of documentosOrigen">
 
@@ -98,7 +103,6 @@
     </div>
 
     <span class="spacer"></span>
-    <!-- </div> -->
 </div>
 <!-- Mostrar logos -->
 <app-barra-logo-demosoft></app-barra-logo-demosoft>

@@ -123,10 +123,11 @@ p {
 }
 
 .filtros {
-    display      : flex;
-    width        : 100%;
-    align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    display       : flex;
+    width         : 100%;
+    align-items   : center;
+    border-bottom : 1px solid $color-bordes;
+    padding-bottom: 15px;
 }
 
 .fechas {
@@ -188,4 +189,27 @@ p {
     padding-right: 5px;
     font-size    : 16px;
     font-weight  : 600;
+}
+
+.form-control {
+    background-color: transparent !important;
+    height          : 35px;
+    font-size       : 14px;
+    border          : 1px solid $color-bordes;
+    color           : $color-azul;
+}
+
+.calendarios {
+    width: 45%;
+}
+
+
+.ico-calendario {
+    font-size: 20px;
+}
+
+.ver-calendario {
+    border     : 1px solid $color-bordes;
+    align-items: center;
+    height     : 35px;
 }

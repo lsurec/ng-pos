@@ -4,6 +4,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
 import { components } from 'src/app/providers/componentes.provider';
+import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-origin-docs',
@@ -20,6 +21,11 @@ export class OriginDocsComponent implements OnInit {
 
   ascendente: boolean = true;
   descendente: boolean = false;
+
+  today: Date = new Date();
+
+  fechaInicial?: NgbDateStruct; //fecha inicial 
+  fechaFinal?: NgbDateStruct;
 
   filtro!: string;
 
@@ -59,11 +65,15 @@ export class OriginDocsComponent implements OnInit {
     }
   ]
 
+  diasSemana = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'];
+
   constructor(
     public globalConvertSrevice: GlobalConvertService,
     private _adapter: DateAdapter<any>, date: DateAdapter<Date>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _eventService: EventService,
+    private _calendar: NgbCalendar,
+    private ngbDateParserFormatter: NgbDateParserFormatter
 
   ) {
     this.setLangPicker();
@@ -71,6 +81,9 @@ export class OriginDocsComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this.globalConvertSrevice.screen);
+
+    this.fechaInicial = { year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: 1 };
+    this.fechaFinal = this._calendar.getToday();
 
   }
 
@@ -126,5 +139,27 @@ export class OriginDocsComponent implements OnInit {
 
   }
 
+  sincronizarFechas() {
+    // Verifica si la fecha inicial está definida
+    if (this.fechaInicial) {
+      // Convierte la fecha inicial a un formato de string
+      let fechaInicialString = this.ngbDateParserFormatter.format(this.fechaInicial);
+
+      // Convierte la fecha inicial string de nuevo a NgbDateStruct
+      let fechaInicialStruct: NgbDateStruct = this.ngbDateParserFormatter.parse(fechaInicialString)!;
+
+      // Actualiza la fecha final
+      this.fechaFinal = fechaInicialStruct;
+    }
+  }
+
+  //convertir una fecha ngbDateStruct a fecha Date.
+  convertirADate(ngbDate: NgbDateStruct): Date {
+    if (ngbDate) {
+      let { year, month, day } = ngbDate;
+      return new Date(year, month - 1, day); // Restar 1 al mes,
+    };
+    return new Date();
+  };
 
 }
