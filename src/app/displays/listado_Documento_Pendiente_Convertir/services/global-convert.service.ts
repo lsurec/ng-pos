@@ -19,6 +19,8 @@ export class GlobalConvertService {
     docSelect?: TypesDocConvertInterface;
     docs: TypesDocConvertInterface[] = [];
     screen: string = "";
+
+    docDestino?: number;
     //vacio regresar a TypesDocsComponent
     //si tiene algo regresar a hoe
 

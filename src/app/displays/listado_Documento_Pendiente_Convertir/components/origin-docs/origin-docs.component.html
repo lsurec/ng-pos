@@ -33,7 +33,7 @@
     <div class="filtros">
         <div class="fechas">
             <form class="calendarios">
-            <p class="textosBold14">Fecha Ini:</p>
+                <p class="textosBold14">Fecha Ini:</p>
                 <div class="input-group">
                     <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker #d="ngbDatepicker"
                         (ngModelChange)="sincronizarFechas()" />
@@ -45,7 +45,7 @@
             <span class="spacer"></span>
 
             <form class="calendarios">
-            <p class="textosBold14">Fecha Fin:</p>
+                <p class="textosBold14">Fecha Fin:</p>
 
                 <div class="input-group">
                     <input class="form-control" name="dp2" [(ngModel)]="fechaFinal" ngbDatepicker #d2="ngbDatepicker"
@@ -84,7 +84,7 @@
             <p class="textosBold14">Usuario: {{documento.usuario}}</p>
         </div>
 
-        <div class="documentos-origen" (click)="globalConvertSrevice.mostrarDocDestino()">
+        <div class="documentos-origen" (click)=" convertirDocumeto(globalConvertSrevice.docDestino!)">
             <div class="dFlex">
                 <p class="textosBold14">Fecha hora: </p>
                 <span class="spacer"></span>
