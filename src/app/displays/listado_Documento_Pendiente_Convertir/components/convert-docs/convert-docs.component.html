@@ -13,7 +13,8 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlarge">
-    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button (click)="backPage(globalConvertSrevice.docDestino!)" class="flecha-regresar"
+        matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <p class="titulo">Documento Conversion </p>

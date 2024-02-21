@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalConvertService } from '../../services/global-convert.service';
 
 @Component({
   selector: 'app-convert-docs',
@@ -37,11 +38,24 @@ export class ConvertDocsComponent {
     }
   ]
 
+  constructor(
+    public globalConvertSrevice: GlobalConvertService,
+
+  ) {
+
+  }
+
   //para selecionar todas las transacciones
   seleccionar() {
     // this.facturaService.montos.forEach(element => {
     //   element.checked = this.selectAllMontos; //asiganer valor del checkbox a las formas de pago
     // });
+  }
+
+  backPage(docDestino: number) {
+    if (docDestino == 0) this.globalConvertSrevice.mostrarDocOrigen();
+
+    if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
   }
 
 }
