@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbarPhone">
     <mat-toolbar-row>
-        <button mat-icon-button aria-label class="flecha-regresar"
+        <button mat-icon-button (click)="goBack()" class="flecha-regresar"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
@@ -13,16 +13,17 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlarge">
-    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button (click)="goBack()" class="flecha-regresar"
+        matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Listado de cotizaciones</p>
 
     <span class="spacer"></span>
-    <button mat-icon-button (click)="verError()">
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarError()">
         <mat-icon>error</mat-icon>
     </button>
 </mat-toolbar>

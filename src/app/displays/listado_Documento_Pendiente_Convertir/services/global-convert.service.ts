@@ -5,7 +5,7 @@ import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interf
 @Injectable({
     providedIn: 'root',
 })
-export class GlobalConvertService{
+export class GlobalConvertService {
 
 
     isLoading: boolean = false; //pantalla de carga
@@ -15,11 +15,81 @@ export class GlobalConvertService{
     verDocDestino: boolean = false;
     verDocConversion: boolean = false;
     verDetalleDocConversion: boolean = false;
-  
-    docSelect?:TypesDocConvertInterface;
-    docs :TypesDocConvertInterface[] = [];
-    screen:string = ""; 
+
+    docSelect?: TypesDocConvertInterface;
+    docs: TypesDocConvertInterface[] = [];
+    screen: string = "";
     //vacio regresar a TypesDocsComponent
     //si tiene algo regresar a hoe
 
+
+    mostrarTiposDoc() {
+        this.verTiposDocConversion = true;
+        this.isLoading = false;
+        this.showError = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    cargarPantalla() {
+        this.isLoading = true;
+        this.showError = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    mostrarError() {
+        this.showError = true;
+        this.isLoading = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    mostrarDocOrigen() {
+        this.verDocOrigen = true;
+        this.showError = false;
+        this.isLoading = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    mostrarDocDestino() {
+        this.verDocDestino = true;
+        this.showError = false;
+        this.isLoading = false;
+        this.verDocOrigen = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    mostrarDocConversion() {
+        this.verDocConversion = true;
+        this.showError = false;
+        this.isLoading = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verTiposDocConversion = false;
+        this.verDetalleDocConversion = false;
+    }
+
+    mostrarDetalleDocConversion() {
+        this.verDetalleDocConversion = true;
+        this.isLoading = false;
+        this.showError = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+    }
 }

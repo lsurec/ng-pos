@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-home-convert',
@@ -8,15 +9,15 @@ import { GlobalConvertService } from '../../services/global-convert.service';
 })
 export class HomeConvertComponent implements OnInit {
 
- 
+
 
 
   /**
    *
    */
-  constructor(public globalConvertService: GlobalConvertService) {
+  constructor(public globalConvertService: GlobalConvertService,
+  ) { }
 
-  }
 
   ngOnInit(): void {
 

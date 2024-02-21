@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
+import { components } from 'src/app/providers/componentes.provider';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-types-docs',
@@ -17,16 +19,26 @@ export class TypesDocsComponent implements OnInit {
   ]
 
   constructor(
-    private _globalConvertSrevice: GlobalConvertService,
+    public globalConvertSrevice: GlobalConvertService,
+    private _eventService: EventService,
 
   ) {
 
   }
   ngOnInit(): void {
-    console.log(this._globalConvertSrevice.screen);
+    console.log(this.globalConvertSrevice.screen);
     console.log("tipos");
 
 
+  }
+
+  //regresear a menu (pantalla de inicio)
+  goBack(): void {
+    components.forEach(element => {
+      element.visible = false;
+    });
+
+    this._eventService.emitCustomEvent(false);
   }
 
   verError() {
@@ -34,12 +46,14 @@ export class TypesDocsComponent implements OnInit {
 
   irTipoCotizacion(index: number) {
 
-      this._globalConvertSrevice.showError = false;
-      this._globalConvertSrevice.verTiposDocConversion = false;
-      this._globalConvertSrevice.verDocOrigen = true;
-      this._globalConvertSrevice.verDocDestino = false;
-      this._globalConvertSrevice.verDocConversion = false;
-      this._globalConvertSrevice.verDetalleDocConversion = false;
+    this.globalConvertSrevice.showError = false;
+    this.globalConvertSrevice.verTiposDocConversion = false;
+    this.globalConvertSrevice.verDocOrigen = true;
+    this.globalConvertSrevice.verDocDestino = false;
+    this.globalConvertSrevice.verDocConversion = false;
+    this.globalConvertSrevice.verDetalleDocConversion = false;
+
+    this.globalConvertSrevice.screen = "";
 
     return;
     // guardar el tipo de cotizacion para mostar el titulo
