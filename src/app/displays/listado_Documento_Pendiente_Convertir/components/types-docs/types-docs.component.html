@@ -17,15 +17,13 @@
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="loadData()">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Listado de cotizaciones</p>
 
     <span class="spacer"></span>
-    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(9)">
-        <mat-icon>error</mat-icon>
-    </button>
+   
 </mat-toolbar>
 
 <div class="container_main">
@@ -36,11 +34,11 @@
         <div class="lista-cotizaciones">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">Registros ({{cotizaciones.length}})</p>
+                <p class="textosBold14">Registros ({{globalConvertSrevice.docs.length}})</p>
             </div>
-            <div *ngFor="let cotizacion of cotizaciones; let index = index">
-                <div class="cotizacion" (click)="irTipoCotizacion(index)">
-                    <p class="textos14"> {{cotizacion}} </p>
+            <div *ngFor="let doc of globalConvertSrevice.docs">
+                <div class="cotizacion" (click)="goOrigin(doc)">
+                    <p class="textos14"> {{doc.fDes_Tipo_Documento}} ({{doc.tipo_Documento}}) </p>
                     <span class="spacer"></span>
                     <mat-icon>arrow_right</mat-icon>
                 </div>
