@@ -3,11 +3,13 @@ $color-azul           : #134895; //bordes y texto azul
 $color-blanco         : #fff; //resaltar texto blanco
 $color-gris           : #666666; //texto gris
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
+$seleccionado         : rgba(0, 0, 0, 0.12);
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris-2         : #777; //sombra y texto gris
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
-
+$color-verde          : #25a704;
+$color-rojo           : #ce1414;
 
 .progress {
     padding         : 10px 20px;
@@ -71,10 +73,10 @@ $background-scrollbar : #134895; //barra azul
 
 .container_main {
     width   : 100%;
-    height  : calc(100% - 128px);
+    height  : calc(100vh - 128px);
     float   : left;
     overflow: auto;
-    padding : 20px 0px;
+    padding : 20px;
 }
 
 
@@ -114,4 +116,84 @@ p {
 .titulo {
     font-weight: bold;
     font-size  : 16px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.lista-documentos {
+    display      : flex;
+    align-items  : center;
+    padding      : 10px 0px;
+    border-bottom: 1px solid $color-bordes;
+}
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBlancos14 {
+    font-size  : 14px;
+    color      : $color-blanco;
+    font-weight: 550;
+}
+
+.textosBold14 {
+    font-size    : 14px;
+    font-weight  : 550;
+    padding-right: 5px;
+}
+
+.origen-destino {
+    border-top   : 1px solid $color-bordes;
+    padding      : 10px 0px;
+    width        : 100%;
+    display      : flex;
+    align-items  : center;
+    margin       : 10px 0px;
+}
+
+.origen {
+    width           : 45%;
+    padding         : 10px;
+    background-color: $color-verde;
+}
+
+.destino {
+    width           : 45%;
+    padding         : 10px;
+    background-color: $color-rojo;
+}
+
+.elemento-autorizacion {
+    width: 100%;
+}
+
+
+.elementos {
+    padding         : 10px;
+    width           : 50%;
+    display         : flex;
+    background-color: $seleccionado;
+
+}
+
+.autorizacion {
+    width              : 45%;
+    // background-color: #666666;
+}
+
+.barra-de-busqueda {
+    height          : 45px;
+    width           : 100%;
+    background      : none;
+    font-size       : 14px;
+    padding-left    : 10px;
+    outline         : none;
+    border-style    : none;
+    color           : $color-azul;
+    // border-radius: 10px;
+    border-bottom   : 1px solid $color-bordes;
 }
