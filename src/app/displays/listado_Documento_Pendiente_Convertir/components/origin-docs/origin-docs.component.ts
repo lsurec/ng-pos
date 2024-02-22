@@ -92,11 +92,6 @@ export class OriginDocsComponent implements OnInit {
   //TODO:Asiganr el lenguaje segun  la configuracion del sistema
   ngOnInit(): void {
 
-    console.log("ejecutandose");
-
-
-
-    this.loadData();
 
   }
 

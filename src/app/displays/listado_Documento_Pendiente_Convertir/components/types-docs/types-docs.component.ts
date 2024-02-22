@@ -103,4 +103,61 @@ export class TypesDocsComponent implements OnInit {
 
   }
 
+
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
+
+  formatStrFilterDate(date: Date) {
+    return `${date.getFullYear()}${this.addLeadingZero(date.getMonth() + 1)}${this.addLeadingZero(date.getDate())}`;
+  }
+
+
+  async loadDocsOrign() {
+    this.globalConvertSrevice.isLoading = true;
+
+    let dateIni: Date = new Date();
+    dateIni.setDate(1); // Establecer el día a 1
+
+    let dateFin: Date = new Date();
+
+    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+      this.user,
+      this.token,
+      this.globalConvertSrevice.docSelect!.tipo_Documento,
+      this.formatStrFilterDate(dateIni),
+      this.formatStrFilterDate(dateFin),
+    );
+
+    this.globalConvertSrevice.isLoading = false;
+
+
+
+    if (!res.status) {
+
+
+      let dateNow: Date = new Date(); //fecha del error
+
+      //Crear error
+      let error: ErrorInterface = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+      }
+
+      PreferencesService.error = error;
+
+      this.globalConvertSrevice.mostrarError(9);
+
+      return;
+
+    }
+
+
+    console.log(res.response);
+
+
+  }
+
 }
