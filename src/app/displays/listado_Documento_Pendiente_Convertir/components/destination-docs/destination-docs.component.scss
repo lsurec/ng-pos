@@ -71,10 +71,10 @@ $background-scrollbar : #134895; //barra azul
 
 .container_main {
     width   : 100%;
-    height  : calc(100% - 128px);
+    height  : calc(100vh - 128px);
     float   : left;
     overflow: auto;
-    padding : 20px 0px;
+    padding : 20px;
 }
 
 
@@ -84,6 +84,9 @@ $background-scrollbar : #134895; //barra azul
         width: 100%;
     }
 
+    .lista-documentos {
+        width: 100% !important;
+    }
 }
 
 .head__sidenav {
