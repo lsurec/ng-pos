@@ -448,8 +448,8 @@ export class ReceptionService {
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getDetallesDocOrigen(
-                user,
                 token,
+                user,
                 documento,
                 tipoDocumento,
                 serieDocumento,

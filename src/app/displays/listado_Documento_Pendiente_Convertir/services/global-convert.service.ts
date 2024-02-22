@@ -3,6 +3,7 @@ import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interf
 import { OriginDocInterface } from '../interfaces/origin-doc.interface';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DestinationDocInterface } from '../interfaces/destination-doc.interface';
+import { DetailsOriginDocInterInterface } from '../interfaces/details-origin-doc.interface';
 
 
 @Injectable({
@@ -34,10 +35,9 @@ export class GlobalConvertService {
     fechaInicial?: NgbDateStruct; //fecha inicial 
     fechaFinal?: NgbDateStruct;
 
-    docDestino: number = -1;
-    //vacio regresar a TypesDocsComponent
-    //si tiene algo regresar a hoe
+    detailsOrigin:DetailsOriginDocInterInterface[] = [];
 
+    docDestino: number = -1;
 
 
     addLeadingZero(number: number): string {

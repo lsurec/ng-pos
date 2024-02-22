@@ -40,7 +40,7 @@
             </div>
             <div *ngFor="let doc of globalConvertSrevice.docs">
                 <div class="cotizacion" (click)="goOrigin(doc)">
-                    <p class="textos14"> {{doc.fDes_Tipo_Documento}} ({{doc.tipo_Documento}}) </p>
+                    <p class="textos14">{{doc.tipo_Documento}} - {{doc.fDes_Tipo_Documento}}</p>
                     <span class="spacer"></span>
                     <mat-icon>arrow_right</mat-icon>
                 </div>

@@ -9,6 +9,7 @@ import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { OriginDocInterface } from '../../interfaces/origin-doc.interface';
+import { DetailsOriginDocInterface } from '../../interfaces/details-origin-doc.interface';
 
 @Component({
   selector: 'app-origin-docs',
@@ -193,12 +194,17 @@ export class OriginDocsComponent implements OnInit {
 
     await this.loadDestinationDocs(origin);
 
-    
+
     if (this.globalConvertSrevice.docsDestination.length == 1) {
 
       this.globalConvertSrevice.docDestinationSelect = this.globalConvertSrevice.docsDestination[0];
+
+
+
+      await this.loadDetailsOrigin();
+
       this.globalConvertSrevice.docDestino = 0;
-      this.globalConvertSrevice.mostrarDetalleDocConversion();
+      this.globalConvertSrevice.mostrarDocConversion();
       return;
     }
 
@@ -206,6 +212,67 @@ export class OriginDocsComponent implements OnInit {
 
     this.globalConvertSrevice.mostrarDocDestino();
   }
+
+  async loadDetailsOrigin() {
+
+    this.globalConvertSrevice.isLoading = true;
+
+    let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
+      this.token,
+      this.user,
+      this.globalConvertSrevice.docOriginSelect!.documento,
+      this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
+      this.globalConvertSrevice.docOriginSelect!.serie_Documento,
+      this.globalConvertSrevice.docOriginSelect!.empresa,
+      this.globalConvertSrevice.docOriginSelect!.localizacion,
+      this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
+      this.globalConvertSrevice.docOriginSelect!.fecha_Reg,
+
+    )
+
+    this.globalConvertSrevice.isLoading = false;
+
+
+
+    if (!res.status) {
+
+
+      let dateNow: Date = new Date(); //fecha del error
+
+      //Crear error
+      let error: ErrorInterface = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+      }
+
+      PreferencesService.error = error;
+
+      this.globalConvertSrevice.mostrarError(10);
+
+      return;
+
+    }
+
+    let deatlles: DetailsOriginDocInterface[] = res.response;
+
+
+    this.globalConvertSrevice.detailsOrigin = [];
+
+    deatlles.forEach(element => {
+      this.globalConvertSrevice.detailsOrigin.push(
+        {
+          checked: false,
+          detalle: element,
+          disponibleMod: element.disponible,
+        }
+      );
+    });
+
+
+  }
+
 
 
   async loadDestinationDocs(doc: OriginDocInterface) {
@@ -245,11 +312,6 @@ export class OriginDocsComponent implements OnInit {
     }
 
     this.globalConvertSrevice.docsDestination = res.response;
-    this.globalConvertSrevice.docsDestination.push(this.globalConvertSrevice.docsDestination[0]);
-
-
-
-
 
   }
 

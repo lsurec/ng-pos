@@ -4,15 +4,11 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
         <p class="titulo">Titulo</p>
 
-        <span class="spacer"></span>
-        <button mat-icon-button>
-            <mat-icon>error</mat-icon>
-        </button>
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
@@ -20,15 +16,11 @@
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Documento destino</p>
 
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(11)">
-        <mat-icon>error</mat-icon>
-    </button>
 </mat-toolbar>
 
 <div class="container_main">
@@ -39,17 +31,17 @@
         <div class="lista-documentos">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{documentosDestino.length}})</p>
+                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsDestination.length}})</p>
             </div>
-            <div *ngFor="let destino of documentosDestino; let index = index"
-                (click)="globalConvertSrevice.mostrarDocConversion()">
+            <div *ngFor="let destino of globalConvertSrevice.docsDestination"
+                (click)="selectDestino(destino)">
                 <div class="destino">
                     <p class="textosBold14">{{ 'pos.documento.documento' | translate }} </p>
-                    <p class="textos14"> Factura </p>
+                    <p class="textos14"> ({{destino.f_Tipo_Documento}}) {{destino.documento}}</p>
                     <span class="spacer"></span>
 
                     <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
-                    <p class="textos14"> Fac M </p>
+                    <p class="textos14"> ({{destino.f_Serie_Documento}}) {{destino.serie}} </p>
                 </div>
             </div>
         </div>
