@@ -4,7 +4,7 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="loadData()">
             <mat-icon>refresh</mat-icon>
         </button>
         <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
@@ -58,7 +58,7 @@
 
                 <div class="input-group">
                     <input class="form-control" name="dp2" [(ngModel)]="fechaFinal" ngbDatepicker #d2="ngbDatepicker"
-                        [minDate]="fechaInicial" />
+                        [minDate]="fechaInicial" (ngModelChange)="loadData()"/>
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>

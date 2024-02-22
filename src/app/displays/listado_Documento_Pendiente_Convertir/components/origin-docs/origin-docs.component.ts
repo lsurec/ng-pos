@@ -77,7 +77,7 @@ export class OriginDocsComponent implements OnInit {
   async loadData() {
 
 
-
+    this.globalConvertSrevice.docsOrigin = [];
 
     this.globalConvertSrevice.isLoading = true;
 
@@ -114,8 +114,7 @@ export class OriginDocsComponent implements OnInit {
 
     }
 
-
-    console.log(res.response);
+    this.globalConvertSrevice.docsOrigin = res.response;
 
 
 
@@ -186,6 +185,8 @@ export class OriginDocsComponent implements OnInit {
       // Actualiza la fecha final
       this.fechaFinal = fechaInicialStruct;
     }
+
+    this.loadData();
   }
 
   //convertir una fecha ngbDateStruct a fecha Date.
