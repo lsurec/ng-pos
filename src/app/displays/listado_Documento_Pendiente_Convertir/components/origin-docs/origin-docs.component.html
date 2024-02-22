@@ -4,6 +4,9 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
+        <button mat-icon-button>
+            <mat-icon>refresh</mat-icon>
+        </button>
         <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
         <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
 
@@ -18,6 +21,9 @@
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
+    <button mat-icon-button>
+        <mat-icon>refresh</mat-icon>
+    </button>
     <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
     <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
 
@@ -29,7 +35,10 @@
 </mat-toolbar>
 
 <div class="container_main">
-
+    <div class="d-flex">
+        <span class="spacer"></span>
+        <p class="textosBold14">Registros (6)</p>
+    </div>
     <div class="filtros">
         <div class="fechas">
             <form class="calendarios">

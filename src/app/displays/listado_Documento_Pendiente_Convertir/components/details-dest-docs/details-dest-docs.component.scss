@@ -3,6 +3,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-blanco         : #fff; //resaltar texto blanco
 $color-gris           : #666666; //texto gris
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
+$seleccionado         : rgba(0, 0, 0, 0.12);
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris-2         : #777; //sombra y texto gris
 $background-oficial   : #FEF5E7; //fondo Demosoft
@@ -74,7 +75,7 @@ $background-scrollbar : #134895; //barra azul
     height  : calc(100% - 128px);
     float   : left;
     overflow: auto;
-    padding : 20px 0px;
+    padding : 20px;
 }
 
 
@@ -114,4 +115,46 @@ p {
 .titulo {
     font-weight: bold;
     font-size  : 16px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.info-doc {
+    display      : flex;
+    align-items  : center;
+    padding      : 10px 0px;
+    border-bottom: 1px solid $color-bordes;
+}
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBold14 {
+    font-size    : 14px;
+    font-weight  : 550;
+    padding-right: 5px;
+}
+
+.lista-documentos {
+    display      : flex;
+    align-items  : center;
+    padding      : 10px 0px;
+    border-bottom: 1px solid $color-bordes;
+}
+
+.documentos-procesados {
+    width           : 100%;
+    padding         : 10px 20px;
+    margin          : 5px 0px;
+    border          : 1px solid $color-bordes;
+    cursor          : pointer;
+    background-color: $seleccionado;
+}
+
+.padding-lista {
+    padding: 10px 0px;
 }

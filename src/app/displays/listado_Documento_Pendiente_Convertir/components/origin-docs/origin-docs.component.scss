@@ -85,6 +85,13 @@ $background-scrollbar : #134895; //barra azul
         width: 100%;
     }
 
+    .filtros {
+        display: block !important;
+    }
+
+    .fechas, .ordenar {
+        width: 100% !important;
+    }
 }
 
 .head__sidenav {

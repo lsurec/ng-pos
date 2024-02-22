@@ -1,44 +1,92 @@
-<!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
-<app-no-connected *ngIf="showError"></app-no-connected>
+<mat-toolbar class="toolbarPhone">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
+            matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <p class="titulo">Documento Procesado</p>
 
-<div *ngIf="!showError">
+        <span class="spacer"></span>
+        <button mat-icon-button>
+            <mat-icon>error</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="listo">
+            <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="imprimir">
+            <mat-icon>print</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="compartir">
+            <mat-icon>share</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="toolbarlarge">
+    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}"
+        (click)="globalConvertSrevice.mostrarDocOrigen()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <p class="titulo">Documento Procesado</p>
 
-    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(13)">
+        <mat-icon>error</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="listo">
+        <mat-icon>check</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="imprimir">
+        <mat-icon>print</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="compartir">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
 
-    <div *ngIf="!isLoading">
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row>
-                <button mat-icon-button aria-label class="flecha-regresar"
-                    matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <p class="titulo">Titulo</p>
+<div class="container_main">
 
-                <span class="spacer"></span>
-                <button mat-icon-button>
-                    <mat-icon>error</mat-icon>
-                </button>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-toolbar class="toolbarlarge">
-            <button mat-icon-button aria-label class="flecha-regresar"
-                matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <p class="titulo">{{ 'pos.error.informe' | translate }}</p>
+    <div class="info-doc">
+        <p class="textosBold14">Id documento: </p>
+        <p class="textos14">3</p>
+        <span class="spacer"></span>
 
+        <p class="textosBold14">Tipo Documento: </p>
+        <p class="textos14">FACTURA</p>
+        <span class="spacer"></span>
+
+        <p class="textosBold14">Serie Documento: </p>
+        <p class="textos14">FAC (M)</p>
+    </div>
+
+    <div class="padding-lista">
+
+        <div class="dFlex">
             <span class="spacer"></span>
-            <button mat-icon-button>
-                <mat-icon>error</mat-icon>
-            </button>
-        </mat-toolbar>
-
-        <div class="container_main">
-
+            <p class="textosBold14">Transacción (2)</p>
         </div>
 
-        <!-- Mostrar logos -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <div class="documentos-procesados">
+            <div class="dFlex">
+                <p class="textosBold14">Cantidad: </p>
+                <p class="textos14">3</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">Id: </p>
+                <p class="textos14">CSERVICIO</p>
+            </div>
+
+            <div class="dFlex">
+                <p class="textosBold14">Producto: </p>
+                <p class="textos14">Champurradas</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">Bodega: </p>
+                <p class="textos14">Tienda</p>
+            </div>
+        </div>
     </div>
 
 </div>
+
+<!-- Mostrar logos -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>

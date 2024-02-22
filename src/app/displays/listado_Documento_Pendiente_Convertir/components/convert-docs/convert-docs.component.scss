@@ -86,6 +86,16 @@ $color-rojo           : #ce1414;
         width: 100%;
     }
 
+    .origen-destino {
+        display: block !important;
+        margin: 0px !important;
+    }
+
+    .origen,
+    .destino {
+        width: 100% !important;
+    }
+
 }
 
 .head__sidenav {
@@ -196,9 +206,4 @@ p {
     color           : $color-azul;
     // border-radius: 10px;
     border-bottom   : 1px solid $color-bordes;
-}
-
-.boton-azul {
-    background-color: $color-azul;
-    color           : $color-blanco;
 }
