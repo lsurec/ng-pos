@@ -7,6 +7,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ReceptionService } from '../../services/reception.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 
 @Component({
   selector: 'app-types-docs',
@@ -23,7 +24,7 @@ export class TypesDocsComponent implements OnInit {
     public globalConvertSrevice: GlobalConvertService,
     private _eventService: EventService,
     private _receptionService: ReceptionService,
-
+    public dataUserService:DataUserService,
   ) {
 
   }

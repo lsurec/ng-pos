@@ -8,6 +8,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { OriginDocInterface } from '../../interfaces/origin-doc.interface';
 
 @Component({
   selector: 'app-origin-docs',
@@ -26,11 +27,11 @@ export class OriginDocsComponent implements OnInit {
 
   ascendente: boolean = true;
 
-  filtro: string = "Id documento";
+  filtroSelect: any;
 
-  filtros: string[] = [
-    "Id documento",
-    "Fecha documento"
+  filtros: any[] = [
+    { "id": 1, "desc": "Id documento", },
+    { "id": 2, "desc": "Fecha documento" },
   ]
 
 
@@ -41,13 +42,17 @@ export class OriginDocsComponent implements OnInit {
     private _eventService: EventService,
     private _calendar: NgbCalendar,
     private ngbDateParserFormatter: NgbDateParserFormatter,
-    private receptionService: ReceptionService,
+    private _receptionService: ReceptionService,
 
   ) {
     this.setLangPicker();
+    this.filtroSelect = this.filtros[0];
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.ordenar();
+
+  }
 
   async loadData() {
 
@@ -56,7 +61,7 @@ export class OriginDocsComponent implements OnInit {
 
     this.globalConvertSrevice.isLoading = true;
 
-    let res: ResApiInterface = await this.receptionService.getPendindgDocs(
+    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
@@ -82,13 +87,15 @@ export class OriginDocsComponent implements OnInit {
 
       PreferencesService.error = error;
 
-      this.globalConvertSrevice.mostrarError(9);
+      this.globalConvertSrevice.mostrarError(10);
 
       return;
 
     }
 
     this.globalConvertSrevice.docsOrigin = res.response;
+
+    this.ordenar();
 
 
   }
@@ -103,12 +110,33 @@ export class OriginDocsComponent implements OnInit {
 
   ordenar() {
 
+    this.ascendente = !this.ascendente;
 
-    switch (this.filtro) {
-      case "Id documento":
+    switch (this.filtroSelect.id) {
+      case 1:
+        //id documento
+        if (this.ascendente) {
+          this.globalConvertSrevice.docsOrigin =
+            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => a.iD_Documento - b.iD_Documento);
+        } else {
+          this.globalConvertSrevice.docsOrigin =
+            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => b.iD_Documento - a.iD_Documento);
+        }
 
         break;
-      case "Fecha documento":
+      case 2:
+        if (this.ascendente) {
+          // Ordenar por fecha de forma ascendente
+          this.globalConvertSrevice.docsOrigin =
+            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => new Date(a.fecha_Hora).getTime() - new Date(b.fecha_Hora).getTime());
+
+        } else {
+
+          // Ordenar por fecha de forma descendente
+          this.globalConvertSrevice.docsOrigin =
+            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => new Date(b.fecha_Hora).getTime() - new Date(a.fecha_Hora).getTime());
+        }
+
         break;
 
       default:
@@ -118,7 +146,7 @@ export class OriginDocsComponent implements OnInit {
 
   backPage() {
     if (!this.globalConvertSrevice.screen) {
-      this.backScreen();
+      this.globalConvertSrevice.mostrarTiposDoc();
       return;
     }
 
@@ -137,15 +165,7 @@ export class OriginDocsComponent implements OnInit {
   }
 
 
-  backScreen() {
-    this.globalConvertSrevice.showError = false;
-    this.globalConvertSrevice.verTiposDocConversion = true;
-    this.globalConvertSrevice.verDocOrigen = false;
-    this.globalConvertSrevice.verDocDestino = false;
-    this.globalConvertSrevice.verDocConversion = false;
-    this.globalConvertSrevice.verDetalleDocConversion = false;
 
-  }
 
   sincronizarFechas() {
 
@@ -172,10 +192,62 @@ export class OriginDocsComponent implements OnInit {
   };
 
 
-  convertirDocumeto(docDestino: number) {
-    if (docDestino == 0) this.globalConvertSrevice.mostrarDocConversion();
+  async selectOrigin(origin: OriginDocInterface) {
 
-    if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
+    this.globalConvertSrevice.docOriginSelect = origin;
+
+    await this.loadDestinationDocs(origin);
+
+    // if (docDestino == 0) this.globalConvertSrevice.mostrarDocConversion();
+
+    // if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
+  }
+
+
+  async loadDestinationDocs(doc: OriginDocInterface) {
+
+    this.globalConvertSrevice.isLoading = true;
+
+    let res: ResApiInterface = await this._receptionService.getDestinationDocs(
+      this.user,
+      this.token,
+      doc.tipo_Documento,
+      doc.serie_Documento,
+      doc.empresa,
+      doc.estacion_Trabajo,
+    );
+
+    this.globalConvertSrevice.isLoading = false;
+
+    if (!res.status) {
+
+
+      let dateNow: Date = new Date(); //fecha del error
+
+      //Crear error
+      let error: ErrorInterface = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+      }
+
+      PreferencesService.error = error;
+
+      this.globalConvertSrevice.mostrarError(10);
+
+      return;
+
+    }
+
+
+    console.log(res.response);
+
+
+
+
+
+
   }
 
 }

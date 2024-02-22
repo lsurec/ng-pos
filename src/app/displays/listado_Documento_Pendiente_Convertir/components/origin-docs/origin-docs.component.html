@@ -7,11 +7,12 @@
         <button mat-icon-button (click)="loadData()">
             <mat-icon>refresh</mat-icon>
         </button>
-        <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-        <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+        <p class="titulo">{{globalConvertSrevice.docSelect?.tipo_Documento}} -
+            {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} (Origen)</p>
+
 
         <span class="spacer"></span>
-       
+
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
@@ -22,12 +23,12 @@
     <button mat-icon-button (click)="loadData()">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-    <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
+    <p class="titulo">{{globalConvertSrevice.docSelect?.tipo_Documento}} -
+        {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} (Origen)</p>
 
 
     <span class="spacer"></span>
-   
+
 </mat-toolbar>
 
 <div class="container_main">
@@ -37,8 +38,8 @@
             <form class="calendarios">
                 <p class="textosBold14">Fecha Ini:</p>
                 <div class="input-group">
-                    <input class="form-control" name="dp" [(ngModel)]="globalConvertSrevice. fechaInicial" ngbDatepicker #d="ngbDatepicker"
-                        (ngModelChange)="sincronizarFechas()" />
+                    <input class="form-control" name="dp" [(ngModel)]="globalConvertSrevice. fechaInicial" ngbDatepicker
+                        #d="ngbDatepicker" (ngModelChange)="sincronizarFechas()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>
@@ -50,8 +51,9 @@
                 <p class="textosBold14">Fecha Fin:</p>
 
                 <div class="input-group">
-                    <input class="form-control" name="dp2" [(ngModel)]=" globalConvertSrevice.fechaFinal" ngbDatepicker #d2="ngbDatepicker"
-                        [minDate]="globalConvertSrevice.fechaInicial!" (ngModelChange)="loadData()" />
+                    <input class="form-control" name="dp2" [(ngModel)]=" globalConvertSrevice.fechaFinal" ngbDatepicker
+                        #d2="ngbDatepicker" [minDate]="globalConvertSrevice.fechaInicial!"
+                        (ngModelChange)="loadData()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>
@@ -60,9 +62,9 @@
         </div>
         <span class="spacer"></span>
         <div class="ordenar">
-            <mat-select name="orden" class="seleccionar" placeholder="Ordenar por:" [(ngModel)]="filtro">
+            <mat-select name="orden" class="seleccionar" placeholder="Ordenar por:" [(ngModel)]="filtroSelect">
                 <mat-option *ngFor="let filtro of filtros" [value]="filtro">
-                    {{filtro}}
+                    {{filtro.desc}}
                 </mat-option>
             </mat-select>
             <span class="spacer"></span>
@@ -75,7 +77,7 @@
             </button>
 
         </div>
-      
+
 
     </div>
     <div class="d-flex">
@@ -91,7 +93,7 @@
             <p class="textosBold14">Usuario: {{documento.usuario}}</p>
         </div>
 
-        <div class="documentos-origen" (click)=" convertirDocumeto(globalConvertSrevice.docDestino!)">
+        <div class="documentos-origen" (click)=" selectOrigin(documento)">
             <div class="dFlex">
                 <p class="textosBold14">Fecha hora: </p>
                 <span class="spacer"></span>

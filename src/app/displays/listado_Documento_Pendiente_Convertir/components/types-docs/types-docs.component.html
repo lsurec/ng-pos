@@ -4,7 +4,8 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <p class="titulo">Listado de cotizaciones</p>
+        <p class="titulo">{{dataUserService.nameDisplay}}</p>
+
         <span class="spacer"></span>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -17,7 +18,7 @@
         (click)="loadData()">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo">Listado de cotizaciones</p>
+    <p class="titulo">{{dataUserService.nameDisplay}}</p>
 
     <span class="spacer"></span>
 

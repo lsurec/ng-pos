@@ -22,6 +22,7 @@ export class GlobalConvertService {
     docs: TypesDocConvertInterface[] = [];
     screen: string = "";
     docsOrigin: OriginDocInterface[] = [];
+    docOriginSelect?: OriginDocInterface;
     fechaInicial?: NgbDateStruct; //fecha inicial 
     fechaFinal?: NgbDateStruct;
 
@@ -30,14 +31,14 @@ export class GlobalConvertService {
     //si tiene algo regresar a hoe
 
 
-    
-  addLeadingZero(number: number): string {
-    return number.toString().padStart(2, '0');
-  }
 
-  formatStrFilterDate(date: NgbDateStruct) {
-    return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
-  }
+    addLeadingZero(number: number): string {
+        return number.toString().padStart(2, '0');
+    }
+
+    formatStrFilterDate(date: NgbDateStruct) {
+        return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
+    }
 
 
     mostrarTiposDoc() {
@@ -47,16 +48,6 @@ export class GlobalConvertService {
         this.verDocOrigen = false;
         this.verDocDestino = false;
         this.verDocConversion = false;
-        this.verDetalleDocConversion = false;
-    }
-
-    cargarPantalla() {
-        this.isLoading = true;
-        this.showError = false;
-        this.verDocOrigen = false;
-        this.verDocDestino = false;
-        this.verDocConversion = false;
-        this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
     }
 
