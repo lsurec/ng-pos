@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { GlobalConvertService } from '../../services/global-convert.service';
+import { components } from 'src/app/providers/componentes.provider';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-details-dest-docs',
@@ -7,7 +10,13 @@ import { Component } from '@angular/core';
 })
 export class DetailsDestDocsComponent {
 
-  isLoading: boolean = false; //pantalla de carga
-  showError: boolean = false;
+  constructor(
+    public globalConvertSrevice: GlobalConvertService,
+    private _eventService: EventService,
+
+  ) {
+
+  }
+
 
 }
