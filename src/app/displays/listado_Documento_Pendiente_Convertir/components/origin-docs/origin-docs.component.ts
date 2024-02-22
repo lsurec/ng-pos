@@ -1,10 +1,13 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { ReceptionService } from '../../services/reception.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-origin-docs',
@@ -13,19 +16,20 @@ import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstra
 })
 export class OriginDocsComponent implements OnInit {
 
+  user: string = PreferencesService.user;
+  token: string = PreferencesService.token;
+  empresa: number = PreferencesService.empresa.empresa;
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;
+
+
   @Input() tipo?: number = 2;
-  isLoading: boolean = false; //pantalla de carga
-  showError: boolean = false;
-  fechaIni: Date = new Date();
-  fechaFin: Date = new Date();
 
   ascendente: boolean = true;
   descendente: boolean = false;
 
-  today: Date = new Date();
 
-  fechaInicial?: NgbDateStruct; //fecha inicial 
-  fechaFinal?: NgbDateStruct;
+  fechaInicial: NgbDateStruct; //fecha inicial 
+  fechaFinal: NgbDateStruct;
 
   filtro!: string;
 
@@ -65,7 +69,6 @@ export class OriginDocsComponent implements OnInit {
     }
   ]
 
-  diasSemana = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'];
 
   constructor(
     public globalConvertSrevice: GlobalConvertService,
@@ -73,17 +76,86 @@ export class OriginDocsComponent implements OnInit {
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _eventService: EventService,
     private _calendar: NgbCalendar,
-    private ngbDateParserFormatter: NgbDateParserFormatter
+    private ngbDateParserFormatter: NgbDateParserFormatter,
+    private receptionService: ReceptionService,
 
   ) {
     this.setLangPicker();
     this.filtro = this.filtros[0];
-  }
-  ngOnInit(): void {
-    console.log(this.globalConvertSrevice.screen);
 
-    this.fechaInicial = { year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: 1 };
+    let today: Date = new Date();
+
+    this.fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: 1 };
     this.fechaFinal = this._calendar.getToday();
+  }
+
+  //TODO:Asiganr el lenguaje segun  la configuracion del sistema
+  ngOnInit(): void {
+
+    console.log("ejecutandose");
+
+
+
+    this.loadData();
+
+  }
+
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
+
+  formatStrFilterDate(date: NgbDateStruct) {
+    return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
+  }
+
+
+
+
+  async loadData() {
+
+
+
+
+    this.globalConvertSrevice.isLoading = true;
+
+    let res: ResApiInterface = await this.receptionService.getPendindgDocs(
+      this.user,
+      this.token,
+      this.globalConvertSrevice.docSelect!.tipo_Documento,
+      this.formatStrFilterDate(this.fechaInicial),
+      this.formatStrFilterDate(this.fechaFinal),
+    );
+
+    this.globalConvertSrevice.isLoading = false;
+
+
+
+    if (!res.status) {
+
+
+      let dateNow: Date = new Date(); //fecha del error
+
+      //Crear error
+      let error: ErrorInterface = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+      }
+
+      PreferencesService.error = error;
+
+      this.globalConvertSrevice.mostrarError(9);
+
+      return;
+
+    }
+
+
+    console.log(res.response);
+
+
+
 
   }
 
