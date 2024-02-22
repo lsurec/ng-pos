@@ -288,6 +288,22 @@
             "fel": "DOCUMENT TRIBUTAIRE ÉLECTRONIQUE FEL",
             "documento_generico": "DOCUMENT GÉNÉRIQUE",
             "sin_devoluciones": "*AUCUN CHANGEMENT NI REMBOURSEMENT ACCEPTÉ*"
+        },
+        "documento": {
+            "fechaIni": "Date de début : ",
+            "fechaFin": "Date de fin : ",
+            "idDoc": "ID du document : ",
+            "usuario": "Utilisateur : ",
+            "fechaHora": "Date et heure : ",
+            "fechaDoc": "Date du document : ",
+            "serieDoc": "Série du document : ",
+            "documento": "Document : ",
+            "origen": "ORIGINE",
+            "destino": "DESTINATION",
+            "disponible": "Disponible : ",
+            "autorizar": "Autoriser : ",
+            "transacciones": "Transactions",
+            "marcarTodo": "Tout sélectionner."
         }
     }
 }

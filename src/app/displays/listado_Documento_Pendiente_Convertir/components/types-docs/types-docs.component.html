@@ -32,7 +32,7 @@
         <div class="lista-cotizaciones">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">Registros ({{globalConvertSrevice.docs.length}})</p>
+                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docs.length}})</p>
             </div>
             <div *ngFor="let doc of globalConvertSrevice.docs">
                 <div class="cotizacion" (click)="goOrigin(doc)">

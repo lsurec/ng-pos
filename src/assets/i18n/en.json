@@ -288,6 +288,22 @@
             "fel": "FEL ELECTRONIC TAX DOCUMENT",
             "documento_generico": "GENERIC DOCUMENT",
             "sin_devoluciones": "*NO CHANGES OR RETURNS ACCEPTED*"
+        },
+        "documento": {
+            "fechaIni": "Start Date: ",
+            "fechaFin": "End Date: ",
+            "idDoc": "Document ID: ",
+            "usuario": "User: ",
+            "fechaHora": "Date and Time: ",
+            "fechaDoc": "Document Date: ",
+            "serieDoc": "Document Series: ",
+            "documento": "Document: ",
+            "origen": "SOURCE",
+            "destino": "DESTINATION",
+            "disponible": "Available: ",
+            "autorizar": "Authorize: ",
+            "transacciones": "Transactions",
+            "marcarTodo": "Select All."
         }
     }
 }
