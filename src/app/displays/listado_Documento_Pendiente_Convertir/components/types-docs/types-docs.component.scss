@@ -22,24 +22,29 @@ $background-scrollbar : #134895; //barra azul
     font-size: 22px;
 }
 
-.toolbarPhone {
+.toolbarPhoneTitle {
     display: none;
     height : 64px;
 }
 
-.toolbarPhone,
-.toolbarlarge {
+.toolbar-row {
+    height: 64px;
+}
+
+.toolbarPhoneTitle,
+.toolbarlargeTitle {
     background-color: $background-oficial;
     border-bottom   : 1px solid $borde-toolbar;
 }
 
 @media screen and (max-width: 767px) {
-    .toolbarlarge {
+    .toolbarlargeTitle {
         display: none !important;
     }
 
-    .toolbarPhone {
+    .toolbarPhoneTitle {
         display: block !important;
+        height : 64px !important;
     }
 }
 

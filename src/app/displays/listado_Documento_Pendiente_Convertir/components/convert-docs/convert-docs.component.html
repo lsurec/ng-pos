@@ -1,18 +1,18 @@
 <mat-toolbar class="toolbarPhone">
-    <mat-toolbar-row>
-        <button mat-icon-button aria-label class="flecha-regresar"
+    <mat-toolbar-row class="toolbar-row">
+        <button mat-icon-button (click)="backPage(globalConvertSrevice.docDestino!)" class="flecha-regresar"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
         <p class="titulo">Titulo</p>
 
         <span class="spacer"></span>
-        <button mat-icon-button>
-            <mat-icon>error</mat-icon>
+        <button mat-icon-button (click)="globalConvertSrevice.mostrarDetalleDocConversion()">
+            <mat-icon>check</mat-icon>
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
-<mat-toolbar class="toolbarlarge">
+<mat-toolbar class="toolbarlargeTitle">
     <button mat-icon-button (click)="backPage(globalConvertSrevice.docDestino!)" class="flecha-regresar"
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>

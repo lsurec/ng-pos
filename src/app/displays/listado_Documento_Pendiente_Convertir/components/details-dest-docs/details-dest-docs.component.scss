@@ -29,13 +29,17 @@ $background-scrollbar : #134895; //barra azul
 }
 
 .toolbarPhone,
-.toolbarlarge {
+.toolbarlargeTitle {
     background-color: $background-oficial;
     border-bottom   : 1px solid $borde-toolbar;
 }
 
+.toolbar-row {
+    height: 64px;
+}
+
 @media screen and (max-width: 767px) {
-    .toolbarlarge {
+    .toolbarlargeTitle {
         display: none !important;
     }
 
@@ -63,16 +67,9 @@ $background-scrollbar : #134895; //barra azul
     border          : 3px $background-oficial;
 }
 
-.container_page {
-    height    : 100vh;
-    width     : 100vw;
-    margin-top: 65px;
-    position  : fixed;
-}
-
 .container_main {
     width   : 100%;
-    height  : calc(100% - 128px);
+    height  : calc(100vh - 128px);
     float   : left;
     overflow: auto;
     padding : 20px;
@@ -83,6 +80,10 @@ $background-scrollbar : #134895; //barra azul
 
     .container_main {
         width: 100%;
+    }
+
+    .info-doc{
+        display: block !important;
     }
 
 }

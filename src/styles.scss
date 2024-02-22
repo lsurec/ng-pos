@@ -49,6 +49,7 @@ body {
 //Aplica el tema oscuro a elementos específicos si es necesario 
 .dark-theme .container_start,
 .dark-theme .toolbarlarge,
+.dark-theme .toolbarlargeTitle,
 .dark-theme mat-toolbar-row,
 .dark-theme .head__sidenav,
 .dark-theme .detallesUsuario,
@@ -107,7 +108,8 @@ body {
 .dark-theme .sumar,
 .dark-theme .cantidad,
 .dark-theme .restar,
-.dark-theme .url-apis {
+.dark-theme .url-apis,
+.dark-theme .form-control {
     color: $color-blanco !important;
 }
 
@@ -124,7 +126,9 @@ body {
 .dark-theme .barra-cerrar-titulo,
 .dark-theme .input-container,
 .dark-theme .seleccionar,
-.dark-theme .head__sidenav {
+.dark-theme .head__sidenav,
+.dark-theme .toolbarlargeTitle,
+.dark-theme .toolbar-row {
     border-bottom: 1px solid $bordes !important;
 }
 
@@ -181,6 +185,13 @@ body {
     color: $placeholder !important;
 }
 
+//sin bordes
+
+.dark-theme .documentos-origen,
+.dark-theme .documentos-procesados {
+    border: none !important;
+}
+
 //cargo-decuento-saldo
 
 .dark-theme .saldo {
@@ -214,7 +225,7 @@ body {
 .dark-theme button:not(:disabled),
 .dark-theme .barra-monto,
 .dark-theme .total,
-.dark-theme .centro, 
+.dark-theme .centro,
 .dark-theme .seleccionar-impresora,
 .dark-theme .restar,
 .dark-theme .sumar,

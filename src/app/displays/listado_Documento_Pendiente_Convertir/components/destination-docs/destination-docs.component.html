@@ -1,6 +1,6 @@
 <mat-toolbar class="toolbarPhone">
-    <mat-toolbar-row>
-        <button mat-icon-button aria-label class="flecha-regresar"
+    <mat-toolbar-row class="toolbar-row">
+        <button mat-icon-button class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
@@ -12,7 +12,7 @@
         </button>
     </mat-toolbar-row>
 </mat-toolbar>
-<mat-toolbar class="toolbarlarge">
+<mat-toolbar class="toolbarlargeTitle">
     <button mat-icon-button class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
@@ -35,7 +35,8 @@
                 <span class="spacer"></span>
                 <p class="textosBold14">Registros ({{documentosDestino.length}})</p>
             </div>
-            <div *ngFor="let destino of documentosDestino; let index = index" (click)="globalConvertSrevice.mostrarDocConversion()">
+            <div *ngFor="let destino of documentosDestino; let index = index"
+                (click)="globalConvertSrevice.mostrarDocConversion()">
                 <div class="destino">
                     <p class="textosBold14">Documento: </p>
                     <p class="textos14"> Factura </p>

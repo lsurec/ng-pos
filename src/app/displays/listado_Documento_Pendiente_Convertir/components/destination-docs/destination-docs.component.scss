@@ -28,13 +28,18 @@ $background-scrollbar : #134895; //barra azul
 }
 
 .toolbarPhone,
-.toolbarlarge {
+.toolbarlargeTitle {
     background-color: $background-oficial;
     border-bottom   : 1px solid $borde-toolbar;
 }
 
+.toolbar-row {
+    height: 64px;
+}
+
+
 @media screen and (max-width: 767px) {
-    .toolbarlarge {
+    .toolbarlargeTitle {
         display: none !important;
     }
 

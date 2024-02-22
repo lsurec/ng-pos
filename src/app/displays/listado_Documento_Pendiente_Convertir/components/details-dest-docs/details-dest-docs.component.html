@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbarPhone">
-    <mat-toolbar-row>
+    <mat-toolbar-row class="toolbar-row">
         <button mat-icon-button aria-label class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
@@ -10,18 +10,15 @@
         <button mat-icon-button>
             <mat-icon>error</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="listo">
-            <mat-icon>check</mat-icon>
-        </button>
         <button mat-icon-button matTooltip="imprimir">
             <mat-icon>print</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="compartir">
+        <!-- <button mat-icon-button matTooltip="compartir">
             <mat-icon>share</mat-icon>
-        </button>
+        </button> -->
     </mat-toolbar-row>
 </mat-toolbar>
-<mat-toolbar class="toolbarlarge">
+<mat-toolbar class="toolbarlargeTitle">
     <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}"
         (click)="globalConvertSrevice.mostrarDocOrigen()">
         <mat-icon>arrow_back</mat-icon>
@@ -32,30 +29,31 @@
     <button mat-icon-button (click)="globalConvertSrevice.mostrarError(13)">
         <mat-icon>error</mat-icon>
     </button>
-    <button mat-icon-button matTooltip="listo">
-        <mat-icon>check</mat-icon>
-    </button>
     <button mat-icon-button matTooltip="imprimir">
         <mat-icon>print</mat-icon>
     </button>
-    <button mat-icon-button matTooltip="compartir">
+    <!-- <button mat-icon-button matTooltip="compartir">
         <mat-icon>share</mat-icon>
-    </button>
+    </button> -->
 </mat-toolbar>
 
 <div class="container_main">
 
     <div class="info-doc">
-        <p class="textosBold14">Id documento: </p>
-        <p class="textos14">3</p>
+        <div class="dFlex">
+            <p class="textosBold14">Id documento: </p>
+            <p class="textos14">3</p>
+        </div>
         <span class="spacer"></span>
-
-        <p class="textosBold14">Tipo Documento: </p>
-        <p class="textos14">FACTURA</p>
+        <div class="dFlex">
+            <p class="textosBold14">Tipo Documento: </p>
+            <p class="textos14">FACTURA</p>
+        </div>
         <span class="spacer"></span>
-
-        <p class="textosBold14">Serie Documento: </p>
-        <p class="textos14">FAC (M)</p>
+        <div class="dFlex">
+            <p class="textosBold14">Serie Documento: </p>
+            <p class="textos14">FAC (M)</p>
+        </div>
     </div>
 
     <div class="padding-lista">
