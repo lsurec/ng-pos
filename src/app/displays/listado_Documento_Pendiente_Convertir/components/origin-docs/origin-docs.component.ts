@@ -25,17 +25,12 @@ export class OriginDocsComponent implements OnInit {
   @Input() tipo?: number = 2;
 
   ascendente: boolean = true;
-  descendente: boolean = false;
 
-
-  fechaInicial: NgbDateStruct; //fecha inicial 
-  fechaFinal: NgbDateStruct;
-
-  filtro!: string;
+  filtro: string = "Id documento";
 
   filtros: string[] = [
     "Id documento",
-    "Fecha"
+    "Fecha documento"
   ]
 
 
@@ -50,29 +45,9 @@ export class OriginDocsComponent implements OnInit {
 
   ) {
     this.setLangPicker();
-    this.filtro = this.filtros[0];
-
-    let today: Date = new Date();
-
-    this.fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: 1 };
-    this.fechaFinal = this._calendar.getToday();
   }
 
-  ngOnInit(): void {
-
-
-  }
-
-  addLeadingZero(number: number): string {
-    return number.toString().padStart(2, '0');
-  }
-
-  formatStrFilterDate(date: NgbDateStruct) {
-    return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
-  }
-
-
-
+  ngOnInit(): void { }
 
   async loadData() {
 
@@ -85,12 +60,11 @@ export class OriginDocsComponent implements OnInit {
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
-      this.formatStrFilterDate(this.fechaInicial),
-      this.formatStrFilterDate(this.fechaFinal),
+      this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaInicial!),
+      this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
     );
 
     this.globalConvertSrevice.isLoading = false;
-
 
 
     if (!res.status) {
@@ -117,10 +91,9 @@ export class OriginDocsComponent implements OnInit {
     this.globalConvertSrevice.docsOrigin = res.response;
 
 
-
-
   }
 
+  //TODO:Seeleccionar idioma de la aplicacion
   //traducir idioma de DATEPIKER al idioma seleccionado
   setLangPicker(): void {
     this._locale = "es-ES";
@@ -130,16 +103,17 @@ export class OriginDocsComponent implements OnInit {
 
   ordenar() {
 
-    if (this.ascendente) {
-      console.log("de manera asendente");
-    }
 
-    if (this.descendente) {
-      console.log("de manera descendente");
-    }
+    switch (this.filtro) {
+      case "Id documento":
 
-    this.ascendente = !this.ascendente;
-    this.descendente = !this.descendente;
+        break;
+      case "Fecha documento":
+        break;
+
+      default:
+        break;
+    }
   }
 
   backPage() {
@@ -174,17 +148,16 @@ export class OriginDocsComponent implements OnInit {
   }
 
   sincronizarFechas() {
-    // Verifica si la fecha inicial está definida
-    if (this.fechaInicial) {
-      // Convierte la fecha inicial a un formato de string
-      let fechaInicialString = this.ngbDateParserFormatter.format(this.fechaInicial);
 
-      // Convierte la fecha inicial string de nuevo a NgbDateStruct
-      let fechaInicialStruct: NgbDateStruct = this.ngbDateParserFormatter.parse(fechaInicialString)!;
+    // Convertir las fechas NgbDateStruct a objetos Date
+    let date1: Date = new Date(this.globalConvertSrevice.fechaInicial!.year, this.globalConvertSrevice.fechaInicial!.month - 1, this.globalConvertSrevice.fechaInicial!.day);
+    let date2: Date = new Date(this.globalConvertSrevice.fechaFinal!.year, this.globalConvertSrevice.fechaFinal!.month - 1, this.globalConvertSrevice.fechaFinal!.day);
 
-      // Actualiza la fecha final
-      this.fechaFinal = fechaInicialStruct;
+    // Comparar las fechas Date
+    if (date1 > date2) {
+      this.globalConvertSrevice.fechaFinal = this.globalConvertSrevice.fechaInicial;
     }
+
 
     this.loadData();
   }

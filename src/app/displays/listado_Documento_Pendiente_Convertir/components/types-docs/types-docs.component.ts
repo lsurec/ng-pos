@@ -101,29 +101,20 @@ export class TypesDocsComponent implements OnInit {
   }
 
 
-  addLeadingZero(number: number): string {
-    return number.toString().padStart(2, '0');
-  }
-
-  formatStrFilterDate(date: Date) {
-    return `${date.getFullYear()}${this.addLeadingZero(date.getMonth() + 1)}${this.addLeadingZero(date.getDate())}`;
-  }
-
-
   async loadDocsOrign() {
     this.globalConvertSrevice.isLoading = true;
 
-    let dateIni: Date = new Date();
-    dateIni.setDate(1); // Establecer el día a 1
+    let today: Date = new Date();
 
-    let dateFin: Date = new Date();
+    this.globalConvertSrevice. fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: 1 };
+    this.globalConvertSrevice.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
 
     let res: ResApiInterface = await this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
-      this.formatStrFilterDate(dateIni),
-      this.formatStrFilterDate(dateFin),
+      this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaInicial!),
+      this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
     );
 
     this.globalConvertSrevice.isLoading = false;
@@ -144,7 +135,7 @@ export class TypesDocsComponent implements OnInit {
 
       PreferencesService.error = error;
 
-      this.globalConvertSrevice.mostrarError(9);
+      this.globalConvertSrevice.mostrarError(10);
 
       return;
 
