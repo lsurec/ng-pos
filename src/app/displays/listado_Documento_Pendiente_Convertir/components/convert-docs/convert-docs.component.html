@@ -1,44 +1,98 @@
-<!-- <app-no-connected [component]="name" [error]="error" *ngIf="showError"></app-no-connected> -->
-<app-no-connected *ngIf="showError"></app-no-connected>
+<mat-toolbar class="toolbarPhone">
+    <mat-toolbar-row>
+        <button mat-icon-button aria-label class="flecha-regresar"
+            matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <p class="titulo">Titulo</p>
 
-<div *ngIf="!showError">
+        <span class="spacer"></span>
+        <button mat-icon-button>
+            <mat-icon>error</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-toolbar class="toolbarlarge">
+    <button mat-icon-button (click)="backPage(globalConvertSrevice.docDestino!)" class="flecha-regresar"
+        matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <p class="titulo">Documento Conversion </p>
 
-    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(12)">
+        <mat-icon>error</mat-icon>
+    </button>
+    <button mat-icon-button>
+        <mat-icon>check</mat-icon>
+    </button>
+    <!-- <button mat-icon-button class="boton-azul">
+        <mat-icon>check</mat-icon>
+    </button> -->
+</mat-toolbar>
 
-    <div *ngIf="!isLoading">
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row>
-                <button mat-icon-button aria-label class="flecha-regresar"
-                    matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-                <p class="titulo">Titulo</p>
+<div class="container_main">
+    <p class="textosBold14">Id documento: 302</p>
 
-                <span class="spacer"></span>
-                <button mat-icon-button>
-                    <mat-icon>error</mat-icon>
-                </button>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-toolbar class="toolbarlarge">
-            <button mat-icon-button aria-label class="flecha-regresar"
-                matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <p class="titulo">{{ 'pos.error.informe' | translate }}</p>
+    <div class="origen-destino">
 
-            <span class="spacer"></span>
-            <button mat-icon-button>
-                <mat-icon>error</mat-icon>
-            </button>
-        </mat-toolbar>
-
-        <div class="container_main">
-
+        <div class="origen">
+            <p class="textosBlancos14"> ORIGEN - (2) Cotización a Cliente - (1) COT.</p>
         </div>
+        <span class="spacer"></span>
 
-        <!-- Mostrar logos -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <div class="destino">
+
+            <p class="textosBlancos14">DESTINO - (3) FACTURA - (1) FAC M </p>
+        </div>
+    </div>
+    <div class="dFlex">
+        <mat-checkbox class="example-margin" color="primary" [(ngModel)]="selectAll"
+            (ngModelChange)="seleccionar()"></mat-checkbox>
+        <p class="textosBold14">Seleccionar todo.</p>
+
+        <span class="spacer"></span>
+        <p class="textosBold14">Registros ({{elementos.length}})</p>
     </div>
 
+    <div class="elemento-autorizacion">
+        <div class="lista-documentos" *ngFor="let elemento of elementos">
+            <div class="elementos">
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="elemento.checked"></mat-checkbox>
+                <div>
+                    <div class="dFlex">
+                        <p class="textosBold14">Id: </p>
+                        <p class="textos14">{{elemento.id}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="textosBold14">Producto: </p>
+                        <p class="textos14">{{elemento.producto}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="textosBold14">Cantidad: </p>
+                        <p class="textos14">{{elemento.cantidad}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="textosBold14">Disponible: </p>
+                        <p class="textos14">{{elemento.disponible}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="textosBold14">Autorizar: </p>
+                        <p class="textos14">{{elemento.autorizar}}</p>
+                    </div>
+                </div>
+            </div>
+            <span class="spacer"></span>
+
+            <div class="autorizacion">
+                <p class="textosBold14">Autorizar: </p>
+                <input class="barra-de-busqueda" type="text" name="search" autocomplete="off" placeholder="Cantidad">
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
+<!-- Mostrar logos -->
+<app-barra-logo-demosoft></app-barra-logo-demosoft>

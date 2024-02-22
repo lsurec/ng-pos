@@ -35,7 +35,7 @@
                 <span class="spacer"></span>
                 <p class="textosBold14">Registros ({{documentosDestino.length}})</p>
             </div>
-            <div *ngFor="let destino of documentosDestino; let index = index">
+            <div *ngFor="let destino of documentosDestino; let index = index" (click)="globalConvertSrevice.mostrarDocConversion()">
                 <div class="destino">
                     <p class="textosBold14">Documento: </p>
                     <p class="textos14"> Factura </p>

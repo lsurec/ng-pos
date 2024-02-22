@@ -234,4 +234,11 @@ export class OriginDocsComponent implements OnInit {
     return new Date();
   };
 
+
+  convertirDocumeto(docDestino: number) {
+    if (docDestino == 0) this.globalConvertSrevice.mostrarDocConversion();
+
+    if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
+  }
+
 }

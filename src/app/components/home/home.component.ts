@@ -441,6 +441,9 @@ export class HomeComponent implements OnInit {
 
         }
 
+        //navegar a documento destino o conversion documento 
+        // this._globalConvertService.docDestino = 0; // solo un elemento
+        this._globalConvertService.docDestino = 1; // mas de un elemento
       }
 
 
