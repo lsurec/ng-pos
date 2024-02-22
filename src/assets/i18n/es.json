@@ -288,6 +288,22 @@
             "fel": "FEL DOCUMENTO TRIBUTARIO ELECTRÓNICO",
             "documento_generico": "DOCUMENTO GENÉRICO",
             "sin_devoluciones": "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+        },
+        "documento": {
+            "fechaIni": "Fecha Inicio: ",
+            "fechaFin": "Fecha Fin: ",
+            "idDoc": "Id documento: ",
+            "usuario": "Usuario: ",
+            "fechaHora": "Fecha hora: ",
+            "fechaDoc": "Fecha documento: ",
+            "serieDoc": "Serie documento: ",
+            "documento": "Documento: ",
+            "origen": "ORIGEN",
+            "destino": "DESTINO",
+            "disponible": "Disponible: ",
+            "autorizar": "Autorizar: ",
+            "transacciones": "Transacciones",
+            "marcarTodo": "Seleccionar todo." 
         }
     }
 }

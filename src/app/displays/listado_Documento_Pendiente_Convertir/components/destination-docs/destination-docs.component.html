@@ -33,16 +33,16 @@
         <div class="lista-documentos">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">Registros ({{documentosDestino.length}})</p>
+                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{documentosDestino.length}})</p>
             </div>
             <div *ngFor="let destino of documentosDestino; let index = index"
                 (click)="globalConvertSrevice.mostrarDocConversion()">
                 <div class="destino">
-                    <p class="textosBold14">Documento: </p>
+                    <p class="textosBold14">{{ 'pos.documento.documento' | translate }} </p>
                     <p class="textos14"> Factura </p>
                     <span class="spacer"></span>
 
-                    <p class="textosBold14">Serie: </p>
+                    <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
                     <p class="textos14"> Fac M </p>
                 </div>
             </div>

@@ -7,11 +7,9 @@
         <button mat-icon-button (click)="loadData()">
             <mat-icon>refresh</mat-icon>
         </button>
-        <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-        <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
-
+        <p class="titulo">Restaurante (Origen)</p>
         <span class="spacer"></span>
-       
+
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
@@ -22,12 +20,9 @@
     <button mat-icon-button (click)="loadData()">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo" *ngIf="tipo == 1">Restaurante (Origen)</p>
-    <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
-
-
+    <p class="titulo">Restaurante (Origen)</p>
     <span class="spacer"></span>
-   
+
 </mat-toolbar>
 
 <div class="container_main">
@@ -35,10 +30,10 @@
     <div class="filtros">
         <div class="fechas">
             <form class="calendarios">
-                <p class="textosBold14">Fecha Ini:</p>
+                <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
                 <div class="input-group">
-                    <input class="form-control" name="dp" [(ngModel)]="globalConvertSrevice. fechaInicial" ngbDatepicker #d="ngbDatepicker"
-                        (ngModelChange)="sincronizarFechas()" />
+                    <input class="form-control" name="dp" [(ngModel)]="globalConvertSrevice. fechaInicial" ngbDatepicker
+                        #d="ngbDatepicker" (ngModelChange)="sincronizarFechas()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>
@@ -47,11 +42,13 @@
             <span class="spacer"></span>
 
             <form class="calendarios">
-                <p class="textosBold14">Fecha Fin:</p>
+                <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
+
 
                 <div class="input-group">
-                    <input class="form-control" name="dp2" [(ngModel)]=" globalConvertSrevice.fechaFinal" ngbDatepicker #d2="ngbDatepicker"
-                        [minDate]="globalConvertSrevice.fechaInicial!" (ngModelChange)="loadData()" />
+                    <input class="form-control" name="dp2" [(ngModel)]=" globalConvertSrevice.fechaFinal" ngbDatepicker
+                        #d2="ngbDatepicker" [minDate]="globalConvertSrevice.fechaInicial!"
+                        (ngModelChange)="loadData()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>
@@ -75,35 +72,36 @@
             </button>
 
         </div>
-      
+
 
     </div>
     <div class="d-flex">
         <span class="spacer"></span>
-        <p class="textosBold14">Registros ({{globalConvertSrevice.docsOrigin.length}})</p>
+        <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsOrigin.length}})
+        </p>
     </div>
 
     <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOrigin">
 
         <div class="dFlex">
-            <p class="textosBold14">Id documento: {{documento.iD_Documento}}</p>
+            <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
             <span class="spacer"></span>
-            <p class="textosBold14">Usuario: {{documento.usuario}}</p>
+            <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.usuario}}</p>
         </div>
 
         <div class="documentos-origen" (click)=" convertirDocumeto(globalConvertSrevice.docDestino!)">
             <div class="dFlex">
-                <p class="textosBold14">Fecha hora: </p>
+                <p class="textosBold14">{{ 'pos.documento.fechaHora' | translate }} </p>
                 <span class="spacer"></span>
                 <p class="textos14">{{documento.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}}</p>
             </div>
             <div class="dFlex">
-                <p class="textosBold14">Fecha documento: </p>
+                <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
                 <span class="spacer"></span>
                 <p class="textos14">{{documento.fecha_Documento}}</p>
             </div>
             <div class="dFlex">
-                <p class="textosBold16">Serie documento: </p>
+                <p class="textosBold16">{{ 'pos.documento.serieDoc' | translate }} </p>
                 <p class="textos14">{{documento.serie}} </p>
             </div>
         </div>
