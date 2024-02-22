@@ -4,6 +4,9 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
+        <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>refresh</mat-icon>
+        </button>
         <p class="titulo">Titulo</p>
 
         <span class="spacer"></span>
@@ -16,6 +19,9 @@
     <button mat-icon-button (click)="backPage(globalConvertSrevice.docDestino!)" class="flecha-regresar"
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Documento Conversion </p>
 
@@ -73,10 +79,6 @@
                     <div class="dFlex">
                         <p class="textosBold14">{{ 'pos.documento.disponible' | translate }} </p>
                         <p class="textos14">{{elemento.disponible}}</p>
-                    </div>
-                    <div class="dFlex">
-                        <p class="textosBold14">{{ 'pos.documento.autorizar' | translate }}</p>
-                        <p class="textos14">{{elemento.autorizar}}</p>
                     </div>
                 </div>
             </div>
