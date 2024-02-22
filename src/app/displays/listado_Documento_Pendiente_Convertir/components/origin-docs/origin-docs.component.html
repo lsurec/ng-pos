@@ -11,9 +11,7 @@
         <p class="titulo" *ngIf="tipo == 2">Cotización a Cliente (Origen)</p>
 
         <span class="spacer"></span>
-        <button mat-icon-button>
-            <mat-icon>error</mat-icon>
-        </button>
+       
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
@@ -29,22 +27,17 @@
 
 
     <span class="spacer"></span>
-    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(10)">
-        <mat-icon>error</mat-icon>
-    </button>
+   
 </mat-toolbar>
 
 <div class="container_main">
-    <div class="d-flex">
-        <span class="spacer"></span>
-        <p class="textosBold14">Registros (6)</p>
-    </div>
+
     <div class="filtros">
         <div class="fechas">
             <form class="calendarios">
                 <p class="textosBold14">Fecha Ini:</p>
                 <div class="input-group">
-                    <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker #d="ngbDatepicker"
+                    <input class="form-control" name="dp" [(ngModel)]="globalConvertSrevice. fechaInicial" ngbDatepicker #d="ngbDatepicker"
                         (ngModelChange)="sincronizarFechas()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -57,8 +50,8 @@
                 <p class="textosBold14">Fecha Fin:</p>
 
                 <div class="input-group">
-                    <input class="form-control" name="dp2" [(ngModel)]="fechaFinal" ngbDatepicker #d2="ngbDatepicker"
-                        [minDate]="fechaInicial" />
+                    <input class="form-control" name="dp2" [(ngModel)]=" globalConvertSrevice.fechaFinal" ngbDatepicker #d2="ngbDatepicker"
+                        [minDate]="globalConvertSrevice.fechaInicial!" (ngModelChange)="loadData()" />
                     <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
                         <mat-icon class="ico-calendario">calendar_month</mat-icon>
                     </button>
@@ -73,16 +66,21 @@
                 </mat-option>
             </mat-select>
             <span class="spacer"></span>
-            <button mat-icon-button (click)="ordenar()" *ngIf="ascendente && !descendente">
+            <button mat-icon-button (click)="ordenar()" *ngIf="ascendente">
                 <mat-icon>north</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="ordenar()" *ngIf="descendente && !ascendente">
+            <button mat-icon-button (click)="ordenar()" *ngIf="!ascendente">
                 <mat-icon>south</mat-icon>
             </button>
 
         </div>
+      
 
+    </div>
+    <div class="d-flex">
+        <span class="spacer"></span>
+        <p class="textosBold14">Registros ({{globalConvertSrevice.docsOrigin.length}})</p>
     </div>
 
     <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOrigin">

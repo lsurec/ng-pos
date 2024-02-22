@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interface';
 import { OriginDocInterface } from '../interfaces/origin-doc.interface';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Injectable({
@@ -21,10 +22,23 @@ export class GlobalConvertService {
     docs: TypesDocConvertInterface[] = [];
     screen: string = "";
     docsOrigin: OriginDocInterface[] = [];
+    fechaInicial?: NgbDateStruct; //fecha inicial 
+    fechaFinal?: NgbDateStruct;
 
     docDestino?: number;
     //vacio regresar a TypesDocsComponent
     //si tiene algo regresar a hoe
+
+
+    
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
+
+  formatStrFilterDate(date: NgbDateStruct) {
+    return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
+  }
+
 
     mostrarTiposDoc() {
         this.verTiposDocConversion = true;
