@@ -4,9 +4,12 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
+       
+        <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}"
+            (click)="loadData()">
+            <mat-icon>refresh</mat-icon>
+        </button>
         <p class="titulo">{{dataUserService.nameDisplay}}</p>
-
-        <span class="spacer"></span>
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
@@ -32,7 +35,8 @@
         <div class="lista-cotizaciones">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docs.length}})</p>
+                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docs.length}})
+                </p>
             </div>
             <div *ngFor="let doc of globalConvertSrevice.docs">
                 <div class="cotizacion" (click)="goOrigin(doc)">
