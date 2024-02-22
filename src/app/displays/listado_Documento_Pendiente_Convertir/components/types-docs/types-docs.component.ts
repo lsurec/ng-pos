@@ -92,15 +92,12 @@ export class TypesDocsComponent implements OnInit {
     this._eventService.emitCustomEvent(false);
   }
 
-  goOrigin(doc: TypesDocConvertInterface) {
-
+  async goOrigin(doc: TypesDocConvertInterface) {
 
     this.globalConvertSrevice.docSelect = doc;
-
+    await this.loadDocsOrign();
     this.globalConvertSrevice.mostrarDocOrigen();
     this.globalConvertSrevice.screen = "";
-
-
   }
 
 
@@ -132,7 +129,6 @@ export class TypesDocsComponent implements OnInit {
     this.globalConvertSrevice.isLoading = false;
 
 
-
     if (!res.status) {
 
 
@@ -154,8 +150,7 @@ export class TypesDocsComponent implements OnInit {
 
     }
 
-
-    console.log(res.response);
+    this.globalConvertSrevice.docsOrigin = res.response;
 
 
   }

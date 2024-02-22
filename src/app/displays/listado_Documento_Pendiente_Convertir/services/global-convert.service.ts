@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interface';
+import { OriginDocInterface } from '../interfaces/origin-doc.interface';
 
 
 @Injectable({
@@ -19,6 +20,7 @@ export class GlobalConvertService {
     docSelect?: TypesDocConvertInterface;
     docs: TypesDocConvertInterface[] = [];
     screen: string = "";
+    docsOrigin: OriginDocInterface[] = [];
 
     docDestino?: number;
     //vacio regresar a TypesDocsComponent

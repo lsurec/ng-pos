@@ -76,10 +76,10 @@
 
     </div>
 
-    <div class="lista-documentos" *ngFor="let documento of documentosOrigen">
+    <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOrigin">
 
         <div class="dFlex">
-            <p class="textosBold14">Id documento: {{documento.id}}</p>
+            <p class="textosBold14">Id documento: {{documento.iD_Documento}}</p>
             <span class="spacer"></span>
             <p class="textosBold14">Usuario: {{documento.usuario}}</p>
         </div>
@@ -88,12 +88,12 @@
             <div class="dFlex">
                 <p class="textosBold14">Fecha hora: </p>
                 <span class="spacer"></span>
-                <p class="textos14">{{documento.fechaHora}}</p>
+                <p class="textos14">{{documento.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}}</p>
             </div>
             <div class="dFlex">
                 <p class="textosBold14">Fecha documento: </p>
                 <span class="spacer"></span>
-                <p class="textos14">{{documento.fechaDoc}}</p>
+                <p class="textos14">{{documento.fecha_Documento}}</p>
             </div>
             <div class="dFlex">
                 <p class="textosBold16">Serie documento: </p>
