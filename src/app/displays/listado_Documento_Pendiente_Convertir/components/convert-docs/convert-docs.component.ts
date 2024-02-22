@@ -52,10 +52,13 @@ export class ConvertDocsComponent {
     // });
   }
 
-  backPage(docDestino: number) {
-    if (docDestino == 0) this.globalConvertSrevice.mostrarDocOrigen();
+  backPage() {
+    if (this.globalConvertSrevice.docDestino == 0) {
+      this.globalConvertSrevice.mostrarDocOrigen();
+      return;
+    }
 
-    if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
+    this.globalConvertSrevice.mostrarDocDestino()
   }
 
 }

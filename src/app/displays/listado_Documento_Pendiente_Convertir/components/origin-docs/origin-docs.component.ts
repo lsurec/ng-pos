@@ -22,9 +22,6 @@ export class OriginDocsComponent implements OnInit {
   empresa: number = PreferencesService.empresa.empresa;
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
 
-
-  @Input() tipo?: number = 2;
-
   ascendente: boolean = true;
 
   filtroSelect: any;
@@ -40,8 +37,6 @@ export class OriginDocsComponent implements OnInit {
     private _adapter: DateAdapter<any>, date: DateAdapter<Date>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _eventService: EventService,
-    private _calendar: NgbCalendar,
-    private ngbDateParserFormatter: NgbDateParserFormatter,
     private _receptionService: ReceptionService,
 
   ) {
@@ -198,9 +193,18 @@ export class OriginDocsComponent implements OnInit {
 
     await this.loadDestinationDocs(origin);
 
-    // if (docDestino == 0) this.globalConvertSrevice.mostrarDocConversion();
+    
+    if (this.globalConvertSrevice.docsDestination.length == 1) {
 
-    // if (docDestino == 1) this.globalConvertSrevice.mostrarDocDestino()
+      this.globalConvertSrevice.docDestinationSelect = this.globalConvertSrevice.docsDestination[0];
+      this.globalConvertSrevice.docDestino = 0;
+      this.globalConvertSrevice.mostrarDetalleDocConversion();
+      return;
+    }
+
+    this.globalConvertSrevice.docDestino = 1;
+
+    this.globalConvertSrevice.mostrarDocDestino();
   }
 
 
@@ -240,9 +244,8 @@ export class OriginDocsComponent implements OnInit {
 
     }
 
-
-    console.log(res.response);
-
+    this.globalConvertSrevice.docsDestination = res.response;
+    this.globalConvertSrevice.docsDestination.push(this.globalConvertSrevice.docsDestination[0]);
 
 
 

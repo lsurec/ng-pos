@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interface';
 import { OriginDocInterface } from '../interfaces/origin-doc.interface';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { DestinationDocInterface } from '../interfaces/destination-doc.interface';
 
 
 @Injectable({
@@ -20,13 +21,20 @@ export class GlobalConvertService {
 
     docSelect?: TypesDocConvertInterface;
     docs: TypesDocConvertInterface[] = [];
+    
     screen: string = "";
+    
     docsOrigin: OriginDocInterface[] = [];
     docOriginSelect?: OriginDocInterface;
+
+    docsDestination:DestinationDocInterface[] = [];
+    docDestinationSelect?: DestinationDocInterface;
+
+
     fechaInicial?: NgbDateStruct; //fecha inicial 
     fechaFinal?: NgbDateStruct;
 
-    docDestino?: number;
+    docDestino: number = -1;
     //vacio regresar a TypesDocsComponent
     //si tiene algo regresar a hoe
 
