@@ -229,7 +229,7 @@ export class DetailsDestDocsComponent {
     }
 
 
-    let docPrint: DocPrintModel = {
+    this.globalConvertSrevice.docPrint = {
       empresa: empresa,
       documento: documento,
       cliente: cliente,
@@ -259,7 +259,7 @@ export class DetailsDestDocsComponent {
           this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
 
-          const docDefinition = await this._printService.getReport(docPrint);
+          const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
 
           pdfMake.createPdf(docDefinition).print();
 
@@ -276,8 +276,7 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.isLoading = false;
 
 
-      //TODO:VER VISTA PREVIA
-      // this.verVistaPrevia = true;
+      this.globalConvertSrevice.mostrarImpresion();
 
     } else {
 
@@ -285,7 +284,7 @@ export class DetailsDestDocsComponent {
       if (PreferencesService.localPrint) {
         this.globalConvertSrevice.isLoading = false;
 
-        const docDefinition = await this._printService.getReport(docPrint);
+        const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
 
         pdfMake.createPdf(docDefinition).print();
 
@@ -295,8 +294,8 @@ export class DetailsDestDocsComponent {
       if (!PreferencesService.vistaPrevia) {
         this.globalConvertSrevice.isLoading = false;
 
-        //TODO:ver vista previa
-        // this.verVistaPrevia = true;
+
+        this.globalConvertSrevice.mostrarImpresion();
         return;
 
       }
@@ -314,7 +313,7 @@ export class DetailsDestDocsComponent {
           this._translate.instant('pos.alertas.sin_servicio_impresion'),
           this._translate.instant('pos.botones.imprimir'),
           async () => {
-            const docDefinition = await this._printService.getReport(docPrint);
+            const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint!);
 
             pdfMake.createPdf(docDefinition).print();
           }
@@ -338,7 +337,7 @@ export class DetailsDestDocsComponent {
           `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
           this._translate.instant('pos.botones.imprimir'),
           async () => {
-            const docDefinition = await this._printService.getReport(docPrint);
+            const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint!);
 
             pdfMake.createPdf(docDefinition).print();
           }
@@ -349,7 +348,7 @@ export class DetailsDestDocsComponent {
 
       }
 
-      const docDefinition = await this._printService.getReport(docPrint);
+      const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
 
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 

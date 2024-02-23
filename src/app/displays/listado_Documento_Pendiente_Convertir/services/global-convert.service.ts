@@ -6,6 +6,7 @@ import { DestinationDocInterface } from '../interfaces/destination-doc.interface
 import { DetailOriginDocInterInterface } from '../interfaces/detail-origin-doc.interface';
 import { DocConvertInterface } from '../interfaces/doc-convert-interface';
 import { DetailDestinationDocIntnterface } from '../interfaces/detail-destination-doc.interface';
+import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
 
 
 @Injectable({
@@ -21,28 +22,32 @@ export class GlobalConvertService {
     verDocDestino: boolean = false;
     verDocConversion: boolean = false;
     verDetalleDocConversion: boolean = false;
+    verPrint: boolean = false;
 
     docSelect?: TypesDocConvertInterface;
     docs: TypesDocConvertInterface[] = [];
-    
+
     screen: string = "";
-    
+
     docsOrigin: OriginDocInterface[] = [];
     docOriginSelect?: OriginDocInterface;
 
-    docsDestination:DestinationDocInterface[] = [];
+    docsDestination: DestinationDocInterface[] = [];
     docDestinationSelect?: DestinationDocInterface;
 
 
     fechaInicial?: NgbDateStruct; //fecha inicial 
     fechaFinal?: NgbDateStruct;
 
-    detailsOrigin:DetailOriginDocInterInterface[] = [];
+    detailsOrigin: DetailOriginDocInterInterface[] = [];
 
     docDestino: number = -1;
 
-    docDestinoSelect?:DocConvertInterface;
-    detialsDocDestination:DetailDestinationDocIntnterface[] = [];
+    docDestinoSelect?: DocConvertInterface;
+    detialsDocDestination: DetailDestinationDocIntnterface[] = [];
+
+
+    docPrint?: DocPrintModel;
 
 
     addLeadingZero(number: number): string {
@@ -62,6 +67,7 @@ export class GlobalConvertService {
         this.verDocDestino = false;
         this.verDocConversion = false;
         this.verDetalleDocConversion = false;
+        this.verPrint = false;
     }
 
     mostrarError(idPantalla: number) {
@@ -73,6 +79,8 @@ export class GlobalConvertService {
         this.verDocConversion = false;
         this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
+        this.verPrint = false;
+
     }
 
     mostrarDocOrigen() {
@@ -83,6 +91,8 @@ export class GlobalConvertService {
         this.verDocConversion = false;
         this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
+        this.verPrint = false;
+
     }
 
     mostrarDocDestino() {
@@ -93,6 +103,8 @@ export class GlobalConvertService {
         this.verDocConversion = false;
         this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
+        this.verPrint = false;
+
     }
 
     mostrarDocConversion() {
@@ -103,6 +115,8 @@ export class GlobalConvertService {
         this.verDocDestino = false;
         this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
+        this.verPrint = false;
+
     }
 
     mostrarDetalleDocConversion() {
@@ -113,5 +127,21 @@ export class GlobalConvertService {
         this.verDocDestino = false;
         this.verDocConversion = false;
         this.verTiposDocConversion = false;
+        this.verPrint = false;
+
+    }
+
+
+
+    mostrarImpresion() {
+        this.verDetalleDocConversion = false;
+        this.isLoading = false;
+        this.showError = false;
+        this.verDocOrigen = false;
+        this.verDocDestino = false;
+        this.verDocConversion = false;
+        this.verTiposDocConversion = false;
+        this.verPrint = true;
+
     }
 }
