@@ -106,15 +106,10 @@ export class ConvertDocsComponent {
 
     this.globalConvertSrevice.docDestinoSelect= resConvert.response;
 
-    await this.loadData();
-
-
     await this.loadDetails();
     
-
-    this.globalConvertSrevice.isLoading = false;
-
     this.globalConvertSrevice.mostrarDetalleDocConversion()
+    this.globalConvertSrevice.isLoading = false;
   }
 
   async loadDetails(){
@@ -140,7 +135,7 @@ export class ConvertDocsComponent {
       return;
     }
 
-    this.globalConvertSrevice.detialsDocDestination = res.response;;
+    this.globalConvertSrevice.detialsDocDestination = res.response;
     
     
 

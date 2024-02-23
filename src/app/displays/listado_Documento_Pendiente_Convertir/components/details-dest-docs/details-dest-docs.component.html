@@ -4,15 +4,13 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
         <p class="titulo">Documento Procesado</p>
 
         <span class="spacer"></span>
-        <button mat-icon-button>
-            <mat-icon>error</mat-icon>
-        </button>
+      
         <button mat-icon-button matTooltip="imprimir">
             <mat-icon>print</mat-icon>
         </button>
@@ -26,15 +24,13 @@
         (click)="globalConvertSrevice.mostrarDocOrigen()">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Documento Procesado</p>
 
     <span class="spacer"></span>
-    <button mat-icon-button (click)="globalConvertSrevice.mostrarError(13)">
-        <mat-icon>error</mat-icon>
-    </button>
+   
     <button mat-icon-button matTooltip="imprimir">
         <mat-icon>print</mat-icon>
     </button>
@@ -48,17 +44,17 @@
     <div class="info-doc">
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} </p>
-            <p class="textos14">3</p>
+            <p class="textos14">{{globalConvertSrevice.docDestinoSelect!.documento}}</p>
         </div>
         <span class="spacer"></span>
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.home.tipoDocumento' | translate }} </p>
-            <p class="textos14">FACTURA</p>
+            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.documento}} ({{globalConvertSrevice.docDestinationSelect!.f_Tipo_Documento}})</p>
         </div>
         <span class="spacer"></span>
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.home.serieDocumento' | translate }} </p>
-            <p class="textos14">FAC (M)</p>
+            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.serie}} ({{globalConvertSrevice.docDestinationSelect!.f_Serie_Documento}})</p>
         </div>
     </div>
 
@@ -66,29 +62,30 @@
 
         <div class="dFlex">
             <span class="spacer"></span>
-            <p class="textosBold14">{{ 'pos.documento.transacciones' | translate }} (2)</p>
+            <p class="textosBold14">{{ 'pos.documento.transacciones' | translate }} ({{globalConvertSrevice.detialsDocDestination.length}})</p>
         </div>
 
-        <div class="documentos-procesados">
+        <div class="documentos-procesados" *ngFor="let tra of globalConvertSrevice.detialsDocDestination">
             <div class="dFlex">
                 <p class="textosBold14">{{ 'pos.factura.cantidad' | translate }} :</p>
-                <p class="textos14">3</p>
+                <p class="textos14">{{tra.cantidad}}</p>
             </div>
             <div class="dFlex">
                 <p class="textosBold14">Id: </p>
-                <p class="textos14">CSERVICIO</p>
+                <p class="textos14">{{tra.id}}</p>
             </div>
 
             <div class="dFlex">
                 <p class="textosBold14">{{ 'pos.factura.producto' | translate }} :</p>
-                <p class="textos14">Champurradas</p>
+                <p class="textos14">{{tra.producto}}</p>
             </div>
             <div class="dFlex">
                 <p class="textosBold14">{{ 'pos.factura.bodega' | translate }}</p>
-                <p class="textos14">Tienda</p>
+                <p class="textos14">{{tra.bodega}}</p>
             </div>
         </div>
     </div>
+    
 
 </div>
 
