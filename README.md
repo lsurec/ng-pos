@@ -5,30 +5,34 @@ Aplicacion web con Angular y .NET CORE.
 Esta aplicación es una solución integral de punto de venta (POS) diseñada para facilitar y optimizar la gestión de un negocio. Con características avanzadas como la capacidad de certificar documentos electrónicos (DTEs), imprimir documentos, entre muchas otras funciones. La aplicación es una herramienta completa para agilizar las operaciones y mejorar la experiencia de los clientes.
 
 - [Punto de ventas (POS) Web App](#punto-de-ventas-pos-web-app)
-  - [Caracteristicas](#caracteristicas)
-  - [Vista Previa.](#vista-previa)
-    - [Idioma de la aplicación.](#idioma-de-la-aplicación)
-    - [Tema de la aplicación.](#tema-de-la-aplicación)
+  - [Características](#características)
+  - [Vista Previa](#vista-previa)
+    - [Idioma de la aplicación](#idioma-de-la-aplicación)
+    - [Tema de la aplicación](#tema-de-la-aplicación)
     - [Configuración inicial del Origen de Datos](#configuración-inicial-del-origen-de-datos)
     - [Inicio de sesión](#inicio-de-sesión)
-    - [Configuracion local.](#configuracion-local)
-    - [Pantalla princial (Home)](#pantalla-princial-home)
+    - [Configuración local](#configuracion-local)
+    - [Pantalla principal (Home)](#pantalla-principal-home)
       - [Menú de aplicaciones](#menú-de-aplicaciones)
     - [Detalles de Usuario](#detalles-de-usuario)
     - [Ajustes](#ajustes)
-    - [Configuración de impresora.](#configuración-de-impresora)
-    - [Módulo de Facturación.](#módulo-de-facturación)
-    - [Historial de documentos.](#historial-de-documentos)
-    - [Imprimir documento.](#imprimir-documento)
-    - [Documento.](#documento)
-      - [Nueva cuenta.](#nueva-cuenta)
-      - [Actualizar cuenta.](#actualizar-cuenta)
-    - [Detalle del documento.](#detalle-del-documento)
-    - [Productos encontrados.](#productos-encontrados)
-    - [Formulario de Producto.](#formulario-de-producto)
-    - [Cargo abono.](#cargo-abono)
-- [Configuraciones del proyecto.](#configuraciones-del-proyecto)
-  - [Cómo implementar un nuevo idioma para la aplicación.](#cómo-implementar-un-nuevo-idioma-para-la-aplicación)
+    - [Configuración de impresora](#configuración-de-impresora)
+  - [Módulo de Facturación](#módulo-de-facturación)
+    - [Historial de documentos](#historial-de-documentos)
+    - [Imprimir documento](#imprimir-documento)
+    - [Documento](#documento)
+      - [Nueva cuenta](#nueva-cuenta)
+      - [Actualizar cuenta](#actualizar-cuenta)
+    - [Detalle del documento](#detalle-del-documento)
+    - [Productos encontrados](#productos-encontrados)
+    - [Formulario de Producto](#formulario-de-producto)
+    - [Cargo abono](#cargo-abono)
+  - [Módulo de Listado de Cotizaciones](#módulo-de-listado-de-cotizaciones)
+    - [Tipos de documentos](#tipos-de-documentos)
+    - [Documento origen](#documento-origen)
+    - [Documento destino](#documento-destino)
+    - [Conversión de documento](#conversión-de-documento)
+    - [Documento procesado](#documento-procesado)
 
 ## Caracteristicas 
 
@@ -116,7 +120,7 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 
 ![screenshot](screenshot/configuracionImpresora.png)
 
-### Módulo de Facturación.
+## Módulo de Facturación.
 
 ![screenshot](screenshot/factura.png)
 
@@ -155,6 +159,30 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 ### Cargo abono.
 
 ![screenshot](screenshot/pago.png)
+
+<!-- Nuevo modulo -->
+
+## Módulo de Listado de Cotizaciones.
+
+### Tipos de documentos.
+
+![screenshot](screenshot/listaDoc.png)
+
+### Documento origen.
+
+![screenshot](screenshot/docOrigen.png)
+
+### Documento destino.
+
+![screenshot](screenshot/docDestino.png)
+
+### Conversión de documento.
+
+![screenshot](screenshot/conversionDoc.png)
+
+### Documento procesado.
+
+![screenshot](screenshot/docProcesado.png)
 
 <!-- aquiiiiiiiiiii -->
 

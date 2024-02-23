@@ -23,7 +23,7 @@ export class ConvertDocsComponent {
     {
       id: 30,
       producto: "COCA-COLA",
-      cantidad: 10.0,
+      cantidad: "0.0",
       disponible: 13.0,
       autorizar: 13.0,
       checked: false
