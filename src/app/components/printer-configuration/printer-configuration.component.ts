@@ -325,10 +325,6 @@ export class PrinterConfigurationComponent implements OnInit {
 
     }
 
-
-
-
-
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
     // pdfMake.createPdf(docDefinition).open();
