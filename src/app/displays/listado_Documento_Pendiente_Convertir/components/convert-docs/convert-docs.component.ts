@@ -9,7 +9,6 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ParamConvertDocInterface } from '../../interfaces/param-convert-doc.interface';
-import { DocConvertInterface } from '../../interfaces/doc-convert-interface';
 
 @Component({
   selector: 'app-convert-docs',
