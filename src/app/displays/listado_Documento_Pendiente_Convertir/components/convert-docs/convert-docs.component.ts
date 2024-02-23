@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
-import { DetailsOriginDocInterInterface, DetailsOriginDocInterface } from '../../interfaces/details-origin-doc.interface';
+import { DetailOriginDocInterInterface, DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { ReceptionService } from '../../services/reception.service';
@@ -8,6 +8,8 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ParamConvertDocInterface } from '../../interfaces/param-convert-doc.interface';
+import { DocConvertInterface } from '../../interfaces/doc-convert-interface';
 
 @Component({
   selector: 'app-convert-docs',
@@ -31,8 +33,123 @@ export class ConvertDocsComponent {
 
   }
 
+  async convertDoc() {
 
-  async loadDaata() {
+    let traCheks: DetailOriginDocInterInterface[] = this.globalConvertSrevice.detailsOrigin.filter((transaction) => transaction.checked);
+
+    if (traCheks.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
+
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        //TODO:Translate
+        title: "¿Estás seguro?",
+        description: "Confirmar transacción.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.globalConvertSrevice.isLoading = true;
+
+
+    for (const tra of traCheks) {
+
+      let resActualizar = await this._receptionService.postActualizar(
+        this.user,
+        this.token,
+        tra.detalle.consecutivo_Interno,
+        tra.disponibleMod,
+      );
+      
+      if (!resActualizar.status) {
+        this.globalConvertSrevice.isLoading = false;
+        this.showError(resActualizar);
+        return;
+      }
+
+    }
+
+    let param: ParamConvertDocInterface = {
+      pUserName: this.user,
+      pO_Documento: this.globalConvertSrevice.docOriginSelect!.documento,
+      pO_Tipo_Documento: this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
+      pO_Serie_Documento: this.globalConvertSrevice.docOriginSelect!.serie_Documento,
+      pO_Empresa: this.globalConvertSrevice.docOriginSelect!.empresa,
+      pO_Estacion_Trabajo: this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
+      pO_Fecha_Reg: this.globalConvertSrevice.docOriginSelect!.fecha_Reg,
+      pD_Tipo_Documento: this.globalConvertSrevice.docDestinationSelect!.f_Tipo_Documento,
+      pD_Serie_Documento: this.globalConvertSrevice.docDestinationSelect!.f_Serie_Documento,
+      pD_Empresa: this.globalConvertSrevice.docOriginSelect!.empresa,
+      pD_Estacion_Trabajo: this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
+
+    };
+
+
+    let resConvert: ResApiInterface = await this._receptionService.postConvertir(
+      this.token,
+      param,
+    );
+
+
+    if (!resConvert.status) {
+      this.globalConvertSrevice.isLoading = false;
+      this.showError(resConvert);
+      return;
+    }
+
+
+    this.globalConvertSrevice.docDestinoSelect= resConvert.response;
+
+    await this.loadData();
+
+
+    await this.loadDetails();
+    
+
+    this.globalConvertSrevice.isLoading = false;
+
+    this.globalConvertSrevice.mostrarDetalleDocConversion()
+  }
+
+  async loadDetails(){
+
+    this.globalConvertSrevice.detialsDocDestination = [];
+    
+    let res:ResApiInterface = await this._receptionService.getDetallesDocDestino(
+      this.token,
+      this.user,
+      this.globalConvertSrevice.docDestinoSelect!.documento,
+      this.globalConvertSrevice.docDestinoSelect!.tipoDocumento,
+      this.globalConvertSrevice.docDestinoSelect!.serieDocumento,
+      this.globalConvertSrevice.docDestinoSelect!.empresa,
+      this.globalConvertSrevice.docDestinoSelect!.localizacion,
+      this.globalConvertSrevice.docDestinoSelect!.estacion,
+      this.globalConvertSrevice.docDestinoSelect!.fechaReg,
+    )
+
+
+    if (!res.status) {
+      this.globalConvertSrevice.isLoading = false;
+      this.showError(res);
+      return;
+    }
+
+    this.globalConvertSrevice.detialsDocDestination = res.response;;
+    
+    
+
+  }
+
+
+
+
+  async loadData() {
     this.globalConvertSrevice.isLoading = true;
 
     let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
@@ -54,26 +171,13 @@ export class ConvertDocsComponent {
 
     if (!res.status) {
 
-
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(12);
-
+      this.showError(res);
       return;
+
 
     }
 
-    let deatlles: DetailsOriginDocInterface[] = res.response;
+    let deatlles: DetailOriginDocInterface[] = res.response;
 
 
     this.globalConvertSrevice.detailsOrigin = [];
@@ -90,6 +194,36 @@ export class ConvertDocsComponent {
 
   }
 
+
+  async showError(res: ResApiInterface) {
+
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    PreferencesService.error = error;
+
+    this.globalConvertSrevice.mostrarError(12);
+
+    return;
+  }
   //para selecionar todas las transacciones
   seleccionar() {
 
@@ -125,20 +259,20 @@ export class ConvertDocsComponent {
       return;
     }
 
-    
-    if ( this.globalConvertSrevice.detailsOrigin[index].disponibleMod <= 0) {
+
+    if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod <= 0) {
       //TODO:Translate
       this._notificationsService.openSnackbar("Las transacciones con disponibilidad 0 no serán seleccionadas.");
 
-       this.globalConvertSrevice.detailsOrigin[index].checked = false;
+      this.globalConvertSrevice.detailsOrigin[index].checked = false;
       return;
     }
 
 
-    if ( this.globalConvertSrevice.detailsOrigin[index].disponibleMod >  this.globalConvertSrevice.detailsOrigin[index].detalle.disponible) {
+    if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod > this.globalConvertSrevice.detailsOrigin[index].detalle.disponible) {
       //TODO:Translate
       this._notificationsService.openSnackbar("La cantidad autorizada no puede ser mayor a la cantidad disponible");
-       this.globalConvertSrevice.detailsOrigin[index].checked = false;
+      this.globalConvertSrevice.detailsOrigin[index].checked = false;
 
       return;
     }
@@ -162,7 +296,7 @@ export class ConvertDocsComponent {
   }
 
 
-  changeCantidad(detalle: DetailsOriginDocInterInterface) {
+  changeCantidad(detalle: DetailOriginDocInterInterface) {
 
     //verificar que la cantidad sea numerica
     if (UtilitiesService.convertirTextoANumero(detalle.disponibleMod.toString()) == null) {

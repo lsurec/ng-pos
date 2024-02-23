@@ -1,4 +1,4 @@
-export interface DetailsOriginDocInterface {
+export interface DetailOriginDocInterface {
     consecutivo_Interno: number;
     disponible: number;
     clase: string;
@@ -10,9 +10,9 @@ export interface DetailsOriginDocInterface {
 }
 
 
-export interface DetailsOriginDocInterInterface {
+export interface DetailOriginDocInterInterface {
 
     disponibleMod: number;
     checked: boolean;
-    detalle: DetailsOriginDocInterface;
+    detalle: DetailOriginDocInterface;
 }

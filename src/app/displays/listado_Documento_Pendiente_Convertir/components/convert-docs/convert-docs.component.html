@@ -4,13 +4,13 @@
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button  (click)="loadDaata()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button  (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
         <p class="titulo">Titulo</p>
 
         <span class="spacer"></span>
-        <button mat-icon-button (click)="globalConvertSrevice.mostrarDetalleDocConversion()">
+        <button mat-icon-button (click)="convertDoc()">
             <mat-icon>check</mat-icon>
         </button>
     </mat-toolbar-row>
@@ -20,14 +20,14 @@
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button  (click)="loadDaata()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button  (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">Documento Conversion </p>
 
     <span class="spacer"></span>
    
-    <button mat-icon-button (click)="globalConvertSrevice.mostrarDetalleDocConversion()">
+    <button mat-icon-button (click)="convertDoc()">
         <mat-icon>check</mat-icon>
     </button>
 </mat-toolbar>

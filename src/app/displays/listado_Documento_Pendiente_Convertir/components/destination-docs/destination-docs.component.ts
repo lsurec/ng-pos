@@ -8,7 +8,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { DestinationDocInterface } from '../../interfaces/destination-doc.interface';
 import { DetailsDestDocsComponent } from '../details-dest-docs/details-dest-docs.component';
-import { DetailsOriginDocInterface } from '../../interfaces/details-origin-doc.interface';
+import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
 
 @Component({
   selector: 'app-destination-docs',
@@ -79,7 +79,7 @@ export class DestinationDocsComponent {
 
     }
 
-    let deatlles:DetailsOriginDocInterface[] = res.response;
+    let deatlles:DetailOriginDocInterface[] = res.response;
 
 
     this.globalConvertSrevice.detailsOrigin = [];

@@ -3,7 +3,9 @@ import { TypesDocConvertInterface } from '../interfaces/types-doc-convert.interf
 import { OriginDocInterface } from '../interfaces/origin-doc.interface';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DestinationDocInterface } from '../interfaces/destination-doc.interface';
-import { DetailsOriginDocInterInterface } from '../interfaces/details-origin-doc.interface';
+import { DetailOriginDocInterInterface } from '../interfaces/detail-origin-doc.interface';
+import { DocConvertInterface } from '../interfaces/doc-convert-interface';
+import { DetailDestinationDocIntnterface } from '../interfaces/detail-destination-doc.interface';
 
 
 @Injectable({
@@ -35,9 +37,12 @@ export class GlobalConvertService {
     fechaInicial?: NgbDateStruct; //fecha inicial 
     fechaFinal?: NgbDateStruct;
 
-    detailsOrigin:DetailsOriginDocInterInterface[] = [];
+    detailsOrigin:DetailOriginDocInterInterface[] = [];
 
     docDestino: number = -1;
+
+    docDestinoSelect?:DocConvertInterface;
+    detialsDocDestination:DetailDestinationDocIntnterface[] = [];
 
 
     addLeadingZero(number: number): string {

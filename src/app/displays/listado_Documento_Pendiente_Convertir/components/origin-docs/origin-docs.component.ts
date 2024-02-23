@@ -9,7 +9,7 @@ import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { OriginDocInterface } from '../../interfaces/origin-doc.interface';
-import { DetailsOriginDocInterface } from '../../interfaces/details-origin-doc.interface';
+import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
 
 @Component({
   selector: 'app-origin-docs',
@@ -255,7 +255,7 @@ export class OriginDocsComponent implements OnInit {
 
     }
 
-    let deatlles: DetailsOriginDocInterface[] = res.response;
+    let deatlles: DetailOriginDocInterface[] = res.response;
 
 
     this.globalConvertSrevice.detailsOrigin = [];
