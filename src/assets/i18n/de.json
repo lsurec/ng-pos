@@ -303,7 +303,9 @@
             "disponible": "Verfügbar: ",
             "autorizar": "Genehmigen: ",
             "transacciones": "Transaktionen",
-            "marcarTodo": "Alles auswählen."
+            "marcarTodo": "Alles auswählen.",
+            "docDestino": "Zieldokument.",
+            "docProcesado": "Dokument verarbeitet."
         }
     }
 }

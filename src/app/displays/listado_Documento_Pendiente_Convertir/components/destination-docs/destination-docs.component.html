@@ -1,25 +1,25 @@
 <mat-toolbar class="toolbarPhone">
     <mat-toolbar-row class="toolbar-row">
-        <button mat-icon-button class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
+        <button mat-icon-button (click)="globalConvertSrevice.mostrarDocOrigen()"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
-        <p class="titulo">Titulo</p>
+        <p class="titulo">{{ 'pos.documento.docDestino' | translate }} </p>
 
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
-    <button mat-icon-button class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
+    <button mat-icon-button (click)="globalConvertSrevice.mostrarDocOrigen()"
         matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo">Documento destino</p>
+    <p class="titulo">{{ 'pos.documento.docDestino' | translate }} </p>
 
 </mat-toolbar>
 
@@ -31,10 +31,10 @@
         <div class="lista-documentos">
             <div class="d-flex">
                 <span class="spacer"></span>
-                <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsDestination.length}})</p>
+                <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
+                    ({{globalConvertSrevice.docsDestination.length}})</p>
             </div>
-            <div *ngFor="let destino of globalConvertSrevice.docsDestination"
-                (click)="selectDestino(destino)">
+            <div *ngFor="let destino of globalConvertSrevice.docsDestination" (click)="selectDestino(destino)">
                 <div class="destino">
                     <p class="textosBold14">{{ 'pos.documento.documento' | translate }} </p>
                     <p class="textos14"> ({{destino.f_Tipo_Documento}}) {{destino.documento}}</p>

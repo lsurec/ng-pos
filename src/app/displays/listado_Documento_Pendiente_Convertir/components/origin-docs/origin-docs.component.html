@@ -1,14 +1,13 @@
 <mat-toolbar class="toolbarPhone">
     <mat-toolbar-row class="toolbar-row">
-        <button mat-icon-button (click)="backPage() " class="flecha-regresar"
-            matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
         <button mat-icon-button (click)="loadData()">
             <mat-icon>refresh</mat-icon>
         </button>
         <p class="titulo">{{globalConvertSrevice.docSelect?.tipo_Documento}} -
-            {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} (Origen)</p>
+            {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} ({{ 'pos.documento.origen' | translate }})</p>
 
 
         <span class="spacer"></span>
@@ -16,15 +15,14 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
-    <button mat-icon-button (click)="backPage() " class="flecha-regresar"
-        matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <button mat-icon-button (click)="loadData()">
         <mat-icon>refresh</mat-icon>
     </button>
     <p class="titulo">{{globalConvertSrevice.docSelect?.tipo_Documento}} -
-        {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} (Origen)</p>
+        {{globalConvertSrevice.docSelect?.fDes_Tipo_Documento}} ({{ 'pos.documento.origen' | translate }})</p>
 
 
     <span class="spacer"></span>

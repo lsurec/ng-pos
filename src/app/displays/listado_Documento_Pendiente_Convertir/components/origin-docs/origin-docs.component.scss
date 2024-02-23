@@ -79,7 +79,7 @@ $background-scrollbar : #134895; //barra azul
     width   : 100%;
     height  : calc(100vh - 128px);
     float   : left;
-    overflow: auto;
+    overflow-y: auto;
     padding : 20px;
 }
 

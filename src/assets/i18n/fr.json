@@ -303,7 +303,9 @@
             "disponible": "Disponible : ",
             "autorizar": "Autoriser : ",
             "transacciones": "Transactions",
-            "marcarTodo": "Tout sélectionner."
+            "marcarTodo": "Tout sélectionner.",
+            "docDestino": "Document de destination.",
+            "docProcesado": "Document traité."
         }
     }
 }

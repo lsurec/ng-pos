@@ -30,9 +30,14 @@ export class OriginDocsComponent implements OnInit {
   filtroSelect: any;
 
   filtros: any[] = [
-    //TODO:Translate
-    { "id": 1, "desc": "Id documento", },
-    { "id": 2, "desc": "Fecha documento" },
+    {
+      "id": 1,
+      "desc": this._translate.instant('pos.documento.idDoc'),
+    },
+    {
+      "id": 2,
+      "desc": this._translate.instant('pos.documento.fechaDoc')
+    },
   ]
 
 
