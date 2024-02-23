@@ -1,15 +1,17 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
 import { components } from 'src/app/providers/componentes.provider';
-import { NgbCalendar, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { OriginDocInterface } from '../../interfaces/origin-doc.interface';
 import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-origin-docs',
@@ -28,6 +30,7 @@ export class OriginDocsComponent implements OnInit {
   filtroSelect: any;
 
   filtros: any[] = [
+    //TODO:Translate
     { "id": 1, "desc": "Id documento", },
     { "id": 2, "desc": "Fecha documento" },
   ]
@@ -39,6 +42,8 @@ export class OriginDocsComponent implements OnInit {
     @Inject(MAT_DATE_LOCALE) private _locale: string,
     private _eventService: EventService,
     private _receptionService: ReceptionService,
+    private _notificationsService: NotificationsService,
+    private _translate: TranslateService
 
   ) {
     this.setLangPicker();
@@ -47,7 +52,6 @@ export class OriginDocsComponent implements OnInit {
 
   ngOnInit(): void {
     this.ordenar();
-
   }
 
   async loadData() {
@@ -71,19 +75,7 @@ export class OriginDocsComponent implements OnInit {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(10);
+      this.showError(res);
 
       return;
 
@@ -237,19 +229,7 @@ export class OriginDocsComponent implements OnInit {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(10);
+      this.showError(res);
 
       return;
 
@@ -293,19 +273,7 @@ export class OriginDocsComponent implements OnInit {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(10);
+      this.showError(res);
 
       return;
 
@@ -314,5 +282,37 @@ export class OriginDocsComponent implements OnInit {
     this.globalConvertSrevice.docsDestination = res.response;
 
   }
+
+
+
+  async showError(res: ResApiInterface) {
+
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    PreferencesService.error = error;
+
+    this.globalConvertSrevice.mostrarError(10);
+
+  }
+
 
 }

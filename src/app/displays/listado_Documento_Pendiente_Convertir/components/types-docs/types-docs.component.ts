@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
@@ -8,13 +8,15 @@ import { ReceptionService } from '../../services/reception.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-types-docs',
   templateUrl: './types-docs.component.html',
   styleUrls: ['./types-docs.component.scss']
 })
-export class TypesDocsComponent implements OnInit {
+export class TypesDocsComponent {
 
   user: string = PreferencesService.user; //Usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
@@ -25,58 +27,32 @@ export class TypesDocsComponent implements OnInit {
     private _eventService: EventService,
     private _receptionService: ReceptionService,
     public dataUserService:DataUserService,
+    private _notificationsService: NotificationsService,
+    private _translate: TranslateService,
   ) {
 
   }
-
-  ngOnInit(): void {
-
-
-
-  }
-
-  isLoading() {
-    this.globalConvertSrevice.verTiposDocConversion = !this.globalConvertSrevice.verDetalleDocConversion;
-    this.globalConvertSrevice.isLoading = !this.globalConvertSrevice.isLoading;
-    this.globalConvertSrevice.showError = false;
-    this.globalConvertSrevice.verDocOrigen = false;
-    this.globalConvertSrevice.verDocDestino = false;
-    this.globalConvertSrevice.verDocConversion = false;
-    this.globalConvertSrevice.verDetalleDocConversion = false;
-  }
-
 
   async loadData() {
 
     this.globalConvertSrevice.docs = [];
 
-    this.isLoading();
+    this.globalConvertSrevice.isLoading = true;
 
     let res: ResApiInterface = await this._receptionService.getTiposDoc(
       this.user,
       this.token,
     );
-    this.isLoading();
+    this.globalConvertSrevice.isLoading = false;
+
 
 
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
+      this.showError(res);
 
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(9);
-
-      return;
+     return;
 
     }
 
@@ -126,19 +102,7 @@ export class TypesDocsComponent implements OnInit {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(10);
+     this.showError(res);
 
       return;
 
@@ -148,5 +112,37 @@ export class TypesDocsComponent implements OnInit {
 
 
   }
+
+
+  
+  async showError(res: ResApiInterface) {
+
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    PreferencesService.error = error;
+
+    this.globalConvertSrevice.mostrarError(9);
+
+  }
+
 
 }

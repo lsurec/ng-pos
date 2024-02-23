@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { components } from 'src/app/providers/componentes.provider';
-import { EventService } from 'src/app/services/event.service';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { DestinationDocInterface } from '../../interfaces/destination-doc.interface';
-import { DetailsDestDocsComponent } from '../details-dest-docs/details-dest-docs.component';
 import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-destination-docs',
@@ -25,7 +24,8 @@ export class DestinationDocsComponent {
   constructor(
     public globalConvertSrevice: GlobalConvertService,
     private _receptionService:ReceptionService,
-
+    private _notificationsService: NotificationsService,
+    private _translate: TranslateService,
   ) {
 
   }
@@ -61,19 +61,7 @@ export class DestinationDocsComponent {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
-
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(11);
+     this.showError(res);
 
       return;
 
@@ -114,25 +102,44 @@ export class DestinationDocsComponent {
     if (!res.status) {
 
 
-      let dateNow: Date = new Date(); //fecha del error
+      this.showError(res);
 
-      //Crear error
-      let error: ErrorInterface = {
-        date: dateNow,
-        description: res.response,
-        storeProcedure: res.storeProcedure,
-        url: res.url,
-      }
-
-      PreferencesService.error = error;
-
-      this.globalConvertSrevice.mostrarError(11);
 
       return;
 
     }
 
     this.globalConvertSrevice.docsDestination = res.response;
+  }
+
+
+  async showError(res: ResApiInterface) {
+
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    PreferencesService.error = error;
+
+    this.globalConvertSrevice.mostrarError(11);
+
   }
 
 
