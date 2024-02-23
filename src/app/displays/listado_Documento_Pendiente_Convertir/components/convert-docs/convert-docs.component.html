@@ -58,9 +58,9 @@
     </div>
 
     <div class="elemento-autorizacion">
-        <div class="lista-documentos" *ngFor="let elemento of globalConvertSrevice.detailsOrigin">
+        <div class="lista-documentos" *ngFor="let elemento of globalConvertSrevice.detailsOrigin; let i = index">
             <div class="elementos">
-                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="elemento.checked"></mat-checkbox>
+                <mat-checkbox class="example-margin" color="primary" [(ngModel)]="elemento.checked" (click)="selectTra(i)"></mat-checkbox>
                 <div>
                     <div class="dFlex">
                         <p class="textosBold14">Id: </p>
@@ -85,7 +85,11 @@
             <div class="autorizacion">
                 <p class="textosBold14">{{ 'pos.documento.autorizar' | translate }}</p>
                 <input class="barra-de-busqueda" type="text" name="search" autocomplete="off"
-                    placeholder="{{ 'pos.factura.cantidad' | translate }}" [(ngModel)]="elemento.disponibleMod">
+                    placeholder="{{ 'pos.factura.cantidad' | translate }}" 
+                    [(ngModel)]="elemento.disponibleMod" 
+                    [disabled]="elemento.detalle.disponible == 0? true : false"
+                    (ngModelChange)="changeCantidad(elemento)">
+
             </div>
         </div>
     </div>
