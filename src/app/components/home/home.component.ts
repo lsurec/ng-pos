@@ -428,11 +428,15 @@ export class HomeComponent implements OnInit {
 
         this._globalConvertService.docs = [];
         this._globalConvertService.docs = res.response;
-        // this._globalConvertService.docs.splice(1,1);
+        // this._globalConvertService.docs.splice(1, 1);
 
 
         if (this._globalConvertService.docs.length == 1) {
-          //TODO:cargar docuentos origen (pendientes de recepcionar)
+
+          this._globalConvertService.docSelect = this._globalConvertService.docs[0];
+
+
+          await this.loadDocsOrign();
           //mostarr los documentos de origen
           this._globalConvertService.screen = "list_cot";
 
@@ -476,6 +480,51 @@ export class HomeComponent implements OnInit {
     this.changeMenuActive(itemMenu.children);
     this.addRouteMenu(itemMenu);
   };
+
+  async loadDocsOrign() {
+    this._globalConvertService.isLoading = true;
+    this._globalConvertService.docsOrigin = [];
+
+
+    let today: Date = new Date();
+
+    this._globalConvertService.fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    this._globalConvertService.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+
+    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+      this.user,
+      this.token,
+      this._globalConvertService.docSelect!.tipo_Documento,
+      this._globalConvertService.formatStrFilterDate(this._globalConvertService.fechaInicial!),
+      this._globalConvertService.formatStrFilterDate(this._globalConvertService.fechaFinal!),
+    );
+
+    this._globalConvertService.isLoading = false;
+
+
+    if (!res.status) {
+      this.isLoading = false;
+      this.showError = true;
+
+      let dateNow: Date = new Date();
+
+      this.error = {
+        date: dateNow,
+        description: res.response,
+        storeProcedure: res.storeProcedure,
+        url: res.url,
+      }
+
+
+
+      return;
+
+    }
+
+    this._globalConvertService.docsOrigin = res.response;
+
+
+  }
 
   changeMenuActive(menuActive: MenuInterface[]): void {
     // limpiar lista de menu activo

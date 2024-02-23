@@ -104,10 +104,12 @@ export class TypesDocsComponent implements OnInit {
 
   async loadDocsOrign() {
     this.globalConvertSrevice.isLoading = true;
+    this.globalConvertSrevice.docsOrigin = [];
+
 
     let today: Date = new Date();
 
-    this.globalConvertSrevice. fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: 1 };
+    this.globalConvertSrevice. fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
     this.globalConvertSrevice.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
 
     let res: ResApiInterface = await this._receptionService.getPendindgDocs(
