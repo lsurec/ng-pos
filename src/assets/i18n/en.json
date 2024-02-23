@@ -303,7 +303,9 @@
             "disponible": "Available: ",
             "autorizar": "Authorize: ",
             "transacciones": "Transactions",
-            "marcarTodo": "Select All."
+            "marcarTodo": "Select All.",
+            "docDestino": "Destination Document.",
+            "docProcesado": "Document Processed."
         }
     }
 }

@@ -1,16 +1,16 @@
 <mat-toolbar class="toolbarPhone">
     <mat-toolbar-row class="toolbar-row">
-        <button mat-icon-button aria-label class="flecha-regresar" (click)="globalConvertSrevice.mostrarDocOrigen()"
+        <button mat-icon-button aria-label (click)="globalConvertSrevice.mostrarDocOrigen()"
             matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+        <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
-        <p class="titulo">Documento Procesado</p>
+        <p class="titulo">{{ 'pos.documento.docProcesado' | translate }}</p>
 
         <span class="spacer"></span>
-      
+
         <button (click)="printDoc()" mat-icon-button matTooltip="imprimir">
             <mat-icon>print</mat-icon>
         </button>
@@ -20,17 +20,17 @@
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar class="toolbarlargeTitle">
-    <button mat-icon-button aria-label class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}"
+    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}"
         (click)="globalConvertSrevice.mostrarDocOrigen()">
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <button (click)="loadData()" mat-icon-button class="flecha-regresar" matTooltip="{{ 'pos.botones.regresar' | translate }}">
+    <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo">Documento Procesado</p>
+    <p class="titulo">{{ 'pos.documento.docProcesado' | translate }}</p>
 
     <span class="spacer"></span>
-   
+
     <button (click)="printDoc()" mat-icon-button matTooltip="imprimir">
         <mat-icon>print</mat-icon>
     </button>
@@ -49,12 +49,14 @@
         <span class="spacer"></span>
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.home.tipoDocumento' | translate }} </p>
-            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.documento}} ({{globalConvertSrevice.docDestinationSelect!.f_Tipo_Documento}})</p>
+            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.documento}}
+                ({{globalConvertSrevice.docDestinationSelect!.f_Tipo_Documento}})</p>
         </div>
         <span class="spacer"></span>
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.home.serieDocumento' | translate }} </p>
-            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.serie}} ({{globalConvertSrevice.docDestinationSelect!.f_Serie_Documento}})</p>
+            <p class="textos14">{{globalConvertSrevice.docDestinationSelect!.serie}}
+                ({{globalConvertSrevice.docDestinationSelect!.f_Serie_Documento}})</p>
         </div>
     </div>
 
@@ -62,7 +64,8 @@
 
         <div class="dFlex">
             <span class="spacer"></span>
-            <p class="textosBold14">{{ 'pos.documento.transacciones' | translate }} ({{globalConvertSrevice.detialsDocDestination.length}})</p>
+            <p class="textosBold14">{{ 'pos.documento.transacciones' | translate }}
+                ({{globalConvertSrevice.detialsDocDestination.length}})</p>
         </div>
 
         <div class="documentos-procesados" *ngFor="let tra of globalConvertSrevice.detialsDocDestination">
@@ -85,7 +88,7 @@
             </div>
         </div>
     </div>
-    
+
 
 </div>
 
