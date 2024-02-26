@@ -141,7 +141,8 @@
             "sin_servicio_impresion": "Der Druckdienst ist derzeit nicht verfügbar.",
             "enCero": "Transaktionen mit einer Verfügbarkeit von 0 werden nicht ausgewählt.",
             "noMayor": "Die autorisierte Menge darf nicht größer sein als die verfügbare Menge.",
-            "noCero": "Die autorisierte Menge darf nicht 0 sein."
+            "noCero": "Die autorisierte Menge darf nicht 0 sein.",
+            "sinDatosImprimir": "Es wurden keine Daten für den Druck des Dokuments gefunden. Überprüfen Sie den gespeicherten Prozedur."
         },
         "botones": {
             "aceptar": "Akzeptieren",

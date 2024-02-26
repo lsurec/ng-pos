@@ -128,8 +128,7 @@ export class DetailsDestDocsComponent {
 
 
     if (printData.length == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinDatosImprimir'));
       return;
     }
 

@@ -141,7 +141,8 @@
             "sin_servicio_impresion": "The printing service is not available at the moment.",
             "enCero": "Transactions with availability 0 will not be selected.",
             "noMayor": "Authorized quantity cannot be greater than available quantity.",
-            "noCero": "Authorized quantity cannot be 0."
+            "noCero": "Authorized quantity cannot be 0.",
+            "sinDatosImprimir": "No data found for document printing, please check the stored procedure."
         },
         "botones": {
             "aceptar": "OK",
