@@ -293,15 +293,13 @@ export class ConvertDocsComponent {
     }
 
     if (detalle.disponibleMod <= 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad autorizada no puede ser 0");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noCero'));
       detalle.checked = false;
       return;
     }
 
 
     if (detalle.disponibleMod > detalle.detalle.disponible) {
-      //TODO:Translate
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noMayor'));
       detalle.checked = false;
 

@@ -138,7 +138,10 @@
             "monedaDistinta": "Die Transaktion kann nicht hinzugefügt werden, da die Währung von den vorhandenen Transaktionen abweicht.",
             "transaccionAgregada": "Transaktion hinzugefügt.",
             "noObtuvoCuenta": "Das mit dem Dokument verbundene Konto konnte nicht abgerufen werden.",
-            "sin_servicio_impresion": "Der Druckdienst ist derzeit nicht verfügbar."
+            "sin_servicio_impresion": "Der Druckdienst ist derzeit nicht verfügbar.",
+            "enCero": "Transaktionen mit einer Verfügbarkeit von 0 werden nicht ausgewählt.",
+            "noMayor": "Die autorisierte Menge darf nicht größer sein als die verfügbare Menge.",
+            "noCero": "Die autorisierte Menge darf nicht 0 sein."
         },
         "botones": {
             "aceptar": "Akzeptieren",
@@ -305,7 +308,9 @@
             "transacciones": "Transaktionen",
             "marcarTodo": "Alles auswählen.",
             "docDestino": "Zieldokument.",
-            "docProcesado": "Dokument verarbeitet."
+            "docProcesado": "Dokument verarbeitet.",
+            "eliminar": "Bist du sicher?",
+            "confirmar": "Transaktion bestätigen."
         }
     }
 }
