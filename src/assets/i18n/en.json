@@ -311,7 +311,8 @@
             "docDestino": "Destination Document.",
             "docProcesado": "Document Processed.",
             "eliminar": "Are you sure?",
-            "confirmar": "Confirm transaction."
+            "confirmar": "Confirm transaction.",
+            "docConvert": "Conversion Document."
         }
     }
 }

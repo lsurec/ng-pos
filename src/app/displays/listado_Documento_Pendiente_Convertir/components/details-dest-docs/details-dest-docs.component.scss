@@ -82,7 +82,7 @@ $background-scrollbar : #134895; //barra azul
         width: 100%;
     }
 
-    .info-doc{
+    .info-doc {
         display: block !important;
     }
 
@@ -152,7 +152,6 @@ p {
     padding         : 10px 20px;
     margin          : 5px 0px;
     border          : 1px solid $color-bordes;
-    cursor          : pointer;
     background-color: $seleccionado;
 }
 

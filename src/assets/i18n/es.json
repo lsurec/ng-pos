@@ -311,7 +311,8 @@
             "docDestino": "Documento destino.",
             "docProcesado": "Documento Procesado.",
             "eliminar": "¿Estás seguro?",
-            "confirmar" : "Confirmar transacción."
+            "confirmar" : "Confirmar transacción.",
+            "docConvert" : "Documento Conversión."
         }
     }
 }

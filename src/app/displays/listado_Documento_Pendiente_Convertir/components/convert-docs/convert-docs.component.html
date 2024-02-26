@@ -6,7 +6,7 @@
         <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.regresar' | translate }}">
             <mat-icon>refresh</mat-icon>
         </button>
-        <p class="titulo">Titulo</p>
+        <p class="titulo">{{ 'pos.documento.docConvert' | translate }}</p>
 
         <span class="spacer"></span>
         <button mat-icon-button (click)="convertDoc()">
@@ -21,7 +21,7 @@
     <button (click)="loadData()" mat-icon-button matTooltip="{{ 'pos.botones.regresar' | translate }}">
         <mat-icon>refresh</mat-icon>
     </button>
-    <p class="titulo">Documento Conversion </p>
+    <p class="titulo">{{ 'pos.documento.docConvert' | translate }} </p>
 
     <span class="spacer"></span>
 
@@ -31,7 +31,7 @@
 </mat-toolbar>
 
 <div class="container_main">
-    <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} 302</p>
+    <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{globalConvertSrevice.docOriginSelect?.iD_Documento}}</p>
 
     <div class="origen-destino">
 
