@@ -12,6 +12,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
 import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -63,6 +64,7 @@ export class PrinterConfigurationComponent implements OnInit {
     private _printerService: PrinterService,
     private _translate: TranslateService,
     private _notificationService: NotificationsService,
+    private _conversion: GlobalConvertService,
   ) {
 
     //evento para regresar desde error 
@@ -252,9 +254,18 @@ export class PrinterConfigurationComponent implements OnInit {
       this.isLoading = false;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
-      const docDefinition = await this._printerService.getReport(this.document!);
+      if (this.volver != 3) {
 
-      pdfMake.createPdf(docDefinition).print();
+        const docDefinition = await this._printerService.getReport(this.document!);
+
+        pdfMake.createPdf(docDefinition).print();
+      } else {
+
+        const docDefinition = await this._printerService.getReportConvert(this.document!);
+
+        pdfMake.createPdf(docDefinition).print();
+      }
+      
 
       return;
 
@@ -266,7 +277,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this._notificationService.openSnackbar(this._translate.instant('pos.factura.selecciona_impresora_formato'));
 
-      
+
 
     }
 
@@ -281,11 +292,19 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this._notificationService.openSnackbarAction(
         this._translate.instant(`${this.impresora!} ${this._translate.instant('pos.factura.no_disponible')}`),
-        this._translate.instant('pos.botones.imprimir'), 
+        this._translate.instant('pos.botones.imprimir'),
         async () => {
-          const docDefinition = await this._printerService.getReport(this.document!);
+          if (this.volver != 3) {
 
-          pdfMake.createPdf(docDefinition).print();
+            const docDefinition = await this._printerService.getReport(this.document!);
+
+            pdfMake.createPdf(docDefinition).print();
+          } else {
+
+            const docDefinition = await this._printerService.getReportConvert(this.document!);
+
+            pdfMake.createPdf(docDefinition).print();
+          }
         }
       );
 
@@ -293,10 +312,18 @@ export class PrinterConfigurationComponent implements OnInit {
 
     }
 
-    const docDefinition = await this._printerService.getReport(this.document!);
+    let docDefinition;
 
 
+    if (this.volver != 3) {
 
+      docDefinition = await this._printerService.getReport(this.document!);
+
+    } else {
+
+      docDefinition = await this._printerService.getReportConvert(this.document!);
+
+    }
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
@@ -382,6 +409,10 @@ export class PrinterConfigurationComponent implements OnInit {
       case 2:
         //desde resumen del documento     
         this._eventService.regresarResumenEvent(true);
+        break;
+      case 3:
+        //desde detalle documento conversion  
+        this._conversion.mostrarDetalleDocConversion();
         break;
       default:
         this._location.back();
