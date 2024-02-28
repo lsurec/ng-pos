@@ -197,7 +197,7 @@ export class CuentaService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Cuenta/cliente`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Cuenta`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa para buscar una cuenta (cuenta correntista)
@@ -289,7 +289,7 @@ export class CuentaService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Cuenta/vendedor`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Cuenta/ref`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa para obtener cuenta correntista ref

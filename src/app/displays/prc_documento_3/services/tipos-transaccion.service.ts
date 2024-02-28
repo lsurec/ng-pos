@@ -33,7 +33,7 @@ export class TipoTransaccionService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Serie/transaccion/tipo`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}transaccion/tipo`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa para obtner los tipos de transaccion disponibles

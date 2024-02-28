@@ -118,7 +118,7 @@ export class ProductService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Bodega/producto`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}producto/Bodega`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtner las bodegas y existencias en las que está un producto
