@@ -138,7 +138,11 @@
             "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
             "transaccionAgregada": "Transacción agregada.",
             "noObtuvoCuenta": "No se pudo obetener la cuenta asociada al documento.",
-            "sin_servicio_impresion": "El servicio de impresión no se encuentra disponible en este momento."
+            "sin_servicio_impresion": "El servicio de impresión no se encuentra disponible en este momento.",
+            "enCero" : "Las transacciones con disponibilidad 0 no serán seleccionadas.",
+            "noMayor" : "La cantidad autorizada no puede ser mayor a la cantidad disponible",
+            "noCero" : "La cantidad autorizada no puede ser 0",
+            "sinDatosImprimir": "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado."
         },
         "botones": {
             "aceptar": "Aceptar",
@@ -305,7 +309,10 @@
             "transacciones": "Transacciones",
             "marcarTodo": "Seleccionar todo.",
             "docDestino": "Documento destino.",
-            "docProcesado": "Documento Procesado."
+            "docProcesado": "Documento Procesado.",
+            "eliminar": "¿Estás seguro?",
+            "confirmar" : "Confirmar transacción.",
+            "docConvert" : "Documento Conversión."
         }
     }
 }

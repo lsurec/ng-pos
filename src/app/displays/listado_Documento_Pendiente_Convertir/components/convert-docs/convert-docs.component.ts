@@ -44,9 +44,8 @@ export class ConvertDocsComponent {
 
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
-        //TODO:Translate
-        title: "¿Estás seguro?",
-        description: "Confirmar transacción.",
+        title: this._translate.instant('pos.documento.eliminar'),
+        description: this._translate.instant('pos.documento.confirmar'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
         falso: this._translate.instant('pos.botones.cancelar'),
       }
@@ -65,7 +64,7 @@ export class ConvertDocsComponent {
         tra.detalle.consecutivo_Interno,
         tra.disponibleMod,
       );
-      
+
       if (!resActualizar.status) {
         this.globalConvertSrevice.isLoading = false;
         this.showError(resActualizar);
@@ -103,19 +102,19 @@ export class ConvertDocsComponent {
     }
 
 
-    this.globalConvertSrevice.docDestinoSelect= resConvert.response;
+    this.globalConvertSrevice.docDestinoSelect = resConvert.response;
 
     await this.loadDetails();
-    
+
     this.globalConvertSrevice.mostrarDetalleDocConversion()
     this.globalConvertSrevice.isLoading = false;
   }
 
-  async loadDetails(){
+  async loadDetails() {
 
     this.globalConvertSrevice.detialsDocDestination = [];
-    
-    let res:ResApiInterface = await this._receptionService.getDetallesDocDestino(
+
+    let res: ResApiInterface = await this._receptionService.getDetallesDocDestino(
       this.token,
       this.user,
       this.globalConvertSrevice.docDestinoSelect!.documento,
@@ -135,8 +134,8 @@ export class ConvertDocsComponent {
     }
 
     this.globalConvertSrevice.detialsDocDestination = res.response;
-    
-    
+
+
 
   }
 
@@ -233,8 +232,7 @@ export class ConvertDocsComponent {
 
 
     if (count > 0 && this.selectAll) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Las transacciones con disponibilidad 0 no serán seleccionadas.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
     }
 
   }
@@ -247,16 +245,13 @@ export class ConvertDocsComponent {
     //verificar que la cantidad sea numerica
     if (UtilitiesService.convertirTextoANumero(this.globalConvertSrevice.detailsOrigin[index].disponibleMod.toString()) == null) {
       this.globalConvertSrevice.detailsOrigin[index].checked = false;
-      //TODO:Translate
-
-      this._notificationsService.openSnackbar("Las transacciones con disponibilidad 0 no serán seleccionadas.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
       return;
     }
 
 
     if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod <= 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Las transacciones con disponibilidad 0 no serán seleccionadas.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
 
       this.globalConvertSrevice.detailsOrigin[index].checked = false;
       return;
@@ -264,8 +259,8 @@ export class ConvertDocsComponent {
 
 
     if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod > this.globalConvertSrevice.detailsOrigin[index].detalle.disponible) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad autorizada no puede ser mayor a la cantidad disponible");
+
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noMayor'));
       this.globalConvertSrevice.detailsOrigin[index].checked = false;
 
       return;
@@ -273,9 +268,7 @@ export class ConvertDocsComponent {
 
     if (this.globalConvertSrevice.detailsOrigin[index].detalle.disponible == 0) {
       this.globalConvertSrevice.detailsOrigin[index].checked = false;
-      //TODO:Translate
-
-      this._notificationsService.openSnackbar("Las transacciones con disponibilidad 0 no serán seleccionadas.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
     }
 
   }
@@ -300,16 +293,14 @@ export class ConvertDocsComponent {
     }
 
     if (detalle.disponibleMod <= 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad autorizada no puede ser 0");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noCero'));
       detalle.checked = false;
       return;
     }
 
 
     if (detalle.disponibleMod > detalle.detalle.disponible) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("La cantidad autorizada no puede ser mayor a la cantidad disponible");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noMayor'));
       detalle.checked = false;
 
       return;

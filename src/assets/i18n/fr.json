@@ -138,7 +138,11 @@
             "monedaDistinta": "La transaction ne peut pas être ajoutée car la monnaie est différente des transactions existantes.",
             "transaccionAgregada": "Transaction ajoutée.",
             "noObtuvoCuenta": "Impossible d'obtenir le compte associé au document.",
-            "sin_servicio_impresion": "Le service d'impression n'est pas disponible pour le moment."
+            "sin_servicio_impresion": "Le service d'impression n'est pas disponible pour le moment.",
+            "enCero": "Les transactions avec une disponibilité de 0 ne seront pas sélectionnées.",
+            "noMayor": "La quantité autorisée ne peut pas être supérieure à la quantité disponible.",
+            "noCero": "La quantité autorisée ne peut pas être de 0.",
+            "sinDatosImprimir": "Aucune donnée trouvée pour l'impression du document, vérifiez la procédure stockée."
         },
         "botones": {
             "aceptar": "Accepter",
@@ -305,7 +309,10 @@
             "transacciones": "Transactions",
             "marcarTodo": "Tout sélectionner.",
             "docDestino": "Document de destination.",
-            "docProcesado": "Document traité."
+            "docProcesado": "Document traité.",
+            "eliminar": "Êtes-vous sûr ?",
+            "confirmar": "Confirmer la transaction.",
+            "docConvert": "Document de conversion."
         }
     }
 }

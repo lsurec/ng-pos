@@ -140,7 +140,6 @@ export class FacturaService {
         //Dialogo para cargar documento guardado
         let verificador = await this._notificationsService.openDialogActions(
             {
-                //TODO:Translate
                 title: this._translate.instant('pos.alertas.docEncontrado'),
                 description: this._translate.instant('pos.alertas.recuperar'),
             }
