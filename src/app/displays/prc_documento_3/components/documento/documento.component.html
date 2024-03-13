@@ -13,7 +13,7 @@
             </mat-select>
         </div>
 
-        <div class="informacion" *ngIf="facturaService.valuParametro(58)">
+        <div class="informacion" *ngIf="facturaService.valueParametro(58)">
             <p class="subtitulo">Tipo de referencia:</p>
             <mat-select name="estado" class="seleccionar" placeholder="Tipo de referencia:"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
@@ -25,7 +25,7 @@
 
         <!-- Fechas -->
         <div class="informacion">
-            <ng-container *ngIf="facturaService.valuParametro(381)">
+            <ng-container *ngIf="facturaService.valueParametro(381)">
                 <p class="textosBold14">Fecha entrega:</p>
                 <div class="fechas">
                     <form class="calendarios">
@@ -53,7 +53,7 @@
                 </div>
             </ng-container>
 
-            <ng-container *ngIf="facturaService.valuParametro(382)">
+            <ng-container *ngIf="facturaService.valueParametro(382)">
                 <p class="textosBold14">Fecha recoger:</p>
 
                 <div class="fechas">
@@ -83,7 +83,7 @@
             </ng-container>
 
             <hr>
-            <ng-container *ngIf="facturaService.valuParametro(44)">
+            <ng-container *ngIf="facturaService.valueParametro(44)">
                 <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
                 <div class="fechas">
                     <form class="calendarios">
@@ -220,28 +220,28 @@
             </mat-select>
         </div>
 
-        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(381)">
+        <div class="detalles-fondo" *ngIf="facturaService.valueParametro(381)">
             <p class="textosBold14">Contacto:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos" placeholder="Añada un contacto."
                 [(ngModel)]="nombre"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(383)">
+        <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
             <p class="textosBold14">Descripción:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada una descripción." [(ngModel)]="descripcion"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(381)">
+        <div class="detalles-fondo" *ngIf="facturaService.valueParametro(381)">
             <p class="textosBold14">Dirección de entrega:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf=" facturaService.valuParametro(384)">
+        <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">Observación:</p>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada una Observación." [(ngModel)]="observacion"></textarea>
@@ -250,7 +250,7 @@
 
 
 
-        <div class="detalles-fondo-v" *ngIf="facturaService.valuParametro(58)">
+        <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">
             <div class="dFlex">
                 <p class="textosBold14">Id:</p>
                 <span class="spacer"></span>

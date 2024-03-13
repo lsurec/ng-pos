@@ -108,7 +108,7 @@ export class ResumenDocumentoComponent implements OnInit {
   //Confirmar documento
   async sendDoc() {
     //Si se permite fel entrar al proceso
-    if (this.facturaService.valuParametro(349)) {
+    if (this.facturaService.valueParametro(349)) {
       //alerta FEL no disponible
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {
@@ -252,7 +252,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    let isFel: boolean = this.facturaService.valuParametro(349);
+    let isFel: boolean = this.facturaService.valueParametro(349);
 
     let documento: DocumentoData = {
       titulo: encabezado.tipo_Documento?.toUpperCase()!,

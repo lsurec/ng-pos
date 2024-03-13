@@ -347,7 +347,7 @@ export class FacturaService {
     }
 
 
-    valuParametro(parametro:number):boolean{
+    valueParametro(parametro:number):boolean{
         // 44: Fecha ini y fehca fin
         // 58: detalles del evento, info
         // 349:FEL
