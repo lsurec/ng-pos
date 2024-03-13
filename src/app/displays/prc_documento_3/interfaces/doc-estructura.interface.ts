@@ -1,6 +1,7 @@
 // documento.interface.ts
 
 export interface Documento {
+  Consecutivo_Interno:number;
   Doc_Tra_Monto: number;
   Doc_CA_Monto: number;
   Doc_ID_Certificador: number;
@@ -26,6 +27,7 @@ export interface Documento {
 }
 
 export interface Transaccion {
+  D_Consecutivo_Interno:number;
   Tra_Consecutivo_Interno: number;
   Tra_Consecutivo_Interno_Padre: number | null;
   Tra_Bodega: number;
@@ -41,6 +43,8 @@ export interface Transaccion {
 }
 
 export interface CargoAbono {
+  Consecutivo_Interno:number;
+  D_Consecutivo_Interno:number;
   Tipo_Cargo_Abono: number;
   Monto: number;
   Cambio: number;
