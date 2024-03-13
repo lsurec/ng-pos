@@ -22,8 +22,8 @@ import { VendedorInterface } from '../interfaces/vendedor.interface';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
-    searchClient:string = ""; //input busqueda cliente
-    searchProduct:string = ""; //input busqueda producto
+    searchClient: string = ""; //input busqueda cliente
+    searchProduct: string = ""; //input busqueda producto
 
     isLoading: boolean = false; //Pantalla de carga
     tipoDocumento?: number; //Tipo de documento
@@ -53,6 +53,9 @@ export class FacturaService {
     cambio: number = 0;
     pagado: number = 0;
 
+  printScreen:number = 0; //1 docummento; 2 commanda.
+
+  
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
@@ -286,7 +289,7 @@ export class FacturaService {
             //buscar cargos y descuentos
             element.operaciones.forEach(tra => {
 
-            //calcular los cargos y descuentos
+                //calcular los cargos y descuentos
                 element.cargo += tra.cargo;
                 element.descuento += tra.descuento;
 
@@ -344,6 +347,22 @@ export class FacturaService {
         //retornar texto
         return name;
 
+    }
+
+    monitorPrint() {
+        let showPrint: Boolean = false;
+        //el parametro que indica si se imprime en mmonitor o no es 272
+
+        for (var i = 0; i < this.parametros.length; i++) {
+            let parametro: ParametroInterface = this.parametros[i];
+
+            if (parametro.parametro == 272) {
+                showPrint = true;
+                break;
+            }
+        }
+
+        return showPrint;
     }
 
     //Validar si se puede Modificar el precio

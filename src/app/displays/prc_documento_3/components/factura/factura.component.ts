@@ -106,6 +106,7 @@ export class FacturaComponent implements OnInit {
   }
 
 
+
   ngOnInit(): void {
 
     //cargar datos necearios al inicio de la aplicacion
@@ -213,6 +214,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.saldo = 0;  //reiniciar saldo por pagar del documento
     this.facturaService.cambio = 0; //reniciare cambio del documento
     this.facturaService.pagado = 0; //reinciiar montos oagados del documento
+
 
 
     //Seleccionar primera pestaña (petssña documento)

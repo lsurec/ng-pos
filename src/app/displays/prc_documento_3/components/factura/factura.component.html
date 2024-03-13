@@ -105,8 +105,11 @@
                         (click)="newDoc()">
                         <mat-icon>note_add</mat-icon>
                     </button>
+                    <button mat-icon-button (click)="verResumen();  facturaService.printScreen =2;">
+                        <mat-icon>desktop_windows_outlined</mat-icon>
+                    </button>
                     <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                        (click)="verResumen()">
+                        (click)="verResumen() ;  facturaService.printScreen =1;">
                         <mat-icon>print</mat-icon>
                     </button>
                 </div>
@@ -131,8 +134,11 @@
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
                 <mat-icon>note_add</mat-icon>
             </button>
+            <button mat-icon-button (click)="verResumen();  facturaService.printScreen =2;">
+                <mat-icon>desktop_windows_outlined</mat-icon>
+            </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                (click)="verResumen()">
+                (click)="verResumen(); facturaService.printScreen =1;">
                 <mat-icon>print</mat-icon>
             </button>
             <div class="circulo-inicial" (click)="sidenavend.open()">
