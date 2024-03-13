@@ -13,7 +13,7 @@
             </mat-select>
         </div>
 
-        <div class="informacion" *ngIf="verReferencia">
+        <div class="informacion" *ngIf="facturaService.valuParametro(58)">
             <p class="subtitulo">Tipo de referencia:</p>
             <mat-select name="estado" class="seleccionar" placeholder="Tipo de referencia:"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
@@ -24,113 +24,120 @@
         </div>
 
         <!-- Fechas -->
-        <div class="informacion" *ngIf="verFechas">
-            <p class="textosBold14">Fecha entrega:</p>
-            <div class="fechas">
-                <form class="calendarios">
-                    <div class="input-group">
-                        <input class="form-control" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
-                            #fEntrega="ngbDatepicker" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
+        <div class="informacion">
+            <ng-container *ngIf="facturaService.valuParametro(381)">
+                <p class="textosBold14">Fecha entrega:</p>
+                <div class="fechas">
+                    <form class="calendarios">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
+                                #fEntrega="ngbDatepicker" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+                    <span class="spacer"></span>
+                    <div class="horas">
+                        <div class="hora-calendario">
+                            <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora" [(ngModel)]="horaEntrega">
+                            <ngx-material-timepicker #horaEntregaPiker
+                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                        </div>
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)"
                             type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
                     </div>
-                </form>
-                <span class="spacer"></span>
-                <div class="horas">
-                    <div class="hora-calendario">
-                        <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora" [(ngModel)]="horaEntrega">
-                        <ngx-material-timepicker #horaEntregaPiker
-                            [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
-                    </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)"
-                        type="button">
-                        <mat-icon class="ico-calendario">access_time</mat-icon>
-                    </button>
                 </div>
-            </div>
+            </ng-container>
 
-            <p class="textosBold14">Fecha recoger:</p>
+            <ng-container *ngIf="facturaService.valuParametro(382)">
+                <p class="textosBold14">Fecha recoger:</p>
 
-            <div class="fechas">
-                <form class="calendarios">
-                    <div class="input-group">
-                        <input class="form-control" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
-                            #fRecoger="ngbDatepicker" [minDate]="fechaEntrega!" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
+                <div class="fechas">
+                    <form class="calendarios">
+                        <div class="input-group">
+                            <input class="form-control" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
+                                #fRecoger="ngbDatepicker" [minDate]="fechaEntrega!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+                    <span class="spacer"></span>
+                    <div class="horas">
+                        <div class="hora-calendario">
+                            <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora" [(ngModel)]="horaRecoger">
+                            <ngx-material-timepicker #horaRegogerPiker
+                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                        </div>
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)"
                             type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
                     </div>
-                </form>
-                <span class="spacer"></span>
-                <div class="horas">
-                    <div class="hora-calendario">
-                        <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora" [(ngModel)]="horaRecoger">
-                        <ngx-material-timepicker #horaRegogerPiker
-                            [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
-                    </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)"
-                        type="button">
-                        <mat-icon class="ico-calendario">access_time</mat-icon>
-                    </button>
                 </div>
-            </div>
+            </ng-container>
+
             <hr>
-            <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
-            <div class="fechas">
-                <form class="calendarios">
-                    <div class="input-group">
-                        <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
-                            #fInicio="ngbDatepicker" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
+            <ng-container *ngIf="facturaService.valuParametro(44)">
+                <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
+                <div class="fechas">
+                    <form class="calendarios">
+                        <div class="input-group">
+                            <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
+                                #fInicio="ngbDatepicker" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+                    <span class="spacer"></span>
+                    <div class="horas">
+                        <div class="hora-calendario">
+                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora" [(ngModel)]="horaActual">
+                            <ngx-material-timepicker #horaInicioPiker
+                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                        </div>
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)"
                             type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
                     </div>
-                </form>
-                <span class="spacer"></span>
-                <div class="horas">
-                    <div class="hora-calendario">
-                        <input [ngxTimepicker]="horaInicioPiker" readonly class="hora" [(ngModel)]="horaActual">
-                        <ngx-material-timepicker #horaInicioPiker
-                            [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
-                    </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)"
-                        type="button">
-                        <mat-icon class="ico-calendario">access_time</mat-icon>
-                    </button>
                 </div>
-            </div>
 
-            <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
-            <div class="fechas">
-                <form class="calendarios">
-                    <div class="input-group">
-                        <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
-                            #fFinal="ngbDatepicker" [minDate]="fechaInicial!" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
+                <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
+                <div class="fechas">
+                    <form class="calendarios">
+                        <div class="input-group">
+                            <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
+                                #fFinal="ngbDatepicker" [minDate]="fechaInicial!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+                    <span class="spacer"></span>
+
+                    <div class="horas">
+                        <div class="hora-calendario">
+                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora" [(ngModel)]="horaFinal">
+                            <ngx-material-timepicker #horaFinalPiker
+                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                        </div>
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)"
                             type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
                     </div>
-                </form>
-                <span class="spacer"></span>
-
-                <div class="horas">
-                    <div class="hora-calendario">
-                        <input [ngxTimepicker]="horaFinalPiker" readonly class="hora" [(ngModel)]="horaFinal">
-                        <ngx-material-timepicker #horaFinalPiker
-                            [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
-                    </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)"
-                        type="button">
-                        <mat-icon class="ico-calendario">access_time</mat-icon>
-                    </button>
                 </div>
-            </div>
-            <hr>
+                <hr>
+            </ng-container>
 
         </div>
 
@@ -142,9 +149,7 @@
                 <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
                     <mat-icon>person_add</mat-icon>
                 </button>
-                <button mat-icon-button (click)="verNuevo()">
-                    <mat-icon>visibility</mat-icon>
-                </button>
+
             </div>
             <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
                 <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
@@ -215,36 +220,37 @@
             </mat-select>
         </div>
 
-        <div class="detalles-fondo" *ngIf="verDetalles">
+        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(381)">
             <p class="textosBold14">Contacto:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
                 placeholder="Añada un contacto." [(ngModel)]="nombre"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf="verDetalles">
+        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(383)">
             <p class="textosBold14">Descripción:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
                 placeholder="Añada una descripción." [(ngModel)]="descripcion"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf="verDetalles">
+        <div class="detalles-fondo" *ngIf="facturaService.valuParametro(381)">
             <p class="textosBold14">Dirección de entrega:</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
                 placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
         </div>
 
-        <div class="detalles-fondo" *ngIf="verDetalles">
+        <div class="detalles-fondo" *ngIf=" facturaService.valuParametro(384)">
             <p class="textosBold14">Observación:</p>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
                 placeholder="Añada una Observación." [(ngModel)]="observacion"></textarea>
         </div>
 
-        <div class="subtitulo" *ngIf="verDetalles">Detalles</div>
 
-        <div class="detalles-fondo-v" *ngIf="verDetalles">
+
+
+        <div class="detalles-fondo-v" *ngIf="facturaService.valuParametro(58)">
             <div class="dFlex">
                 <p class="textosBold14">Id:</p>
                 <span class="spacer"></span>

@@ -348,8 +348,15 @@ export class FacturaService {
 
 
     valuParametro(parametro:number):boolean{
+        // 44: Fecha ini y fehca fin
+        // 58: detalles del evento, info
         // 349:FEL
         // 351:Editar precios
+        // 381: Fecha entrega, contacto, direccion de entrega
+        // 382: Fecha recoger
+        // 383: descripcion
+        // 384: Observacion
+
 
         //El parametro existe
         let value: boolean = false;
