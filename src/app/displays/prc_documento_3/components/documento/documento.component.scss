@@ -50,13 +50,24 @@ hr {
     opacity   : .25;
 }
 
-.informacion,
-.buscar-cliente {
+.informacion {
     padding: 10px 0px;
     width  : 80%;
 }
 
+.buscar-cliente {
+    padding: 0px 0px 5px;
+    width  : 80%;
+}
+
 .detalles-fondo {
+    padding         : 10px 5px 0px;
+    width           : 80%;
+    background-color: $detalles;
+    margin-bottom   : 10px;
+}
+
+.detalles-fondo-v {
     padding         : 10px 5px;
     width           : 80%;
     background-color: $detalles;
@@ -318,4 +329,12 @@ hr {
 .descripcion-tarea:hover {
     border: 1px solid $color-bordes;
 
+}
+
+hr {
+    margin    : 1.0rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : 0.25;
 }

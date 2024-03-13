@@ -50,6 +50,7 @@
                     </button>
                 </div>
             </div>
+
             <p class="textosBold14">Fecha recoger:</p>
 
             <div class="fechas">
@@ -76,7 +77,7 @@
                     </button>
                 </div>
             </div>
-
+            <hr>
             <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
             <div class="fechas">
                 <form class="calendarios">
@@ -129,6 +130,8 @@
                     </button>
                 </div>
             </div>
+            <hr>
+
         </div>
 
 
@@ -213,43 +216,35 @@
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
-            <div class="dFlex">
-                <p class="textosBold14">Descripción:</p>
-                <span class="spacer"></span>
-                <p class="textos14">14217</p>
-            </div>
+            <p class="textosBold14">Contacto:</p>
+            <span class="spacer"></span>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                placeholder="Añada un contacto." [(ngModel)]="nombre"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
-            <div class="dFlex">
-                <p class="textosBold14">Contacto:</p>
-                <span class="spacer"></span>
-                <p class="textos14">Juan Paco Pedro de la Mar</p>
-            </div>
-            <div class="dFlex">
-                <p class="textosBold14">Teléfono:</p>
-                <span class="spacer"></span>
-                <p class="textos14">87654321</p>
-            </div>
+            <p class="textosBold14">Descripción:</p>
+            <span class="spacer"></span>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                placeholder="Añada una descripción." [(ngModel)]="descripcion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
-            <div class="dFlex">
-                <p class="textosBold14">Dirección de entrega:</p>
-                <span class="spacer"></span>
-                <p class="textos14">Casita azul zona 4</p>
-            </div>
+            <p class="textosBold14">Dirección de entrega:</p>
+            <span class="spacer"></span>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
             <p class="textosBold14">Observación:</p>
-            <textarea name="notas" id="descripcion" cols="30" rows="3" class="descripcion-tarea"
-                placeholder="Añada una Observación." [(ngModel)]="descripcion"></textarea>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                placeholder="Añada una Observación." [(ngModel)]="observacion"></textarea>
         </div>
 
         <div class="subtitulo" *ngIf="verDetalles">Detalles</div>
 
-        <div class="detalles-fondo" *ngIf="verDetalles">
+        <div class="detalles-fondo-v" *ngIf="verDetalles">
             <div class="dFlex">
                 <p class="textosBold14">Id:</p>
                 <span class="spacer"></span>
