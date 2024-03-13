@@ -57,13 +57,14 @@ export class DocumentoComponent {
   horaEntrega!: string;
   horaRecoger!: string;
 
-  descripcion: string = "";
-
+  
   verFechas: boolean = false;
   verDetalles: boolean = false;
   verReferencia: boolean = false;
-
+  
   //campos
+  descripcion: string = "";
+  observacion: string = "";
   nombre: string ="";
   direccion: string ="";
   telefono: string ="";
