@@ -271,3 +271,24 @@ hr {
     background-color: transparent;
     text-align: center;
 }
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBold14 {
+    font-size  : 14px;
+    font-weight: 550;
+}
+
+.descripcion-tarea {
+    color           : $color-azul;
+    width: 100%;
+    // width           : calc(100% - 10px);
+    border-style    : none;
+    background-color: transparent;
+    outline         : none;
+    font-size       : 12px;
+    border-bottom   : 1px solid $color-bordes;
+    padding         : 3px;
+}

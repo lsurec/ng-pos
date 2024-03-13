@@ -13,12 +13,25 @@
             </mat-select>
         </div>
 
+        <div class="informacion" *ngIf="verReferencia">
+            <p class="subtitulo">Tipo de referencia:</p>
+            <mat-select name="estado" class="seleccionar" placeholder="Tipo de referencia:"
+                [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
+                <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
+                    {{serie.descripcion}}
+                </mat-option>
+            </mat-select>
+        </div>
+
         <div class="buscar-cliente">
             <div class="dFlex">
                 <p class="subtitulo">{{facturaService.getTextCuenta() | titlecase}}</p>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
                     <mat-icon>person_add</mat-icon>
+                </button>
+                <button mat-icon-button (click)="verNuevo()">
+                    <mat-icon>visibility</mat-icon>
                 </button>
             </div>
             <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
@@ -75,14 +88,15 @@
         </div>
 
         <!-- Fechas -->
-        <div class="informacion">
+        <div class="informacion" *ngIf="verFechas">
             <p class="textosBold14">Fecha entrega:</p>
             <div class="fechas">
                 <form class="calendarios">
                     <div class="input-group">
                         <input class="form-control" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
                             #fEntrega="ngbDatepicker" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()" type="button">
+                        <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
+                            type="button">
                             <mat-icon class="ico-calendario">calendar_month</mat-icon>
                         </button>
                     </div>
@@ -94,7 +108,8 @@
                         <ngx-material-timepicker #horaEntregaPiker
                             [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
                     </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)" type="button">
+                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)"
+                        type="button">
                         <mat-icon class="ico-calendario">access_time</mat-icon>
                     </button>
                 </div>
@@ -106,7 +121,8 @@
                     <div class="input-group">
                         <input class="form-control" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
                             #fRecoger="ngbDatepicker" [minDate]="fechaEntrega!" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()" type="button">
+                        <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
+                            type="button">
                             <mat-icon class="ico-calendario">calendar_month</mat-icon>
                         </button>
                     </div>
@@ -118,7 +134,8 @@
                         <ngx-material-timepicker #horaRegogerPiker
                             [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
                     </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)" type="button">
+                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)"
+                        type="button">
                         <mat-icon class="ico-calendario">access_time</mat-icon>
                     </button>
                 </div>
@@ -130,7 +147,8 @@
                     <div class="input-group">
                         <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
                             #fInicio="ngbDatepicker" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()" type="button">
+                        <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
+                            type="button">
                             <mat-icon class="ico-calendario">calendar_month</mat-icon>
                         </button>
                     </div>
@@ -142,7 +160,8 @@
                         <ngx-material-timepicker #horaInicioPiker
                             [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
                     </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)" type="button">
+                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)"
+                        type="button">
                         <mat-icon class="ico-calendario">access_time</mat-icon>
                     </button>
                 </div>
@@ -154,7 +173,8 @@
                     <div class="input-group">
                         <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
                             #fFinal="ngbDatepicker" [minDate]="fechaInicial!" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()" type="button">
+                        <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
+                            type="button">
                             <mat-icon class="ico-calendario">calendar_month</mat-icon>
                         </button>
                     </div>
@@ -167,7 +187,8 @@
                         <ngx-material-timepicker #horaFinalPiker
                             [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
                     </div>
-                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)" type="button">
+                    <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)"
+                        type="button">
                         <mat-icon class="ico-calendario">access_time</mat-icon>
                     </button>
                 </div>
@@ -191,6 +212,70 @@
             </mat-select>
         </div>
 
-    </div>
+        <div class="informacion" *ngIf="verDetalles">
+            <div class="dFlex">
+                <p class="textosBold14">Descripción:</p>
+                <span class="spacer"></span>
+                <p class="textos14">14217</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">Contacto:</p>
+                <span class="spacer"></span>
+                <p class="textos14">Juan Paco Pedro de la Mar</p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">Teléfono:</p>
+                <span class="spacer"></span>
+                <p class="textos14">87654321</p>
+            </div>
+            <hr>
 
+            <div class="dFlex">
+                <p class="textosBold14">Dirección de entrega:</p>
+                <span class="spacer"></span>
+                <p class="textos14">Casita azul zona 4</p>
+            </div>
+
+            <!-- <p class="textosBold14">Observación:</p> -->
+            <textarea name="notas" id="descripcion" cols="30" rows="3" class="descripcion-tarea"
+                placeholder="Añada una Observación." [(ngModel)]="descripcion"></textarea>
+        </div>
+
+        <div class="informacion" *ngIf="verDetalles">
+
+            <div class="subtitulo">Detalles</div>
+
+            <div class="dFlex">
+                <p class="textosBold14">Id:</p>
+                <span class="spacer"></span>
+                <p class="textos14">14217</p>
+            </div>
+
+            <div class="dFlex">
+                <p class="textosBold14"> Usuario:</p>
+                <span class="spacer"></span>
+                <p class="textos14">Ventas502</p>
+            </div>
+
+            <div class="dFlex">
+                <p class="textosBold14"> Referencia:</p>
+                <span class="spacer"></span>
+                <p class="textos14">14217</p>
+            </div>
+
+            <div class="dFlex">
+                <p class="textosBold14">Estado</p>
+                <span class="spacer"></span>
+                <p class="textos14">Activo</p>
+            </div>
+
+            <div class="dFlex">
+                <p class="textosBold14">Fecha hora:</p>
+                <span class="spacer"></span>
+                <p class="textos14"> {{fecha | date: 'dd/MM/yyyy'}} {{horaActual}}</p>
+            </div>
+
+        </div>
+
+    </div>
 </div>

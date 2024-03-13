@@ -56,7 +56,13 @@ export class DocumentoComponent {
   horaFinal!: string //hora final +10 min
   horaEntrega!: string;
   horaRecoger!: string;
-  
+
+  descripcion: string = "";
+
+  verFechas: boolean = false;
+  verDetalles: boolean = false;
+  verReferencia: boolean = false;
+
   constructor(
     private _dialog: MatDialog,
     private _calendar: NgbCalendar,
@@ -76,6 +82,12 @@ export class DocumentoComponent {
     this.fechaRecoger = this._calendar.getToday();
 
     this.horaActual = this.getHoraInput(this.fecha);
+  }
+
+  verNuevo(){
+    this.verDetalles = !this.verDetalles;
+    this.verFechas = !this.verFechas;
+    this.verReferencia = !this.verReferencia;
   }
 
   abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
