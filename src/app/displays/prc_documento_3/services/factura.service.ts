@@ -346,52 +346,11 @@ export class FacturaService {
 
     }
 
-    //Validar si se puede Modificar el precio
-    editPrice(): boolean {
-        //Permitir modificar el precio
-        let edit: boolean = false;
-
-        //recorrer lista de parametros
-        for (let i = 0; i < this.parametros.length; i++) {
-            const param = this.parametros[i];
-
-            //buscar parametro para editar el precio (351)
-            if (param.parametro == 351) {
-                //si piede esitarse el precio
-                edit = true;
-                break;
-            }
-        }
-
-        //retornar true o false
-        return edit;
-    }
-
-    //Validar si el proceso fel peude hacerse
-    printFel(): boolean {
-
-        //Se permite fel?
-        let fel: boolean = false;
-
-        //recorrer todos los parametros disponibles
-        for (let i = 0; i < this.parametros.length; i++) {
-            const element = this.parametros[i];
-
-            //el parametro que indica si genera fel o no es 349
-            if (element.parametro == 349) {
-                //Sí es permitido el proceso fel
-                fel = true;
-                break;
-            }
-        }
-
-        //Retornar true o false
-        return fel;
-    }
-
-
 
     valuParametro(parametro:number):boolean{
+        // 349:FEL
+        // 351:Editar precios
+
         //El parametro existe
         let value: boolean = false;
 
