@@ -108,7 +108,7 @@ export class ResumenDocumentoComponent implements OnInit {
   //Confirmar documento
   async sendDoc() {
     //Si se permite fel entrar al proceso
-    if (this.facturaService.printFel()) {
+    if (this.facturaService.valuParametro(349)) {
       //alerta FEL no disponible
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {
@@ -252,7 +252,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    let isFel: boolean = this.facturaService.printFel();
+    let isFel: boolean = this.facturaService.valuParametro(349);
 
     let documento: DocumentoData = {
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
@@ -555,6 +555,18 @@ export class ResumenDocumentoComponent implements OnInit {
   //Creacion del documnto en tbl_documento estructura
   async sendDocument() {
 
+      // Generar dos números aleatorios de 7 dígitos cada uno?
+      let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
+      let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
+  
+      // Combinar los dos números para formar uno de 14 dígitos
+      let strNum1: string = randomNumber1.toString();
+      let strNum2: string = randomNumber2.toString();
+      let combinedStr: string = strNum1 + strNum2;
+  
+      //ref id
+      let combinedNum: number = parseInt(combinedStr, 10);
+  
     //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
     //transacciones para el docummento
@@ -586,6 +598,7 @@ export class ResumenDocumentoComponent implements OnInit {
           //agregar cargos
           cargos.push(
             {
+              D_Consecutivo_Interno:randomNumber1,
               Tra_Consecutivo_Interno: consecutivo,
               Tra_Consecutivo_Interno_Padre: padre,
               Tra_Bodega: transaccion.bodega!.bodega,
@@ -611,6 +624,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
           descuentos.push(
             {
+              D_Consecutivo_Interno:randomNumber1,
               Tra_Consecutivo_Interno: consecutivo,
               Tra_Consecutivo_Interno_Padre: padre,
               Tra_Bodega: transaccion.bodega!.bodega,
@@ -632,6 +646,7 @@ export class ResumenDocumentoComponent implements OnInit {
       //agregar transacion (que no sea cargo o descuento)
       transacciones.push(
         {
+          D_Consecutivo_Interno: randomNumber1,
           Tra_Consecutivo_Interno: padre,
           Tra_Consecutivo_Interno_Padre: null,
           Tra_Bodega: transaccion.bodega!.bodega,
@@ -665,10 +680,15 @@ export class ResumenDocumentoComponent implements OnInit {
 
     });
 
+
+    let consecutivoPago :number= 1;
+
     //agreagar cargo abono a la estructrura
     this.facturaService.montos.forEach(monto => {
       pagos.push(
         {
+          Consecutivo_Interno:consecutivoPago,
+          D_Consecutivo_Interno: randomNumber1,
           Tipo_Cargo_Abono: monto.payment.tipo_Cargo_Abono,
           Monto: monto.amount,
           Cambio: monto.difference,
@@ -681,21 +701,11 @@ export class ResumenDocumentoComponent implements OnInit {
           Cuenta_Bancaria: monto.account?.cuenta_Bancaria ?? null,
         }
       );
+      consecutivoPago++;
     });
 
 
-    // Generar dos números aleatorios de 7 dígitos cada uno?
-    let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
-    let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
-
-    // Combinar los dos números para formar uno de 14 dígitos
-    let strNum1: string = randomNumber1.toString();
-    let strNum2: string = randomNumber2.toString();
-    let combinedStr: string = strNum1 + strNum2;
-
-    //ref id
-    let combinedNum: number = parseInt(combinedStr, 10);
-
+  
     //total cargo abono
     let totalCA: number = 0;
 
@@ -709,6 +719,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //documento estructura
     let doc: Documento = {
+      Consecutivo_Interno: randomNumber1,
       Doc_Tra_Monto: this.facturaService.total,
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar

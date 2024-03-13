@@ -58,10 +58,6 @@ export class DocumentoComponent {
   horaRecoger!: string;
 
   
-  verFechas: boolean = false;
-  verDetalles: boolean = false;
-  verReferencia: boolean = false;
-  
   //campos
   descripcion: string = "";
   observacion: string = "";
@@ -94,11 +90,7 @@ export class DocumentoComponent {
 
   }
 
-  verNuevo(){
-    this.verDetalles = !this.verDetalles;
-    this.verFechas = !this.verFechas;
-    this.verReferencia = !this.verReferencia;
-  }
+ 
 
   abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
     timepicker.open();
