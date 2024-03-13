@@ -82,6 +82,10 @@ export class DocumentoComponent {
     this.fechaRecoger = this._calendar.getToday();
 
     this.horaActual = this.getHoraInput(this.fecha);
+    this.horaFinal = this.getHoraInput(this.fecha);
+    this.horaEntrega = this.getHoraInput(this.fecha);
+    this.horaRecoger = this.getHoraInput(this.fecha);
+
   }
 
   verNuevo(){

@@ -23,70 +23,6 @@
             </mat-select>
         </div>
 
-        <div class="buscar-cliente">
-            <div class="dFlex">
-                <p class="subtitulo">{{facturaService.getTextCuenta() | titlecase}}</p>
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
-                    <mat-icon>person_add</mat-icon>
-                </button>
-                <button mat-icon-button (click)="verNuevo()">
-                    <mat-icon>visibility</mat-icon>
-                </button>
-            </div>
-            <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
-                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
-                <div class="input-container">
-                    <input class="barra-de-busqueda" type="search" name="search"
-                        [(ngModel)]="facturaService.searchClient" autocomplete="off"
-                        placeholder="{{'pos.inputs.buscar' | translate}}">
-                    <button mat-icon-button class="iconoLupa" type="submit">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div class="informacion">
-            <div class="d-flex">
-                <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
-                <span class="spacer"></span>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                        (change)="setCF()">
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="informacion" *ngIf="facturaService.cuenta">
-            <div class="dFlex">
-                <p class="titulo">{{facturaService.getTextCuenta() | titlecase}}</p>
-                <span class="spacer"></span>
-                <button *ngIf="!switchState" mat-icon-button (click)="actualizar()"
-                    [matTooltip]="'pos.factura.actualizar' | translate">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </div>
-            <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.nit' | translate }}</p>
-                <span class="spacer"></span>
-                <p>{{facturaService.cuenta.factura_NIT}}</p>
-            </div>
-            <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.nombre' | translate }}</p>
-                <span class="spacer"></span>
-                <p>{{facturaService.cuenta.factura_Nombre}}</p>
-            </div>
-            <span class="spacer"></span>
-            <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.direccion' | translate }}</p>
-                <span class="spacer"></span>
-                <p>Ciudad</p>
-            </div>
-        </div>
-
         <!-- Fechas -->
         <div class="informacion" *ngIf="verFechas">
             <p class="textosBold14">Fecha entrega:</p>
@@ -196,6 +132,70 @@
         </div>
 
 
+        <div class="buscar-cliente">
+            <div class="dFlex">
+                <p class="subtitulo">{{facturaService.getTextCuenta() | titlecase}}</p>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+                <button mat-icon-button (click)="verNuevo()">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+            </div>
+            <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
+                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                <div class="input-container">
+                    <input class="barra-de-busqueda" type="search" name="search"
+                        [(ngModel)]="facturaService.searchClient" autocomplete="off"
+                        placeholder="{{'pos.inputs.buscar' | translate}}">
+                    <button mat-icon-button class="iconoLupa" type="submit">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="informacion">
+            <div class="d-flex">
+                <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
+                <span class="spacer"></span>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        (change)="setCF()">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="informacion" *ngIf="facturaService.cuenta">
+            <div class="dFlex">
+                <p class="titulo">{{facturaService.getTextCuenta() | titlecase}}</p>
+                <span class="spacer"></span>
+                <button *ngIf="!switchState" mat-icon-button (click)="actualizar()"
+                    [matTooltip]="'pos.factura.actualizar' | translate">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <div class="dFlex">
+                <p class="detalles">{{ 'pos.factura.nit' | translate }}</p>
+                <span class="spacer"></span>
+                <p>{{facturaService.cuenta.factura_NIT}}</p>
+            </div>
+            <div class="dFlex">
+                <p class="detalles">{{ 'pos.factura.nombre' | translate }}</p>
+                <span class="spacer"></span>
+                <p>{{facturaService.cuenta.factura_Nombre}}</p>
+            </div>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <p class="detalles">{{ 'pos.factura.direccion' | translate }}</p>
+                <span class="spacer"></span>
+                <p>Ciudad</p>
+            </div>
+        </div>
+
     </div>
     <span class="spacer"></span>
 
@@ -212,12 +212,15 @@
             </mat-select>
         </div>
 
-        <div class="informacion" *ngIf="verDetalles">
+        <div class="detalles-fondo" *ngIf="verDetalles">
             <div class="dFlex">
                 <p class="textosBold14">Descripción:</p>
                 <span class="spacer"></span>
                 <p class="textos14">14217</p>
             </div>
+        </div>
+
+        <div class="detalles-fondo" *ngIf="verDetalles">
             <div class="dFlex">
                 <p class="textosBold14">Contacto:</p>
                 <span class="spacer"></span>
@@ -228,23 +231,25 @@
                 <span class="spacer"></span>
                 <p class="textos14">87654321</p>
             </div>
-            <hr>
+        </div>
 
+        <div class="detalles-fondo" *ngIf="verDetalles">
             <div class="dFlex">
                 <p class="textosBold14">Dirección de entrega:</p>
                 <span class="spacer"></span>
                 <p class="textos14">Casita azul zona 4</p>
             </div>
+        </div>
 
-            <!-- <p class="textosBold14">Observación:</p> -->
+        <div class="detalles-fondo" *ngIf="verDetalles">
+            <p class="textosBold14">Observación:</p>
             <textarea name="notas" id="descripcion" cols="30" rows="3" class="descripcion-tarea"
                 placeholder="Añada una Observación." [(ngModel)]="descripcion"></textarea>
         </div>
 
-        <div class="informacion" *ngIf="verDetalles">
+        <div class="subtitulo" *ngIf="verDetalles">Detalles</div>
 
-            <div class="subtitulo">Detalles</div>
-
+        <div class="detalles-fondo" *ngIf="verDetalles">
             <div class="dFlex">
                 <p class="textosBold14">Id:</p>
                 <span class="spacer"></span>
@@ -272,7 +277,7 @@
             <div class="dFlex">
                 <p class="textosBold14">Fecha hora:</p>
                 <span class="spacer"></span>
-                <p class="textos14"> {{fecha | date: 'dd/MM/yyyy'}} {{horaActual}}</p>
+                <p class="textos14"> {{fecha | date: 'dd/MM/yyyy'}} - {{horaActual}}</p>
             </div>
 
         </div>
