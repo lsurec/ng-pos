@@ -390,4 +390,25 @@ export class FacturaService {
     }
 
 
+
+    valuParametro(parametro:number):boolean{
+        //El parametro existe
+        let value: boolean = false;
+
+        //recorrer todos los parametros disponibles
+        for (let i = 0; i < this.parametros.length; i++) {
+            const element = this.parametros[i];
+
+            //Se busca el parametro
+            if (element.parametro == parametro) {
+                //Sí es permitido el proceso fel
+                value = true;
+                break;
+            }
+        }
+
+        //Retornar true o false
+        return value;
+    }
+
 }
