@@ -17,6 +17,9 @@ import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.inte
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { PrintDataComandaInterface } from '../../interfaces/print-data-comanda.interface';
+import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
+import { FormatoComandaInterface } from '../../interfaces/formato-comanda.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -116,6 +119,82 @@ export class ResumenDocumentoComponent implements OnInit {
       this.sendDocument()
     }
 
+
+
+
+  }
+
+
+
+  async printNetwork(){
+    let resComanda:ResApiInterface = await this._documentService.getDataComanda(
+      this.user,
+      this.token,
+      this.consecutivoDoc,
+    );
+    
+
+    if (!resComanda.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resComanda);
+
+      return;
+
+    }
+
+
+    let detalles:PrintDataComandaInterface[] = resComanda.response;
+    
+    let formats:FormatoComandaInterface[] = [];
+
+    detalles.forEach(detalle => {
+      if(formats.length == 0){
+        formats.push(
+          {
+            ipAdress:detalle.printerName,
+            bodega: detalle.bodega,
+            detalles: [detalle],
+          }
+        );
+      }else{
+        let indexBodega:number = -1;
+
+        for (var i = 0; i < formats.length; i++) {
+           let formato: FormatoComandaInterface = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if(indexBodega == -1){
+          formats.push(
+            {
+              ipAdress:detalle.printerName,
+              bodega: detalle.bodega,
+              detalles: [detalle],
+            }
+          );
+        }else{
+          formats[indexBodega].detalles.push(detalle);
+        }
+      }
+
+
+    });
 
 
 
