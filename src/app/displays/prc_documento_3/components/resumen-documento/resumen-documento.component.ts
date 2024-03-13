@@ -20,6 +20,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import { PrintDataComandaInterface } from '../../interfaces/print-data-comanda.interface';
 import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
 import { FormatoComandaInterface } from '../../interfaces/formato-comanda.interface';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -126,13 +127,16 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
 
-  async printNetwork(){
-    let resComanda:ResApiInterface = await this._documentService.getDataComanda(
+  async printNetwork() {
+
+    this.isLoading = true;
+
+    let resComanda: ResApiInterface = await this._documentService.getDataComanda(
       this.user,
       this.token,
       this.consecutivoDoc,
     );
-    
+
 
     if (!resComanda.status) {
 
@@ -156,45 +160,60 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    let detalles:PrintDataComandaInterface[] = resComanda.response;
-    
-    let formats:FormatoComandaInterface[] = [];
+    let detalles: PrintDataComandaInterface[] = resComanda.response;
+
+    let formats: FormatoComandaInterface[] = [];
 
     detalles.forEach(detalle => {
-      if(formats.length == 0){
+      if (formats.length == 0) {
         formats.push(
           {
-            ipAdress:detalle.printerName,
+            ipAdress: detalle.printerName,
             bodega: detalle.bodega,
             detalles: [detalle],
           }
         );
-      }else{
-        let indexBodega:number = -1;
+      } else {
+        let indexBodega: number = -1;
 
         for (var i = 0; i < formats.length; i++) {
-           let formato: FormatoComandaInterface = formats[i];
+          let formato: FormatoComandaInterface = formats[i];
           if (detalle.bodega == formato.bodega) {
             indexBodega = i;
             break;
           }
         }
 
-        if(indexBodega == -1){
+        if (indexBodega == -1) {
           formats.push(
             {
-              ipAdress:detalle.printerName,
+              ipAdress: detalle.printerName,
               bodega: detalle.bodega,
               detalles: [detalle],
             }
           );
-        }else{
+        } else {
           formats[indexBodega].detalles.push(detalle);
         }
       }
 
 
     });
+
+
+
+    //TODO:revisar
+    
+
+    for (const element of formats) {
+      console.log("Enotro");
+      
+      const docDefinition = await this._printService.getComanda(element);
+      pdfMake.createPdf(docDefinition).print();
+
+    }
+
+    this.isLoading = false;
 
 
 

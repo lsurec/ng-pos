@@ -6,6 +6,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { PreferencesService } from './preferences.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FormatoComandaInterface } from '../displays/prc_documento_3/interfaces/formato-comanda.interface';
 
 @Injectable()
 export class PrinterService {
@@ -649,7 +650,7 @@ export class PrinterService {
         });
 
 
-      
+
         let divider = {
             layout: 'headerLineOnly',
             table: {
@@ -1275,5 +1276,230 @@ export class PrinterService {
         return docDefinition;
     }
 
-    
+
+    async getComanda(format: FormatoComandaInterface) {
+        console.log("paos");
+        
+        let date: Date = new Date();
+
+        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+        let transacciones: any[] = [];
+
+        format.detalles.forEach(item => {
+            transacciones.push(
+                [
+                    { text: item.cantidad, style: 'normalText', },
+                    { text: item.des_Producto, style: 'endText', },
+                ],
+
+            );
+        });
+
+        let divider = {
+            layout: 'headerLineOnly',
+            table: {
+                widths: ['100%'],
+                headerRows: 1,
+                body: [
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                ]
+            }
+        };
+
+
+        var docDefinition: TDocumentDefinitions = {
+            info: {
+                title: 'Comanda',
+                author: 'Demosoft',
+                subject: 'Comanda',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                //DATOS EMPRESA
+
+                {
+                    text: format.detalles[0].des_Ubicacion,
+                    style: 'centerBold12',
+                    margin: [0, 10, 0, 0],
+                },
+                {
+                    text: `Mesa: ${format.detalles[0].des_Mesa.toUpperCase()}` , style: 'text'
+                },
+                {
+                    text: `${format.detalles[0].des_Serie_Documento} - ${format.detalles[0].id_Documento}`,
+                    style: 'centerBold12',
+                },
+
+                //TABLA PRODUCTOS
+                {
+                    layout: 'headerLineOnly',
+                    margin: [0, 10, 0, 0],
+                    table: {
+
+                        widths: ['15%', '85%'],
+                        headerRows: 1,
+
+                        body: [
+
+                            [
+                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
+                            ],
+
+                           ...transacciones,
+
+                        ],
+                    },
+
+                },
+                divider,
+                {
+                    margin: [0, 10, 0, 0],
+
+
+                    text:   `Le atendió ${format.detalles[0].userName}`,
+                    style: 'center',
+                },
+                {
+
+
+                    text: `${fecha} ${hora}`,
+                    style: 'center',
+                },
+
+
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+                // {
+                //   image: this.logo_empresa,
+                //   fit: [141.73, 56.692],
+                //   alignment: 'center',
+                // },
+
+
+
+            ],
+            styles: {
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                centerBold: {
+                    fontSize: 8,
+                    alignment: 'center',
+                    bold: true,
+                },
+                centerBold12: {
+                    fontSize: 12,
+                    alignment: 'center',
+                    bold: true,
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+                endText: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                endTextBold: {
+                    fontSize: 8,
+                    alignment: 'right',
+                    bold: true,
+                },
+                header: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'center',
+                },
+                tHeaderLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tHeaderValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                tProductsHeader: {
+                    fontSize: 8.5,
+                    bold: true,
+                },
+                tProductsBody: {
+                    fontSize: 8,
+                },
+                tTotals: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'right',
+                },
+                tClientLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tClientValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                text: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                text12: {
+                    fontSize: 12,
+                },
+                link: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                    alignment: 'center',
+                },
+            },
+        };
+
+
+
+
+        return docDefinition;
+    }
+
+
 }
