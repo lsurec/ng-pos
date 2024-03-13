@@ -50,6 +50,8 @@
                     </button>
                 </div>
             </div>
+            <hr>
+
             <p class="textosBold14">Fecha recoger:</p>
 
             <div class="fechas">
@@ -76,7 +78,7 @@
                     </button>
                 </div>
             </div>
-
+            <hr>
             <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
             <div class="fechas">
                 <form class="calendarios">
@@ -102,6 +104,7 @@
                     </button>
                 </div>
             </div>
+            <hr>
 
             <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
             <div class="fechas">
@@ -129,6 +132,8 @@
                     </button>
                 </div>
             </div>
+            <hr>
+
         </div>
 
 
@@ -224,12 +229,14 @@
             <div class="dFlex">
                 <p class="textosBold14">Contacto:</p>
                 <span class="spacer"></span>
-                <p class="textos14">Juan Paco Pedro de la Mar</p>
+                <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                    placeholder="Añada un contacto." [(ngModel)]="nombre"></textarea>
             </div>
             <div class="dFlex">
                 <p class="textosBold14">Teléfono:</p>
                 <span class="spacer"></span>
-                <p class="textos14">87654321</p>
+                <textarea name="notas" id="descripcion" cols="30" rows="1" class="descripcion-tarea"
+                    placeholder="Añada telefono de contacto." [(ngModel)]="telefono"></textarea>
             </div>
         </div>
 
@@ -237,7 +244,8 @@
             <div class="dFlex">
                 <p class="textosBold14">Dirección de entrega:</p>
                 <span class="spacer"></span>
-                <p class="textos14">Casita azul zona 4</p>
+                <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+                    placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
             </div>
         </div>
 

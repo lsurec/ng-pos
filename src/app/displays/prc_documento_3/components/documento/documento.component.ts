@@ -63,6 +63,11 @@ export class DocumentoComponent {
   verDetalles: boolean = false;
   verReferencia: boolean = false;
 
+  //campos
+  nombre: string ="";
+  direccion: string ="";
+  telefono: string ="";
+
   constructor(
     private _dialog: MatDialog,
     private _calendar: NgbCalendar,

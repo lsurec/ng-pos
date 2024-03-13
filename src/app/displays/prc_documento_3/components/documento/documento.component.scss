@@ -50,9 +50,13 @@ hr {
     opacity   : .25;
 }
 
-.informacion,
-.buscar-cliente {
+.informacion {
     padding: 10px 0px;
+    width  : 80%;
+}
+
+.buscar-cliente {
+    padding: 0px 0px 5px;
     width  : 80%;
 }
 
