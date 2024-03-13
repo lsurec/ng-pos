@@ -67,6 +67,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HomeConvertComponent } from './displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -146,6 +147,7 @@ import { HomeConvertComponent } from './displays/listado_Documento_Pendiente_Con
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     // DataUserService,
