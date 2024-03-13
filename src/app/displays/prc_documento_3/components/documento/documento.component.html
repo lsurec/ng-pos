@@ -29,7 +29,7 @@
             <div class="fechas">
                 <form class="calendarios">
                     <div class="input-group">
-                        <input class="form-control" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
+                        <input class="form-control bf" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
                             #fEntrega="ngbDatepicker" />
                         <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
                             type="button">
@@ -56,7 +56,7 @@
             <div class="fechas">
                 <form class="calendarios">
                     <div class="input-group">
-                        <input class="form-control" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
+                        <input class="form-control bf" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
                             #fRecoger="ngbDatepicker" [minDate]="fechaEntrega!" />
                         <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
                             type="button">
@@ -82,7 +82,7 @@
             <div class="fechas">
                 <form class="calendarios">
                     <div class="input-group">
-                        <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
+                        <input class="form-control bf" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
                             #fInicio="ngbDatepicker" />
                         <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
                             type="button">
@@ -108,7 +108,7 @@
             <div class="fechas">
                 <form class="calendarios">
                     <div class="input-group">
-                        <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
+                        <input class="form-control bf" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
                             #fFinal="ngbDatepicker" [minDate]="fechaInicial!" />
                         <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
                             type="button">
@@ -218,27 +218,27 @@
         <div class="detalles-fondo" *ngIf="verDetalles">
             <p class="textosBold14">Contacto:</p>
             <span class="spacer"></span>
-            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
-                placeholder="Añada un contacto." [(ngModel)]="nombre"></textarea>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos" placeholder="Añada un contacto."
+                [(ngModel)]="nombre"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
             <p class="textosBold14">Descripción:</p>
             <span class="spacer"></span>
-            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada una descripción." [(ngModel)]="descripcion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
             <p class="textosBold14">Dirección de entrega:</p>
             <span class="spacer"></span>
-            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="verDetalles">
             <p class="textosBold14">Observación:</p>
-            <textarea name="notas" id="descripcion" cols="30" rows="2" class="descripcion-tarea"
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Añada una Observación." [(ngModel)]="observacion"></textarea>
         </div>
 

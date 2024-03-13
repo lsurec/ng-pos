@@ -237,6 +237,7 @@ hr {
 .fechas {
     display    : flex;
     align-items: center;
+    padding    : 3px 0px;
 }
 
 .form-control {
@@ -315,7 +316,7 @@ hr {
     font-weight: 550;
 }
 
-.descripcion-tarea {
+.campos {
     color           : $color-azul;
     width           : 100%;
     border-style    : none;
@@ -325,7 +326,7 @@ hr {
     padding         : 3px;
 }
 
-.descripcion-tarea:hover {
+.campos:hover {
     border: 1px solid $color-bordes;
 
 }

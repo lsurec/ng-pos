@@ -109,7 +109,9 @@ body {
 .dark-theme .cantidad,
 .dark-theme .restar,
 .dark-theme .url-apis,
-.dark-theme .form-control {
+.dark-theme .form-control,
+.dark-theme .hora,
+.dark-theme .campos {
     color: $color-blanco !important;
 }
 
@@ -167,6 +169,11 @@ body {
 .dark-theme .itemRouteActive:hover {
     color : $color-blanco !important;
     cursor: pointer;
+}
+
+.dark-theme .detalles-fondo,
+.dark-theme .detalles-fondo-v {
+    background-color: rgb(127 121 121 / 18%) !important;
 }
 
 .dark-theme .iconos-detalles,
@@ -229,7 +236,9 @@ body {
 .dark-theme .seleccionar-impresora,
 .dark-theme .restar,
 .dark-theme .sumar,
-.dark-theme .cantidad {
+.dark-theme .cantidad,
+.dark-theme .hora-calendario,
+.dark-theme .bf {
     border-color: $bordes !important;
 }
 
