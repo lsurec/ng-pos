@@ -64,6 +64,8 @@ export class DocumentoComponent {
   nombre: string ="";
   direccion: string ="";
   telefono: string ="";
+  tipoReferencia: string ="";
+
 
   constructor(
     private _dialog: MatDialog,

@@ -291,7 +291,18 @@
             "sin_encabezados": "No se han encontrado encabezados para la impresión del documento. Verifique el procedimiento almacenado.",
             "fel": "FEL DOCUMENTO TRIBUTARIO ELECTRÓNICO",
             "documento_generico": "DOCUMENTO GENÉRICO",
-            "sin_devoluciones": "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+            "sin_devoluciones": "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+            "fEntrega": "Fecha Entrega:",
+            "fRecoger": "Fecha Recoger:",
+            "tipoRef": "Tipo de referencia",
+            "contacto": "Contacto",
+            "evento" : "DATOS DEL EVENTO",
+            "añadirContacto": "Añada un contacto",
+            "entrega": "Dirección de entrega:",
+            "añadirEntrega": "Añada dirección de entrega.",
+            "añadirDescripcion": "Añada una descripción.",
+            "añadirObservacion" : "Añada una Observación.",
+            "estado": "Estado"
         },
         "documento": {
             "fechaIni": "Fecha Inicio: ",

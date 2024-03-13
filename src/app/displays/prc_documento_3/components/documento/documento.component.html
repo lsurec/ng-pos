@@ -14,19 +14,23 @@
         </div>
 
         <div class="informacion" *ngIf="facturaService.valueParametro(58)">
-            <p class="subtitulo">Tipo de referencia:</p>
-            <mat-select name="estado" class="seleccionar" placeholder="Tipo de referencia:"
+            <p class="tEvento">{{ 'pos.factura.evento' | translate }}</p>
+            <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
+            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
                 </mat-option>
             </mat-select>
+
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos bRef"
+                placeholder="{{ 'pos.factura.añadirDescripcion' | translate }}" [(ngModel)]="tipoReferencia"></textarea>
         </div>
 
         <!-- Fechas -->
         <div class="informacion">
             <ng-container *ngIf="facturaService.valueParametro(381)">
-                <p class="textosBold14">Fecha entrega:</p>
+                <p class="textosBold14">{{ 'pos.factura.fEntrega' | translate }}</p>
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
@@ -54,7 +58,7 @@
             </ng-container>
 
             <ng-container *ngIf="facturaService.valueParametro(382)">
-                <p class="textosBold14">Fecha recoger:</p>
+                <p class="textosBold14">{{ 'pos.factura.fRecoger' | translate }}</p>
 
                 <div class="fechas">
                     <form class="calendarios">
@@ -221,34 +225,31 @@
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(381)">
-            <p class="textosBold14">Contacto:</p>
+            <p class="textosBold14">{{ 'pos.factura.contacto' | translate }}</p>
             <span class="spacer"></span>
-            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos" placeholder="Añada un contacto."
-                [(ngModel)]="nombre"></textarea>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
+                placeholder="{{ 'pos.factura.añadirContacto' | translate }}" [(ngModel)]="nombre"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
-            <p class="textosBold14">Descripción:</p>
+            <p class="textosBold14">{{ 'pos.factura.descripcion' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
-                placeholder="Añada una descripción." [(ngModel)]="descripcion"></textarea>
+                placeholder="{{ 'pos.factura.añadirDescripcion' | translate }}" [(ngModel)]="descripcion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(381)">
-            <p class="textosBold14">Dirección de entrega:</p>
+            <p class="textosBold14">{{ 'pos.factura.entrega' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
-                placeholder="Añada dirección de entrega." [(ngModel)]="direccion"></textarea>
+                placeholder="{{ 'pos.factura.añadirEntrega' | translate }}" [(ngModel)]="direccion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
-            <p class="textosBold14">Observación:</p>
+            <p class="textosBold14">{{ 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
-                placeholder="Añada una Observación." [(ngModel)]="observacion"></textarea>
+                placeholder="{{ 'pos.factura.añadirObservacion' | translate }}" [(ngModel)]="observacion"></textarea>
         </div>
-
-
-
 
         <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">
             <div class="dFlex">
@@ -258,25 +259,25 @@
             </div>
 
             <div class="dFlex">
-                <p class="textosBold14"> Usuario:</p>
+                <p class="textosBold14"> {{ 'pos.documento.usuario' |translate }}</p>
                 <span class="spacer"></span>
                 <p class="textos14">Ventas502</p>
             </div>
 
             <div class="dFlex">
-                <p class="textosBold14"> Referencia:</p>
+                <p class="textosBold14"> {{ 'pos.factura.referencia' |translate }}: </p>
                 <span class="spacer"></span>
                 <p class="textos14">14217</p>
             </div>
 
             <div class="dFlex">
-                <p class="textosBold14">Estado</p>
+                <p class="textosBold14">{{ 'pos.factura.estado' |translate }}: </p>
                 <span class="spacer"></span>
                 <p class="textos14">Activo</p>
             </div>
 
             <div class="dFlex">
-                <p class="textosBold14">Fecha hora:</p>
+                <p class="textosBold14">{{ 'pos.documento.fechaHora' |translate }}</p>
                 <span class="spacer"></span>
                 <p class="textos14"> {{fecha | date: 'dd/MM/yyyy'}} - {{horaActual}}</p>
             </div>

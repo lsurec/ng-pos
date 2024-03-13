@@ -106,6 +106,12 @@ hr {
     font-weight: bold;
 }
 
+.tEvento {
+    font-size     : 14px;
+    font-weight   : bold;
+    padding-bottom: 10px;
+}
+
 .mat-mdc-option {
     min-height: 30px;
     color     : $color-azul;
@@ -337,4 +343,8 @@ hr {
     border    : 0;
     border-top: 1px solid;
     opacity   : 0.25;
+}
+
+.bRef {
+    margin-top: 10px;
 }

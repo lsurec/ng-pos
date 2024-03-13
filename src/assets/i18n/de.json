@@ -291,7 +291,18 @@
             "sin_encabezados": "Es wurden keine Überschriften für den Druck des Dokuments gefunden. Überprüfen Sie den gespeicherten Prozedur.",
             "fel": "FEL ELEKTRONISCHE STEUERDOKUMENT",
             "documento_generico": "GENERISCHES DOKUMENT",
-            "sin_devoluciones": "*KEINE ÄNDERUNGEN ODER RÜCKERSTATTUNGEN AKZEPTIERT*"
+            "sin_devoluciones": "*KEINE ÄNDERUNGEN ODER RÜCKERSTATTUNGEN AKZEPTIERT*",
+            "fEntrega": "Lieferdatum:",
+            "fRecoger": "Abholdatum:",
+            "tipoRef": "Referenztyp",
+            "contacto": "Kontakt",
+            "evento": "EVENTDATEN",
+            "añadirContacto": "Kontakt hinzufügen",
+            "entrega": "Lieferadresse:",
+            "añadirEntrega": "Lieferadresse hinzufügen.",
+            "añadirDescripcion": "Beschreibung hinzufügen.",
+            "añadirObservacion": "Beobachtung hinzufügen.",
+            "estado": "Status"
         },
         "documento": {
             "fechaIni": "Startdatum: ",

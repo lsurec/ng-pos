@@ -291,7 +291,18 @@
             "sin_encabezados": "No headers found for document printing. Check the stored procedure.",
             "fel": "FEL ELECTRONIC TAX DOCUMENT",
             "documento_generico": "GENERIC DOCUMENT",
-            "sin_devoluciones": "*NO CHANGES OR RETURNS ACCEPTED*"
+            "sin_devoluciones": "*NO CHANGES OR RETURNS ACCEPTED*",
+            "fEntrega": "Delivery Date:",
+            "fRecoger": "Pickup Date:",
+            "tipoRef": "Reference Type",
+            "contacto": "Contact",
+            "evento": "EVENT DETAILS",
+            "añadirContacto": "Add a contact",
+            "entrega": "Delivery Address:",
+            "añadirEntrega": "Add delivery address.",
+            "añadirDescripcion": "Add a description.",
+            "añadirObservacion": "Add an observation.",
+            "estado": "Status"
         },
         "documento": {
             "fechaIni": "Start Date: ",

@@ -291,7 +291,18 @@
             "sin_encabezados": "Aucun en-tête trouvé pour l'impression du document. Vérifiez la procédure stockée.",
             "fel": "DOCUMENT TRIBUTAIRE ÉLECTRONIQUE FEL",
             "documento_generico": "DOCUMENT GÉNÉRIQUE",
-            "sin_devoluciones": "*AUCUN CHANGEMENT NI REMBOURSEMENT ACCEPTÉ*"
+            "sin_devoluciones": "*AUCUN CHANGEMENT NI REMBOURSEMENT ACCEPTÉ*",
+            "fEntrega": "Date de livraison :",
+            "fRecoger": "Date de collecte :",
+            "tipoRef": "Type de référence",
+            "contacto": "Contact",
+            "evento": "DONNÉES DE L'ÉVÉNEMENT",
+            "añadirContacto": "Ajouter un contact",
+            "entrega": "Adresse de livraison :",
+            "añadirEntrega": "Ajouter une adresse de livraison.",
+            "añadirDescripcion": "Ajouter une description.",
+            "añadirObservacion": "Ajouter une observation.",
+            "estado": "État"
         },
         "documento": {
             "fechaIni": "Date de début : ",

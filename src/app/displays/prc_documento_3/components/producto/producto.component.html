@@ -81,10 +81,10 @@
             </div>
             <div class="">
                 <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
-                <p class="subtitulo" *ngIf="!facturaService.valuParametro(351)">{{productoService.precioU | currency:'
+                <p class="subtitulo" *ngIf="!facturaService.valueParametro(351)">{{productoService.precioU | currency:'
                     ':'symbol':'2.2-2' }}</p>
                 <input class="precio-unitario" type="text" name="search" [(ngModel)]="productoService.precioText"
-                    autocomplete="off" *ngIf="facturaService.valuParametro(351)" (ngModelChange)="editPrice()">
+                    autocomplete="off" *ngIf="facturaService.valueParametro(351)" (ngModelChange)="editPrice()">
             </div>
             <div class="dFlex">
                 <span class="spacer"></span>
