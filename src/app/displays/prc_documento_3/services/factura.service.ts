@@ -22,8 +22,8 @@ import { VendedorInterface } from '../interfaces/vendedor.interface';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
-    searchClient:string = ""; //input busqueda cliente
-    searchProduct:string = ""; //input busqueda producto
+    searchClient: string = ""; //input busqueda cliente
+    searchProduct: string = ""; //input busqueda producto
 
     isLoading: boolean = false; //Pantalla de carga
     tipoDocumento?: number; //Tipo de documento
@@ -286,7 +286,7 @@ export class FacturaService {
             //buscar cargos y descuentos
             element.operaciones.forEach(tra => {
 
-            //calcular los cargos y descuentos
+                //calcular los cargos y descuentos
                 element.cargo += tra.cargo;
                 element.descuento += tra.descuento;
 
@@ -323,19 +323,22 @@ export class FacturaService {
         this.calculateTotales();
     }
 
-    //Obtner texto para cuentas en parametors
-    getTextCuenta(): string {
+
+    getTextParam(param: number): string | null {
+
+        //57:Cuenta
+
         //texto por defecto
-        let name: string = "Cuenta";
+        let name: string | null = null;
 
         //recorrer lista de parametros
         for (let i = 0; i < this.parametros.length; i++) {
             const parametro = this.parametros[i];
 
             //buscar el nombre en el parametro 57
-            if (parametro.parametro == 57) {
+            if (parametro.parametro == param) {
                 // si nombre es nulo agregar el texto por defecto
-                name = parametro.pa_Caracter ?? name;
+                name = parametro.pa_Caracter;
                 break;
             }
 
@@ -343,11 +346,10 @@ export class FacturaService {
 
         //retornar texto
         return name;
-
     }
 
 
-    valueParametro(parametro:number):boolean{
+    valueParametro(parametro: number): boolean {
         // 44: Fecha ini y fehca fin
         // 58: detalles del evento, info
         // 349:FEL
