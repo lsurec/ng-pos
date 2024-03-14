@@ -297,12 +297,9 @@
             "tipoRef": "Reference Type",
             "contacto": "Contact",
             "evento": "EVENT DETAILS",
-            "añadirContacto": "Add a contact",
             "entrega": "Delivery Address:",
-            "añadirEntrega": "Add delivery address.",
-            "añadirDescripcion": "Add a description.",
-            "añadirObservacion": "Add an observation.",
-            "estado": "Status"
+            "estado": "Status",
+            "escribir": "Type here."
         },
         "documento": {
             "fechaIni": "Start Date: ",

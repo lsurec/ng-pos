@@ -297,12 +297,9 @@
             "tipoRef": "Referenztyp",
             "contacto": "Kontakt",
             "evento": "EVENTDATEN",
-            "añadirContacto": "Kontakt hinzufügen",
             "entrega": "Lieferadresse:",
-            "añadirEntrega": "Lieferadresse hinzufügen.",
-            "añadirDescripcion": "Beschreibung hinzufügen.",
-            "añadirObservacion": "Beobachtung hinzufügen.",
-            "estado": "Status"
+            "estado": "Status",
+            "escribir": "Geben Sie hier ein."
         },
         "documento": {
             "fechaIni": "Startdatum: ",
