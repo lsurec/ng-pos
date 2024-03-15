@@ -240,21 +240,21 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaEntrega = this._calendar.getToday();
     this.facturaService.inputFechaRecoger = this._calendar.getToday();
 
-    this.facturaService.horaIncial = this.getHoraInput(this. facturaService. fecha);
-    this.facturaService.horaFinal = this.getHoraInput(this.facturaService.  fecha);
-    this.facturaService.horaEntrega = this.getHoraInput(this.facturaService.  fecha);
-    this.facturaService.horaRecoger = this.getHoraInput(this. facturaService. fecha);
+    this.facturaService.horaIncial = this.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaFinal = this.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaEntrega = this.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaRecoger = this.getHoraInput(this.facturaService.fecha);
 
 
 
-    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!,this.facturaService.horaEntrega);
-    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!,this.facturaService.horaRecoger);
-    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!,this.facturaService.horaIncial);
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!,this.facturaService.horaFinal);
+    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
+    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!, this.facturaService.horaRecoger);
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
 
   }
 
-  convertValidDate(date: NgbDateStruct, timeString:string):Date {
+  convertValidDate(date: NgbDateStruct, timeString: string): Date {
     // Separar la cadena de tiempo en horas, minutos y AM/PM
     const { year, month, day } = date;
     const [time, meridiem] = timeString.split(' ');
@@ -555,6 +555,15 @@ export class FacturaComponent implements OnInit {
       // si no se ha pagado el total mostrar mensaje
       if (this.facturaService.saldo > 0) {
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.saldoPendiente'));
+        return;
+      }
+    }
+
+
+    if (this.facturaService.valueParametro(58)) {
+      if (!this.facturaService.tipoReferencia) {
+
+        this._notificationService.openSnackbar("Debe seelccionar un tipo de referencia.");
         return;
       }
     }
