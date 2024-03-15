@@ -44,23 +44,10 @@ export class DocumentoComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
   documento: number = this.facturaService.tipoDocumento!;
 
-  //fechas
-  fechaInicial?: NgbDateStruct; //fecha inicial 
-  fechaFinal?: NgbDateStruct;
-  fechaEntrega?: NgbDateStruct;
-  fechaRecoger?: NgbDateStruct;
-  fecha: Date = new Date();
-
-  //horas
-  horaActual!: string; //hora actual
-  horaFinal!: string //hora final +10 min
-  horaEntrega!: string;
-  horaRecoger!: string;
 
 
   constructor(
     private _dialog: MatDialog,
-    private _calendar: NgbCalendar,
     private _translate: TranslateService,
     private _eventService: EventService,
     public facturaService: FacturaService,
@@ -70,19 +57,20 @@ export class DocumentoComponent {
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
   ) {
-    // Inicializar selectedDate con la fecha de hoy
-    this.fechaInicial = this._calendar.getToday();
-    this.fechaFinal = this._calendar.getToday();
-    this.fechaEntrega = this._calendar.getToday();
-    this.fechaRecoger = this._calendar.getToday();
-
-    this.horaActual = this.getHoraInput(this.fecha);
-    this.horaFinal = this.getHoraInput(this.fecha);
-    this.horaEntrega = this.getHoraInput(this.fecha);
-    this.horaRecoger = this.getHoraInput(this.fecha);
 
   }
 
+  
+  //formatear la hora con una fecha ingresada.
+  getHoraInput(horaSelected: Date): string {
+    // Obtener la hora actual y formatearla como deseas
+    let hora = new Date(horaSelected);
+    let horas = hora.getHours();
+    let minutos = hora.getMinutes();
+    let ampm = horas >= 12 ? 'pm' : 'am';
+    // Formatear la hora actual como 'hh:mm am/pm'
+    return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
+  };
  
 
   abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
@@ -402,16 +390,6 @@ export class DocumentoComponent {
   }
 
 
-  //formatear la hora con una fecha ingresada.
-  getHoraInput(horaSelected: Date): string {
-    // Obtener la hora actual y formatearla como deseas
-    let hora = new Date(horaSelected);
-    let horas = hora.getHours();
-    let minutos = hora.getMinutes();
-    let ampm = horas >= 12 ? 'pm' : 'am';
-    // Formatear la hora actual como 'hh:mm am/pm'
-    return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
-  };
 
 
   //convertir una fecha ngbDateStruct a fecha Date.

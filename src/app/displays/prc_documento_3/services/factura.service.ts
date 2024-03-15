@@ -14,6 +14,7 @@ import { TraInternaInterface } from '../interfaces/tra-interna.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { VendedorInterface } from '../interfaces/vendedor.interface';
 import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
     providedIn: 'root',
@@ -55,19 +56,35 @@ export class FacturaService {
     pagado: number = 0;
 
 
-    tiposReferencia:TipoReferenciaInterface[] = [];
-    tipoReferencia?:TipoReferenciaInterface;
+    tiposReferencia: TipoReferenciaInterface[] = [];
+    tipoReferencia?: TipoReferenciaInterface;
 
 
-    fechaEntrega?:Date;
-    fechaRecoger?:Date;
-    fechaIni?:Date;
-    fechaFin?:Date;
+    fecha: Date = new Date();
 
-    refContacto?:string; 
-    refDescripcion?:string; 
-    refDireccionEntrega?:string; 
-    refObservacion?:string; 
+
+    fechaEntrega?: Date;
+    fechaRecoger?: Date;
+    fechaIni?: Date;
+    fechaFin?: Date;
+
+    refContacto?: string;
+    refDescripcion?: string;
+    refDireccionEntrega?: string;
+    refObservacion?: string;
+
+
+    //fechas
+    inputFechaInicial?: NgbDateStruct; //fecha inicial 
+    inputFechaFinal?: NgbDateStruct;
+    inputFechaEntrega?: NgbDateStruct;
+    inputFechaRecoger?: NgbDateStruct;
+
+    //horas
+    horaActual!: string; //hora actual
+    horaFinal!: string //hora final +10 min
+    horaEntrega!: string;
+    horaRecoger!: string;
 
     constructor(
         //instancias de los servicios utilizados
@@ -75,6 +92,7 @@ export class FacturaService {
         private _notificationsService: NotificationsService,
         private _translate: TranslateService,
     ) { }
+
 
 
     //cargar documento guardado en el strorage

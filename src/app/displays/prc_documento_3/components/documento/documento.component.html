@@ -34,8 +34,8 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp" [(ngModel)]="fechaEntrega" ngbDatepicker
-                                #fEntrega="ngbDatepicker" />
+                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaEntrega"
+                                ngbDatepicker #fEntrega="ngbDatepicker" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -45,9 +45,10 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora" [(ngModel)]="horaEntrega">
+                            <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora"
+                                [(ngModel)]="facturaService. horaEntrega">
                             <ngx-material-timepicker #horaEntregaPiker
-                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                                [defaultTime]=" getHoraInput(facturaService.fecha)"></ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)"
                             type="button">
@@ -63,8 +64,8 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp2" [(ngModel)]=" fechaRecoger" ngbDatepicker
-                                #fRecoger="ngbDatepicker" [minDate]="fechaEntrega!" />
+                            <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaRecoger"
+                                ngbDatepicker #fRecoger="ngbDatepicker" [minDate]="facturaService.inputFechaEntrega!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -74,9 +75,10 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora" [(ngModel)]="horaRecoger">
+                            <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora"
+                                [(ngModel)]="facturaService. horaRecoger">
                             <ngx-material-timepicker #horaRegogerPiker
-                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                                [defaultTime]="getHoraInput(facturaService. fecha)"></ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)"
                             type="button">
@@ -92,8 +94,8 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp" [(ngModel)]="fechaInicial" ngbDatepicker
-                                #fInicio="ngbDatepicker" />
+                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaInicial"
+                                ngbDatepicker #fInicio="ngbDatepicker" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -103,9 +105,10 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora" [(ngModel)]="horaActual">
+                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
+                                [(ngModel)]="facturaService. horaActual">
                             <ngx-material-timepicker #horaInicioPiker
-                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                                [defaultTime]="getHoraInput(facturaService. fecha)"></ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)"
                             type="button">
@@ -118,8 +121,8 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
-                                #fFinal="ngbDatepicker" [minDate]="fechaInicial!" />
+                            <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaFinal"
+                                ngbDatepicker #fFinal="ngbDatepicker" [minDate]="facturaService.inputFechaInicial!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -130,9 +133,10 @@
 
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora" [(ngModel)]="horaFinal">
+                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
+                                [(ngModel)]="facturaService. horaFinal">
                             <ngx-material-timepicker #horaFinalPiker
-                                [defaultTime]="getHoraInput(fecha)"></ngx-material-timepicker>
+                                [defaultTime]="getHoraInput(facturaService. fecha)"></ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)"
                             type="button">
@@ -227,27 +231,31 @@
             <p class="textosBold14">{{facturaService.getTextParam(385) ?? 'pos.factura.contacto' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refContacto"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}"
+                [(ngModel)]="facturaService.refContacto"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
             <p class="textosBold14">{{ facturaService.getTextParam(383) ?? 'pos.factura.descripcion' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDescripcion"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}"
+                [(ngModel)]="facturaService.refDescripcion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(386)">
             <p class="textosBold14">{{ facturaService.getTextParam(386) ?? 'pos.factura.entrega' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDireccionEntrega"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}"
+                [(ngModel)]="facturaService.refDireccionEntrega"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservacion"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}"
+                [(ngModel)]="facturaService.refObservacion"></textarea>
         </div>
 
         <!-- <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">

@@ -17,6 +17,7 @@ import { SerieService } from '../../services/serie.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ReferenciaService } from '../../services/referencia.service';
+import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-factura',
@@ -58,6 +59,8 @@ export class FacturaComponent implements OnInit {
   tabPago: boolean = false; //Contorlador para la pestaña de pago
 
 
+
+
   constructor(
     //Instancia de los servicios que se van a utilizar
     private _notificationService: NotificationsService,
@@ -71,6 +74,8 @@ export class FacturaComponent implements OnInit {
     private _formaPagoService: PagoService,
     private _translate: TranslateService,
     private _referenciaService: ReferenciaService,
+    private _calendar: NgbCalendar,
+
   ) {
 
     //sucripcion a eventos desde componentes hijo
@@ -173,6 +178,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDescripcion = undefined;
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
+    this.setDateNow();
+
 
     //si hay solo una serie disponoble
     if (this.facturaService.series.length == 1) {
@@ -212,8 +219,38 @@ export class FacturaComponent implements OnInit {
 
   }
 
+
+  //formatear la hora con una fecha ingresada.
+  getHoraInput(horaSelected: Date): string {
+    // Obtener la hora actual y formatearla como deseas
+    let hora = new Date(horaSelected);
+    let horas = hora.getHours();
+    let minutos = hora.getMinutes();
+    let ampm = horas >= 12 ? 'pm' : 'am';
+    // Formatear la hora actual como 'hh:mm am/pm'
+    return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
+  };
+
+
+  setDateNow() {
+
+    // Inicializar selectedDate con la fecha de hoy
+    this.facturaService.inputFechaInicial = this._calendar.getToday();
+    this.facturaService.inputFechaFinal = this._calendar.getToday();
+    this.facturaService.inputFechaEntrega = this._calendar.getToday();
+    this.facturaService.inputFechaRecoger = this._calendar.getToday();
+
+    this.facturaService.horaActual = this.getHoraInput(this. facturaService. fecha);
+    this.facturaService.horaFinal = this.getHoraInput(this.facturaService.  fecha);
+    this.facturaService.horaEntrega = this.getHoraInput(this.facturaService.  fecha);
+    this.facturaService.horaRecoger = this.getHoraInput(this. facturaService. fecha);
+  }
+
+
   //cargar datos necesarios
   async loadData() {
+
+
 
     //limpiar datos del modulo
     this.facturaService.series = [] //Vaciar series
@@ -243,6 +280,9 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDescripcion = undefined;
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
+
+    this.setDateNow();
+
 
 
     //Seleccionar primera pestaña (petssña documento)
