@@ -17,9 +17,9 @@
             <p class="tEvento">{{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}</p>
             <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
             <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
-                [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
-                <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
-                    {{serie.descripcion}}
+                [(ngModel)]="facturaService.tipoReferencia">
+                <mat-option *ngFor="let referencia of facturaService.tiposReferencia" [value]="referencia">
+                    {{referencia.descripcion}}
                 </mat-option>
             </mat-select>
             <!-- 

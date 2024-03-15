@@ -24,7 +24,7 @@ export class ReferenciaService{
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}api/Referencia/tipo/${user}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Referencia/tipo/${user}`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
