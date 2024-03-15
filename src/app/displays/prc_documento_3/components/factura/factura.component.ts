@@ -17,7 +17,7 @@ import { SerieService } from '../../services/serie.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ReferenciaService } from '../../services/referencia.service';
-import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-factura',
@@ -240,10 +240,37 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaEntrega = this._calendar.getToday();
     this.facturaService.inputFechaRecoger = this._calendar.getToday();
 
-    this.facturaService.horaActual = this.getHoraInput(this. facturaService. fecha);
+    this.facturaService.horaIncial = this.getHoraInput(this. facturaService. fecha);
     this.facturaService.horaFinal = this.getHoraInput(this.facturaService.  fecha);
     this.facturaService.horaEntrega = this.getHoraInput(this.facturaService.  fecha);
     this.facturaService.horaRecoger = this.getHoraInput(this. facturaService. fecha);
+
+
+
+    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!,this.facturaService.horaEntrega);
+    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!,this.facturaService.horaRecoger);
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!,this.facturaService.horaIncial);
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!,this.facturaService.horaFinal);
+
+  }
+
+  convertValidDate(date: NgbDateStruct, timeString:string):Date {
+    // Separar la cadena de tiempo en horas, minutos y AM/PM
+    const { year, month, day } = date;
+    const [time, meridiem] = timeString.split(' ');
+    const [hoursString, minutesString] = time.split(':');
+
+    let hours = parseInt(hoursString);
+    const minutes = parseInt(minutesString);
+
+    // Convertir las horas a formato de 24 horas si es PM
+    if (meridiem.toUpperCase() === 'PM' && hours < 12) {
+      hours += 12;
+    } else if (meridiem.toUpperCase() === 'AM' && hours === 12) {
+      hours = 0; // Si es 12:xx AM, lo convertimos a 0 horas
+    }
+
+    return new Date(year, month - 1, day, hours, minutes);
   }
 
 

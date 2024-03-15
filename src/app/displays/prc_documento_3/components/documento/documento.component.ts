@@ -60,7 +60,27 @@ export class DocumentoComponent {
 
   }
 
-  
+
+
+  convertValidDate(date: NgbDateStruct, timeString:string):Date {
+    // Separar la cadena de tiempo en horas, minutos y AM/PM
+    const { year, month, day } = date;
+    const [time, meridiem] = timeString.split(' ');
+    const [hoursString, minutesString] = time.split(':');
+
+    let hours = parseInt(hoursString);
+    const minutes = parseInt(minutesString);
+
+    // Convertir las horas a formato de 24 horas si es PM
+    if (meridiem.toUpperCase() === 'PM' && hours < 12) {
+      hours += 12;
+    } else if (meridiem.toUpperCase() === 'AM' && hours === 12) {
+      hours = 0; // Si es 12:xx AM, lo convertimos a 0 horas
+    }
+
+    return new Date(year, month - 1, day, hours, minutes);
+  }
+
   //formatear la hora con una fecha ingresada.
   getHoraInput(horaSelected: Date): string {
     // Obtener la hora actual y formatearla como deseas
@@ -71,7 +91,22 @@ export class DocumentoComponent {
     // Formatear la hora actual como 'hh:mm am/pm'
     return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
   };
- 
+
+
+  setDateEntrega() {
+    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!,this.facturaService.horaEntrega);
+  }
+
+  setDateRecoger() {
+    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!,this.facturaService.horaRecoger);
+  }
+  setDateIncio() {
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!,this.facturaService.horaIncial);
+  }
+  setDateFin() {
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!,this.facturaService.horaFinal);
+  }
+
 
   abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
     timepicker.open();

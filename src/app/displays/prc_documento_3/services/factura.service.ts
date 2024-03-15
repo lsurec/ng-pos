@@ -81,7 +81,7 @@ export class FacturaService {
     inputFechaRecoger?: NgbDateStruct;
 
     //horas
-    horaActual!: string; //hora actual
+    horaIncial!: string; //hora actual
     horaFinal!: string //hora final +10 min
     horaEntrega!: string;
     horaRecoger!: string;
