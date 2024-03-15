@@ -183,6 +183,16 @@ export class FacturaComponent implements OnInit {
       this.facturaService.serie = undefined
     }
 
+
+    //si hay solo una tipo referencia disponoble
+    if (this.facturaService.tiposReferencia.length == 1) {
+      //seleccionar la tipo referencia
+      this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
+    } else {
+      //si hay mas de una no seleccionar ninguna
+      this.facturaService.tipoReferencia = undefined
+    }
+
     //si solo un vendedor dipsonible
     if (this.facturaService.vendedores.length == 1) {
       //seleccionar el vendedor

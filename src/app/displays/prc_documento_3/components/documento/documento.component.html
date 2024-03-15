@@ -227,27 +227,27 @@
             <p class="textosBold14">{{facturaService.getTextParam(385) ?? 'pos.factura.contacto' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="nombre"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refContacto"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
             <p class="textosBold14">{{ facturaService.getTextParam(383) ?? 'pos.factura.descripcion' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="descripcion"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDescripcion"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(386)">
             <p class="textosBold14">{{ facturaService.getTextParam(386) ?? 'pos.factura.entrega' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="direccion"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDireccionEntrega"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="observacion"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservacion"></textarea>
         </div>
 
         <!-- <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">

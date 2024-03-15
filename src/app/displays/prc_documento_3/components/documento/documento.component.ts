@@ -57,15 +57,6 @@ export class DocumentoComponent {
   horaEntrega!: string;
   horaRecoger!: string;
 
-  
-  //campos
-  descripcion: string = "";
-  observacion: string = "";
-  nombre: string ="";
-  direccion: string ="";
-  telefono: string ="";
-  tipoReferencia: string ="";
-
 
   constructor(
     private _dialog: MatDialog,
