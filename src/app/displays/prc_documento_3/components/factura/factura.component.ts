@@ -16,6 +16,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { SerieService } from '../../services/serie.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ReferenciaService } from '../../services/referencia.service';
 
 @Component({
   selector: 'app-factura',
@@ -27,6 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
     TipoTransaccionService,
     ParametroService,
     PagoService,
+    ReferenciaService,
   ]
 })
 export class FacturaComponent implements OnInit {
@@ -68,6 +70,7 @@ export class FacturaComponent implements OnInit {
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
     private _translate: TranslateService,
+    private _referenciaService: ReferenciaService,
   ) {
 
     //sucripcion a eventos desde componentes hijo
@@ -173,11 +176,11 @@ export class FacturaComponent implements OnInit {
     }
 
     //si solo un vendedor dipsonible
-    if(this.facturaService.vendedores.length == 1){
+    if (this.facturaService.vendedores.length == 1) {
       //seleccionar el vendedor
       this.facturaService.vendedor = this.facturaService.vendedores[0];
 
-    }else{
+    } else {
       //si hay mas de uno no sleccionarlo
       this.facturaService.vendedor = undefined; //
 
@@ -222,13 +225,13 @@ export class FacturaComponent implements OnInit {
     if (!this.facturaService.tipoDocumento) {
       this.verError({
         response: this._translate.instant('pos.factura.sin_tipo_documento'),
-        status:false,
+        status: false,
       })
       return;
     }
 
     //Datos de la sesion
-    let user: string = PreferencesService.user; 
+    let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;
     let empresa: number = PreferencesService.empresa.empresa;
     let estacion: number = PreferencesService.estacion.estacion_Trabajo;
@@ -245,7 +248,7 @@ export class FacturaComponent implements OnInit {
       estacion,
     );
 
-      //si algo salio al
+    //si algo salio al
     if (!resSeries.status) {
       this.facturaService.isLoading = false;
       this.verError(resSeries);
@@ -347,6 +350,36 @@ export class FacturaComponent implements OnInit {
 
       //Formas de pago disponobles
       this.facturaService.formasPago = resFormaPago.response;
+
+    }
+
+
+    if (this.facturaService.valueParametro(58)) {
+
+      this.facturaService.tipoReferencia = undefined;
+      this.facturaService.tiposReferencia = [];
+
+
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
+
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+
+      if( this.facturaService.tiposReferencia.length == 1 ){
+        this.facturaService.tipoReferencia	= this.facturaService.tiposReferencia[0];
+      }
 
     }
 

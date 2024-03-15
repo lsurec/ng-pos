@@ -13,6 +13,7 @@ import { TipoTransaccionInterface } from '../interfaces/tipo-transaccion.interfa
 import { TraInternaInterface } from '../interfaces/tra-interna.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { VendedorInterface } from '../interfaces/vendedor.interface';
+import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 
 @Injectable({
     providedIn: 'root',
@@ -52,6 +53,10 @@ export class FacturaService {
     saldo: number = 0;
     cambio: number = 0;
     pagado: number = 0;
+
+
+    tiposReferencia:TipoReferenciaInterface[] = [];
+    tipoReferencia?:TipoReferenciaInterface;
 
     constructor(
         //instancias de los servicios utilizados
