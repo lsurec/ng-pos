@@ -164,7 +164,15 @@ export class FacturaComponent implements OnInit {
     this.facturaService.saldo = 0;  //reiniciar saldo del documento
     this.facturaService.cambio = 0; //reiniciar cambio del documento
     this.facturaService.pagado = 0; //reiniciar monto pagado del
-
+    this.facturaService.tipoReferencia = undefined;
+    this.facturaService.fechaEntrega = undefined;
+    this.facturaService.fechaRecoger = undefined;
+    this.facturaService.fechaIni = undefined;
+    this.facturaService.fechaFin = undefined;
+    this.facturaService.refContacto = undefined;
+    this.facturaService.refDescripcion = undefined;
+    this.facturaService.refDireccionEntrega = undefined;
+    this.facturaService.refObservacion = undefined;
 
     //si hay solo una serie disponoble
     if (this.facturaService.series.length == 1) {
@@ -216,6 +224,15 @@ export class FacturaComponent implements OnInit {
     this.facturaService.saldo = 0;  //reiniciar saldo por pagar del documento
     this.facturaService.cambio = 0; //reniciare cambio del documento
     this.facturaService.pagado = 0; //reinciiar montos oagados del documento
+    this.facturaService.tipoReferencia = undefined;
+    this.facturaService.fechaEntrega = undefined;
+    this.facturaService.fechaRecoger = undefined;
+    this.facturaService.fechaIni = undefined;
+    this.facturaService.fechaFin = undefined;
+    this.facturaService.refContacto = undefined;
+    this.facturaService.refDescripcion = undefined;
+    this.facturaService.refDireccionEntrega = undefined;
+    this.facturaService.refObservacion = undefined;
 
 
     //Seleccionar primera pestaña (petssña documento)
@@ -377,8 +394,8 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tiposReferencia = resTipoRefencia.response;
 
 
-      if( this.facturaService.tiposReferencia.length == 1 ){
-        this.facturaService.tipoReferencia	= this.facturaService.tiposReferencia[0];
+      if (this.facturaService.tiposReferencia.length == 1) {
+        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
       }
 
     }
