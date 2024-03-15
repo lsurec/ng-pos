@@ -161,12 +161,11 @@ hr {
 }
 
 .fechas {
-    display    : flex;
-    align-items: center;
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 10px;
 }
 
 .fechaER {
-    display    : flex;
-    align-items: center;
-    width      : 45%;
+    width: 45%;
 }
