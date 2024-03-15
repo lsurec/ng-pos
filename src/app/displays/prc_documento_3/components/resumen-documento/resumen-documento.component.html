@@ -137,55 +137,78 @@
                                 <p class="textos">Tipo Referencia</p>
                             </div>
                         </div>
-
-                        <div class="descripciones">
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.fEntrega' | translate }} </p>
-                                <span class="spacer"></span>
-
-                                <p class="textos">15/02/2024</p>
+                        <hr>
+                        <div class="fechas">
+                            <div class="fechaER" *ngIf="facturaService.valueParametro(381)">
+                                <p class="subtitulo-borde">
+                                    {{ facturaService.getTextParam(381) ?? 'pos.factura.fEntrega' | translate }}
+                                </p>
+                                <div class="descripciones">
+                                    <p class="textos">15/02/2024</p>
+                                </div>
                             </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.factura.fRecoger' | translate }} </p>
-                                <span class="spacer"></span>
-
-                                <p class="textos">17/02/2024</p>
-                            </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.documento.fechaIni' | translate }} </p>
-                                <span class="spacer"></span>
-
-                                <p class="textos">15/02/2024</p>
-                            </div>
-                            <div class="dFlex">
-                                <p class="subtitulo">{{ 'pos.documento.fechaFin' | translate }} </p>
-                                <span class="spacer"></span>
-
-                                <p class="textos">17/02/2024</p>
+                            <span class="spacer"></span>
+                            <div class="fechaER" *ngIf="facturaService.valueParametro(382)">
+                                <p class="subtitulo-borde">
+                                    {{ facturaService.getTextParam(382) ?? 'pos.factura.fRecoger' | translate }}</p>
+                                <div class="descripciones">
+                                    <p class="textos">17/02/2024</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="informacion">
+                        <div class="fechas" *ngIf="facturaService.valueParametro(44)">
+                            <div class="fechaER">
+                                <p class="subtitulo-borde">{{ 'pos.documento.fechaIni' | translate }} </p>
+                                <div class="descripciones">
+                                    <p class="textos">15/02/2024</p>
+                                </div>
+                            </div>
+                            <span class="spacer"></span>
+                            <div class="fechaER">
+                                <p class="subtitulo-borde">{{ 'pos.documento.fechaFin' | translate }} </p>
+                                <div class="descripciones">
+                                    <p class="textos">17/02/2024</p>
+                                </div>
+                            </div>
+                        </div>
 
+                        <p class="subtitulo-borde" *ngIf="facturaService.valueParametro(385)">
+                            {{facturaService.getTextParam(385) ?? 'pos.factura.contacto' | translate }}</p>
+                        <div class="descripciones">
+                            <p class="textos">(Contacto) Juan Perez</p>
+                        </div>
+                        <div class="informacion">
+                            <p class="subtitulo-borde" *ngIf="facturaService.valueParametro(383)">
+                                {{ facturaService.getTextParam(383) ?? 'pos.factura.descripcion' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">(Descripcion) Descripcion</p>
+                            </div>
+                        </div>
+                        <div class="informacion">
+                            <p class="subtitulo-borde" *ngIf="facturaService.valueParametro(386)">
+                                {{ facturaService.getTextParam(386) ?? 'pos.factura.entrega' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">(Direccion) Entrega</p>
+                            </div>
+                        </div>
+                        <div class="informacion">
+                            <p class="subtitulo-borde" *ngIf=" facturaService.valueParametro(384)">
+                                {{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">(Observacion) Observacion 1</p>
+                            </div>
+
+                        </div>
+
+                        <div class="informacion" *ngIf="facturaService.valueParametro(58)">
                             <p class="subtitulo-borde ">{{ 'pos.factura.detalle' | translate }}</p>
                             <div class="descripciones">
-
-
-                                <p class="subtitulo" *ngIf="facturaService.valueParametro(385)">
-                                    {{facturaService.getTextParam(385) ?? 'pos.factura.contacto' | translate }}</p>
-                                <p class="textos">(Contacto) Juan Perez</p>
-
-                                <p class="subtitulo" *ngIf="facturaService.valueParametro(383)">
-                                    {{ facturaService.getTextParam(383) ?? 'pos.factura.descripcion' | translate }}</p>
-                                <p class="textos">(Descripcion) Descripcion</p>
-
-                                <p class="subtitulo" *ngIf="facturaService.valueParametro(386)">
-                                    {{ facturaService.getTextParam(386) ?? 'pos.factura.entrega' | translate }}</p>
-                                <p class="textos">(Direccion) Entrega</p>
-
-                                <p class="subtitulo" *ngIf=" facturaService.valueParametro(384)">
-                                    {{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
-                                <p class="textos">(Observacion) Observacion 1</p>
+                                <p class="textos">Id: 14217</p>
+                                <p class="textos"> {{ 'pos.documento.usuario' |translate }} Ventas502</p>
+                                <p class="textos"> {{ 'pos.factura.referencia' |translate }}: 14217</p>
+                                <p class="textos">{{ 'pos.factura.estado' |translate }}: Activo</p>
+                                <p class="textos">{{ 'pos.documento.fechaHora' |translate }} 15/03/2024 - 11:00 AM</p>
                             </div>
                         </div>
 
