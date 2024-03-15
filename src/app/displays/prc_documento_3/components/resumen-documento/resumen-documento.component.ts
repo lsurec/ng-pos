@@ -555,18 +555,18 @@ export class ResumenDocumentoComponent implements OnInit {
   //Creacion del documnto en tbl_documento estructura
   async sendDocument() {
 
-      // Generar dos números aleatorios de 7 dígitos cada uno?
-      let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
-      let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
-  
-      // Combinar los dos números para formar uno de 14 dígitos
-      let strNum1: string = randomNumber1.toString();
-      let strNum2: string = randomNumber2.toString();
-      let combinedStr: string = strNum1 + strNum2;
-  
-      //ref id
-      let combinedNum: number = parseInt(combinedStr, 10);
-  
+    // Generar dos números aleatorios de 7 dígitos cada uno?
+    let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
+    let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    let strNum1: string = randomNumber1.toString();
+    let strNum2: string = randomNumber2.toString();
+    let combinedStr: string = strNum1 + strNum2;
+
+    //ref id
+    let combinedNum: number = parseInt(combinedStr, 10);
+
     //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
     //transacciones para el docummento
@@ -598,7 +598,7 @@ export class ResumenDocumentoComponent implements OnInit {
           //agregar cargos
           cargos.push(
             {
-              D_Consecutivo_Interno:randomNumber1,
+              D_Consecutivo_Interno: randomNumber1,
               Tra_Consecutivo_Interno: consecutivo,
               Tra_Consecutivo_Interno_Padre: padre,
               Tra_Bodega: transaccion.bodega!.bodega,
@@ -624,7 +624,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
           descuentos.push(
             {
-              D_Consecutivo_Interno:randomNumber1,
+              D_Consecutivo_Interno: randomNumber1,
               Tra_Consecutivo_Interno: consecutivo,
               Tra_Consecutivo_Interno_Padre: padre,
               Tra_Bodega: transaccion.bodega!.bodega,
@@ -681,13 +681,13 @@ export class ResumenDocumentoComponent implements OnInit {
     });
 
 
-    let consecutivoPago :number= 1;
+    let consecutivoPago: number = 1;
 
     //agreagar cargo abono a la estructrura
     this.facturaService.montos.forEach(monto => {
       pagos.push(
         {
-          Consecutivo_Interno:consecutivoPago,
+          Consecutivo_Interno: consecutivoPago,
           D_Consecutivo_Interno: randomNumber1,
           Tipo_Cargo_Abono: monto.payment.tipo_Cargo_Abono,
           Monto: monto.amount,
@@ -705,7 +705,7 @@ export class ResumenDocumentoComponent implements OnInit {
     });
 
 
-  
+
     //total cargo abono
     let totalCA: number = 0;
 
@@ -720,6 +720,15 @@ export class ResumenDocumentoComponent implements OnInit {
     //documento estructura
     let doc: Documento = {
       Consecutivo_Interno: randomNumber1,
+      Doc_Tipo_Referencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
+      Doc_Fecha_Entrega: this.facturaService.fechaEntrega ?? null,
+      Doc_Fecha_Recoger: this.facturaService.fechaRecoger ?? null,
+      Doc_Fecha_Incio: this.facturaService.fechaIni ?? null,
+      Doc_Fecha_Finalizacion: this.facturaService.fechaFin ?? null,
+      Doc_Ref_Contacto: this.facturaService.refContacto ?? null,
+      Doc_Ref_Descripcion: this.facturaService.refDescripcion ?? null,
+      Doc_Ref_Direccion_Entrega: this.facturaService.refDireccionEntrega ?? null,
+      Doc_Ref_Observacion: this.facturaService.refObservacion ?? null,
       Doc_Tra_Monto: this.facturaService.total,
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar

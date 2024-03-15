@@ -1,6 +1,15 @@
 // documento.interface.ts
 
 export interface Documento {
+  Doc_Tipo_Referencia:number | null,
+  Doc_Fecha_Entrega:Date | null,
+  Doc_Fecha_Recoger:Date | null,
+  Doc_Fecha_Incio:Date | null,
+  Doc_Fecha_Finalizacion:Date | null,
+  Doc_Ref_Contacto:string |null,
+  Doc_Ref_Descripcion:string| null,
+  Doc_Ref_Direccion_Entrega:string | null,
+  Doc_Ref_Observacion:string | null,
   Consecutivo_Interno:number;
   Doc_Tra_Monto: number;
   Doc_CA_Monto: number;

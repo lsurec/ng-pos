@@ -58,6 +58,17 @@ export class FacturaService {
     tiposReferencia:TipoReferenciaInterface[] = [];
     tipoReferencia?:TipoReferenciaInterface;
 
+
+    fechaEntrega?:Date;
+    fechaRecoger?:Date;
+    fechaIni?:Date;
+    fechaFin?:Date;
+
+    refContacto?:string; 
+    refDescripcion?:string; 
+    refDireccionEntrega?:string; 
+    refObservacion?:string; 
+
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
