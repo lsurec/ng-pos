@@ -164,11 +164,36 @@ hr {
         display: block !important;
     }
 
-    .informacion, .detalles-lista {
+    .informacion,
+    .detalles-lista {
         width: 100% !important;
     }
 
     .subtitulo-total {
         font-size: 12px !important;
     }
+
+    .fechas,
+    .ordenar {
+        width: 100% !important;
+    }
+
+    .fechas {
+        display: block !important;
+    }
+
+    .fechaER {
+        width: 100% !important;
+    }
+}
+
+.fechas {
+    display    : flex;
+    align-items: center;
+    padding    : 3px 0px;
+    width      : 48%;
+}
+
+.fechaER {
+    width: 45%;
 }
