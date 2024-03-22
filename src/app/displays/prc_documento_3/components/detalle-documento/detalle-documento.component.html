@@ -50,6 +50,89 @@
 
             <div class="cliente-vendedor">
                 <div class="informacion">
+                    <p class="subtitulo-borde ">{{ 'pos.factura.tipoRef' | translate }}</p>
+                    <div class="descripciones">
+                        <p class="textos">Tipo Referencia</p>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+                <div class="informacion">
+                    <p class="subtitulo-borde">
+                        {{ 'pos.factura.descripcion' | translate }}</p>
+                    <div class="descripciones">
+                        <p class="textos">(Descripcion) Descripcion</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cliente-vendedor">
+                <div class="informacion">
+                    <p class="subtitulo-borde">
+                        {{ 'pos.factura.contacto' | translate }}</p>
+                    <div class="descripciones">
+                        <p class="textos">(Contacto) Juan Perez</p>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+                <div class="informacion">
+                    <p class="subtitulo-borde">
+                        {{ 'pos.factura.entrega' | translate }}</p>
+                    <div class="descripciones">
+                        <p class="textos">(Direccion) Entrega</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cliente-vendedor">
+                <div class="informacion">
+                    <p class="subtitulo-borde">
+                        {{ 'pos.factura.observacion' | translate }}</p>
+                    <div class="descripciones">
+                        <p class="textos">(Observacion) Observacion 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cliente-vendedor">
+                <div class="fechas">
+                    <div class="fechaER">
+                        <p class="subtitulo-borde">
+                            {{ 'pos.factura.fEntrega' | translate }}
+                        </p>
+                        <div class="descripciones">
+                            <p class="textos">15/02/2024</p>
+                        </div>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="fechaER">
+                        <p class="subtitulo-borde">
+                            {{ 'pos.factura.fRecoger' | translate }}</p>
+                        <div class="descripciones">
+                            <p class="textos">17/02/2024</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+
+                <div class="fechas">
+                    <div class="fechaER">
+                        <p class="subtitulo-borde">{{ 'pos.documento.fechaIni' | translate }} </p>
+                        <div class="descripciones">
+                            <p class="textos">15/02/2024</p>
+                        </div>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="fechaER">
+                        <p class="subtitulo-borde">{{ 'pos.documento.fechaFin' | translate }} </p>
+                        <div class="descripciones">
+                            <p class="textos">17/02/2024</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cliente-vendedor">
+                <div class="informacion">
                     <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
                     <div class="descripciones" *ngIf="client">
                         <p class="textos">{{ 'pos.factura.nit' | translate }}: {{client.factura_NIT}}</p>
