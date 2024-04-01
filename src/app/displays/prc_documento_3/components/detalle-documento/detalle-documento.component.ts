@@ -25,6 +25,7 @@ import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
 import { MontoIntreface } from '../../interfaces/monto.interface';
 import { BancoInterface } from '../../interfaces/banco.interface';
 import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
+import { TipoReferenciaInterface } from '../../interfaces/tipo-referencia';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -66,6 +67,8 @@ export class DetalleDocumentoComponent implements OnInit {
 
   banco?: BancoInterface;
   cuentaBanco?: CuentaBancoInterface;
+
+  tipoReferencia?:TipoReferenciaInterface;
 
   constructor(
     private _eventService: EventService,
@@ -611,7 +614,7 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-
+    //TODO:Buscar tioo de referencia
 
     this.isLoading = false;
 
