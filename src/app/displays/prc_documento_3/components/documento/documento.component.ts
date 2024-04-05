@@ -62,7 +62,7 @@ export class DocumentoComponent {
 
 
 
-  convertValidDate(date: NgbDateStruct, timeString:string):Date {
+  convertValidDate(date: NgbDateStruct, timeString: string): Date {
     // Separar la cadena de tiempo en horas, minutos y AM/PM
     const { year, month, day } = date;
     const [time, meridiem] = timeString.split(' ');
@@ -94,17 +94,68 @@ export class DocumentoComponent {
 
 
   setDateEntrega() {
-    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!,this.facturaService.horaEntrega);
+    //si se debe calcular el preciuo por dias
+    if (this.facturaService.valueParametro(351)) {
+      //si hay productos agregados no se puede cambiar la fechha
+      if (this.facturaService.traInternas.length > 0) {
+        //TODO:Translate
+        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
+        //TODO:Reestablecer primera fecha
+
+        return;
+      }
+
+    }
+    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
   }
 
   setDateRecoger() {
-    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!,this.facturaService.horaRecoger);
+    //si se debe calcular el preciuo por dias
+    if (this.facturaService.valueParametro(351)) {
+      //si hay productos agregados no se puede cambiar la fechha
+      if (this.facturaService.traInternas.length > 0) {
+        //TODO:Translate
+        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
+        //TODO:Reestablecer primera fecha
+
+        return;
+      }
+
+    }
+
+    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!, this.facturaService.horaRecoger);
   }
   setDateIncio() {
-    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!,this.facturaService.horaIncial);
+    //si se debe calcular el preciuo por dias
+    if (this.facturaService.valueParametro(351)) {
+      //si hay productos agregados no se puede cambiar la fechha
+      if (this.facturaService.traInternas.length > 0) {
+        //TODO:Translate
+        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
+        //TODO:Reestablecer primera fecha
+
+        return;
+      }
+
+    }
+
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
   }
   setDateFin() {
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!,this.facturaService.horaFinal);
+    //si se debe calcular el preciuo por dias
+    if (this.facturaService.valueParametro(351)) {
+      //si hay productos agregados no se puede cambiar la fechha
+      if (this.facturaService.traInternas.length > 0) {
+        //TODO:Translate
+        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
+        //TODO:Reestablecer primera fecha
+
+        return;
+      }
+
+    }
+
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
   }
 
 

@@ -403,13 +403,14 @@ export class ProductoComponent {
     // /7agregar transaccion
     this.facturaService.addTransaction(
       {
+        precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
         precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        total: this.productoService.total,
+        total: this.facturaService.valueParametro(351) ? precioDias :  this.productoService.total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
