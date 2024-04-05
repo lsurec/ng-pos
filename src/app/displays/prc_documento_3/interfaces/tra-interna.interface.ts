@@ -8,6 +8,7 @@ export interface TraInternaInterface {
     bodega?: BodegaProductoInterface; // La propiedad es opcional con la opción de ser nula
     precio?: UnitarioInterface; // La propiedad es opcional con la opción de ser nula
     cantidad: number;
+    precipDia: number | null;
     total: number;
     operaciones: TraInternaInterface[];
     descuento: number;

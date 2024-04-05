@@ -457,6 +457,7 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
+            precipDia:null, //TODO:Usar precio dia
             isChecked: false,
             producto: element.producto,
             cantidad: 0,

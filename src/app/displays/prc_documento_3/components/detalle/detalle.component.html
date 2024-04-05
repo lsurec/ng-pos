@@ -113,10 +113,14 @@
                     <div class="descripcion-producto">
                         <p class="subtitulo"> {{transaccion.cantidad}} x {{transaccion.producto.des_Producto}}</p>
                         <p class="subtitulo">SKU: {{transaccion.producto.producto_Id}}</p>
-                        <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}
+                        <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
                             {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }} {{transaccion.total |
+                         <!--TODO:Translate-->
+                         <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por días:
+                            {{transaccion.precipDia | currency:' ':'symbol':'2.2-2' }}
+                        </p>
+                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |
                             currency:' ':'symbol':'2.2-2' }}</p>
                         <p class="info-producto" *ngIf="transaccion.cargo != 0">{{ 'pos.factura.cargos' | translate }}
                             {{transaccion.cargo |

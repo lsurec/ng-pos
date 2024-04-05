@@ -95,6 +95,17 @@ export class FacturaService {
 
 
 
+
+    addLeadingZero(number: number): string {
+        return number.toString().padStart(2, '0');
+    }
+
+
+    formatstrDateForPriceU(date:Date){
+        return `${date.getFullYear()}${this.addLeadingZero(date.getMonth() +1 )}${this.addLeadingZero(date.getDate())} ${this.addLeadingZero(date.getHours())}:${this.addLeadingZero(date.getMinutes())}:${this.addLeadingZero(date.getSeconds())}`;
+
+    }
+    
     //cargar documento guardado en el strorage
     async loadDocDave() {
 

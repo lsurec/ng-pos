@@ -13,6 +13,7 @@ import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 
 @Component({
   selector: 'app-producto',
@@ -305,7 +306,7 @@ export class ProductoComponent {
   }
 
   //guardar transaccion
-  enviar() {
+  async enviar() {
     //Validaciones
 
     //verificar que la cantidad sea numerica
@@ -371,9 +372,38 @@ export class ProductoComponent {
     }
 
 
+    let precioDias:number = 0;
+
+    if(this.facturaService.valueParametro(351))
+    {
+
+      let strFechaIni:string =this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!); 
+      let strFechaFin:string =this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!); 
+
+
+      let res:ResApiInterface = await this._productService.getFormulaPrecioU(
+        this.token,
+         strFechaIni, 
+        strFechaFin,
+        this.productoService.total.toString(),
+      );
+
+      if(!res.status){
+        this._notificationsService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+          
+        console.error(res);
+        
+        return;
+      }
+      
+      precioDias = res.response.data;
+      
+    }    
+
     // /7agregar transaccion
     this.facturaService.addTransaction(
       {
+        precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,
