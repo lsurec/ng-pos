@@ -77,7 +77,11 @@
         <mat-toolbar class="toolbarPhone" *ngIf="!facturaService.isLoading">
             <mat-toolbar-row>
                 <div class="barras">
-                    <button mat-icon-button color="transparent" (click)="goBack()">
+                    <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    
+                    <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
                         <mat-icon>home</mat-icon>
                     </button>
                     <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
@@ -113,7 +117,11 @@
             </mat-toolbar-row>
         </mat-toolbar>
         <mat-toolbar class="toolbar-large" *ngIf="!facturaService.isLoading">
-            <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+            <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            
+            <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
                 <mat-icon>home</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"

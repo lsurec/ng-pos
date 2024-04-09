@@ -18,6 +18,7 @@ import { TipoTransaccionService } from '../../services/tipos-transaccion.service
 import { TranslateService } from '@ngx-translate/core';
 import { ReferenciaService } from '../../services/referencia.service';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Component({
   selector: 'app-factura',
@@ -75,6 +76,7 @@ export class FacturaComponent implements OnInit {
     private _translate: TranslateService,
     private _referenciaService: ReferenciaService,
     private _calendar: NgbCalendar,
+    public globalConvertService:GlobalConvertService,
 
   ) {
 
