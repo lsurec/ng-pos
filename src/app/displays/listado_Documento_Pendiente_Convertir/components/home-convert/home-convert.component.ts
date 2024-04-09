@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
-import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-home-convert',

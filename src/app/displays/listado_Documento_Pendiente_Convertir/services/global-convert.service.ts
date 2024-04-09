@@ -13,6 +13,9 @@ import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
     providedIn: 'root',
 })
 export class GlobalConvertService {
+
+
+    editDoc:boolean = false;
     regresar: number = 0;
 
     isLoading: boolean = false; //pantalla de carga
