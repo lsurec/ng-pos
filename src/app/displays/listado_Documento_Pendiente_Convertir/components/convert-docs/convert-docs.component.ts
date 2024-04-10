@@ -205,6 +205,9 @@ export class ConvertDocsComponent {
 
     }
 
+
+    
+
     let deatlles: DetailOriginDocInterface[] = res.response;
 
 

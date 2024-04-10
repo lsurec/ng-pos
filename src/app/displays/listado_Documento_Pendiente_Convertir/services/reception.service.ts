@@ -475,6 +475,8 @@ export class ReceptionService {
                 },
                 //si algo sale mal
                 err => {
+    console.log(err);
+
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;
 
