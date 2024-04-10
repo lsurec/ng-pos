@@ -378,6 +378,9 @@ export class ConvertDocsComponent {
       let prod: ProductoInterface = productSearch[iProd];
 
 
+      
+
+
 
       this._facturaService.traInternas.push(
         {
