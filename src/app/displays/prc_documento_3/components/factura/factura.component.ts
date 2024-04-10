@@ -290,34 +290,7 @@ export class FacturaComponent implements OnInit {
 
 
     //limpiar datos del modulo
-    this.facturaService.series = [] //Vaciar series
-    this.facturaService.serie = undefined;  //no seleccionar serie
-    this.facturaService.vendedores = [];  //Vaciar lista cuenta correntista ref
-    this.facturaService.vendedor = undefined; //no seleccionar cuenta correntusta ref
-    this.facturaService.tiposTransaccion = [];  //limpiar tipos de transaccion
-    this.facturaService.parametros = [];  //limpiar parametros
-    this.facturaService.formasPago = [];  //limpiar formas de pago
-    this.facturaService.cuenta = undefined; //no seleccionar cuenta correntista
-    this.facturaService.montos = [];  //limpiar cargo abono agregados al documento
-    this.facturaService.traInternas = []; //limpoiar transaciones agregadas al documento
-    this.facturaService.selectAllTra = false; //No seleccionar todas las transacciones
-    this.facturaService.subtotal = 0; //reniciar subtotla del documento
-    this.facturaService.cargo = 0;  //reiniciar cargos del documento
-    this.facturaService.descuento = 0;  //reiniciar descuentos del documento
-    this.facturaService.total = 0;  //reinicar total del documento
-    this.facturaService.saldo = 0;  //reiniciar saldo por pagar del documento
-    this.facturaService.cambio = 0; //reniciare cambio del documento
-    this.facturaService.pagado = 0; //reinciiar montos oagados del documento
-    this.facturaService.tipoReferencia = undefined;
-    this.facturaService.fechaEntrega = undefined;
-    this.facturaService.fechaRecoger = undefined;
-    this.facturaService.fechaIni = undefined;
-    this.facturaService.fechaFin = undefined;
-    this.facturaService.refContacto = undefined;
-    this.facturaService.refDescripcion = undefined;
-    this.facturaService.refDireccionEntrega = undefined;
-    this.facturaService.refObservacion = undefined;
-
+ this.facturaService.clearData();
     this.setDateNow();
 
 

@@ -471,6 +471,9 @@ export class ReceptionService {
                         response: response.data,
                         storeProcedure: response.storeProcedure
                     }
+
+    console.log(res);
+
                     resolve(resApi);
                 },
                 //si algo sale mal

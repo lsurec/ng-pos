@@ -96,6 +96,38 @@ export class FacturaService {
 
 
 
+    clearData(){
+           //limpiar datos del modulo
+    this.series = [] //Vaciar series
+    this.serie = undefined;  //no seleccionar serie
+    this.vendedores = [];  //Vaciar lista cuenta correntista ref
+    this.vendedor = undefined; //no seleccionar cuenta correntusta ref
+    this.tiposTransaccion = [];  //limpiar tipos de transaccion
+    this.parametros = [];  //limpiar parametros
+    this.formasPago = [];  //limpiar formas de pago
+    this.cuenta = undefined; //no seleccionar cuenta correntista
+    this.montos = [];  //limpiar cargo abono agregados al documento
+    this.traInternas = []; //limpoiar transaciones agregadas al documento
+    this.selectAllTra = false; //No seleccionar todas las transacciones
+    this.subtotal = 0; //reniciar subtotla del documento
+    this.cargo = 0;  //reiniciar cargos del documento
+    this.descuento = 0;  //reiniciar descuentos del documento
+    this.total = 0;  //reinicar total del documento
+    this.saldo = 0;  //reiniciar saldo por pagar del documento
+    this.cambio = 0; //reniciare cambio del documento
+    this.pagado = 0; //reinciiar montos oagados del documento
+    this.tipoReferencia = undefined;
+    this.fechaEntrega = undefined;
+    this.fechaRecoger = undefined;
+    this.fechaIni = undefined;
+    this.fechaFin = undefined;
+    this.refContacto = undefined;
+    this.refDescripcion = undefined;
+    this.refDireccionEntrega = undefined;
+    this.refObservacion = undefined;
+
+    }
+
     addLeadingZero(number: number): string {
         return number.toString().padStart(2, '0');
     }

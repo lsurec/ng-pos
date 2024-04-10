@@ -10,11 +10,26 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ParamConvertDocInterface } from '../../interfaces/param-convert-doc.interface';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { SerieService } from 'src/app/displays/prc_documento_3/services/serie.service';
+import { CuentaService } from 'src/app/displays/prc_documento_3/services/cuenta.service';
+import { TipoTransaccionService } from 'src/app/displays/prc_documento_3/services/tipos-transaccion.service';
+import { ParametroService } from 'src/app/displays/prc_documento_3/services/parametro.service';
+import { PagoService } from 'src/app/displays/prc_documento_3/services/pago.service';
+import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/referencia.service';
 
 @Component({
   selector: 'app-convert-docs',
   templateUrl: './convert-docs.component.html',
-  styleUrls: ['./convert-docs.component.scss']
+  styleUrls: ['./convert-docs.component.scss'],
+  providers: [
+    SerieService,
+    CuentaService,
+    TipoTransaccionService,
+    ParametroService,
+    PagoService,
+    ReferenciaService,
+  ],
 })
 export class ConvertDocsComponent {
   selectAll: boolean = false; // seleccionar todas las trasnsacciones
@@ -29,12 +44,279 @@ export class ConvertDocsComponent {
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     private _facturaService: FacturaService,
+    private _dataUserService: DataUserService,
+    private _serieService: SerieService,
+    private _cuentaService: CuentaService,
+    private _tipoTransaccionService: TipoTransaccionService,
+    private _parametroService: ParametroService,
+    private _formaPagoService: PagoService,
+    private _referenciaService: ReferenciaService,
   ) {
 
   }
 
-  editDoc() {
-    // this._facturaService.traInternas 
+  async editDoc() {
+
+
+    //empty data in screen
+    this._facturaService.clearData();
+
+
+    //set t ipo documento and descripcion tipo docuemnto
+    this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Decripcion;
+    this._facturaService.tipoDocumento = this.globalConvertSrevice.docOriginSelect!.tipo_Documento;
+
+    //Datos de la sesion
+    let user: string = this.globalConvertSrevice.docOriginSelect!.usuario;
+    let token: string = PreferencesService.token;
+    let empresa: number = this.globalConvertSrevice.docOriginSelect!.empresa;
+    let estacion: number = this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo;
+    let documento: number = this._facturaService.tipoDocumento;
+
+
+    //TODO: Cargar en conversion
+    this._facturaService.isLoading = true;
+
+    //set serie documento
+    //Buscar series
+    let resSeries: ResApiInterface = await this._serieService.getSerie(
+      user,
+      token,
+      documento,
+      empresa,
+      estacion,
+    );
+
+    //si algo salio al
+    if (!resSeries.status) {
+      this._facturaService.isLoading = false;
+      //TODO: Show error 
+      console.log(resSeries);
+      
+
+      // this.verError(resSeries);
+      return;
+    }
+
+    //Series disponobles
+    this._facturaService.series = resSeries.response;
+
+
+
+
+    let indexSerie: number = -1;
+
+    for (let i = 0; i < this._facturaService.series.length; i++) {
+      const element = this._facturaService.series[i];
+
+      if (element.serie_Documento == this.globalConvertSrevice.docOriginSelect?.serie_Documento) {
+        indexSerie = i;
+        break;
+      }
+    }
+
+
+    if (indexSerie == -1) {
+      ///TODO: Si no existe no navegar
+      console.log("No existe la serie");
+
+      return;
+
+    }
+
+
+    this._facturaService.serie = this._facturaService.series[indexSerie];
+
+
+    //si solo hay una serie seleccionarla por defecto;
+    if (this._facturaService.series.length == 1) {
+      //seleccionar serie
+
+
+
+      let serie: string = this._facturaService.serie.serie_Documento;
+
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      )
+
+      //si algo salió mal mostrar error
+      if (!resVendedor.status) {
+        //TODO: Show error 
+
+        this._facturaService.isLoading = false;
+        // this.verError(resVendedor);
+      console.log(resVendedor);
+
+
+        return;
+      }
+
+      //cuntas correntista ref disponibles
+      this._facturaService.vendedores = resVendedor.response;
+
+
+      //Validar cuenta ref si existe
+      if (this.globalConvertSrevice.docOriginSelect?.cuenta_Correntista_Ref) {
+
+        let indexCtaRef = -1;
+        for (let i = 0; i < this._facturaService.vendedores.length; i++) {
+          const element = this._facturaService.vendedores[i];
+
+          if (element.cuenta_Correntista == this.globalConvertSrevice.docOriginSelect.cuenta_Correntista_Ref) {
+            indexCtaRef = i;
+            break;
+          }
+
+        }
+
+
+        if (indexCtaRef == -1) {
+          //TODO: Mostrar mensjae}
+          console.log("No eciste cuenat ref");
+          
+          //TODO: Reinventar
+          // return;
+        }
+
+
+        this._facturaService.vendedor = this._facturaService.vendedores[indexCtaRef];
+
+
+      }
+
+
+
+
+      //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+      );
+
+      //si algo salio mal
+      if (!resTransaccion.status) {
+
+      console.log(resTransaccion);
+
+
+        //TODO:Error
+        // this._facturaService.isLoading = false;
+        // this.verError(resTransaccion);
+
+        return;
+      }
+
+      //tioos de trabnsaccion disponibles
+      this._facturaService.tiposTransaccion = resTransaccion.response;
+
+      //Buscar parametros del documento
+      let resParametro: ResApiInterface = await this._parametroService.getParametro(
+        user,
+        token,
+        documento,
+        serie,
+        empresa,
+        estacion,
+      )
+
+      //si algo salio mal
+      if (!resParametro.status) {
+        //TODO:Error
+        console.log(resParametro);
+        
+
+        // this._facturaService.isLoading = false;
+        // this.verError(resParametro);
+
+        return;
+      }
+
+      //Parammetros disponibles
+      this._facturaService.parametros = resParametro.response;
+
+      //Buscar formas de pago
+      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+        token,
+        empresa,
+        serie,
+        documento,
+      );
+
+      //si algo salio mal
+      if (!resFormaPago.status) {
+
+        //TODO:Error
+
+        console.log(resFormaPago);
+        
+        // this._facturaService.isLoading = false;
+
+        // this.verError(resFormaPago);
+
+        return;
+
+      }
+
+      //Formas de pago disponobles
+      this._facturaService.formasPago = resFormaPago.response;
+
+    }
+
+
+    //TODO:Buscar referencia, observaciones y fechas para caragarlas
+
+    if (this._facturaService.valueParametro(58)) {
+
+      this._facturaService.tipoReferencia = undefined;
+      this._facturaService.tiposReferencia = [];
+
+
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
+
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+
+        console.log(resTipoRefencia);
+        
+
+        //TODO:Error
+        // this._facturaService.isLoading = false;
+
+
+        // this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this._facturaService.tiposReferencia = resTipoRefencia.response;
+
+
+      if (this._facturaService.tiposReferencia.length == 1) {
+        this._facturaService.tipoReferencia = this._facturaService.tiposReferencia[0];
+      }
+
+    }
+
+    //TODO:Cargarr
+    this._facturaService.isLoading = false;
+
+
+
+
+    this._facturaService.traInternas = [];
+
 
     this.globalConvertSrevice.detailsOrigin.forEach(element => {
       this._facturaService.traInternas.push(
@@ -63,6 +345,8 @@ export class ConvertDocsComponent {
       );
     });
 
+    console.log("PAso por aqui");
+    
     this.globalConvertSrevice.editDoc = true;
 
   }
@@ -206,9 +490,11 @@ export class ConvertDocsComponent {
     }
 
 
-    
+
 
     let deatlles: DetailOriginDocInterface[] = res.response;
+
+    
 
 
     this.globalConvertSrevice.detailsOrigin = [];
