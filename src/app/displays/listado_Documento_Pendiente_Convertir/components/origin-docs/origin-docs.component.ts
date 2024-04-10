@@ -86,6 +86,8 @@ export class OriginDocsComponent implements OnInit {
 
     }
 
+    
+
     this.globalConvertSrevice.docsOrigin = res.response;
 
     this.ordenar();
