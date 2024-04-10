@@ -17,6 +17,8 @@ import { TipoTransaccionService } from 'src/app/displays/prc_documento_3/service
 import { ParametroService } from 'src/app/displays/prc_documento_3/services/parametro.service';
 import { PagoService } from 'src/app/displays/prc_documento_3/services/pago.service';
 import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/referencia.service';
+import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
+import { ProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/producto.interface';
 
 @Component({
   selector: 'app-convert-docs',
@@ -29,6 +31,7 @@ import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/ref
     ParametroService,
     PagoService,
     ReferenciaService,
+    ProductService,
   ],
 })
 export class ConvertDocsComponent {
@@ -51,6 +54,7 @@ export class ConvertDocsComponent {
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
     private _referenciaService: ReferenciaService,
+    private _productService: ProductService,
   ) {
 
   }
@@ -92,7 +96,7 @@ export class ConvertDocsComponent {
       this._facturaService.isLoading = false;
       //TODO: Show error 
       console.log(resSeries);
-      
+
 
       // this.verError(resSeries);
       return;
@@ -151,7 +155,7 @@ export class ConvertDocsComponent {
 
         this._facturaService.isLoading = false;
         // this.verError(resVendedor);
-      console.log(resVendedor);
+        console.log(resVendedor);
 
 
         return;
@@ -179,7 +183,7 @@ export class ConvertDocsComponent {
         if (indexCtaRef == -1) {
           //TODO: Mostrar mensjae}
           console.log("No eciste cuenat ref");
-          
+
           //TODO: Reinventar
           // return;
         }
@@ -205,7 +209,7 @@ export class ConvertDocsComponent {
       //si algo salio mal
       if (!resTransaccion.status) {
 
-      console.log(resTransaccion);
+        console.log(resTransaccion);
 
 
         //TODO:Error
@@ -232,7 +236,7 @@ export class ConvertDocsComponent {
       if (!resParametro.status) {
         //TODO:Error
         console.log(resParametro);
-        
+
 
         // this._facturaService.isLoading = false;
         // this.verError(resParametro);
@@ -257,7 +261,7 @@ export class ConvertDocsComponent {
         //TODO:Error
 
         console.log(resFormaPago);
-        
+
         // this._facturaService.isLoading = false;
 
         // this.verError(resFormaPago);
@@ -287,7 +291,7 @@ export class ConvertDocsComponent {
       if (!resTipoRefencia.status) {
 
         console.log(resTipoRefencia);
-        
+
 
         //TODO:Error
         // this._facturaService.isLoading = false;
@@ -309,44 +313,96 @@ export class ConvertDocsComponent {
 
     }
 
+
+
+    this._facturaService.cuenta = {
+      cuenta_Correntista: 1,
+      cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.cuenta_Cta,
+      factura_Nombre: this.globalConvertSrevice.docOriginSelect!.cliente,
+      factura_NIT: this.globalConvertSrevice.docOriginSelect!.nit,
+      factura_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
+      cC_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
+      des_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.nit,
+      direccion_1_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.direccion,
+      eMail: "",
+      telefono: "",
+      limite_Credito: 0,
+      permitir_CxC: false,
+
+    }
+
+
     //TODO:Cargarr
     this._facturaService.isLoading = false;
-
-
 
 
     this._facturaService.traInternas = [];
 
 
-    this.globalConvertSrevice.detailsOrigin.forEach(element => {
+    for (const iterator of this.globalConvertSrevice.detailsOrigin) {
+      let resProduct = await this._productService.getProductId(
+        this.token,
+        iterator.detalle.id,
+      );
+
+
+      if (!resProduct.status) {
+        console.log("No se encontró el producto");
+        return;
+      }
+
+      let productSearch: ProductoInterface[] = resProduct.response;
+
+
+      let iProd: number = -1;
+
+      for (let i = 0; i < productSearch.length; i++) {
+        const element = productSearch[i];
+
+        if (element.producto_Id = iterator.detalle.id) {
+          iProd = i;
+          break;
+        }
+
+      }
+
+
+      if (iProd == -1) {
+
+        console.log("No se encontró el producto");
+        return;
+
+      }
+
+
+      let prod: ProductoInterface = productSearch[iProd];
+
+
+
       this._facturaService.traInternas.push(
         {
           precioCantidad: 0,
           precipDia: 0,
           isChecked: false,
           bodega: undefined,
-          producto: {
-            des_Producto: element.detalle.producto,
-            des_Unidad_Medida: "",
-            producto: 1,
-            producto_Id: element.detalle.id,
-            tipo_Producto: 1,
-            unidad_Medida: 1,
-
-
-          },
+          producto:prod,
           precio: undefined!,
-          cantidad: element.disponibleMod,
+          cantidad: iterator.disponibleMod,
           total: 0,
           cargo: 0,
           descuento: 0,
           operaciones: [],
         }
       );
-    });
 
-    console.log("PAso por aqui");
+
+    }
+
+
     
+
+    console.log("Paso por aqui");
+
     this.globalConvertSrevice.editDoc = true;
 
   }
@@ -494,7 +550,7 @@ export class ConvertDocsComponent {
 
     let deatlles: DetailOriginDocInterface[] = res.response;
 
-    
+
 
 
     this.globalConvertSrevice.detailsOrigin = [];
