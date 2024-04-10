@@ -119,7 +119,15 @@ export class FacturaComponent implements OnInit {
   ngOnInit(): void {
 
     //cargar datos necearios al inicio de la aplicacion
-    this.loadData();
+
+    if(!this.globalConvertService.editDoc){
+
+      this.loadData();
+    return;
+    }
+
+    console.log("Cargar datos del duocumento que se edita");
+    
 
   }
 

@@ -7,14 +7,5 @@ export interface ProductoInterface {
     tipo_Producto:     number;
 }
 
-//TODO:Eliminar
-export interface CompraInterface {
-    producto: ProductoInterface
-    cantidad: number,
-    precioUnitario: number;
-    total: number;
-    cargos?: number;
-    descuentos?: number;
-    checked?: boolean;
-}
+
 

@@ -9,6 +9,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ParamConvertDocInterface } from '../../interfaces/param-convert-doc.interface';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 
 @Component({
   selector: 'app-convert-docs',
@@ -27,8 +28,42 @@ export class ConvertDocsComponent {
     private _receptionService: ReceptionService,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
-
+    private _facturaService: FacturaService,
   ) {
+
+  }
+
+  editDoc() {
+    // this._facturaService.traInternas 
+
+    this.globalConvertSrevice.detailsOrigin.forEach(element => {
+      this._facturaService.traInternas.push(
+        {
+          precioCantidad: 0,
+          precipDia: 0,
+          isChecked: false,
+          bodega: undefined,
+          producto: {
+            des_Producto: element.detalle.producto,
+            des_Unidad_Medida: "",
+            producto: 1,
+            producto_Id: element.detalle.id,
+            tipo_Producto: 1,
+            unidad_Medida: 1,
+
+
+          },
+          precio: undefined!,
+          cantidad: element.disponibleMod,
+          total: 0,
+          cargo: 0,
+          descuento: 0,
+          operaciones: [],
+        }
+      );
+    });
+
+    this.globalConvertSrevice.editDoc = true;
 
   }
 

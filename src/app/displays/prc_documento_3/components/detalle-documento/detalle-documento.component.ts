@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CompraInterface, ProductoInterface } from '../../interfaces/producto.interface';
+import {  ProductoInterface } from '../../interfaces/producto.interface';
 import { EventService } from 'src/app/services/event.service';
 import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
 import { Documento } from '../../interfaces/doc-estructura.interface';
