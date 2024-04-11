@@ -24,6 +24,7 @@ export class OriginDocsComponent implements OnInit {
   token: string = PreferencesService.token;
   empresa: number = PreferencesService.empresa.empresa;
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
+  strFilter: string = "";
 
   ascendente: boolean = true;
 
@@ -39,6 +40,7 @@ export class OriginDocsComponent implements OnInit {
       "desc": this._translate.instant('pos.documento.fechaDoc')
     },
   ]
+
 
 
   constructor(
@@ -57,6 +59,43 @@ export class OriginDocsComponent implements OnInit {
 
   ngOnInit(): void {
     this.ordenar();
+  }
+
+  filterDoc() {
+    let timer: any;
+    // TODO: reemplazar por filtro real
+    let opcionFiltro: number = 2;
+    switch (opcionFiltro) {
+      case 1: //Nombre
+        // Configurar un nuevo temporizador
+        clearTimeout(timer); // Limpiar el temporizador anterior
+
+        timer = setTimeout(() => {
+          this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOrigin.filter(
+              item => item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())
+            );
+          this.ordenar();
+        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+        break;
+      case 2: //Nit
+        clearTimeout(timer); // Limpiar el temporizador anterior
+
+        timer = setTimeout(() => {
+          this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOrigin.filter(
+              item => item.nit.toLowerCase().includes(this.strFilter.toLowerCase())
+            );
+          this.ordenar();
+        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   async loadData() {
@@ -86,9 +125,10 @@ export class OriginDocsComponent implements OnInit {
 
     }
 
-    
+
 
     this.globalConvertSrevice.docsOrigin = res.response;
+    this.globalConvertSrevice.docsOriginFilter = res.response;
 
     this.ordenar();
 
@@ -111,25 +151,20 @@ export class OriginDocsComponent implements OnInit {
       case 1:
         //id documento
         if (this.ascendente) {
-          this.globalConvertSrevice.docsOrigin =
-            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => a.iD_Documento - b.iD_Documento);
+          this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOriginFilter.slice().sort((a, b) => a.iD_Documento - b.iD_Documento);
         } else {
-          this.globalConvertSrevice.docsOrigin =
-            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => b.iD_Documento - a.iD_Documento);
+          this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOriginFilter.slice().sort((a, b) => b.iD_Documento - a.iD_Documento);
         }
 
         break;
       case 2:
         if (this.ascendente) {
           // Ordenar por fecha de forma ascendente
-          this.globalConvertSrevice.docsOrigin =
-            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => new Date(a.fecha_Hora).getTime() - new Date(b.fecha_Hora).getTime());
-
-        } else {
-
-          // Ordenar por fecha de forma descendente
-          this.globalConvertSrevice.docsOrigin =
-            this.globalConvertSrevice.docsOrigin.slice().sort((a, b) => new Date(b.fecha_Hora).getTime() - new Date(a.fecha_Hora).getTime());
+          this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOriginFilter =
+            this.globalConvertSrevice.docsOriginFilter.slice().sort((a, b) => new Date(b.fecha_Hora).getTime() - new Date(a.fecha_Hora).getTime());
         }
 
         break;

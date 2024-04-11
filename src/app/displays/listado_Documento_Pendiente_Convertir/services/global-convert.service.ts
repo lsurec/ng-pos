@@ -33,6 +33,7 @@ export class GlobalConvertService {
     screen: string = "";
 
     docsOrigin: OriginDocInterface[] = [];
+    docsOriginFilter: OriginDocInterface[] = [];
     docOriginSelect?: OriginDocInterface;
 
     docsDestination: DestinationDocInterface[] = [];

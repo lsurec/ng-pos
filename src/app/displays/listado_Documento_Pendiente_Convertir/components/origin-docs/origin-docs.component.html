@@ -79,13 +79,20 @@
 
 
     </div>
+
+    <div>
+        <p class="textosBold14">Buscar por</p>
+        <input class="barra-de-busqueda" type="text" name="search" placeholder="Buscar" [(ngModel)]="strFilter" (ngModelChange)="filterDoc()">
+
+    </div>
     <div class="d-flex">
+
         <span class="spacer"></span>
-        <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsOrigin.length}})
+        <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsOriginFilter.length}})
         </p>
     </div>
 
-    <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOrigin">
+    <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOriginFilter">
 
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
@@ -96,17 +103,30 @@
         <div class="documentos-origen" (click)=" selectOrigin(documento)">
             <div class="dFlex">
                 <p class="textosBold14">{{ 'pos.documento.fechaHora' | translate }} </p>
-                <span class="spacer"></span>
                 <p class="textos14">{{documento.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}}</p>
-            </div>
-            <div class="dFlex">
-                <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
+
                 <span class="spacer"></span>
+                <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
                 <p class="textos14">{{documento.fecha_Documento}}</p>
             </div>
             <div class="dFlex">
-                <p class="textosBold16">{{ 'pos.documento.serieDoc' | translate }} </p>
+                <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
                 <p class="textos14">{{documento.serie}} </p>
+            </div>
+            <!--TODO:Translate-->
+            <div class="dFlex">
+
+                <p class="textosBold14">Cliente:</p>
+                <p class="textos14"> {{documento.cliente}} </p>
+            </div>
+            <div class="dFlex">
+                <p class="textosBold14">NIT: </p>
+                <p class="textos14"> {{documento.nit}} </p>
+            </div>
+            <div class="dFlex">
+                <span class="spacer"></span>
+                <p class="textosBold14">TOTAL: {{documento.monto | currency:'
+                    ':'symbol':'2.2-2'}} </p>
             </div>
         </div>
     </div>
