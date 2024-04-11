@@ -76,6 +76,194 @@ export class DetalleComponent {
   ) { }
 
 
+  async editTra(indexTra: number) {
+
+    this._productoService.cantidad = this.facturaService.traInternas [indexTra].cantidad.toString();
+    let product = this.facturaService.traInternas [indexTra].producto;
+
+    //buscar bodegas del produxto
+    let resBodega = await this._productService.getBodegaProducto(
+      this.user,
+      this.token,
+      this.empresa,
+      this.estacion,
+      product.producto,
+      product.unidad_Medida,
+    );
+
+
+    if (!resBodega.status) {
+
+      this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.verError(resBodega);
+
+      return;
+
+    }
+
+    this._productoService.bodegas = resBodega.response;
+
+
+    //validar que existan bodegas
+    if (this._productoService.bodegas.length == 0) {
+      this.facturaService.isLoading = false;
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
+      return;
+    }
+
+
+    //Si solo hay una bodega
+    if (this._productoService.bodegas.length == 1) {
+      this._productoService.bodega = this._productoService.bodegas[0];
+      let bodega: number = this._productoService.bodega.bodega;
+
+      //buscar precios
+      let resPrecio = await this._productService.getPrecios(
+        this.user,
+        this.token,
+        bodega,
+        product.producto,
+        product.unidad_Medida,
+      );
+
+
+      if (!resPrecio.status) {
+
+        this.facturaService.isLoading = false;
+
+
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resPrecio);
+
+        return;
+
+      }
+
+      let precios: PrecioInterface[] = resPrecio.response;
+
+      precios.forEach(element => {
+        this._productoService.precios.push(
+          {
+            id: element.tipo_Precio,
+            precioU: element.precio_Unidad,
+            descripcion: element.des_Tipo_Precio,
+            precio: true,
+            moneda: element.moneda,
+            orden: element.precio_Orden,
+          }
+        );
+      });
+
+      //si no hay precios buscar factor conversion
+      if (this._productoService.precios.length == 0) {
+        let resfactor = await this._productService.getFactorConversion(
+          this.user,
+          this.token,
+          bodega,
+          product.producto,
+          product.unidad_Medida,
+        );
+
+        if (!resfactor.status) {
+
+          this.facturaService.isLoading = false;
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(resfactor);
+
+          return;
+
+        }
+
+
+        let factores: FactorConversionInterface[] = resfactor.response;
+
+
+        factores.forEach(element => {
+          this._productoService.precios.push(
+            {
+              id: element.tipo_Precio,
+              precioU: element.precio_Unidad,
+              descripcion: element.des_Tipo_Precio,
+              precio: false,
+              moneda: element.moneda,
+              orden: element.tipo_Precio_Orden,
+            }
+          );
+        });
+
+      }
+
+      //si no hay precos ni factores
+
+      if (this._productoService.precios.length == 1) {
+
+        let precioU: UnitarioInterface = this._productoService.precios[0];
+
+        this._productoService.precio = precioU;
+        this._productoService.total = precioU.precioU;
+        this._productoService.precioU = precioU.precioU;
+        this._productoService.precioText = precioU.precioU.toString();
+
+      } else if (this._productoService.precios.length > 1) {
+        for (let i = 0; i < this._productoService.precios.length; i++) {
+          const element = this._productoService.precios[i];
+          if (element.orden) {
+            this._productoService.precio = element;
+            this._productoService.total = element.precioU;
+            this._productoService.precioU = element.precioU;
+            this._productoService.precioText = element.precioU.toString();
+
+          }
+          break;
+
+        }
+      }
+
+    }
+
+    this.facturaService.isLoading = false;
+
+
+    this._dialog.open(ProductoComponent, { data: product })
+
+
+  }
+
+
   async buscarProducto() {
 
     //validar que siempre hay nun texto para buscar
@@ -251,7 +439,7 @@ export class DetalleComponent {
               descripcion: element.des_Tipo_Precio,
               precio: true,
               moneda: element.moneda,
-              orden:element.precio_Orden,
+              orden: element.precio_Orden,
             }
           );
         });
@@ -299,7 +487,7 @@ export class DetalleComponent {
                 descripcion: element.des_Tipo_Precio,
                 precio: false,
                 moneda: element.moneda,
-                orden:element.tipo_Precio_Orden,
+                orden: element.tipo_Precio_Orden,
               }
             );
           });
@@ -457,8 +645,8 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
-            precioCantidad : null,
-            precipDia:null, //TODO:Usar precio dia
+            precioCantidad: null,
+            precipDia: null, //TODO:Usar precio dia
             isChecked: false,
             producto: element.producto,
             cantidad: 0,
