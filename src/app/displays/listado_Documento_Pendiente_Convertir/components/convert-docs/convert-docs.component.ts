@@ -19,6 +19,10 @@ import { PagoService } from 'src/app/displays/prc_documento_3/services/pago.serv
 import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/referencia.service';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
 import { ProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/producto.interface';
+import { ProductoService } from 'src/app/displays/prc_documento_3/services/producto.service';
+import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
+import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
+import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 
 @Component({
   selector: 'app-convert-docs',
@@ -55,6 +59,7 @@ export class ConvertDocsComponent {
     private _formaPagoService: PagoService,
     private _referenciaService: ReferenciaService,
     private _productService: ProductService,
+    private _productoService:ProductoService,
   ) {
 
   }
@@ -378,7 +383,199 @@ export class ConvertDocsComponent {
       let prod: ProductoInterface = productSearch[iProd];
 
 
-      
+       //buscar bodegas del produxto
+       let resBodega = await this._productService.getBodegaProducto(
+        this.user,
+        this.token,
+        empresa,
+        estacion,
+        prod.producto,
+        prod.unidad_Medida,
+      );
+
+
+      if (!resBodega.status) {
+
+        // this.facturaService.isLoading = false;
+
+
+        // let verificador = await this._notificationsService.openDialogActions(
+        //   {
+        //     title: this._translate.instant('pos.alertas.salioMal'),
+        //     description: this._translate.instant('pos.alertas.error'),
+        //     verdadero: this._translate.instant('pos.botones.informe'),
+        //     falso: this._translate.instant('pos.botones.aceptar'),
+        //   }
+        // );
+
+        // if (!verificador) return;
+
+        // this.verError(resBodega);
+        console.log(resBodega);
+        
+
+        return;
+
+      }
+
+      this._productoService.bodegas = resBodega.response;
+
+
+      //validar que existan bodegas
+      if (this._productoService.bodegas.length == 0) {
+        // this._facturaService.isLoading = false;
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
+        return;
+      }
+
+
+      //Si solo hay una bodega
+      if (this._productoService.bodegas.length == 1) {
+        this._productoService.bodega = this._productoService.bodegas[0];
+        let bodega: number = this._productoService.bodega.bodega;
+
+        //buscar precios
+        let resPrecio = await this._productService.getPrecios(
+          this.user,
+          this.token,
+          bodega,
+          prod.producto,
+          prod.unidad_Medida,
+        );
+
+
+        if (!resPrecio.status) {
+
+          this._facturaService.isLoading = false;
+
+
+          // let verificador = await this._notificationsService.openDialogActions(
+          //   {
+          //     title: this._translate.instant('pos.alertas.salioMal'),
+          //     description: this._translate.instant('pos.alertas.error'),
+          //     verdadero: this._translate.instant('pos.botones.informe'),
+          //     falso: this._translate.instant('pos.botones.aceptar'),
+          //   }
+          // );
+
+          // if (!verificador) return;
+
+          // this.verError(resPrecio);
+
+          console.log(resPrecio);
+          
+          return;
+
+        }
+
+        let precios: PrecioInterface[] = resPrecio.response;
+
+        precios.forEach(element => {
+          this._productoService.precios.push(
+            {
+              id: element.tipo_Precio,
+              precioU: element.precio_Unidad,
+              descripcion: element.des_Tipo_Precio,
+              precio: true,
+              moneda: element.moneda,
+              orden:element.precio_Orden,
+            }
+          );
+        });
+
+        //si no hay precios buscar factor conversion
+        if (this._productoService.precios.length == 0) {
+          let resfactor = await this._productService.getFactorConversion(
+            this.user,
+            this.token,
+            bodega,
+            prod.producto,
+            prod.unidad_Medida,
+          );
+
+          if (!resfactor.status) {
+
+            this._facturaService.isLoading = false;
+
+            // let verificador = await this._notificationsService.openDialogActions(
+            //   {
+            //     title: this._translate.instant('pos.alertas.salioMal'),
+            //     description: this._translate.instant('pos.alertas.error'),
+            //     verdadero: this._translate.instant('pos.botones.informe'),
+            //     falso: this._translate.instant('pos.botones.aceptar'),
+            //   }
+            // );
+
+            // if (!verificador) return;
+
+            // this.verError(resfactor);
+
+            console.log(resfactor);
+            
+            return;
+
+          }
+
+
+          let factores: FactorConversionInterface[] = resfactor.response;
+
+
+          factores.forEach(element => {
+            this._productoService.precios.push(
+              {
+                id: element.tipo_Precio,
+                precioU: element.precio_Unidad,
+                descripcion: element.des_Tipo_Precio,
+                precio: false,
+                moneda: element.moneda,
+                orden:element.tipo_Precio_Orden,
+              }
+            );
+          });
+
+        }
+
+        //si no hay precos ni factores
+
+        // let precio:number = 0;
+        // if(iterator.detalle.tipo_Precio){
+        //     precio = iterator.detalle.tipo_Precio;
+            
+        // }
+
+        // for (let i = 0; i < this._facturaService..length; i++) {
+        //   const element = this._facturaService.[i];
+          
+        // }
+
+
+        //TODO:Buscar precio
+
+        if (this._productoService.precios.length == 1) {
+
+          let precioU: UnitarioInterface = this._productoService.precios[0];
+
+          this._productoService.precio = precioU;
+          this._productoService.total = precioU.precioU;
+          this._productoService.precioU = precioU.precioU;
+          this._productoService.precioText = precioU.precioU.toString();
+
+        } else if (this._productoService.precios.length > 1) {
+          for (let i = 0; i < this._productoService.precios.length; i++) {
+            const element = this._productoService.precios[i];
+            if (element.orden) {
+              this._productoService.precio = element;
+              this._productoService.total = element.precioU;
+              this._productoService.precioU = element.precioU;
+              this._productoService.precioText = element.precioU.toString();
+
+            }
+            break;
+
+          }
+        }
+
+      }
 
 
 
