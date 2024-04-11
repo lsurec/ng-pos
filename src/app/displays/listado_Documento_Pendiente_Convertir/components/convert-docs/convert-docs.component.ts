@@ -551,44 +551,55 @@ export class ConvertDocsComponent {
 
         //TODO:Buscar precio
 
-        if (this._productoService.precios.length == 1) {
+        
 
-          let precioU: UnitarioInterface = this._productoService.precios[0];
+        console.log(this._productoService.precios);
 
-          this._productoService.precio = precioU;
-          this._productoService.total = precioU.precioU;
-          this._productoService.precioU = precioU.precioU;
-          this._productoService.precioText = precioU.precioU.toString();
 
-        } else if (this._productoService.precios.length > 1) {
-          for (let i = 0; i < this._productoService.precios.length; i++) {
-            const element = this._productoService.precios[i];
-            if (element.orden) {
-              this._productoService.precio = element;
-              this._productoService.total = element.precioU;
-              this._productoService.precioU = element.precioU;
-              this._productoService.precioText = element.precioU.toString();
 
-            }
-            break;
+        
 
-          }
-        }
+        // if (this._productoService.precios.length == 1) {
+
+        //   let precioU: UnitarioInterface = this._productoService.precios[0];
+
+        //   this._productoService.precio = precioU;
+        //   this._productoService.total = precioU.precioU;
+        //   this._productoService.precioU = precioU.precioU;
+        //   this._productoService.precioText = precioU.precioU.toString();
+
+        // } else if (this._productoService.precios.length > 1) {
+        //   for (let i = 0; i < this._productoService.precios.length; i++) {
+        //     const element = this._productoService.precios[i];
+        //     if (element.orden) {
+        //       this._productoService.precio = element;
+        //       this._productoService.total = element.precioU;
+        //       this._productoService.precioU = element.precioU;
+        //       this._productoService.precioText = element.precioU.toString();
+
+        //     }
+        //     break;
+
+        //   }
+        // }
+
+        console.log(this._productoService.precio);
+        
 
       }
 
 
 
-      this._facturaService.traInternas.push(
+      this._facturaService.addTransaction(
         {
           precioCantidad: 0,
           precipDia: 0,
           isChecked: false,
-          bodega: undefined,
+          bodega: this._productoService.bodega,
           producto:prod,
-          precio: undefined!,
-          cantidad: iterator.disponibleMod,
-          total: 0,
+          precio: this._productoService.precios[0],
+          cantidad: iterator.detalle.cantidad,
+          total: this._productoService.precios[0].precioU * iterator.detalle.cantidad,
           cargo: 0,
           descuento: 0,
           operaciones: [],
@@ -603,6 +614,7 @@ export class ConvertDocsComponent {
 
     console.log("Paso por aqui");
 
+    
     this.globalConvertSrevice.editDoc = true;
 
   }
