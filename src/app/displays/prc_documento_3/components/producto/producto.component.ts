@@ -400,6 +400,8 @@ export class ProductoComponent {
       
     }    
 
+    //TODO:editar transaccion
+
     // /7agregar transaccion
     this.facturaService.addTransaction(
       {

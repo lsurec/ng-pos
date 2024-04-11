@@ -450,6 +450,8 @@ export class ReceptionService {
         estacion: number,
         fechaReg: number,
     ): Promise<ResApiInterface> {
+
+
         return new Promise((resolve, reject) => {
             this._getDetallesDocOrigen(
                 token,
