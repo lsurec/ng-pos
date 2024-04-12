@@ -12,6 +12,7 @@ import { OriginDocInterface } from '../../interfaces/origin-doc.interface';
 import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { FiltroInterface } from 'src/app/displays/prc_documento_3/interfaces/filtro.interface';
 
 @Component({
   selector: 'app-origin-docs',
@@ -27,6 +28,7 @@ export class OriginDocsComponent implements OnInit {
   strFilter: string = "";
 
   ascendente: boolean = true;
+  filtroCliente: number = 1;
 
   filtroSelect: any;
 
@@ -40,6 +42,18 @@ export class OriginDocsComponent implements OnInit {
       "desc": this._translate.instant('pos.documento.fechaDoc')
     },
   ]
+
+  filtrosBusqueda: FiltroInterface[] = [
+    {
+      id: 1,
+      nombre: this._translate.instant('pos.factura.nombre'),
+    },
+    {
+      id: 2,
+      nombre: "NIT",
+    },
+  ];
+
 
 
 
@@ -59,15 +73,19 @@ export class OriginDocsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("iniciando");
-    
+
     this.ordenar();
+  }
+
+  onOptionChange(optionId: number) {
+    this.filtroCliente = optionId;
   }
 
   filterDoc() {
     let timer: any;
     // TODO: reemplazar por filtro real
-    let opcionFiltro: number = 2;
-    switch (opcionFiltro) {
+    // let opcionFiltro: number = this.filtroCliente;
+    switch (this.filtroCliente) {
       case 1: //Nombre
         // Configurar un nuevo temporizador
         clearTimeout(timer); // Limpiar el temporizador anterior

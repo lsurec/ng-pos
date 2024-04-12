@@ -299,7 +299,10 @@
             "evento": "EVENTDATEN",
             "entrega": "Lieferadresse:",
             "estado": "Status",
-            "escribir": "Geben Sie hier ein."
+            "escribir": "Geben Sie hier ein.",
+            "tipoCli": "Kundentyp.",
+            "actualizarFechas": "Keine Dokumente für dieses Datum verfügbar. Versuchen Sie, den Datumsbereich zu ändern, um die Liste zu aktualisieren.",
+            "buscarPor": "Suchen nach"
         },
         "documento": {
             "fechaIni": "Startdatum: ",

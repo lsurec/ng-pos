@@ -299,7 +299,10 @@
             "evento": "DATOS DEL EVENTO",
             "entrega": "Dirección de entrega:",
             "estado": "Estado",
-            "escribir": "Escriba aqui."
+            "escribir": "Escriba aqui.",
+            "tipoCli": "Tipo de cliente.",
+            "actualizarFechas": "No hay documentos disponibles para esta fecha, intente cambiar el rango de fechas para actualizar la lista.",
+            "buscarPor": "Buscar por"
         },
         "documento": {
             "fechaIni": "Fecha Inicio: ",

@@ -299,7 +299,10 @@
             "evento": "EVENT DETAILS",
             "entrega": "Delivery Address:",
             "estado": "Status",
-            "escribir": "Type here."
+            "escribir": "Type here.",
+            "tipoCli": "Customer type.",
+            "actualizarFechas": "No documents available for this date, try changing the date range to update the list.",
+            "buscarPor": "Search by"
         },
         "documento": {
             "fechaIni": "Start Date: ",

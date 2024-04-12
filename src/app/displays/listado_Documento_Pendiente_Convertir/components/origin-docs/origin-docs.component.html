@@ -80,16 +80,44 @@
 
     </div>
 
-    <div>
+    <!-- <div>
         <p class="textosBold14">Buscar por</p>
-        <input class="barra-de-busqueda" type="text" name="search" placeholder="Buscar" [(ngModel)]="strFilter" (ngModelChange)="filterDoc()">
+        <input class="barra-de-busqueda" type="text" name="search" placeholder="Buscar" [(ngModel)]="strFilter"
+            (ngModelChange)="filterDoc()">
+    </div> -->
 
+    <div class="informacion" *ngIf="globalConvertSrevice.docsOriginFilter.length > 0">
+        <p class="textosBold14">{{ 'pos.factura.buscarPor' | translate }}:</p>
+        <div class="dFlex">
+            <div class="input-container">
+                <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="strFilter" autocomplete="off"
+                    placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filterDoc()">
+                <button mat-icon-button class="iconoLupa" type="submit">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <div *ngFor="let option of filtrosBusqueda">
+                    <div class="chip" [class.selected]="option.id === filtroCliente"
+                        (click)="onOptionChange(option.id)">{{ option.nombre }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="d-flex">
 
+    <div class="d-flex">
         <span class="spacer"></span>
-        <p class="textosBold14">{{ 'pos.factura.registros' | translate }} ({{globalConvertSrevice.docsOriginFilter.length}})
+        <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
+            ({{globalConvertSrevice.docsOriginFilter.length}})
         </p>
+    </div>
+
+    <div class="cambiarFecha" *ngIf="globalConvertSrevice.docsOriginFilter.length == 0">
+        <span class="spacer"></span>
+        <p class="textosBold14"> {{ 'pos.factura.actualizarFechas' | translate }} </p>
+        <span class="spacer"></span>
     </div>
 
     <div class="lista-documentos" *ngFor="let documento of globalConvertSrevice.docsOriginFilter">

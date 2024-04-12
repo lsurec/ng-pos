@@ -299,7 +299,10 @@
             "evento": "DONNÉES DE L'ÉVÉNEMENT",
             "entrega": "Adresse de livraison :",
             "estado": "État",
-            "escribir": "Écrivez ici."
+            "escribir": "Écrivez ici.",
+            "tipoCli": "Type de client.",
+            "actualizarFechas": "Aucun document disponible pour cette date, essayez de modifier la plage de dates pour mettre à jour la liste.",
+            "buscarPor": "Rechercher par"
         },
         "documento": {
             "fechaIni": "Date de début : ",
