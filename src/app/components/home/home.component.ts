@@ -522,6 +522,8 @@ export class HomeComponent implements OnInit {
     }
 
     this._globalConvertService.docsOrigin = res.response;
+    this._globalConvertService.docsOriginFilter = res.response;
+
 
 
   }

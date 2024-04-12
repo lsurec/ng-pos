@@ -109,6 +109,8 @@ export class TypesDocsComponent {
     }
 
     this.globalConvertSrevice.docsOrigin = res.response;
+    this.globalConvertSrevice.docsOriginFilter = res.response;
+
 
 
   }
