@@ -77,11 +77,13 @@
         <mat-toolbar class="toolbarPhone" *ngIf="!facturaService.isLoading">
             <mat-toolbar-row>
                 <div class="barras">
-                    <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                    <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false"
+                        mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
-                    
-                    <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+
+                    <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button
+                        matTooltip="{{ 'pos.botones.inicio' | translate }}">
                         <mat-icon>home</mat-icon>
                     </button>
                     <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
@@ -101,27 +103,36 @@
             <mat-toolbar-row>
                 <div class="barras">
                     <span class="spacer"></span>
-                    <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                        (click)="verHistorial()">
-                        <mat-icon>schedule</mat-icon>
+                    <!--TODO:Tranlate-->
+                    <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
+                        (click)="modifyDoc()">
+                        <mat-icon>save</mat-icon>
                     </button>
-                    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
-                        (click)="newDoc()">
-                        <mat-icon>note_add</mat-icon>
-                    </button>
-                    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                        (click)="verResumen()">
-                        <mat-icon>print</mat-icon>
-                    </button>
+                    <ng-container *ngIf="!globalConvertService.editDoc">
+                        <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
+                            (click)="verHistorial()">
+                            <mat-icon>schedule</mat-icon>
+                        </button>
+                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
+                            (click)="newDoc()">
+                            <mat-icon>note_add</mat-icon>
+                        </button>
+                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                            (click)="verResumen()">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </ng-container>
                 </div>
             </mat-toolbar-row>
         </mat-toolbar>
         <mat-toolbar class="toolbar-large" *ngIf="!facturaService.isLoading">
-            <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+            <button *ngIf="globalConvertService.editDoc" (click)="globalConvertService.editDoc = false" mat-icon-button
+                matTooltip="{{ 'pos.botones.inicio' | translate }}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            
-            <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+
+            <button *ngIf="!globalConvertService.editDoc" (click)="goBack()" mat-icon-button
+                matTooltip="{{ 'pos.botones.inicio' | translate }}">
                 <mat-icon>home</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
@@ -132,17 +143,27 @@
             <!-- Titulo de la tarea -->
             <p class="titulo">{{dataUserService.nameDisplay}}</p>
             <span class="spacer"></span>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                (click)="verHistorial()">
-                <mat-icon>schedule</mat-icon>
+
+            <!--TODO:Tranlate-->
+            <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
+                (click)="modifyDoc()">
+                <mat-icon>save</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
-                <mat-icon>note_add</mat-icon>
-            </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                (click)="verResumen()">
-                <mat-icon>print</mat-icon>
-            </button>
+
+            <ng-container *ngIf="!globalConvertService.editDoc">
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
+                    (click)="verHistorial()">
+                    <mat-icon>schedule</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
+                    (click)="newDoc()">
+                    <mat-icon>note_add</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                    (click)="verResumen()">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </ng-container>
             <div class="circulo-inicial" (click)="sidenavend.open()">
                 <p class="inicial-usuario">{{user[0]}}</p>
             </div>

@@ -786,6 +786,10 @@ export class FacturaComponent implements OnInit {
   }
 
 
+  modifyDoc(){
+    
+  }
+
 
   //ver oabtalal crear cuenta correntista
   verNuevoCliente() {
