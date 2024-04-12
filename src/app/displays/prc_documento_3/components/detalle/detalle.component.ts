@@ -78,8 +78,14 @@ export class DetalleComponent {
 
   async editTra(indexTra: number) {
 
-    this._productoService.cantidad = this.facturaService.traInternas [indexTra].cantidad.toString();
-    let product = this.facturaService.traInternas [indexTra].producto;
+
+    this._productoService.bodegas = [];
+    this._productoService.precios = [];
+
+    this._productoService.cantidad = this.facturaService.traInternas[indexTra].cantidad.toString();
+    let productTra = this.facturaService.traInternas[indexTra].producto;
+    let boddegaTra = this.facturaService.traInternas[indexTra].bodega;
+    let precioTra = this.facturaService.traInternas[indexTra].precio;
 
     //buscar bodegas del produxto
     let resBodega = await this._productService.getBodegaProducto(
@@ -87,8 +93,8 @@ export class DetalleComponent {
       this.token,
       this.empresa,
       this.estacion,
-      product.producto,
-      product.unidad_Medida,
+      productTra.producto,
+      productTra.unidad_Medida,
     );
 
 
@@ -135,8 +141,8 @@ export class DetalleComponent {
         this.user,
         this.token,
         bodega,
-        product.producto,
-        product.unidad_Medida,
+        productTra.producto,
+        productTra.unidad_Medida,
       );
 
 
@@ -183,8 +189,8 @@ export class DetalleComponent {
           this.user,
           this.token,
           bodega,
-          product.producto,
-          product.unidad_Medida,
+          productTra.producto,
+          productTra.unidad_Medida,
         );
 
         if (!resfactor.status) {
@@ -258,7 +264,40 @@ export class DetalleComponent {
     this.facturaService.isLoading = false;
 
 
-    this._dialog.open(ProductoComponent, { data: product })
+    let existBodega: number = -1;
+
+    for (let i = 0; i < this._productoService.bodegas.length; i++) {
+      const element = this._productoService.bodegas[i];
+      if (element.bodega == boddegaTra!.bodega) {
+        existBodega = i;
+        break;
+      }
+    }
+
+    if (existBodega == -1) {
+      this._productoService.bodegas.push(boddegaTra!);
+
+      this._productoService.bodega = this._productoService.bodegas[this._productoService.bodegas.length - 1];
+
+    } else {
+      this._productoService.bodega = this._productoService.bodegas[existBodega];
+    }
+
+
+    let existPrecio: number = -1;
+
+    if (existPrecio == -1) {
+      this._productoService.precios.push(precioTra!);
+
+      this._productoService.precio = this._productoService.precios[this._productoService.precios.length - 1];
+
+    } else {
+      this._productoService.precio = this._productoService.precios[existPrecio];
+    }
+
+
+    this._dialog.open(ProductoComponent, { data: productTra })
+    this._productoService.indexEdit = indexTra;
 
 
   }
@@ -527,6 +566,7 @@ export class DetalleComponent {
 
       this._dialog.open(ProductoComponent, { data: productos[0] })
 
+      this._productoService.indexEdit = -1;
 
       return;
 
@@ -540,6 +580,8 @@ export class DetalleComponent {
       if (result) {
 
         this._dialog.open(ProductoComponent, { data: result })
+        this._productoService.indexEdit = -1;
+
         // let producto: ProductoInterface = result[0];
         // this.producto = producto;
       }

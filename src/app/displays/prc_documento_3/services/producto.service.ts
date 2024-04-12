@@ -16,7 +16,7 @@ export class ProductoService{
     cantidad:string = "1"; //Cantidad del producto
     precioU:number = 0; //Precio unitario
     precioText:string = "0"; //precio unitario modificable
-
+    indexEdit = -1;
 
 
 }

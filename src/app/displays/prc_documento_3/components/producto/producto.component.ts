@@ -187,7 +187,7 @@ export class ProductoComponent {
             descripcion: element.des_Tipo_Precio,
             precio: false,
             moneda: element.moneda,
-            orden:element.tipo_Precio_Orden,
+            orden: element.tipo_Precio_Orden,
           }
         );
       });
@@ -305,6 +305,8 @@ export class ProductoComponent {
     this.dialogRef.close();
   }
 
+
+
   //guardar transaccion
   async enviar() {
     //Validaciones
@@ -372,39 +374,60 @@ export class ProductoComponent {
     }
 
 
-    let precioDias:number = 0;
+    let precioDias: number = 0;
 
-    if(this.facturaService.valueParametro(351))
-    {
+    if (this.facturaService.valueParametro(351)) {
 
-      let strFechaIni:string =this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!); 
-      let strFechaFin:string =this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!); 
+      let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+      let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
 
 
-      let res:ResApiInterface = await this._productService.getFormulaPrecioU(
+      let res: ResApiInterface = await this._productService.getFormulaPrecioU(
         this.token,
-         strFechaIni, 
+        strFechaIni,
         strFechaFin,
         this.productoService.total.toString(),
       );
 
-      if(!res.status){
+      if (!res.status) {
         this._notificationsService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-          
+
         console.error(res);
-        
+
         return;
       }
-      
+
       precioDias = res.response.data;
-      
-    }    
+
+    }
 
     //TODO:editar transaccion
 
-    // /7agregar transaccion
-    this.facturaService.addTransaction(
-      {
+
+    if (this.productoService.indexEdit == -1) {
+      // /7agregar transaccion
+      this.facturaService.addTransaction(
+        {
+          precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
+          precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
+          isChecked: false,
+          bodega: this.productoService.bodega,
+          producto: this.producto,
+          precio: this.productoService.precio!,
+          cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+          total: this.facturaService.valueParametro(351) ? precioDias : this.productoService.total,
+          cargo: 0,
+          descuento: 0,
+          operaciones: [],
+        }
+      );
+
+      //Transacion agregada
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
+
+    } else {
+      // /7agregar transaccion
+      this.facturaService.traInternas[this.productoService.indexEdit] = {
         precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
         precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
         isChecked: false,
@@ -412,15 +435,20 @@ export class ProductoComponent {
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        total: this.facturaService.valueParametro(351) ? precioDias :  this.productoService.total,
+        total: this.facturaService.valueParametro(351) ? precioDias : this.productoService.total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
       }
-    );
 
-    //Transacion agregada
-    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
+      this.facturaService.calculateTotales();
+
+      //Transacion agregada
+      //TODO:Translate
+      this._notificationsService.openSnackbar("Transaccion modificada");
+
+    }
+
 
     this.dialogRef.close();
 
