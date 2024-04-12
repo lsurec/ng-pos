@@ -367,6 +367,9 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
+
+      console.log( resVendedor.response);
+      
       //cuntas correntista ref disponibles
       this.facturaService.vendedores = resVendedor.response;
 
@@ -405,6 +408,8 @@ export class FacturaComponent implements OnInit {
         estacion,
       )
 
+      
+
       //si algo salio mal
       if (!resParametro.status) {
         this.facturaService.isLoading = false;
@@ -415,6 +420,9 @@ export class FacturaComponent implements OnInit {
 
       //Parammetros disponibles
       this.facturaService.parametros = resParametro.response;
+
+
+
 
       //Buscar formas de pago
       let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(

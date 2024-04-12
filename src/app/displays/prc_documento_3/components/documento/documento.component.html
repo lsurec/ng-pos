@@ -226,9 +226,9 @@
     </div>
     <span class="spacer"></span>
 
-    <div class="cliente" *ngIf="facturaService.vendedores.length > 0">
+    <div class="cliente">
 
-        <div class="informacion">
+        <div class="informacion"  *ngIf="facturaService.vendedores.length > 0">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
             <mat-select name="estado" class="seleccionar"
                 placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor"

@@ -91,7 +91,7 @@
                         <mat-icon>refresh</mat-icon>
                     </button>
                     <span class="spacer"></span>
-                    <p class="titulo">{{dataUserService.nameDisplay }} </p><p class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
+                    <p class="titulo">{{dataUserService.nameDisplay }} </p><p  *ngIf="globalConvertService.editDoc"  class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
                     <span class="spacer"></span>
                     <div class="circulo-inicial" (click)="sidenavend.open()">
                         <p class="inicial-usuario">{{user[0]}}</p>
@@ -141,7 +141,7 @@
             </button>
             <span class="spacer"></span>
             <!-- Titulo de la tarea -->
-            <p class="titulo">{{dataUserService.nameDisplay }} </p><p class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
+            <p class="titulo">{{dataUserService.nameDisplay }} </p><p  *ngIf="globalConvertService.editDoc"  class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
 
             <span class="spacer"></span>
 
