@@ -14,6 +14,7 @@ import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Component({
   selector: 'app-documento',
@@ -56,6 +57,7 @@ export class DocumentoComponent {
     private _tipoTransaccionService: TipoTransaccionService,
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
+    public globalConvertService: GlobalConvertService,
   ) {
 
   }
