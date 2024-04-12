@@ -786,8 +786,18 @@ export class FacturaComponent implements OnInit {
   }
 
 
-  modifyDoc(){
-    
+ async  modifyDoc(){
+    //TODO:Translate
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: "¿Estás seguro?",
+        description: "Se aplicaran los cambios al documento.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
   }
 
 
