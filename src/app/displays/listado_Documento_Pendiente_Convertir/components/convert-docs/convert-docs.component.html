@@ -75,13 +75,14 @@
                 <mat-checkbox class="example-margin" color="primary" [(ngModel)]="elemento.checked"
                     (click)="selectTra(i)"></mat-checkbox>
                 <div>
-                    <div class="dFlex">
+                    <!-- <div class="dFlex">
                         <p class="textosBold14">Id: </p>
                         <p class="textos14">{{elemento.detalle.id}}</p>
-                    </div>
+                    </div> -->
                     <div class="dFlex">
-                        <p class="textosBold14">{{ 'pos.factura.producto' | translate }}: </p>
-                        <p class="textos14">{{elemento.detalle.producto}}</p>
+                        <!-- <p class="textosBold14">{{ 'pos.factura.producto' | translate }}: </p> -->
+                        <p class="textosBold14">({{elemento.detalle.id}}) </p>
+                        <p class="textos14">{{elemento.detalle.producto_Descripcion}}</p>
                     </div>
                     <div class="dFlex">
                         <p class="textosBold14">{{ 'pos.factura.cantidad' | translate }}: </p>
@@ -90,6 +91,13 @@
                     <div class="dFlex">
                         <p class="textosBold14">{{ 'pos.documento.disponible' | translate }} </p>
                         <p class="textos14">{{elemento.detalle.disponible}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <!--Transalate-->
+                        <!-- <p class="textosBold14">{{ 'pos.documento.disponible' | translate }} </p> -->
+                        <p class="textosBold14">TOTAL: {{elemento.detalle.monto| currency:'
+                            ':'symbol':'2.2-2'}} </p>
+                        <!-- <p class="textos14">{{elemento.detalle.disponible}}</p> -->
                     </div>
                 </div>
             </div>
