@@ -19,6 +19,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { ReferenciaService } from '../../services/referencia.service';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { OriginDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/origin-doc.interface';
+import { ProductService } from '../../services/product.service';
+import { ProductoInterface } from '../../interfaces/producto.interface';
+import { BodegaProductoInterface } from '../../interfaces/bodega-produto.interface';
+import { PrecioInterface } from '../../interfaces/precio.interface';
+import { UnitarioInterface } from '../../interfaces/unitario.interface';
 
 @Component({
   selector: 'app-factura',
@@ -31,6 +37,7 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
     ParametroService,
     PagoService,
     ReferenciaService,
+    ProductService,
   ]
 })
 export class FacturaComponent implements OnInit {
@@ -76,7 +83,8 @@ export class FacturaComponent implements OnInit {
     private _translate: TranslateService,
     private _referenciaService: ReferenciaService,
     private _calendar: NgbCalendar,
-    public globalConvertService:GlobalConvertService,
+    public globalConvertService: GlobalConvertService,
+    private _productService: ProductService,
 
   ) {
 
@@ -119,15 +127,16 @@ export class FacturaComponent implements OnInit {
   ngOnInit(): void {
 
     //cargar datos necearios al inicio de la aplicacion
+    this.loadData();
 
-    if(!this.globalConvertService.editDoc){
 
-      this.loadData();
-    return;
-    }
+    // if (!this.globalConvertService.editDoc) {
 
-    console.log("Cargar datos del duocumento que se edita");
-    
+    //   this.loadData();
+    //   return;
+    // }
+
+
 
   }
 
@@ -290,7 +299,7 @@ export class FacturaComponent implements OnInit {
 
 
     //limpiar datos del modulo
- this.facturaService.clearData();
+    this.facturaService.clearData();
     this.setDateNow();
 
 
@@ -460,11 +469,322 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    this.facturaService.isLoading = false;
 
     //cargar documento guardado localmente
-    this.facturaService.loadDocDave();
+
+
+
+    if (!this.globalConvertService.editDoc) {
+
+      this.facturaService.isLoading = false;
+      this.facturaService.loadDocDave();
+      return;
+    }
+
+    //Cargar datos del docuemnto origen
+
+
+    //Verificar serie
+
+    let docOrigin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
+
+
+    let serieOrigen = docOrigin.serie_Documento;
+
+
+    //--EMpiezan datos
+    //Cargar cliente
+    let resClient: ResApiInterface = await this._cuentaService.getClient(
+      user,
+      token,
+      empresa,
+      docOrigin.nit,
+
+    );
+
+    //si algo salio mal
+    if (!resClient.status) {
+      this.facturaService.isLoading = false;
+
+      this.verError(resClient);
+
+      return;
+
+    }
+
+    //Buscar cliente y asiganrlo
+    let clients: ClienteInterface[] = resClient.response;
+
+
+    let existClient: number = -1;
+
+    for (let i = 0; i < clients.length; i++) {
+      const element = clients[i];
+
+    }
+
+    if (existClient == -1) {
+      this.facturaService.cuenta = {
+        cuenta_Correntista: 1,
+        cuenta_Cta: docOrigin.cuenta_Cta,
+        factura_Nombre: docOrigin.cliente,
+        factura_NIT: docOrigin.nit,
+        factura_Direccion: docOrigin.direccion,
+        cC_Direccion: docOrigin.direccion,
+        des_Cuenta_Cta: docOrigin.nit,
+        direccion_1_Cuenta_Cta: docOrigin.direccion,
+        eMail: "",
+        telefono: "",
+        limite_Credito: 0,
+        permitir_CxC: false,
+
+      }
+
+    } else {
+      this.facturaService.cuenta = clients[existClient];
+    }
+
+    //Set dates and observaciones
+
+    this.facturaService.fechaIni = docOrigin.referencia_D_Fecha_Ini;
+    this.facturaService.fechaFin = docOrigin.referencia_D_Fecha_Fin;
+    // TODO://Preguntar por ovservaciones y fechas
+
+    //TODO:Cragar vendedor
+
+
+
+    //TODO:Cargar productos
+    for (const tra of this.globalConvertService.detailsOrigin) {
+      let resProduct = await this._productService.getProductId(
+        token,
+        tra.detalle.id,
+      );
+
+
+      if (!resProduct.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resProduct);
+
+        return;
+      }
+
+      let productSearch: ProductoInterface[] = resProduct.response;
+
+
+      let iProd: number = -1;
+
+      for (let i = 0; i < productSearch.length; i++) {
+        const element = productSearch[i];
+
+        if (element.producto_Id = tra.detalle.id) {
+          iProd = i;
+          break;
+        }
+
+      }
+
+      if (iProd == -1) {
+
+        this.facturaService.isLoading = false;
+
+
+        resProduct.response = "Error al cargar las transacciones, no se encontró un producto";
+
+        this.verError(resProduct);
+
+        return;
+
+
+
+      }
+
+
+      let prod: ProductoInterface = productSearch[iProd];
+
+      //buscar bodegas del producto
+      let resBodega = await this._productService.getBodegaProducto(
+        user,
+        token,
+        empresa,
+        estacion,
+        prod.producto,
+        prod.unidad_Medida,
+      );
+
+
+      if (!resBodega.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.verError(resBodega);
+
+        return;
+
+      }
+
+      let bodegas: BodegaProductoInterface[] = resBodega.response;
+
+      let existBodega: number = -1;
+
+      //Search bodega
+      for (let i = 0; i < bodegas.length; i++) {
+        const element = bodegas[i];
+        if (element.bodega == tra.detalle.bodega) {
+          existBodega = i;
+          break;
+        }
+      }
+
+
+
+      let bodega: BodegaProductoInterface;
+
+      if (existBodega == -1) {
+        //No hay bodegas
+        bodega = {
+          bodega: tra.detalle.bodega,
+          existencia: 0,
+          nombre: tra.detalle.bodega_Descripcion,
+        }
+
+      } else {
+        bodega = bodegas[existBodega];
+      }
+
+
+      //buscar precios
+      let resPrecio = await this._productService.getPrecios(
+        this.user,
+        token,
+        bodega.bodega,
+        prod.producto,
+        prod.unidad_Medida,
+      );
+
+
+
+      if (!resPrecio.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.verError(resPrecio);
+
+        return;
+
+      }
+
+      let precios: PrecioInterface[] = resPrecio.response;
+
+
+      let existPrecio: number = -1;
+
+      for (let i = 0; i < precios.length; i++) {
+        const element = precios[i];
+        if (element.tipo_Precio = tra.detalle.tipo_Precio) {
+          existPrecio = i;
+          break;
+        }
+      }
+
+      let precioSelect: UnitarioInterface;
+
+      if (existPrecio == -1) {
+        //TODO:Seacrh factor de conversion
+        precioSelect = {
+          descripcion: "Precio",
+          id: tra.detalle.tipo_Precio,
+          moneda: 1,
+          orden: 1,
+          precio: true,
+          precioU: tra.detalle.disponible ? 0 : tra.detalle.monto / tra.detalle.disponible
+        }
+      } else {
+        precioSelect = {
+          descripcion: precios[existPrecio].des_Tipo_Precio,
+          id: precios[existPrecio].tipo_Precio,
+          moneda: precios[existPrecio].moneda,
+          orden: precios[existPrecio].precio_Orden,
+          precio: true,
+          precioU: precios[existPrecio].precio_Unidad
+        }
+      }
+
+
+
+
+
+      this.facturaService.addTransaction(
+        {
+          //TODO:Agregar montos por dia
+          precioCantidad: 0,
+          precipDia: 0,
+          isChecked: false,
+          bodega: bodega,
+          producto: prod,
+          precio: precioSelect,
+          cantidad: tra.detalle.disponible,
+          total: precioSelect.precioU * tra.detalle.disponible,
+          cargo: 0,
+          descuento: 0,
+          operaciones: [],
+        }
+      );
+
+
+    }
+
+    this.facturaService.isLoading = false;
+
+
+    return;
+
+    if (this.facturaService.series.length == 1 && serieOrigen == this.facturaService.serie!.serie_Documento) {
+
+      //TODO:Cargar demas datos
+
+
+
+      //buscar 
+
+
+
+      this.facturaService.isLoading = false;
+      return;
+    }
+
+    let existSerie: number = -1;
+
+    for (let i = 0; i < this.facturaService.series.length; i++) {
+      const element = this.facturaService.series[i];
+
+      if (element.serie_Documento == serieOrigen) {
+        existSerie = i;
+        break;
+      }
+
+    }
+
+
+    if (existSerie == -1) {
+      this.facturaService.isLoading = false;
+      //TODO:Bloquear pantalla porque la serie no existe
+
+      return;
+    }
+
+    //TODO:Seleccionar serie y cargar datos
+
+
+
+
+
+    this.facturaService.isLoading = false;
+
+
   }
+
 
 
   //ver oabtalal crear cuenta correntista

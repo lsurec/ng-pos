@@ -75,544 +75,544 @@ export class ConvertDocsComponent {
     this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Decripcion;
     this._facturaService.tipoDocumento = this.globalConvertSrevice.docOriginSelect!.tipo_Documento;
 
-    //Datos de la sesion
-    let user: string = this.globalConvertSrevice.docOriginSelect!.usuario;
-    let token: string = PreferencesService.token;
-    let empresa: number = this.globalConvertSrevice.docOriginSelect!.empresa;
-    let estacion: number = this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo;
-    let documento: number = this._facturaService.tipoDocumento;
+    // //Datos de la sesion
+    // let user: string = this.globalConvertSrevice.docOriginSelect!.usuario;
+    // let token: string = PreferencesService.token;
+    // let empresa: number = this.globalConvertSrevice.docOriginSelect!.empresa;
+    // let estacion: number = this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo;
+    // let documento: number = this._facturaService.tipoDocumento;
 
 
-    //TODO: Cargar en conversion
-    this._facturaService.isLoading = true;
+    // //TODO: Cargar en conversion
+    // this._facturaService.isLoading = true;
 
-    //set serie documento
-    //Buscar series
-    let resSeries: ResApiInterface = await this._serieService.getSerie(
-      user,
-      token,
-      documento,
-      empresa,
-      estacion,
-    );
+    // //set serie documento
+    // //Buscar series
+    // let resSeries: ResApiInterface = await this._serieService.getSerie(
+    //   user,
+    //   token,
+    //   documento,
+    //   empresa,
+    //   estacion,
+    // );
 
-    //si algo salio al
-    if (!resSeries.status) {
-      this._facturaService.isLoading = false;
-      //TODO: Show error 
-      console.log(resSeries);
+    // //si algo salio al
+    // if (!resSeries.status) {
+    //   this._facturaService.isLoading = false;
+    //   //TODO: Show error 
+    //   console.log(resSeries);
 
 
-      // this.verError(resSeries);
-      return;
-    }
+    //   // this.verError(resSeries);
+    //   return;
+    // }
 
-    //Series disponobles
-    this._facturaService.series = resSeries.response;
+    // //Series disponobles
+    // this._facturaService.series = resSeries.response;
 
 
 
 
-    let indexSerie: number = -1;
+    // let indexSerie: number = -1;
 
-    for (let i = 0; i < this._facturaService.series.length; i++) {
-      const element = this._facturaService.series[i];
+    // for (let i = 0; i < this._facturaService.series.length; i++) {
+    //   const element = this._facturaService.series[i];
 
-      if (element.serie_Documento == this.globalConvertSrevice.docOriginSelect?.serie_Documento) {
-        indexSerie = i;
-        break;
-      }
-    }
+    //   if (element.serie_Documento == this.globalConvertSrevice.docOriginSelect?.serie_Documento) {
+    //     indexSerie = i;
+    //     break;
+    //   }
+    // }
 
 
-    if (indexSerie == -1) {
-      ///TODO: Si no existe no navegar
-      console.log("No existe la serie");
+    // if (indexSerie == -1) {
+    //   ///TODO: Si no existe no navegar
+    //   console.log("No existe la serie");
 
-      return;
+    //   return;
 
-    }
+    // }
 
 
-    this._facturaService.serie = this._facturaService.series[indexSerie];
+    // this._facturaService.serie = this._facturaService.series[indexSerie];
 
 
-    //si solo hay una serie seleccionarla por defecto;
-    if (this._facturaService.series.length == 1) {
-      //seleccionar serie
+    // //si solo hay una serie seleccionarla por defecto;
+    // if (this._facturaService.series.length == 1) {
+    //   //seleccionar serie
 
 
 
-      let serie: string = this._facturaService.serie.serie_Documento;
+    //   let serie: string = this._facturaService.serie.serie_Documento;
 
-      //buscar vendedores
-      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
-        user,
-        token,
-        documento,
-        serie,
-        empresa,
-      )
+    //   //buscar vendedores
+    //   let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+    //     user,
+    //     token,
+    //     documento,
+    //     serie,
+    //     empresa,
+    //   )
 
-      //si algo salió mal mostrar error
-      if (!resVendedor.status) {
-        //TODO: Show error 
+    //   //si algo salió mal mostrar error
+    //   if (!resVendedor.status) {
+    //     //TODO: Show error 
 
-        this._facturaService.isLoading = false;
-        // this.verError(resVendedor);
-        console.log(resVendedor);
+    //     this._facturaService.isLoading = false;
+    //     // this.verError(resVendedor);
+    //     console.log(resVendedor);
 
 
-        return;
-      }
+    //     return;
+    //   }
 
-      //cuntas correntista ref disponibles
-      this._facturaService.vendedores = resVendedor.response;
+    //   //cuntas correntista ref disponibles
+    //   this._facturaService.vendedores = resVendedor.response;
 
 
-      //Validar cuenta ref si existe
-      if (this.globalConvertSrevice.docOriginSelect?.cuenta_Correntista_Ref) {
+    //   //Validar cuenta ref si existe
+    //   if (this.globalConvertSrevice.docOriginSelect?.cuenta_Correntista_Ref) {
 
-        let indexCtaRef = -1;
-        for (let i = 0; i < this._facturaService.vendedores.length; i++) {
-          const element = this._facturaService.vendedores[i];
+    //     let indexCtaRef = -1;
+    //     for (let i = 0; i < this._facturaService.vendedores.length; i++) {
+    //       const element = this._facturaService.vendedores[i];
 
-          if (element.cuenta_Correntista == this.globalConvertSrevice.docOriginSelect.cuenta_Correntista_Ref) {
-            indexCtaRef = i;
-            break;
-          }
+    //       if (element.cuenta_Correntista == this.globalConvertSrevice.docOriginSelect.cuenta_Correntista_Ref) {
+    //         indexCtaRef = i;
+    //         break;
+    //       }
 
-        }
+    //     }
 
 
-        if (indexCtaRef == -1) {
-          //TODO: Mostrar mensjae}
-          console.log("No eciste cuenat ref");
+    //     if (indexCtaRef == -1) {
+    //       //TODO: Mostrar mensjae}
+    //       console.log("No eciste cuenat ref");
 
-          //TODO: Reinventar
-          // return;
-        }
+    //       //TODO: Reinventar
+    //       // return;
+    //     }
 
 
-        this._facturaService.vendedor = this._facturaService.vendedores[indexCtaRef];
+    //     this._facturaService.vendedor = this._facturaService.vendedores[indexCtaRef];
 
 
-      }
+    //   }
 
 
 
 
-      //Buscar tipos transaccion
-      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
-        user,
-        token,
-        documento,
-        serie,
-        empresa,
-      );
+    //   //Buscar tipos transaccion
+    //   let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+    //     user,
+    //     token,
+    //     documento,
+    //     serie,
+    //     empresa,
+    //   );
 
-      //si algo salio mal
-      if (!resTransaccion.status) {
+    //   //si algo salio mal
+    //   if (!resTransaccion.status) {
 
-        console.log(resTransaccion);
+    //     console.log(resTransaccion);
 
 
-        //TODO:Error
-        // this._facturaService.isLoading = false;
-        // this.verError(resTransaccion);
+    //     //TODO:Error
+    //     // this._facturaService.isLoading = false;
+    //     // this.verError(resTransaccion);
 
-        return;
-      }
+    //     return;
+    //   }
 
-      //tioos de trabnsaccion disponibles
-      this._facturaService.tiposTransaccion = resTransaccion.response;
+    //   //tioos de trabnsaccion disponibles
+    //   this._facturaService.tiposTransaccion = resTransaccion.response;
 
-      //Buscar parametros del documento
-      let resParametro: ResApiInterface = await this._parametroService.getParametro(
-        user,
-        token,
-        documento,
-        serie,
-        empresa,
-        estacion,
-      )
+    //   //Buscar parametros del documento
+    //   let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    //     user,
+    //     token,
+    //     documento,
+    //     serie,
+    //     empresa,
+    //     estacion,
+    //   )
 
-      //si algo salio mal
-      if (!resParametro.status) {
-        //TODO:Error
-        console.log(resParametro);
+    //   //si algo salio mal
+    //   if (!resParametro.status) {
+    //     //TODO:Error
+    //     console.log(resParametro);
 
 
-        // this._facturaService.isLoading = false;
-        // this.verError(resParametro);
+    //     // this._facturaService.isLoading = false;
+    //     // this.verError(resParametro);
 
-        return;
-      }
+    //     return;
+    //   }
 
-      //Parammetros disponibles
-      this._facturaService.parametros = resParametro.response;
+    //   //Parammetros disponibles
+    //   this._facturaService.parametros = resParametro.response;
 
-      //Buscar formas de pago
-      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
-        token,
-        empresa,
-        serie,
-        documento,
-      );
+    //   //Buscar formas de pago
+    //   let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+    //     token,
+    //     empresa,
+    //     serie,
+    //     documento,
+    //   );
 
-      //si algo salio mal
-      if (!resFormaPago.status) {
+    //   //si algo salio mal
+    //   if (!resFormaPago.status) {
 
-        //TODO:Error
+    //     //TODO:Error
 
-        console.log(resFormaPago);
+    //     console.log(resFormaPago);
 
-        // this._facturaService.isLoading = false;
+    //     // this._facturaService.isLoading = false;
 
-        // this.verError(resFormaPago);
+    //     // this.verError(resFormaPago);
 
-        return;
+    //     return;
 
-      }
+    //   }
 
-      //Formas de pago disponobles
-      this._facturaService.formasPago = resFormaPago.response;
+    //   //Formas de pago disponobles
+    //   this._facturaService.formasPago = resFormaPago.response;
 
-    }
+    // }
 
 
-    //TODO:Buscar referencia, observaciones y fechas para caragarlas
+    // //TODO:Buscar referencia, observaciones y fechas para caragarlas
 
-    if (this._facturaService.valueParametro(58)) {
+    // if (this._facturaService.valueParametro(58)) {
 
-      this._facturaService.tipoReferencia = undefined;
-      this._facturaService.tiposReferencia = [];
+    //   this._facturaService.tipoReferencia = undefined;
+    //   this._facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
+    //   let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
 
 
-      //si algo salio mal
-      if (!resTipoRefencia.status) {
+    //   //si algo salio mal
+    //   if (!resTipoRefencia.status) {
 
-        console.log(resTipoRefencia);
+    //     console.log(resTipoRefencia);
 
 
-        //TODO:Error
-        // this._facturaService.isLoading = false;
+    //     //TODO:Error
+    //     // this._facturaService.isLoading = false;
 
 
-        // this.verError(resTipoRefencia);
+    //     // this.verError(resTipoRefencia);
 
-        return;
+    //     return;
 
-      }
+    //   }
 
 
-      this._facturaService.tiposReferencia = resTipoRefencia.response;
+    //   this._facturaService.tiposReferencia = resTipoRefencia.response;
 
 
-      if (this._facturaService.tiposReferencia.length == 1) {
-        this._facturaService.tipoReferencia = this._facturaService.tiposReferencia[0];
-      }
+    //   if (this._facturaService.tiposReferencia.length == 1) {
+    //     this._facturaService.tipoReferencia = this._facturaService.tiposReferencia[0];
+    //   }
 
-    }
+    // }
 
 
 
-    this._facturaService.cuenta = {
-      cuenta_Correntista: 1,
-      cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.cuenta_Cta,
-      factura_Nombre: this.globalConvertSrevice.docOriginSelect!.cliente,
-      factura_NIT: this.globalConvertSrevice.docOriginSelect!.nit,
-      factura_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
-      cC_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
-      des_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.nit,
-      direccion_1_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.direccion,
-      eMail: "",
-      telefono: "",
-      limite_Credito: 0,
-      permitir_CxC: false,
+    // this._facturaService.cuenta = {
+    //   cuenta_Correntista: 1,
+    //   cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.cuenta_Cta,
+    //   factura_Nombre: this.globalConvertSrevice.docOriginSelect!.cliente,
+    //   factura_NIT: this.globalConvertSrevice.docOriginSelect!.nit,
+    //   factura_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
+    //   cC_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
+    //   des_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.nit,
+    //   direccion_1_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.direccion,
+    //   eMail: "",
+    //   telefono: "",
+    //   limite_Credito: 0,
+    //   permitir_CxC: false,
 
-    }
+    // }
 
 
-    //TODO:Cargarr
-    this._facturaService.isLoading = false;
+    // //TODO:Cargarr
+    // this._facturaService.isLoading = false;
 
 
-    this._facturaService.traInternas = [];
+    // this._facturaService.traInternas = [];
 
 
-    for (const iterator of this.globalConvertSrevice.detailsOrigin) {
-      let resProduct = await this._productService.getProductId(
-        this.token,
-        iterator.detalle.id,
-      );
+    // for (const iterator of this.globalConvertSrevice.detailsOrigin) {
+    //   let resProduct = await this._productService.getProductId(
+    //     this.token,
+    //     iterator.detalle.id,
+    //   );
 
 
-      if (!resProduct.status) {
-        console.log("No se encontró el producto");
-        return;
-      }
+    //   if (!resProduct.status) {
+    //     console.log("No se encontró el producto");
+    //     return;
+    //   }
 
-      let productSearch: ProductoInterface[] = resProduct.response;
+    //   let productSearch: ProductoInterface[] = resProduct.response;
 
 
-      let iProd: number = -1;
+    //   let iProd: number = -1;
 
-      for (let i = 0; i < productSearch.length; i++) {
-        const element = productSearch[i];
+    //   for (let i = 0; i < productSearch.length; i++) {
+    //     const element = productSearch[i];
 
-        if (element.producto_Id = iterator.detalle.id) {
-          iProd = i;
-          break;
-        }
+    //     if (element.producto_Id = iterator.detalle.id) {
+    //       iProd = i;
+    //       break;
+    //     }
 
-      }
+    //   }
 
 
-      if (iProd == -1) {
+    //   if (iProd == -1) {
 
-        console.log("No se encontró el producto");
-        return;
+    //     console.log("No se encontró el producto");
+    //     return;
 
-      }
+    //   }
 
 
-      let prod: ProductoInterface = productSearch[iProd];
+    //   let prod: ProductoInterface = productSearch[iProd];
 
 
-       //buscar bodegas del produxto
-       let resBodega = await this._productService.getBodegaProducto(
-        this.user,
-        this.token,
-        empresa,
-        estacion,
-        prod.producto,
-        prod.unidad_Medida,
-      );
+    //    //buscar bodegas del produxto
+    //    let resBodega = await this._productService.getBodegaProducto(
+    //     this.user,
+    //     this.token,
+    //     empresa,
+    //     estacion,
+    //     prod.producto,
+    //     prod.unidad_Medida,
+    //   );
 
 
-      if (!resBodega.status) {
+    //   if (!resBodega.status) {
 
-        // this.facturaService.isLoading = false;
+    //     // this.facturaService.isLoading = false;
 
 
-        // let verificador = await this._notificationsService.openDialogActions(
-        //   {
-        //     title: this._translate.instant('pos.alertas.salioMal'),
-        //     description: this._translate.instant('pos.alertas.error'),
-        //     verdadero: this._translate.instant('pos.botones.informe'),
-        //     falso: this._translate.instant('pos.botones.aceptar'),
-        //   }
-        // );
+    //     // let verificador = await this._notificationsService.openDialogActions(
+    //     //   {
+    //     //     title: this._translate.instant('pos.alertas.salioMal'),
+    //     //     description: this._translate.instant('pos.alertas.error'),
+    //     //     verdadero: this._translate.instant('pos.botones.informe'),
+    //     //     falso: this._translate.instant('pos.botones.aceptar'),
+    //     //   }
+    //     // );
 
-        // if (!verificador) return;
+    //     // if (!verificador) return;
 
-        // this.verError(resBodega);
-        console.log(resBodega);
+    //     // this.verError(resBodega);
+    //     console.log(resBodega);
         
 
-        return;
+    //     return;
 
-      }
+    //   }
 
-      this._productoService.bodegas = resBodega.response;
-
-
-      //validar que existan bodegas
-      if (this._productoService.bodegas.length == 0) {
-        // this._facturaService.isLoading = false;
-        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
-        return;
-      }
+    //   this._productoService.bodegas = resBodega.response;
 
 
-      //Si solo hay una bodega
-      if (this._productoService.bodegas.length == 1) {
-        this._productoService.bodega = this._productoService.bodegas[0];
-        let bodega: number = this._productoService.bodega.bodega;
-
-        //buscar precios
-        let resPrecio = await this._productService.getPrecios(
-          this.user,
-          this.token,
-          bodega,
-          prod.producto,
-          prod.unidad_Medida,
-        );
+    //   //validar que existan bodegas
+    //   if (this._productoService.bodegas.length == 0) {
+    //     // this._facturaService.isLoading = false;
+    //     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
+    //     return;
+    //   }
 
 
-        if (!resPrecio.status) {
+    //   //Si solo hay una bodega
+    //   if (this._productoService.bodegas.length == 1) {
+    //     this._productoService.bodega = this._productoService.bodegas[0];
+    //     let bodega: number = this._productoService.bodega.bodega;
 
-          this._facturaService.isLoading = false;
+    //     //buscar precios
+    //     let resPrecio = await this._productService.getPrecios(
+    //       this.user,
+    //       this.token,
+    //       bodega,
+    //       prod.producto,
+    //       prod.unidad_Medida,
+    //     );
 
 
-          // let verificador = await this._notificationsService.openDialogActions(
-          //   {
-          //     title: this._translate.instant('pos.alertas.salioMal'),
-          //     description: this._translate.instant('pos.alertas.error'),
-          //     verdadero: this._translate.instant('pos.botones.informe'),
-          //     falso: this._translate.instant('pos.botones.aceptar'),
-          //   }
-          // );
+    //     if (!resPrecio.status) {
 
-          // if (!verificador) return;
+    //       this._facturaService.isLoading = false;
 
-          // this.verError(resPrecio);
 
-          console.log(resPrecio);
+    //       // let verificador = await this._notificationsService.openDialogActions(
+    //       //   {
+    //       //     title: this._translate.instant('pos.alertas.salioMal'),
+    //       //     description: this._translate.instant('pos.alertas.error'),
+    //       //     verdadero: this._translate.instant('pos.botones.informe'),
+    //       //     falso: this._translate.instant('pos.botones.aceptar'),
+    //       //   }
+    //       // );
+
+    //       // if (!verificador) return;
+
+    //       // this.verError(resPrecio);
+
+    //       console.log(resPrecio);
           
-          return;
+    //       return;
 
-        }
+    //     }
 
-        let precios: PrecioInterface[] = resPrecio.response;
+    //     let precios: PrecioInterface[] = resPrecio.response;
 
-        precios.forEach(element => {
-          this._productoService.precios.push(
-            {
-              id: element.tipo_Precio,
-              precioU: element.precio_Unidad,
-              descripcion: element.des_Tipo_Precio,
-              precio: true,
-              moneda: element.moneda,
-              orden:element.precio_Orden,
-            }
-          );
-        });
+    //     precios.forEach(element => {
+    //       this._productoService.precios.push(
+    //         {
+    //           id: element.tipo_Precio,
+    //           precioU: element.precio_Unidad,
+    //           descripcion: element.des_Tipo_Precio,
+    //           precio: true,
+    //           moneda: element.moneda,
+    //           orden:element.precio_Orden,
+    //         }
+    //       );
+    //     });
 
-        //si no hay precios buscar factor conversion
-        if (this._productoService.precios.length == 0) {
-          let resfactor = await this._productService.getFactorConversion(
-            this.user,
-            this.token,
-            bodega,
-            prod.producto,
-            prod.unidad_Medida,
-          );
+    //     //si no hay precios buscar factor conversion
+    //     if (this._productoService.precios.length == 0) {
+    //       let resfactor = await this._productService.getFactorConversion(
+    //         this.user,
+    //         this.token,
+    //         bodega,
+    //         prod.producto,
+    //         prod.unidad_Medida,
+    //       );
 
-          if (!resfactor.status) {
+    //       if (!resfactor.status) {
 
-            this._facturaService.isLoading = false;
+    //         this._facturaService.isLoading = false;
 
-            // let verificador = await this._notificationsService.openDialogActions(
-            //   {
-            //     title: this._translate.instant('pos.alertas.salioMal'),
-            //     description: this._translate.instant('pos.alertas.error'),
-            //     verdadero: this._translate.instant('pos.botones.informe'),
-            //     falso: this._translate.instant('pos.botones.aceptar'),
-            //   }
-            // );
+    //         // let verificador = await this._notificationsService.openDialogActions(
+    //         //   {
+    //         //     title: this._translate.instant('pos.alertas.salioMal'),
+    //         //     description: this._translate.instant('pos.alertas.error'),
+    //         //     verdadero: this._translate.instant('pos.botones.informe'),
+    //         //     falso: this._translate.instant('pos.botones.aceptar'),
+    //         //   }
+    //         // );
 
-            // if (!verificador) return;
+    //         // if (!verificador) return;
 
-            // this.verError(resfactor);
+    //         // this.verError(resfactor);
 
-            console.log(resfactor);
+    //         console.log(resfactor);
             
-            return;
+    //         return;
 
-          }
-
-
-          let factores: FactorConversionInterface[] = resfactor.response;
+    //       }
 
 
-          factores.forEach(element => {
-            this._productoService.precios.push(
-              {
-                id: element.tipo_Precio,
-                precioU: element.precio_Unidad,
-                descripcion: element.des_Tipo_Precio,
-                precio: false,
-                moneda: element.moneda,
-                orden:element.tipo_Precio_Orden,
-              }
-            );
-          });
+    //       let factores: FactorConversionInterface[] = resfactor.response;
 
-        }
 
-        //si no hay precos ni factores
+    //       factores.forEach(element => {
+    //         this._productoService.precios.push(
+    //           {
+    //             id: element.tipo_Precio,
+    //             precioU: element.precio_Unidad,
+    //             descripcion: element.des_Tipo_Precio,
+    //             precio: false,
+    //             moneda: element.moneda,
+    //             orden:element.tipo_Precio_Orden,
+    //           }
+    //         );
+    //       });
 
-        // let precio:number = 0;
-        // if(iterator.detalle.tipo_Precio){
-        //     precio = iterator.detalle.tipo_Precio;
+    //     }
+
+    //     //si no hay precos ni factores
+
+    //     // let precio:number = 0;
+    //     // if(iterator.detalle.tipo_Precio){
+    //     //     precio = iterator.detalle.tipo_Precio;
             
-        // }
+    //     // }
 
-        // for (let i = 0; i < this._facturaService..length; i++) {
-        //   const element = this._facturaService.[i];
+    //     // for (let i = 0; i < this._facturaService..length; i++) {
+    //     //   const element = this._facturaService.[i];
           
-        // }
+    //     // }
 
 
-        //TODO:Buscar precio
-
-        
-
-        console.log(this._productoService.precios);
-
-
+    //     //TODO:Buscar precio
 
         
 
-        // if (this._productoService.precios.length == 1) {
+    //     console.log(this._productoService.precios);
 
-        //   let precioU: UnitarioInterface = this._productoService.precios[0];
 
-        //   this._productoService.precio = precioU;
-        //   this._productoService.total = precioU.precioU;
-        //   this._productoService.precioU = precioU.precioU;
-        //   this._productoService.precioText = precioU.precioU.toString();
 
-        // } else if (this._productoService.precios.length > 1) {
-        //   for (let i = 0; i < this._productoService.precios.length; i++) {
-        //     const element = this._productoService.precios[i];
-        //     if (element.orden) {
-        //       this._productoService.precio = element;
-        //       this._productoService.total = element.precioU;
-        //       this._productoService.precioU = element.precioU;
-        //       this._productoService.precioText = element.precioU.toString();
-
-        //     }
-        //     break;
-
-        //   }
-        // }
-
-        console.log(this._productoService.precio);
         
 
-      }
+    //     // if (this._productoService.precios.length == 1) {
+
+    //     //   let precioU: UnitarioInterface = this._productoService.precios[0];
+
+    //     //   this._productoService.precio = precioU;
+    //     //   this._productoService.total = precioU.precioU;
+    //     //   this._productoService.precioU = precioU.precioU;
+    //     //   this._productoService.precioText = precioU.precioU.toString();
+
+    //     // } else if (this._productoService.precios.length > 1) {
+    //     //   for (let i = 0; i < this._productoService.precios.length; i++) {
+    //     //     const element = this._productoService.precios[i];
+    //     //     if (element.orden) {
+    //     //       this._productoService.precio = element;
+    //     //       this._productoService.total = element.precioU;
+    //     //       this._productoService.precioU = element.precioU;
+    //     //       this._productoService.precioText = element.precioU.toString();
+
+    //     //     }
+    //     //     break;
+
+    //     //   }
+    //     // }
+
+    //     console.log(this._productoService.precio);
+        
+
+    //   }
 
 
 
-      this._facturaService.addTransaction(
-        {
-          precioCantidad: 0,
-          precipDia: 0,
-          isChecked: false,
-          bodega: this._productoService.bodega,
-          producto:prod,
-          precio: this._productoService.precios[0],
-          cantidad: iterator.detalle.cantidad,
-          total: this._productoService.precios[0].precioU * iterator.detalle.cantidad,
-          cargo: 0,
-          descuento: 0,
-          operaciones: [],
-        }
-      );
+    //   this._facturaService.addTransaction(
+    //     {
+    //       precioCantidad: 0,
+    //       precipDia: 0,
+    //       isChecked: false,
+    //       bodega: this._productoService.bodega,
+    //       producto:prod,
+    //       precio: this._productoService.precios[0],
+    //       cantidad: iterator.detalle.cantidad,
+    //       total: this._productoService.precios[0].precioU * iterator.detalle.cantidad,
+    //       cargo: 0,
+    //       descuento: 0,
+    //       operaciones: [],
+    //     }
+    //   );
 
 
-    }
+    // }
 
 
     
 
-    console.log("Paso por aqui");
+    // console.log("Paso por aqui");
 
     
     this.globalConvertSrevice.editDoc = true;
