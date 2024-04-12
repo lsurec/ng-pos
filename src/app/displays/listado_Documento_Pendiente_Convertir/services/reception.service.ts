@@ -607,7 +607,7 @@ export class ReceptionService {
                 "Authorization": "bearer " + token,
                 "user": user,
                 "doc": doc,
-                "fechaIni": "20240101",//TODO:Arreglar
+                "fechaIni": fechaIni,
                 "fechaFin": fechaFin,
             }
         )
