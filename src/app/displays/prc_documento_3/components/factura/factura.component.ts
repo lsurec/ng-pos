@@ -721,7 +721,18 @@ export class FacturaComponent implements OnInit {
 
 
 
-
+        // this.facturaService.inputFechaEntrega = ;
+        // this.facturaService.horaEntrega = ;
+        // this.facturaService.inputFechaRecoger = ;
+        // this.facturaService.horaRecoger = ;
+        // this.facturaService.inputFechaInicial = ;
+        // this.facturaService.horaIncial = ;
+        // this.facturaService.inputFechaFinal = ;
+        // this.facturaService.horaFinal = ;
+        // this.facturaService.refContacto = ;
+        // this.facturaService.refDescripcion = ;
+        // this.facturaService.refDireccionEntrega = ;
+        // this.facturaService.refObservacion = ;
 
       this.facturaService.addTransaction(
         {
