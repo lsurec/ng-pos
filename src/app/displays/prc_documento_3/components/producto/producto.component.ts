@@ -378,8 +378,9 @@ export class ProductoComponent {
 
     if (this.facturaService.valueParametro(351)) {
 
-      console.log("-----------------");
+      //TODO:ESte error se resuelev una vez recuperadas las fechas
 
+      console.log("-----------------");
       console.log(this.facturaService.fechaIni);
       console.log(this.facturaService.fechaFin);
       console.log("-----------------");
