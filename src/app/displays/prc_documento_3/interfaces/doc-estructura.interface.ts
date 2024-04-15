@@ -1,14 +1,14 @@
 // documento.interface.ts
 
 export interface Documento {
-  Doc_Tipo_Referencia:number | null | undefined,
-  Doc_Fecha_Entrega:Date | null | undefined,
-  Doc_Fecha_Recoger:Date | null | undefined,
-  Doc_Fecha_Incio:Date | null | undefined,
-  Doc_Fecha_Finalizacion:Date | null | undefined,
-  Doc_Ref_Contacto:string |null | undefined,
+  Doc_Ref_Tipo_Referencia:number | null | undefined,
+  Doc_Ref_Fecha_Ini:Date | null | undefined, //entrega
+  Doc_Ref_Fecha_Fin:Date | null | undefined, //regoger
+  Doc_Fecha_Ini:Date | null | undefined,
+  Doc_Fecha_Fin:Date | null | undefined,
+  Doc_Ref_Observacion_2:string |null | undefined, //Contacto
   Doc_Ref_Descripcion:string| null | undefined,
-  Doc_Ref_Direccion_Entrega:string | null | undefined,
+  Doc_Ref_Observacion_3:string | null | undefined, //Direccion entrega
   Doc_Ref_Observacion:string | null | undefined,
   Consecutivo_Interno:number;
   Doc_Tra_Monto: number;

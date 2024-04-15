@@ -5,9 +5,19 @@ import { VendedorInterface } from "./vendedor.interface";
 import { SerieInterface } from "./serie.interface";
 import { TraInternaInterface } from "./tra-interna.interface";
 import { MontoIntreface } from "./monto.interface";
+import { TipoReferenciaInterface } from "./tipo-referencia";
 
 export interface DocLocalInterface{
     user:string,
+    tipoRef?:TipoReferenciaInterface,
+    refFechaEntrega?: string,
+    refFechaRecoger?: string,
+    refFechaInicio?: string,
+    refFechaFin?: string,
+    refContacto?: string,
+    refDescripcion?: string,
+    refDireccionEntrega?: string,
+    refObservacion?: string,
     empresa:EmpresaInterface,
     estacion:EstacionInterface,
     cliente?:ClienteInterface,

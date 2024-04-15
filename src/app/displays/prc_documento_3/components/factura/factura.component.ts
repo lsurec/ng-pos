@@ -25,6 +25,7 @@ import { ProductoInterface } from '../../interfaces/producto.interface';
 import { BodegaProductoInterface } from '../../interfaces/bodega-produto.interface';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-factura',
@@ -239,16 +240,6 @@ export class FacturaComponent implements OnInit {
   }
 
 
-  //formatear la hora con una fecha ingresada.
-  getHoraInput(horaSelected: Date): string {
-    // Obtener la hora actual y formatearla como deseas
-    let hora = new Date(horaSelected);
-    let horas = hora.getHours();
-    let minutos = hora.getMinutes();
-    let ampm = horas >= 12 ? 'pm' : 'am';
-    // Formatear la hora actual como 'hh:mm am/pm'
-    return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
-  };
 
 
   setDateNow() {
@@ -259,10 +250,10 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaEntrega = this._calendar.getToday();
     this.facturaService.inputFechaRecoger = this._calendar.getToday();
 
-    this.facturaService.horaIncial = this.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaFinal = this.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaEntrega = this.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaRecoger = this.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fecha);
 
 
 
@@ -368,8 +359,6 @@ export class FacturaComponent implements OnInit {
       }
 
 
-      console.log( resVendedor.response);
-      
       //cuntas correntista ref disponibles
       this.facturaService.vendedores = resVendedor.response;
 

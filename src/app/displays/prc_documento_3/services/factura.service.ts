@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { VendedorInterface } from '../interfaces/vendedor.interface';
 import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Injectable({
     providedIn: 'root',
@@ -264,6 +265,56 @@ export class FacturaService {
         this.traInternas = doc.detalles; //asignar detalles
         this.montos = doc.pagos; //asignar pagos
 
+        //TODO:Verificar
+        this.tipoReferencia = doc.tipoRef;
+
+
+
+        //load dates 
+        this.fechaEntrega = new Date(doc.refFechaEntrega!);
+        this.fechaRecoger = new Date(doc.refFechaRecoger!);
+        this.fechaIni = new Date(doc.refFechaInicio!);
+        this.fechaFin = new Date(doc.refFechaFin!);
+
+
+        //set dates in inputs
+        this.inputFechaEntrega = {
+            year: this.fechaEntrega.getFullYear(),
+            day: this.fechaEntrega.getDate(),
+            month: this.fechaEntrega.getMonth() + 1,
+        }
+
+        this.inputFechaRecoger = {
+            year: this.fechaRecoger.getFullYear(),
+            day: this.fechaRecoger.getDate(),
+            month: this.fechaRecoger.getMonth() + 1,
+        }
+
+        this.inputFechaInicial = {
+            year: this.fechaIni.getFullYear(),
+            day: this.fechaIni.getDate(),
+            month: this.fechaIni.getMonth() + 1,
+        }
+
+        this.inputFechaFinal = {
+            year: this.fechaFin.getFullYear(),
+            day: this.fechaFin.getDate(),
+            month: this.fechaFin.getMonth() + 1,
+        }
+
+        //set time
+        this.horaIncial = UtilitiesService.getHoraInput(this.fechaIni);
+        this.horaFinal = UtilitiesService.getHoraInput(this.fechaFin);
+        this.horaEntrega = UtilitiesService.getHoraInput(this.fechaEntrega);
+        this.horaRecoger = UtilitiesService.getHoraInput(this.fechaRecoger);
+
+
+        // set observaciones
+        this.refContacto = doc.refContacto;
+        this.refDescripcion = doc.refDescripcion;
+        this.refDireccionEntrega = doc.refDireccionEntrega;
+        this.refObservacion = doc.refObservacion;
+
 
         //calcular totales del documento y pagos
         this.calculateTotales();
@@ -275,6 +326,15 @@ export class FacturaService {
         //objeto con todos los datos de un documento
         let doc: DocLocalInterface = {
             user: PreferencesService.user, //usuario de la sesion
+            tipoRef: this.valueParametro(58) ? this.tipoReferencia : undefined,
+            refFechaEntrega: this.valueParametro(381) ? this.fechaEntrega!.toISOString() : undefined,
+            refFechaRecoger: this.valueParametro(382) ? this.fechaRecoger!.toISOString() : undefined,
+            refFechaInicio: this.valueParametro(44) ? this.fechaIni!.toISOString() : undefined,
+            refFechaFin: this.valueParametro(44) ? this.fechaFin!.toISOString() : undefined,
+            refContacto: this.valueParametro(385) ? this.refContacto : undefined,
+            refDescripcion: this.valueParametro(383) ? this.refDescripcion : undefined,
+            refDireccionEntrega: this.valueParametro(386) ? this.refDireccionEntrega : undefined,
+            refObservacion: this.valueParametro(384) ? this.refObservacion : undefined,
             empresa: PreferencesService.empresa, //empresa de la sesion
             estacion: PreferencesService.estacion, //estacion de la sesion
             cliente: this.cuenta, //cliente seleccionado (cuenta correntista)
