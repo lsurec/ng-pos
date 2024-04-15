@@ -378,6 +378,13 @@ export class ProductoComponent {
 
     if (this.facturaService.valueParametro(351)) {
 
+      console.log("-----------------");
+
+      console.log(this.facturaService.fechaIni);
+      console.log(this.facturaService.fechaFin);
+      console.log("-----------------");
+
+
       let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
       let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
 
@@ -407,7 +414,7 @@ export class ProductoComponent {
     if (this.productoService.indexEdit == -1) {
 
       console.log("Paso por aqui");
-      
+
       // /7agregar transaccion
       this.facturaService.addTransaction(
         {
