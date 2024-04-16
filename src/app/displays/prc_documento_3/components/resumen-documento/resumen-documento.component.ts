@@ -658,10 +658,13 @@ export class ResumenDocumentoComponent implements OnInit {
           Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
           Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
-          Tra_Monto: transaccion.cantidad * transaccion.precio!.precioU,
+          Tra_Monto: transaccion.total,
+          //TODO:veridificar monto por dias
         }
 
+        
       );
+      console.log(transaccion.total);
 
 
       //agregar cargos al documento
@@ -730,6 +733,9 @@ export class ResumenDocumentoComponent implements OnInit {
     fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() - 6)
     fIni.setHours(this.facturaService.fechaIni!.getHours() - 6)
     fFin.setHours(this.facturaService.fechaFin!.getHours() - 6)
+
+    console.log(this.facturaService.total);
+    
 
     //documento estructura
     let doc: Documento = {
