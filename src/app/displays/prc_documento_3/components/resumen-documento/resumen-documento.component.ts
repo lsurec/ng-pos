@@ -717,14 +717,28 @@ export class ResumenDocumentoComponent implements OnInit {
     //Obtener fecha y hora actual
     let currentDate: Date = new Date();
 
+
+    //TODO:Solucion para que las horas sean correctas
+    //Restar 6 horas 
+    let fEntrega: Date = this.facturaService.fechaEntrega!;
+    let fRecoger: Date = this.facturaService.fechaRecoger!;
+    let fIni: Date = this.facturaService.fechaIni!;
+    let fFin: Date = this.facturaService.fechaFin!;
+
+
+    fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() - 6)
+    fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() - 6)
+    fIni.setHours(this.facturaService.fechaIni!.getHours() - 6)
+    fFin.setHours(this.facturaService.fechaFin!.getHours() - 6)
+
     //documento estructura
     let doc: Documento = {
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
-      Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? this.facturaService.fechaEntrega : null,
-      Doc_Ref_Fecha_Fin: this.facturaService.valueParametro(382) ? this.facturaService.fechaRecoger : null,
-      Doc_Fecha_Ini: this.facturaService.valueParametro(44) ? this.facturaService.fechaIni : null,
-      Doc_Fecha_Fin: this.facturaService.valueParametro(44) ? this.facturaService.fechaFin : null,
+      Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
+      Doc_Ref_Fecha_Fin: this.facturaService.valueParametro(382) ? fRecoger : null,
+      Doc_Fecha_Ini: this.facturaService.valueParametro(44) ? fIni : null,
+      Doc_Fecha_Fin: this.facturaService.valueParametro(44) ? fFin : null,
       Doc_Ref_Observacion_2: this.facturaService.valueParametro(385) ? this.facturaService.refContacto : null,
       Doc_Ref_Descripcion: this.facturaService.valueParametro(383) ? this.facturaService.refDescripcion : null,
       Doc_Ref_Observacion_3: this.facturaService.valueParametro(386) ? this.facturaService.refDireccionEntrega : null,

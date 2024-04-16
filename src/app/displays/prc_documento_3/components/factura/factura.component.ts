@@ -543,11 +543,62 @@ export class FacturaComponent implements OnInit {
 
     //Set dates and observaciones
 
-    this.facturaService.fechaIni = docOrigin.referencia_D_Fecha_Ini;
-    this.facturaService.fechaFin = docOrigin.referencia_D_Fecha_Fin;
     // TODO://Preguntar por ovservaciones y fechas
 
     //TODO:Cragar vendedor
+
+    //TODO:Cargar tipo referencia
+
+    //TODO: Cargar campos
+
+
+      let dateDefault:Date = new Date()
+    
+        //load dates 
+        this.facturaService .fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
+        this.facturaService .fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
+        this.facturaService .fechaIni = new Date(docOrigin.fecha_Pedido ?? dateDefault);
+        this.facturaService .fechaFin = new Date(dateDefault); //TODO:Falata esta fecha
+
+
+        //set dates in inputs
+        this.facturaService.inputFechaEntrega = {
+            year: this.facturaService.fechaEntrega.getFullYear(),
+            day: this.facturaService.fechaEntrega.getDate(),
+            month: this.facturaService.fechaEntrega.getMonth() + 1,
+        }
+
+        this.facturaService.inputFechaRecoger = {
+            year: this.facturaService.fechaRecoger.getFullYear(),
+            day: this.facturaService.fechaRecoger.getDate(),
+            month: this.facturaService.fechaRecoger.getMonth() + 1,
+        }
+
+        this.facturaService.inputFechaInicial = {
+            year: this.facturaService.fechaIni.getFullYear(),
+            day: this.facturaService.fechaIni.getDate(),
+            month: this.facturaService.fechaIni.getMonth() + 1,
+        }
+
+        this.facturaService.inputFechaFinal = {
+            year: this.facturaService.fechaFin.getFullYear(),
+            day: this.facturaService.fechaFin.getDate(),
+            month: this.facturaService.fechaFin.getMonth() + 1,
+        }
+
+        //set time
+        this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+        this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+        this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
+        this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaRecoger);
+
+
+        // set observaciones
+        this. facturaService.refContacto = docOrigin.referencia_D_Observacion_2;
+        this. facturaService.refDescripcion = docOrigin.referencia_D_Descripcion;
+        this. facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3;
+        this. facturaService.refObservacion = docOrigin.referencia_D_Observacion;
+
 
 
 
@@ -707,21 +758,6 @@ export class FacturaComponent implements OnInit {
           precioU: precios[existPrecio].precio_Unidad
         }
       }
-
-
-
-        // this.facturaService.inputFechaEntrega = ;
-        // this.facturaService.horaEntrega = ;
-        // this.facturaService.inputFechaRecoger = ;
-        // this.facturaService.horaRecoger = ;
-        // this.facturaService.inputFechaInicial = ;
-        // this.facturaService.horaIncial = ;
-        // this.facturaService.inputFechaFinal = ;
-        // this.facturaService.horaFinal = ;
-        // this.facturaService.refContacto = ;
-        // this.facturaService.refDescripcion = ;
-        // this.facturaService.refDireccionEntrega = ;
-        // this.facturaService.refObservacion = ;
 
       this.facturaService.addTransaction(
         {

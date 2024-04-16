@@ -16,6 +16,7 @@ import { VendedorInterface } from '../interfaces/vendedor.interface';
 import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Injectable({
     providedIn: 'root',
@@ -94,6 +95,7 @@ export class FacturaService {
         private _pagoComponentService: PagoComponentService,
         private _notificationsService: NotificationsService,
         private _translate: TranslateService,
+        private _convertService: GlobalConvertService,
     ) { }
 
 
@@ -323,6 +325,11 @@ export class FacturaService {
 
     //guardar documento en storage
     saveDocLocal() {
+
+
+        //Solo se guarda si se está creando
+        if (this._convertService.editDoc) return;
+
         //objeto con todos los datos de un documento
         let doc: DocLocalInterface = {
             user: PreferencesService.user, //usuario de la sesion
