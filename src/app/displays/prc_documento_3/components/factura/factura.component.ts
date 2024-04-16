@@ -397,7 +397,7 @@ export class FacturaComponent implements OnInit {
         estacion,
       )
 
-      
+
 
       //si algo salio mal
       if (!resParametro.status) {
@@ -464,6 +464,7 @@ export class FacturaComponent implements OnInit {
         this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
       }
 
+
     }
 
 
@@ -487,6 +488,47 @@ export class FacturaComponent implements OnInit {
 
 
     let serieOrigen = docOrigin.serie_Documento;
+
+
+    //TODO:Evaluar cuando este el campo
+    let existRef: number = -1;
+
+    for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
+      const element = this.facturaService.tiposReferencia[i];
+      if (element.tipo_Referencia == docOrigin.documento_Referencia) {
+        existRef = i;
+        break;
+      }
+    }
+
+
+    if (existRef == -1) {
+      this._notificationService.openSnackbar("No se pudo encontrar el tipo de referencia.");
+    } else {
+
+      this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
+
+
+    }
+
+    let existCuentaRef:number = -1;
+
+    for (let i = 0; i < this.facturaService.vendedores.length; i++) {
+      const element = this.facturaService.vendedores[i];
+      if(element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref){
+        existCuentaRef = i;
+        break;
+      }
+    }
+
+
+    if(existCuentaRef == -1){
+      this._notificationService.openSnackbar("No se pudo encontrar la cuenta correntista ref.");
+
+    }else{
+      this.facturaService.vendedor =  this.facturaService.vendedores[existCuentaRef];
+    }
+
 
 
     //--EMpiezan datos
@@ -552,52 +594,52 @@ export class FacturaComponent implements OnInit {
     //TODO: Cargar campos
 
 
-      let dateDefault:Date = new Date()
-    
-        //load dates 
-        this.facturaService .fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
-        this.facturaService .fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
-        this.facturaService .fechaIni = new Date(docOrigin.fecha_Pedido ?? dateDefault);
-        this.facturaService .fechaFin = new Date(dateDefault); //TODO:Falata esta fecha
+    let dateDefault: Date = new Date()
+
+    //load dates 
+    this.facturaService.fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
+    this.facturaService.fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
+    this.facturaService.fechaIni = new Date(docOrigin.fecha_Pedido ?? dateDefault);
+    this.facturaService.fechaFin = new Date(dateDefault); //TODO:Falta esta fecha
 
 
-        //set dates in inputs
-        this.facturaService.inputFechaEntrega = {
-            year: this.facturaService.fechaEntrega.getFullYear(),
-            day: this.facturaService.fechaEntrega.getDate(),
-            month: this.facturaService.fechaEntrega.getMonth() + 1,
-        }
+    //set dates in inputs
+    this.facturaService.inputFechaEntrega = {
+      year: this.facturaService.fechaEntrega.getFullYear(),
+      day: this.facturaService.fechaEntrega.getDate(),
+      month: this.facturaService.fechaEntrega.getMonth() + 1,
+    }
 
-        this.facturaService.inputFechaRecoger = {
-            year: this.facturaService.fechaRecoger.getFullYear(),
-            day: this.facturaService.fechaRecoger.getDate(),
-            month: this.facturaService.fechaRecoger.getMonth() + 1,
-        }
+    this.facturaService.inputFechaRecoger = {
+      year: this.facturaService.fechaRecoger.getFullYear(),
+      day: this.facturaService.fechaRecoger.getDate(),
+      month: this.facturaService.fechaRecoger.getMonth() + 1,
+    }
 
-        this.facturaService.inputFechaInicial = {
-            year: this.facturaService.fechaIni.getFullYear(),
-            day: this.facturaService.fechaIni.getDate(),
-            month: this.facturaService.fechaIni.getMonth() + 1,
-        }
+    this.facturaService.inputFechaInicial = {
+      year: this.facturaService.fechaIni.getFullYear(),
+      day: this.facturaService.fechaIni.getDate(),
+      month: this.facturaService.fechaIni.getMonth() + 1,
+    }
 
-        this.facturaService.inputFechaFinal = {
-            year: this.facturaService.fechaFin.getFullYear(),
-            day: this.facturaService.fechaFin.getDate(),
-            month: this.facturaService.fechaFin.getMonth() + 1,
-        }
+    this.facturaService.inputFechaFinal = {
+      year: this.facturaService.fechaFin.getFullYear(),
+      day: this.facturaService.fechaFin.getDate(),
+      month: this.facturaService.fechaFin.getMonth() + 1,
+    }
 
-        //set time
-        this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-        this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-        this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
-        this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaRecoger);
+    //set time
+    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+    this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
+    this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaRecoger);
 
 
-        // set observaciones
-        this. facturaService.refContacto = docOrigin.referencia_D_Observacion_2;
-        this. facturaService.refDescripcion = docOrigin.referencia_D_Descripcion;
-        this. facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3;
-        this. facturaService.refObservacion = docOrigin.referencia_D_Observacion;
+    // set observaciones
+    this.facturaService.refContacto = docOrigin.referencia_D_Observacion_2;
+    this.facturaService.refDescripcion = docOrigin.referencia_D_Descripcion;
+    this.facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3;
+    this.facturaService.refObservacion = docOrigin.referencia_D_Observacion;
 
 
 
@@ -830,7 +872,7 @@ export class FacturaComponent implements OnInit {
   }
 
 
- async  modifyDoc(){
+  async modifyDoc() {
     //TODO:Translate
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
