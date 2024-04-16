@@ -511,22 +511,22 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    let existCuentaRef:number = -1;
+    let existCuentaRef: number = -1;
 
     for (let i = 0; i < this.facturaService.vendedores.length; i++) {
       const element = this.facturaService.vendedores[i];
-      if(element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref){
+      if (element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref) {
         existCuentaRef = i;
         break;
       }
     }
 
 
-    if(existCuentaRef == -1){
+    if (existCuentaRef == -1) {
       this._notificationService.openSnackbar("No se pudo encontrar la cuenta correntista ref.");
 
-    }else{
-      this.facturaService.vendedor =  this.facturaService.vendedores[existCuentaRef];
+    } else {
+      this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
     }
 
 
@@ -559,7 +559,10 @@ export class FacturaComponent implements OnInit {
 
     for (let i = 0; i < clients.length; i++) {
       const element = clients[i];
-
+      if (element.cuenta_Correntista == docOrigin.cuenta_Correntista) {
+        existClient = i;
+        break;
+      }
     }
 
     if (existClient == -1) {
@@ -584,16 +587,6 @@ export class FacturaComponent implements OnInit {
     }
 
     //Set dates and observaciones
-
-    // TODO://Preguntar por ovservaciones y fechas
-
-    //TODO:Cragar vendedor
-
-    //TODO:Cargar tipo referencia
-
-    //TODO: Cargar campos
-
-
     let dateDefault: Date = new Date()
 
     //load dates 
@@ -801,17 +794,46 @@ export class FacturaComponent implements OnInit {
         }
       }
 
+
+      let precioDias: number = 0;
+
+      if (this.facturaService.valueParametro(351)) {
+
+
+        let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+        let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
+
+
+        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+          token,
+          strFechaIni,
+          strFechaFin,
+          precioSelect.precioU.toString(),
+        );
+
+        if (!res.status) {
+          this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+          console.error(res);
+
+          return;
+        }
+
+        precioDias = res.response.data;
+
+      }
+
       this.facturaService.addTransaction(
         {
           //TODO:Agregar montos por dia
-          precioCantidad: 0,
-          precipDia: 0,
+          precioCantidad: precioSelect.precioU * tra.detalle.disponible,
+          precipDia: precioDias,
           isChecked: false,
           bodega: bodega,
           producto: prod,
           precio: precioSelect,
           cantidad: tra.detalle.disponible,
-          total: precioSelect.precioU * tra.detalle.disponible,
+          total: tra.detalle.monto,
           cargo: 0,
           descuento: 0,
           operaciones: [],
