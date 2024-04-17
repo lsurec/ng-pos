@@ -164,7 +164,13 @@ export class DocumentoComponent {
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
+
+    this.facturaService.saveDocLocal()
+
+
   }
+
+
 
   setDateRecoger() {
     //si se debe calcular el preciuo por dias
@@ -198,6 +204,9 @@ export class DocumentoComponent {
     this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+
+    this.facturaService.saveDocLocal()
+
   }
 
 
@@ -237,6 +246,9 @@ export class DocumentoComponent {
     this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+
+    this.facturaService.saveDocLocal()
+
   }
 
   setDateFin() {
@@ -273,6 +285,10 @@ export class DocumentoComponent {
     this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+
+
+    this.facturaService.saveDocLocal()
+
   }
 
 
@@ -280,10 +296,7 @@ export class DocumentoComponent {
     timepicker.open();
   }
 
-  changeVendedor() {
-    this.facturaService.saveDocLocal();
 
-  }
 
   async changeSerie() {
 

@@ -5,7 +5,7 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
+            <mat-select  name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
@@ -17,7 +17,7 @@
             <p class="tEvento">{{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}</p>
             <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
             <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
-                [(ngModel)]="facturaService.tipoReferencia">
+                [(ngModel)]="facturaService.tipoReferencia" (ngModelChange)="facturaService.saveDocLocal()">
                 <mat-option *ngFor="let referencia of facturaService.tiposReferencia" [value]="referencia">
                     {{referencia.descripcion}}
                 </mat-option>
@@ -230,7 +230,7 @@
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
             <mat-select name="estado" class="seleccionar"
                 placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor"
-                (ngModelChange)="changeVendedor()">
+                (ngModelChange)="facturaService.saveDocLocal()">
                 <mat-option *ngFor="let vendedor of facturaService.vendedores" [value]="vendedor">
                     {{vendedor.nom_Cuenta_Correntista}}
                 </mat-option>
@@ -242,7 +242,7 @@
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
                 placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refContacto"></textarea>
+                [(ngModel)]="facturaService.refContacto" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
@@ -250,7 +250,7 @@
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
                 placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refDescripcion"></textarea>
+                [(ngModel)]="facturaService.refDescripcion" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(386)">
@@ -258,14 +258,14 @@
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
                 placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refDireccionEntrega"></textarea>
+                [(ngModel)]="facturaService.refDireccionEntrega" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
                 placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refObservacion"></textarea>
+                [(ngModel)]="facturaService.refObservacion" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <!-- <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">
