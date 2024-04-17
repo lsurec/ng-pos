@@ -175,17 +175,6 @@
             </form>
         </div>
 
-        <!--TODO: guardar-->
-        <div class="informacion" *ngIf="facturaService.valueParametro(58)">
-            <p class="subtitulo">{{ 'pos.factura.tipoCli' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoCli' | translate }}"
-                [(ngModel)]="facturaService.tipoCliente">
-                <mat-option *ngFor="let referencia of facturaService.tiposReferencia" [value]="referencia">
-                    {{referencia.descripcion}}
-                </mat-option>
-            </mat-select>
-        </div>
-
         <div class="informacion">
             <div class="d-flex">
                 <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
@@ -221,7 +210,14 @@
             <div class="dFlex">
                 <p class="detalles">{{ 'pos.factura.direccion' | translate }}</p>
                 <span class="spacer"></span>
-                <p>Ciudad</p>
+                <p>{{facturaService.cuenta.factura_Direccion}}</p>
+            </div>
+
+            <div class="dFlex" *ngIf="facturaService.cuenta.grupo_Cuenta && facturaService.cuenta.des_Grupo_Cuenta">
+            <!--TODO:Transalate-->
+                <p class="detalles">Tipo Cliente</p>
+                <span class="spacer"></span>
+                <p>({{facturaService.cuenta.grupo_Cuenta}}) {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
             </div>
         </div>
 

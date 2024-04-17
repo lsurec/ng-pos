@@ -61,9 +61,6 @@ export class FacturaService {
     tiposReferencia: TipoReferenciaInterface[] = [];
     tipoReferencia?: TipoReferenciaInterface;
 
-    //tipo cliente
-    tipoCliente?: TipoReferenciaInterface;
-
     fecha: Date = new Date();
 
 

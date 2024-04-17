@@ -578,7 +578,9 @@ export class FacturaComponent implements OnInit {
         telefono: "",
         limite_Credito: 0,
         permitir_CxC: false,
-
+        celular: null,
+        des_Grupo_Cuenta: null,
+        grupo_Cuenta: null
       }
 
     } else {
@@ -592,7 +594,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
     this.facturaService.fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
     this.facturaService.fechaIni = new Date(docOrigin.fecha_Ini ?? dateDefault);
-    this.facturaService.fechaFin = new Date(docOrigin.fecha_Fin ?? dateDefault); 
+    this.facturaService.fechaFin = new Date(docOrigin.fecha_Fin ?? dateDefault);
 
 
     //set dates in inputs

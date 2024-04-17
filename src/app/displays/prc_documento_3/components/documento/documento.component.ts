@@ -365,7 +365,9 @@ export class DocumentoComponent {
         telefono: "",
         limite_Credito: 0,
         permitir_CxC: false,
-
+        celular: null,
+        des_Grupo_Cuenta: null,
+        grupo_Cuenta: null
 
       }
 
