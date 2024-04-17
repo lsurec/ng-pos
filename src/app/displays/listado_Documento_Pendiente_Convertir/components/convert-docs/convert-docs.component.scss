@@ -169,7 +169,7 @@ p {
     width      : 100%;
     display    : flex;
     align-items: center;
-    margin-top: 5px;
+    margin-top : 5px;
 }
 
 .origen {
@@ -213,4 +213,9 @@ p {
     color           : $color-azul;
     // border-radius: 10px;
     border-bottom   : 1px solid $color-bordes;
+}
+
+.informacion {
+    padding: 10px 0px;
+    width  : 50%;
 }
