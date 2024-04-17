@@ -114,11 +114,14 @@ export class DocumentoComponent {
 
     if (this.facturaService.fechaEntrega > this.facturaService.fechaRecoger!) {
 
+      this.facturaService.fechaRecoger = this.facturaService.fechaEntrega;
+
+      this.facturaService.fechaRecoger.setTime(this.facturaService.fechaEntrega.getTime() + (30 * 60000)); 
+
       this.facturaService.inputFechaRecoger =UtilitiesService.getStructureDate(this.facturaService.fechaEntrega)
       
       this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
       
-      this.facturaService.fechaRecoger = this.facturaService.fechaEntrega;
 
     }
 
@@ -155,6 +158,20 @@ export class DocumentoComponent {
     }
 
     this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
+
+
+    if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
+
+      this.facturaService.fechaFin = this.facturaService.fechaIni;
+
+      this.facturaService.fechaFin.setTime(this.facturaService.fechaIni.getTime() + (30 * 60000)); 
+
+      this.facturaService.inputFechaFinal =UtilitiesService.getStructureDate(this.facturaService.fechaIni)
+      
+      this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+      
+
+    }
   }
   setDateFin() {
     //si se debe calcular el preciuo por dias
