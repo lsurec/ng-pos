@@ -383,12 +383,17 @@ export class ProductoComponent {
       let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
 
 
+      this.isLoading = true;
+
       let res: ResApiInterface = await this._productService.getFormulaPrecioU(
         this.token,
         strFechaIni,
         strFechaFin,
         this.productoService.total.toString(),
       );
+
+      this.isLoading = false;
+
 
       if (!res.status) {
         this._notificationsService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
@@ -402,12 +407,9 @@ export class ProductoComponent {
 
     }
 
-    //TODO:editar transaccion
-
 
     if (this.productoService.indexEdit == -1) {
 
-      console.log("Paso por aqui");
 
       // /7agregar transaccion
       this.facturaService.addTransaction(

@@ -297,6 +297,12 @@ export class DocumentoComponent {
   }
 
 
+  changeCuentaRef() {
+
+    if (!this.globalConvertService.editDoc) return;
+    console.log("Solicitar permisos");
+
+  }
 
   async changeSerie() {
 

@@ -72,7 +72,6 @@ export class OriginDocsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("iniciando");
 
     this.ordenar();
   }

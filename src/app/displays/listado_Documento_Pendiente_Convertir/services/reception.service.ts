@@ -420,15 +420,6 @@ export class ReceptionService {
         fechaReg: number,
     ) {
 
-        console.log(documento);
-        console.log(tipoDocumento);
-        console.log(serieDocumento);
-        console.log(empresa);
-        console.log(localizacion);
-        console.log(estacion);
-        console.log(fechaReg);
-
-
 
         let headers = new HttpHeaders(
             {
@@ -484,13 +475,11 @@ export class ReceptionService {
                         storeProcedure: response.storeProcedure
                     }
 
-                    console.log(res);
 
                     resolve(resApi);
                 },
                 //si algo sale mal
                 err => {
-                    console.log(err);
 
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;

@@ -5,7 +5,7 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select  name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
+            <mat-select  [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
                 [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
@@ -16,7 +16,7 @@
         <div class="informacion" *ngIf="facturaService.valueParametro(58)">
             <p class="tEvento">{{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}</p>
             <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
+            <mat-select  name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
                 [(ngModel)]="facturaService.tipoReferencia" (ngModelChange)="facturaService.saveDocLocal()">
                 <mat-option *ngFor="let referencia of facturaService.tiposReferencia" [value]="referencia">
                     {{referencia.descripcion}}
@@ -226,9 +226,9 @@
 
     <div class="cliente">
 
-        <div class="informacion"  *ngIf="facturaService.vendedores.length > 0">
+        <div class="informacion"  *ngIf="facturaService.vendedores.length > 0" (click)="changeCuentaRef()">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
-            <mat-select name="estado" class="seleccionar"
+            <mat-select [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar"
                 placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor"
                 (ngModelChange)="facturaService.saveDocLocal()">
                 <mat-option *ngFor="let vendedor of facturaService.vendedores" [value]="vendedor">
