@@ -27,7 +27,7 @@
     <p class="titulo">{{ 'pos.documento.docConvert' | translate }} </p>
 
     <span class="spacer"></span>
-    <button mat-icon-button (click)="editDoc()" >
+    <button mat-icon-button (click)="editDoc()">
         <mat-icon>edit</mat-icon>
     </button>
     <button mat-icon-button (click)="convertDoc()">
@@ -36,7 +36,35 @@
 </mat-toolbar>
 
 <div class="container_main">
-    <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{globalConvertSrevice.docOriginSelect?.iD_Documento}}</p>
+
+    <div class="origen-destino">
+
+        <div class="informacion">
+            <p class="textosBold14">{{ 'Cuenta' | titlecase}}</p>
+            <div class="dFlex">
+                <p class="textos14">{{ 'pos.factura.nit' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos14">11223344-5</p>
+            </div>
+            <div class="dFlex">
+                <p class="textos14">{{ 'pos.factura.nombre' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos14">Nombre cliente</p>
+            </div>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <p class="textos14">{{ 'pos.factura.direccion' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textos14">Ciudad</p>
+            </div>
+        </div>
+        <span class="spacer"></span>
+
+        <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }}
+            {{globalConvertSrevice.docOriginSelect?.iD_Documento}}
+        </p>
+
+    </div>
 
     <div class="origen-destino">
 
