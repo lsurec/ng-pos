@@ -662,7 +662,7 @@ export class ResumenDocumentoComponent implements OnInit {
           //TODO:veridificar monto por dias
         }
 
-        
+
       );
       console.log(transaccion.total);
 
@@ -721,21 +721,35 @@ export class ResumenDocumentoComponent implements OnInit {
     let currentDate: Date = new Date();
 
 
-    //TODO:Solucion para que las horas sean correctas
-    //Restar 6 horas 
+    //Solucion para que las horas sean correctas
+    //Modificar la hora segun la diferencia horaria 
     let fEntrega: Date = this.facturaService.fechaEntrega!;
     let fRecoger: Date = this.facturaService.fechaRecoger!;
     let fIni: Date = this.facturaService.fechaIni!;
     let fFin: Date = this.facturaService.fechaFin!;
 
+    let diferenciaHoraria: number = fEntrega.getTimezoneOffset() / 60;
 
-    fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() - 6)
-    fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() - 6)
-    fIni.setHours(this.facturaService.fechaIni!.getHours() - 6)
-    fFin.setHours(this.facturaService.fechaFin!.getHours() - 6)
+
+    if (diferenciaHoraria > 0) {
+      //es positivo
+      fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() - diferenciaHoraria);
+      fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() - diferenciaHoraria);
+      fIni.setHours(this.facturaService.fechaIni!.getHours() - diferenciaHoraria);
+      fFin.setHours(this.facturaService.fechaFin!.getHours() - diferenciaHoraria);
+    } else {
+      fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() + diferenciaHoraria)
+      fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() + diferenciaHoraria)
+      fIni.setHours(this.facturaService.fechaIni!.getHours() + diferenciaHoraria)
+      fFin.setHours(this.facturaService.fechaFin!.getHours() + diferenciaHoraria)
+    }
+
+
+
+
 
     console.log(this.facturaService.total);
-    
+
 
     //documento estructura
     let doc: Documento = {
