@@ -67,6 +67,13 @@ export class FacturaService {
     fecha: Date = new Date();
 
 
+    fechaStruct: NgbDateStruct = {
+        year: this.fecha.getFullYear(),
+        day: this.fecha.getDate(),
+        month: this.fecha.getMonth() + 1,
+    }
+
+
     fechaEntrega?: Date;
     fechaRecoger?: Date;
     fechaIni?: Date;

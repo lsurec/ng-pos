@@ -44,18 +44,18 @@
             <div class="dFlex">
                 <p class="textos14">{{ 'pos.factura.nit' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos14">11223344-5</p>
+                <p class="textos14">{{globalConvertSrevice.docOriginSelect?.nit}}</p>
             </div>
             <div class="dFlex">
                 <p class="textos14">{{ 'pos.factura.nombre' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos14">Nombre cliente</p>
+                <p class="textos14">{{globalConvertSrevice.docOriginSelect?.cliente}}</p>
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
                 <p class="textos14">{{ 'pos.factura.direccion' | translate }}</p>
                 <span class="spacer"></span>
-                <p class="textos14">Ciudad</p>
+                <p class="textos14">{{globalConvertSrevice.docOriginSelect?.direccion}}</p>
             </div>
         </div>
         <span class="spacer"></span>

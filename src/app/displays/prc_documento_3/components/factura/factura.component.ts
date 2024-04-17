@@ -490,12 +490,11 @@ export class FacturaComponent implements OnInit {
     let serieOrigen = docOrigin.serie_Documento;
 
 
-    //TODO:Evaluar cuando este el campo
     let existRef: number = -1;
 
     for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
       const element = this.facturaService.tiposReferencia[i];
-      if (element.tipo_Referencia == docOrigin.documento_Referencia) {
+      if (element.tipo_Referencia == docOrigin.tipo_Referencia) {
         existRef = i;
         break;
       }
@@ -592,8 +591,8 @@ export class FacturaComponent implements OnInit {
     //load dates 
     this.facturaService.fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
     this.facturaService.fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
-    this.facturaService.fechaIni = new Date(docOrigin.fecha_Pedido ?? dateDefault);
-    this.facturaService.fechaFin = new Date(dateDefault); //TODO:Falta esta fecha
+    this.facturaService.fechaIni = new Date(docOrigin.fecha_Ini ?? dateDefault);
+    this.facturaService.fechaFin = new Date(docOrigin.fecha_Fin ?? dateDefault); 
 
 
     //set dates in inputs
@@ -629,10 +628,10 @@ export class FacturaComponent implements OnInit {
 
 
     // set observaciones
-    this.facturaService.refContacto = docOrigin.referencia_D_Observacion_2;
-    this.facturaService.refDescripcion = docOrigin.referencia_D_Descripcion;
-    this.facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3;
-    this.facturaService.refObservacion = docOrigin.referencia_D_Observacion;
+    this.facturaService.refContacto = docOrigin.referencia_D_Observacion_2 ?? undefined;
+    this.facturaService.refDescripcion = docOrigin.referencia_D_Descripcion ?? undefined;
+    this.facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3 ?? undefined;
+    this.facturaService.refObservacion = docOrigin.referencia_D_Observacion ?? undefined;
 
 
 

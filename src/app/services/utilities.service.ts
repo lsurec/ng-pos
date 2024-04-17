@@ -26,16 +26,24 @@ export class UtilitiesService {
     }
 
 
-    
-  //formatear la hora con una fecha ingresada.
-  static getHoraInput(horaSelected: Date): string {
-    // Obtener la hora actual y formatearla como deseas
-    let hora = new Date(horaSelected);
-    let horas = hora.getHours();
-    let minutos = hora.getMinutes();
-    let ampm = horas >= 12 ? 'pm' : 'am';
-    // Formatear la hora actual como 'hh:mm am/pm'
-    return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
-  };
+
+    //formatear la hora con una fecha ingresada.
+    static getHoraInput(horaSelected: Date): string {
+        // Obtener la hora actual y formatearla como deseas
+        let hora = new Date(horaSelected);
+        let horas = hora.getHours();
+        let minutos = hora.getMinutes();
+        let ampm = horas >= 12 ? 'pm' : 'am';
+        // Formatear la hora actual como 'hh:mm am/pm'
+        return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
+    };
+
+    static getStructureDate(date: Date) {
+        return {
+            year: date.getFullYear(),
+            day: date.getDate(),
+            month: date.getMonth() + 1,
+        }
+    }
 
 }

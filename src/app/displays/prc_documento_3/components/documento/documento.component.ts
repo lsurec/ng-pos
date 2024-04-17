@@ -15,6 +15,7 @@ import { PagoService } from '../../services/pago.service';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-documento',
@@ -109,16 +110,18 @@ export class DocumentoComponent {
 
     }
 
+    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
 
-    if(this.facturaService.inputFechaEntrega! > this.facturaService.inputFechaRecoger!){
-      console.log("Es mayor");
+    if (this.facturaService.fechaEntrega > this.facturaService.fechaRecoger!) {
+
+      this.facturaService.inputFechaRecoger =UtilitiesService.getStructureDate(this.facturaService.fechaEntrega)
       
-    }else{
-      console.log("Es menor");
+      this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
       
+      this.facturaService.fechaRecoger = this.facturaService.fechaEntrega;
+
     }
 
-    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
   }
 
   setDateRecoger() {

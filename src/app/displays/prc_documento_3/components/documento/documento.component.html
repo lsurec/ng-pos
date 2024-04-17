@@ -36,7 +36,7 @@
                         <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaEntrega"
                                 ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateEntrega()" 
-                                [minDate]="facturaService.inputFechaEntrega!"/>
+                                [minDate]="facturaService.fechaStruct!"/>
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
