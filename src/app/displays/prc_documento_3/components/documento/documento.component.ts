@@ -108,6 +108,16 @@ export class DocumentoComponent {
       }
 
     }
+
+
+    if(this.facturaService.inputFechaEntrega! > this.facturaService.inputFechaRecoger!){
+      console.log("Es mayor");
+      
+    }else{
+      console.log("Es menor");
+      
+    }
+
     this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
   }
 
