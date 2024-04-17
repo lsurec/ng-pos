@@ -149,7 +149,7 @@ export class FacturaService {
     }
 
     //cargar documento guardado en el strorage
-    async loadDocDave() {
+    async loadDocSave() {
 
         let localDoc = PreferencesService.documento;
 
@@ -272,9 +272,17 @@ export class FacturaService {
         this.traInternas = doc.detalles; //asignar detalles
         this.montos = doc.pagos; //asignar pagos
 
-        //TODO:Verificar
-        this.tipoReferencia = doc.tipoRef;
 
+        if (doc.tipoRef) {
+            for (let i = 0; i < this.tiposReferencia.length; i++) {
+                const element = this.tiposReferencia[i];
+                if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
+                    this.tipoReferencia = element;;
+
+                }
+            }
+
+        }
 
 
         //load dates 

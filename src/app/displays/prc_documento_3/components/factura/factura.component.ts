@@ -484,7 +484,7 @@ export class FacturaComponent implements OnInit {
     if (!this.globalConvertService.editDoc) {
 
       this.facturaService.isLoading = false;
-      this.facturaService.loadDocDave();
+      this.facturaService.loadDocSave();
       return;
     }
 
