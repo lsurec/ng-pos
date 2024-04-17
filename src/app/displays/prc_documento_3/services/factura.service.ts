@@ -61,18 +61,14 @@ export class FacturaService {
     tiposReferencia: TipoReferenciaInterface[] = [];
     tipoReferencia?: TipoReferenciaInterface;
 
-    fecha: Date = new Date();
+    fecha?: Date;
 
 
-    fechaStruct: NgbDateStruct = {
-        year: this.fecha.getFullYear(),
-        day: this.fecha.getDate(),
-        month: this.fecha.getMonth() + 1,
-    }
+    fechaStruct?: NgbDateStruct;
 
 
-    fechaEntrega?: Date;
-    fechaRecoger?: Date;
+    fechaRefIni?: Date;
+    fechaRefFin?: Date;
     fechaIni?: Date;
     fechaFin?: Date;
 
@@ -85,14 +81,14 @@ export class FacturaService {
     //fechas
     inputFechaInicial?: NgbDateStruct; //fecha inicial 
     inputFechaFinal?: NgbDateStruct;
-    inputFechaEntrega?: NgbDateStruct;
-    inputFechaRecoger?: NgbDateStruct;
+    inputFechaRefIni?: NgbDateStruct;
+    inputFechaRefFin?: NgbDateStruct;
 
     //horas
     horaIncial!: string; //hora actual
     horaFinal!: string //hora final +10 min
-    horaEntrega!: string;
-    horaRecoger!: string;
+    horaRefIni!: string;
+    horaRefFin!: string;
 
     constructor(
         //instancias de los servicios utilizados
@@ -126,8 +122,8 @@ export class FacturaService {
         this.cambio = 0; //reniciare cambio del documento
         this.pagado = 0; //reinciiar montos oagados del documento
         this.tipoReferencia = undefined;
-        this.fechaEntrega = undefined;
-        this.fechaRecoger = undefined;
+        this.fechaRefIni = undefined;
+        this.fechaRefFin = undefined;
         this.fechaIni = undefined;
         this.fechaFin = undefined;
         this.refContacto = undefined;
@@ -277,23 +273,23 @@ export class FacturaService {
 
 
         //load dates 
-        this.fechaEntrega = new Date(doc.refFechaEntrega!);
-        this.fechaRecoger = new Date(doc.refFechaRecoger!);
+        this.fechaRefIni = new Date(doc.refFechaEntrega!);
+        this.fechaRefFin = new Date(doc.refFechaRecoger!);
         this.fechaIni = new Date(doc.refFechaInicio!);
         this.fechaFin = new Date(doc.refFechaFin!);
 
 
         //set dates in inputs
-        this.inputFechaEntrega = {
-            year: this.fechaEntrega.getFullYear(),
-            day: this.fechaEntrega.getDate(),
-            month: this.fechaEntrega.getMonth() + 1,
+        this.inputFechaRefIni = {
+            year: this.fechaRefIni.getFullYear(),
+            day: this.fechaRefIni.getDate(),
+            month: this.fechaRefIni.getMonth() + 1,
         }
 
-        this.inputFechaRecoger = {
-            year: this.fechaRecoger.getFullYear(),
-            day: this.fechaRecoger.getDate(),
-            month: this.fechaRecoger.getMonth() + 1,
+        this.inputFechaRefFin = {
+            year: this.fechaRefFin.getFullYear(),
+            day: this.fechaRefFin.getDate(),
+            month: this.fechaRefFin.getMonth() + 1,
         }
 
         this.inputFechaInicial = {
@@ -311,8 +307,8 @@ export class FacturaService {
         //set time
         this.horaIncial = UtilitiesService.getHoraInput(this.fechaIni);
         this.horaFinal = UtilitiesService.getHoraInput(this.fechaFin);
-        this.horaEntrega = UtilitiesService.getHoraInput(this.fechaEntrega);
-        this.horaRecoger = UtilitiesService.getHoraInput(this.fechaRecoger);
+        this.horaRefIni = UtilitiesService.getHoraInput(this.fechaRefIni);
+        this.horaRefFin = UtilitiesService.getHoraInput(this.fechaRefFin);
 
 
         // set observaciones
@@ -338,8 +334,8 @@ export class FacturaService {
         let doc: DocLocalInterface = {
             user: PreferencesService.user, //usuario de la sesion
             tipoRef: this.valueParametro(58) ? this.tipoReferencia : undefined,
-            refFechaEntrega: this.valueParametro(381) ? this.fechaEntrega!.toISOString() : undefined,
-            refFechaRecoger: this.valueParametro(382) ? this.fechaRecoger!.toISOString() : undefined,
+            refFechaEntrega: this.valueParametro(381) ? this.fechaRefIni!.toISOString() : undefined,
+            refFechaRecoger: this.valueParametro(382) ? this.fechaRefFin!.toISOString() : undefined,
             refFechaInicio: this.valueParametro(44) ? this.fechaIni!.toISOString() : undefined,
             refFechaFin: this.valueParametro(44) ? this.fechaFin!.toISOString() : undefined,
             refContacto: this.valueParametro(385) ? this.refContacto : undefined,

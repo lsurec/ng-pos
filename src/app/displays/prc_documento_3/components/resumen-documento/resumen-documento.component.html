@@ -145,7 +145,7 @@
                                     {{ facturaService.getTextParam(381) ?? 'pos.factura.fEntrega' | translate }}
                                 </p>
                                 <div class="descripciones">
-                                    <p class="textos">{{facturaService.fechaEntrega | date: 'dd/MM/yyyy HH:mm'}}</p>
+                                    <p class="textos">{{facturaService.fechaRefIni | date: 'dd/MM/yyyy HH:mm'}}</p>
                                 </div>
                             </div>
                             <span class="spacer"></span>
@@ -153,7 +153,7 @@
                                 <p class="subtitulo-borde">
                                     {{ facturaService.getTextParam(382) ?? 'pos.factura.fRecoger' | translate }}</p>
                                 <div class="descripciones">
-                                    <p class="textos">{{facturaService.fechaRecoger | date: 'dd/MM/yyyy HH:mm'}}</p>
+                                    <p class="textos">{{facturaService.fechaRefFin | date: 'dd/MM/yyyy HH:mm'}}</p>
                                 </div>
                             </div>
                         </div>

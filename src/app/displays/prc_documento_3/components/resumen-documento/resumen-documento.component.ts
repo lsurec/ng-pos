@@ -723,8 +723,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //Solucion para que las horas sean correctas
     //Modificar la hora segun la diferencia horaria 
-    let fEntrega: Date = this.facturaService.fechaEntrega!;
-    let fRecoger: Date = this.facturaService.fechaRecoger!;
+    let fEntrega: Date = this.facturaService.fechaRefIni!;
+    let fRecoger: Date = this.facturaService.fechaRefFin!;
     let fIni: Date = this.facturaService.fechaIni!;
     let fFin: Date = this.facturaService.fechaFin!;
 
@@ -733,13 +733,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     if (diferenciaHoraria > 0) {
       //es positivo
-      fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() - diferenciaHoraria);
-      fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() - diferenciaHoraria);
+      fEntrega.setHours(this.facturaService.fechaRefIni!.getHours() - diferenciaHoraria);
+      fRecoger.setHours(this.facturaService.fechaRefFin!.getHours() - diferenciaHoraria);
       fIni.setHours(this.facturaService.fechaIni!.getHours() - diferenciaHoraria);
       fFin.setHours(this.facturaService.fechaFin!.getHours() - diferenciaHoraria);
     } else {
-      fEntrega.setHours(this.facturaService.fechaEntrega!.getHours() + diferenciaHoraria)
-      fRecoger.setHours(this.facturaService.fechaRecoger!.getHours() + diferenciaHoraria)
+      fEntrega.setHours(this.facturaService.fechaRefIni!.getHours() + diferenciaHoraria)
+      fRecoger.setHours(this.facturaService.fechaRefFin!.getHours() + diferenciaHoraria)
       fIni.setHours(this.facturaService.fechaIni!.getHours() + diferenciaHoraria)
       fFin.setHours(this.facturaService.fechaFin!.getHours() + diferenciaHoraria)
     }

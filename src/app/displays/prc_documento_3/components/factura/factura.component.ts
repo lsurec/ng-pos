@@ -190,8 +190,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.cambio = 0; //reiniciar cambio del documento
     this.facturaService.pagado = 0; //reiniciar monto pagado del
     this.facturaService.tipoReferencia = undefined;
-    this.facturaService.fechaEntrega = undefined;
-    this.facturaService.fechaRecoger = undefined;
+    this.facturaService.fechaRefIni = undefined;
+    this.facturaService.fechaRefFin = undefined;
     this.facturaService.fechaIni = undefined;
     this.facturaService.fechaFin = undefined;
     this.facturaService.refContacto = undefined;
@@ -244,44 +244,47 @@ export class FacturaComponent implements OnInit {
 
   setDateNow() {
 
+
+    let dateNow: Date = new Date;
+    this.facturaService.fecha = dateNow;
+    this.facturaService.fechaStruct = UtilitiesService.getStructureDate(dateNow);
+
+
+    this.facturaService.fechaRefIni = new Date(dateNow);
+    this.facturaService.fechaRefFin = new Date(dateNow);
+
+    let modifyFechaRefFin: Date = new Date(dateNow);
+
+    this.facturaService.fechaRefFin.setTime(modifyFechaRefFin.getTime() + (30 * 60000));
+
+
+    this.facturaService.fechaIni = new Date(dateNow);
+    this.facturaService.fechaFin = new Date(dateNow);
+
+
+    
+    let modifyFechaFin: Date = new Date(dateNow);
+
+    this.facturaService.fechaFin.setTime(modifyFechaFin.getTime() + (30 * 60000));
+
+
     // Inicializar selectedDate con la fecha de hoy
-    this.facturaService.inputFechaInicial = this._calendar.getToday();
-    this.facturaService.inputFechaFinal = this._calendar.getToday();
-    this.facturaService.inputFechaEntrega = this._calendar.getToday();
-    this.facturaService.inputFechaRecoger = this._calendar.getToday();
+    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+    this.facturaService.inputFechaRefFin =UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+    this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
-    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fecha);
-    this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fecha);
+    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
 
 
-    this.facturaService.fechaEntrega = this.convertValidDate(this.facturaService.inputFechaEntrega!, this.facturaService.horaEntrega);
-    this.facturaService.fechaRecoger = this.convertValidDate(this.facturaService.inputFechaRecoger!, this.facturaService.horaRecoger);
-    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
 
   }
 
-  convertValidDate(date: NgbDateStruct, timeString: string): Date {
-    // Separar la cadena de tiempo en horas, minutos y AM/PM
-    const { year, month, day } = date;
-    const [time, meridiem] = timeString.split(' ');
-    const [hoursString, minutesString] = time.split(':');
 
-    let hours = parseInt(hoursString);
-    const minutes = parseInt(minutesString);
-
-    // Convertir las horas a formato de 24 horas si es PM
-    if (meridiem.toUpperCase() === 'PM' && hours < 12) {
-      hours += 12;
-    } else if (meridiem.toUpperCase() === 'AM' && hours === 12) {
-      hours = 0; // Si es 12:xx AM, lo convertimos a 0 horas
-    }
-
-    return new Date(year, month - 1, day, hours, minutes);
-  }
 
 
   //cargar datos necesarios
@@ -591,23 +594,23 @@ export class FacturaComponent implements OnInit {
     let dateDefault: Date = new Date()
 
     //load dates 
-    this.facturaService.fechaEntrega = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
-    this.facturaService.fechaRecoger = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
+    this.facturaService.fechaRefIni = new Date(docOrigin.referencia_D_Fecha_Ini ?? dateDefault);
+    this.facturaService.fechaRefFin = new Date(docOrigin.referencia_D_Fecha_Fin ?? dateDefault);
     this.facturaService.fechaIni = new Date(docOrigin.fecha_Ini ?? dateDefault);
     this.facturaService.fechaFin = new Date(docOrigin.fecha_Fin ?? dateDefault);
 
 
     //set dates in inputs
-    this.facturaService.inputFechaEntrega = {
-      year: this.facturaService.fechaEntrega.getFullYear(),
-      day: this.facturaService.fechaEntrega.getDate(),
-      month: this.facturaService.fechaEntrega.getMonth() + 1,
+    this.facturaService.inputFechaRefIni = {
+      year: this.facturaService.fechaRefIni.getFullYear(),
+      day: this.facturaService.fechaRefIni.getDate(),
+      month: this.facturaService.fechaRefIni.getMonth() + 1,
     }
 
-    this.facturaService.inputFechaRecoger = {
-      year: this.facturaService.fechaRecoger.getFullYear(),
-      day: this.facturaService.fechaRecoger.getDate(),
-      month: this.facturaService.fechaRecoger.getMonth() + 1,
+    this.facturaService.inputFechaRefFin = {
+      year: this.facturaService.fechaRefFin.getFullYear(),
+      day: this.facturaService.fechaRefFin.getDate(),
+      month: this.facturaService.fechaRefFin.getMonth() + 1,
     }
 
     this.facturaService.inputFechaInicial = {
@@ -625,8 +628,8 @@ export class FacturaComponent implements OnInit {
     //set time
     this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-    this.facturaService.horaEntrega = UtilitiesService.getHoraInput(this.facturaService.fechaEntrega);
-    this.facturaService.horaRecoger = UtilitiesService.getHoraInput(this.facturaService.fechaRecoger);
+    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
 
 
     // set observaciones
