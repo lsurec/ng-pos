@@ -280,6 +280,12 @@ export class FacturaComponent implements OnInit {
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
 
+    //Copiar valores
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService. fechaRefIni);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService. fechaRefFin);
+    this.facturaService.copyFechaIni = new Date(this.facturaService. fechaIni);
+    this.facturaService.copyFechaFin = new Date(this.facturaService. fechaFin);
+
 
 
   }

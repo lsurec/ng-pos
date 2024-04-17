@@ -72,6 +72,11 @@ export class FacturaService {
     fechaIni?: Date;
     fechaFin?: Date;
 
+    copyFechaRefIni?: Date;
+    copyFechaRefFin?: Date;
+    copyFechaIni?: Date;
+    copyFechaFin?: Date;
+
     refContacto?: string;
     refDescripcion?: string;
     refDireccionEntrega?: string;

@@ -96,6 +96,38 @@ export class DocumentoComponent {
   };
 
 
+  restartDates() {
+
+    console.log(this.facturaService.fechaRefIni);
+
+
+    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
+    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
+    this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
+    this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
+
+
+    // Inicializar selectedDate con la fecha de hoy
+    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+    this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
+
+
+
+    console.log(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+
+    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+
+    console.log(this.facturaService.fechaRefIni);
+
+
+  }
+
+
   setDateEntrega() {
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -103,10 +135,12 @@ export class DocumentoComponent {
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
         this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        //TODO:Reestablecer primera fecha
+
+        this.restartDates();
 
         return;
       }
+
 
     }
 
@@ -116,14 +150,19 @@ export class DocumentoComponent {
 
       this.facturaService.fechaRefFin = this.facturaService.fechaRefIni;
 
-      this.facturaService.fechaRefFin.setTime(this.facturaService.fechaRefIni.getTime() + (30 * 60000)); 
+      this.facturaService.fechaRefFin.setTime(this.facturaService.fechaRefIni.getTime() + (30 * 60000));
 
-      this.facturaService.inputFechaRefFin =UtilitiesService.getStructureDate(this.facturaService.fechaRefIni)
-      
+      this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni)
+
       this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-      
+
 
     }
+    //Copiar valores
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
   }
 
@@ -134,7 +173,8 @@ export class DocumentoComponent {
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
         this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        //TODO:Reestablecer primera fecha
+        this.restartDates();
+
 
         return;
       }
@@ -142,7 +182,25 @@ export class DocumentoComponent {
     }
 
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
+
+
+    if (this.facturaService.fechaRefFin < this.facturaService.fechaRefIni!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
+      this.restartDates();
+      return;
+    }
+
+
+    //Copiar valores
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
   }
+
+
   setDateIncio() {
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -150,7 +208,8 @@ export class DocumentoComponent {
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
         this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        //TODO:Reestablecer primera fecha
+        this.restartDates();
+
 
         return;
       }
@@ -164,15 +223,22 @@ export class DocumentoComponent {
 
       this.facturaService.fechaFin = this.facturaService.fechaIni;
 
-      this.facturaService.fechaFin.setTime(this.facturaService.fechaIni.getTime() + (30 * 60000)); 
+      this.facturaService.fechaFin.setTime(this.facturaService.fechaIni.getTime() + (30 * 60000));
 
-      this.facturaService.inputFechaFinal =UtilitiesService.getStructureDate(this.facturaService.fechaIni)
-      
+      this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaIni)
+
       this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-      
+
 
     }
+
+    //Copiar valores
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
   }
+
   setDateFin() {
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -180,7 +246,8 @@ export class DocumentoComponent {
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
         this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        //TODO:Reestablecer primera fecha
+        this.restartDates();
+
 
         return;
       }
@@ -188,6 +255,24 @@ export class DocumentoComponent {
     }
 
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
+
+
+
+    if (this.facturaService.fechaFin < this.facturaService.fechaIni!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
+      this.restartDates();
+      return;
+    }
+
+
+    //Actuali<ar copaias 
+    //Copiar valores
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
   }
 
 
