@@ -49,7 +49,8 @@ export interface Transaccion {
   Tra_Factor_Conversion: number | null;
   Tra_Tipo_Transaccion: number;
   Tra_Monto: number;
-}2
+  Tra_Monto_Dias: number |  null;
+}
 
 export interface CargoAbono {
   Consecutivo_Interno:number;

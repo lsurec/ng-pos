@@ -688,7 +688,7 @@ export class DetalleComponent {
         element.operaciones.push(
           {
             precioCantidad: null,
-            precipDia: null, //TODO:Usar precio dia
+            precioDia: null, //TODO:Usar precio dia
             isChecked: false,
             producto: element.producto,
             cantidad: 0,

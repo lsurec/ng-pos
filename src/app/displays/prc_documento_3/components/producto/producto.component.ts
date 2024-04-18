@@ -415,7 +415,7 @@ export class ProductoComponent {
       this.facturaService.addTransaction(
         {
           precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
-          precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
+          precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
           isChecked: false,
           bodega: this.productoService.bodega,
           producto: this.producto,
@@ -435,7 +435,7 @@ export class ProductoComponent {
       // /7agregar transaccion
       this.facturaService.traInternas[this.productoService.indexEdit] = {
         precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
-        precipDia: this.facturaService.valueParametro(351) ? precioDias : null,
+        precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,

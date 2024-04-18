@@ -611,6 +611,7 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
+              Tra_Monto_Dias:null,
             }
           );
 
@@ -637,6 +638,8 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
+              Tra_Monto_Dias:null,
+
             }
           );
         }
@@ -660,12 +663,10 @@ export class ResumenDocumentoComponent implements OnInit {
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
           Tra_Monto: transaccion.total,
           //TODO:veridificar monto por dias
+          Tra_Monto_Dias: transaccion.precioDia,
         }
 
-
       );
-      console.log(transaccion.total);
-
 
       //agregar cargos al documento
       cargos.forEach(cargo => {
@@ -744,11 +745,6 @@ export class ResumenDocumentoComponent implements OnInit {
       fFin.setHours(this.facturaService.fechaFin!.getHours() + diferenciaHoraria)
     }
 
-
-
-
-
-    console.log(this.facturaService.total);
 
 
     //documento estructura

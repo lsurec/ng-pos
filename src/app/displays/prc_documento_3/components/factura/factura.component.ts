@@ -837,7 +837,7 @@ export class FacturaComponent implements OnInit {
         {
           //TODO:Agregar montos por dia
           precioCantidad: precioSelect.precioU * tra.detalle.disponible,
-          precipDia: precioDias,
+          precioDia: precioDias,
           isChecked: false,
           bodega: bodega,
           producto: prod,
