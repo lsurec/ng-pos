@@ -14,55 +14,53 @@ import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
 })
 export class GlobalConvertService {
 
-
-    editDoc:boolean = false;
-    regresar: number = 0;
+    editDoc:boolean = false; //editar documento
+    regresar: number = 0; //Desde donde se navegó
 
     isLoading: boolean = false; //pantalla de carga
-    showError: boolean = false;
-    verTiposDocConversion: boolean = false;
-    verDocOrigen: boolean = false;
-    verDocDestino: boolean = false;
-    verDocConversion: boolean = false;
-    verDetalleDocConversion: boolean = false;
-    verPrint: boolean = false;
+    showError: boolean = false; //ostrar pantalla de rror
+    verTiposDocConversion: boolean = false; //mmostrar oanatalal tipos de documento
+    verDocOrigen: boolean = false;  //Mostrar anatalal documento origen
+    verDocDestino: boolean = false; //mostrar panatlla docuemtos destino
+    verDocConversion: boolean = false; //Mostrar pantalla conversin de docuemtno origen a documento  destino
+    verDetalleDocConversion: boolean = false;   //Ver detalels del docuemtno convetrido 
+    verPrint: boolean = false;  //ver pantalla de impersion
 
-    docSelect?: TypesDocConvertInterface;
-    docs: TypesDocConvertInterface[] = [];
+    docSelect?: TypesDocConvertInterface; //tipo de documento seleccioando 
+    docs: TypesDocConvertInterface[] = [];  //lsiat de tipos de docuemmmtnos disponobles
 
-    screen: string = "";
+    screen: string = "";    //id de la panatalla
 
-    docsOrigin: OriginDocInterface[] = [];
-    docsOriginFilter: OriginDocInterface[] = [];
-    docOriginSelect?: OriginDocInterface;
+    docsOrigin: OriginDocInterface[] = []; //Docuemntos orieen disponobles
+    docsOriginFilter: OriginDocInterface[] = []; //docuemmntos origen con filtro aplicados
+    docOriginSelect?: OriginDocInterface; //Documento origen seleccionado
 
-    docsDestination: DestinationDocInterface[] = [];
-    docDestinationSelect?: DestinationDocInterface;
-
+    docsDestination: DestinationDocInterface[] = [];    //Docuementos destino duponibles
+    docDestinationSelect?: DestinationDocInterface; //docuemmnto destino seleccionado
 
     fechaInicial?: NgbDateStruct; //fecha inicial 
-    fechaFinal?: NgbDateStruct;
+    fechaFinal?: NgbDateStruct; //fecha final
 
-    detailsOrigin: DetailOriginDocInterInterface[] = [];
+    detailsOrigin: DetailOriginDocInterInterface[] = []; //Detalles dle docuemtno origen
 
-    docDestino: number = -1;
+    docDestino: number = -1;     //Codigo asignado al documento
 
-    docDestinoSelect?: DocConvertInterface;
-    detialsDocDestination: DetailDestinationDocIntnterface[] = [];
+    docDestinoSelect?: DocConvertInterface; //Docuemto destino selccionado
+    detialsDocDestination: DetailDestinationDocIntnterface[] = []; // documetnos destinos disponibles
 
+    docPrint?: DocPrintModel; //Daros del docuemtno par
 
-    docPrint?: DocPrintModel;
-
-
+    //agregar un 0 al princiiop de un numero de un solo digito 
     addLeadingZero(number: number): string {
         return number.toString().padStart(2, '0');
     }
 
+    //formato para la fech avalido para el servico 
     formatStrFilterDate(date: NgbDateStruct) {
         return `${date.year}${this.addLeadingZero(date.month)}${this.addLeadingZero(date.day)}`;
     }
 
-
+    //mosttrar pantalla tipos de docuemntos
     mostrarTiposDoc() {
         this.verTiposDocConversion = true;
         this.isLoading = false;
@@ -74,6 +72,7 @@ export class GlobalConvertService {
         this.verPrint = false;
     }
 
+    //mosttrar pantalla error
     mostrarError(idPantalla: number) {
         this.regresar = idPantalla;
         this.showError = true;
@@ -87,6 +86,7 @@ export class GlobalConvertService {
 
     }
 
+    //mosttrar pantallla documetos orugen
     mostrarDocOrigen() {
         this.verDocOrigen = true;
         this.showError = false;
@@ -99,6 +99,7 @@ export class GlobalConvertService {
 
     }
 
+    //mosttrar pantallla documetos destino
     mostrarDocDestino() {
         this.verDocDestino = true;
         this.showError = false;
@@ -108,9 +109,9 @@ export class GlobalConvertService {
         this.verTiposDocConversion = false;
         this.verDetalleDocConversion = false;
         this.verPrint = false;
-
     }
 
+    //mostr pantalla conversion de docuemtno origen a docuemtno destino
     mostrarDocConversion() {
         this.verDocConversion = true;
         this.showError = false;
@@ -123,6 +124,7 @@ export class GlobalConvertService {
 
     }
 
+    //mostrar oabtalla docuemtno destino convertido
     mostrarDetalleDocConversion() {
         this.verDetalleDocConversion = true;
         this.isLoading = false;
@@ -135,8 +137,7 @@ export class GlobalConvertService {
 
     }
 
-
-
+    //mostrr apantalla de imprecion
     mostrarImpresion() {
         this.verDetalleDocConversion = false;
         this.isLoading = false;

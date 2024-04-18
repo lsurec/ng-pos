@@ -100,7 +100,7 @@
             <div class="dFlex">
                 <div *ngFor="let option of filtrosBusqueda">
                     <div class="chip" [class.selected]="option.id === filtroCliente"
-                        (click)="onOptionChange(option.id)">{{ option.nombre }}
+                        (click)="filtroCliente = option.id">{{ option.nombre }}
                     </div>
                 </div>
             </div>

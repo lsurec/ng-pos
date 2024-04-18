@@ -21,17 +21,20 @@ import { FiltroInterface } from 'src/app/displays/prc_documento_3/interfaces/fil
 })
 export class OriginDocsComponent implements OnInit {
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  strFilter: string = "";
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token del usuario de la sesion
+  empresa: number = PreferencesService.empresa.empresa; // emporesa de la sesuin
+  estacion: number = PreferencesService.estacion.estacion_Trabajo;//etsacion e la sesion
 
-  ascendente: boolean = true;
-  filtroCliente: number = 1;
+  strFilter: string = ""; //texto para filtrar dicuemntos por nombre o nit
 
-  filtroSelect: any;
+  ascendente: boolean = true; //orden de la lista
 
+  filtroCliente: number = 1; //Filtro de busqueda por defecto nombre
+
+  filtroSelect: any;  //Filtro seleccionado
+
+  //filtros disponibles
   filtros: any[] = [
     {
       "id": 1,
@@ -43,6 +46,7 @@ export class OriginDocsComponent implements OnInit {
     },
   ]
 
+  //filtros dispinibles
   filtrosBusqueda: FiltroInterface[] = [
     {
       id: 1,
@@ -55,9 +59,8 @@ export class OriginDocsComponent implements OnInit {
   ];
 
 
-
-
   constructor(
+    //instancias de los servicios que se van a utilizar
     public globalConvertSrevice: GlobalConvertService,
     private _adapter: DateAdapter<any>, date: DateAdapter<Date>,
     @Inject(MAT_DATE_LOCALE) private _locale: string,
@@ -67,23 +70,21 @@ export class OriginDocsComponent implements OnInit {
     private _translate: TranslateService
 
   ) {
+    //asiganr lenguaje a picker date
     this.setLangPicker();
+
+    //seleccionar filtro por defecto
     this.filtroSelect = this.filtros[0];
   }
 
   ngOnInit(): void {
-
+    //ordenar los datos de la lista visible segun configuracion de los filtros
     this.ordenar();
-  }
-
-  onOptionChange(optionId: number) {
-    this.filtroCliente = optionId;
   }
 
   filterDoc() {
     let timer: any;
-    // TODO: reemplazar por filtro real
-    // let opcionFiltro: number = this.filtroCliente;
+    //evaluar filtro de busqueda 
     switch (this.filtroCliente) {
       case 1: //Nombre
         // Configurar un nuevo temporizador
@@ -117,13 +118,16 @@ export class OriginDocsComponent implements OnInit {
 
   }
 
+  //cargar datos inciiales
   async loadData() {
 
-
+    //limpiar datos previos
     this.globalConvertSrevice.docsOrigin = [];
 
+    //inciiar proceso
     this.globalConvertSrevice.isLoading = true;
 
+    //Uso del servicio para obtner documentos pendientes de recepcionar
     let res: ResApiInterface = await this._receptionService.getPendindgDocs(
       this.user,
       this.token,
@@ -132,26 +136,22 @@ export class OriginDocsComponent implements OnInit {
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
     );
 
+    //finalizar proiceso
     this.globalConvertSrevice.isLoading = false;
 
 
+    //si elservico falló mostrar error
     if (!res.status) {
-
-
       this.showError(res);
-
       return;
-
     }
 
-
-
+    //Respuest del servicio
     this.globalConvertSrevice.docsOrigin = res.response;
     this.globalConvertSrevice.docsOriginFilter = res.response;
 
+    //ordenar datos segun configuracines
     this.ordenar();
-
-
   }
 
   //TODO:Seeleccionar idioma de la aplicacion
@@ -161,18 +161,20 @@ export class OriginDocsComponent implements OnInit {
     this._adapter.setLocale(this._locale);
   }
 
-
+  //ooirdenar datos de l lista segun la configuracion
   ordenar() {
 
+    //Cambair orden de la  lista
     this.ascendente = !this.ascendente;
 
+    //Evaluar orden deseado
     switch (this.filtroSelect.id) {
       case 1:
         //id documento
-        if (this.ascendente) {
+        if (this.ascendente) { //orden ascendente
           this.globalConvertSrevice.docsOriginFilter =
             this.globalConvertSrevice.docsOriginFilter.slice().sort((a, b) => a.iD_Documento - b.iD_Documento);
-        } else {
+        } else {  //orden descendente
           this.globalConvertSrevice.docsOriginFilter =
             this.globalConvertSrevice.docsOriginFilter.slice().sort((a, b) => b.iD_Documento - a.iD_Documento);
         }
@@ -193,7 +195,9 @@ export class OriginDocsComponent implements OnInit {
     }
   }
 
+  //salir de l avista
   backPage() {
+    //evaluar desde donde se mostrio la pantalla poara regresar a ala correcta 
     if (!this.globalConvertSrevice.screen) {
       this.globalConvertSrevice.mostrarTiposDoc();
       return;
@@ -214,8 +218,7 @@ export class OriginDocsComponent implements OnInit {
   }
 
 
-
-
+  //cambaiar fechas en la vista  
   sincronizarFechas() {
 
     // Convertir las fechas NgbDateStruct a objetos Date
@@ -227,7 +230,7 @@ export class OriginDocsComponent implements OnInit {
       this.globalConvertSrevice.fechaFinal = this.globalConvertSrevice.fechaInicial;
     }
 
-
+    //bsicar nuevos docuemtos segun la fecha cambiada
     this.loadData();
   }
 
@@ -240,36 +243,44 @@ export class OriginDocsComponent implements OnInit {
     return new Date();
   };
 
-
+  //seleccioanr documento origen
   async selectOrigin(origin: OriginDocInterface) {
 
+    //asiganr documento otigen deleccionado 
     this.globalConvertSrevice.docOriginSelect = origin;
 
+    //bsuacr docuemntos destino al que se pouede convertir el documento origen
     await this.loadDestinationDocs(origin);
 
 
+    //Si solo hay un odcumento destino selecciionarlo  por default
     if (this.globalConvertSrevice.docsDestination.length == 1) {
 
+      //seleccioanr unico docucemnto destino
       this.globalConvertSrevice.docDestinationSelect = this.globalConvertSrevice.docsDestination[0];
 
-
-
+      //Cragara detalles de documento origern
       await this.loadDetailsOrigin();
 
+      //ir aa siuuiente pantalla
       this.globalConvertSrevice.docDestino = 0;
       this.globalConvertSrevice.mostrarDocConversion();
       return;
     }
 
+    //si ahy varios dicuemntos ir a la oantala de docuemntos destino 
     this.globalConvertSrevice.docDestino = 1;
 
     this.globalConvertSrevice.mostrarDocDestino();
   }
 
+  //caraghra detalles del docuemnto origen
   async loadDetailsOrigin() {
 
+    //inciar el procespp
     this.globalConvertSrevice.isLoading = true;
 
+    //Consumo del servisio
     let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
@@ -283,24 +294,22 @@ export class OriginDocsComponent implements OnInit {
 
     )
 
+    ///Finaliar el procespo
     this.globalConvertSrevice.isLoading = false;
 
-
-
+    //Si el servicio falló mostrar error
     if (!res.status) {
-
-
       this.showError(res);
-
       return;
-
     }
 
+    //respuesta del sservivixo
     let deatlles: DetailOriginDocInterface[] = res.response;
 
-
+    //limpiar datos prwvios
     this.globalConvertSrevice.detailsOrigin = [];
 
+    //Nuevo objeto con cehk para seleccionar transacciones
     deatlles.forEach(element => {
       this.globalConvertSrevice.detailsOrigin.push(
         {
@@ -310,16 +319,15 @@ export class OriginDocsComponent implements OnInit {
         }
       );
     });
-
-
   }
 
-
-
+  //caraar docuemntos destino
   async loadDestinationDocs(doc: OriginDocInterface) {
 
+    //inciar el proceso 
     this.globalConvertSrevice.isLoading = true;
 
+    //Consumo del servico 
     let res: ResApiInterface = await this._receptionService.getDestinationDocs(
       this.user,
       this.token,
@@ -329,25 +337,24 @@ export class OriginDocsComponent implements OnInit {
       doc.estacion_Trabajo,
     );
 
+      //finalizar  carga
     this.globalConvertSrevice.isLoading = false;
 
+    //si el servicio falló mostrar error
     if (!res.status) {
-
-
       this.showError(res);
-
       return;
-
     }
 
+    //respuesta del servivios
     this.globalConvertSrevice.docsDestination = res.response;
 
   }
 
-
-
+  //mostrar error
   async showError(res: ResApiInterface) {
 
+    //dialogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -357,6 +364,7 @@ export class OriginDocsComponent implements OnInit {
       }
     );
 
+    //Cancelar
     if (!verificador) return;
 
     let dateNow: Date = new Date(); //fecha del error
@@ -369,11 +377,10 @@ export class OriginDocsComponent implements OnInit {
       url: res.url,
     }
 
+    //guardar eror
     PreferencesService.error = error;
 
+    //msotrar antallad de error
     this.globalConvertSrevice.mostrarError(10);
-
   }
-
-
 }

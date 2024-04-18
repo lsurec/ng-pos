@@ -18,11 +18,6 @@ import { ParametroService } from 'src/app/displays/prc_documento_3/services/para
 import { PagoService } from 'src/app/displays/prc_documento_3/services/pago.service';
 import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/referencia.service';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
-import { ProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/producto.interface';
-import { ProductoService } from 'src/app/displays/prc_documento_3/services/producto.service';
-import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
-import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
-import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 
 @Component({
   selector: 'app-convert-docs',
@@ -41,594 +36,51 @@ import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/u
 export class ConvertDocsComponent {
   selectAll: boolean = false; // seleccionar todas las trasnsacciones
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
+  user: string = PreferencesService.user; //usjario de la seision  
+  token: string = PreferencesService.token; //token del usuario
 
 
   constructor(
+    //intancias para los serviicos
     public globalConvertSrevice: GlobalConvertService,
     private _receptionService: ReceptionService,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     private _facturaService: FacturaService,
     private _dataUserService: DataUserService,
-    private _serieService: SerieService,
-    private _cuentaService: CuentaService,
-    private _tipoTransaccionService: TipoTransaccionService,
-    private _parametroService: ParametroService,
-    private _formaPagoService: PagoService,
-    private _referenciaService: ReferenciaService,
-    private _productService: ProductService,
-    private _productoService:ProductoService,
   ) {
 
   }
 
+  //Editar el documento que se está visualizando
   async editDoc() {
 
-
-    //empty data in screen
+    //limpiar datos de la pantalla POS
     this._facturaService.clearData();
 
-
-    //set t ipo documento and descripcion tipo docuemnto
+    //Asignar nuevo tipo de documento y descripcion
     this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Decripcion;
     this._facturaService.tipoDocumento = this.globalConvertSrevice.docOriginSelect!.tipo_Documento;
-
-    // //Datos de la sesion
-    // let user: string = this.globalConvertSrevice.docOriginSelect!.usuario;
-    // let token: string = PreferencesService.token;
-    // let empresa: number = this.globalConvertSrevice.docOriginSelect!.empresa;
-    // let estacion: number = this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo;
-    // let documento: number = this._facturaService.tipoDocumento;
-
-
-    // //TODO: Cargar en conversion
-    // this._facturaService.isLoading = true;
-
-    // //set serie documento
-    // //Buscar series
-    // let resSeries: ResApiInterface = await this._serieService.getSerie(
-    //   user,
-    //   token,
-    //   documento,
-    //   empresa,
-    //   estacion,
-    // );
-
-    // //si algo salio al
-    // if (!resSeries.status) {
-    //   this._facturaService.isLoading = false;
-    //   //TODO: Show error 
-    //   console.log(resSeries);
-
-
-    //   // this.verError(resSeries);
-    //   return;
-    // }
-
-    // //Series disponobles
-    // this._facturaService.series = resSeries.response;
-
-
-
-
-    // let indexSerie: number = -1;
-
-    // for (let i = 0; i < this._facturaService.series.length; i++) {
-    //   const element = this._facturaService.series[i];
-
-    //   if (element.serie_Documento == this.globalConvertSrevice.docOriginSelect?.serie_Documento) {
-    //     indexSerie = i;
-    //     break;
-    //   }
-    // }
-
-
-    // if (indexSerie == -1) {
-    //   ///TODO: Si no existe no navegar
-    //   console.log("No existe la serie");
-
-    //   return;
-
-    // }
-
-
-    // this._facturaService.serie = this._facturaService.series[indexSerie];
-
-
-    // //si solo hay una serie seleccionarla por defecto;
-    // if (this._facturaService.series.length == 1) {
-    //   //seleccionar serie
-
-
-
-    //   let serie: string = this._facturaService.serie.serie_Documento;
-
-    //   //buscar vendedores
-    //   let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
-    //     user,
-    //     token,
-    //     documento,
-    //     serie,
-    //     empresa,
-    //   )
-
-    //   //si algo salió mal mostrar error
-    //   if (!resVendedor.status) {
-    //     //TODO: Show error 
-
-    //     this._facturaService.isLoading = false;
-    //     // this.verError(resVendedor);
-    //     console.log(resVendedor);
-
-
-    //     return;
-    //   }
-
-    //   //cuntas correntista ref disponibles
-    //   this._facturaService.vendedores = resVendedor.response;
-
-
-    //   //Validar cuenta ref si existe
-    //   if (this.globalConvertSrevice.docOriginSelect?.cuenta_Correntista_Ref) {
-
-    //     let indexCtaRef = -1;
-    //     for (let i = 0; i < this._facturaService.vendedores.length; i++) {
-    //       const element = this._facturaService.vendedores[i];
-
-    //       if (element.cuenta_Correntista == this.globalConvertSrevice.docOriginSelect.cuenta_Correntista_Ref) {
-    //         indexCtaRef = i;
-    //         break;
-    //       }
-
-    //     }
-
-
-    //     if (indexCtaRef == -1) {
-    //       //TODO: Mostrar mensjae}
-    //       console.log("No eciste cuenat ref");
-
-    //       //TODO: Reinventar
-    //       // return;
-    //     }
-
-
-    //     this._facturaService.vendedor = this._facturaService.vendedores[indexCtaRef];
-
-
-    //   }
-
-
-
-
-    //   //Buscar tipos transaccion
-    //   let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
-    //     user,
-    //     token,
-    //     documento,
-    //     serie,
-    //     empresa,
-    //   );
-
-    //   //si algo salio mal
-    //   if (!resTransaccion.status) {
-
-    //     console.log(resTransaccion);
-
-
-    //     //TODO:Error
-    //     // this._facturaService.isLoading = false;
-    //     // this.verError(resTransaccion);
-
-    //     return;
-    //   }
-
-    //   //tioos de trabnsaccion disponibles
-    //   this._facturaService.tiposTransaccion = resTransaccion.response;
-
-    //   //Buscar parametros del documento
-    //   let resParametro: ResApiInterface = await this._parametroService.getParametro(
-    //     user,
-    //     token,
-    //     documento,
-    //     serie,
-    //     empresa,
-    //     estacion,
-    //   )
-
-    //   //si algo salio mal
-    //   if (!resParametro.status) {
-    //     //TODO:Error
-    //     console.log(resParametro);
-
-
-    //     // this._facturaService.isLoading = false;
-    //     // this.verError(resParametro);
-
-    //     return;
-    //   }
-
-    //   //Parammetros disponibles
-    //   this._facturaService.parametros = resParametro.response;
-
-    //   //Buscar formas de pago
-    //   let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
-    //     token,
-    //     empresa,
-    //     serie,
-    //     documento,
-    //   );
-
-    //   //si algo salio mal
-    //   if (!resFormaPago.status) {
-
-    //     //TODO:Error
-
-    //     console.log(resFormaPago);
-
-    //     // this._facturaService.isLoading = false;
-
-    //     // this.verError(resFormaPago);
-
-    //     return;
-
-    //   }
-
-    //   //Formas de pago disponobles
-    //   this._facturaService.formasPago = resFormaPago.response;
-
-    // }
-
-
-    // //TODO:Buscar referencia, observaciones y fechas para caragarlas
-
-    // if (this._facturaService.valueParametro(58)) {
-
-    //   this._facturaService.tipoReferencia = undefined;
-    //   this._facturaService.tiposReferencia = [];
-
-
-    //   let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
-
-
-    //   //si algo salio mal
-    //   if (!resTipoRefencia.status) {
-
-    //     console.log(resTipoRefencia);
-
-
-    //     //TODO:Error
-    //     // this._facturaService.isLoading = false;
-
-
-    //     // this.verError(resTipoRefencia);
-
-    //     return;
-
-    //   }
-
-
-    //   this._facturaService.tiposReferencia = resTipoRefencia.response;
-
-
-    //   if (this._facturaService.tiposReferencia.length == 1) {
-    //     this._facturaService.tipoReferencia = this._facturaService.tiposReferencia[0];
-    //   }
-
-    // }
-
-
-
-    // this._facturaService.cuenta = {
-    //   cuenta_Correntista: 1,
-    //   cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.cuenta_Cta,
-    //   factura_Nombre: this.globalConvertSrevice.docOriginSelect!.cliente,
-    //   factura_NIT: this.globalConvertSrevice.docOriginSelect!.nit,
-    //   factura_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
-    //   cC_Direccion: this.globalConvertSrevice.docOriginSelect!.direccion,
-    //   des_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.nit,
-    //   direccion_1_Cuenta_Cta: this.globalConvertSrevice.docOriginSelect!.direccion,
-    //   eMail: "",
-    //   telefono: "",
-    //   limite_Credito: 0,
-    //   permitir_CxC: false,
-
-    // }
-
-
-    // //TODO:Cargarr
-    // this._facturaService.isLoading = false;
-
-
-    // this._facturaService.traInternas = [];
-
-
-    // for (const iterator of this.globalConvertSrevice.detailsOrigin) {
-    //   let resProduct = await this._productService.getProductId(
-    //     this.token,
-    //     iterator.detalle.id,
-    //   );
-
-
-    //   if (!resProduct.status) {
-    //     console.log("No se encontró el producto");
-    //     return;
-    //   }
-
-    //   let productSearch: ProductoInterface[] = resProduct.response;
-
-
-    //   let iProd: number = -1;
-
-    //   for (let i = 0; i < productSearch.length; i++) {
-    //     const element = productSearch[i];
-
-    //     if (element.producto_Id = iterator.detalle.id) {
-    //       iProd = i;
-    //       break;
-    //     }
-
-    //   }
-
-
-    //   if (iProd == -1) {
-
-    //     console.log("No se encontró el producto");
-    //     return;
-
-    //   }
-
-
-    //   let prod: ProductoInterface = productSearch[iProd];
-
-
-    //    //buscar bodegas del produxto
-    //    let resBodega = await this._productService.getBodegaProducto(
-    //     this.user,
-    //     this.token,
-    //     empresa,
-    //     estacion,
-    //     prod.producto,
-    //     prod.unidad_Medida,
-    //   );
-
-
-    //   if (!resBodega.status) {
-
-    //     // this.facturaService.isLoading = false;
-
-
-    //     // let verificador = await this._notificationsService.openDialogActions(
-    //     //   {
-    //     //     title: this._translate.instant('pos.alertas.salioMal'),
-    //     //     description: this._translate.instant('pos.alertas.error'),
-    //     //     verdadero: this._translate.instant('pos.botones.informe'),
-    //     //     falso: this._translate.instant('pos.botones.aceptar'),
-    //     //   }
-    //     // );
-
-    //     // if (!verificador) return;
-
-    //     // this.verError(resBodega);
-    //     console.log(resBodega);
-        
-
-    //     return;
-
-    //   }
-
-    //   this._productoService.bodegas = resBodega.response;
-
-
-    //   //validar que existan bodegas
-    //   if (this._productoService.bodegas.length == 0) {
-    //     // this._facturaService.isLoading = false;
-    //     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
-    //     return;
-    //   }
-
-
-    //   //Si solo hay una bodega
-    //   if (this._productoService.bodegas.length == 1) {
-    //     this._productoService.bodega = this._productoService.bodegas[0];
-    //     let bodega: number = this._productoService.bodega.bodega;
-
-    //     //buscar precios
-    //     let resPrecio = await this._productService.getPrecios(
-    //       this.user,
-    //       this.token,
-    //       bodega,
-    //       prod.producto,
-    //       prod.unidad_Medida,
-    //     );
-
-
-    //     if (!resPrecio.status) {
-
-    //       this._facturaService.isLoading = false;
-
-
-    //       // let verificador = await this._notificationsService.openDialogActions(
-    //       //   {
-    //       //     title: this._translate.instant('pos.alertas.salioMal'),
-    //       //     description: this._translate.instant('pos.alertas.error'),
-    //       //     verdadero: this._translate.instant('pos.botones.informe'),
-    //       //     falso: this._translate.instant('pos.botones.aceptar'),
-    //       //   }
-    //       // );
-
-    //       // if (!verificador) return;
-
-    //       // this.verError(resPrecio);
-
-    //       console.log(resPrecio);
-          
-    //       return;
-
-    //     }
-
-    //     let precios: PrecioInterface[] = resPrecio.response;
-
-    //     precios.forEach(element => {
-    //       this._productoService.precios.push(
-    //         {
-    //           id: element.tipo_Precio,
-    //           precioU: element.precio_Unidad,
-    //           descripcion: element.des_Tipo_Precio,
-    //           precio: true,
-    //           moneda: element.moneda,
-    //           orden:element.precio_Orden,
-    //         }
-    //       );
-    //     });
-
-    //     //si no hay precios buscar factor conversion
-    //     if (this._productoService.precios.length == 0) {
-    //       let resfactor = await this._productService.getFactorConversion(
-    //         this.user,
-    //         this.token,
-    //         bodega,
-    //         prod.producto,
-    //         prod.unidad_Medida,
-    //       );
-
-    //       if (!resfactor.status) {
-
-    //         this._facturaService.isLoading = false;
-
-    //         // let verificador = await this._notificationsService.openDialogActions(
-    //         //   {
-    //         //     title: this._translate.instant('pos.alertas.salioMal'),
-    //         //     description: this._translate.instant('pos.alertas.error'),
-    //         //     verdadero: this._translate.instant('pos.botones.informe'),
-    //         //     falso: this._translate.instant('pos.botones.aceptar'),
-    //         //   }
-    //         // );
-
-    //         // if (!verificador) return;
-
-    //         // this.verError(resfactor);
-
-    //         console.log(resfactor);
-            
-    //         return;
-
-    //       }
-
-
-    //       let factores: FactorConversionInterface[] = resfactor.response;
-
-
-    //       factores.forEach(element => {
-    //         this._productoService.precios.push(
-    //           {
-    //             id: element.tipo_Precio,
-    //             precioU: element.precio_Unidad,
-    //             descripcion: element.des_Tipo_Precio,
-    //             precio: false,
-    //             moneda: element.moneda,
-    //             orden:element.tipo_Precio_Orden,
-    //           }
-    //         );
-    //       });
-
-    //     }
-
-    //     //si no hay precos ni factores
-
-    //     // let precio:number = 0;
-    //     // if(iterator.detalle.tipo_Precio){
-    //     //     precio = iterator.detalle.tipo_Precio;
-            
-    //     // }
-
-    //     // for (let i = 0; i < this._facturaService..length; i++) {
-    //     //   const element = this._facturaService.[i];
-          
-    //     // }
-
-
-    //     //TODO:Buscar precio
-
-        
-
-    //     console.log(this._productoService.precios);
-
-
-
-        
-
-    //     // if (this._productoService.precios.length == 1) {
-
-    //     //   let precioU: UnitarioInterface = this._productoService.precios[0];
-
-    //     //   this._productoService.precio = precioU;
-    //     //   this._productoService.total = precioU.precioU;
-    //     //   this._productoService.precioU = precioU.precioU;
-    //     //   this._productoService.precioText = precioU.precioU.toString();
-
-    //     // } else if (this._productoService.precios.length > 1) {
-    //     //   for (let i = 0; i < this._productoService.precios.length; i++) {
-    //     //     const element = this._productoService.precios[i];
-    //     //     if (element.orden) {
-    //     //       this._productoService.precio = element;
-    //     //       this._productoService.total = element.precioU;
-    //     //       this._productoService.precioU = element.precioU;
-    //     //       this._productoService.precioText = element.precioU.toString();
-
-    //     //     }
-    //     //     break;
-
-    //     //   }
-    //     // }
-
-    //     console.log(this._productoService.precio);
-        
-
-    //   }
-
-
-
-    //   this._facturaService.addTransaction(
-    //     {
-    //       precioCantidad: 0,
-    //       precipDia: 0,
-    //       isChecked: false,
-    //       bodega: this._productoService.bodega,
-    //       producto:prod,
-    //       precio: this._productoService.precios[0],
-    //       cantidad: iterator.detalle.cantidad,
-    //       total: this._productoService.precios[0].precioU * iterator.detalle.cantidad,
-    //       cargo: 0,
-    //       descuento: 0,
-    //       operaciones: [],
-    //     }
-    //   );
-
-
-    // }
-
-
     
-
-    // console.log("Paso por aqui");
-
-    
+    //Show pos screen
     this.globalConvertSrevice.editDoc = true;
-
   }
 
+
+  //Conversion de documento, trnasacciones seleccioandas
   async convertDoc() {
 
+    //Buscar transaccionws seleccionadas
     let traCheks: DetailOriginDocInterInterface[] = this.globalConvertSrevice.detailsOrigin.filter((transaction) => transaction.checked);
 
+    //Mostarr alerta si no hay transacciones selecconadas
     if (traCheks.length == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
 
 
+    //Mostrar dialogo de confirmacion antes de iniciar el proceso de conversions
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.documento.eliminar'),
@@ -638,13 +90,17 @@ export class ConvertDocsComponent {
       }
     );
 
+    //opcion cancelar
     if (!verificador) return;
 
+    //Iniciar carga
     this.globalConvertSrevice.isLoading = true;
 
 
+    //Recorrer todas las transacciones seleccionadas
     for (const tra of traCheks) {
 
+      //Actualizar transacciones que se vana a confirmar
       let resActualizar = await this._receptionService.postActualizar(
         this.user,
         this.token,
@@ -652,6 +108,7 @@ export class ConvertDocsComponent {
         tra.disponibleMod,
       );
 
+      //si no se pudo actualziar mostrar alerta
       if (!resActualizar.status) {
         this.globalConvertSrevice.isLoading = false;
         this.showError(resActualizar);
@@ -660,6 +117,7 @@ export class ConvertDocsComponent {
 
     }
 
+    //Preparar docummento para convertirlo al documento destino
     let param: ParamConvertDocInterface = {
       pUserName: this.user,
       pO_Documento: this.globalConvertSrevice.docOriginSelect!.documento,
@@ -676,31 +134,42 @@ export class ConvertDocsComponent {
     };
 
 
+    //conversion de documento origen a documento destino
     let resConvert: ResApiInterface = await this._receptionService.postConvertir(
       this.token,
       param,
     );
 
 
+    //si el srvicio de eejecuto incorrectaemnete
     if (!resConvert.status) {
       this.globalConvertSrevice.isLoading = false;
       this.showError(resConvert);
       return;
     }
 
-
+    //Respuesta del servicio
     this.globalConvertSrevice.docDestinoSelect = resConvert.response;
 
+
+    //Una vez actualizado el docuemnto cargar detalles del documneto destino
     await this.loadDetails();
 
+    //Mostrar mantalla detalles documento destino
     this.globalConvertSrevice.mostrarDetalleDocConversion()
+
+    //finalizar carga
     this.globalConvertSrevice.isLoading = false;
   }
 
+  //cargar detalles del docuemnto destino
   async loadDetails() {
 
+    //Limpiar datos anterirores que puedan existir
     this.globalConvertSrevice.detialsDocDestination = [];
 
+
+    //Consumo del servico 
     let res: ResApiInterface = await this._receptionService.getDetallesDocDestino(
       this.token,
       this.user,
@@ -714,24 +183,26 @@ export class ConvertDocsComponent {
     )
 
 
+    //si el consumo el servic o salio mal
     if (!res.status) {
       this.globalConvertSrevice.isLoading = false;
       this.showError(res);
       return;
     }
 
+    //Respuesta del servicio
     this.globalConvertSrevice.detialsDocDestination = res.response;
-
-
-
   }
 
 
 
-
+  //Cargar datos inciales
   async loadData() {
+
+    //inciiar carga
     this.globalConvertSrevice.isLoading = true;
 
+    //Consumo para obtener detalles del docuemnto origen
     let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
@@ -745,28 +216,25 @@ export class ConvertDocsComponent {
 
     )
 
+    //finalizar carga
     this.globalConvertSrevice.isLoading = false;
 
 
-
+    //Si algo salio mmal al consumir el servicio
     if (!res.status) {
 
       this.showError(res);
       return;
-
-
     }
 
 
-
-
+    //Respuesta del servicio
     let deatlles: DetailOriginDocInterface[] = res.response;
 
-
-
-
+    //ñimpiar detalles del documento origen que podrían esxistir
     this.globalConvertSrevice.detailsOrigin = [];
 
+    //Crear nuevo objetro para los detalles para poder seleccionarlos
     deatlles.forEach(element => {
       this.globalConvertSrevice.detailsOrigin.push(
         {
@@ -779,9 +247,10 @@ export class ConvertDocsComponent {
 
   }
 
-
+  //Mmostrar error
   async showError(res: ResApiInterface) {
 
+      //Dialogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -791,8 +260,10 @@ export class ConvertDocsComponent {
       }
     );
 
+    //No hacer nada
     if (!verificador) return;
 
+    //Ver informe de error
     let dateNow: Date = new Date(); //fecha del error
 
     //Crear error
@@ -803,35 +274,45 @@ export class ConvertDocsComponent {
       url: res.url,
     }
 
+    //guardar error
     PreferencesService.error = error;
 
+    //mmostrar pantalla de error
     this.globalConvertSrevice.mostrarError(12);
 
     return;
   }
-  //para selecionar todas las transacciones
+
+  //Seleccionar todas las transacciones
   seleccionar() {
 
+    //contador de tareas 
     let count = 0;
 
+    //Recorrer todas las transacciones
     this.globalConvertSrevice.detailsOrigin.forEach(element => {
       if (element.detalle.disponible == 0) {
+        //Contar cuantas  transacciones tienen cantidad 0 disponoiles
         count++;
       } else {
+        //seleccioanr  la que tiene disponible mas de cero
         element.checked = this.selectAll;
       }
     });
 
 
+    //si hubo alguna transaccion con cantidad 0, mmostrar alerta de que no se seleccionó 
     if (count > 0 && this.selectAll) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
     }
 
   }
 
+  //Seleccionar una transaccion
   selectTra(index: number) {
 
 
+    //Si ya estpá seleccionada no hacer nada
     if (!this.globalConvertSrevice.detailsOrigin[index].checked) return;
 
     //verificar que la cantidad sea numerica
@@ -841,7 +322,7 @@ export class ConvertDocsComponent {
       return;
     }
 
-
+    //SI la cantidad disponible es  no seleccioanr la transaccion y mostrra alerta
     if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod <= 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
 
@@ -849,7 +330,7 @@ export class ConvertDocsComponent {
       return;
     }
 
-
+    //no se puede agregar una cantodad mayor a la que hay dispoible
     if (this.globalConvertSrevice.detailsOrigin[index].disponibleMod > this.globalConvertSrevice.detailsOrigin[index].detalle.disponible) {
 
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noMayor'));
@@ -858,6 +339,7 @@ export class ConvertDocsComponent {
       return;
     }
 
+    //Si la cantidad es  no hacer nada
     if (this.globalConvertSrevice.detailsOrigin[index].detalle.disponible == 0) {
       this.globalConvertSrevice.detailsOrigin[index].checked = false;
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.enCero'));
@@ -865,16 +347,18 @@ export class ConvertDocsComponent {
 
   }
 
+  //salir de la pagina
   backPage() {
     if (this.globalConvertSrevice.docDestino == 0) {
+      //Regresar a pantala con documentos pe
       this.globalConvertSrevice.mostrarDocOrigen();
       return;
     }
-
+    //mmostrar documento destino
     this.globalConvertSrevice.mostrarDocDestino()
   }
 
-
+  //cambiar cantidad de una transaccion
   changeCantidad(detalle: DetailOriginDocInterInterface) {
 
     //verificar que la cantidad sea numerica
@@ -884,13 +368,14 @@ export class ConvertDocsComponent {
       return;
     }
 
+    //La cantidad no puede ser 0
     if (detalle.disponibleMod <= 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noCero'));
       detalle.checked = false;
       return;
     }
 
-
+    //La cantidad no puede ser mayor a ladisponible
     if (detalle.disponibleMod > detalle.detalle.disponible) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.noMayor'));
       detalle.checked = false;
@@ -898,8 +383,7 @@ export class ConvertDocsComponent {
       return;
     }
 
+    //seleccioanr transaccion
     detalle.checked = true;
   }
-
-
 }

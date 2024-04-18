@@ -17,11 +17,12 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 export class DestinationDocsComponent {
 
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
   
 
   constructor(
+    //instancia de los servicios
     public globalConvertSrevice: GlobalConvertService,
     private _receptionService:ReceptionService,
     private _notificationsService: NotificationsService,
@@ -30,17 +31,23 @@ export class DestinationDocsComponent {
 
   }
 
-
+  //Seleccionar documemnto destino
   async selectDestino(destino:DestinationDocInterface){
+    //asiganr documento destino
     this.globalConvertSrevice.docDestinationSelect = destino;
+    //buscar detalles del docuemnto origen
     await this.loadDetailsOrigin();
+    //mostarr documento conversion (pantalla)
     this.globalConvertSrevice.mostrarDocConversion();
   }
 
+  //Cargar detalles del documento origen
   async loadDetailsOrigin(){
 
+    //iniciar caraga
     this.globalConvertSrevice.isLoading = true;
 
+    //Uso del servicio para obtener detalles dle documento origen
     let res : ResApiInterface = await this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
@@ -54,24 +61,24 @@ export class DestinationDocsComponent {
 
       )
 
+      //finalizar caraga
     this.globalConvertSrevice.isLoading = false;
 
-
-    
+    //Si el servicio falló mostrar error
     if (!res.status) {
 
-
      this.showError(res);
-
       return;
-
     }
 
+    //Respuesta del servicio
     let deatlles:DetailOriginDocInterface[] = res.response;
 
 
+    //impiar datos que pudieran existir
     this.globalConvertSrevice.detailsOrigin = [];
 
+    //armar nuevo objeto con check oara poder seleccioanrlo
     deatlles.forEach(element => {
       this.globalConvertSrevice.detailsOrigin.push(
         {
@@ -85,9 +92,13 @@ export class DestinationDocsComponent {
 
   }
 
+
+  //cargar datos iniciales
   async loadData(){
+    //iniciar proceso
     this.globalConvertSrevice.isLoading = true;
 
+    //buscar documentos destino
     let res: ResApiInterface = await this._receptionService.getDestinationDocs(
       this.user,
       this.token,
@@ -97,24 +108,24 @@ export class DestinationDocsComponent {
       this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
     );
 
+    //finalizar carga
     this.globalConvertSrevice.isLoading = false;
 
+    //si el servicio fallo mostrar error
     if (!res.status) {
-
-
       this.showError(res);
-
-
       return;
-
     }
 
+    //Respuest del servicio
     this.globalConvertSrevice.docsDestination = res.response;
   }
 
 
+  //mostrar error
   async showError(res: ResApiInterface) {
 
+    //Dialogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -124,8 +135,10 @@ export class DestinationDocsComponent {
       }
     );
 
+    //cancelar
     if (!verificador) return;
 
+    //Objeto error
     let dateNow: Date = new Date(); //fecha del error
 
     //Crear error
@@ -136,11 +149,12 @@ export class DestinationDocsComponent {
       url: res.url,
     }
 
+    //guardar error
     PreferencesService.error = error;
 
+    //mostrar informe de error en pantalla
     this.globalConvertSrevice.mostrarError(11);
 
   }
-
 
 }

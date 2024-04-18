@@ -23,6 +23,7 @@ export class TypesDocsComponent {
 
 
   constructor(
+    //isntancias del servicio
     public globalConvertSrevice: GlobalConvertService,
     private _eventService: EventService,
     private _receptionService: ReceptionService,
@@ -33,29 +34,31 @@ export class TypesDocsComponent {
 
   }
 
+  //cargar datos iniciales
   async loadData() {
 
+    //limpiar datos previos
     this.globalConvertSrevice.docs = [];
 
+    //inciiar proceso
     this.globalConvertSrevice.isLoading = true;
 
+    //consumo del servicio para obtener los tipos de documentos disponibles
     let res: ResApiInterface = await this._receptionService.getTiposDoc(
       this.user,
       this.token,
     );
+
+    //Finalizar proceso
     this.globalConvertSrevice.isLoading = false;
 
-
-
+    //si el sercico falló
     if (!res.status) {
-
-
       this.showError(res);
-
      return;
-
     }
 
+      //Respuesta del servicio 
     this.globalConvertSrevice.docs = res.response;
 
   }
@@ -69,6 +72,7 @@ export class TypesDocsComponent {
     this._eventService.emitCustomEvent(false);
   }
 
+  //ir a vista douemntos origen (pendientes de recepcionar)
   async goOrigin(doc: TypesDocConvertInterface) {
 
     this.globalConvertSrevice.docSelect = doc;
@@ -78,16 +82,23 @@ export class TypesDocsComponent {
   }
 
 
+  //caragr docuemntos origen (pendientes de recpecionar)
   async loadDocsOrign() {
+    //inciar proceso 
     this.globalConvertSrevice.isLoading = true;
+    
+    //limpiar datos previso
     this.globalConvertSrevice.docsOrigin = [];
 
-
+    //fecha del usuario
     let today: Date = new Date();
 
+    //obtener fechas con formato valido para el servico 
     this.globalConvertSrevice. fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
     this.globalConvertSrevice.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
 
+
+    //Consumo del servixio para obtener documents pendientes de recepcionar
     let res: ResApiInterface = await this._receptionService.getPendindgDocs(
       this.user,
       this.token,
@@ -96,29 +107,25 @@ export class TypesDocsComponent {
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
     );
 
+    //Finalizar proceoso
     this.globalConvertSrevice.isLoading = false;
 
-
+      //Si el servicio falló mostrar mensaje
     if (!res.status) {
-
-
      this.showError(res);
-
       return;
-
     }
 
+      //asigar erespuestas del servicio 
     this.globalConvertSrevice.docsOrigin = res.response;
     this.globalConvertSrevice.docsOriginFilter = res.response;
 
-
-
   }
 
-
-  
+  //mostrar error
   async showError(res: ResApiInterface) {
 
+    //dialofo de confirmmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -128,6 +135,7 @@ export class TypesDocsComponent {
       }
     );
 
+    //Cancelar
     if (!verificador) return;
 
     let dateNow: Date = new Date(); //fecha del error
@@ -140,11 +148,10 @@ export class TypesDocsComponent {
       url: res.url,
     }
 
+    //guardrad error
     PreferencesService.error = error;
 
+    //ver pantalla de rror
     this.globalConvertSrevice.mostrarError(9);
-
   }
-
-
 }

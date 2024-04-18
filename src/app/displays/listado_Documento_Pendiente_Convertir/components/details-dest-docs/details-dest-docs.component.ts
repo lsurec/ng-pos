@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
-import { components } from 'src/app/providers/componentes.provider';
-import { EventService } from 'src/app/services/event.service';
 import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
@@ -9,8 +7,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PrintConvertInterface } from '../../interfaces/print-convert.interface';
-import { ClienteInterface } from 'src/app/displays/prc_documento_3/interfaces/cliente.interface';
-import { Empresa, DocumentoData, Cliente, Item, Montos, Pago, Certificador, PoweredBy, DocPrintModel } from 'src/app/interfaces/doc-print.interface';
+import { Empresa, DocumentoData, Cliente, Item, Montos, Certificador, PoweredBy,  } from 'src/app/interfaces/doc-print.interface';
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -28,10 +25,11 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 export class DetailsDestDocsComponent {
 
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
+  user: string = PreferencesService.user; //usuario de la sesion
+  token: string = PreferencesService.token; //token del usuario de la sesion
 
   constructor(
+    //Instamcia de servicios
     public globalConvertSrevice: GlobalConvertService,
     private _receptionService: ReceptionService,
     private _notificationsService: NotificationsService,
@@ -44,11 +42,15 @@ export class DetailsDestDocsComponent {
   }
 
 
+  //cargar datos inciiales
   async loadData() {
+    //limpiar datos anterriores
     this.globalConvertSrevice.detialsDocDestination = [];
 
+    //iniciar proceso
     this.globalConvertSrevice.isLoading = true;
 
+    //Buscar detalles del documento destino
     let res: ResApiInterface = await this._receptionService.getDetallesDocDestino(
       this.token,
       this.user,
@@ -61,21 +63,26 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.docDestinoSelect!.fechaReg,
     )
 
+    //finalizar proceso
     this.globalConvertSrevice.isLoading = false;
 
+    //si el servico fallo mostrar error
     if (!res.status) {
       this.showError(res);
       return;
     }
 
+    //respuest adel servicio
     this.globalConvertSrevice.detialsDocDestination = res.response;
   }
 
+  //cargar docuemntos pendientes de recepcionar
   async loadOrigin() {
 
+    //limpiar datos anterirores
     this.globalConvertSrevice.docsOrigin = [];
 
-
+    //Consumo del servicio
     let res: ResApiInterface = await this._receptionService.getPendindgDocs(
       this.user,
       this.token,
@@ -85,22 +92,24 @@ export class DetailsDestDocsComponent {
     );
 
 
+    //SI el servico falló mostrar error
     if (!res.status) {
       this.globalConvertSrevice.isLoading = false;
-
       this.showError(res);
-
       return;
 
     }
 
+    //Respuesta del servicoo
     this.globalConvertSrevice.docsOrigin = res.response;
   }
 
-
+  //Imptimit documento 
+  //TODO:Verificar erroes
   async printDoc() {
     this.globalConvertSrevice.isLoading = true;
 
+    //obtener datos que van a imprimirse
     let res: ResApiInterface = await this._receptionService.getDataPrint(
       this.token,
       this.user,
@@ -114,29 +123,32 @@ export class DetailsDestDocsComponent {
 
     );
 
-
+    // si esl servicio falló
     if (!res.status) {
       this.globalConvertSrevice.isLoading = false;
-
+      //mostrra error
       this.showError(res);
 
       return;
 
     }
 
+    //Respuesta del servicio
     let printData: PrintConvertInterface[] = res.response;
 
 
+    //si no se obtuvieron daros mostrar alerta
     if (printData.length == 0) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinDatosImprimir'));
       return;
     }
 
 
+    //encabexados
     let encabezado: PrintConvertInterface = printData[0];
 
 
-
+    //emporesa
     let empresa: Empresa = {
       direccion: encabezado.empresa_Direccion ?? "",
       nit: encabezado.empresa_Nit ?? "",
@@ -146,7 +158,7 @@ export class DetailsDestDocsComponent {
     }
 
 
-
+    //datos del documento
     let documento: DocumentoData = {
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: this._translate.instant('pos.factura.documento_generico'),
@@ -157,9 +169,10 @@ export class DetailsDestDocsComponent {
       noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
     }
 
-
+    //Fecha actual
     let currentDate: Date = new Date();
 
+    //Datos del cliente
     let cliente: Cliente = {
       nombre: encabezado?.documento_Nombre ?? "",
       direccion: encabezado?.documento_Direccion ?? "",
@@ -168,17 +181,19 @@ export class DetailsDestDocsComponent {
       fecha: currentDate,
     }
 
+    //monstos
     let cargo: number = 0;
     let descuento: number = 0;
     let subtotal: number = 0;
     let total: number = 0;
 
+    //transacciones
     let items: Item[] = [];
 
-
+    //Asiganr transacciones
     printData.forEach(detail => {
 
-
+      //evaluar tipo de transaccion
       if ((detail.cantidad ?? 0) == 0 && (detail.monto ?? 0) > 0) {
         //4 cargo
         cargo += detail.monto ?? 0;
@@ -190,18 +205,22 @@ export class DetailsDestDocsComponent {
         subtotal += (detail.monto ?? 0);
       }
 
+      //Agregar transaccion
       items.push(
         {
           descripcion: detail.des_Producto ?? "",
           cantidad: detail.cantidad ?? 0,
+          //Calcular preco untario, si la cantidad es 0 agregar el total de la transaccion
           unitario: this.currencyPipe.transform((detail.cantidad ?? 0) > 0 ? (detail.monto ?? 0) / (detail.cantidad ?? 0) : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
         }
       );
     });
 
+    //Calcular totales
     total += (subtotal + cargo) + descuento;
 
+    //Asiganar montos
     let montos: Montos = {
       subtotal: this.currencyPipe.transform(subtotal, ' ', 'symbol', '2.2-2')!,
       cargos: this.currencyPipe.transform(cargo, ' ', 'symbol', '2.2-2')!,
@@ -209,25 +228,29 @@ export class DetailsDestDocsComponent {
       total: this.currencyPipe.transform(total, ' ', 'symbol', '2.2-2')!,
       totalLetras: encabezado.monto_Letras!.toUpperCase(),
     }
-
-
+    
+    //Cuenta correntista ref (vendedor)
     let vendedor: string = encabezado.atendio ?? "";
 
 
+    
     let certificador: Certificador;
 
+    //Asignar mensaje al final del formato
     let mensajes: string[] = [
       //TODO: Mostrar frase
       // "**Sujeto a pagos trimestrales**",
       this._translate.instant('pos.factura.sin_devoluciones')
     ];
 
+    //Desarrollado por
     let poweredBy: PoweredBy = {
       nombre: "Desarrollo Moderno de Software S.A.",
       website: "www.demosoft.com.gt",
     }
 
 
+    //Ebojeto completo con los datos de impresion
     this.globalConvertSrevice.docPrint = {
       empresa: empresa,
       documento: documento,
@@ -242,6 +265,8 @@ export class DetailsDestDocsComponent {
       poweredBy: poweredBy,
     }
 
+
+    //TODO:Proceso de impresion debe testearse y optimizarse
     //Verificar que ya se haya configurado antes 
     if (!PreferencesService.port) {
 
@@ -389,9 +414,10 @@ export class DetailsDestDocsComponent {
 
   }
 
-
+  //Mostrar error
   async showError(res: ResApiInterface) {
 
+      //Diaogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -401,6 +427,7 @@ export class DetailsDestDocsComponent {
       }
     );
 
+    //Cancelar
     if (!verificador) return;
 
     let dateNow: Date = new Date(); //fecha del error
@@ -413,14 +440,13 @@ export class DetailsDestDocsComponent {
       url: res.url,
     }
 
+    //Guardar error
     PreferencesService.error = error;
 
+    //mostrar pantalla de error
     this.globalConvertSrevice.mostrarError(13);
 
     return;
   }
-
-
-
 
 }
