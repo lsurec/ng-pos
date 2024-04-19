@@ -32,16 +32,18 @@ export class DetalleComponent {
   desplegarCarDes: boolean = false;
   valueCargoDescuento: string = "";
 
-  user: string = PreferencesService.user;
-  token: string = PreferencesService.token;
-  empresa: number = PreferencesService.empresa.empresa;
-  estacion: number = PreferencesService.estacion.estacion_Trabajo;
-  documento: number = this.facturaService.tipoDocumento!;
+  user: string = PreferencesService.user; //Usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
+  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
+  documento: number = this.facturaService.tipoDocumento!; //Tipo docuemtno seleccioando (display)
 
-  searchText: string = "";
-  filtrosProductos: number = 1;
+  searchText: string = "";  //Texto para bsucar productos
+  filtrosProductos: number = 1; //filtro producto
 
-  tipoDesCar: number = 1;
+  tipoDesCar: number = 1; //tipo de cargo o descuento (monto o porcentaje)
+
+  //filtros disponibles para bsuqueda de productos
   filtrosBusqueda: FiltroInterface[] = [
     {
       id: 1,
@@ -53,6 +55,7 @@ export class DetalleComponent {
     },
   ];
 
+  //opciones para cargos y descuetnos
   tipos: FiltroInterface[] = [
     {
       id: 1,
@@ -66,6 +69,7 @@ export class DetalleComponent {
 
 
   constructor(
+    //intancias de los servicios
     private _dialog: MatDialog,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
@@ -76,16 +80,22 @@ export class DetalleComponent {
   ) { }
 
 
+  //editar transacciines que ay fueron agregadas
   async editTra(indexTra: number) {
 
 
+    //Limpiar bodegas previas
     this._productoService.bodegas = [];
+    //limpiar precios
     this._productoService.precios = [];
 
+    //Asiganar cantidad de la transaccion
     this._productoService.cantidad = this.facturaService.traInternas[indexTra].cantidad.toString();
-    let productTra = this.facturaService.traInternas[indexTra].producto;
-    let boddegaTra = this.facturaService.traInternas[indexTra].bodega;
-    let precioTra = this.facturaService.traInternas[indexTra].precio;
+
+
+    let productTra = this.facturaService.traInternas[indexTra].producto; //producto de la transaccion
+    let boddegaTra = this.facturaService.traInternas[indexTra].bodega; // bodega  de la transaccion
+    let precioTra = this.facturaService.traInternas[indexTra].precio; //tipo precio de la transaccion
 
     //buscar bodegas del produxto
     let resBodega = await this._productService.getBodegaProducto(
@@ -97,7 +107,7 @@ export class DetalleComponent {
       productTra.unidad_Medida,
     );
 
-
+    //Si bo se pudo obtener ls bodegas
     if (!resBodega.status) {
 
       this.facturaService.isLoading = false;
@@ -120,6 +130,7 @@ export class DetalleComponent {
 
     }
 
+    //bodegas encontradas
     this._productoService.bodegas = resBodega.response;
 
 
@@ -146,6 +157,7 @@ export class DetalleComponent {
       );
 
 
+      //Si no se pudo obtener precios
       if (!resPrecio.status) {
 
         this.facturaService.isLoading = false;
@@ -168,8 +180,11 @@ export class DetalleComponent {
 
       }
 
+      //Precios encontrados
       let precios: PrecioInterface[] = resPrecio.response;
 
+
+      //arammar nuevo objeo precio
       precios.forEach(element => {
         this._productoService.precios.push(
           {
@@ -193,6 +208,8 @@ export class DetalleComponent {
           productTra.unidad_Medida,
         );
 
+
+        //si no sepudo obtener factores de conversion
         if (!resfactor.status) {
 
           this.facturaService.isLoading = false;
@@ -215,9 +232,11 @@ export class DetalleComponent {
         }
 
 
+        //factores de conversion enonytrados
         let factores: FactorConversionInterface[] = resfactor.response;
 
 
+        //Armar objeto precios
         factores.forEach(element => {
           this._productoService.precios.push(
             {
@@ -233,8 +252,7 @@ export class DetalleComponent {
 
       }
 
-      //si no hay precos ni factores
-
+      //Si solo ahy un precio seleccioarlo
       if (this._productoService.precios.length == 1) {
 
         let precioU: UnitarioInterface = this._productoService.precios[0];
@@ -244,6 +262,7 @@ export class DetalleComponent {
         this._productoService.precioU = precioU.precioU;
         this._productoService.precioText = precioU.precioU.toString();
 
+        //si hay varios precios seleccionar uno por defeco segun campo orden
       } else if (this._productoService.precios.length > 1) {
         for (let i = 0; i < this._productoService.precios.length; i++) {
           const element = this._productoService.precios[i];
@@ -261,9 +280,11 @@ export class DetalleComponent {
 
     }
 
+    //filizar cargfa
     this.facturaService.isLoading = false;
 
 
+    //bsucar bodega de la transaccion
     let existBodega: number = -1;
 
     for (let i = 0; i < this._productoService.bodegas.length; i++) {
@@ -274,35 +295,42 @@ export class DetalleComponent {
       }
     }
 
+    //s i no se ecnotro la bodega crearla internamente y asiganrla
     if (existBodega == -1) {
       this._productoService.bodegas.push(boddegaTra!);
 
       this._productoService.bodega = this._productoService.bodegas[this._productoService.bodegas.length - 1];
 
     } else {
+      //asiganr bodega de la transaccon 
       this._productoService.bodega = this._productoService.bodegas[existBodega];
     }
 
 
+    //bsuacr p´roducto de la transaccion
     let existPrecio: number = -1;
 
+    //si no se encontro el procuto crearlo unetnamente
     if (existPrecio == -1) {
       this._productoService.precios.push(precioTra!);
 
       this._productoService.precio = this._productoService.precios[this._productoService.precios.length - 1];
 
     } else {
+      //asigar producto encontradp
       this._productoService.precio = this._productoService.precios[existPrecio];
     }
 
-
+    //abrir dialogo producto con lo datos cargados
     this._dialog.open(ProductoComponent, { data: productTra })
+
+    //enviar indice de la transaccion para poder editarla despues
     this._productoService.indexEdit = indexTra;
 
 
   }
 
-
+  //bsuqueda de productos
   async buscarProducto() {
 
     //validar que siempre hay nun texto para buscar
@@ -336,13 +364,10 @@ export class DetalleComponent {
     }
 
 
-
+    //si fallo el servioo mostrar eror
     if (!res!.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationsService.openDialogActions(
         {
@@ -361,9 +386,11 @@ export class DetalleComponent {
 
     }
 
+    //prodsuyctos encontrados
     let productos: ProductoInterface[] = res!.response;
 
 
+    //si no hay coincie¿dencias mostrar alerta
     if (productos.length == 0) {
       this.facturaService.isLoading = false;
 
@@ -382,7 +409,7 @@ export class DetalleComponent {
     this._productoService.precioU = 0;
     this._productoService.precioText = "0";
 
-
+    //si solo hay un producto seleccioanrlo por defecto
     if (productos.length == 1) {
 
       let product = productos[0];
@@ -397,7 +424,7 @@ export class DetalleComponent {
         product.unidad_Medida,
       );
 
-
+      //si fallo la busquea¿da de bodegas
       if (!resBodega.status) {
 
         this.facturaService.isLoading = false;
@@ -420,6 +447,7 @@ export class DetalleComponent {
 
       }
 
+      //bodegas encontradas
       this._productoService.bodegas = resBodega.response;
 
 
@@ -446,8 +474,10 @@ export class DetalleComponent {
         );
 
 
+        //si no fiue pocible obtener los precios mmostrar error 
         if (!resPrecio.status) {
 
+          //finalziuar proceso
           this.facturaService.isLoading = false;
 
 
@@ -468,6 +498,7 @@ export class DetalleComponent {
 
         }
 
+        //precios encontrados
         let precios: PrecioInterface[] = resPrecio.response;
 
         precios.forEach(element => {
@@ -493,6 +524,7 @@ export class DetalleComponent {
             product.unidad_Medida,
           );
 
+          //si no feue posible controrar los factores de conversion mostrar error
           if (!resfactor.status) {
 
             this.facturaService.isLoading = false;
@@ -514,10 +546,10 @@ export class DetalleComponent {
 
           }
 
-
+          //factores de convrsion encontradposa
           let factores: FactorConversionInterface[] = resfactor.response;
 
-
+          //nneyvo onbheoto precio interno
           factores.forEach(element => {
             this._productoService.precios.push(
               {
@@ -533,8 +565,7 @@ export class DetalleComponent {
 
         }
 
-        //si no hay precos ni factores
-
+        //si solo ahy precio seleccoanrlo por defectp
         if (this._productoService.precios.length == 1) {
 
           let precioU: UnitarioInterface = this._productoService.precios[0];
@@ -545,6 +576,7 @@ export class DetalleComponent {
           this._productoService.precioText = precioU.precioU.toString();
 
         } else if (this._productoService.precios.length > 1) {
+          //si ahy mas de un precio seleccionar uno por defecto segun campo orden
           for (let i = 0; i < this._productoService.precios.length; i++) {
             const element = this._productoService.precios[i];
             if (element.orden) {
@@ -561,9 +593,11 @@ export class DetalleComponent {
 
       }
 
+      //finalizar proceso
       this.facturaService.isLoading = false;
 
 
+      //mostrar dualogo de producto
       this._dialog.open(ProductoComponent, { data: productos[0] })
 
       this._productoService.indexEdit = -1;
@@ -572,13 +606,15 @@ export class DetalleComponent {
 
     }
 
+    //finalzir proceso
     this.facturaService.isLoading = false;
 
 
+    //abriri dialogo de prosuctospara seleccioanr uno
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
     productosDialog.afterClosed().subscribe(result => {
       if (result) {
-
+        //abrir gialofo de producto
         this._dialog.open(ProductoComponent, { data: result })
         this._productoService.indexEdit = -1;
 
@@ -590,6 +626,7 @@ export class DetalleComponent {
 
   }
 
+  //ver cargos y descuentos de una transccion
   verTansacciones(index: number) {
 
     if (this.facturaService.traInternas[index].operaciones.length == 0) {
@@ -599,15 +636,18 @@ export class DetalleComponent {
     this._dialog.open(CargoDescuentoComponent, { data: index })
   }
 
+  //Cambiar fdilto 
   onOptionChange(optionId: number) {
     this.filtrosProductos = optionId;
   }
 
+  //Cambiar ocpion para cargo y decuento
   onOptionCarDes(optionId: number) {
     this.tipoDesCar = optionId;
   }
 
 
+  //Convertir un numero en texto a un dato numerico valido
   convertirTextoANumero(texto: string): number | null {
     // Verificar si la cadena es un número
     const esNumero = /^\d+(\.\d+)?$/.test(texto);
@@ -622,7 +662,7 @@ export class DetalleComponent {
     }
   }
 
-
+  //Agregar cargo o descuebto
   cargoDescuento(operacion: number) {
 
     // operacion 1: cargo; 2: descuento
