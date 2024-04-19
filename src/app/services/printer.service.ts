@@ -6,6 +6,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { PreferencesService } from './preferences.service';
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalConvertService } from '../displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Injectable()
 export class PrinterService {
@@ -16,6 +17,7 @@ export class PrinterService {
     //inicializar http
     constructor(private _http: HttpClient,
         private _translate: TranslateService,
+        private _convertService: GlobalConvertService,
     ) {
     }
 
@@ -231,6 +233,24 @@ export class PrinterService {
         });
     }
 
+
+    private formatDate(dateOrigin: Date): string {
+
+        let date: Date = new Date(dateOrigin);
+
+
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        // Agregar ceros a la izquierda si es necesario
+        const dayString = day < 10 ? '0' + day : day.toString();
+        const monthString = month < 10 ? '0' + month : month.toString();
+
+        return `${dayString}/${monthString}/${year}`;
+    }
+
+
     async getReport(doc: DocPrintModel) {
 
         await this._generateBase64('/assets/empresa.png');
@@ -412,6 +432,15 @@ export class PrinterService {
                     },
                     layout: 'noBorders',
                 },
+
+                {
+                    margin: [0, 10, 0, 0],
+                    text: "FECHA ENTREGA: " + this.formatDate(this._convertService.docOriginSelect!.referencia_D_Fecha_Ini!), style: 'center'
+                },
+                { text: "FECHA RECOGER: " + this.formatDate(this._convertService.docOriginSelect!.referencia_D_Fecha_Fin!), style: 'center', },
+                { text: "FECHA INICIO: " + this.formatDate(this._convertService.docOriginSelect!.fecha_Ini!), style: 'center' },
+                { text: "FECHA FIN: " + this.formatDate(this._convertService.docOriginSelect!.fecha_Fin!), style: 'center', },
+
                 //TABLA PRODUCTOS
                 {
                     layout: 'headerLineOnly',
@@ -508,6 +537,20 @@ export class PrinterService {
                 },
 
                 ...pagos,
+
+                {
+                    text: "Contacto: ", style: 'normalText',
+                },
+                { text: this._convertService.docOriginSelect?.referencia_D_Observacion_2, style: 'normalText', },
+
+                { text: "Descripcion: ", style: 'normalText', },
+                { text: this._convertService.docOriginSelect?.referencia_D_Descripcion, style: 'normalText', },
+
+                { text: "Direccion entrega: ", style: 'normalText', },
+                { text: this._convertService.docOriginSelect?.referencia_D_Observacion_3, style: 'normalText', },
+
+                { text: "Observacion: ", style: 'normalText', },
+                { text: this._convertService.docOriginSelect?.referencia_D_Observacion, style: 'normalText', },
 
                 //TODO:Agregar informacion del certificador
 
@@ -649,7 +692,7 @@ export class PrinterService {
         });
 
 
-      
+
         let divider = {
             layout: 'headerLineOnly',
             table: {
@@ -1275,5 +1318,5 @@ export class PrinterService {
         return docDefinition;
     }
 
-    
+
 }

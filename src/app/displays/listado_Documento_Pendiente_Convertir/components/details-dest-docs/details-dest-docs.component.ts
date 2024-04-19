@@ -266,6 +266,13 @@ export class DetailsDestDocsComponent {
     }
 
 
+    const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
+
+    pdfMake.createPdf(docDefinition).open();
+
+    
+    
+
     //TODO:Proceso de impresion debe testearse y optimizarse
     //Verificar que ya se haya configurado antes 
     if (!PreferencesService.port) {
