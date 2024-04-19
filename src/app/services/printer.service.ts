@@ -432,6 +432,10 @@ export class PrinterService {
                     },
                     layout: 'noBorders',
                 },
+                {
+                    margin: [0, 10, 0, 0],
+                    text: "TIPO EVENTO: " + this._convertService.docOriginSelect?.referencia_D_Des_Tipo_Referencia?.toUpperCase(), style: 'center'
+                },
 
                 {
                     margin: [0, 10, 0, 0],
