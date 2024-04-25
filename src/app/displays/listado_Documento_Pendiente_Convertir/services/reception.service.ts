@@ -4,6 +4,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ParamConvertDocInterface } from '../interfaces/param-convert-doc.interface';
+import { UpdateDocInterface } from '../interfaces/update-doc.interface';
 
 @Injectable()
 export class ReceptionService {
@@ -12,6 +13,93 @@ export class ReceptionService {
 
     //inicializar http
     constructor(private _http: HttpClient) {
+    }
+
+
+    //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
+    private _udateDocument(
+        token: string,
+        doc: UpdateDocInterface,
+    ) {
+
+        let paramsStr = JSON.stringify(doc); //JSON to String
+
+
+        //confgurar headers
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "Content-Type": "application/json",
+            }
+        )
+
+        //consumo de api
+        return this._http.post(`${this._urlBase}Recepcion/modify/doc`, paramsStr, { headers: headers, observe: 'response' });
+
+
+    }
+
+    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
+    updateDocument(
+        token: string,
+        doc: UpdateDocInterface,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._udateDocument(
+                token,
+                doc,
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        })
     }
 
 
