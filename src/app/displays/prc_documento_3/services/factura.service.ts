@@ -95,6 +95,11 @@ export class FacturaService {
     horaRefIni!: string;
     horaRefFin!: string;
 
+
+    //observacuion1, observacion del documento
+  observacion = ""; //input para agreagar una observacion
+
+
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
@@ -135,6 +140,7 @@ export class FacturaService {
         this.refDescripcion = undefined;
         this.refDireccionEntrega = undefined;
         this.refObservacion = undefined;
+        this.observacion = "";
 
     }
 

@@ -199,6 +199,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDescripcion = undefined;
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
+    this.facturaService.observacion = "";
     this.setDateNow();
 
 
@@ -263,7 +264,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.fechaFin = new Date(dateNow);
 
 
-    
+
     let modifyFechaFin: Date = new Date(dateNow);
 
     this.facturaService.fechaFin.setTime(modifyFechaFin.getTime() + (30 * 60000));
@@ -271,7 +272,7 @@ export class FacturaComponent implements OnInit {
 
     // Inicializar selectedDate con la fecha de hoy
     this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
-    this.facturaService.inputFechaRefFin =UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
     this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
@@ -282,10 +283,10 @@ export class FacturaComponent implements OnInit {
 
 
     //Copiar valores
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService. fechaRefIni);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService. fechaRefFin);
-    this.facturaService.copyFechaIni = new Date(this.facturaService. fechaIni);
-    this.facturaService.copyFechaFin = new Date(this.facturaService. fechaFin);
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin);
 
 
 
@@ -644,6 +645,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDescripcion = docOrigin.referencia_D_Descripcion ?? undefined;
     this.facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3 ?? undefined;
     this.facturaService.refObservacion = docOrigin.referencia_D_Observacion ?? undefined;
+    this.facturaService.observacion  = docOrigin.observacion_1;
 
 
 
@@ -906,25 +908,22 @@ export class FacturaComponent implements OnInit {
 
 
   async modifyDoc() {
-    //TODO:Translate
-    let verificador: boolean = await this._notificationService.openDialogActions(
-      {
-        title: "¿Estás seguro?",
-        description: "Se aplicaran los cambios al documento.",
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-        falso: this._translate.instant('pos.botones.cancelar'),
-      }
-    );
-
-    if (!verificador) return;
-
-
     
 
-    //Actualizar documento
-  //   let  docModify: UpdateDocInterface = {
-  //     consecutivoInterno : this..
-  //   }
+    //Navegar a resumen de documento
+
+
+    //ir a resumen
+    this.vistaResumen = true;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaHistorial = false;
+    this.vistaInforme = false;
+
+
+  
+    // let resUpdateEncabezados:ResApiInterface = await _rec
   }
 
 

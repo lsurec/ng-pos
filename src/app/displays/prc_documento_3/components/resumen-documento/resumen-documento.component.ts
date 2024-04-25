@@ -17,6 +17,8 @@ import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.inte
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -35,7 +37,6 @@ export class ResumenDocumentoComponent implements OnInit {
   verError: boolean = false; //ocultar y mostrar pantalla de error
 
   volver: number = 2;//volver a resumen desde configurar impresora
-  observacion = ""; //input para agreagar una observacion
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
@@ -59,6 +60,8 @@ export class ResumenDocumentoComponent implements OnInit {
     private _translate: TranslateService,
     private currencyPipe: CurrencyPipe,
     private _printService: PrinterService,
+    public globalConvertService: GlobalConvertService,
+
 
   ) {
 
@@ -107,6 +110,14 @@ export class ResumenDocumentoComponent implements OnInit {
 
   //Confirmar documento
   async sendDoc() {
+
+    //validar si es editar doc
+    if (this.globalConvertService.editDoc) {
+      this.modifyDoc();
+      return;
+    }
+
+
     //Si se permite fel entrar al proceso
     if (this.facturaService.valueParametro(349)) {
       //alerta FEL no disponible
@@ -117,6 +128,45 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
+
+
+  }
+
+  async modifyDoc() {
+    //TODO:Translate
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: "¿Estás seguro?",
+        description: "Se aplicaran los cambios al documento.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    // Actualizar documento (ewncabezados)
+    let docModify: UpdateDocInterface = {
+      consecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+      cuentaCorrentista: this.facturaService.cuenta!.cuenta_Correntista,
+      cuentaCuenta: this.facturaService.cuenta!.cuenta_Cta,
+      documentoDireccion: this.facturaService.cuenta!.factura_Direccion,
+      documentoNit: this.facturaService.cuenta!.factura_NIT,
+      documentoNombre: this.facturaService.cuenta!.factura_Nombre,
+      empresa: this.globalConvertService.docOriginSelect!.empresa,
+      estacion: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+      fechaDocumento: this.globalConvertService.docOriginSelect!.fecha_Documento,
+      fechaFin: this.facturaService.fechaFin!,//TODO: Verificar fdiferencia horaria
+      fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
+      fechaIni: this.facturaService.fechaIni!, //TODO: Verificar fdiferencia horaria
+      localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+      mUser: this.user,
+      observacion1: this.facturaService.observacion, //asignar observacion anteriror 
+      serie: this.globalConvertService.docOriginSelect!.serie_Documento,
+      tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
+      user: this.globalConvertService.docOriginSelect!.usuario,
+
+    }
 
 
   }
@@ -370,7 +420,7 @@ export class ResumenDocumentoComponent implements OnInit {
       pagos: pagosP,
       vendedor: vendedor,
       certificador: certificador!,
-      observacion: this.observacion,
+      observacion: this.facturaService.observacion,
       mensajes: mensajes,
       poweredBy: poweredBy,
     }
@@ -611,7 +661,7 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
-              Tra_Monto_Dias:null,
+              Tra_Monto_Dias: null,
             }
           );
 
@@ -638,7 +688,7 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
-              Tra_Monto_Dias:null,
+              Tra_Monto_Dias: null,
 
             }
           );
@@ -776,7 +826,7 @@ export class ResumenDocumentoComponent implements OnInit {
       Doc_Empresa: this.empresa,
       Doc_Estacion_Trabajo: this.estacion,
       Doc_UserName: this.user,
-      Doc_Observacion_1: this.observacion,
+      Doc_Observacion_1: this.facturaService.observacion,
       Doc_Tipo_Pago: 1, //TODO:preguntar
       Doc_Elemento_Asignado: 1, //TODO:Preguntar
       Doc_Transaccion: transacciones,

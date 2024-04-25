@@ -14,10 +14,7 @@ export interface UpdateDocInterface {
     documentoDireccion: string;
     observacion1:       string;
     fechaDocumento:     Date;
-    observacion2:       string;
-    estadoDocumento:    number;
     fechaIni:           Date;
     fechaFin:           Date;
-    observacion3:       string;
     consecutivoInterno: number;
 }
