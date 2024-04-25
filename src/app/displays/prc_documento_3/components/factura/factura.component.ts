@@ -26,6 +26,7 @@ import { BodegaProductoInterface } from '../../interfaces/bodega-produto.interfa
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
 
 @Component({
   selector: 'app-factura',
@@ -916,6 +917,14 @@ export class FacturaComponent implements OnInit {
     );
 
     if (!verificador) return;
+
+
+    
+
+    //Actualizar documento
+  //   let  docModify: UpdateDocInterface = {
+  //     consecutivoInterno : this..
+  //   }
   }
 
 

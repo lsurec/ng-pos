@@ -554,7 +554,9 @@ export class ReceptionService {
                 fechaReg,
             ).subscribe(
                 //si esta correcto
+                
                 res => {
+                    console.log(res);
                     let response: ResponseInterface = <ResponseInterface>res.body;
 
                     let resApi: ResApiInterface = {
@@ -721,6 +723,8 @@ export class ReceptionService {
             ).subscribe(
                 //si esta correcto
                 res => {
+                    console.log(res);
+
                     let response: ResponseInterface = <ResponseInterface>res.body;
 
                     let resApi: ResApiInterface = {

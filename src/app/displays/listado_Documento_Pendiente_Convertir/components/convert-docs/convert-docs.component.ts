@@ -59,7 +59,7 @@ export class ConvertDocsComponent {
     this._facturaService.clearData();
 
     //Asignar nuevo tipo de documento y descripcion
-    this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Decripcion;
+    this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Descripcion;
     this._facturaService.tipoDocumento = this.globalConvertSrevice.docOriginSelect!.tipo_Documento;
     
     //Show pos screen
@@ -104,7 +104,7 @@ export class ConvertDocsComponent {
       let resActualizar = await this._receptionService.postActualizar(
         this.user,
         this.token,
-        tra.detalle.consecutivo_Interno,
+        tra.detalle.relacion_Consecutivo_Interno,
         tra.disponibleMod,
       );
 
@@ -156,6 +156,8 @@ export class ConvertDocsComponent {
     await this.loadDetails();
 
     //Mostrar mantalla detalles documento destino
+
+    //TODO: actualizar docuemmtos origen
     this.globalConvertSrevice.mostrarDetalleDocConversion()
 
     //finalizar carga
