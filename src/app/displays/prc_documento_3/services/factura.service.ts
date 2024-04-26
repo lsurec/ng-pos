@@ -99,6 +99,8 @@ export class FacturaService {
     //observacuion1, observacion del documento
   observacion = ""; //input para agreagar una observacion
 
+    transaccionesPorEliminar:TraInternaInterface [] = [];
+
 
     constructor(
         //instancias de los servicios utilizados

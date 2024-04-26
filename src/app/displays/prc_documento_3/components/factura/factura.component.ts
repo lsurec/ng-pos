@@ -839,6 +839,8 @@ export class FacturaComponent implements OnInit {
       this.facturaService.addTransaction(
         {
           //TODO:Agregar montos por dia
+          consecutivo:tra.detalle.transaccion_Consecutivo_Interno,
+          estadoInterno:0,
           precioCantidad: precioSelect.precioU * tra.detalle.disponible,
           precioDia: precioDias,
           isChecked: false,
@@ -856,52 +858,13 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    this.facturaService.isLoading = false;
 
-
-    return;
-
-    if (this.facturaService.series.length == 1 && serieOrigen == this.facturaService.serie!.serie_Documento) {
-
-      //TODO:Cargar demas datos
-
-
-
-      //buscar 
-
-
-
-      this.facturaService.isLoading = false;
-      return;
-    }
-
-    let existSerie: number = -1;
-
-    for (let i = 0; i < this.facturaService.series.length; i++) {
-      const element = this.facturaService.series[i];
-
-      if (element.serie_Documento == serieOrigen) {
-        existSerie = i;
-        break;
-      }
-
-    }
-
-
-    if (existSerie == -1) {
-      this.facturaService.isLoading = false;
-      //TODO:Bloquear pantalla porque la serie no existe
-
-      return;
-    }
-
-    //TODO:Seleccionar serie y cargar datos
-
-
-
-
+    this.facturaService.transaccionesPorEliminar = []; //limpiar transacciones pendientes
 
     this.facturaService.isLoading = false;
+
+
+   
 
 
   }

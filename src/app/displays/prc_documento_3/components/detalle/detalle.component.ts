@@ -727,6 +727,8 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
+            consecutivo:0,
+            estadoInterno:0,
             precioCantidad: null,
             precioDia: null, //TODO:Usar precio dia
             isChecked: false,
