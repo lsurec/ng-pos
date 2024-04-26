@@ -19,4 +19,5 @@ export interface UpdateDocInterface {
     fechaIni: Date | null | undefined;
     fechaFin: Date | null | undefined;
     idDocumento: string;
+    referencia:number | null | undefined, 
 }

@@ -182,7 +182,7 @@ export class ResumenDocumentoComponent implements OnInit {
       tipoDocumento:this.globalConvertService.docOriginSelect!.tipo_Documento,
       user:this.globalConvertService.docOriginSelect!.usuario,
       idDocumento:this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
-
+      referencia: this.globalConvertService.docOriginSelect!.referencia,
     }
 
     this.isLoading = true;
@@ -210,47 +210,49 @@ export class ResumenDocumentoComponent implements OnInit {
       return;
     }
 
+
+
+    let refModify:UpdateRefInterface = {
+      descripcion: this.facturaService.refDescripcion,
+      empresa: this.globalConvertService.docOriginSelect!.empresa,
+      fechaFin: this.facturaService.fechaRefFin!,
+      fechaIni: this.facturaService.fechaRefIni!,
+      mUser:this.user,
+      observacion:this.facturaService.refObservacion,
+      observacion2:this.facturaService.refContacto,
+      observacion3:this.facturaService.refDireccionEntrega,
+      referencia:this.globalConvertService.docOriginSelect!.referencia!,
+      referenciaID:'92144684365752' ,//TODO:Preguntar
+      tipoReferencia:this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
+
+    }
+
+    let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+      this.token,
+      refModify,
+    );
+
+    if (!resRefUpdate.status) {
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resRefUpdate);
+
+      return;
+    }
+
+
     //TODO:continuar  con la logica de actualizar detalle
-
-
-    // let refModify:UpdateRefInterface = {
-    //   descripcion: this.facturaService.refDescripcion,
-    //   empresa: this.globalConvertService.docOriginSelect!.empresa,
-    //   fechaFin: this.facturaService.fechaRefFin!,
-    //   fechaIni: this.facturaService.fechaRefIni!,
-    //   mUser:this.user,
-    //   observacion:this.facturaService.refObservacion,
-    //   observacion2:this.facturaService.refContacto,
-    //   observacion3:this.facturaService.refDireccionEntrega,
-    //   referencia:this.globalConvertService.docOriginSelect!.referencia!,
-    //   referenciaID:'92144684365752' ,//TODO:Preguntar
-    //   tipoReferencia:this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
-
-    // }
-
-    // let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
-    //   this.token,
-    //   refModify,
-    // );
-
-    // if (!resRefUpdate.status) {
-    //   this.isLoading = false;
-
-    //   let verificador = await this._notificationService.openDialogActions(
-    //     {
-    //       title: this._translate.instant('pos.alertas.salioMal'),
-    //       description: this._translate.instant('pos.alertas.error'),
-    //       verdadero: this._translate.instant('pos.botones.informe'),
-    //       falso: this._translate.instant('pos.botones.aceptar'),
-    //     }
-    //   );
-
-    //   if (!verificador) return;
-
-    //   this.mostrarError(resRefUpdate);
-
-    //   return;
-    // }
 
 
     this.isLoading = false;
