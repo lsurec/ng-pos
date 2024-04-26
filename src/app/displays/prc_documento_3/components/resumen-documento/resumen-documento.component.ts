@@ -20,6 +20,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
+import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-ref-interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -157,29 +158,30 @@ export class ResumenDocumentoComponent implements OnInit {
     // Crea un objeto Date con el formato esperado ('YYYY-MM-DD')
     const fechaFormateada = new Date(`${anio}-${mes}-${dia}`);
 
-    console.log(this.globalConvertService.docOriginSelect!.fecha_Documento);
 
 
     // Actualizar documento (ewncabezados)
     let docModify: UpdateDocInterface = {
       consecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
-      cuentaCorrentista: this.facturaService.cuenta!.cuenta_Correntista,
-      cuentaCuenta: this.facturaService.cuenta!.cuenta_Cta,
-      documentoDireccion: this.facturaService.cuenta!.factura_Direccion,
-      documentoNit: this.facturaService.cuenta!.factura_NIT,
-      documentoNombre: this.facturaService.cuenta!.factura_Nombre,
-      empresa: this.globalConvertService.docOriginSelect!.empresa,
-      estacion: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
-      fechaDocumento: fechaFormateada,
-      fechaFin: this.facturaService.fechaFin!,//TODO: Verificar fdiferencia horaria
-      fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
-      fechaIni: this.facturaService.fechaIni!, //TODO: Verificar fdiferencia horaria
-      localizacion: this.globalConvertService.docOriginSelect!.localizacion,
-      mUser: this.user,
-      observacion1: this.facturaService.observacion, //asignar observacion anteriror 
-      serie: this.globalConvertService.docOriginSelect!.serie_Documento,
-      tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
-      user: this.globalConvertService.docOriginSelect!.usuario,
+      cuentaCorrentista:this.facturaService.cuenta!.cuenta_Correntista,
+      cuentaCorrentistaRef:this.facturaService.vendedor?.cuenta_Correntista,
+      cuentaCuenta:this.facturaService.cuenta!.cuenta_Cta,
+      documentoDireccion:this.facturaService.cuenta!.factura_Direccion,
+      documentoNit:this.facturaService.cuenta!.factura_NIT,
+      documentoNombre:this.facturaService.cuenta!.factura_Nombre,
+      empresa:this.globalConvertService.docOriginSelect!.empresa,
+      estacionTrabajo:this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+      fechaDocumento:fechaFormateada,
+      fechaFin:this.facturaService.fechaFin,
+      fechaHora:this.globalConvertService.docOriginSelect!.fecha_Hora,
+      fechaIni:this.facturaService.fechaIni,
+      localizacion:this.globalConvertService.docOriginSelect!.localizacion,
+      mUser:this.user,
+      observacion:this.facturaService.observacion,
+      serieDocumento:this.globalConvertService.docOriginSelect!.serie_Documento,
+      tipoDocumento:this.globalConvertService.docOriginSelect!.tipo_Documento,
+      user:this.globalConvertService.docOriginSelect!.usuario,
+      idDocumento:this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
 
     }
 
@@ -209,6 +211,46 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     //TODO:continuar  con la logica de actualizar detalle
+
+
+    // let refModify:UpdateRefInterface = {
+    //   descripcion: this.facturaService.refDescripcion,
+    //   empresa: this.globalConvertService.docOriginSelect!.empresa,
+    //   fechaFin: this.facturaService.fechaRefFin!,
+    //   fechaIni: this.facturaService.fechaRefIni!,
+    //   mUser:this.user,
+    //   observacion:this.facturaService.refObservacion,
+    //   observacion2:this.facturaService.refContacto,
+    //   observacion3:this.facturaService.refDireccionEntrega,
+    //   referencia:this.globalConvertService.docOriginSelect!.referencia!,
+    //   referenciaID:'92144684365752' ,//TODO:Preguntar
+    //   tipoReferencia:this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
+
+    // }
+
+    // let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+    //   this.token,
+    //   refModify,
+    // );
+
+    // if (!resRefUpdate.status) {
+    //   this.isLoading = false;
+
+    //   let verificador = await this._notificationService.openDialogActions(
+    //     {
+    //       title: this._translate.instant('pos.alertas.salioMal'),
+    //       description: this._translate.instant('pos.alertas.error'),
+    //       verdadero: this._translate.instant('pos.botones.informe'),
+    //       falso: this._translate.instant('pos.botones.aceptar'),
+    //     }
+    //   );
+
+    //   if (!verificador) return;
+
+    //   this.mostrarError(resRefUpdate);
+
+    //   return;
+    // }
 
 
     this.isLoading = false;
