@@ -19,6 +19,7 @@ import { PrinterService } from 'src/app/services/printer.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
+import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -28,6 +29,7 @@ import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente
     DocumentService,
     CurrencyPipe,
     PrinterService,
+    ReceptionService,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -61,6 +63,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private _printService: PrinterService,
     public globalConvertService: GlobalConvertService,
+    private _recpetionService: ReceptionService,
 
 
   ) {
@@ -145,6 +148,18 @@ export class ResumenDocumentoComponent implements OnInit {
 
     if (!verificador) return;
 
+
+    const partesFecha = this.globalConvertService.docOriginSelect!.fecha_Documento.toString().split('/');
+    const dia = partesFecha[0];
+    const mes = partesFecha[1];
+    const anio = partesFecha[2];
+
+    // Crea un objeto Date con el formato esperado ('YYYY-MM-DD')
+    const fechaFormateada = new Date(`${anio}-${mes}-${dia}`);
+
+    console.log(this.globalConvertService.docOriginSelect!.fecha_Documento);
+
+
     // Actualizar documento (ewncabezados)
     let docModify: UpdateDocInterface = {
       consecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
@@ -155,7 +170,7 @@ export class ResumenDocumentoComponent implements OnInit {
       documentoNombre: this.facturaService.cuenta!.factura_Nombre,
       empresa: this.globalConvertService.docOriginSelect!.empresa,
       estacion: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
-      fechaDocumento: this.globalConvertService.docOriginSelect!.fecha_Documento,
+      fechaDocumento: fechaFormateada,
       fechaFin: this.facturaService.fechaFin!,//TODO: Verificar fdiferencia horaria
       fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
       fechaIni: this.facturaService.fechaIni!, //TODO: Verificar fdiferencia horaria
@@ -167,6 +182,37 @@ export class ResumenDocumentoComponent implements OnInit {
       user: this.globalConvertService.docOriginSelect!.usuario,
 
     }
+
+    this.isLoading = true;
+    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+      this.token,
+      docModify,
+    );
+
+    if (!resUpdateEncabezado.status) {
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resUpdateEncabezado);
+
+      return;
+    }
+
+    //TODO:continuar  con la logica de actualizar detalle
+
+
+    this.isLoading = false;
+
 
 
   }
