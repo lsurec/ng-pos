@@ -17,6 +17,7 @@ import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 import { EventService } from 'src/app/services/event.service';
+import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 
 @Component({
   selector: 'app-detalle',
@@ -77,6 +78,7 @@ export class DetalleComponent {
     public facturaService: FacturaService,
     private _productoService: ProductoService,
     private _eventService: EventService,
+    private _globalConvertService:GlobalConvertService,
   ) { }
 
 
@@ -778,6 +780,18 @@ export class DetalleComponent {
 
     if (!verificador) return;
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
+
+    //guadar tr5ansaccione que se van a eliminar 
+    if(this._globalConvertService.editDoc){
+      this.facturaService.traInternas.filter((transactions) => transactions.isChecked).forEach(element => {
+        
+        if(element.consecutivo != 0){
+          this.facturaService.transaccionesPorEliminar.push(element);
+        }
+      });
+    }
+
+
     this.facturaService.traInternas = this.facturaService.traInternas.filter((transactions) => !transactions.isChecked);
 
     this.facturaService.calculateTotales();

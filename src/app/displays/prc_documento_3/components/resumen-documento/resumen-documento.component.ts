@@ -21,6 +21,7 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
 import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
 import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-ref-interface';
+import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -163,25 +164,25 @@ export class ResumenDocumentoComponent implements OnInit {
     // Actualizar documento (ewncabezados)
     let docModify: UpdateDocInterface = {
       consecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
-      cuentaCorrentista:this.facturaService.cuenta!.cuenta_Correntista,
-      cuentaCorrentistaRef:this.facturaService.vendedor?.cuenta_Correntista,
-      cuentaCuenta:this.facturaService.cuenta!.cuenta_Cta,
-      documentoDireccion:this.facturaService.cuenta!.factura_Direccion,
-      documentoNit:this.facturaService.cuenta!.factura_NIT,
-      documentoNombre:this.facturaService.cuenta!.factura_Nombre,
-      empresa:this.globalConvertService.docOriginSelect!.empresa,
-      estacionTrabajo:this.globalConvertService.docOriginSelect!.estacion_Trabajo,
-      fechaDocumento:fechaFormateada,
-      fechaFin:this.facturaService.fechaFin,
-      fechaHora:this.globalConvertService.docOriginSelect!.fecha_Hora,
-      fechaIni:this.facturaService.fechaIni,
-      localizacion:this.globalConvertService.docOriginSelect!.localizacion,
-      mUser:this.user,
-      observacion:this.facturaService.observacion,
-      serieDocumento:this.globalConvertService.docOriginSelect!.serie_Documento,
-      tipoDocumento:this.globalConvertService.docOriginSelect!.tipo_Documento,
-      user:this.globalConvertService.docOriginSelect!.usuario,
-      idDocumento:this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
+      cuentaCorrentista: this.facturaService.cuenta!.cuenta_Correntista,
+      cuentaCorrentistaRef: this.facturaService.vendedor?.cuenta_Correntista,
+      cuentaCuenta: this.facturaService.cuenta!.cuenta_Cta,
+      documentoDireccion: this.facturaService.cuenta!.factura_Direccion,
+      documentoNit: this.facturaService.cuenta!.factura_NIT,
+      documentoNombre: this.facturaService.cuenta!.factura_Nombre,
+      empresa: this.globalConvertService.docOriginSelect!.empresa,
+      estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+      fechaDocumento: fechaFormateada,
+      fechaFin: this.facturaService.fechaFin,
+      fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
+      fechaIni: this.facturaService.fechaIni,
+      localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+      mUser: this.user,
+      observacion: this.facturaService.observacion,
+      serieDocumento: this.globalConvertService.docOriginSelect!.serie_Documento,
+      tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
+      user: this.globalConvertService.docOriginSelect!.usuario,
+      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
       referencia: this.globalConvertService.docOriginSelect!.referencia,
     }
 
@@ -212,18 +213,18 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
 
-    let refModify:UpdateRefInterface = {
+    let refModify: UpdateRefInterface = {
       descripcion: this.facturaService.refDescripcion,
       empresa: this.globalConvertService.docOriginSelect!.empresa,
       fechaFin: this.facturaService.fechaRefFin!,
       fechaIni: this.facturaService.fechaRefIni!,
-      mUser:this.user,
-      observacion:this.facturaService.refObservacion,
-      observacion2:this.facturaService.refContacto,
-      observacion3:this.facturaService.refDireccionEntrega,
-      referencia:this.globalConvertService.docOriginSelect!.referencia!,
-      referenciaID:'92144684365752' ,//TODO:Preguntar
-      tipoReferencia:this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
+      mUser: this.user,
+      observacion: this.facturaService.refObservacion,
+      observacion2: this.facturaService.refContacto,
+      observacion3: this.facturaService.refDireccionEntrega,
+      referencia: this.globalConvertService.docOriginSelect!.referencia!,
+      referenciaID: '92144684365752',//TODO:Preguntar
+      tipoReferencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
 
     }
 
@@ -254,6 +255,216 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //TODO:continuar  con la logica de actualizar detalle
 
+    //eliminar transacciones
+    for (const eliminar of this.facturaService.transaccionesPorEliminar) {
+
+
+      let transactionEliminar: NewTransactionInterface = {
+        bodega: eliminar.bodega!.bodega,
+        cantidad: eliminar.cantidad!,
+        documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+        empresa: this.globalConvertService.docOriginSelect!.empresa,
+        estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+        localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+        moneda: eliminar.precio!.moneda,
+        monto: eliminar.total,
+        montoMoneda: eliminar.total / this.tipoCambio,
+        producto: eliminar.producto.producto,
+        tipoCambio: this.tipoCambio,
+        tipoPrecio: eliminar.precio!.id,
+        tipoTransaccion: this.facturaService.resolveTipoTransaccion(eliminar.producto.tipo_Producto),
+        transaccionConsecutivoInterno: eliminar.consecutivo,
+        unidadMedida: eliminar.producto.unidad_Medida,
+        usuario: this.user,
+      }
+
+
+      let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+        this.token,
+        transactionEliminar,
+      );
+
+
+      if (!resTransDelete.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resTransDelete);
+
+        return;
+
+      }
+
+
+
+    }
+
+    //lipiar lista de eliminados
+    this.facturaService.transaccionesPorEliminar = [];
+
+
+    //Actualizar transacciones
+    for (const actualizar of this.facturaService.traInternas) {
+
+      if (actualizar.estadoInterno == 3) {
+
+        ///Anular y actualizar
+        let transactionActualizar: NewTransactionInterface = {
+          bodega: actualizar.bodega!.bodega,
+          cantidad: actualizar.cantidad!,
+          documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+          empresa: this.globalConvertService.docOriginSelect!.empresa,
+          estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+          localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+          moneda: actualizar.precio!.moneda,
+          monto: actualizar.total,
+          montoMoneda: actualizar.total / this.tipoCambio,
+          producto: actualizar.producto.producto,
+          tipoCambio: this.tipoCambio,
+          tipoPrecio: actualizar.precio!.id,
+          tipoTransaccion: this.facturaService.resolveTipoTransaccion(actualizar.producto.tipo_Producto),
+          transaccionConsecutivoInterno: actualizar.consecutivo,
+          unidadMedida: actualizar.producto.unidad_Medida,
+          usuario: this.user,
+        }
+
+
+        let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+          this.token,
+          transactionActualizar,
+        );
+
+
+        if (!resTransDelete.status) {
+
+          this.isLoading = false;
+
+          let verificador = await this._notificationService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.mostrarError(resTransDelete);
+
+          return;
+
+        }
+
+
+
+
+        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+          this.token,
+          transactionActualizar,
+        );
+
+
+        if (!resActualizarTransaccion.status) {
+
+          this.isLoading = false;
+
+          let verificador = await this._notificationService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.mostrarError(resActualizarTransaccion);
+
+          return;
+
+        }
+
+
+        //TODO:asiganar nuevo consecutivo interno y nuevo estado interno
+
+
+
+      }
+    }
+
+
+    //insertar tranasacciones
+    for (const nueva of this.facturaService.traInternas) {
+
+      if (nueva.estadoInterno == 1) {
+        ///Nueva transaccion
+        let transactionNueva: NewTransactionInterface = {
+          bodega: nueva.bodega!.bodega,
+          cantidad: nueva.cantidad!,
+          documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+          empresa: this.globalConvertService.docOriginSelect!.empresa,
+          estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+          localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+          moneda: nueva.precio!.moneda,
+          monto: nueva.total,
+          montoMoneda: nueva.total / this.tipoCambio,
+          producto: nueva.producto.producto,
+          tipoCambio: this.tipoCambio,
+          tipoPrecio: nueva.precio!.id,
+          tipoTransaccion: this.facturaService.resolveTipoTransaccion(nueva.producto.tipo_Producto),
+          transaccionConsecutivoInterno: nueva.consecutivo,
+          unidadMedida: nueva.producto.unidad_Medida,
+          usuario: this.user,
+        }
+
+        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+          this.token,
+          transactionNueva,
+        );
+
+
+        if (!resActualizarTransaccion.status) {
+
+          this.isLoading = false;
+
+          let verificador = await this._notificationService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.mostrarError(resActualizarTransaccion);
+
+          return;
+
+        }
+
+
+        //TODO:asiganar nuevo consecutivo interno y nuevo estado interno
+
+
+
+      }
+
+    }
 
     this.isLoading = false;
 
