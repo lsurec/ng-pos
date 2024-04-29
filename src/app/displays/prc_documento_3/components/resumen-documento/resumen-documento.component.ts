@@ -214,14 +214,14 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     let refModify: UpdateRefInterface = {
-      descripcion: this.facturaService.refDescripcion,
+      descripcion: this.facturaService.refDescripcion ?? "",
       empresa: this.globalConvertService.docOriginSelect!.empresa,
       fechaFin: this.facturaService.fechaRefFin!,
       fechaIni: this.facturaService.fechaRefIni!,
       mUser: this.user,
-      observacion: this.facturaService.refObservacion,
-      observacion2: this.facturaService.refContacto,
-      observacion3: this.facturaService.refDireccionEntrega,
+      observacion: this.facturaService.refObservacion ?? "",
+      observacion2: this.facturaService.refContacto ?? "",
+      observacion3: this.facturaService.refDireccionEntrega ?? "",
       referencia: this.globalConvertService.docOriginSelect!.referencia!,
       referenciaID: '92144684365752',//TODO:Preguntar
       tipoReferencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
@@ -314,6 +314,7 @@ export class ResumenDocumentoComponent implements OnInit {
     this.facturaService.transaccionesPorEliminar = [];
 
 
+    let indexUpdate:number = 0;
     //Actualizar transacciones
     for (const actualizar of this.facturaService.traInternas) {
 
@@ -398,14 +399,13 @@ export class ResumenDocumentoComponent implements OnInit {
         }
 
 
-        //TODO:asiganar nuevo consecutivo interno y nuevo estado interno
-
-
-
+        this.facturaService.traInternas[indexUpdate].consecutivo = resActualizarTransaccion.response;
+      indexUpdate++;
       }
     }
 
 
+    let indexInsert:number= 0;
     //insertar tranasacciones
     for (const nueva of this.facturaService.traInternas) {
 
@@ -458,9 +458,9 @@ export class ResumenDocumentoComponent implements OnInit {
         }
 
 
-        //TODO:asiganar nuevo consecutivo interno y nuevo estado interno
 
-
+        this.facturaService.traInternas[indexInsert].consecutivo = resActualizarTransaccion.response;
+        indexInsert++;
 
       }
 

@@ -287,15 +287,6 @@ export class FacturaComponent implements OnInit {
     this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
-
-    //agregar fechas minimas para cada input time
-    this.facturaService.horaRefIniMin = new Date(this.facturaService.fecha);
-    this.facturaService.horaRefFinMin = new Date(this.facturaService.fechaRefIni);
-    this.facturaService.horaIniMin = new Date(this.facturaService.fecha);
-    this.facturaService.horaFinMin = new Date(this.facturaService.fechaIni);
-
-
-
     //Copiar valores (Valores anteriores a una modificacion)
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin);
@@ -650,6 +641,9 @@ export class FacturaComponent implements OnInit {
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
     this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
     this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+
+    //Set min time for inputs
+
 
 
     // set observaciones
