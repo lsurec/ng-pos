@@ -14,20 +14,152 @@ export class ProductService {
     }
 
 
-     //funcion que va a realizar el consumo privado para obtener las empresas
-     private _getFormulaPrecioU( 
-        token: string, 
-        fechaIni:string,
-         fechaFin:string,
-          precioU:string,
-        ) {
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getValidateProduct(
+        user: string,
+        serie: string,
+        tipoDocumento: number,
+        estacion: number,
+        empresa: number,
+        bodega: number,
+        tipoTransaccion: number,
+        unidadMedida: number,
+        producto: number,
+        cantidad: number,
+        tipoCambio: number,
+        moneda: number,
+        tipoPrecio: number,
+        token: string,
+    ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
-                "fechaIni":fechaIni,
-                "fechaFin":fechaFin,
-                "precioU":precioU,
+                "user": user,
+                "serie": serie,
+                "tipoDocumento": tipoDocumento,
+                "estacion": estacion,
+                "empresa": empresa,
+                "bodega": bodega,
+                "tipoTransaccion": tipoTransaccion,
+                "unidadMedida": unidadMedida,
+                "producto": producto,
+                "cantidad": cantidad,
+                "tipoCambio": tipoCambio,
+                "moneda": moneda,
+                "tipoPrecio": tipoPrecio,
+                "token": token,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Producto/validate`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getValidateProducts(
+
+        user: string,
+        serie: string,
+        tipoDocumento: number,
+        estacion: number,
+        empresa: number,
+        bodega: number,
+        tipoTransaccion: number,
+        unidadMedida: number,
+        producto: number,
+        cantidad: number,
+        tipoCambio: number,
+        moneda: number,
+        tipoPrecio: number,
+        token: string,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getValidateProduct(
+                user,
+                serie,
+                tipoDocumento,
+                estacion,
+                empresa,
+                bodega,
+                tipoTransaccion,
+                unidadMedida,
+                producto,
+                cantidad,
+                tipoCambio,
+                moneda,
+                tipoPrecio,
+                token,
+
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        }
+        )
+    }
+
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getFormulaPrecioU(
+        token: string,
+        fechaIni: string,
+        fechaFin: string,
+        precioU: string,
+    ) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "fechaIni": fechaIni,
+                "fechaFin": fechaFin,
+                "precioU": precioU,
             }
         )
 
@@ -37,10 +169,10 @@ export class ProductService {
 
     //funcion asyncrona con promesa  para obtener las empresas
     getFormulaPrecioU(
-        token: string, 
-        fechaIni:string,
-         fechaFin:string,
-          precioU:string,
+        token: string,
+        fechaIni: string,
+        fechaFin: string,
+        precioU: string,
 
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
@@ -325,7 +457,7 @@ export class ProductService {
 
                         try {
                             let response: ResponseInterface = <ResponseInterface>err.error;
-    
+
                             let resApi: ResApiInterface = {
                                 status: false,
                                 response: err.error,
@@ -334,18 +466,18 @@ export class ProductService {
                             }
                             resolve(resApi);
                         } catch (e) {
-    
-    
+
+
                             try {
                                 let message = err.message;
-    
+
                                 let resApi: ResApiInterface = {
                                     status: false,
                                     response: message,
                                     url: err.url,
                                 }
                                 resolve(resApi);
-    
+
                             } catch (ex) {
                                 let resApi: ResApiInterface = {
                                     status: false,
@@ -354,8 +486,8 @@ export class ProductService {
                                 }
                                 resolve(resApi);
                             }
-    
-    
+
+
                         }
                     }
                 )
