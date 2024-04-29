@@ -457,8 +457,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
         }
 
-
-
         this.facturaService.traInternas[indexInsert].consecutivo = resActualizarTransaccion.response;
         indexInsert++;
 
@@ -466,9 +464,10 @@ export class ResumenDocumentoComponent implements OnInit {
 
     }
 
+
     this.isLoading = false;
 
-
+    this._notificationService.openSnackbar("Documento editado correctamente.");
 
   }
 
