@@ -62,15 +62,17 @@ export class FacturaService {
     tipoReferencia?: TipoReferenciaInterface;
 
     fecha?: Date;
-
-
     fechaStruct?: NgbDateStruct;
-
 
     fechaRefIni?: Date;
     fechaRefFin?: Date;
     fechaIni?: Date;
     fechaFin?: Date;
+    
+    horaRefIniMin?:Date;
+    horaRefFinMin?:Date;
+    horaIniMin?:Date;
+    horaFinMin?:Date;
 
     copyFechaRefIni?: Date;
     copyFechaRefFin?: Date;

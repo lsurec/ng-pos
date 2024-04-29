@@ -246,27 +246,32 @@ export class FacturaComponent implements OnInit {
 
   setDateNow() {
 
-
+    //Fecha Actual
     let dateNow: Date = new Date;
+    //asignar fecha actual
     this.facturaService.fecha = dateNow;
+    //fecha min para los pickers
     this.facturaService.fechaStruct = UtilitiesService.getStructureDate(dateNow);
 
-
+    //asignar fechas a fechas referencia
     this.facturaService.fechaRefIni = new Date(dateNow);
     this.facturaService.fechaRefFin = new Date(dateNow);
 
+    //Agregar 30 mmin a la fecha fin ref
     let modifyFechaRefFin: Date = new Date(dateNow);
 
+    //sumar 30 minutos
     this.facturaService.fechaRefFin.setTime(modifyFechaRefFin.getTime() + (30 * 60000));
 
-
+//asignar fechas a las fechas del documento
     this.facturaService.fechaIni = new Date(dateNow);
     this.facturaService.fechaFin = new Date(dateNow);
 
 
-
+    //agregar 30 min a la fecha final del documetno
     let modifyFechaFin: Date = new Date(dateNow);
 
+    //sumar 30 min
     this.facturaService.fechaFin.setTime(modifyFechaFin.getTime() + (30 * 60000));
 
 
@@ -276,13 +281,22 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
+    //agregar horas a las selectTime
     this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
     this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
     this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
 
-    //Copiar valores
+    //agregar fechas minimas para cada input time
+    this.facturaService.horaRefIniMin = new Date(this.facturaService.fecha);
+    this.facturaService.horaRefFinMin = new Date(this.facturaService.fechaRefIni);
+    this.facturaService.horaIniMin = new Date(this.facturaService.fecha);
+    this.facturaService.horaFinMin = new Date(this.facturaService.fechaIni);
+
+
+
+    //Copiar valores (Valores anteriores a una modificacion)
     this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni);
     this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);

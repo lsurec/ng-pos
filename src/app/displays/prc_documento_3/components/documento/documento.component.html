@@ -5,8 +5,9 @@
 
         <div class="informacion">
             <p class="subtitulo">{{ 'pos.factura.series' | translate }}</p>
-            <mat-select  [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
-                [(ngModel)]="facturaService.serie" (ngModelChange)="changeSerie()">
+            <mat-select [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar"
+                placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}" [(ngModel)]="facturaService.serie"
+                (ngModelChange)="changeSerie()">
                 <mat-option *ngFor="let serie of facturaService.series" [value]="serie">
                     {{serie.descripcion}}
                 </mat-option>
@@ -16,7 +17,7 @@
         <div class="informacion" *ngIf="facturaService.valueParametro(58)">
             <p class="tEvento">{{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}</p>
             <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
-            <mat-select  name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
+            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.tipoRef' | translate }}"
                 [(ngModel)]="facturaService.tipoReferencia" (ngModelChange)="facturaService.saveDocLocal()">
                 <mat-option *ngFor="let referencia of facturaService.tiposReferencia" [value]="referencia">
                     {{referencia.descripcion}}
@@ -35,8 +36,8 @@
                     <form class="calendarios">
                         <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaRefIni"
-                                ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateEntrega()" 
-                                [minDate]="facturaService.fechaStruct!"/>
+                                ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateEntrega()"
+                                [minDate]="facturaService.fechaStruct!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -47,7 +48,8 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateEntrega()">
+                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateEntrega()"
+                                [min]="getHoraInput(facturaService.horaRefIniMin!)">
                             <ngx-material-timepicker #horaEntregaPiker
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
@@ -78,7 +80,8 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRecoger()">
+                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRecoger()"
+                                [min]="getHoraInput(facturaService. horaRefFinMin!)">
                             <ngx-material-timepicker #horaRegogerPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -108,7 +111,8 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()">
+                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()"
+                                [min]="getHoraInput(facturaService. horaIniMin!)">
                             <ngx-material-timepicker #horaInicioPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -137,7 +141,8 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()">
+                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()"
+                                [min]="getHoraInput(facturaService. horaFinMin!)">
                             <ngx-material-timepicker #horaFinalPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -214,7 +219,7 @@
             </div>
 
             <div class="dFlex" *ngIf="facturaService.cuenta.grupo_Cuenta && facturaService.cuenta.des_Grupo_Cuenta">
-            <!--TODO:Transalate-->
+                <!--TODO:Transalate-->
                 <p class="detalles">Tipo Cliente</p>
                 <span class="spacer"></span>
                 <p>({{facturaService.cuenta.grupo_Cuenta}}) {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
@@ -226,7 +231,7 @@
 
     <div class="cliente">
 
-        <div class="informacion"  *ngIf="facturaService.vendedores.length > 0" (click)="changeCuentaRef()">
+        <div class="informacion" *ngIf="facturaService.vendedores.length > 0" (click)="changeCuentaRef()">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
             <mat-select [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar"
                 placeholder="{{ 'pos.factura.seleccionarVendedor' | translate }}" [(ngModel)]="facturaService.vendedor"
@@ -241,31 +246,31 @@
             <p class="textosBold14">{{facturaService.getTextParam(385) ?? 'pos.factura.contacto' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refContacto" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refContacto"
+                (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(383)">
             <p class="textosBold14">{{ facturaService.getTextParam(383) ?? 'pos.factura.descripcion' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refDescripcion" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDescripcion"
+                (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf="facturaService.valueParametro(386)">
             <p class="textosBold14">{{ facturaService.getTextParam(386) ?? 'pos.factura.entrega' | translate }}</p>
             <span class="spacer"></span>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refDireccionEntrega" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refDireccionEntrega"
+                (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}"
-                [(ngModel)]="facturaService.refObservacion" (ngModelChange)="facturaService.saveDocLocal()"></textarea>
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservacion"
+                (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <!-- <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">
