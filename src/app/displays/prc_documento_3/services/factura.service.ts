@@ -74,8 +74,6 @@ export class FacturaService {
     horaIniMin?:Date;
     horaFinMin?:Date;
 
-    copyFechaRefIni?: Date;
-    copyFechaRefFin?: Date;
     copyFechaIni?: Date;
     copyFechaFin?: Date;
 

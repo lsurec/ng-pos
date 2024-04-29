@@ -297,8 +297,6 @@ export class FacturaComponent implements OnInit {
 
 
     //Copiar valores (Valores anteriores a una modificacion)
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin);
 

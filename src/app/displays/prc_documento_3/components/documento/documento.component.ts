@@ -16,6 +16,7 @@ import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-documento',
@@ -59,6 +60,7 @@ export class DocumentoComponent {
     private _parametroService: ParametroService,
     private _formaPagoService: PagoService,
     public globalConvertService: GlobalConvertService,
+    private _productService: ProductService,
   ) {
 
   }
@@ -98,51 +100,26 @@ export class DocumentoComponent {
 
   restartDates() {
 
-    console.log(this.facturaService.fechaRefIni);
 
-
-    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
-    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
     this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
 
 
     // Inicializar selectedDate con la fecha de hoy
-    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
-    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
     this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
 
-
-    console.log(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-
-    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
     this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
-    console.log(this.facturaService.fechaRefIni);
 
 
   }
 
 
   setDateEntrega() {
-    //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
-      //si hay productos agregados no se puede cambiar la fechha
-      if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
-        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
 
-        this.restartDates();
-
-        return;
-      }
-
-
-    }
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
 
@@ -159,8 +136,6 @@ export class DocumentoComponent {
 
     }
     //Copiar valores
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
@@ -173,19 +148,6 @@ export class DocumentoComponent {
 
 
   setDateRecoger() {
-    //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
-      //si hay productos agregados no se puede cambiar la fechha
-      if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
-        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        this.restartDates();
-
-
-        return;
-      }
-
-    }
 
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
 
@@ -200,8 +162,6 @@ export class DocumentoComponent {
 
 
     //Copiar valores
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
@@ -210,22 +170,81 @@ export class DocumentoComponent {
   }
 
 
-  setDateIncio() {
+  async setDateIncio() {
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
+
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
       //si hay productos agregados no se puede cambiar la fechha
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
-        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        this.restartDates();
+
+        let verificador: boolean = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('¿Cambiar fecha?'),
+            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+            verdadero: this._translate.instant('pos.botones.aceptar'),
+            falso: this._translate.instant('pos.botones.cancelar'),
+          }
+        );
+
+        if (!verificador) {
+          this.restartDates();
+          return;
+        };
 
 
-        return;
+        //Calcular nuevos totales
+        if (this.facturaService.valueParametro(351)) {
+
+          for (const tra of this.facturaService.traInternas) {
+            let count: number = 0;
+
+
+
+            let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+            let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
+
+
+            this.facturaService.isLoading = true;
+
+            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              this.token,
+              strFechaIni,
+              strFechaFin,
+              tra.precioCantidad!.toString(),
+            );
+
+            this.facturaService.isLoading = false;
+
+
+            if (!res.status) {
+              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+              console.error(res);
+
+              return;
+            }
+
+            let precioDias: number = res.response.data;
+
+
+            this.facturaService.traInternas[count].precioDia = precioDias;
+            this.facturaService.traInternas[count].total = precioDias;
+
+
+            count++;
+
+          }
+
+          this.facturaService.calculateTotales();
+        }
+
+
       }
 
     }
 
-    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
 
 
     if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
@@ -242,8 +261,6 @@ export class DocumentoComponent {
     }
 
     //Copiar valores
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
@@ -251,22 +268,81 @@ export class DocumentoComponent {
 
   }
 
-  setDateFin() {
+  async setDateFin() {
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
+
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
       //si hay productos agregados no se puede cambiar la fechha
       if (this.facturaService.traInternas.length > 0) {
         //TODO:Translate
-        this._notificationService.openSnackbar("Para cambiar la fecha elimine primero las transacciones.");
-        this.restartDates();
+
+        let verificador: boolean = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('¿Cambiar fecha?'),
+            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+            verdadero: this._translate.instant('pos.botones.aceptar'),
+            falso: this._translate.instant('pos.botones.cancelar'),
+          }
+        );
+
+        if (!verificador) {
+          this.restartDates();
+          return;
+        };
 
 
-        return;
+        //Calcular nuevos totales
+        if (this.facturaService.valueParametro(351)) {
+
+          for (const tra of this.facturaService.traInternas) {
+            let count: number = 0;
+
+
+
+            let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+            let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
+
+
+            this.facturaService.isLoading = true;
+
+            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              this.token,
+              strFechaIni,
+              strFechaFin,
+              tra.precioCantidad!.toString(),
+            );
+
+            this.facturaService.isLoading = false;
+
+
+            if (!res.status) {
+              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+              console.error(res);
+
+              return;
+            }
+
+            let precioDias: number = res.response.data;
+
+
+            this.facturaService.traInternas[count].precioDia = precioDias;
+            this.facturaService.traInternas[count].total = precioDias;
+
+
+            count++;
+
+          }
+
+          this.facturaService.calculateTotales();
+        }
+
+
       }
 
     }
 
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
 
 
 
@@ -281,8 +357,6 @@ export class DocumentoComponent {
 
     //Actuali<ar copaias 
     //Copiar valores
-    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
-    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
