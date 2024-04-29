@@ -852,7 +852,7 @@ export class FacturaComponent implements OnInit {
         {
           //TODO:Agregar montos por dia
           consecutivo:tra.detalle.transaccion_Consecutivo_Interno,
-          estadoInterno:0,
+          estadoTra:0,
           precioCantidad: precioSelect.precioU * tra.detalle.disponible,
           precioDia: precioDias,
           isChecked: false,

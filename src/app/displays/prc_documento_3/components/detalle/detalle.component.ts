@@ -730,7 +730,7 @@ export class DetalleComponent {
         element.operaciones.push(
           {
             consecutivo:0,
-            estadoInterno:0,
+            estadoTra:0,
             precioCantidad: null,
             precioDia: null, //TODO:Usar precio dia
             isChecked: false,

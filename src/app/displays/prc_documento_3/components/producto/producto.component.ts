@@ -415,7 +415,7 @@ export class ProductoComponent {
       this.facturaService.addTransaction(
         {
           consecutivo:0,
-          estadoInterno:1,
+          estadoTra:1,
           precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
           precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
           isChecked: false,
@@ -437,7 +437,7 @@ export class ProductoComponent {
       // /7agregar transaccion
       this.facturaService.traInternas[this.productoService.indexEdit] = {
         consecutivo: this.facturaService.traInternas[this.productoService.indexEdit].consecutivo,
-        estadoInterno: 3,
+        estadoTra: 1,
         precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
         precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
         isChecked: false,

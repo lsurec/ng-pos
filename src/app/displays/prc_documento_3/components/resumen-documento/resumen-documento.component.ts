@@ -317,7 +317,7 @@ export class ResumenDocumentoComponent implements OnInit {
     //Actualizar transacciones
     for (const actualizar of this.facturaService.traInternas) {
 
-      if (actualizar.estadoInterno == 3) {
+      if (actualizar.estadoTra != 0 && actualizar.consecutivo != 0) {
 
         ///Anular y actualizar
         let transactionActualizar: NewTransactionInterface = {
@@ -409,7 +409,7 @@ export class ResumenDocumentoComponent implements OnInit {
     //insertar tranasacciones
     for (const nueva of this.facturaService.traInternas) {
 
-      if (nueva.estadoInterno == 1) {
+      if (nueva.estadoTra != 0 && nueva.consecutivo == 0) {
         ///Nueva transaccion
         let transactionNueva: NewTransactionInterface = {
           bodega: nueva.bodega!.bodega,

@@ -14,6 +14,6 @@ export interface TraInternaInterface {
     operaciones: TraInternaInterface[];
     descuento: number;
     cargo: number;
-    estadoInterno:number; //0 ninguno; 1 nuevo; 2 eliminar; 3 actualizar
     consecutivo:number;
+    estadoTra:number;
 }
