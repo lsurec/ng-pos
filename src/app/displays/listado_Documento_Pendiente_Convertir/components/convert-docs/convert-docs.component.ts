@@ -96,9 +96,12 @@ export class ConvertDocsComponent {
     //Iniciar carga
     this.globalConvertSrevice.isLoading = true;
 
+    
+      //TODO:Verificar disponibilodad de produtos
 
     //Recorrer todas las transacciones seleccionadas
     for (const tra of traCheks) {
+
 
       //Actualizar transacciones que se vana a confirmar
       let resActualizar = await this._receptionService.postActualizar(
