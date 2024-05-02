@@ -48,6 +48,7 @@ export class ConvertDocsComponent {
     private _translate: TranslateService,
     private _facturaService: FacturaService,
     private _dataUserService: DataUserService,
+    private _productService: ProductService,
   ) {
 
   }
@@ -61,7 +62,7 @@ export class ConvertDocsComponent {
     //Asignar nuevo tipo de documento y descripcion
     this._dataUserService.nameDisplay = this.globalConvertSrevice.docOriginSelect!.documento_Descripcion;
     this._facturaService.tipoDocumento = this.globalConvertSrevice.docOriginSelect!.tipo_Documento;
-    
+
     //Show pos screen
     this.globalConvertSrevice.editDoc = true;
   }
@@ -80,6 +81,37 @@ export class ConvertDocsComponent {
     }
 
 
+    // //buscar  informacion de la transacción
+
+
+    // //Validar que las transaccones por autorizar esten disponibles
+    // for (const transaction of traCheks) {
+
+
+      //buscar informacion del producto
+
+
+
+    //   let resValidate: ResApiInterface = await this._productService.getValidateProducts(
+    //     this.user,
+    //     this.globalConvertSrevice.docOriginSelect!.serie_Documento,
+    //     this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
+    //     this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
+    //     this.globalConvertSrevice.docOriginSelect!.empresa,
+    //     transaction.detalle.bodega,
+    //     2, //tipo transaccion
+        
+
+        
+
+
+
+
+    //   );
+
+    // }
+
+
     //Mostrar dialogo de confirmacion antes de iniciar el proceso de conversions
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
@@ -96,8 +128,8 @@ export class ConvertDocsComponent {
     //Iniciar carga
     this.globalConvertSrevice.isLoading = true;
 
-    
-      //TODO:Verificar disponibilodad de produtos
+
+    //TODO:Verificar disponibilodad de produtos
 
     //Recorrer todas las transacciones seleccionadas
     for (const tra of traCheks) {
@@ -255,7 +287,7 @@ export class ConvertDocsComponent {
   //Mmostrar error
   async showError(res: ResApiInterface) {
 
-      //Dialogo de confirmacion
+    //Dialogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
