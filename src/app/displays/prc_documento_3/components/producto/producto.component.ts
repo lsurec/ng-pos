@@ -348,11 +348,56 @@ export class ProductoComponent {
     }
 
     // /7verificar que haya existencvias para el producto
-    if (this.productoService.bodega.existencia == 0) {
-      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.existenciaInsuficiente'));
+    //usar pa valida
+
+    this.isLoading = true;
+
+
+    let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+      this.user,
+      this.facturaService.serie!.serie_Documento,
+      this.facturaService.tipoDocumento!,
+      this.estacion,
+      this.empresa,
+      this.productoService.bodega.bodega,
+      this.facturaService.resolveTipoTransaccion(this.producto.tipo_Producto),
+      this.producto.unidad_Medida,
+      this.producto.producto,
+      UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+      8, //TODO:Parametrizar
+      this.productoService.precio!.moneda,
+      this.productoService.precio!.id,
+      this.token,
+
+    );
+
+
+    if (!resDisponibiladProducto.status) {
+      //TODO:Translate
+
+      this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
+      console.error(resDisponibiladProducto);
       return;
     }
 
+    this.isLoading = false;
+
+
+
+    let mensajes: string[] = resDisponibiladProducto.response;
+
+
+    //si hay mensjaes hay inconvenientes
+    if (mensajes.length > 0) {
+
+      //TODO:Mostar dialogo
+
+      //TODO:Translate
+
+      this._notificationsService.openSnackbar("Uno o mas productos  no estan disponibles para su venta.");
+
+      return;
+    }
 
     //si todo ha salido bien, agregamos el producto al documento
     //Buscar la moneda, v
@@ -378,12 +423,11 @@ export class ProductoComponent {
 
     if (this.facturaService.valueParametro(351)) {
 
-  
+
       let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
       let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
 
 
-      this.isLoading = true;
 
       let res: ResApiInterface = await this._productService.getFormulaPrecioU(
         this.token,
@@ -392,10 +436,11 @@ export class ProductoComponent {
         this.productoService.total.toString(),
       );
 
-      this.isLoading = false;
 
 
       if (!res.status) {
+        this.isLoading = false;
+
         this._notificationsService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
         console.error(res);
@@ -403,9 +448,13 @@ export class ProductoComponent {
         return;
       }
 
+
       precioDias = res.response.data;
 
     }
+
+    this.isLoading = false;
+
 
 
     if (this.productoService.indexEdit == -1) {
@@ -414,8 +463,8 @@ export class ProductoComponent {
       // /7agregar transaccion
       this.facturaService.addTransaction(
         {
-          consecutivo:0,
-          estadoTra:1,
+          consecutivo: 0,
+          estadoTra: 1,
           precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
           precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
           isChecked: false,
