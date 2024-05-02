@@ -222,8 +222,24 @@ export class HomeComponent implements OnInit {
     let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
 
     var docDefinition: TDocumentDefinitions = {
-      pageMargins: [40, 130, 40, 60],
-      footer: function (currentPage, pageCount) { return currentPage.toString() + ' of ' + pageCount; },
+      pageMargins: [40, 130, 40, 30],
+      footer: function (currentPage, pageCount) { 
+        return [
+            {
+              marginLeft:40,
+              text:[
+                {
+                  text: '30/04/2024 08:18:55 a. m. ',
+                  fontSize:6,
+                  color:'#999999'
+                },
+                {
+                  text:'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                  fontSize:6,
+                } 
+              ]
+            }
+      ]; },
       header:
         // you can apply any logic and return any valid pdfmake element
 
