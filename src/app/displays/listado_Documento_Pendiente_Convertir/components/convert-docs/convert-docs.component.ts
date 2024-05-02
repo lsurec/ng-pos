@@ -18,6 +18,12 @@ import { ParametroService } from 'src/app/displays/prc_documento_3/services/para
 import { PagoService } from 'src/app/displays/prc_documento_3/services/pago.service';
 import { ReferenciaService } from 'src/app/displays/prc_documento_3/services/referencia.service';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
+import { TipoReferenciaInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-referencia';
+import { TipoTransaccionInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-transaccion.interface';
+import { ProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/producto.interface';
+import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
+import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
+import { ValidateProductInterface } from '../../interfaces/validate-product.interface';
 
 @Component({
   selector: 'app-convert-docs',
@@ -49,6 +55,7 @@ export class ConvertDocsComponent {
     private _facturaService: FacturaService,
     private _dataUserService: DataUserService,
     private _productService: ProductService,
+    private _tipoTransaccionService: TipoTransaccionService,
   ) {
 
   }
@@ -67,6 +74,22 @@ export class ConvertDocsComponent {
     this.globalConvertSrevice.editDoc = true;
   }
 
+  //Buscar tipo transaccion
+  private _resolveTipoTransaccion(tipo: number, tiposTra: TipoTransaccionInterface[]): number {
+
+    //buscar tipo de trabsaccion dependientdo del tipo de producto
+    for (let i = 0; i < tiposTra.length; i++) {
+      const element = tiposTra[i];
+      if (tipo == element.tipo) {
+        //Devolver tipo de transaccion correspondiente al tipo de producto
+        return element.tipo_Transaccion;
+      }
+    }
+
+    //si no encontró el tipo de producto retorna 0
+    return 0;
+  }
+
 
   //Conversion de documento, trnasacciones seleccioandas
   async convertDoc() {
@@ -79,37 +102,6 @@ export class ConvertDocsComponent {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
-
-
-    // //buscar  informacion de la transacción
-
-
-    // //Validar que las transaccones por autorizar esten disponibles
-    // for (const transaction of traCheks) {
-
-
-      //buscar informacion del producto
-
-
-
-    //   let resValidate: ResApiInterface = await this._productService.getValidateProducts(
-    //     this.user,
-    //     this.globalConvertSrevice.docOriginSelect!.serie_Documento,
-    //     this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
-    //     this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
-    //     this.globalConvertSrevice.docOriginSelect!.empresa,
-    //     transaction.detalle.bodega,
-    //     2, //tipo transaccion
-        
-
-        
-
-
-
-
-    //   );
-
-    // }
 
 
     //Mostrar dialogo de confirmacion antes de iniciar el proceso de conversions
@@ -128,8 +120,188 @@ export class ConvertDocsComponent {
     //Iniciar carga
     this.globalConvertSrevice.isLoading = true;
 
+    //buscar  informacion de la transacción
 
-    //TODO:Verificar disponibilodad de produtos
+
+    let resTipoTransacciones: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+      this.user,
+      this.token,
+      this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
+      this.globalConvertSrevice.docOriginSelect!.serie_Documento,
+      this.globalConvertSrevice.docOriginSelect!.empresa,
+    );
+
+    //si no se pudo actualziar mostrar alerta
+    if (!resTipoTransacciones.status) {
+      this.globalConvertSrevice.isLoading = false;
+      this.showError(resTipoTransacciones);
+      return;
+    }
+
+    let tiposTraDisponibles: TipoTransaccionInterface[] = resTipoTransacciones.response;
+
+
+    let productsErr: ValidateProductInterface[] = [];
+
+    //Validar que las transaccones por autorizar esten disponibles
+    for (const tra of traCheks) {
+
+      let resProduct = await this._productService.getProductId(
+        this.token,
+        tra.detalle.id,
+      );
+
+
+
+      if (!resProduct.status) {
+        this.globalConvertSrevice.isLoading = false;
+        this.showError(resProduct);
+        return;
+      }
+
+
+      let productSearch: ProductoInterface[] = resProduct.response;
+
+
+      let iProd: number = -1;
+
+      for (let i = 0; i < productSearch.length; i++) {
+        const element = productSearch[i];
+
+        if (element.producto_Id = tra.detalle.id) {
+          iProd = i;
+          break;
+        }
+
+      }
+
+      if (iProd == -1) {
+
+        this.globalConvertSrevice.isLoading = false;
+
+
+        resProduct.response = "Error al cargar las transacciones, no se encontró un producto";
+
+        this.showError(resProduct);
+
+        return;
+
+
+      }
+
+
+      //Detalled del producto encontrados
+      let prod: ProductoInterface = productSearch[iProd];
+
+      // /buscar precios
+      let resPrecio = await this._productService.getPrecios(
+        this.user,
+        this.token,
+        tra.detalle.bodega,
+        prod.producto,
+        prod.unidad_Medida,
+      );
+
+
+      if (!resPrecio.status) {
+        this.globalConvertSrevice.isLoading = false;
+        this.showError(resPrecio);
+        return;
+      }
+
+
+
+
+      let precios: PrecioInterface[] = resPrecio.response;
+
+
+      let existPrecio: number = -1;
+
+      for (let i = 0; i < precios.length; i++) {
+        const element = precios[i];
+        if (element.tipo_Precio = tra.detalle.tipo_Precio) {
+          existPrecio = i;
+          break;
+        }
+      }
+
+      let precioSelect: UnitarioInterface;
+
+      if (existPrecio == -1) {
+        //TODO:Seacrh factor de conversion
+        precioSelect = {
+          descripcion: "Precio",
+          id: tra.detalle.tipo_Precio,
+          moneda: 1,
+          orden: 1,
+          precio: true,
+          precioU: tra.detalle.disponible ? 0 : tra.detalle.monto / tra.detalle.disponible
+        }
+      } else {
+        precioSelect = {
+          descripcion: precios[existPrecio].des_Tipo_Precio,
+          id: precios[existPrecio].tipo_Precio,
+          moneda: precios[existPrecio].moneda,
+          orden: precios[existPrecio].precio_Orden,
+          precio: true,
+          precioU: precios[existPrecio].precio_Unidad
+        }
+      }
+
+
+      //verifcar disponiobilidad del producto
+      let resValidaDisponibilidad: ResApiInterface = await this._productService.getValidateProducts(
+        this.user,
+        this.globalConvertSrevice.docOriginSelect!.serie_Documento,
+        this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
+        this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
+        this.globalConvertSrevice.docOriginSelect!.empresa,
+        tra.detalle.bodega,
+        this._resolveTipoTransaccion(prod.tipo_Producto, tiposTraDisponibles),
+        prod.unidad_Medida,
+        prod.producto,
+        tra.disponibleMod,
+        8,
+        precioSelect.moneda,
+        precioSelect.id,
+        this.token,
+      );
+
+
+      if (!resValidaDisponibilidad.status) {
+        this.globalConvertSrevice.isLoading = false;
+        this.showError(resValidaDisponibilidad);
+        return;
+      }
+
+      let mensajes: string[] = resValidaDisponibilidad.response;
+
+
+      //si ha mensajes guaradar el prodcutco que genera  la validacion de disponiblidad
+      if (mensajes.length != 0) {
+        productsErr.push(
+          {
+            detalle: tra,
+            mensajes: [...mensajes]
+          }
+        )
+
+      }
+
+    }
+
+    //valiodar  si hay productos erroneos para mostrar
+
+    if(productsErr.length > 0){
+      //TODO:mostar diaologo y reporrte
+
+      this._notificationsService.openSnackbar("Uno o mas productos no se ecnuentras disponoibles");
+      return;
+    }
+
+
+
+    
 
     //Recorrer todas las transacciones seleccionadas
     for (const tra of traCheks) {
