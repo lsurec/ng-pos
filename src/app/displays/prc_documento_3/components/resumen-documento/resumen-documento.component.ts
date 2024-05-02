@@ -726,6 +726,20 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
+    //Imprimir doc 
+
+    if(this.facturaService.tipoDocumento! == 20){
+      //immmpirmir cotizacion
+
+      const docDefinition = await this._printService.getReportCotizacion(this.docPrint);
+      pdfMake.createPdf(docDefinition).open();
+
+      
+
+      return;
+
+    }
+
 
     //Verificar que ya se haya configurado antes 
     if (!PreferencesService.port) {

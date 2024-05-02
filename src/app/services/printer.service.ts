@@ -212,20 +212,17 @@ export class PrinterService {
         )
     }
 
-    private _logo_empresa: any;
-    private _imageBase64: any;
 
-    private async _generateBase64(source: string): Promise<void> {
-        this._imageBase64 = "";
+
+    private async _generateBase64(source: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this._http.get(source, { responseType: 'blob' })
                 .subscribe(res => {
                     const reader = new FileReader();
                     reader.onloadend = () => {
                         var base64data = reader.result;
-                        this._imageBase64 = base64data;
                         //   console.log(base64data);
-                        resolve();
+                        resolve(base64data);
                     }
                     reader.readAsDataURL(res);
                     //console.log(res);
@@ -251,10 +248,717 @@ export class PrinterService {
     }
 
 
+
+    async getReportCotizacion( doc: DocPrintModel) {
+        let logo_empresa = await this._generateBase64('/assets/empresa.png');
+        let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+
+        var docDefinition: TDocumentDefinitions = {
+            pageMargins: [40, 130, 40, 30],
+            footer: function (currentPage, pageCount) {
+                return [
+                    {
+                        marginLeft: 40,
+                        text: [
+                            {
+                                text: '30/04/2024 08:18:55 a. m. ',
+                                fontSize: 6,
+                                color: '#999999'
+                            },
+                            {
+                                text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                                fontSize: 6,
+                            }
+                        ]
+                    }
+                ];
+            },
+            header:
+                // you can apply any logic and return any valid pdfmake element
+
+                [
+
+                    {
+                        margin: [0, 15, 0, 0],
+                        table: {
+
+                            heights: 'auto',
+                            widths: ['33%', '34%', '33%'], // Ancho de las columnas
+                            body: [
+                                [
+                                    {
+                                        image: logo_empresa,
+                                        width: 115,
+                                        absolutePosition: { x: 20, y: 10 }
+                                    },
+                                    [
+                                        {
+                                            text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'NIT: 7057806',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'ALFA Y OMEGA',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: '0 Avenida 5-35, Zona 9 Guatemala',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: '(502) 2505 1000',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'ALFA Y OMEGA ANTIGUA',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: '(502) 7822 8375',
+                                            style: 'headerText'
+                                        },
+                                    ],
+
+                                    [
+                                        {
+                                            layout: 'noBorders',
+
+                                            table: {
+
+                                                widths: ['50%', '50%'],
+                                                body: [
+                                                    [
+                                                        {
+                                                            marginLeft: 20,
+                                                            marginRight: 20,
+                                                            table: {
+                                                                widths: ['80%'],
+                                                                body: [
+                                                                    [
+                                                                        {
+                                                                            text: 'COTIZACIÓN',
+                                                                            style: 'docText',
+                                                                        },
+                                                                    ],
+                                                                ]
+                                                            },
+                                                            colSpan: 2,
+                                                        },
+
+
+
+
+                                                    ],
+
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            alignment: 'center',
+                                            layout: 'noBorders',
+                                            table: {
+
+                                                widths: ['35%', '65%'],
+                                                body: [
+                                                    [
+                                                        {
+                                                            table: {
+                                                                widths: ['100%'],
+                                                                body: [
+                                                                    [
+                                                                        {
+                                                                            text: 'NO. COTIZACIÓN',
+                                                                            style: 'dataText',
+                                                                        },
+                                                                    ],
+                                                                ]
+                                                            },
+                                                        },
+
+                                                        {
+                                                            table: {
+                                                                widths: ['70%'],
+                                                                body: [
+                                                                    [
+                                                                        {
+                                                                            text: 'FECHA DE COTIZACIÓN',
+                                                                            style: 'dataText',
+                                                                        },
+                                                                    ],
+                                                                ]
+                                                            },
+                                                        },
+                                                    ],
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            alignment: 'center',
+                                            layout: 'noBorders',
+
+
+                                            table: {
+
+                                                widths: ['35%', '65%'],
+
+                                                body: [
+                                                    [
+                                                        {
+                                                            text: '45874',
+                                                            style: 'dataText',
+                                                            fontSize: 7,
+                                                        },
+
+                                                        {
+                                                            marginRight: 25,
+
+                                                            text: '10/10/2024',
+                                                            style: 'dataText',
+                                                            fontSize: 7,
+
+                                                        },
+                                                    ],
+                                                ]
+                                            }
+                                        }
+                                    ],
+
+                                ],
+
+                            ]
+                        },
+                        layout: 'noBorders'
+                    }
+                ]
+            ,
+            content: [
+                {
+                    alignment: 'left',
+                    layout: 'noBorders', // optional
+                    table: {
+                        widths: ['10%', '50%', '*'],
+
+                        body: [
+                            [
+                                {
+                                    text: "CLIENTE:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: "Mafer Brenes",
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Vendedor: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'Lendy Castañon',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    text: "TELEFONO:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: "45949849",
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Correo: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'alfayomegaeventos@hotmail.com',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    text: "NIT:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: "45949849-1",
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Fecha Evento: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: '14/02/2021 - 14/02/2021',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    text: "EMAIL:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: "",
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Fecha Entrega: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: '14/02/2021',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    text: "DIRECCION:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: "Manzana A, Sector B1, Lote 12 Ciudad San Cristobal Zona 8 de Mixco",
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Fecha Recoger: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: '14/02/2021',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                        ]
+                    }
+                },
+                {
+                    marginTop: 10,
+                    layout: 'noBorders',
+                    table: {
+                        widths: ["50%", "50%"],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: "Contacto: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'Mafer Bernes',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: [
+                                        {
+                                            text: "Descripcion: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'Reprehenderit minim commodo Lorem cupidatat labore fugiat nostrud occaecat elit ipsum do.',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: "Direccion Entrega: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'Manzana A, Sector B1, Lote 12 Ciudad San Cristobal Zona 8 de Mixco',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                },
+                                {
+                                    text: [
+                                        {
+                                            text: "Observacion: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: 'Reprehenderit minim commodo Lorem cupidatat labore fugiat nostrud occaecat elit ipsum do.',
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    fillColor: '#CCCCCC',
+                    table: {
+                        widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
+                        body: [
+                            [
+                                {
+                                    text: 'Precio Reposicion',
+                                    style: 'normalTextBold'
+                                },
+
+                                {
+                                    text: 'Cantidad',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: 'Codigo',
+                                    style: 'normalTextBold'
+                                },
+                                [
+                                    {
+                                        text: 'Descripción',
+                                        style: 'normalTextBold'
+                                    },
+                                    {
+                                        text: 'Alquier de:',
+                                        style: 'normalTextBold'
+                                    }
+                                ],
+                                {
+                                    text: 'Imagen',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: 'Precio Unitario',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: 'Precio x Dia',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: 'Total',
+                                    style: 'normalTextBold'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
+
+                        body: [
+                            [
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '25',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: 'CRIS-196',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: 'COPA LABRADA DE PANAL PARA AGUA COLOR AMBAR - ',
+                                    style: 'normalText'
+                                },
+
+                                {
+                                    image: backgroundimg,
+                                    fit: [50, 50],
+
+
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '25',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: 'CRIS-196',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: 'COPA LABRADA DE PANAL PARA AGUA COLOR AMBAR - ',
+                                    style: 'normalText'
+                                },
+
+                                {
+                                    image: backgroundimg,
+                                    fit: [50, 50],
+
+
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: '50.00',
+                                    style: 'normalText'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginLeft: 172,
+                    fillColor: '#CCCCCC',
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['55%', '45%'],
+                        body: [
+                            [
+                                {
+                                    text: 'TOTAL',
+                                    style: 'headerText'
+                                },
+                                {
+                                    text: '500.48',
+                                    style: 'headerText',
+                                    alignment: 'right',
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 5,
+                    text: 'CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACIÓN',
+                    bold: true,
+                    fontSize: 13,
+                },
+                {
+                    marginTop: 2,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '1. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Esta Cotización no es reservación',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 2,
+
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '2. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Al confirmar su cotizacion se requiere de contrato firmado',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 2,
+
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '3. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Los precios cotizados estan sujetos a cambios',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 2,
+
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '4. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Se cobrara Q 125.00 por cheque rechazado por cargos administrativos',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 2,
+
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '5. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Se solicitara cheque de garantía',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 2,
+
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: '6. ',
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: 'Se cobrará por daños al mobiliario y equipo según contrato ',
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ],
+            styles: {
+                headerText: {
+                    fontSize: 11,
+                    bold: true,
+                    alignment: 'center',
+                },
+                normalText: {
+                    fontSize: 9,
+                },
+                normalTextBold: {
+                    fontSize: 9,
+                    bold: true,
+                },
+                dataText: {
+                    fontSize: 6,
+                    bold: true,
+                },
+                docText: {
+                    fontSize: 17,
+                    bold: true,
+                    alignment: 'center'
+                },
+
+            }
+        };
+
+        return docDefinition;
+
+    }
+
+
     async getReport(doc: DocPrintModel) {
 
-        await this._generateBase64('/assets/empresa.png');
-        this._logo_empresa = this._imageBase64;
+        
+        let logo_empresa = await this._generateBase64('/assets/empresa.png');;
 
         let date: Date = doc.cliente.fecha;
 
@@ -350,7 +1054,7 @@ export class PrinterService {
             content: [
                 //DATOS EMPRESA
                 {
-                    image: this._logo_empresa,
+                    image: logo_empresa,
                     fit: [161.73, 76.692],
                     alignment: 'center',
                 },
@@ -672,8 +1376,8 @@ export class PrinterService {
 
     async getReportConvert(doc: DocPrintModel) {
 
-        await this._generateBase64('/assets/empresa.png');
-        this._logo_empresa = this._imageBase64;
+        
+        let logo_empresa = await this._generateBase64('/assets/empresa.png');
 
         let date: Date = doc.cliente.fecha;
 
@@ -733,7 +1437,7 @@ export class PrinterService {
             content: [
                 //DATOS EMPRESA
                 {
-                    image: this._logo_empresa,
+                    image: logo_empresa,
                     fit: [161.73, 76.692],
                     alignment: 'center',
                 },
@@ -1016,8 +1720,8 @@ export class PrinterService {
 
     async getTestTemplate() {
 
-        await this._generateBase64('/assets/logo_demosoft.png');
-        this._logo_empresa = this._imageBase64;
+        
+        let logo_empresa  =await this._generateBase64('/assets/logo_demosoft.png');
 
         let date: Date = new Date();
 
@@ -1061,7 +1765,7 @@ export class PrinterService {
             content: [
                 //DATOS EMPRESA
                 {
-                    image: this._logo_empresa,
+                    image:logo_empresa,
                     fit: [161.73, 76.692],
                     alignment: 'center',
                 },
