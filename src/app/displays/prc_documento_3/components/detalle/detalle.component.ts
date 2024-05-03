@@ -853,6 +853,22 @@ export class DetalleComponent {
       des_Producto: 'Ensalada César',
       des_Unidad_Medida: 'porción',
       tipo_Producto: 3
+    },
+    {
+      producto: 4,
+      unidad_Medida: 4,
+      producto_Id: 'P004',
+      des_Producto: 'Ensalada César',
+      des_Unidad_Medida: 'porción',
+      tipo_Producto: 3
+    },
+    {
+      producto: 4,
+      unidad_Medida: 4,
+      producto_Id: 'P004',
+      des_Producto: 'Ensalada César',
+      des_Unidad_Medida: 'porción',
+      tipo_Producto: 3
     }
   ];
 
