@@ -21,24 +21,17 @@
                 </div>
                 <div class="" *ngFor="let producto of productos">
                     <div class="seleccionar">
-                        <p class="textos">{{producto.des_Producto}} </p>
+                        <p class="textos">({{producto.sku}}) {{producto.productoDesc}} </p>
                         <div class="d-flex">
-                            <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.producto_Id}}</p>
-                            <span class="spacer"></span>
-                            <p class="textos">Bodega: (3) Bebidas calientes.. </p>
-                            <span class="spacer"></span>
-
-                            <p class="textos">Serie documento: (2)</p>
+                       
+                            <p class="textos">Serie documento: {{producto.serie}}</p>
                             <span class="spacer"></span>
 
-                            <p class="textos">Tipo documento: (4)</p>
+                            <p class="textos">Tipo documento: {{producto.serie}}</p>
                         </div>
                         <hr>
                         <div class="advertencias">
-                            <p class="adver">No disponible por x motivo.</p>
-                            <p class="adver">No disponible hasta x fecha.</p>
-                            <p class="adver">Sin existencias.</p>
-                            <p class="adver">Agotado.</p>
+                            <p class="adver" *ngFor="let mensaje of producto.mensajes">{{mensaje}}</p>
                         </div>
                     </div>
                 </div>
@@ -49,13 +42,13 @@
 <div class="informacion">
     <div class="dFlex">
         <span class="spacer"></span>
-        <p class="descargar">Descargar informe.</p>
+        <p class="descargar" (click)="downloadPDF()">Descargar informe.</p>
     </div>
     <div class="botones">
         <button mat-stroked-button type="button" (click)="closeDialog()">
             {{ 'pos.botones.cancelar' | translate }}
         </button>
         <span class="spacer"></span>
-        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+        <button (click)="closeDialog()" mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
     </div>
 </div>

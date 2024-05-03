@@ -7,6 +7,7 @@ import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { PreferencesService } from './preferences.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalConvertService } from '../displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 
 @Injectable()
 export class PrinterService {
@@ -247,13 +248,67 @@ export class PrinterService {
         return `${dayString}/${monthString}/${year}`;
     }
 
-    async getFormatProductValidate() {
+    async getFormatProductValidate(tarnsaciones: ValidateProductInterface[]) {
         let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
 
         let date: Date = new Date();
 
         let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
         let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+        let transacciones: any[] = [];
+
+        tarnsaciones.forEach(item => {
+
+
+            let mensajes: any[] = [];
+
+            item.mensajes.forEach(element => {
+                mensajes.push([{
+                    text: element,
+                    style: 'normalText',
+                    colSpan: 5,
+
+                },],);
+            });
+            transacciones.push(
+                [
+                    {
+                        text: item.sku,
+                        style: 'normalText'
+                    },
+
+                    {
+                        text: item.productoDesc,
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.bodega,
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.tipoDoc,
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.serie,
+                        style: 'normalText'
+                    },
+
+                ],
+                [
+                    {
+                        text: 'Mensajes:',
+                        style: 'normalTextBold',
+                        colSpan: 5,
+                    },
+
+                ],
+                ...mensajes
+
+            );
+        });
 
 
 
@@ -419,47 +474,7 @@ export class PrinterService {
                         widths: ['10%', '30%', '20%', '20%', '20%',],
 
                         body: [
-                            [
-                                {
-                                    text: "55xs4",
-                                    style: 'normalText'
-                                },
-
-                                {
-                                    text: "Aute aliquip ipsum tempor pariatur irure reprehenderit nostrud.",
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: "Central (4)",
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: "Cotizacion (5)",
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: "COT (54)",
-                                    style: 'normalText'
-                                },
-
-                            ],
-                            [
-                                {
-                                    text: 'Mensajes:',
-                                    style: 'normalTextBold',
-                                    colSpan:5,
-                                },
-
-                            ],
-                            [
-                                {
-                                    text: "Et enim aliquip qui culpa culpa exercitation.",
-                                    style: 'normalText',
-                                    colSpan: 5,
-                                    
-                                },
-                                
-                            ]
+                            ...transacciones
 
                         ]
                     }

@@ -299,7 +299,8 @@ export class ConvertDocsComponent {
     if(productsErr.length > 0){
       //TODO:mostar diaologo y reporrte
 
-      this._notificationsService.openSnackbar("Uno o mas productos no se ecnuentras disponoibles");
+      let resDialogInforme = await this._notificationsService.openDialogValidations(productsErr);
+      
       return;
     }
 
