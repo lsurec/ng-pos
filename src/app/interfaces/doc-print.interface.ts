@@ -20,18 +20,28 @@ export interface Empresa {
   
   // cliente.interface.ts
   export interface Cliente {
+    correo:string;
     nombre: string;
     direccion: string;
     nit: string;
     fecha: Date;
     tel: string;
   }
+
+  export interface Fechas{
+    fechaInicio:Date,
+    fechaFin:Date;
+    fechaInicioRef:Date;
+    fechaFinRef:Date;
+  }
   
   // item.interface.ts
   export interface Item {
+    sku:string;
     descripcion: string;
     cantidad: number;
     unitario: string;
+    
     total: string;
   }
   
@@ -63,12 +73,19 @@ export interface Empresa {
     nombre: string;
     website: string;
   }
+  export interface ObservacionesRef{
+    observacion2:string, //contcto
+    descripcion:string, //Descripcion
+    observacion3:string, //direccion entrga
+    observacion:string, //observacion
+  };
   
   
   export interface DocPrintModel {
     empresa: Empresa;
     documento: DocumentoData;
     cliente: Cliente;
+    fechas?:Fechas;
     items: Item[];
     montos: Montos;
     pagos: Pago[];
@@ -77,5 +94,6 @@ export interface Empresa {
     observacion: string;
     mensajes: string[];
     poweredBy: PoweredBy;
+    refObservacones?:ObservacionesRef;
   }
   

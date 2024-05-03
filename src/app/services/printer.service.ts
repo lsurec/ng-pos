@@ -253,7 +253,65 @@ export class PrinterService {
         let logo_empresa = await this._generateBase64('/assets/empresa.png');
         let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
 
+        let date: Date = doc.cliente.fecha;
+
+        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+        
+        let transacciones: any[] = [];
+
+        doc.items.forEach(item => {
+            transacciones.push(
+                [
+                    {
+                        text: '50.00',
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.cantidad,
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.sku,
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.descripcion,
+                        style: 'normalText'
+                    },
+        
+                    {
+                        image: backgroundimg,
+                        fit: [50, 50],
+        
+                    },
+                    {
+                        text: item.unitario,
+                        style: 'normalText'
+                    },
+                    {
+                        text: '50.00', //TODO:set precio dia
+                        style: 'normalText'
+                    },
+                    {
+                        text: item.total,
+                        style: 'normalText'
+                    },
+                ],
+
+            );
+        });
+
+       
+
+
         var docDefinition: TDocumentDefinitions = {
+            info: {
+                title: 'TD_Cotizacion_IMG',
+                author: 'DEMOSOFT S.A.',
+              },
             pageMargins: [40, 130, 40, 30],
             footer: function (currentPage, pageCount) {
                 return [
@@ -261,7 +319,7 @@ export class PrinterService {
                         marginLeft: 40,
                         text: [
                             {
-                                text: '30/04/2024 08:18:55 a. m. ',
+                                text: `${fecha} ${hora} `,
                                 fontSize: 6,
                                 color: '#999999'
                             },
@@ -452,7 +510,7 @@ export class PrinterService {
                                     style: 'normalTextBold',
                                 },
                                 {
-                                    text: "Mafer Brenes",
+                                    text: doc.cliente.nombre,
                                     style: 'normalText',
                                 }
                                 ,
@@ -463,7 +521,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'Lendy Castañon',
+                                            text: doc.vendedor,
                                             style: 'normalText',
                                         }
                                     ]
@@ -475,7 +533,7 @@ export class PrinterService {
                                     style: 'normalTextBold',
                                 },
                                 {
-                                    text: "45949849",
+                                    text: doc.cliente.tel,
                                     style: 'normalText',
                                 }
                                 ,
@@ -486,7 +544,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'alfayomegaeventos@hotmail.com',
+                                            text: doc.cliente.correo,
                                             style: 'normalText',
                                         }
                                     ]
@@ -498,7 +556,7 @@ export class PrinterService {
                                     style: 'normalTextBold',
                                 },
                                 {
-                                    text: "45949849-1",
+                                    text: doc.cliente.nit,
                                     style: 'normalText',
                                 }
                                 ,
@@ -509,7 +567,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: '14/02/2021 - 14/02/2021',
+                                            text: `${this.formatDate(doc.fechas!.fechaInicio)} -  ${this.formatDate(doc.fechas!.fechaFin)}`,
                                             style: 'normalText',
                                         }
                                     ]
@@ -521,7 +579,7 @@ export class PrinterService {
                                     style: 'normalTextBold',
                                 },
                                 {
-                                    text: "",
+                                    text: doc.cliente.correo,
                                     style: 'normalText',
                                 }
                                 ,
@@ -532,7 +590,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: '14/02/2021',
+                                            text: this.formatDate(doc.fechas!.fechaInicioRef),
                                             style: 'normalText',
                                         }
                                     ]
@@ -544,7 +602,7 @@ export class PrinterService {
                                     style: 'normalTextBold',
                                 },
                                 {
-                                    text: "Manzana A, Sector B1, Lote 12 Ciudad San Cristobal Zona 8 de Mixco",
+                                    text: doc.cliente.direccion,
                                     style: 'normalText',
                                 }
                                 ,
@@ -555,7 +613,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: '14/02/2021',
+                                            text: this.formatDate(doc.fechas!.fechaFinRef),
                                             style: 'normalText',
                                         }
                                     ]
@@ -578,7 +636,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'Mafer Bernes',
+                                            text: doc.refObservacones!.observacion2,
                                             style: 'normalText',
                                         }
                                     ]
@@ -590,7 +648,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'Reprehenderit minim commodo Lorem cupidatat labore fugiat nostrud occaecat elit ipsum do.',
+                                            text: doc.refObservacones!.descripcion,
                                             style: 'normalText',
                                         }
                                     ]
@@ -604,7 +662,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'Manzana A, Sector B1, Lote 12 Ciudad San Cristobal Zona 8 de Mixco',
+                                            text: doc.refObservacones!.observacion3,
                                             style: 'normalText',
                                         }
                                     ]
@@ -616,7 +674,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: 'Reprehenderit minim commodo Lorem cupidatat labore fugiat nostrud occaecat elit ipsum do.',
+                                            text: doc.refObservacones!.observacion,
                                             style: 'normalText',
                                         }
                                     ]
@@ -681,84 +739,12 @@ export class PrinterService {
                         widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
 
                         body: [
-                            [
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '25',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: 'CRIS-196',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: 'COPA LABRADA DE PANAL PARA AGUA COLOR AMBAR - ',
-                                    style: 'normalText'
-                                },
-
-                                {
-                                    image: backgroundimg,
-                                    fit: [50, 50],
-
-
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                            ],
-                            [
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '25',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: 'CRIS-196',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: 'COPA LABRADA DE PANAL PARA AGUA COLOR AMBAR - ',
-                                    style: 'normalText'
-                                },
-
-                                {
-                                    image: backgroundimg,
-                                    fit: [50, 50],
-
-
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                                {
-                                    text: '50.00',
-                                    style: 'normalText'
-                                },
-                            ]
+                            ...transacciones
                         ]
                     }
                 },
                 {
+                    marginTop:5,
                     marginLeft: 172,
                     fillColor: '#CCCCCC',
                     layout: 'noBorders',

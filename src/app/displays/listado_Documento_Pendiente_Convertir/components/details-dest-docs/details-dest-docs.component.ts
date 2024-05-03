@@ -179,6 +179,7 @@ export class DetailsDestDocsComponent {
       nit: encabezado?.documento_Nit ?? "",
       tel: encabezado?.documento_Telefono ?? "",
       fecha: currentDate,
+      correo:encabezado.documento_EMail ?? "",
     }
 
     //monstos
@@ -208,6 +209,7 @@ export class DetailsDestDocsComponent {
       //Agregar transaccion
       items.push(
         {
+          sku:detail.producto_Id ?? "",
           descripcion: detail.des_Producto ?? "",
           cantidad: detail.cantidad ?? 0,
           //Calcular preco untario, si la cantidad es 0 agregar el total de la transaccion
@@ -252,6 +254,7 @@ export class DetailsDestDocsComponent {
 
     //Ebojeto completo con los datos de impresion
     this.globalConvertSrevice.docPrint = {
+      
       empresa: empresa,
       documento: documento,
       cliente: cliente,
@@ -379,7 +382,7 @@ export class DetailsDestDocsComponent {
 
       }
 
-      const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
+    const docDefinition = await this._printService.getReport(this.globalConvertSrevice.docPrint);
 
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 

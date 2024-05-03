@@ -8,7 +8,7 @@ import { PostDocumentInterface } from '../../interfaces/post-document.interface'
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
-import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Item, Montos, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
+import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Fechas, Item, Montos, ObservacionesRef, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
 import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
 import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
 import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
@@ -620,11 +620,19 @@ export class ResumenDocumentoComponent implements OnInit {
     let currentDate: Date = new Date();
 
     let cliente: Cliente = {
+      correo:cuenta?.eMail ?? "",
       nombre: cuenta?.factura_Nombre ?? "",
       direccion: cuenta?.factura_Direccion ?? "",
       nit: cuenta?.factura_NIT ?? "",
       tel: cuenta?.telefono ?? "",
       fecha: currentDate,
+    }
+
+    let fechas: Fechas ={
+      fechaInicio: this.facturaService.fechaIni!,
+      fechaInicioRef: this.facturaService.fechaFin!,
+      fechaFin: this.facturaService.fechaFin!,
+      fechaFinRef : this.facturaService.fechaRefFin!,
     }
 
     let cargo: number = 0;
@@ -651,6 +659,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       items.push(
         {
+          sku:detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
           unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
@@ -710,8 +719,15 @@ export class ResumenDocumentoComponent implements OnInit {
       website: "www.demosoft.com.gt",
     }
 
+    let observaciones: ObservacionesRef = {
+      descripcion: this.facturaService.refDescripcion ?? "",
+      observacion:this.facturaService.refObservacion ?? "",
+      observacion2:this.facturaService.refContacto ?? "",
+      observacion3:this.facturaService.refDireccionEntrega ?? "",
+    }
 
     this.docPrint = {
+      refObservacones: observaciones,
       empresa: empresa,
       documento: documento,
       cliente: cliente,
@@ -723,6 +739,7 @@ export class ResumenDocumentoComponent implements OnInit {
       observacion: this.facturaService.observacion,
       mensajes: mensajes,
       poweredBy: poweredBy,
+      fechas:fechas,
     }
 
 
