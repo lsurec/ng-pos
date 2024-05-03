@@ -324,11 +324,24 @@ export class DetalleComponent {
       this._productoService.precio = this._productoService.precios[existPrecio];
     }
 
-    //abrir dialogo producto con lo datos cargados
-    this._dialog.open(ProductoComponent, { data: productTra })
-
     //enviar indice de la transaccion para poder editarla despues
     this._productoService.indexEdit = indexTra;
+
+    //abrir dialogo producto con lo datos cargados
+
+    let resDialogProd = await this._notificationsService.openDetalleporoduct(productTra);
+
+
+    if (resDialogProd) {
+      if (resDialogProd.length > 0) {
+        let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
+
+      }
+    }
+
+
+
+
 
 
   }
@@ -599,11 +612,19 @@ export class DetalleComponent {
       //finalizar proceso
       this.facturaService.isLoading = false;
 
-
-      //mostrar dualogo de producto
-      this._dialog.open(ProductoComponent, { data: productos[0] })
-
       this._productoService.indexEdit = -1;
+
+      let resDialogProd = await this._notificationsService.openDetalleporoduct(productos[0]);
+
+
+      if (resDialogProd) {
+        if (resDialogProd.length > 0) {
+          let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
+
+        }
+      }
+
+
 
       return;
 
@@ -615,11 +636,26 @@ export class DetalleComponent {
 
     //abriri dialogo de prosuctospara seleccioanr uno
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
-    productosDialog.afterClosed().subscribe(result => {
+    productosDialog.afterClosed().subscribe(async result => {
       if (result) {
         //abrir gialofo de producto
-        this._dialog.open(ProductoComponent, { data: result })
         this._productoService.indexEdit = -1;
+
+        let resDialogProd = await this._notificationsService.openDetalleporoduct(result);
+
+
+        if (resDialogProd) {
+          if (resDialogProd.length > 0) {
+
+            let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
+
+            //TODO:VAlidar respuesta
+
+            // if(!resDialogInforme)return;
+
+          }
+        }
+
 
         // let producto: ProductoInterface = result[0];
         // this.producto = producto;
@@ -821,63 +857,13 @@ export class DetalleComponent {
 
   //Para el dialogo
 
-  productos: ProductoInterface[] = [
-    {
-      producto: 1,
-      unidad_Medida: 1,
-      producto_Id: 'P001',
-      des_Producto: 'Hamburguesa con queso',
-      des_Unidad_Medida: 'unidad',
-      tipo_Producto: 1
-    },
-    {
-      producto: 2,
-      unidad_Medida: 2,
-      producto_Id: 'P002',
-      des_Producto: 'Papas fritas',
-      des_Unidad_Medida: 'porción',
-      tipo_Producto: 1
-    },
-    {
-      producto: 3,
-      unidad_Medida: 3,
-      producto_Id: 'P003',
-      des_Producto: 'Refresco de cola',
-      des_Unidad_Medida: 'botella',
-      tipo_Producto: 2
-    },
-    {
-      producto: 4,
-      unidad_Medida: 4,
-      producto_Id: 'P004',
-      des_Producto: 'Ensalada César',
-      des_Unidad_Medida: 'porción',
-      tipo_Producto: 3
-    },
-    {
-      producto: 4,
-      unidad_Medida: 4,
-      producto_Id: 'P004',
-      des_Producto: 'Ensalada César',
-      des_Unidad_Medida: 'porción',
-      tipo_Producto: 3
-    },
-    {
-      producto: 4,
-      unidad_Medida: 4,
-      producto_Id: 'P004',
-      des_Producto: 'Ensalada César',
-      des_Unidad_Medida: 'porción',
-      tipo_Producto: 3
-    }
-  ];
 
 
   verInforme() {
-    //abre el dialogo
-    this._dialog.open(InformeProductosComponent, {
-      data: this.productos,
-    });
+    // //abre el dialogo
+    // this._dialog.open(InformeProductosComponent, {
+    //   data: this.productos,
+    // });
   }
 
 }

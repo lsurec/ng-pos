@@ -14,6 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-producto',
@@ -43,6 +45,7 @@ export class ProductoComponent {
     private _notificationsService: NotificationsService,
     public facturaService: FacturaService,
     private _translate: TranslateService,
+    private _dataUserService: DataUserService,
   ) {
 
   }
@@ -390,11 +393,21 @@ export class ProductoComponent {
     //si hay mensjaes hay inconvenientes
     if (mensajes.length > 0) {
 
-      //TODO:Mostar dialogo
+      let validaciones: ValidateProductInterface[] = [
+        {
+          bodega: `${this.productoService.bodega.nombre} (${this.productoService.bodega!.bodega})`,
+          mensajes: mensajes,
+          productoDesc: this.producto.des_Producto,
+          serie: `${this.facturaService.serie!.descripcion} (${this.facturaService.serie!.serie_Documento})`,
+          sku: this.producto.producto_Id,
+          tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
+        }
+      ]
 
-      //TODO:Translate
+      this.dialogRef.close(
+        validaciones
+      );
 
-      this._notificationsService.openSnackbar("Uno o mas productos  no estan disponibles para su venta.");
 
       return;
     }
@@ -509,7 +522,7 @@ export class ProductoComponent {
     }
 
 
-    this.dialogRef.close();
+    this.dialogRef.close([]);
 
   }
 

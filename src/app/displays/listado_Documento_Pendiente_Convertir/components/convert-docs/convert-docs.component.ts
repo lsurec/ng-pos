@@ -281,8 +281,12 @@ export class ConvertDocsComponent {
       if (mensajes.length != 0) {
         productsErr.push(
           {
-            detalle: tra,
-            mensajes: [...mensajes]
+            bodega: `${tra.detalle.bodega_Descripcion} (${tra.detalle.bodega})`,
+            mensajes: mensajes,
+            productoDesc:tra.detalle.producto_Descripcion,
+            serie: `${this.globalConvertSrevice.docOriginSelect!.serie } (${this.globalConvertSrevice.docOriginSelect!.serie_Documento })`,
+            sku: tra.detalle.producto.toString(),
+            tipoDoc: `${this.globalConvertSrevice.docOriginSelect!.documento_Descripcion} (${this.globalConvertSrevice.docOriginSelect!.tipo_Documento})`,
           }
         )
 
