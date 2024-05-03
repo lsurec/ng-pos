@@ -469,7 +469,7 @@ export class PrinterService {
                                                 body: [
                                                     [
                                                         {
-                                                            text: '45874',
+                                                            text: doc.noDoc,
                                                             style: 'dataText',
                                                             fontSize: 7,
                                                         },
@@ -477,7 +477,7 @@ export class PrinterService {
                                                         {
                                                             marginRight: 25,
 
-                                                            text: '10/10/2024',
+                                                            text: fecha,
                                                             style: 'dataText',
                                                             fontSize: 7,
 
@@ -758,7 +758,7 @@ export class PrinterService {
                                     style: 'headerText'
                                 },
                                 {
-                                    text: '500.48',
+                                    text: doc.montos.total,
                                     style: 'headerText',
                                     alignment: 'right',
                                 }

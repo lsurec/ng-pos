@@ -82,6 +82,7 @@ export interface Empresa {
   
   
   export interface DocPrintModel {
+    noDoc:string;
     empresa: Empresa;
     documento: DocumentoData;
     cliente: Cliente;

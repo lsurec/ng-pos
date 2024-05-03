@@ -727,6 +727,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     this.docPrint = {
+      noDoc:this.consecutivoDoc.toString(),
       refObservacones: observaciones,
       empresa: empresa,
       documento: documento,
