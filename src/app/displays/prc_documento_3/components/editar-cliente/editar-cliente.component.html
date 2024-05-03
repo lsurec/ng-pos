@@ -47,11 +47,10 @@
                             <mat-select name="estado" class="seleccionar"
                                 placeholder="{{ 'pos.factura.seleccionartipoCuenta' | translate }}"
                                 [(ngModel)]="tipoCuenta">
-                                <mat-option *ngFor="let cuenta of tiposCuentas" [value]="cuenta">
-                                    {{cuenta.nombre}}
+                                <mat-option *ngFor="let cuenta of gruposCuenta" [value]="cuenta">
+                                    {{cuenta.descripcion}}
                                 </mat-option>
                             </mat-select>
-                            <p class="subtitulo" *ngIf="tipoCuenta">Cuenta seleccionada: {{tipoCuenta.nombre}}</p>
                         </div>
                         <div class="dFlex">
                             <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' |

@@ -1,6 +1,6 @@
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { CuentaCorrentistaInterface, TipoCuentaInterface } from '../../interfaces/cuenta-correntista.interface';
+import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { CuentaService } from '../../services/cuenta.service';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
@@ -58,26 +58,9 @@ export class EditarClienteComponent implements OnInit {
   }
 
 
-  tipoCuenta?: TipoCuentaInterface;
+  tipoCuenta?: GrupoCuentaInterface;
 
-  tiposCuentas: TipoCuentaInterface[] = [
-    {
-      id: 1,
-      nombre: "Cuenta 1"
-    },
-    {
-      id: 2,
-      nombre: "Cuenta 2"
-    },
-    {
-      id: 3,
-      nombre: "Cuenta 3"
-    },
-    {
-      id: 4,
-      nombre: "Cuenta 4"
-    }
-  ];
+
 
   ngOnInit(): void {
 
