@@ -21,13 +21,9 @@ export class InformeProductosComponent {
     //Instancias de los servicios qeu se van  a usar
     public dialogRef: MatDialogRef<InformeProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public productosEncontrados: ProductoInterface[],
-    private _productService: ProductService,
-    private _notificationsService: NotificationsService,
-    private _productoService: ProductoService,
-    private _translate: TranslateService,
   ) {
     //porudtcos disponibles
-    this.productos = productosEncontrados;
+    this.productos = productosEncontrados;    
   }
 
 

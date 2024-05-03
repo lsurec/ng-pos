@@ -116,15 +116,10 @@ p {
 
 .seleccionar {
     width        : 100%;
-    cursor       : pointer;
     min-height   : 30px;
     border-bottom: 1px solid $color-bordes;
     font-weight  : 400;
     padding      : 5px 0px;
-}
-
-.seleccionar:hover {
-    background-color: #ebebeb;
 }
 
 .dFlex {
@@ -151,8 +146,34 @@ p {
     font-weight: 550;
 }
 
+.adver {
+    font-size  : 12px;
+    color      : #7c7676;
+    font-weight: 550;
+}
+
 .textos {
     font-size: 14px;
+}
+
+.botones {
+    display: flex;
+    padding: 10px 0px;
+}
+
+
+.descargar {
+    color        : $color-azul;
+    font-weight  : bold;
+    cursor       : pointer;
+    font-size    : 12px;
+    border-bottom: 1px solid $color-azul;
+}
+
+.informacion {
+    background-color: $background-oficial;
+    padding         : 10px 15px;
+    overflow-x      : hidden;
 }
 
 @media screen and (max-width: 767px) {
