@@ -18,6 +18,7 @@ import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 import { EventService } from 'src/app/services/event.service';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { InformeProductosComponent } from 'src/app/componets/displays/prc_documento_3/informe-productos/informe-productos.component';
 
 @Component({
   selector: 'app-detalle',
@@ -78,7 +79,7 @@ export class DetalleComponent {
     public facturaService: FacturaService,
     private _productoService: ProductoService,
     private _eventService: EventService,
-    private _globalConvertService:GlobalConvertService,
+    private _globalConvertService: GlobalConvertService,
   ) { }
 
 
@@ -729,8 +730,8 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
-            consecutivo:0,
-            estadoTra:0,
+            consecutivo: 0,
+            estadoTra: 0,
             precioCantidad: null,
             precioDia: null, //TODO:Usar precio dia
             isChecked: false,
@@ -782,10 +783,10 @@ export class DetalleComponent {
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
 
     //guadar tr5ansaccione que se van a eliminar 
-    if(this._globalConvertService.editDoc){
+    if (this._globalConvertService.editDoc) {
       this.facturaService.traInternas.filter((transactions) => transactions.isChecked).forEach(element => {
-        
-        if(element.consecutivo != 0){
+
+        if (element.consecutivo != 0) {
           this.facturaService.transaccionesPorEliminar.push(element);
         }
       });
@@ -815,6 +816,52 @@ export class DetalleComponent {
 
     PreferencesService.error = error;
     this._eventService.verInformeErrorEvent(true);
+  }
+
+
+  //Para el dialogo
+
+  productos: ProductoInterface[] = [
+    {
+      producto: 1,
+      unidad_Medida: 1,
+      producto_Id: 'P001',
+      des_Producto: 'Hamburguesa con queso',
+      des_Unidad_Medida: 'unidad',
+      tipo_Producto: 1
+    },
+    {
+      producto: 2,
+      unidad_Medida: 2,
+      producto_Id: 'P002',
+      des_Producto: 'Papas fritas',
+      des_Unidad_Medida: 'porción',
+      tipo_Producto: 1
+    },
+    {
+      producto: 3,
+      unidad_Medida: 3,
+      producto_Id: 'P003',
+      des_Producto: 'Refresco de cola',
+      des_Unidad_Medida: 'botella',
+      tipo_Producto: 2
+    },
+    {
+      producto: 4,
+      unidad_Medida: 4,
+      producto_Id: 'P004',
+      des_Producto: 'Ensalada César',
+      des_Unidad_Medida: 'porción',
+      tipo_Producto: 3
+    }
+  ];
+
+
+  verInforme() {
+    //abre el dialogo
+    this._dialog.open(InformeProductosComponent, {
+      data: this.productos,
+    });
   }
 
 }
