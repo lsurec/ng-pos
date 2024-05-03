@@ -1,5 +1,5 @@
 import { ClienteInterface } from '../../interfaces/cliente.interface';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { CuentaService } from '../../services/cuenta.service';
 import { EventService } from 'src/app/services/event.service';
@@ -8,6 +8,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { GrupoCuentaInterface } from '../../interfaces/grupo-cuenta.interface';
 
 @Component({
   selector: 'app-nuevo-cliente',
@@ -17,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
     CuentaService,
   ]
 })
-export class NuevoClienteComponent {
+export class NuevoClienteComponent implements OnInit {
 
   //datos para la nueva cuenta
   nombre!: string;  
@@ -31,6 +32,12 @@ export class NuevoClienteComponent {
   isLoading: boolean = false;
   //ver informe de errores
   verError: boolean = false;
+
+  user: string = PreferencesService.user; //Usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+
+  //grupo cuenta disponible
+  gruposCuenta: GrupoCuentaInterface [] = [];
 
   constructor(
     //instancias de los servicios necesarios
@@ -47,6 +54,51 @@ export class NuevoClienteComponent {
     this._eventService.regresarNuevaCuenta$.subscribe((eventData) => {
       this.verError = false;
     });
+  }
+
+  ngOnInit(): void {
+  this.loadData();
+    
+  }
+
+  async loadData(){
+    //Consumo tipo cuneta
+
+    this.gruposCuenta = [];
+
+    this.isLoading   = true;
+    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user,this.token);
+
+    this.isLoading = false;
+
+    //Si el servicio falló
+    if (!resGrupoCuenta.status) {
+
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resGrupoCuenta);
+
+      return;
+
+    }
+
+
+    this.gruposCuenta = resGrupoCuenta.response;
+
+
+    console.log(this.gruposCuenta);
+    
   }
 
 

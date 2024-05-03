@@ -8,6 +8,7 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { GrupoCuentaInterface } from '../../interfaces/grupo-cuenta.interface';
 
 
 @Component({
@@ -31,6 +32,11 @@ export class EditarClienteComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga0
   verError: boolean = false; //informe de errores
+  
+  gruposCuenta:GrupoCuentaInterface[] =  [];
+  user: string = PreferencesService.user; //Usuario de la sesion
+  token: string = PreferencesService.token; //token de la sesion
+
 
   constructor(
     //Instancias de los servicios
@@ -53,6 +59,10 @@ export class EditarClienteComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+    this.loadData()
+
+
     //datos de la cuenta que se va a actualizar
     this.nombre = this.cuenta?.factura_Nombre;
     this.direccion = this.cuenta?.factura_Direccion;
@@ -60,6 +70,48 @@ export class EditarClienteComponent implements OnInit {
     this.telefono = this.cuenta?.telefono;
     this.correo = this.cuenta?.eMail;
 
+    
+
+  }
+
+  async loadData(){
+    //Consumo tipo cuneta
+
+    this.gruposCuenta = [];
+
+    this.isLoading   = true;
+    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user,this.token);
+
+    this.isLoading = false;
+
+    //Si el servicio falló
+    if (!resGrupoCuenta.status) {
+
+
+
+      let verificador = await this._notificationsServie.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resGrupoCuenta);
+
+      return;
+
+    }
+
+
+    this.gruposCuenta = resGrupoCuenta.response;
+
+
+    console.log(this.gruposCuenta);
+    
   }
 
   //regresar a la pantalla anterior
