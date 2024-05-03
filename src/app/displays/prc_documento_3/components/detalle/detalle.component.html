@@ -94,8 +94,7 @@
     </div>
     <div class="documento-sin-borde">
         <div class="lista-productos">
-            <button mat-stroked-button (click)="verInforme()">ABRIR DIALOGO INFORMACION DE PRODUCTOS</button>
-
+            
             <div class="eliminar" *ngIf="facturaService.traInternas.length > 0">
                 <div class="dFlex">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.selectAllTra"
