@@ -8,10 +8,25 @@ $color-azul           : #134895; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 
+.container-main::-webkit-scrollbar {
+    width: 7px;
+}
+
+.container-main::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
 .container-main {
-    height : calc(100vh - 128px) !important;
-    width  : 100%;
-    padding: 0px;
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    padding   : 0px;
+    overflow-x: auto;
 }
 
 .progress {
@@ -42,13 +57,13 @@ p {
 .dFlex {
     display    : flex;
     align-items: center;
-    margin-top : 40px;
+    margin-top : 20px;
 }
 
 .sin-conexion {
     display    : flex;
     align-items: center !important;
-    height     : 100%;
+    padding    : 20px 0px;
 }
 
 .centro {
@@ -90,6 +105,10 @@ p {
     align-items: center;
 }
 
+.informacion {
+    padding: 10px 0px;
+}
+
 .guardar {
     position        : fixed;
     z-index         : 1000;
@@ -103,4 +122,21 @@ p {
     .centro {
         width: 85% !important;
     }
+}
+
+.subtitulo {
+    font-size: 14px;
+    color    : #7c7676;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $color-bordes;
+    font-size    : 12px;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
 }

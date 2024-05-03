@@ -1,6 +1,6 @@
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { Component } from '@angular/core';
-import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
+import { CuentaCorrentistaInterface, TipoCuentaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { CuentaService } from '../../services/cuenta.service';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
@@ -20,13 +20,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class NuevoClienteComponent {
 
   //datos para la nueva cuenta
-  nombre!: string;  
+  nombre!: string;
   direccion!: string;
   nit!: string;
   telefono!: string;
   correo!: string;
   regresar: number = 3;
-  
+
   //Pantalla de carga
   isLoading: boolean = false;
   //ver informe de errores
@@ -49,6 +49,26 @@ export class NuevoClienteComponent {
     });
   }
 
+  tipoCuenta?: TipoCuentaInterface;
+
+  tiposCuentas: TipoCuentaInterface[] = [
+    {
+      id: 1,
+      nombre: "Cuenta 1"
+    },
+    {
+      id: 2,
+      nombre: "Cuenta 2"
+    },
+    {
+      id: 3,
+      nombre: "Cuenta 3"
+    },
+    {
+      id: 4,
+      nombre: "Cuenta 4"
+    }
+  ];
 
   //funcion que valida que un correo ee¿lectronico sea valido
   validarCorreo(correo: string): boolean {
@@ -134,7 +154,7 @@ export class NuevoClienteComponent {
 
     this.isLoading = false;
 
-      // si falló la buqueda de la cuenta creada
+    // si falló la buqueda de la cuenta creada
     if (!infoCuenta.response) {
       this.isLoading = false;
 
@@ -222,7 +242,7 @@ export class NuevoClienteComponent {
 
     //guardar error
     PreferencesService.error = error;
-    
+
     //ver pantalla de informe de errores
     this.verError = true;
   }

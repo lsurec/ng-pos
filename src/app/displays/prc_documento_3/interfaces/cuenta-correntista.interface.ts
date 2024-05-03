@@ -6,3 +6,8 @@ export interface CuentaCorrentistaInterface {
     correo:    string;
     nit:       string;
 }
+
+export interface TipoCuentaInterface {
+    id:     number;
+    nombre: string;
+}
