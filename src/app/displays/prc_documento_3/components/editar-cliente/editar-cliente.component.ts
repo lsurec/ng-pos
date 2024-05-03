@@ -122,6 +122,7 @@ export class EditarClienteComponent implements OnInit {
     for (let i = 0; i < this.gruposCuenta.length; i++) {
       const element = this.gruposCuenta[i];
       if(element.grupo_Cuenta == this.cuenta!.grupo_Cuenta){
+        
         indexGrupoCuenta=i;
         break;
       }
