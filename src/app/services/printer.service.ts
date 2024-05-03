@@ -247,6 +247,239 @@ export class PrinterService {
         return `${dayString}/${monthString}/${year}`;
     }
 
+    async getFormatProductValidate() {
+        let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
+    
+        let date: Date = new Date();
+    
+        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    
+    
+    
+        var docDefinition: TDocumentDefinitions = {
+          info: {
+            title: 'RPT_VALIDA_PRODUCTO',
+            author: 'DEMOSOFT S.A.',
+          },
+          pageMargins: [40, 130, 40, 30],
+          footer: function (currentPage, pageCount) {
+            return [
+              {
+                marginLeft: 40,
+                text: [
+                  {
+                    text: `${fecha} ${hora} `,
+                    fontSize: 6,
+                    color: '#999999'
+                  },
+                  {
+                    text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                    fontSize: 6,
+                  }
+                ]
+              }
+            ];
+          },
+          header:
+            // you can apply any logic and return any valid pdfmake element
+    
+            [
+    
+              {
+                margin: [0, 15, 0, 0],
+                table: {
+    
+                  heights: 'auto',
+                  widths: ['33%', '34%', '33%'], // Ancho de las columnas
+                  body: [
+                    [
+                      {
+                        image: logo_empresa,
+                        width: 115,
+                        absolutePosition: { x: 20, y: 10 }
+                      },
+                      [
+                        {
+                          text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                          style: 'headerText'
+                        },
+                        {
+                          text: 'NIT: 7057806',
+                          style: 'headerText'
+                        },
+                        {
+                          text: 'ALFA Y OMEGA',
+                          style: 'headerText'
+                        },
+                        {
+                          text: '0 Avenida 5-35, Zona 9 Guatemala',
+                          style: 'headerText'
+                        },
+                        {
+                          text: '(502) 2505 1000',
+                          style: 'headerText'
+                        },
+                        {
+                          text: 'ALFA Y OMEGA ANTIGUA',
+                          style: 'headerText'
+                        },
+                        {
+                          text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
+                          style: 'headerText'
+                        },
+                        {
+                          text: '(502) 7822 8375',
+                          style: 'headerText'
+                        },
+                      ],
+    
+                      [
+                        {
+                          layout: 'noBorders',
+    
+                          table: {
+    
+                            widths: ['50%', '50%'],
+                            body: [
+                              [
+                                {
+                                  marginLeft: 20,
+                                  marginRight: 20,
+                                  table: {
+                                    widths: ['80%'],
+                                    body: [
+                                      [
+                                        {
+                                          text: 'DISPONIBILIDAD DE PRODUCTOS',
+                                          style: 'docText',
+                                        },
+                                      ],
+                                    ]
+                                  },
+                                  colSpan: 2,
+                                },
+    
+    
+    
+    
+                              ],
+    
+                            ]
+                          }
+                        },
+                      ],
+    
+                    ],
+    
+                  ]
+                },
+                layout: 'noBorders'
+              }
+            ]
+          ,
+          content: [
+    
+            {
+              fillColor: '#CCCCCC',
+              table: {
+                widths: ['10%', '30%', '20%', '20%', '20%',],
+                body: [
+                  [
+    
+                    {
+                      text: 'Codigo',
+                      style: 'normalTextBold'
+                    },
+    
+                    {
+                      text: 'Descripción',
+                      style: 'normalTextBold'
+                    },
+                    {
+                      text: 'Bodega',
+                      style: 'normalTextBold'
+                    },
+                    {
+                      text: 'Tipo Documento',
+                      style: 'normalTextBold'
+                    },
+                    {
+                      text: 'Serie Documento',
+                      style: 'normalTextBold'
+                    },
+                  ]
+                ]
+              }
+            },
+            {
+              layout: 'noBorders',
+              table: {
+    
+                widths: ['10%', '30%', '20%', '20%', '20%',],
+    
+                body: [
+                  [
+                    {
+                      text:"55xs4",
+                      style : 'normalText'
+                    },
+    
+                    {
+                      text:"Aute aliquip ipsum tempor pariatur irure reprehenderit nostrud.",
+                      style : 'normalText'
+                    },
+                    {
+                      text:"Central (4)",
+                      style : 'normalText'
+                    },
+                    {
+                      text:"Cotizacion (5)",
+                      style : 'normalText'
+                    },
+                    {
+                      text:"COT (54)",
+                      style : 'normalText'
+                    },
+                    
+                  ],
+                  
+                ]
+              }
+            },
+    
+    
+          ],
+          styles: {
+            headerText: {
+              fontSize: 11,
+              bold: true,
+              alignment: 'center',
+            },
+            normalText: {
+              fontSize: 9,
+            },
+            normalTextBold: {
+              fontSize: 9,
+              bold: true,
+            },
+            dataText: {
+              fontSize: 6,
+              bold: true,
+            },
+            docText: {
+              fontSize: 12,
+              bold: true,
+              alignment: 'center'
+            },
+    
+          }
+        };
+        
+        return docDefinition;
+    
+    
+      }
 
 
     async getReportCotizacion( doc: DocPrintModel) {

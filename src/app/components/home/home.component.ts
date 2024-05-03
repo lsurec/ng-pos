@@ -200,7 +200,6 @@ export class HomeComponent implements OnInit {
   };
 
 
- 
 
   // Funcion para llamar datos para el menu (Application y Display)
   async loadDataMenu(): Promise<void> {
