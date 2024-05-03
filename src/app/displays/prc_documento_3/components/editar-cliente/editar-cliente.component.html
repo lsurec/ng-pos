@@ -3,12 +3,15 @@
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
         <mat-toolbar-row class="head__sidenav">
-            <button mat-icon-button aria-label matTooltip="{{'pos.botones.regresarAnterior' | translate}}"
+            <button mat-icon-button aria-label matTooltip="{{'pos.botones.regresar' | translate}}"
                 (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+                <mat-icon>refresh</mat-icon>
+            </button>
             <span class="spacer"></span>
-           
+
             <!-- Titulo de la tarea -->
             <p class="titulo"></p>
         </mat-toolbar-row>
@@ -38,6 +41,17 @@
                         <div class="campos d-flex">
                             <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
                                 class="detalles" [(ngModel)]="correo">
+                        </div>
+                        <div class="informacion">
+                            <p class="subtitulo">{{ 'pos.factura.tipoCuenta' | translate }}</p>
+                            <mat-select name="estado" class="seleccionar"
+                                placeholder="{{ 'pos.factura.seleccionartipoCuenta' | translate }}"
+                                [(ngModel)]="tipoCuenta">
+                                <mat-option *ngFor="let cuenta of tiposCuentas" [value]="cuenta">
+                                    {{cuenta.nombre}}
+                                </mat-option>
+                            </mat-select>
+                            <p class="subtitulo" *ngIf="tipoCuenta">Cuenta seleccionada: {{tipoCuenta.nombre}}</p>
                         </div>
                         <div class="dFlex">
                             <button mat-stroked-button type="button" (click)="goBack()">{{ 'pos.botones.cancelar' |

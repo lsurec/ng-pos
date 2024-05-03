@@ -21,13 +21,13 @@ import { GrupoCuentaInterface } from '../../interfaces/grupo-cuenta.interface';
 export class NuevoClienteComponent implements OnInit {
 
   //datos para la nueva cuenta
-  nombre!: string;  
+  nombre!: string;
   direccion!: string;
   nit!: string;
   telefono!: string;
   correo!: string;
   regresar: number = 3;
-  
+
   //Pantalla de carga
   isLoading: boolean = false;
   //ver informe de errores
@@ -100,6 +100,9 @@ export class NuevoClienteComponent implements OnInit {
     console.log(this.gruposCuenta);
     
   }
+
+  tipoCuenta?: GrupoCuentaInterface;
+
 
 
   //funcion que valida que un correo ee¿lectronico sea valido
@@ -186,7 +189,7 @@ export class NuevoClienteComponent implements OnInit {
 
     this.isLoading = false;
 
-      // si falló la buqueda de la cuenta creada
+    // si falló la buqueda de la cuenta creada
     if (!infoCuenta.response) {
       this.isLoading = false;
 
@@ -274,7 +277,7 @@ export class NuevoClienteComponent implements OnInit {
 
     //guardar error
     PreferencesService.error = error;
-    
+
     //ver pantalla de informe de errores
     this.verError = true;
   }
