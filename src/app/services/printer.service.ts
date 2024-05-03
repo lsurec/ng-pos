@@ -250,7 +250,7 @@ export class PrinterService {
 
 
     async getReportCotizacion( doc: DocPrintModel) {
-        let logo_empresa = await this._generateBase64('/assets/empresa.png');
+        let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
         let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
 
         let date: Date = doc.cliente.fecha;
@@ -292,7 +292,7 @@ export class PrinterService {
                         style: 'normalText'
                     },
                     {
-                        text: '50.00', //TODO:set precio dia
+                        text: item.precioDia, //TODO:set precio dia
                         style: 'normalText'
                     },
                     {

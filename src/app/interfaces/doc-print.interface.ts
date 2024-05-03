@@ -41,7 +41,7 @@ export interface Empresa {
     descripcion: string;
     cantidad: number;
     unitario: string;
-    
+    precioDia:string,
     total: string;
   }
   
