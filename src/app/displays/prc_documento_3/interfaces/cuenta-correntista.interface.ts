@@ -5,4 +5,5 @@ export interface CuentaCorrentistaInterface {
     telefono:  string;
     correo:    string;
     nit:       string;
+    grupoCuenta:number;
 }

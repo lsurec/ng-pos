@@ -7,7 +7,7 @@
                 (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+            <button (click)="loadData()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}">
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>

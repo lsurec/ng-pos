@@ -64,6 +64,8 @@ export class NuevoClienteComponent implements OnInit {
   async loadData(){
     //Consumo tipo cuneta
 
+    this.tipoCuenta = undefined;
+
     this.gruposCuenta = [];
 
     this.isLoading   = true;
@@ -97,7 +99,6 @@ export class NuevoClienteComponent implements OnInit {
     this.gruposCuenta = resGrupoCuenta.response;
 
 
-    console.log(this.gruposCuenta);
     
   }
 
@@ -130,6 +131,13 @@ export class NuevoClienteComponent implements OnInit {
       return;
     }
 
+     //Validar Grupo Cuenta
+     if (!this.validarCorreo(this.correo)) {
+      //TODO:Translate
+      this._notificationsServie.openSnackbar("Seleccione un tipo de cuenta");
+      return;
+    }
+
     //nueva cuneta
     let cuenta: CuentaCorrentistaInterface = {
       correo: this.correo,
@@ -137,7 +145,9 @@ export class NuevoClienteComponent implements OnInit {
       cuenta: 0,
       nit: this.nit,
       nombre: this.nombre,
-      telefono: this.telefono
+      telefono: this.telefono,
+      grupoCuenta:this.tipoCuenta!.grupo_Cuenta,
+      
     }
 
 
