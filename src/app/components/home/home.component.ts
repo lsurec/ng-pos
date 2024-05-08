@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
     //Funcion que carga datos
     this.loadDataMenu();
 
-    //Buscar y obtener el leguaje guardado en el servicio  
+    //Buscar y obtener el leguaje guardado en el servicio
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
@@ -174,7 +174,7 @@ export class HomeComponent implements OnInit {
     this.sidenavend.close();
   };
 
-  //Obtener nombre 
+  //Obtener nombre
   getNameByLanguageRegion(data: LanguageInterface): string | undefined {
     const { names } = data;
     const languageRegion = names.find((item) => item.lrCode === `${this.activeLang.lang}-${this.activeLang.reg}`);
@@ -279,7 +279,7 @@ export class HomeComponent implements OnInit {
 
       };
 
-      //asignar displays a cada aplicacion 
+      //asignar displays a cada aplicacion
       let displays: DisplayInterface[] = resDisplay.response;
       app.children = displays;
 
@@ -454,7 +454,7 @@ export class HomeComponent implements OnInit {
 
         }
 
-        //navegar a documento destino o conversion documento 
+        //navegar a documento destino o conversion documento
         // this._globalConvertService.docDestino = 0; // solo un elemento
         this._globalConvertService.docDestino = 1; // mas de un elemento
       }
@@ -564,7 +564,7 @@ export class HomeComponent implements OnInit {
       const padre: MenuInterface = padres[indexPadre];
       for (let indexHijo = 0; indexHijo < hijos.length; indexHijo++) {
         const hijo: MenuInterface = hijos[indexHijo];
-        // asignacion de elementos hijos al padre. 
+        // asignacion de elementos hijos al padre.
         if (padre.idChild == hijo.idFather) {
           //Asignacion del elemento hijo.
           padre.children.push(hijo);
@@ -635,51 +635,51 @@ export class HomeComponent implements OnInit {
 
   async verConfiguracion(): Promise<void> {
 
-    //verificar si es posible utilizar el servicio
-    if (!PreferencesService.port) {
-      //Cargar pantalla
-      this.isLoading = true;
-      //hay dos puertos disponibles
+    // //verificar si es posible utilizar el servicio
+    // if (!PreferencesService.port) {
+    //   //Cargar pantalla
+    //   this.isLoading = true;
+    //   //hay dos puertos disponibles
 
-      //verifica si el servicio puede ser utilizado en el puerto 5000
-      let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
-      //si no exite el servicio en el puerto 5000
-      if (!resStatus5000.status) {
-        //Verifica si el servicio puede ser utilizado en el puerto 5001
-        let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
-        //sino existe el servicio en el puerto 5001
-        if (!resStatus5001.status) {
+    //   //verifica si el servicio puede ser utilizado en el puerto 5000
+    //   let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
+    //   //si no exite el servicio en el puerto 5000
+    //   if (!resStatus5000.status) {
+    //     //Verifica si el servicio puede ser utilizado en el puerto 5001
+    //     let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
+    //     //sino existe el servicio en el puerto 5001
+    //     if (!resStatus5001.status) {
 
-          //Muestra notificacion de que el servicio no esta disponible en ese momento
-          this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
+    //       //Muestra notificacion de que el servicio no esta disponible en ese momento
+    //       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
-          this.isLoading = false; //Parar pantalla de carga
-          this.showError = true; //Ver error
+    //       this.isLoading = false; //Parar pantalla de carga
+    //       this.showError = true; //Ver error
 
-          let dateNow: Date = new Date(); //fecha del error
+    //       let dateNow: Date = new Date(); //fecha del error
 
-          //Crear error
-          this.error = {
-            date: dateNow,
-            description: "No fue posible establecer conexion con el servicio de impresion, verifique que el servicio este disponible o que el sistema operativo sea compatible.",
-          }
+    //       //Crear error
+    //       this.error = {
+    //         date: dateNow,
+    //         description: "No fue posible establecer conexion con el servicio de impresion, verifique que el servicio este disponible o que el sistema operativo sea compatible.",
+    //       }
 
-          return;
-        } else {
+    //       return;
+    //     } else {
 
-          ///si encontro el servicio en el puerto 5001
-          PreferencesService.port = "5001";
-          this.isLoading = false;
-        }
-      } else {
-        ///si encontro el servicio en el puerto 5000
-        PreferencesService.port = "5000";
-        this.isLoading = false;
-      }
-      //detener la pantalla de carga
-      this.isLoading = false;
-    }
-    // this.sidenavend.close(); //cerrar menu 
+    //       ///si encontro el servicio en el puerto 5001
+    //       PreferencesService.port = "5001";
+    //       this.isLoading = false;
+    //     }
+    //   } else {
+    //     ///si encontro el servicio en el puerto 5000
+    //     PreferencesService.port = "5000";
+    //     this.isLoading = false;
+    //   }
+    //   //detener la pantalla de carga
+    //   this.isLoading = false;
+    // }
+    // this.sidenavend.close(); //cerrar menu
     this.hideHome = true;
     this.impresora = true; //ver impresora
   }
