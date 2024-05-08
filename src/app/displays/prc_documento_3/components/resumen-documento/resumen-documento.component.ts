@@ -22,6 +22,8 @@ import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
 import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-ref-interface';
 import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
+import { PrintFormatService } from '../../services/print-format.service';
+import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -32,6 +34,7 @@ import { NewTransactionInterface } from '../../interfaces/new-transaction.interf
     CurrencyPipe,
     PrinterService,
     ReceptionService,
+    PrintFormatService,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -66,6 +69,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private _printService: PrinterService,
     public globalConvertService: GlobalConvertService,
     private _recpetionService: ReceptionService,
+    private _printFormatService: PrintFormatService,
 
 
   ) {
@@ -314,7 +318,7 @@ export class ResumenDocumentoComponent implements OnInit {
     this.facturaService.transaccionesPorEliminar = [];
 
 
-    let indexUpdate:number = 0;
+    let indexUpdate: number = 0;
     //Actualizar transacciones
     for (const actualizar of this.facturaService.traInternas) {
 
@@ -400,12 +404,12 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
         this.facturaService.traInternas[indexUpdate].consecutivo = resActualizarTransaccion.response;
-      indexUpdate++;
+        indexUpdate++;
       }
     }
 
 
-    let indexInsert:number= 0;
+    let indexInsert: number = 0;
     //insertar tranasacciones
     for (const nueva of this.facturaService.traInternas) {
 
@@ -471,7 +475,59 @@ export class ResumenDocumentoComponent implements OnInit {
 
   }
 
+
+  async printCotizacion() {
+
+    this.isLoading = true;
+
+    let resCot: ResApiInterface = await this._printFormatService.getReportCotizacion(
+      this.user,
+      this.token,
+      this.consecutivoDoc,
+    );
+
+    if (!resCot.status) {
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resCot);
+
+      return;
+    }
+
+    this.isLoading = false;
+
+
+    let dataPrint:CotizacionInterface [] = resCot.response;
+
+
+    console.log(dataPrint);
+    
+    
+
+
+
+  }
+
   async printDoc() {
+
+    //Verificar tipo de documento
+    if (this.facturaService.tipoDocumento == 20) {
+      //Generar datos apra impresion de cotizacion
+
+      this.printCotizacion();
+      return;
+    }
 
     this.isLoading = true;
 
@@ -620,7 +676,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let currentDate: Date = new Date();
 
     let cliente: Cliente = {
-      correo:cuenta?.eMail ?? "",
+      correo: cuenta?.eMail ?? "",
       nombre: cuenta?.factura_Nombre ?? "",
       direccion: cuenta?.factura_Direccion ?? "",
       nit: cuenta?.factura_NIT ?? "",
@@ -628,11 +684,11 @@ export class ResumenDocumentoComponent implements OnInit {
       fecha: currentDate,
     }
 
-    let fechas: Fechas ={
+    let fechas: Fechas = {
       fechaInicio: this.facturaService.fechaIni!,
       fechaInicioRef: this.facturaService.fechaFin!,
       fechaFin: this.facturaService.fechaFin!,
-      fechaFinRef : this.facturaService.fechaRefFin!,
+      fechaFinRef: this.facturaService.fechaRefFin!,
     }
 
     let cargo: number = 0;
@@ -647,7 +703,7 @@ export class ResumenDocumentoComponent implements OnInit {
     this.facturaService.traInternas.forEach(detail => {
 
 
-      
+
       if (detail.cantidad == 0 && detail.total > 0) {
         //4 cargo
         cargo += detail.total;
@@ -661,8 +717,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
       items.push(
         {
-          sku:detail.producto.producto_Id,
-          descripcion: detail.producto. des_Producto,
+          sku: detail.producto.producto_Id,
+          descripcion: detail.producto.des_Producto,
           cantidad: detail.cantidad,
           unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.precioCantidad! / detail.cantidad : detail.precioCantidad, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.total, ' ', 'symbol', '2.2-2')!,
@@ -724,13 +780,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let observaciones: ObservacionesRef = {
       descripcion: this.facturaService.refDescripcion ?? "",
-      observacion:this.facturaService.refObservacion ?? "",
-      observacion2:this.facturaService.refContacto ?? "",
-      observacion3:this.facturaService.refDireccionEntrega ?? "",
+      observacion: this.facturaService.refObservacion ?? "",
+      observacion2: this.facturaService.refContacto ?? "",
+      observacion3: this.facturaService.refDireccionEntrega ?? "",
     }
 
     this.docPrint = {
-      noDoc:this.consecutivoDoc.toString(),
+      noDoc: this.consecutivoDoc.toString(),
       refObservacones: observaciones,
       empresa: empresa,
       documento: documento,
@@ -743,19 +799,19 @@ export class ResumenDocumentoComponent implements OnInit {
       observacion: this.facturaService.observacion,
       mensajes: mensajes,
       poweredBy: poweredBy,
-      fechas:fechas,
+      fechas: fechas,
     }
 
 
     //Imprimir doc 
 
-    if(this.facturaService.tipoDocumento! == 20){
+    if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
 
       const docDefinition = await this._printService.getReportCotizacion(this.docPrint);
       pdfMake.createPdf(docDefinition).open();
 
-      
+
 
       return;
 
