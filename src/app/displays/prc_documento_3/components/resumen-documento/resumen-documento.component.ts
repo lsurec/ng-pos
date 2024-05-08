@@ -521,13 +521,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
   async printDoc() {
 
-    //Verificar tipo de documento
-    if (this.facturaService.tipoDocumento == 20) {
-      //Generar datos apra impresion de cotizacion
+    // //Verificar tipo de documento
+    // if (this.facturaService.tipoDocumento == 20) {
+    //   //Generar datos apra impresion de cotizacion
 
-      this.printCotizacion();
-      return;
-    }
+    //   this.printCotizacion();
+    //   return;
+    // }
 
     this.isLoading = true;
 
