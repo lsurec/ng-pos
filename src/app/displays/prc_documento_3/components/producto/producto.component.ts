@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { FacturaService } from '../../services/factura.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
@@ -16,6 +16,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { DataUserService } from '../../services/data-user.service';
+import { ImagenComponent } from '../imagen/imagen.component';
 
 @Component({
   selector: 'app-producto',
@@ -38,6 +39,7 @@ export class ProductoComponent {
 
   constructor(
     //Servicios que se van a utilizar
+    private _dialog: MatDialog,
     public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public producto: ProductoInterface,
     public productoService: ProductoService,
@@ -526,4 +528,7 @@ export class ProductoComponent {
 
   }
 
+  imagen(producto: ProductoInterface) {
+    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+  }
 }

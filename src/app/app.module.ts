@@ -68,7 +68,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HomeConvertComponent } from './displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { InformeProductosComponent } from './componets/displays/prc_documento_3/informe-productos/informe-productos.component';
+import { InformeProductosComponent } from './displays/prc_documento_3/components/informe-productos/informe-productos.component';
+import { ImagenComponent } from './displays/prc_documento_3/components/imagen/imagen.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { InformeProductosComponent } from './componets/displays/prc_documento_3/
     DetailsDestDocsComponent,
     HomeConvertComponent,
     InformeProductosComponent,
+    ImagenComponent,
   ],
   imports: [
     BrowserModule,

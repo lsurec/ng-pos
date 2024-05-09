@@ -16,7 +16,7 @@ $color-negro          : #000; //bordes y texto azul
 .dialog {
     padding         : 10px 10px 15px 15px;
     width           : 700px;
-    height          : 430px;
+    height          : 325px;
     background-color: $background-oficial;
 }
 
@@ -87,6 +87,7 @@ p {
     text-align : left !important;
     font-size  : 14px;
     width      : 100%;
+    height     : 100%;
     font-weight: 450;
     align-items: center;
 }
@@ -114,23 +115,12 @@ p {
     padding-left: 3px;
 }
 
-.seleccionar-imagen {
-    border-bottom: 1px solid $color-bordes;
-    display      : flex;
-    align-items  : center;
-}
-
 .seleccionar {
-    width           : 90%;
-    cursor          : pointer;
-    min-height      : 30px;
-    // border-bottom: 1px solid $color-bordes;
-    font-weight     : 400;
-    padding         : 5px 0px;
-}
-
-.seleccionar:hover {
-    background-color: #ebebeb;
+    width        : 100%;
+    min-height   : 30px;
+    border-bottom: 1px solid $color-bordes;
+    font-weight  : 400;
+    padding      : 5px 0px;
 }
 
 .dFlex {
@@ -157,9 +147,33 @@ p {
     font-weight: 550;
 }
 
+.adver {
+    font-size  : 12px;
+    color      : #7c7676;
+    font-weight: 550;
+}
+
 .textos {
     font-size: 14px;
 }
+
+.botones {
+    display: flex;
+    padding: 10px 0px;
+}
+
+.informacion {
+    background-color: $background-oficial;
+    padding         : 10px 15px;
+    overflow-x      : hidden;
+}
+
+.imagen {
+    height       : 250px;
+    margin       : 10px 0px;
+    align-content: center;
+}
+
 
 @media screen and (max-width: 767px) {
 
@@ -175,5 +189,10 @@ p {
 
     .verDetalle {
         font-size: 15px !important;
+    }
+
+    .imagen {
+        height: 150px !important;
+        margin: 5px 0px !important;
     }
 }

@@ -9,6 +9,7 @@ import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
+import { ImagenComponent } from '../imagen/imagen.component';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -28,6 +29,7 @@ export class ProductosEncontradosComponent {
   constructor(
     //Instancias de los servicios qeu se van  a usar
     public dialogRef: MatDialogRef<ProductosEncontradosComponent>,
+    private _dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public productosEncontrados: ProductoInterface[],
     private _productService: ProductService,
     private _notificationsService: NotificationsService,
@@ -195,5 +197,9 @@ export class ProductosEncontradosComponent {
 
     }
 
+  }
+
+  imagen(producto: ProductoInterface) {
+    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
   }
 }

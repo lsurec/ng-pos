@@ -18,7 +18,7 @@ import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
 import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.component';
 import { EventService } from 'src/app/services/event.service';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
-import { InformeProductosComponent } from 'src/app/componets/displays/prc_documento_3/informe-productos/informe-productos.component';
+import { ImagenComponent } from '../imagen/imagen.component';
 
 @Component({
   selector: 'app-detalle',
@@ -866,4 +866,7 @@ export class DetalleComponent {
     // });
   }
 
+  imagen(producto: ProductoInterface) {
+    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+  }
 }

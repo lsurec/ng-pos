@@ -9,10 +9,10 @@ import { ResApiInterface } from "../interfaces/res-api.interface";
 import { RouteNamesService } from "./route.names.service";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { InformeProductosComponent } from "../componets/displays/prc_documento_3/informe-productos/informe-productos.component";
 import { ValidateProductInterface } from "../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface";
 import { ProductoInterface } from "../displays/prc_documento_3/interfaces/producto.interface";
 import { ProductoComponent } from "../displays/prc_documento_3/components/producto/producto.component";
+import { InformeProductosComponent } from "../displays/prc_documento_3/components/informe-productos/informe-productos.component";
 
 @Injectable({
     providedIn: 'root'

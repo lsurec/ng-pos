@@ -9,14 +9,14 @@ $color-negro          : #000; //bordes y texto azul
     padding         : 0px;
     padding-right   : 0px;
     width           : 680px;
-    min-height      : 350px;
+    height          : 430px;
     background-color: $background-oficial;
 }
 
 .dialog {
     padding         : 10px 20px;
     width           : 700px;
-    min-height      : 350px;
+    height          : 430px;
     background-color: $background-oficial;
     overflow        : hidden;
 }
