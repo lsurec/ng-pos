@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
@@ -866,7 +866,18 @@ export class DetalleComponent {
     // });
   }
 
+  imagenes: string[] = [
+    "https://ferreteriavidri.com/images/items/large/405515.jpg",
+    "https://http2.mlstatic.com/D_NQ_NP_828517-MLA43045758475_082020-O.webp",
+  ]
+
   imagen(producto: ProductoInterface) {
-    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+
+    let imagenesProducto: ImagenProductoInterface = {
+      producto: producto,
+      imagenesUrl: this.imagenes,
+    }
+
+    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }
