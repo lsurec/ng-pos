@@ -24,6 +24,7 @@ import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente
 import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
 import { PrintFormatService } from '../../services/print-format.service';
 import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -70,6 +71,7 @@ export class ResumenDocumentoComponent implements OnInit {
     public globalConvertService: GlobalConvertService,
     private _recpetionService: ReceptionService,
     private _printFormatService: PrintFormatService,
+    private _dataUserService:DataUserService,
 
 
   ) {
@@ -128,7 +130,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //Si se permite fel entrar al proceso
-    if (this.facturaService.valueParametro(349)) {
+    // if (this.facturaService.valueParametro(349)) {
+      if (DataUserService.switchState) {
       //alerta FEL no disponible
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {

@@ -53,8 +53,8 @@ export class ProductoComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.seleccionarTexto();
-    console.log("init");
+    // this.seleccionarTexto();
+    // console.log("init");
     
   }
 
