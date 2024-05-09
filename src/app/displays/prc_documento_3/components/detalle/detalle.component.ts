@@ -594,6 +594,13 @@ export class DetalleComponent {
             break;
 
           }
+
+          if(!this._productoService.precio){
+            this._productoService.precio = this._productoService.precios![0];
+            this._productoService.total = this._productoService.precios![0].precioU;
+            this._productoService.precioU = this._productoService.precios![0].precioU;
+            this._productoService.precioText = this._productoService.precios![0].precioU.toString();
+          }
         }
 
       }
@@ -625,6 +632,7 @@ export class DetalleComponent {
 
     //abriri dialogo de prosuctospara seleccioanr uno
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
+    
     productosDialog.afterClosed().subscribe(async result => {
       if (result) {
         //abrir gialofo de producto

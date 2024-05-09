@@ -187,6 +187,12 @@ export class ProductosEncontradosComponent {
 
         }
 
+        if (!this._productoService.precio) {
+          this._productoService.precio = this._productoService.precios![0];
+          this._productoService.total = this._productoService.precios![0].precioU;
+          this._productoService.precioU = this._productoService.precios![0].precioU;
+          this._productoService.precioText = this._productoService.precios![0].precioU.toString();
+        }
       }
 
 
