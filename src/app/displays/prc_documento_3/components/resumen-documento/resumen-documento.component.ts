@@ -130,13 +130,40 @@ export class ResumenDocumentoComponent implements OnInit {
     //Si se permite fel entrar al proceso
     if (this.facturaService.valueParametro(349)) {
       //alerta FEL no disponible
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+      // this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+
+      await this.sendDocument();
+
+      //Empezar proceso FEL 
+      this.felProcess();
+
+
     } else {
       //Enviar documento a tbl_documento estructura
       this.sendDocument()
     }
 
 
+
+  }
+
+
+  async felProcess() {
+
+    //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
+    let apiToken:number = 0;
+    let tokenFel:string = "";
+
+
+    //TODO:Replece for value in database
+    let uuidDoc = 'BA86F308-C4F7-4E13-A930-D859E3AC55FF'
+    
+    //TODO:Asiganr el api 
+    let apiUse:number = 9;
+
+
+    //Lista de servisios que se van a autilizar
+    
 
 
   }
@@ -508,12 +535,12 @@ export class ResumenDocumentoComponent implements OnInit {
     this.isLoading = false;
 
 
-    let dataPrint:CotizacionInterface [] = resCot.response;
+    let dataPrint: CotizacionInterface[] = resCot.response;
 
 
     console.log(dataPrint);
-    
-    
+
+
 
 
 
