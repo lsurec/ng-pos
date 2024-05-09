@@ -834,7 +834,7 @@ export class ResumenDocumentoComponent implements OnInit {
           this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
 
-          const docDefinition = await this._printService.getReport(this.docPrint);
+          const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
           pdfMake.createPdf(docDefinition).print();
 
@@ -858,7 +858,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       if (PreferencesService.localPrint) {
         this.isLoading = false;
-        const docDefinition = await this._printService.getReport(this.docPrint);
+        const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
         pdfMake.createPdf(docDefinition).print();
 
@@ -886,7 +886,7 @@ export class ResumenDocumentoComponent implements OnInit {
           this._translate.instant('pos.alertas.sin_servicio_impresion'),
           this._translate.instant('pos.botones.imprimir'),
           async () => {
-            const docDefinition = await this._printService.getReport(this.docPrint!);
+            const docDefinition = await this._printService.getPDFDocTMU(this.docPrint!);
 
             pdfMake.createPdf(docDefinition).print();
           }
@@ -909,7 +909,7 @@ export class ResumenDocumentoComponent implements OnInit {
           `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
           this._translate.instant('pos.botones.imprimir'),
           async () => {
-            const docDefinition = await this._printService.getReport(this.docPrint!);
+            const docDefinition = await this._printService.getPDFDocTMU(this.docPrint!);
 
             pdfMake.createPdf(docDefinition).print();
           }
@@ -920,7 +920,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       }
 
-      const docDefinition = await this._printService.getReport(this.docPrint);
+      const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 

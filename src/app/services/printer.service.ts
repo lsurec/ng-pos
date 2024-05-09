@@ -22,7 +22,6 @@ export class PrinterService {
     ) {
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatusPrint(
 
         printer: string,
@@ -32,7 +31,6 @@ export class PrinterService {
 
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getStatusPrint(
         printer: string,
     ): Promise<ResApiInterface> {
@@ -65,7 +63,6 @@ export class PrinterService {
         )
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatus(
 
         port: string,
@@ -75,7 +72,6 @@ export class PrinterService {
 
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getStatus(
         port: string,
     ): Promise<ResApiInterface> {
@@ -167,14 +163,12 @@ export class PrinterService {
         })
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getPrinters() {
 
         //consumo de api
         return this._http.get(`${this._urlBase}${this._port}/api/printer`, { observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getPrinters(): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPrinters().subscribe(
@@ -212,7 +206,6 @@ export class PrinterService {
         }
         )
     }
-
 
 
     private async _generateBase64(source: string): Promise<any> {
@@ -1701,7 +1694,7 @@ export class PrinterService {
     }
 
 
-    async getReport(doc: DocPrintModel) {
+    async getPDFDocTMU(doc: DocPrintModel) {
 
 
         let logo_empresa = await this._generateBase64('/assets/empresa.png');;
@@ -2095,349 +2088,6 @@ export class PrinterService {
         return docDefinition;
     }
 
-
-    async getReportConvert(doc: DocPrintModel) {
-
-
-        let logo_empresa = await this._generateBase64('/assets/empresa.png');
-
-        let date: Date = doc.cliente.fecha;
-
-        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-
-        let transacciones: any[] = [];
-
-        doc.items.forEach(item => {
-            transacciones.push(
-                [
-                    { text: item.cantidad, style: 'normalText', },
-                    { text: item.descripcion, style: 'normalText' },
-                    { text: item.unitario, style: 'endText', },
-                    { text: item.total, style: 'endText', },
-                ],
-
-            );
-        });
-
-
-
-        let divider = {
-            layout: 'headerLineOnly',
-            table: {
-                widths: ['100%'],
-                headerRows: 1,
-                body: [
-                    [
-                        {
-                            text: ''
-                        }
-                    ],
-                    [
-                        {
-                            text: ''
-                        }
-                    ],
-                ]
-            }
-        };
-
-
-        var docDefinition: TDocumentDefinitions = {
-            info: {
-                title: doc.documento.titulo,
-                author: 'Demosoft',
-                subject: 'ticket',
-                keywords: 'tck, sale',
-            },
-            pageSize: {
-                width: 226.77,
-                height: 'auto',
-            },
-            pageMargins: [5.66, 0, 5.66, 5.66],
-            content: [
-                //DATOS EMPRESA
-                {
-                    image: logo_empresa,
-                    fit: [161.73, 76.692],
-                    alignment: 'center',
-                },
-                {
-                    text: doc.empresa.razonSocial,
-                    style: 'centerBold',
-                    margin: [0, 10, 0, 0],
-                },
-                {
-                    text: doc.empresa.nombre,
-                    style: 'centerBold',
-                },
-                {
-                    text: doc.empresa.direccion,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nit')} ${doc.empresa.nit}`,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.tel')} ${doc.empresa.tel}`,
-                    style: 'centerBold',
-                },
-                {
-                    text: doc.documento.titulo,
-                    style: 'centerBold',
-                    margin: [0, 10, 0, 0],
-
-                },
-                {
-                    text: doc.documento.descripcion,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
-                    style: 'center',
-                    margin: [0, 10, 0, 0],
-
-                },
-
-                //CLiente
-                {
-                    text: `${this._translate.instant('pos.factura.cliente').toUpperCase()}:`,
-                    style: 'center',
-                    margin: [0, 10, 0, 0],
-
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nombre')} :  ${doc.cliente.nombre}`,
-                    style: 'center',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nit')} :  ${doc.cliente.nit}`,
-                    style: 'center',
-                },
-
-                {
-                    text: `${this._translate.instant('pos.factura.direccion')} : ${doc.cliente.direccion}`,
-                    style: 'center',
-                },
-
-                {
-                    text: `${this._translate.instant('pos.factura.tel')} ${doc.cliente.tel}`,
-                    style: 'center',
-                },
-                {
-                    table: {
-                        widths: ['50%', '50%',],
-                        body: [
-                            [
-                                { text: this._translate.instant('pos.factura.fecha').toUpperCase() + fecha, style: 'center' },
-                                { text: this._translate.instant('pos.factura.hora').toUpperCase() + hora, style: 'center', },
-                            ],
-
-                        ],
-                    },
-                    layout: 'noBorders',
-                },
-                //TABLA PRODUCTOS
-                {
-                    layout: 'headerLineOnly',
-                    margin: [0, 10, 0, 0],
-                    table: {
-
-                        widths: ['15%', '45%', '15%', '25%'],
-                        headerRows: 1,
-
-                        body: [
-
-                            [
-                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
-                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
-                                { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
-                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
-                            ],
-
-                            ...transacciones
-
-                        ],
-                    },
-
-                },
-                divider,
-                {
-                    layout: 'headerLineOnly',
-                    table: {
-
-                        widths: ['50%', '50%'],
-
-                        body: [
-
-                            [
-                                { text: this._translate.instant('pos.factura.subtotal'), style: 'normalTextBold' },
-                                { text: doc.montos.subtotal, style: 'endTextBold' },
-
-                            ],
-                            [
-                                { text: this._translate.instant('pos.factura.cargo'), style: 'normalTextBold' },
-                                { text: doc.montos.cargos, style: 'endTextBold' },
-
-                            ],
-                            [
-                                { text: this._translate.instant('pos.factura.descuento'), style: 'normalTextBold' },
-                                { text: doc.montos.descuentos, style: 'endTextBold' },
-
-                            ],
-
-                        ],
-                    },
-
-
-                },
-                divider,
-
-
-                {
-                    layout: 'headerLineOnly',
-                    table: {
-
-                        widths: ['50%', '50%'],
-
-                        body: [
-
-                            [
-                                {
-                                    text: this._translate.instant('pos.factura.total').toUpperCase(),
-                                    style: 'normalTextBold'
-                                },
-                                {
-                                    text: doc.montos.total,
-                                    style: 'endTextBold'
-                                },
-
-                            ],
-                        ],
-                    },
-
-
-                },
-                {
-                    text: doc.montos.totalLetras,
-                    style: 'normalText',
-                    alignment: 'justify',
-                },
-                divider,
-
-
-                {
-                    margin: [0, 10],
-                    text: doc.mensajes[0],
-                    style: 'centerBold',
-                },
-
-                {
-                    margin: [0, 20, 0, 0],
-                    text: '---------------------------------------------------------------',
-                    style: 'center',
-                },
-
-                {
-                    text: 'Power By',
-                    style: 'center',
-                },
-
-                {
-                    text: 'Desarrollo Moderno de Software S.A.',
-                    style: 'center',
-                },
-
-                {
-                    text: 'www.demosoft.com.gt',
-                    style: 'center',
-                },
-                // {
-                //   image: this.logo_empresa,
-                //   fit: [141.73, 56.692],
-                //   alignment: 'center',
-                // },
-
-
-
-            ],
-            styles: {
-                center: {
-                    fontSize: 8,
-                    alignment: 'center',
-                },
-                centerBold: {
-                    fontSize: 8,
-                    alignment: 'center',
-                    bold: true,
-                },
-                normalText: {
-                    fontSize: 8,
-                },
-                normalTextBold: {
-                    fontSize: 8,
-                    bold: true,
-                },
-
-                endText: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                endTextBold: {
-                    fontSize: 8,
-                    alignment: 'right',
-                    bold: true,
-                },
-                header: {
-                    fontSize: 9,
-                    bold: true,
-                    alignment: 'center',
-                },
-                tHeaderLabel: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                tHeaderValue: {
-                    fontSize: 8,
-                    bold: true,
-                },
-                tProductsHeader: {
-                    fontSize: 8.5,
-                    bold: true,
-                },
-                tProductsBody: {
-                    fontSize: 8,
-                },
-                tTotals: {
-                    fontSize: 9,
-                    bold: true,
-                    alignment: 'right',
-                },
-                tClientLabel: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                tClientValue: {
-                    fontSize: 8,
-                    bold: true,
-                },
-                text: {
-                    fontSize: 8,
-                    alignment: 'center',
-                },
-                link: {
-                    fontSize: 8,
-                    bold: true,
-                    margin: [0, 0, 0, 4],
-                    alignment: 'center',
-                },
-            },
-        };
-
-        return docDefinition;
-    }
 
 
     async getTestTemplate() {
