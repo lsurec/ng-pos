@@ -8,4 +8,7 @@ export interface ProductoInterface {
 }
 
 
-
+export interface ImagenProductoInterface {
+    producto: ProductoInterface,
+    imagenesUrl: string[],
+}

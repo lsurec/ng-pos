@@ -13,14 +13,20 @@
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="contenedor">
-        <div class="busqueda">
-            <div class="contenido-izquierdo">
-                <div class="dFlex">
-                    <span class="spacer"></span>
-                    <img class="imagen" src="assets/empresa.png" alt="{{ 'pos.home.noDisponible' | translate }}">
-                    <span class="spacer"></span>
-                </div>
+        <div class="contenido-izquierdo">
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <span class="spacer"></span>
+                <ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let url of imagenes">
+                        <div class="picsum-img-wrapper">
+                            <img [src]="url" alt="Random first slide" />
+                        </div>
+                    </ng-template>
+                </ngb-carousel>
+                <span class="spacer"></span>
             </div>
+            <span class="spacer"></span>
         </div>
     </div>
 </div>

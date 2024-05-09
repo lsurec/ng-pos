@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
@@ -540,7 +540,19 @@ export class ProductoComponent implements OnInit {
 
   }
 
+  imagenes: string[] = [
+    "https://guateplast.com/wp-content/uploads/2022/03/Silla-Petatillo-VR.jpg",
+    "https://img.freepik.com/psd-gratis/mesa-cafe-aislada-fondo-transparente_191095-13806.jpg",
+    "https://mobeduc.com/wordpress/wp-content/uploads/2017/03/600120-Mesa-hexagonal_r-e1488989978398.jpg"
+  ]
+
   imagen(producto: ProductoInterface) {
-    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+
+    let imagenesProducto: ImagenProductoInterface = {
+      producto: producto,
+      imagenesUrl: this.imagenes,
+    }
+
+    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }

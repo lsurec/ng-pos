@@ -33,6 +33,7 @@ $color-negro          : #000; //bordes y texto azul
 .contenedor {
     overflow-y: auto;
     overflow-x: hidden;
+    height    : 100%;
 }
 
 .dialog::-webkit-scrollbar {
@@ -94,12 +95,12 @@ p {
 
 .contenido-izquierdo {
     //corregir ancho del contenedor
-    min-height      : 35px;
-    align-items     : center;
-    // margin-bottom: 5px;
-    width           : 100%;
-    padding-left    : 5px;
-    padding-right   : 5px;
+    height       : 100%;
+    align-items  : center;
+    display      : flex;
+    width        : 100%;
+    padding-left : 5px;
+    padding-right: 5px;
 }
 
 .campo-obligatorio {
@@ -195,4 +196,14 @@ p {
         height: 150px !important;
         margin: 5px 0px !important;
     }
+}
+
+
+img {
+    height: 200px;
+}
+
+//importante para cetrar el carrusel
+.carousel {
+    position: unset !important;
 }

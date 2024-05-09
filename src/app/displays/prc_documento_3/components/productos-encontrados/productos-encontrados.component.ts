@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -205,7 +205,18 @@ export class ProductosEncontradosComponent {
 
   }
 
+  imagenes: string[] = [
+    "https://cemacogt.vtexassets.com/arquivos/ids/403500-800-800?v=638439347056370000&width=800&height=800&aspect=true",
+    "https://i1.wp.com/primatextil.com.gt/wp-content/uploads/2020/05/Mantel-Peque%C3%B1o.png?fit=1080%2C1080&ssl=1",
+  ]
+
   imagen(producto: ProductoInterface) {
-    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+
+    let imagenesProducto: ImagenProductoInterface = {
+      producto: producto,
+      imagenesUrl: this.imagenes,
+    }
+
+    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }
