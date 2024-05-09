@@ -706,7 +706,8 @@ export class HomeComponent implements OnInit {
 
 
     let logo_empresa = await this._generateBase64('/assets/empresa.png');
-    let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+    let felImg = await this._generateBase64('/assets/fel.png');
+    let logoDemosoft = await this._generateBase64('/assets/logo_demosoft.png');
 
     let date: Date = new Date();
 
@@ -722,23 +723,89 @@ export class HomeComponent implements OnInit {
         title: 'TD_Cotizacion_IMG',
         author: 'DEMOSOFT S.A.',
       },
-      pageMargins: [25, 100, 25, 25],
+      pageMargins: [25, 100, 25, 60],
       footer: function (currentPage, pageCount) {
         return [
           {
-            marginLeft: 40,
-            text: [
-              {
-                text: `${fecha} ${hora} `,
-                fontSize: 6,
-                color: '#134895'
-              },
-              {
-                text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
-                fontSize: 6,
-              }
-            ]
-          }
+            layout:'noBorders',
+            table: {
+              widths: ['20%', '30%', '30%', '20%'],
+              body: [
+                [
+                  
+                    {
+                      image: felImg,
+                      fit: [50, 50],
+                      alignment:'center'
+
+                    },
+                    
+                  
+                  [
+                    {
+                      marginTop:10,
+                      text: 'Datos del Certificador:',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                    {
+                      text: 'Infile S.A.',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                    {
+                      text: 'NIT: 6518584-87',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                  ],
+                  [
+                    {
+                      marginTop:10,
+
+                      text: 'Powered By:',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                    {
+                      text: 'Desarrollo Moderno de Software S.A.',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                    {
+                      text: 'www.demosoft.com.gt',
+                      style: 'textFooter',
+                      alignment:'center',
+                    },
+                  ],
+                  [
+                    {
+                      image: logoDemosoft,
+                      fit: [50, 50],
+                      alignment:'center'
+
+                    },
+                    {
+                      alignment:'center',
+                      text: [
+                        {
+                          text: `${fecha} ${hora} `,
+                          style: 'textFooter',
+                        },
+                        {
+                          text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                          fontSize: 6,
+                        }
+                        ,
+                        
+                      ]
+                    }
+                  ],
+                ]
+              ]
+            }
+          },
+
         ];
       },
       header:
@@ -954,27 +1021,27 @@ export class HomeComponent implements OnInit {
 
                 {
                   text: 'CODIGO',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 },
                 {
                   text: 'CANTIDAD',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 },
                 {
                   text: 'UM',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 },
                 {
                   text: 'DESCRIPCION',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 },
                 {
                   text: 'P/U',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 },
                 {
                   text: 'TOTAL',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                 }
               ],
               [
@@ -1056,7 +1123,7 @@ export class HomeComponent implements OnInit {
               [
                 {
                   text: 'TOTAL',
-                  style: ['headerText','fillColor'],
+                  style: ['headerText', 'fillColor'],
                   colSpan: 5,
                 },
                 {}, // Celda adicional para fusionar con la primera celda
@@ -1080,24 +1147,28 @@ export class HomeComponent implements OnInit {
             ]
           }
         },
-       [
-        {
-          text:
-            '*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*',
-          style: 'headerText'
-        },
-        {
-          text:
-            '*GRACIAS POR TU COMPRA*',
-          style: 'headerText'
-        }
-       ]
+        [
+          {
+            text:
+              '*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*',
+            style: 'headerText'
+          },
+          {
+            text:
+              '*GRACIAS POR TU COMPRA*',
+            style: 'headerText'
+          }
+        ]
 
       ],
       styles: {
-        fillColor:{
-          fillColor:'#134895',
-          color:'#ffffff'
+        textFooter: {
+          fontSize: 6,
+          color: '#134895',
+        },
+        fillColor: {
+          fillColor: '#134895',
+          color: '#ffffff'
         },
         felText: {
           fontSize: 8,
