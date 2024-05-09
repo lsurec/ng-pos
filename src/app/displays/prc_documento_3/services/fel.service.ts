@@ -25,7 +25,7 @@ export class FelService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Fel/${api}/${user}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/api/${api}/${user}`, { headers: headers, observe: 'response' });
     }
 
     getApi(

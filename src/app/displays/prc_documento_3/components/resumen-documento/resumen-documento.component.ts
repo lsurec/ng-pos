@@ -166,16 +166,39 @@ export class ResumenDocumentoComponent implements OnInit {
     let apiUse: number = 9;
 
 
+    this.isLoading = true;
+
     //buscar api en catalogo api 
     let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
 
     if(!resApi.status){
+      this.isLoading = false;
       this.showError(resApi);
       return;
     }
 
+    //apis encontradas
+    let apis: APIInterface[] = resApi.response;
 
-    let api: APIInterface[] = resApi.response;
+    //verificar que hay elemnetos en el catalogo de apis
+    if(apis.length == 0){
+     //TODO:Translate
+     this.isLoading = false;
+     resApi.response = `No se encontri el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
+
+     this.showError(resApi);
+
+     return;
+    }
+
+
+    //api que se va a usar
+    let api:APIInterface = apis[0];
+
+
+
+
+    this.isLoading = false;
 
 
 
