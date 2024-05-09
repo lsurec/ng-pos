@@ -256,12 +256,12 @@ export class PrinterConfigurationComponent implements OnInit {
 
       if (this.volver != 3) {
 
-        const docDefinition = await this._printerService.getReport(this.document!);
+        const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
         pdfMake.createPdf(docDefinition).print();
       } else {
 
-        const docDefinition = await this._printerService.getReportConvert(this.document!);
+        const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
         pdfMake.createPdf(docDefinition).print();
       }
@@ -296,12 +296,12 @@ export class PrinterConfigurationComponent implements OnInit {
         async () => {
           if (this.volver != 3) {
 
-            const docDefinition = await this._printerService.getReport(this.document!);
+            const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
             pdfMake.createPdf(docDefinition).print();
           } else {
 
-            const docDefinition = await this._printerService.getReportConvert(this.document!);
+            const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
             pdfMake.createPdf(docDefinition).print();
           }
@@ -317,11 +317,11 @@ export class PrinterConfigurationComponent implements OnInit {
 
     if (this.volver != 3) {
 
-      docDefinition = await this._printerService.getReport(this.document!);
+      docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
     } else {
 
-      docDefinition = await this._printerService.getReportConvert(this.document!);
+      docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
     }
 

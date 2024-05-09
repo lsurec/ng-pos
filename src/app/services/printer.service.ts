@@ -22,7 +22,6 @@ export class PrinterService {
     ) {
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatusPrint(
 
         printer: string,
@@ -32,7 +31,6 @@ export class PrinterService {
 
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getStatusPrint(
         printer: string,
     ): Promise<ResApiInterface> {
@@ -65,7 +63,6 @@ export class PrinterService {
         )
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getStatus(
 
         port: string,
@@ -75,7 +72,6 @@ export class PrinterService {
 
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getStatus(
         port: string,
     ): Promise<ResApiInterface> {
@@ -167,14 +163,12 @@ export class PrinterService {
         })
     }
 
-    //funcion que va a realizar el consumo privado para obtener las empresas
     private _getPrinters() {
 
         //consumo de api
         return this._http.get(`${this._urlBase}${this._port}/api/printer`, { observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
     getPrinters(): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPrinters().subscribe(
@@ -212,7 +206,6 @@ export class PrinterService {
         }
         )
     }
-
 
 
     private async _generateBase64(source: string): Promise<any> {
@@ -513,8 +506,503 @@ export class PrinterService {
 
     }
 
+    async getPDFDocLetter() {
 
-    async getReportCotizacion(doc: DocPrintModel) {
+
+        let logo_empresa = await this._generateBase64('/assets/empresa.png');
+        let felImg = await this._generateBase64('/assets/fel.png');
+        let logoDemosoft = await this._generateBase64('/assets/logo_demosoft.png');
+
+        let date: Date = new Date();
+
+        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+
+
+        var docDefinition: TDocumentDefinitions = {
+            pageSize: 'LETTER',
+            info: {
+                title: 'TD_Cotizacion_IMG',
+                author: 'DEMOSOFT S.A.',
+            },
+            pageMargins: [25, 100, 25, 60],
+            footer: function (currentPage, pageCount) {
+                return [
+                    {
+                        layout: 'noBorders',
+                        table: {
+                            widths: ['20%', '30%', '30%', '20%'],
+                            body: [
+                                [
+
+                                    {
+                                        image: felImg,
+                                        fit: [50, 50],
+                                        alignment: 'center'
+
+                                    },
+
+
+                                    [
+                                        {
+                                            marginTop: 10,
+                                            text: 'Datos del Certificador:',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                        {
+                                            text: 'Infile S.A.',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                        {
+                                            text: 'NIT: 6518584-87',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                    ],
+                                    [
+                                        {
+                                            marginTop: 10,
+
+                                            text: 'Powered By:',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                        {
+                                            text: 'Desarrollo Moderno de Software S.A.',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                        {
+                                            text: 'www.demosoft.com.gt',
+                                            style: 'textFooter',
+                                            alignment: 'center',
+                                        },
+                                    ],
+                                    [
+                                        {
+                                            image: logoDemosoft,
+                                            fit: [50, 50],
+                                            alignment: 'center'
+
+                                        },
+                                        {
+                                            alignment: 'center',
+                                            text: [
+                                                {
+                                                    text: `${fecha} ${hora} `,
+                                                    style: 'textFooter',
+                                                },
+                                                {
+                                                    text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                                                    fontSize: 6,
+                                                }
+                                                ,
+
+                                            ]
+                                        }
+                                    ],
+                                ]
+                            ]
+                        }
+                    },
+
+                ];
+            },
+            header:
+                // you can apply any logic and return any valid pdfmake element
+
+                [
+
+                    {
+                        margin: [0, 15, 0, 0],
+                        table: {
+
+                            heights: 'auto',
+                            widths: ['30%', '35%', '35%'], // Ancho de las columnas
+                            body: [
+                                [
+                                    {
+                                        image: logo_empresa,
+                                        width: 90,
+                                        absolutePosition: { x: 20, y: 10 }
+                                    },
+                                    [
+                                        {
+                                            text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'Empresa Test',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: '0 Avenida 5-35, Zona 9 Guatemala',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'test@gmail.com',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'NIT: 1181185-4',
+                                            style: 'headerText'
+                                        },
+                                        {
+                                            text: 'TEL: (502) 2505 1000',
+                                            style: 'headerText'
+                                        },
+
+
+                                    ],
+                                    [
+
+                                        {
+                                            text: 'Factura',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'DOCUMENTO TRIBUTARIO ELECTRONICO',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'SERIE: 49491',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'No. 54485151',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'Fecha certificacion: 12/12/2024 14:00:62',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'Firma electronica:',
+                                            style: 'felText',
+
+                                        },
+                                        {
+                                            text: 'BA86F308-C4F7-4E13-A930-D859E3AC55FF',
+                                            style: 'felText',
+                                        },
+                                    ],
+
+
+                                ],
+
+                            ]
+                        },
+                        layout: 'noBorders'
+                    }
+                ]
+            ,
+            content: [
+                {
+                    layout: 'noBorders',
+                    table: {
+                        widths: ['50%', '50%'],
+                        body: [
+                            [
+                                {
+                                    text: 'No. Interno: 49494',
+                                    style: 'normalText'
+                                },
+                                {
+                                    text: 'Vendedor: Nombre venedor',
+                                    style: 'normalText',
+                                    alignment: 'right'
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginTop: 10,
+                    table: {
+                        widths: ['71%', '*'],
+                        body: [
+                            [
+                                [
+                                    {
+                                        text: [
+                                            {
+                                                text: 'Nombre: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: 'Nobre clinete',
+                                                style: 'normalText'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: [
+                                            {
+                                                text: 'NIT: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: '5184189-5',
+                                                style: 'normalText'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: [
+                                            {
+                                                text: 'Direccion: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: 'Ciudad',
+                                                style: 'normalText'
+                                            }
+                                        ]
+                                    }
+                                ],
+                                [
+
+                                    {
+                                        text: [
+                                            {
+                                                text: 'Fecha: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: '12/12/2024 14:15:15',
+                                                style: 'normalText'
+                                            }
+                                        ]
+
+                                    },
+                                    {
+                                        text: [
+                                            {
+                                                text: 'Tel: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: '6419115',
+                                                style: 'normalText'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: [
+                                            {
+                                                text: 'Correo: ',
+                                                style: 'normalTextBold'
+                                            },
+                                            {
+                                                text: 'cliente@gmail.com',
+                                                style: 'normalText'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            ]
+                        ]
+                    }
+                },
+
+
+                {
+                    marginTop: 15,
+                    marginBottom: 15,
+                    table: {
+                        widths: ['10%', '10%', '10%', '45%', '10%', '15%'],
+                        body: [
+                            [
+
+                                {
+                                    text: 'CODIGO',
+                                    style: ['headerText', 'fillColor'],
+                                },
+                                {
+                                    text: 'CANTIDAD',
+                                    style: ['headerText', 'fillColor'],
+                                },
+                                {
+                                    text: 'UM',
+                                    style: ['headerText', 'fillColor'],
+                                },
+                                {
+                                    text: 'DESCRIPCION',
+                                    style: ['headerText', 'fillColor'],
+                                },
+                                {
+                                    text: 'P/U',
+                                    style: ['headerText', 'fillColor'],
+                                },
+                                {
+                                    text: 'TOTAL',
+                                    style: ['headerText', 'fillColor'],
+                                }
+                            ],
+                            [
+
+                                {
+                                    text: 'KSNK-451',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [true, false, false, false]
+                                },
+                                {
+                                    text: '10',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'und',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Lorem sunt nostrud nisi officia duis officia ex.',
+                                    style: 'normalText',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Q. 10.00',
+                                    style: 'normalText',
+                                    alignment: 'right',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Q. 10000.00',
+                                    style: 'normalText',
+                                    alignment: 'right',
+                                    border: [false, false, true, false]
+                                }
+                            ],
+                            [
+
+                                {
+                                    text: 'KSNK-451',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [true, false, false, false]
+                                },
+                                {
+                                    text: '10',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'und',
+                                    style: 'normalText',
+                                    alignment: 'center',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Lorem sunt nostrud nisi officia duis officia ex.',
+                                    style: 'normalText',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Q. 10.00',
+                                    style: 'normalText',
+                                    alignment: 'right',
+                                    border: [false, false, false, false]
+                                },
+                                {
+                                    text: 'Q. 10000.00',
+                                    style: 'normalText',
+                                    alignment: 'right',
+                                    border: [false, false, true, false]
+                                }
+                            ],
+                            [
+                                {
+                                    text: 'TOTAL',
+                                    style: ['headerText', 'fillColor'],
+                                    colSpan: 5,
+                                },
+                                {}, // Celda adicional para fusionar con la primera celda
+                                {}, // Celda adicional para fusionar
+                                {}, // Celda adicional para fusionar
+                                {}, // Celda adicional para fusionar
+                                {
+                                    text: 'Q.10000.00',
+                                    style: 'headerText',
+                                    alignment: 'right',
+                                } // La última celda
+                            ],
+                            [
+                                {
+                                    text: 'TOTAL EN LETRAS: Qui eu minim excepteur nulla veniam pariatur aute quis non.',
+                                    style: 'normalTextBold',
+                                    colSpan: 6,
+                                },
+                                {}, {}, {}, {}, {},
+                            ]
+                        ]
+                    }
+                },
+                [
+                    {
+                        text:
+                            '*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*',
+                        style: 'headerText'
+                    },
+                    {
+                        text:
+                            '*GRACIAS POR TU COMPRA*',
+                        style: 'headerText'
+                    }
+                ]
+
+            ],
+            styles: {
+                textFooter: {
+                    fontSize: 6,
+                    color: '#134895',
+                },
+                fillColor: {
+                    fillColor: '#134895',
+                    color: '#ffffff'
+                },
+                felText: {
+                    fontSize: 8,
+                    bold: true,
+                    marginLeft: 20,
+                },
+                headerText: {
+                    fontSize: 8,
+                    bold: true,
+                    alignment: 'center',
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+
+            }
+        };
+
+        return docDefinition;
+
+
+
+    }
+
+    async getPDFCotizacionAlfaYOmega(doc: DocPrintModel) {
         let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
         let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
 
@@ -1206,7 +1694,7 @@ export class PrinterService {
     }
 
 
-    async getReport(doc: DocPrintModel) {
+    async getPDFDocTMU(doc: DocPrintModel) {
 
 
         let logo_empresa = await this._generateBase64('/assets/empresa.png');;
@@ -1387,19 +1875,7 @@ export class PrinterService {
                     },
                     layout: 'noBorders',
                 },
-                {
-                    margin: [0, 10, 0, 0],
-                    text: "TIPO EVENTO: " + this._convertService.docOriginSelect?.referencia_D_Des_Tipo_Referencia?.toUpperCase(), style: 'center'
-                },
-
-                {
-                    margin: [0, 10, 0, 0],
-                    text: "FECHA ENTREGA: " + this.formatDate(this._convertService.docOriginSelect!.referencia_D_Fecha_Ini!), style: 'center'
-                },
-                { text: "FECHA RECOGER: " + this.formatDate(this._convertService.docOriginSelect!.referencia_D_Fecha_Fin!), style: 'center', },
-                { text: "FECHA INICIO: " + this.formatDate(this._convertService.docOriginSelect!.fecha_Ini!), style: 'center' },
-                { text: "FECHA FIN: " + this.formatDate(this._convertService.docOriginSelect!.fecha_Fin!), style: 'center', },
-
+               
                 //TABLA PRODUCTOS
                 {
                     layout: 'headerLineOnly',
@@ -1497,19 +1973,7 @@ export class PrinterService {
 
                 ...pagos,
 
-                {
-                    text: "Contacto: ", style: 'normalText',
-                },
-                { text: this._convertService.docOriginSelect?.referencia_D_Observacion_2, style: 'normalText', },
-
-                { text: "Descripcion: ", style: 'normalText', },
-                { text: this._convertService.docOriginSelect?.referencia_D_Descripcion, style: 'normalText', },
-
-                { text: "Direccion entrega: ", style: 'normalText', },
-                { text: this._convertService.docOriginSelect?.referencia_D_Observacion_3, style: 'normalText', },
-
-                { text: "Observacion: ", style: 'normalText', },
-                { text: this._convertService.docOriginSelect?.referencia_D_Observacion, style: 'normalText', },
+               
 
                 //TODO:Agregar informacion del certificador
 
@@ -1624,349 +2088,6 @@ export class PrinterService {
         return docDefinition;
     }
 
-
-    async getReportConvert(doc: DocPrintModel) {
-
-
-        let logo_empresa = await this._generateBase64('/assets/empresa.png');
-
-        let date: Date = doc.cliente.fecha;
-
-        let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-        let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-
-        let transacciones: any[] = [];
-
-        doc.items.forEach(item => {
-            transacciones.push(
-                [
-                    { text: item.cantidad, style: 'normalText', },
-                    { text: item.descripcion, style: 'normalText' },
-                    { text: item.unitario, style: 'endText', },
-                    { text: item.total, style: 'endText', },
-                ],
-
-            );
-        });
-
-
-
-        let divider = {
-            layout: 'headerLineOnly',
-            table: {
-                widths: ['100%'],
-                headerRows: 1,
-                body: [
-                    [
-                        {
-                            text: ''
-                        }
-                    ],
-                    [
-                        {
-                            text: ''
-                        }
-                    ],
-                ]
-            }
-        };
-
-
-        var docDefinition: TDocumentDefinitions = {
-            info: {
-                title: doc.documento.titulo,
-                author: 'Demosoft',
-                subject: 'ticket',
-                keywords: 'tck, sale',
-            },
-            pageSize: {
-                width: 226.77,
-                height: 'auto',
-            },
-            pageMargins: [5.66, 0, 5.66, 5.66],
-            content: [
-                //DATOS EMPRESA
-                {
-                    image: logo_empresa,
-                    fit: [161.73, 76.692],
-                    alignment: 'center',
-                },
-                {
-                    text: doc.empresa.razonSocial,
-                    style: 'centerBold',
-                    margin: [0, 10, 0, 0],
-                },
-                {
-                    text: doc.empresa.nombre,
-                    style: 'centerBold',
-                },
-                {
-                    text: doc.empresa.direccion,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nit')} ${doc.empresa.nit}`,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.tel')} ${doc.empresa.tel}`,
-                    style: 'centerBold',
-                },
-                {
-                    text: doc.documento.titulo,
-                    style: 'centerBold',
-                    margin: [0, 10, 0, 0],
-
-                },
-                {
-                    text: doc.documento.descripcion,
-                    style: 'centerBold',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
-                    style: 'center',
-                    margin: [0, 10, 0, 0],
-
-                },
-
-                //CLiente
-                {
-                    text: `${this._translate.instant('pos.factura.cliente').toUpperCase()}:`,
-                    style: 'center',
-                    margin: [0, 10, 0, 0],
-
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nombre')} :  ${doc.cliente.nombre}`,
-                    style: 'center',
-                },
-                {
-                    text: `${this._translate.instant('pos.factura.nit')} :  ${doc.cliente.nit}`,
-                    style: 'center',
-                },
-
-                {
-                    text: `${this._translate.instant('pos.factura.direccion')} : ${doc.cliente.direccion}`,
-                    style: 'center',
-                },
-
-                {
-                    text: `${this._translate.instant('pos.factura.tel')} ${doc.cliente.tel}`,
-                    style: 'center',
-                },
-                {
-                    table: {
-                        widths: ['50%', '50%',],
-                        body: [
-                            [
-                                { text: this._translate.instant('pos.factura.fecha').toUpperCase() + fecha, style: 'center' },
-                                { text: this._translate.instant('pos.factura.hora').toUpperCase() + hora, style: 'center', },
-                            ],
-
-                        ],
-                    },
-                    layout: 'noBorders',
-                },
-                //TABLA PRODUCTOS
-                {
-                    layout: 'headerLineOnly',
-                    margin: [0, 10, 0, 0],
-                    table: {
-
-                        widths: ['15%', '45%', '15%', '25%'],
-                        headerRows: 1,
-
-                        body: [
-
-                            [
-                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
-                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
-                                { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
-                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
-                            ],
-
-                            ...transacciones
-
-                        ],
-                    },
-
-                },
-                divider,
-                {
-                    layout: 'headerLineOnly',
-                    table: {
-
-                        widths: ['50%', '50%'],
-
-                        body: [
-
-                            [
-                                { text: this._translate.instant('pos.factura.subtotal'), style: 'normalTextBold' },
-                                { text: doc.montos.subtotal, style: 'endTextBold' },
-
-                            ],
-                            [
-                                { text: this._translate.instant('pos.factura.cargo'), style: 'normalTextBold' },
-                                { text: doc.montos.cargos, style: 'endTextBold' },
-
-                            ],
-                            [
-                                { text: this._translate.instant('pos.factura.descuento'), style: 'normalTextBold' },
-                                { text: doc.montos.descuentos, style: 'endTextBold' },
-
-                            ],
-
-                        ],
-                    },
-
-
-                },
-                divider,
-
-
-                {
-                    layout: 'headerLineOnly',
-                    table: {
-
-                        widths: ['50%', '50%'],
-
-                        body: [
-
-                            [
-                                {
-                                    text: this._translate.instant('pos.factura.total').toUpperCase(),
-                                    style: 'normalTextBold'
-                                },
-                                {
-                                    text: doc.montos.total,
-                                    style: 'endTextBold'
-                                },
-
-                            ],
-                        ],
-                    },
-
-
-                },
-                {
-                    text: doc.montos.totalLetras,
-                    style: 'normalText',
-                    alignment: 'justify',
-                },
-                divider,
-
-
-                {
-                    margin: [0, 10],
-                    text: doc.mensajes[0],
-                    style: 'centerBold',
-                },
-
-                {
-                    margin: [0, 20, 0, 0],
-                    text: '---------------------------------------------------------------',
-                    style: 'center',
-                },
-
-                {
-                    text: 'Power By',
-                    style: 'center',
-                },
-
-                {
-                    text: 'Desarrollo Moderno de Software S.A.',
-                    style: 'center',
-                },
-
-                {
-                    text: 'www.demosoft.com.gt',
-                    style: 'center',
-                },
-                // {
-                //   image: this.logo_empresa,
-                //   fit: [141.73, 56.692],
-                //   alignment: 'center',
-                // },
-
-
-
-            ],
-            styles: {
-                center: {
-                    fontSize: 8,
-                    alignment: 'center',
-                },
-                centerBold: {
-                    fontSize: 8,
-                    alignment: 'center',
-                    bold: true,
-                },
-                normalText: {
-                    fontSize: 8,
-                },
-                normalTextBold: {
-                    fontSize: 8,
-                    bold: true,
-                },
-
-                endText: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                endTextBold: {
-                    fontSize: 8,
-                    alignment: 'right',
-                    bold: true,
-                },
-                header: {
-                    fontSize: 9,
-                    bold: true,
-                    alignment: 'center',
-                },
-                tHeaderLabel: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                tHeaderValue: {
-                    fontSize: 8,
-                    bold: true,
-                },
-                tProductsHeader: {
-                    fontSize: 8.5,
-                    bold: true,
-                },
-                tProductsBody: {
-                    fontSize: 8,
-                },
-                tTotals: {
-                    fontSize: 9,
-                    bold: true,
-                    alignment: 'right',
-                },
-                tClientLabel: {
-                    fontSize: 8,
-                    alignment: 'right',
-                },
-                tClientValue: {
-                    fontSize: 8,
-                    bold: true,
-                },
-                text: {
-                    fontSize: 8,
-                    alignment: 'center',
-                },
-                link: {
-                    fontSize: 8,
-                    bold: true,
-                    margin: [0, 0, 0, 4],
-                    alignment: 'center',
-                },
-            },
-        };
-
-        return docDefinition;
-    }
 
 
     async getTestTemplate() {

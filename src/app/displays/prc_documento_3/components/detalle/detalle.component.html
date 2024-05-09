@@ -121,7 +121,7 @@
                         <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por cantidad:
                             {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por días:
+                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por día:
                             {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
                         </p>
                         <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |

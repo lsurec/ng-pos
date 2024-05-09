@@ -49,89 +49,90 @@
             </div>
 
             <div class="cliente-vendedor">
-                <div class="informacion">
+                <!--TODO:Buscar descripcion-->
+                <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Tipo_Referencia">
                     <p class="subtitulo-borde ">{{ 'pos.factura.tipoRef' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">Tipo Referencia</p>
+                        <p class="textos">{{estructura.estructura.Doc_Ref_Tipo_Referencia}}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
-                <div class="informacion">
+                <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Descripcion">
                     <p class="subtitulo-borde">
                         {{ 'pos.factura.descripcion' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">(Descripcion) Descripcion</p>
+                        <p class="textos">{{estructura.estructura.Doc_Ref_Descripcion}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="cliente-vendedor">
-                <div class="informacion">
+                <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Observacion_2">
                     <p class="subtitulo-borde">
                         {{ 'pos.factura.contacto' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">(Contacto) Juan Perez</p>
+                        <p class="textos">{{estructura.estructura.Doc_Ref_Observacion_2}}</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
-                <div class="informacion">
+                <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Observacion_3">
                     <p class="subtitulo-borde">
                         {{ 'pos.factura.entrega' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">(Direccion) Entrega</p>
+                        <p class="textos">{{estructura.estructura.Doc_Ref_Observacion_3}}</p>
                     </div>
                 </div>
             </div>
-            <div class="cliente-vendedor">
+            <div class="cliente-vendedor" *ngIf="estructura.estructura.Doc_Ref_Observacion">
                 <div class="informacion">
                     <p class="subtitulo-borde">
                         {{ 'pos.factura.observacion' | translate }}</p>
                     <div class="descripciones">
-                        <p class="textos">(Observacion) Observacion 1</p>
+                        <p class="textos">{{estructura.estructura.Doc_Ref_Observacion}}</p>
                     </div>
                 </div>
             </div>
 
             <div class="cliente-vendedor">
                 <div class="fechas">
-                    <div class="fechaER">
+                    <div class="fechaER" *ngIf="estructura.estructura.Doc_Ref_Fecha_Ini">
                         <p class="subtitulo-borde">
                             {{ 'pos.factura.fEntrega' | translate }}
                         </p>
                         <div class="descripciones">
-                            <p class="textos">15/02/2024</p>
+                            <p class="textos">{{estructura.estructura.Doc_Ref_Fecha_Ini| date: 'dd/MM/yyyy HH:mm'}}</p>
                         </div>
                     </div>
                     <span class="spacer"></span>
-                    <div class="fechaER">
+                    <div class="fechaER" *ngIf="estructura.estructura.Doc_Ref_Fecha_Fin">
                         <p class="subtitulo-borde">
                             {{ 'pos.factura.fRecoger' | translate }}</p>
                         <div class="descripciones">
-                            <p class="textos">17/02/2024</p>
+                            <p class="textos">{{estructura.estructura.Doc_Ref_Fecha_Fin| date: 'dd/MM/yyyy HH:mm'}}</p>
                         </div>
                     </div>
                 </div>
                 <span class="spacer"></span>
 
                 <div class="fechas">
-                    <div class="fechaER">
+                    <div class="fechaER" *ngIf="estructura.estructura.Doc_Fecha_Ini">
                         <p class="subtitulo-borde">{{ 'pos.documento.fechaIni' | translate }} </p>
                         <div class="descripciones">
-                            <p class="textos">15/02/2024</p>
+                            <p class="textos">{{estructura.estructura.Doc_Fecha_Ini| date: 'dd/MM/yyyy HH:mm'}}</p>
                         </div>
                     </div>
                     <span class="spacer"></span>
-                    <div class="fechaER">
+                    <div class="fechaER" *ngIf="estructura.estructura.Doc_Fecha_Fin">
                         <p class="subtitulo-borde">{{ 'pos.documento.fechaFin' | translate }} </p>
                         <div class="descripciones">
-                            <p class="textos">17/02/2024</p>
+                            <p class="textos">{{estructura.estructura.Doc_Fecha_Fin| date: 'dd/MM/yyyy HH:mm'}}</p>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="cliente-vendedor">
+            <div class="cliente-vendedor">|
                 <div class="informacion">
                     <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
                     <div class="descripciones" *ngIf="client">
