@@ -684,4 +684,448 @@ export class HomeComponent implements OnInit {
     this.impresora = true; //ver impresora
   }
 
+
+  private async _generateBase64(source: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._http.get(source, { responseType: 'blob' })
+        .subscribe(res => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            var base64data = reader.result;
+            //   console.log(base64data);
+            resolve(base64data);
+          }
+          reader.readAsDataURL(res);
+          //console.log(res);
+        });
+    });
+  }
+
+
+  async printTest() {
+
+
+    let logo_empresa = await this._generateBase64('/assets/empresa.png');
+    let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+
+    let date: Date = new Date();
+
+    let fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    let hora = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+
+
+
+    var docDefinition: TDocumentDefinitions = {
+      pageSize: 'LETTER',
+      info: {
+        title: 'TD_Cotizacion_IMG',
+        author: 'DEMOSOFT S.A.',
+      },
+      pageMargins: [25, 100, 25, 25],
+      footer: function (currentPage, pageCount) {
+        return [
+          {
+            marginLeft: 40,
+            text: [
+              {
+                text: `${fecha} ${hora} `,
+                fontSize: 6,
+                color: '#134895'
+              },
+              {
+                text: 'Pagina ' + currentPage.toString() + ' de ' + pageCount,
+                fontSize: 6,
+              }
+            ]
+          }
+        ];
+      },
+      header:
+        // you can apply any logic and return any valid pdfmake element
+
+        [
+
+          {
+            margin: [0, 15, 0, 0],
+            table: {
+
+              heights: 'auto',
+              widths: ['30%', '35%', '35%'], // Ancho de las columnas
+              body: [
+                [
+                  {
+                    image: logo_empresa,
+                    width: 90,
+                    absolutePosition: { x: 20, y: 10 }
+                  },
+                  [
+                    {
+                      text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                      style: 'headerText'
+                    },
+                    {
+                      text: 'Empresa Test',
+                      style: 'headerText'
+                    },
+                    {
+                      text: '0 Avenida 5-35, Zona 9 Guatemala',
+                      style: 'headerText'
+                    },
+                    {
+                      text: 'test@gmail.com',
+                      style: 'headerText'
+                    },
+                    {
+                      text: 'NIT: 1181185-4',
+                      style: 'headerText'
+                    },
+                    {
+                      text: 'TEL: (502) 2505 1000',
+                      style: 'headerText'
+                    },
+
+
+                  ],
+                  [
+
+                    {
+                      text: 'Factura',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'DOCUMENTO TRIBUTARIO ELECTRONICO',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'SERIE: 49491',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'No. 54485151',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'Fecha certificacion: 12/12/2024 14:00:62',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'Firma electronica:',
+                      style: 'felText',
+
+                    },
+                    {
+                      text: 'BA86F308-C4F7-4E13-A930-D859E3AC55FF',
+                      style: 'felText',
+                    },
+                  ],
+
+
+                ],
+
+              ]
+            },
+            layout: 'noBorders'
+          }
+        ]
+      ,
+      content: [
+        {
+          layout: 'noBorders',
+          table: {
+            widths: ['50%', '50%'],
+            body: [
+              [
+                {
+                  text: 'No. Interno: 49494',
+                  style: 'normalText'
+                },
+                {
+                  text: 'Vendedor: Nombre venedor',
+                  style: 'normalText',
+                  alignment: 'right'
+                }
+              ]
+            ]
+          }
+        },
+        {
+          marginTop: 10,
+          table: {
+            widths: ['71%', '*'],
+            body: [
+              [
+                [
+                  {
+                    text: [
+                      {
+                        text: 'Nombre: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: 'Nobre clinete',
+                        style: 'normalText'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: 'NIT: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: '5184189-5',
+                        style: 'normalText'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: 'Direccion: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: 'Ciudad',
+                        style: 'normalText'
+                      }
+                    ]
+                  }
+                ],
+                [
+
+                  {
+                    text: [
+                      {
+                        text: 'Fecha: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: '12/12/2024 14:15:15',
+                        style: 'normalText'
+                      }
+                    ]
+
+                  },
+                  {
+                    text: [
+                      {
+                        text: 'Tel: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: '6419115',
+                        style: 'normalText'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      {
+                        text: 'Correo: ',
+                        style: 'normalTextBold'
+                      },
+                      {
+                        text: 'cliente@gmail.com',
+                        style: 'normalText'
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ]
+          }
+        },
+
+
+        {
+          marginTop: 15,
+          marginBottom: 15,
+          table: {
+            widths: ['10%', '10%', '10%', '45%', '10%', '15%'],
+            body: [
+              [
+
+                {
+                  text: 'CODIGO',
+                  style: ['headerText','fillColor'],
+                },
+                {
+                  text: 'CANTIDAD',
+                  style: ['headerText','fillColor'],
+                },
+                {
+                  text: 'UM',
+                  style: ['headerText','fillColor'],
+                },
+                {
+                  text: 'DESCRIPCION',
+                  style: ['headerText','fillColor'],
+                },
+                {
+                  text: 'P/U',
+                  style: ['headerText','fillColor'],
+                },
+                {
+                  text: 'TOTAL',
+                  style: ['headerText','fillColor'],
+                }
+              ],
+              [
+
+                {
+                  text: 'KSNK-451',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [true, false, false, false]
+                },
+                {
+                  text: '10',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'und',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Lorem sunt nostrud nisi officia duis officia ex.',
+                  style: 'normalText',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Q. 10.00',
+                  style: 'normalText',
+                  alignment: 'right',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Q. 10000.00',
+                  style: 'normalText',
+                  alignment: 'right',
+                  border: [false, false, true, false]
+                }
+              ],
+              [
+
+                {
+                  text: 'KSNK-451',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [true, false, false, false]
+                },
+                {
+                  text: '10',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'und',
+                  style: 'normalText',
+                  alignment: 'center',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Lorem sunt nostrud nisi officia duis officia ex.',
+                  style: 'normalText',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Q. 10.00',
+                  style: 'normalText',
+                  alignment: 'right',
+                  border: [false, false, false, false]
+                },
+                {
+                  text: 'Q. 10000.00',
+                  style: 'normalText',
+                  alignment: 'right',
+                  border: [false, false, true, false]
+                }
+              ],
+              [
+                {
+                  text: 'TOTAL',
+                  style: ['headerText','fillColor'],
+                  colSpan: 5,
+                },
+                {}, // Celda adicional para fusionar con la primera celda
+                {}, // Celda adicional para fusionar
+                {}, // Celda adicional para fusionar
+                {}, // Celda adicional para fusionar
+                {
+                  text: 'Q.10000.00',
+                  style: 'headerText',
+                  alignment: 'right',
+                } // La última celda
+              ],
+              [
+                {
+                  text: 'TOTAL EN LETRAS: Qui eu minim excepteur nulla veniam pariatur aute quis non.',
+                  style: 'normalTextBold',
+                  colSpan: 6,
+                },
+                {}, {}, {}, {}, {},
+              ]
+            ]
+          }
+        },
+       [
+        {
+          text:
+            '*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*',
+          style: 'headerText'
+        },
+        {
+          text:
+            '*GRACIAS POR TU COMPRA*',
+          style: 'headerText'
+        }
+       ]
+
+      ],
+      styles: {
+        fillColor:{
+          fillColor:'#134895',
+          color:'#ffffff'
+        },
+        felText: {
+          fontSize: 8,
+          bold: true,
+          marginLeft: 20,
+        },
+        headerText: {
+          fontSize: 8,
+          bold: true,
+          alignment: 'center',
+        },
+        normalText: {
+          fontSize: 8,
+        },
+        normalTextBold: {
+          fontSize: 8,
+          bold: true,
+        },
+
+
+      }
+    };
+
+    pdfMake.createPdf(docDefinition).open();
+
+
+
+
+  }
+
 }
