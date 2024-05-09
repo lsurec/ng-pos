@@ -17,9 +17,15 @@
                     <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }} ({{productos.length }}) </p>
                 </div>
                 <div class="" *ngFor="let producto of productos">
-                    <div class="seleccionar" (click)="setProduct(producto)">
-                        <p class="textos">{{producto.des_Producto}} </p>
-                        <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.producto_Id}}</p>
+                    <div class="seleccionar-imagen">
+                        <div class="seleccionar" (click)="setProduct(producto)">
+                            <p class="textos">{{producto.des_Producto}} </p>
+                            <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto.producto_Id}}</p>
+                        </div>
+                        <span class="spacer"></span>
+                        <button mat-icon-button (click)="imagen(producto)">
+                            <mat-icon>image</mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,30 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <div>
+        <p class="verDetalle">Vista Previa</p>
+        <p class="adver">Producto: producto 1.</p>
+    </div>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+    <div class="contenedor">
+        <div class="busqueda">
+            <div class="contenido-izquierdo">
+                <div class="dFlex">
+                    <span class="spacer"></span>
+                    <img class="imagen" src="assets/empresa.png" alt="{{ 'pos.home.noDisponible' | translate }}">
+                    <span class="spacer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="informacion dFlex">
+    <span class="spacer"></span>
+    <button (click)="closeDialog()" mat-stroked-button>{{ 'pos.botones.aceptar' | translate }}</button>
+</div>

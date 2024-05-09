@@ -94,7 +94,7 @@
     </div>
     <div class="documento-sin-borde">
         <div class="lista-productos">
-            
+
             <div class="eliminar" *ngIf="facturaService.traInternas.length > 0">
                 <div class="dFlex">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.selectAllTra"
@@ -117,11 +117,11 @@
                         <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
                             {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                         <!--TODO:Translate-->
-                         <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por cantidad:
+                        <!--TODO:Translate-->
+                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por cantidad:
                             {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
                         </p>
-                         <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por días:
+                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por días:
                             {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
                         </p>
                         <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |
@@ -139,6 +139,9 @@
                     </button>
                     <button mat-icon-button (click)="verTansacciones(index)">
                         <mat-icon>format_list_bulleted</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="imagen(transaccion.producto)">
+                        <mat-icon>image</mat-icon>
                     </button>
                 </div>
             </div>
