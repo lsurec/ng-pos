@@ -808,7 +808,7 @@ export class ResumenDocumentoComponent implements OnInit {
     if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
 
-      const docDefinition = await this._printService.getReportCotizacion(this.docPrint);
+      const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).open();
 
 
