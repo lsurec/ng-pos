@@ -1,4 +1,4 @@
-export interface DocXMLModel {
+export interface DocXMLInterface {
     id:                    number;
     userName:              string;
     fecha_Hora:            Date;

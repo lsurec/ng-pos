@@ -26,6 +26,7 @@ import { PrintFormatService } from '../../services/print-format.service';
 import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
 import { FelService } from '../../services/fel.service';
 import { APIInterface } from '../../interfaces/api.interface';
+import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -184,7 +185,7 @@ export class ResumenDocumentoComponent implements OnInit {
     if(apis.length == 0){
      //TODO:Translate
      this.isLoading = false;
-     resApi.response = `No se encontri el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
+     resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
 
      this.showError(resApi);
 
@@ -195,8 +196,30 @@ export class ResumenDocumentoComponent implements OnInit {
     //api que se va a usar
     let api:APIInterface = apis[0];
 
+    //buscar documento xml para porcesar
+
+    let resDocXml:ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
+
+    if(!resDocXml.status){
+      this.isLoading = false;
+      this.showError(resDocXml);
+      return;
+    }
+
+    let docsXMl :DocXMLInterface[]= resDocXml.response; 
 
 
+     //verificar que hay documentos que procesar
+     if(apis.length == 0){
+      //TODO:Translate
+      this.isLoading = false;
+      resApi.response = `No se encontró el documento XML para procesar, .`
+ 
+      this.showError(resApi);
+ 
+      return;
+     }
+ 
 
     this.isLoading = false;
 
