@@ -41,21 +41,10 @@ export class DetalleComponent {
   documento: number = this.facturaService.tipoDocumento!; //Tipo docuemtno seleccioando (display)
 
   searchText: string = "";  //Texto para bsucar productos
-  filtrosProductos: number = 1; //filtro producto
 
   tipoDesCar: number = 1; //tipo de cargo o descuento (monto o porcentaje)
 
-  //filtros disponibles para bsuqueda de productos
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: "SKU",
-    },
-    {
-      id: 2,
-      nombre: this._translate.instant('pos.factura.descripcion'),
-    },
-  ];
+
 
   //opciones para cargos y descuetnos
   tipos: FiltroInterface[] = [
@@ -364,7 +353,7 @@ export class DetalleComponent {
 
     this.facturaService.isLoading = true;
     //filtro 1 = sku
-    if (this.filtrosProductos == 1) {
+    if (this.facturaService. filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
         this.searchText,
@@ -372,7 +361,7 @@ export class DetalleComponent {
     }
 
     //filtro 2 = descripcion
-    if (this.filtrosProductos == 2) {
+    if (this.facturaService. filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
         this.searchText,
@@ -677,7 +666,7 @@ export class DetalleComponent {
 
   //Cambiar fdilto 
   onOptionChange(optionId: number) {
-    this.filtrosProductos = optionId;
+    this.facturaService. filtrosProductos = optionId;
   }
 
   //Cambiar ocpion para cargo y decuento
