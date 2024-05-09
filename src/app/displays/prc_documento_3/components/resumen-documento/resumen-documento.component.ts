@@ -24,6 +24,8 @@ import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente
 import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
 import { PrintFormatService } from '../../services/print-format.service';
 import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
+import { FelService } from '../../services/fel.service';
+import { APIInterface } from '../../interfaces/api.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -35,6 +37,7 @@ import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
     PrinterService,
     ReceptionService,
     PrintFormatService,
+    FelService,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -70,6 +73,7 @@ export class ResumenDocumentoComponent implements OnInit {
     public globalConvertService: GlobalConvertService,
     private _recpetionService: ReceptionService,
     private _printFormatService: PrintFormatService,
+    private _felService: FelService,
 
 
   ) {
@@ -151,19 +155,47 @@ export class ResumenDocumentoComponent implements OnInit {
   async felProcess() {
 
     //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
-    let apiToken:number = 0;
-    let tokenFel:string = "";
+    let apiToken: number = 0;
+    let tokenFel: string = "";
 
 
     //TODO:Replece for value in database
     let uuidDoc = 'BA86F308-C4F7-4E13-A930-D859E3AC55FF'
-    
+
     //TODO:Asiganr el api 
-    let apiUse:number = 9;
+    let apiUse: number = 9;
 
 
-    //Lista de servisios que se van a autilizar
-    
+    //buscar api en catalogo api 
+    let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
+
+    if(!resApi.status){
+      this.showError(resApi);
+      return;
+    }
+
+
+    let api: APIInterface[] = resApi.response;
+
+
+
+  }
+
+  async showError(res: ResApiInterface) {
+
+
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.mostrarError(res);
 
 
   }
