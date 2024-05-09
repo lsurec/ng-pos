@@ -684,4 +684,14 @@ export class HomeComponent implements OnInit {
     this.impresora = true; //ver impresora
   }
 
+  //TODO:Eliminar fel
+  valorSwitch: string = "";
+
+  // Función para manejar el cambio de estado del switch
+  setCF(): void {
+    DataUserService.switchState = !DataUserService.switchState;
+    if (DataUserService.switchState) this.valorSwitch = "Activo";
+    if (!DataUserService.switchState) this.valorSwitch = "Desactivado";
+  }
+
 }
