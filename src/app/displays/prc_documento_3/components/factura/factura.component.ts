@@ -69,6 +69,13 @@ export class FacturaComponent implements OnInit {
   tabPago: boolean = false; //Contorlador para la pestaña de pago
 
 
+  key = {
+    F1: 112,
+    F2: 113,
+    a: 65
+    // Agrega más teclas según sea necesario
+  }
+
 
 
   constructor(
@@ -141,6 +148,18 @@ export class FacturaComponent implements OnInit {
 
 
   }
+
+  //evento 
+  handleKeyPress(event: KeyboardEvent) {
+    switch (event.keyCode) {
+      case this.key.a:
+        console.log(new Date());
+        break;
+      // Agrega más casos para otras teclas si es necesario
+    }
+  }
+
+
 
   //mostrar pestaña doccumento
   showDocumento() {
@@ -263,7 +282,7 @@ export class FacturaComponent implements OnInit {
     //sumar 30 minutos
     this.facturaService.fechaRefFin.setTime(modifyFechaRefFin.getTime() + (30 * 60000));
 
-//asignar fechas a las fechas del documento
+    //asignar fechas a las fechas del documento
     this.facturaService.fechaIni = new Date(dateNow);
     this.facturaService.fechaFin = new Date(dateNow);
 
@@ -651,7 +670,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDescripcion = docOrigin.referencia_D_Descripcion ?? undefined;
     this.facturaService.refDireccionEntrega = docOrigin.referencia_D_Observacion_3 ?? undefined;
     this.facturaService.refObservacion = docOrigin.referencia_D_Observacion ?? undefined;
-    this.facturaService.observacion  = docOrigin.observacion_1;
+    this.facturaService.observacion = docOrigin.observacion_1;
 
 
 
@@ -845,8 +864,8 @@ export class FacturaComponent implements OnInit {
       this.facturaService.addTransaction(
         {
           //TODO:Agregar montos por dia
-          consecutivo:tra.detalle.transaccion_Consecutivo_Interno,
-          estadoTra:0,
+          consecutivo: tra.detalle.transaccion_Consecutivo_Interno,
+          estadoTra: 0,
           precioCantidad: precioSelect.precioU * tra.detalle.disponible,
           precioDia: precioDias,
           isChecked: false,
@@ -870,14 +889,14 @@ export class FacturaComponent implements OnInit {
     this.facturaService.isLoading = false;
 
 
-   
+
 
 
   }
 
 
   async modifyDoc() {
-    
+
 
     //Navegar a resumen de documento
 
@@ -891,7 +910,7 @@ export class FacturaComponent implements OnInit {
     this.vistaInforme = false;
 
 
-  
+
     // let resUpdateEncabezados:ResApiInterface = await _rec
   }
 

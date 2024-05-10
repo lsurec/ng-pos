@@ -546,6 +546,9 @@ export class DocumentoComponent {
   setCF(): void {
     this.switchState = !this.switchState;
 
+    console.log(this.switchState);
+    
+
     if (this.switchState) {
       this.facturaService.cuenta = {
         cuenta_Correntista: 1,

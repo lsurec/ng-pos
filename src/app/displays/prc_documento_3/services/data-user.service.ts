@@ -11,7 +11,7 @@ export class DataUserService {
 
 
   //TODO:Eliminar fel
-  static switchState: boolean = false;
+  switchState: boolean = false;
 
 
   constructor() { }

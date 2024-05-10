@@ -131,7 +131,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //Si se permite fel entrar al proceso
     // if (this.facturaService.valueParametro(349)) {
-      if (DataUserService.switchState) {
+      if (this._dataUserService.switchState) {
       //alerta FEL no disponible
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
     } else {

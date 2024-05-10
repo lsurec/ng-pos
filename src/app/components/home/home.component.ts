@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
     public themeService: ThemeService,
-    private _dataUserService: DataUserService,
+    public dataUserService: DataUserService,
     public facturaService: FacturaService,
     private _retryService: RetryService,
     private _printService: PrinterService,
@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit {
     console.log(this.sizeSelect);
 
 
-    let verificador :boolean = await this._notificationsService.openDialogActions(
+    let verificador: boolean = await this._notificationsService.openDialogActions(
       {
         title: "Tamaño de fuente.",
         description: "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
@@ -228,6 +228,15 @@ export class HomeComponent implements OnInit {
       this.showError = false;
       this.loadDataMenu();
     });
+
+    //valor switch fel
+    let getSwitchFel: string = PreferencesService.sitchFelStorage;
+    if (getSwitchFel == "1") {
+      this.dataUserService.switchState = true;
+    } else {
+      this.dataUserService.switchState = false;
+    }
+
   }
 
 
@@ -459,7 +468,7 @@ export class HomeComponent implements OnInit {
       let display: DisplayInterface = itemMenu.display!;
 
       this.facturaService.tipoDocumento = display.tipo_Documento;
-      this._dataUserService.nameDisplay = display.name;
+      this.dataUserService.nameDisplay = display.name;
       this.facturaService.documentoName = display.des_Tipo_Documento ?? "";
 
       //Oculta el contenido de todos los componentes de la lista
@@ -758,8 +767,18 @@ export class HomeComponent implements OnInit {
 
   //TODO:Eliminar fel
   // Función para manejar el cambio de estado del switch
-  setCF(): void {
-    DataUserService.switchState = !DataUserService.switchState;
+  switchFel(): void {
+    this.dataUserService.switchState = !this.dataUserService.switchState;
+
+    //falso es 0
+    if (this.dataUserService.switchState == false) {
+      PreferencesService.sitchFelStorage = "0"
+    }
+
+    if (this.dataUserService.switchState == true) {
+      //verdadero es 1
+      PreferencesService.sitchFelStorage = "1"
+    }
   }
 
 }

@@ -30,6 +30,7 @@ export class PreferencesService {
     private static readonly copiesKey: string = 'copies';
     private static readonly sizeKey: string = 'fontSize';
     private static readonly idSizeKey: string = 'idFontSize';
+    private static readonly felKey: string = 'fel';
 
 
     //Borrar datos al cerrar sesion
@@ -289,4 +290,15 @@ export class PreferencesService {
         return value;
     }
 
+    //valor del switch de fel
+    @Input()
+    static set sitchFelStorage(value: string) {
+        localStorage.setItem(this.felKey, value);
+    }
+
+    static get sitchFelStorage(): string {
+        let value = localStorage.getItem(this.felKey);
+        if (!value) return "";
+        return value;
+    }
 }
