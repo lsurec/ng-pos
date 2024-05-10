@@ -18,9 +18,23 @@ $navegacion              : #252323;
 
 html,
 body {
-    height          : 100%;
-    background-color: #FEF5E7 !important;
-    font-family     : 'Playfair Display', serif;
+    height             : 100%;
+    background-color   : #FEF5E7 !important;
+    font-family        : 'Playfair Display', serif;
+    // font-size       : 10px !important;
+
+    p,
+    h2,
+    h4,
+    label,
+    button,
+    .mat-mdc-outlined-button .mdc-button__label {
+        font-size: 10px !important;
+    }
+
+    .inicial-usuario-h {
+        font-size: 35px !important;
+    }
 }
 
 /* Importing Bootstrap SCSS file. */

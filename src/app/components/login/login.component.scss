@@ -68,6 +68,25 @@ $background-oficial : #FEF5E7; //fondo Demosoft
     color     : $color-blanco;
 }
 
+
+.iniciar {
+    background        : $color-azul;
+    color             : $color-blanco;
+    border            : none;
+    width             : 100%;
+    outline           : none;
+    padding           : 8px 15px 9px 15px;
+    transition        : 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition   : 0.5s all;
+    -o-transition     : 0.5s all;
+}
+
+.iniciar:hover {
+    background: $color-naranja;
+    color     : $color-blanco;
+}
+
 .login-right h3 {
     color        : $color-naranja;
     font-size    : 22px;

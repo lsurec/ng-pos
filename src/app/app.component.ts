@@ -39,7 +39,7 @@ export class AppComponent {
       this._themeService.isDarkTheme = true;
       this._themeService.updateTheme();
     }
-
+    _themeService.size();
   }
 
 }

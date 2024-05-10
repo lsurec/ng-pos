@@ -3,7 +3,7 @@
     <app-progress *ngIf="isLoading"></app-progress>
     <div class="container" *ngIf=" !isLoading">
         <div class="centrar-login">
-        <app-logos></app-logos>
+            <app-logos></app-logos>
             <div class="row">
                 <div class="col-md-5 mx-auto text-center">
                     <div class="login-right">
@@ -48,9 +48,13 @@
                                 <label for="brand"><span></span>{{ 'pos.login.recordar' | translate }}</label>
                             </div>
                             <!-- Ingresar, iniciar sesion -->
-                            <div class="sign-in">
+                            <!-- <div class="sign-in">
                                 <input type="submit" value="{{ 'pos.login.iniciar' | translate }}">
-                            </div>
+                            </div> -->
+
+                            <button class="iniciar" type="submit">
+                                {{ 'pos.login.iniciar' | translate }}
+                            </button>
                         </form>
                     </div>
                 </div>

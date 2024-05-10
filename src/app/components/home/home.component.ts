@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
     private _translate: TranslateService,
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
-    private themeService: ThemeService,
+    public themeService: ThemeService,
     private _dataUserService: DataUserService,
     public facturaService: FacturaService,
     private _retryService: RetryService,

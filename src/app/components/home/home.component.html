@@ -169,7 +169,7 @@
                         class="circular-image" alt=""> -->
 
                     <div class="circular-usuario">
-                        <p class="inicial-usuario">{{user[0]}}</p>
+                        <p class="inicial-usuario-h">{{user[0]}}</p>
                     </div>
                 </div>
                 <p class="userName">{{user.toUpperCase()}}</p>
@@ -305,6 +305,11 @@
                 </div>
                 <!-- Buscador de tareas y tareas encontradas -->
                 <div class="container_main">
+
+                    <button mat-icon-button (click)="themeService.toggleTheme()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+
                 </div>
                 <!-- Mostrar logos -->
                 <!-- <app-barra-logos></app-barra-logos> -->
