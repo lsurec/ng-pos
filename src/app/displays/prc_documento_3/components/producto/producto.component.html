@@ -23,8 +23,8 @@
                     <div class="restar" (click)="restar()">
                         <mat-icon class="sumar-restar">remove</mat-icon>
                     </div>
-                    <input class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad"
-                        autocomplete="off" (ngModelChange)="changeCantidad()">
+                    <input #inputCantidad class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad"
+                        autocomplete="off" (ngModelChange)="changeCantidad()" (click)="seleccionarTexto()">
                     <div class="sumar" (click)="sumar()">
                         <mat-icon class="sumar-restar">add</mat-icon>
                     </div>

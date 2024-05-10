@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { FacturaService } from '../../services/factura.service';
@@ -26,7 +26,7 @@ import { ImagenComponent } from '../imagen/imagen.component';
     ProductService,
   ]
 })
-export class ProductoComponent {
+export class ProductoComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga
 
@@ -36,6 +36,7 @@ export class ProductoComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
 
+  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
 
   constructor(
     //Servicios que se van a utilizar
@@ -50,6 +51,17 @@ export class ProductoComponent {
     private _dataUserService: DataUserService,
   ) {
 
+  }
+  ngOnInit(): void {
+    // this.seleccionarTexto();
+    // console.log("init");
+    
+  }
+
+  seleccionarTexto() {
+    const inputEl = this.inputCantidad!.nativeElement;
+    inputEl.focus(); // Asegúrate de que el input tenga el foco
+    inputEl.setSelectionRange(0, inputEl.value.length); // Selecciona todo el texto
   }
 
   //Calcular totral de la transaccion

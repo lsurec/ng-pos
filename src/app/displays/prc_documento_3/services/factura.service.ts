@@ -17,6 +17,7 @@ import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { FiltroInterface } from '../interfaces/filtro.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -68,7 +69,7 @@ export class FacturaService {
     fechaRefFin?: Date;
     fechaIni?: Date;
     fechaFin?: Date;
-    
+
     // horaRefIniMin?:Date;
     // horaRefFinMin?:Date;
     // horaIniMin?:Date;
@@ -97,9 +98,24 @@ export class FacturaService {
 
 
     //observacuion1, observacion del documento
-  observacion = ""; //input para agreagar una observacion
+    observacion = ""; //input para agreagar una observacion
 
-    transaccionesPorEliminar:TraInternaInterface [] = [];
+    transaccionesPorEliminar: TraInternaInterface[] = [];
+
+
+    //filtros disponibles para bsuqueda de productos
+    filtrosBusqueda: FiltroInterface[] = [
+        {
+            id: 1,
+            nombre: "SKU",
+        },
+        {
+            id: 2,
+            nombre: this._translate.instant('pos.factura.descripcion'),
+        },
+    ];
+    
+  filtrosProductos: number = 1; //filtro producto
 
 
     constructor(
