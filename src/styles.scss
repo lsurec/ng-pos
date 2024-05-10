@@ -171,7 +171,11 @@ body {
     cursor: pointer;
 }
 
+.dark-theme .mat-mdc-select-value,
+.dark-theme .mat-mdc-select-arrow svg,
+.dark-theme .informacion-fondo,
 .dark-theme .detalles-fondo,
+.dark-theme .buscar-cliente,
 .dark-theme .detalles-fondo-v {
     background-color: rgb(127 121 121 / 18%) !important;
 }

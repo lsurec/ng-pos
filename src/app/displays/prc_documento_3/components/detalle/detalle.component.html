@@ -1,7 +1,7 @@
 <div class="detalle-container">
     <div class="documento">
         <div class="buscar-producto">
-            <div class="informacion">
+            <div class="informacion-fondo">
                 <form #searchForm="ngForm" (ngSubmit)="buscarProducto()">
                     <div class="dFlex">
                         <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
@@ -29,8 +29,8 @@
 
         <div class="producto">
             <!-- Acordeon de transacciones -->
-            <div class="informacion">
-                <div class="acordeon_oculto">
+            <div class="acordeon_oculto">
+                <div class="informacion-fondo">
                     <mat-accordion class="mat-expansion">
                         <mat-expansion-panel (opened)="desplegarCarDes = true" (closed)="desplegarCarDes = false"
                             class="acordeon">
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="transacciones">
-                <div class="informacion">
+                <div class="informacion-fondo">
                     <div class="filtros-transacciones">
                         <p class="subtitulo">{{ 'pos.factura.cargoDescuento' | translate }}</p>
                         <span class="spacer"></span>
@@ -109,29 +109,42 @@
             <div class="producto-seleccionado"
                 *ngFor="let transaccion of facturaService.traInternas; let index = index">
                 <div class="dFlex">
-                    <mat-checkbox class="example-margin" color="primary"
-                        [(ngModel)]="transaccion.isChecked"></mat-checkbox>
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="transaccion.isChecked">
+                    </mat-checkbox>
                     <div class="descripcion-producto">
-                        <p class="subtitulo"> {{transaccion.cantidad}} x {{transaccion.producto.des_Producto}}</p>
-                        <p class="subtitulo">SKU: {{transaccion.producto.producto_Id}}</p>
-                        <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
-                            {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
-                        </p>
-                        <!--TODO:Translate-->
-                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por cantidad:
-                            {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
-                        </p>
-                        <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por día:
-                            {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
-                        </p>
-                        <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |
-                            currency:' ':'symbol':'2.2-2' }}</p>
-                        <p class="info-producto" *ngIf="transaccion.cargo != 0">{{ 'pos.factura.cargos' | translate }}
-                            {{transaccion.cargo |
-                            currency:' ':'symbol':'2.2-2' }}</p>
-                        <p class="info-producto" *ngIf="transaccion.descuento != 0">{{ 'pos.factura.descuentos' |
-                            translate }} {{transaccion.descuento |
-                            currency:' ':'symbol':'2.2-2' }}</p>
+                        <p class="subtitulo"> {{transaccion.cantidad}} x ({{transaccion.producto.producto_Id}})
+                            {{transaccion.producto.des_Producto}}</p>
+
+                        <div class="precios">
+
+                            <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
+                                {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer"></span>
+                            <!--TODO:Translate-->
+                            <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por
+                                cantidad:
+                                {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer"></span>
+
+                            <p *ngIf="facturaService.valueParametro(351)" class="info-producto">Precio total por día:
+                                {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer"></span>
+                            <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |
+                                currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer"></span>
+                            <p class="info-producto" *ngIf="transaccion.cargo != 0">{{ 'pos.factura.cargos' | translate
+                                }}
+                                {{transaccion.cargo | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer"></span>
+                            <p class="info-producto" *ngIf="transaccion.descuento != 0">{{ 'pos.factura.descuentos' |
+                                translate }} {{transaccion.descuento | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                        </div>
                     </div>
                     <span class="spacer"></span>
                     <button mat-icon-button (click)="editTra(index)">
