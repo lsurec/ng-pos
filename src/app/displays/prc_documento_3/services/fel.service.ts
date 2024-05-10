@@ -13,9 +13,6 @@ export class FelService {
     constructor(private _http: HttpClient) {
     }
 
-
-
-    
     //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
     private _posInfile(
         api:number,
