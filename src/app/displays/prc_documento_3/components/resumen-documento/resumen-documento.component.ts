@@ -27,6 +27,9 @@ import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
 import { FelService } from '../../services/fel.service';
 import { APIInterface } from '../../interfaces/api.interface';
 import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
+import { DataInfileInterface } from '../../interfaces/data.infile.interface';
+import { CredencialInterface } from '../../interfaces/credencial.interface';
+import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -167,13 +170,13 @@ export class ResumenDocumentoComponent implements OnInit {
     let apiUse: number = 9;
 
     //TODO:Reemplzar y parametrizar
-    let certificador:number = 1;
+    let certificador: number = 1;
 
 
     this.isLoading = true;
 
     //buscar las credenciales del certificador
-    let resCredenciales:ResApiInterface = await  this._felService.getCredenciales(
+    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
       certificador,
       this.empresa,
       this.user,
@@ -188,33 +191,34 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     //TODO:Api que se va a usar debe buscarse y asignarse aqui 
+    let credecniales: CredencialInterface[] = resCredenciales.response;
 
-    //buscar api en catalogo api 
-    let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
+    // //buscar api en catalogo api 
+    // let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
 
-    if (!resApi.status) {
-      this.isLoading = false;
-      this.showError(resApi);
-      return;
-    }
+    // if (!resApi.status) {
+    //   this.isLoading = false;
+    //   this.showError(resApi);
+    //   return;
+    // }
 
     //apis encontradas
-    let apis: APIInterface[] = resApi.response;
+    // let apis: APIInterface[] = resApi.response;
 
-    //verificar que hay elemnetos en el catalogo de apis
-    if (apis.length == 0) {
-      //TODO:Translate
-      this.isLoading = false;
-      resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
+    // //verificar que hay elemnetos en el catalogo de apis
+    // if (apis.length == 0) {
+    //   //TODO:Translate
+    //   this.isLoading = false;
+    //   resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
 
-      this.showError(resApi);
+    //   this.showError(resApi);
 
-      return;
-    }
+    //   return;
+    // }
 
 
-    //api que se va a usar
-    let api: APIInterface = apis[0];
+    // //api que se va a usar
+    // let api: APIInterface = apis[0];
 
     //buscar documento xml para porcesar
 
@@ -241,7 +245,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    let docXml:DocXMLInterface = docsXMl[0];
+    let docXml: DocXMLInterface = docsXMl[0];
 
 
     //TODO:Proceso para obtene el token de un api aqui
@@ -249,16 +253,88 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //Obtener parametros del api
-    let resParamsApi:ResApiInterface = await this._felService.getParamsApi(
-      apiUse, this.user,this.token,
+    // let resParamsApi: ResApiInterface = await this._felService.getParamsApi(
+    //   apiUse, this.user, this.token,
+    // )
+
+
+    // if (!resParamsApi.status) {
+    //   this.isLoading = false;
+    //   this.showError(resParamsApi);
+    //   return;
+    // }
+
+
+    //Buscvar credenciales de infile
+    let llaveApi: string = "";
+    let llaveFirma: string = "";
+    let usuarioApi: string = "";
+    let usuarioFirma: string = "";
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+      switch (element.campo_Nombre) {
+        case "LlaveApi":
+          llaveApi = element.campo_Valor;
+
+          break;
+        case "LlaveFirma":
+          llaveFirma = element.campo_Valor;
+          break;
+
+        case "UsuarioApi":
+          usuarioApi = element.campo_Valor;
+          break;
+        case "UsuarioFirma":
+          usuarioFirma = element.campo_Valor;
+          break;
+        default:
+          break;
+      }
+
+    }
+
+
+    let paramFel: DataInfileInterface = {
+      docXML: docXml.xml_Contenido,
+      identificador: uuidDoc,
+      llaveApi: llaveApi,
+      llaveFirma: llaveFirma,
+      usuarioApi: usuarioApi,
+      usuarioFirma:usuarioFirma,
+    }
+
+
+    let resCertDoc:ResApiInterface = await this._felService.postInfile(
+      apiUse,
+      paramFel,
+      this.token,
     )
 
 
-    if (!resParamsApi.status) {
+    if (!resCertDoc.status) {
       this.isLoading = false;
-      this.showError(resParamsApi);
+      this.showError(resCertDoc);
       return;
     }
+
+
+    let doc:any = resCertDoc.response;
+
+    let paramUpdate : ParamUpdateXMLInterface = {
+      documento: doc,
+      documentoCompleto:doc,
+      usuario:this.user,
+      uuid:uuidDoc,
+    }
+
+
+    //actualizar
+    let resUpdateXml:ResApiInterface = await this._felService.postXmlUpdate(
+      this.token, 
+      paramUpdate,
+    )
 
 
 
