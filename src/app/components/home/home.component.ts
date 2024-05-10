@@ -193,7 +193,7 @@ export class HomeComponent implements OnInit {
 
   sizeSelect?: FontSizeInterface;
 
-  cambiarFuente(index: number) {
+  async cambiarFuente(index: number) {
 
     this.sizeSelect = this.fontsSizes[index];
 
@@ -208,6 +208,15 @@ export class HomeComponent implements OnInit {
     console.log(this.sizeSelect);
 
 
+    let verificador :boolean = await this._notificationsService.openDialogActions(
+      {
+        title: "Tamaño de fuente.",
+        description: "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
     // Usando window.location.reload()
     window.location.reload();
 
