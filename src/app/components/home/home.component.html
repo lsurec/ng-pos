@@ -71,6 +71,7 @@
                     <p class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</p>
+                    <p class="ajustesMenu" *ngIf="sizes">Tamaño de fuente.</p>
                 </div>
                 <span class="spacer"></span>
                 <span class="spacer" *ngIf="ajustes"></span>
@@ -92,6 +93,14 @@
                     <div class="detalle">
                         <p class="subtitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
                         <p class="descripcion">{{getNameByLanguageRegion(activeLang)}}</p>
+                    </div>
+                </div>
+                <div class="configuraciones" (click)="verSizes()">
+                    <mat-icon class="iconos-detalles">format_size</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">TAMAÑO DE LA FUENTE</p>
+                        <p class="descripcion">{{ fontsSizes[size].name }} </p>
                     </div>
                 </div>
                 <!-- <p class="separador"></p> -->
@@ -116,6 +125,21 @@
                         <mat-icon>navigate_next</mat-icon>
                     </div>
                 </div>
+
+                <div class="configuraciones">
+                    <mat-icon class="iconos-detalles">dvr</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <div class="d-flex">
+                            <p class="subtitulo">Fel</p>
+                            <span class="spacer"></span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckDefault" (change)="setCF()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Lenguajes de la aplicacion -->
@@ -125,6 +149,16 @@
                         *ngFor="let item of languages ; let i = index" [value]="i" color="primary"
                         (click)="changeLang(i)">
                         {{getNameByLanguageRegion(item)}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!-- Seleccionar tamaño de fuente -->
+            <div class="lenguajes" *ngIf="sizes">
+                <mat-radio-group class="example-radio-group" [(ngModel)]="size">
+                    <mat-radio-button class="example-radio-button separador"
+                        *ngFor="let size of fontsSizes ; let i = index" [value]="i" color="primary"
+                        (click)="cambiarFuente(i)">
+                        {{size.name}}
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
@@ -154,7 +188,7 @@
                         class="circular-image" alt=""> -->
 
                     <div class="circular-usuario">
-                        <p class="inicial-usuario">{{user[0]}}</p>
+                        <p class="inicial-usuario-h">{{user[0]}}</p>
                     </div>
                 </div>
                 <p class="userName">{{user.toUpperCase()}}</p>
@@ -222,6 +256,12 @@
             </mat-toolbar>
             <!-- botones regresar a ajustes -->
             <mat-toolbar class="backColorNavBar" *ngIf="idiomas">
+                <button mat-icon-button (click)="verAjustes()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- Regresa tamaño fuente -->
+            <mat-toolbar class="backColorNavBar" *ngIf="sizes">
                 <button mat-icon-button (click)="verAjustes()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>

@@ -4,7 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
-import { LanguageInterface } from 'src/app/interfaces/language.interface';
+import { FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
@@ -75,6 +75,7 @@ export class HomeComponent implements OnInit {
   detallesUsuario: boolean = true;
   ajustes: boolean = false;
   idiomas: boolean = false;
+  sizes: boolean = false;
   btnRegresar: boolean = false;
   tema!: number;
 
@@ -82,6 +83,7 @@ export class HomeComponent implements OnInit {
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
   idioma: number = indexDefaultLang;
+  size: number = 0;
   languages: LanguageInterface[] = languagesProvider;
   temaOscuro: boolean = false;
   //Guardar el nombre del usuario
@@ -114,7 +116,7 @@ export class HomeComponent implements OnInit {
     private _translate: TranslateService,
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
-    private themeService: ThemeService,
+    public themeService: ThemeService,
     private _dataUserService: DataUserService,
     public facturaService: FacturaService,
     private _retryService: RetryService,
@@ -155,8 +157,70 @@ export class HomeComponent implements OnInit {
     } else {
       this.tema = 0;
     }
+
+    //tamaño de fuente
+    let getFontSize: string = PreferencesService.idFontSizeStorage;
+    if (!getFontSize) {
+      this.size = 0;
+    } else {
+      this.size = +getFontSize;
+    }
   }
 
+  fontsSizes: FontSizeInterface[] = [
+
+    {
+      id: 1,
+      name: "Pequeño (12)",
+      value: "12px"
+    },
+    {
+      id: 2,
+      name: "Mediano (14)",
+      value: "14px"
+    },
+    {
+      id: 3,
+      name: "Grande (16)",
+      value: "16px"
+    },
+    {
+      id: 4,
+      name: "Extra grande (20)",
+      value: "20px"
+    }
+  ];
+
+  sizeSelect?: FontSizeInterface;
+
+  async cambiarFuente(index: number) {
+
+    this.sizeSelect = this.fontsSizes[index];
+
+    this.themeService.globalFontSize = this.sizeSelect.value;
+
+    PreferencesService.fontSizeStorage = this.sizeSelect.value;
+
+    this.size = index;
+
+    PreferencesService.idFontSizeStorage = `${index}`;
+
+    console.log(this.sizeSelect);
+
+
+    let verificador :boolean = await this._notificationsService.openDialogActions(
+      {
+        title: "Tamaño de fuente.",
+        description: "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+    // Usando window.location.reload()
+    window.location.reload();
+
+  }
 
   ngOnInit(): void {
 
@@ -600,6 +664,7 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
     this.temas = false;
     this.idiomas = false;
+    this.sizes = false;
   };
 
   verTema(): void {
@@ -629,6 +694,13 @@ export class HomeComponent implements OnInit {
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas
   verLenguajes(): void {
     this.idiomas = true;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+  };
+
+  verSizes(): void {
+    this.sizes = true;
+    this.idiomas = false;
     this.ajustes = false;
     this.detallesUsuario = false;
   };
@@ -682,6 +754,12 @@ export class HomeComponent implements OnInit {
     // this.sidenavend.close(); //cerrar menu
     this.hideHome = true;
     this.impresora = true; //ver impresora
+  }
+
+  //TODO:Eliminar fel
+  // Función para manejar el cambio de estado del switch
+  setCF(): void {
+    DataUserService.switchState = !DataUserService.switchState;
   }
 
 }

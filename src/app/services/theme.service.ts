@@ -7,6 +7,9 @@ import { Injectable } from '@angular/core';
 export class ThemeService {
     //tema configurado: falso = claro; true = oscuro
     isDarkTheme: boolean = false;
+    // Tamaño de fuente global
+
+    globalFontSize: string = "14px";
 
     //cambiar tema
     toggleTheme(): void {
@@ -23,4 +26,5 @@ export class ThemeService {
             body.classList.remove('dark-theme');
         }
     }
+
 }

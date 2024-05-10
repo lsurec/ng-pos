@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PreferencesService } from './services/preferences.service';
 import { LanguageInterface } from './interfaces/language.interface';
@@ -10,7 +10,7 @@ import { ThemeService } from './services/theme.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   //Idiomas disponibles para la aplicacion
   languages: LanguageInterface[] = languagesProvider;
@@ -40,6 +40,19 @@ export class AppComponent {
       this._themeService.updateTheme();
     }
 
+    //tamaño de fuente
+    let getFontSize: string = PreferencesService.fontSizeStorage;
+
+    if (!getFontSize) {
+      _themeService.globalFontSize = "14px";
+    } else {
+      _themeService.globalFontSize = getFontSize;
+    }
+  }
+
+  ngOnInit(): void {
+    // Obtener el valor de globalFontSize del servicio y establecerlo como una variable CSS
+    document.documentElement.style.setProperty('--global-font-size', this._themeService.globalFontSize);
   }
 
 }

@@ -12,9 +12,9 @@
                 <p class="verDetalle">{{ 'pos.factura.sku' | translate }}: </p>
                 <p class="subtitulo"> {{producto.producto_Id}} </p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="imagen(producto)">
+                <!-- <button mat-icon-button (click)="imagen(producto)">
                     <mat-icon>image</mat-icon>
-                </button>
+                </button> -->
             </div>
             <div class="producto-cantidad">
                 <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
@@ -23,8 +23,8 @@
                     <div class="restar" (click)="restar()">
                         <mat-icon class="sumar-restar">remove</mat-icon>
                     </div>
-                    <input class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad"
-                        autocomplete="off" (ngModelChange)="changeCantidad()">
+                    <input #inputCantidad class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad"
+                        autocomplete="off" (ngModelChange)="changeCantidad()" (click)="seleccionarTexto()">
                     <div class="sumar" (click)="sumar()">
                         <mat-icon class="sumar-restar">add</mat-icon>
                     </div>

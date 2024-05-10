@@ -28,6 +28,8 @@ export class PreferencesService {
     private static readonly printServiceKey: string = 'printlocal';
     private static readonly portKey: string = 'port';
     private static readonly copiesKey: string = 'copies';
+    private static readonly sizeKey: string = 'fontSize';
+    private static readonly idSizeKey: string = 'idFontSize';
 
 
     //Borrar datos al cerrar sesion
@@ -262,4 +264,29 @@ export class PreferencesService {
         if (!value) return "";
         return value;
     }
+
+    //tamaño de la fuente
+    @Input()
+    static set fontSizeStorage(value: string) {
+        localStorage.setItem(this.sizeKey, value);
+    }
+
+    static get fontSizeStorage(): string {
+        let value = localStorage.getItem(this.sizeKey);
+        if (!value) return "";
+        return value;
+    }
+
+    //tamaño de la fuente
+    @Input()
+    static set idFontSizeStorage(value: string) {
+        localStorage.setItem(this.idSizeKey, value);
+    }
+
+    static get idFontSizeStorage(): string {
+        let value = localStorage.getItem(this.idSizeKey);
+        if (!value) return "";
+        return value;
+    }
+
 }

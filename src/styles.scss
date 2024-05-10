@@ -21,6 +21,37 @@ body {
     height          : 100%;
     background-color: #FEF5E7 !important;
     font-family     : 'Playfair Display', serif;
+
+    //tamaño para todos los textos de toda la aplicacion
+    p,
+    h2,
+    h4,
+    label,
+    button,
+    input,
+    textarea,
+    //mennu
+    .mat-mdc-select-value,
+    //mennu
+    .mat-mdc-select-value-text,
+    //opciones de menu
+    .mat-mdc-option .mdc-list-item__primary-text,
+    .mat-mdc-outlined-button .mdc-button__label {
+        font-size: var(--global-font-size) !important; // Utiliza la variable CSS
+    }
+
+    //textos que no van cambiar
+    .inicial-usuario-h {
+        font-size: 35px !important;
+    }
+
+    .desa {
+        font-size: 14px !important;
+    }
+
+    .form-switch .form-check-input {
+        font-size: 20px !important;
+    }
 }
 
 /* Importing Bootstrap SCSS file. */
@@ -111,7 +142,8 @@ body {
 .dark-theme .url-apis,
 .dark-theme .form-control,
 .dark-theme .hora,
-.dark-theme .campos {
+.dark-theme .campos,
+.dark-theme .precio-unitario {
     color: $color-blanco !important;
 }
 
@@ -171,7 +203,11 @@ body {
     cursor: pointer;
 }
 
+.dark-theme .mat-mdc-select-value,
+.dark-theme .mat-mdc-select-arrow svg,
+.dark-theme .informacion-fondo,
 .dark-theme .detalles-fondo,
+.dark-theme .buscar-cliente,
 .dark-theme .detalles-fondo-v {
     background-color: rgb(127 121 121 / 18%) !important;
 }

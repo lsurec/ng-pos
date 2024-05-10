@@ -10,6 +10,10 @@ export class DataUserService {
   nameDisplay: string = "";
 
 
+  //TODO:Eliminar fel
+  static switchState: boolean = false;
+
+
   constructor() { }
 
 

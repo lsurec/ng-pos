@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { FacturaService } from '../../services/factura.service';
@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
 import { TraInternaInterface } from '../../interfaces/tra-interna.interface';
@@ -26,7 +26,7 @@ import { ImagenComponent } from '../imagen/imagen.component';
     ProductService,
   ]
 })
-export class ProductoComponent {
+export class ProductoComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga
 
@@ -36,6 +36,7 @@ export class ProductoComponent {
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
 
+  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
 
   constructor(
     //Servicios que se van a utilizar
@@ -50,6 +51,17 @@ export class ProductoComponent {
     private _dataUserService: DataUserService,
   ) {
 
+  }
+  ngOnInit(): void {
+    // this.seleccionarTexto();
+    // console.log("init");
+    
+  }
+
+  seleccionarTexto() {
+    const inputEl = this.inputCantidad!.nativeElement;
+    inputEl.focus(); // Asegúrate de que el input tenga el foco
+    inputEl.setSelectionRange(0, inputEl.value.length); // Selecciona todo el texto
   }
 
   //Calcular totral de la transaccion
@@ -528,7 +540,19 @@ export class ProductoComponent {
 
   }
 
+  imagenes: string[] = [
+    "https://guateplast.com/wp-content/uploads/2022/03/Silla-Petatillo-VR.jpg",
+    "https://img.freepik.com/psd-gratis/mesa-cafe-aislada-fondo-transparente_191095-13806.jpg",
+    "https://mobeduc.com/wordpress/wp-content/uploads/2017/03/600120-Mesa-hexagonal_r-e1488989978398.jpg"
+  ]
+
   imagen(producto: ProductoInterface) {
-    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+
+    let imagenesProducto: ImagenProductoInterface = {
+      producto: producto,
+      imagenesUrl: this.imagenes,
+    }
+
+    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }

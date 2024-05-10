@@ -8,6 +8,7 @@ $background-naranja : #DF9722; //resaltar naranja
 $color-gris-s       : #777; //sombra y texto gris
 $color-blanco       : #fff; //texto blanco
 $color-gris         : #efefef;
+$detalles           : rgb(0 0 0 / 3%);
 $background-transparent: transparent; //fondo transparennte,
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 $background-scrollbar : #134895; //barra azul
@@ -20,6 +21,7 @@ $background-scrollbar : #134895; //barra azul
 .documento {
     display   : flex;
     overflow-x: hidden;
+    padding   : 10px 0px;
 }
 
 .documento-sin-borde {
@@ -46,6 +48,7 @@ $background-scrollbar : #134895; //barra azul
 
 .producto {
     width     : 50%;
+    padding   : 10px 25px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -73,9 +76,11 @@ p {
 }
 
 
-.informacion {
-    padding: 10px 0px;
-    width  : 400px;
+.informacion-fondo {
+    padding            : 10px;
+    // width           : 80%;
+    margin-bottom      : 10px;
+    background-color   : $detalles;
 }
 
 .eliminar {
@@ -86,15 +91,11 @@ p {
     font-size: 14px;
 }
 
-.buscar-cliente {
-    padding: 10px 0px;
-    width  : 400px;
-}
-
 .dFlex {
     display    : flex;
     align-items: center;
 }
+
 
 .filtros-transacciones {
     display    : flex;
@@ -242,15 +243,24 @@ p {
 }
 
 .producto-seleccionado {
-    min-height      : 40px;
+    min-height      : 45px;
     width           : 100%;
     background-color: $color-bordes;
-    padding         : 0px 10px;
+    padding         : 5px 10px;
     margin          : 5px 0px;
 }
 
 .descripcion-producto {
-    padding: 10px 0px;
+    width         : 100%;
+    padding       : 10px 0px;
+    // display    : flex;
+    // align-items: center;
+}
+
+.precios {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
 }
 
 .info-producto {
@@ -276,11 +286,10 @@ p {
 }
 
 .pagar {
-    padding    : 10px 0px;
-    width      : 200px;
-    // position: fixed;
-    // bottom  : 64px;
-    // right   : 25px;
+    padding         : 10px;
+    width           : 250px;
+    background-color: $detalles;
+    margin-right    : 6px;
 }
 
 .textos {
@@ -293,11 +302,12 @@ p {
 @media screen and (max-width: 767px) {
 
     .documento,
-    .filtros-transacciones {
+    .filtros-transacciones,
+    .precios {
         display: block !important;
     }
 
-    .informacion {
+    .informacion-fondo {
         width: 100% !important;
     }
 

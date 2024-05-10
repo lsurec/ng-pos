@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
-import { ProductoInterface } from '../../interfaces/producto.interface';
+import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { ProductoComponent } from '../producto/producto.component';
@@ -41,21 +41,10 @@ export class DetalleComponent {
   documento: number = this.facturaService.tipoDocumento!; //Tipo docuemtno seleccioando (display)
 
   searchText: string = "";  //Texto para bsucar productos
-  filtrosProductos: number = 1; //filtro producto
 
   tipoDesCar: number = 1; //tipo de cargo o descuento (monto o porcentaje)
 
-  //filtros disponibles para bsuqueda de productos
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: "SKU",
-    },
-    {
-      id: 2,
-      nombre: this._translate.instant('pos.factura.descripcion'),
-    },
-  ];
+
 
   //opciones para cargos y descuetnos
   tipos: FiltroInterface[] = [
@@ -364,7 +353,7 @@ export class DetalleComponent {
 
     this.facturaService.isLoading = true;
     //filtro 1 = sku
-    if (this.filtrosProductos == 1) {
+    if (this.facturaService. filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
         this.searchText,
@@ -372,7 +361,7 @@ export class DetalleComponent {
     }
 
     //filtro 2 = descripcion
-    if (this.filtrosProductos == 2) {
+    if (this.facturaService. filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
         this.searchText,
@@ -605,6 +594,13 @@ export class DetalleComponent {
             break;
 
           }
+
+          if(!this._productoService.precio){
+            this._productoService.precio = this._productoService.precios![0];
+            this._productoService.total = this._productoService.precios![0].precioU;
+            this._productoService.precioU = this._productoService.precios![0].precioU;
+            this._productoService.precioText = this._productoService.precios![0].precioU.toString();
+          }
         }
 
       }
@@ -636,6 +632,7 @@ export class DetalleComponent {
 
     //abriri dialogo de prosuctospara seleccioanr uno
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
+    
     productosDialog.afterClosed().subscribe(async result => {
       if (result) {
         //abrir gialofo de producto
@@ -677,7 +674,7 @@ export class DetalleComponent {
 
   //Cambiar fdilto 
   onOptionChange(optionId: number) {
-    this.filtrosProductos = optionId;
+    this.facturaService. filtrosProductos = optionId;
   }
 
   //Cambiar ocpion para cargo y decuento
@@ -866,7 +863,18 @@ export class DetalleComponent {
     // });
   }
 
+  imagenes: string[] = [
+    "https://ferreteriavidri.com/images/items/large/405515.jpg",
+    "https://http2.mlstatic.com/D_NQ_NP_828517-MLA43045758475_082020-O.webp",
+  ]
+
   imagen(producto: ProductoInterface) {
-    let productosDialog = this._dialog.open(ImagenComponent, { data: producto })
+
+    let imagenesProducto: ImagenProductoInterface = {
+      producto: producto,
+      imagenesUrl: this.imagenes,
+    }
+
+    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }

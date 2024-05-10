@@ -13,3 +13,9 @@ export interface MensajesInterface {
     lrCode: string;
     value: string;
 }
+
+export interface FontSizeInterface {
+    id: number;
+    name: string;
+    value: string;
+}
