@@ -249,9 +249,16 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //Obtener parametros del api
-    
+    let resParamsApi:ResApiInterface = await this._felService.getParamsApi(
+      apiUse, this.user,this.token,
+    )
 
 
+    if (!resParamsApi.status) {
+      this.isLoading = false;
+      this.showError(resParamsApi);
+      return;
+    }
 
 
 

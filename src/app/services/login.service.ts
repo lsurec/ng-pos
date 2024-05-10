@@ -21,8 +21,9 @@ export class LoginService {
         //configurar headers
         let paramsStr = JSON.stringify(credenciales); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" })
+        
         //consumo de api
-      return this._http.post(`${this._urlBase}login`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.post(`${this._urlBase}login`, paramsStr, { headers: headers, observe: 'response' });
 
     }
 
