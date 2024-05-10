@@ -156,8 +156,8 @@ export class ResumenDocumentoComponent implements OnInit {
   async felProcess() {
 
     //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
-    let apiToken: number = 0;
-    let tokenFel: string = "";
+    // let apiToken: number = 0;
+    // let tokenFel: string = "";
 
 
     //TODO:Replece for value in database
@@ -166,8 +166,28 @@ export class ResumenDocumentoComponent implements OnInit {
     //TODO:Asiganr el api 
     let apiUse: number = 9;
 
+    //TODO:Reemplzar y parametrizar
+    let certificador:number = 1;
+
 
     this.isLoading = true;
+
+    //buscar las credenciales del certificador
+    let resCredenciales:ResApiInterface = await  this._felService.getCredenciales(
+      certificador,
+      this.empresa,
+      this.user,
+      this.token,
+    )
+
+
+    if (!resCredenciales.status) {
+      this.isLoading = false;
+      this.showError(resCredenciales);
+      return;
+    }
+
+    //TODO:Api que se va a usar debe buscarse y asignarse aqui 
 
     //buscar api en catalogo api 
     let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
@@ -224,7 +244,14 @@ export class ResumenDocumentoComponent implements OnInit {
     let docXml:DocXMLInterface = docsXMl[0];
 
 
+    //TODO:Proceso para obtene el token de un api aqui
+    //Omitido por falat de tiempo
+
+
+    //Obtener parametros del api
     
+
+
 
 
 
