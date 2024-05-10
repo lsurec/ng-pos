@@ -337,6 +337,15 @@ export class ResumenDocumentoComponent implements OnInit {
     )
 
 
+    if (!resUpdateXml.status) {
+      this.isLoading = false;
+      this.showError(resUpdateXml);
+      return;
+    }
+
+
+    this._notificationService.openSnackbar("Documento creado y certificado correctamente.");
+
 
     this.isLoading = false;
 
