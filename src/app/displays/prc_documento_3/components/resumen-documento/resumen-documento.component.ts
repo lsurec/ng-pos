@@ -170,7 +170,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let uuidDoc = 'BA86F308-C4F7-4E13-A930-D859E3AC55FF'
 
     //TODO:Asiganr el api 
-    let apiUse: number = 9;
+    let apiUse: string = "";
 
     //TODO:Reemplzar y parametrizar
     let certificador: number = 1;
@@ -195,6 +195,19 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //TODO:Api que se va a usar debe buscarse y asignarse aqui 
     let credecniales: CredencialInterface[] = resCredenciales.response;
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+
+      if(element.campo_Nombre == "apiUnificadaInfile"){
+
+        apiUse = element.campo_Valor;
+        break;
+
+      }
+      
+    }
 
     // //buscar api en catalogo api 
     // let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
@@ -346,13 +359,8 @@ export class ResumenDocumentoComponent implements OnInit {
       return;
     }
 
-
-    this._notificationService.openSnackbar("Documento creado y certificado correctamente.");
-
-
     this.isLoading = false;
-
-
+    this._notificationService.openSnackbar("Documento creado y certificado correctamente.");
 
   }
 

@@ -91,7 +91,7 @@ export class FelService {
 
     //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
     private _posInfile(
-        api:number,
+        api:string,
         data:DataInfileInterface,     
         token:string,   
         ) {
@@ -106,7 +106,7 @@ export class FelService {
 
     //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
     postInfile(
-        api:number,
+        api:string,
         data:DataInfileInterface,  
         token:string, 
     ): Promise<ResApiInterface> {
@@ -353,7 +353,7 @@ export class FelService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}api/Fel/doc/xml`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/doc/xml`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
