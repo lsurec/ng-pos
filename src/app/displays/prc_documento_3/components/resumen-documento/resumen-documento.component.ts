@@ -172,7 +172,7 @@ export class ResumenDocumentoComponent implements OnInit {
     //buscar api en catalogo api 
     let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
 
-    if(!resApi.status){
+    if (!resApi.status) {
       this.isLoading = false;
       this.showError(resApi);
       return;
@@ -182,44 +182,51 @@ export class ResumenDocumentoComponent implements OnInit {
     let apis: APIInterface[] = resApi.response;
 
     //verificar que hay elemnetos en el catalogo de apis
-    if(apis.length == 0){
-     //TODO:Translate
-     this.isLoading = false;
-     resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
+    if (apis.length == 0) {
+      //TODO:Translate
+      this.isLoading = false;
+      resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
 
-     this.showError(resApi);
+      this.showError(resApi);
 
-     return;
+      return;
     }
 
 
     //api que se va a usar
-    let api:APIInterface = apis[0];
+    let api: APIInterface = apis[0];
 
     //buscar documento xml para porcesar
 
-    let resDocXml:ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
+    let resDocXml: ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
 
-    if(!resDocXml.status){
+    if (!resDocXml.status) {
       this.isLoading = false;
       this.showError(resDocXml);
       return;
     }
 
-    let docsXMl :DocXMLInterface[]= resDocXml.response; 
+    let docsXMl: DocXMLInterface[] = resDocXml.response;
 
 
-     //verificar que hay documentos que procesar
-     if(apis.length == 0){
+    //verificar que hay documentos que procesar
+    if (docsXMl.length == 0) {
       //TODO:Translate
       this.isLoading = false;
-      resApi.response = `No se encontró el documento XML para procesar, .`
- 
-      this.showError(resApi);
- 
+      resDocXml.response = `No se encontró el documento XML para procesar.`
+
+      this.showError(resDocXml);
+
       return;
-     }
- 
+    }
+
+
+    let docXml:DocXMLInterface = docsXMl[0];
+
+
+    
+
+
 
     this.isLoading = false;
 
