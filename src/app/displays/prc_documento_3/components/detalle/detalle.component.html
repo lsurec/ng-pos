@@ -8,7 +8,10 @@
                         <span class="spacer"></span>
                         <div *ngFor="let option of facturaService.filtrosBusqueda">
                             <div class="chip" [class.selected]="option.id === facturaService.filtrosProductos"
-                                (click)="onOptionChange(option.id)">{{ option.nombre }}
+                                (click)="onOptionChange(option.id)">
+                                <p>
+                                    {{ option.nombre }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -44,8 +47,10 @@
                                 <span class="spacer"></span>
                                 <div *ngFor="let option of tipos">
                                     <div class="chip" [class.selected]="option.id === tipoDesCar"
-                                        (click)="onOptionCarDes(option.id)">{{
-                                        option.nombre }}
+                                        (click)="onOptionCarDes(option.id)">
+                                        <p>
+                                            {{option.nombre }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -72,8 +77,10 @@
                             <span class="spacer"></span>
                             <div *ngFor="let option of tipos">
                                 <div class="chip" [class.selected]="option.id === tipoDesCar"
-                                    (click)="onOptionCarDes(option.id)">{{
-                                    option.nombre }}
+                                    (click)="onOptionCarDes(option.id)">
+                                    <p>
+                                        {{option.nombre }}
+                                    </p>
                                 </div>
                             </div>
                         </div>

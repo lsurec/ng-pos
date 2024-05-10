@@ -18,22 +18,39 @@ $navegacion              : #252323;
 
 html,
 body {
-    height             : 100%;
-    background-color   : #FEF5E7 !important;
-    font-family        : 'Playfair Display', serif;
-    // font-size       : 10px !important;
+    height          : 100%;
+    background-color: #FEF5E7 !important;
+    font-family     : 'Playfair Display', serif;
 
+    //tamaño para todos los textos de toda la aplicacion
     p,
     h2,
     h4,
     label,
     button,
+    input,
+    textarea,
+    //mennu
+    .mat-mdc-select-value,
+    //mennu
+    .mat-mdc-select-value-text,
+    //opciones de menu
+    .mat-mdc-option .mdc-list-item__primary-text,
     .mat-mdc-outlined-button .mdc-button__label {
-        font-size: 10px !important;
+        font-size: var(--global-font-size) !important; // Utiliza la variable CSS
     }
 
+    //textos que no van cambiar
     .inicial-usuario-h {
         font-size: 35px !important;
+    }
+
+    .desa {
+        font-size: 14px !important;
+    }
+
+    .form-switch .form-check-input{
+        font-size: 20px !important;
     }
 }
 
