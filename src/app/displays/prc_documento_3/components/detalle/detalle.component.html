@@ -6,7 +6,7 @@
                     <div class="dFlex">
                         <p class="subtitulo">{{ 'pos.factura.filtro' | translate }}</p>
                         <span class="spacer"></span>
-                        <div *ngFor="let option of facturaService.filtrosBusqueda">
+                        <div *ngFor="let option of filtrosBusqueda">
                             <div class="chip" [class.selected]="option.id === facturaService.filtrosProductos"
                                 (click)="onOptionChange(option.id)">
                                 <p>

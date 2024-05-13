@@ -102,19 +102,6 @@ export class FacturaService {
 
     transaccionesPorEliminar: TraInternaInterface[] = [];
 
-
-    //filtros disponibles para bsuqueda de productos
-    filtrosBusqueda: FiltroInterface[] = [
-        {
-            id: 1,
-            nombre: "SKU",
-        },
-        {
-            id: 2,
-            nombre: this._translate.instant('pos.factura.descripcion'),
-        },
-    ];
-
     filtrosProductos: number = 1; //filtro producto
 
 

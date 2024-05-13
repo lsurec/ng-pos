@@ -59,6 +59,18 @@ export class DetalleComponent {
   ];
 
 
+  //filtros disponibles para bsuqueda de productos
+  filtrosBusqueda: FiltroInterface[] = [
+    {
+      id: 1,
+      nombre: "SKU",
+    },
+    {
+      id: 2,
+      nombre: this._translate.instant('pos.factura.descripcion'),
+    },
+  ];
+
   constructor(
     //intancias de los servicios
     private _dialog: MatDialog,
@@ -353,7 +365,7 @@ export class DetalleComponent {
 
     this.facturaService.isLoading = true;
     //filtro 1 = sku
-    if (this.facturaService. filtrosProductos == 1) {
+    if (this.facturaService.filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
         this.searchText,
@@ -361,7 +373,7 @@ export class DetalleComponent {
     }
 
     //filtro 2 = descripcion
-    if (this.facturaService. filtrosProductos == 2) {
+    if (this.facturaService.filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
         this.searchText,
@@ -595,7 +607,7 @@ export class DetalleComponent {
 
           }
 
-          if(!this._productoService.precio){
+          if (!this._productoService.precio) {
             this._productoService.precio = this._productoService.precios![0];
             this._productoService.total = this._productoService.precios![0].precioU;
             this._productoService.precioU = this._productoService.precios![0].precioU;
@@ -632,7 +644,7 @@ export class DetalleComponent {
 
     //abriri dialogo de prosuctospara seleccioanr uno
     let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
-    
+
     productosDialog.afterClosed().subscribe(async result => {
       if (result) {
         //abrir gialofo de producto
@@ -674,7 +686,7 @@ export class DetalleComponent {
 
   //Cambiar fdilto 
   onOptionChange(optionId: number) {
-    this.facturaService. filtrosProductos = optionId;
+    this.facturaService.filtrosProductos = optionId;
   }
 
   //Cambiar ocpion para cargo y decuento

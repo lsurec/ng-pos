@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
@@ -43,7 +43,7 @@ import { HttpClient } from '@angular/common/http';
     ReceptionService,
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   //token y usuario
   user = PreferencesService.user;
@@ -781,4 +781,35 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  @ViewChild('myInput') myInput?: ElementRef;
+
+  saludo: string = "Hola";
+
+  // selectText(input: HTMLInputElement) {
+  //   input.setSelectionRange(0, input.value.length);
+  // }
+
+
+  ngAfterViewInit() {
+    if (this.myInput) {
+      setTimeout(() => {
+        this.selectText();
+      });
+    }
+  }
+
+  selectText() {
+    const inputElement = this.myInput!.nativeElement;
+    inputElement.focus();
+    inputElement.setSelectionRange(0, inputElement.value.length);
+  }
+
+  // selectText() {
+  //   this.myInput!.nativeElement.focus();
+  //   this.myInput!.nativeElement.select();
+  // }
+  // selectText() {
+  //   this.myInput!.nativeElement.focus();
+  //   this.myInput!.nativeElement.setSelectionRange(0, this.myInput!.nativeElement.value.length);
+  // }
 }
