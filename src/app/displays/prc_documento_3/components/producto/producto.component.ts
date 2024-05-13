@@ -28,6 +28,11 @@ import { ImagenComponent } from '../imagen/imagen.component';
 })
 export class ProductoComponent implements OnInit {
 
+  @ViewChild('cantidadInput') myInput?: ElementRef;
+
+  saludo: string = "Hola";
+
+
   isLoading: boolean = false; //pantalla de carga
 
   user: string = PreferencesService.user; //Usuario de la sesion
@@ -554,5 +559,11 @@ export class ProductoComponent implements OnInit {
     }
 
     let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
+  }
+
+  selectText() {
+    const inputElement = this.myInput!.nativeElement;
+    inputElement.focus();
+    inputElement.setSelectionRange(0, inputElement.value.length);
   }
 }

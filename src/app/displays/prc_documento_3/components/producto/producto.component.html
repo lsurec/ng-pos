@@ -23,8 +23,9 @@
                     <div class="restar" (click)="restar()">
                         <mat-icon class="sumar-restar">remove</mat-icon>
                     </div>
-                    <input #inputCantidad class="cantidad" type="text" name="search" [(ngModel)]="productoService.cantidad"
-                        autocomplete="off" (ngModelChange)="changeCantidad()" (click)="seleccionarTexto()">
+                    <input #cantidadInput class="cantidad" type="text" name="search"
+                        [(ngModel)]="productoService.cantidad" autocomplete="off" (ngModelChange)="changeCantidad()"
+                        (focus)="selectText()" (autofocus)="selectText()">
                     <div class="sumar" (click)="sumar()">
                         <mat-icon class="sumar-restar">add</mat-icon>
                     </div>
@@ -100,7 +101,8 @@
     <div class="dFlex">
         <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
         <span class="spacer"></span>
-        <button *ngIf="productoService.indexEdit == -1" mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' | translate }}</button>
+        <button *ngIf="productoService.indexEdit == -1" mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' |
+            translate }}</button>
         <!--TODO: Tranlate-->
         <button *ngIf="productoService.indexEdit != -1" mat-stroked-button (click)="enviar()">Modificar</button>
     </div>
