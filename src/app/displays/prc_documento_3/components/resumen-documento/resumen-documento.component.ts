@@ -79,7 +79,7 @@ export class ResumenDocumentoComponent implements OnInit {
     private _recpetionService: ReceptionService,
     private _printFormatService: PrintFormatService,
     private _felService: FelService,
-    private _dataUserService:DataUserService,
+    private _dataUserService: DataUserService,
 
 
   ) {
@@ -138,8 +138,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //Si se permite fel entrar al proceso
-    // if (this.facturaService.valueParametro(349)) {
-      if (DataUserService.switchState) {
+    if (this.facturaService.valueParametro(349)) {
+      // if (DataUserService.switchState) {
       //alerta FEL no disponible
       // this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
 
@@ -167,7 +167,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //TODO:Replece for value in database
-    let uuidDoc = 'BA86F308-C4F7-4E13-A930-D859E3AC55FF'
+    let uuidDoc = ''
 
     //TODO:Asiganr el api 
     let apiUse: string = "";
@@ -177,6 +177,39 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     this.isLoading = true;
+
+
+    //buscar documento, plantilla xml
+
+    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+      this.user,
+      this.token,
+      this.consecutivoDoc,
+    )
+
+
+    if (!resXMlCert.status) {
+      this.isLoading = false;
+      this.showError(resXMlCert);
+      return;
+    }
+
+
+    let templatesXMl: DocXMLInterface[] = resXMlCert.response;
+
+
+    if (templatesXMl.length == 0) {
+
+      //TODO: Translate}
+      this.isLoading = false;
+      resXMlCert.response = "No se pudo encontrar el docuemnto xml para certificar.";
+      this.showError(resXMlCert);
+      return;
+    }
+
+
+    uuidDoc = templatesXMl[0].d_Id_Unc;
+
 
     //buscar las credenciales del certificador
     let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
@@ -200,13 +233,13 @@ export class ResumenDocumentoComponent implements OnInit {
       const element = credecniales[i];
 
 
-      if(element.campo_Nombre == "apiUnificadaInfile"){
+      if (element.campo_Nombre == "apiUnificadaInfile") {
 
         apiUse = element.campo_Valor;
         break;
 
       }
-      
+
     }
 
     // //buscar api en catalogo api 
@@ -238,30 +271,30 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //buscar documento xml para porcesar
 
-    let resDocXml: ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
+    // let resDocXml: ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
 
-    if (!resDocXml.status) {
-      this.isLoading = false;
-      this.showError(resDocXml);
-      return;
-    }
+    // if (!resDocXml.status) {
+    //   this.isLoading = false;
+    //   this.showError(resDocXml);
+    //   return;
+    // }
 
-    let docsXMl: DocXMLInterface[] = resDocXml.response;
-
-
-    //verificar que hay documentos que procesar
-    if (docsXMl.length == 0) {
-      //TODO:Translate
-      this.isLoading = false;
-      resDocXml.response = `No se encontró el documento XML para procesar.`
-
-      this.showError(resDocXml);
-
-      return;
-    }
+    // let docsXMl: DocXMLInterface[] = resDocXml.response;
 
 
-    let docXml: DocXMLInterface = docsXMl[0];
+    // //verificar que hay documentos que procesar
+    // if (docsXMl.length == 0) {
+    //   //TODO:Translate
+    //   this.isLoading = false;
+    //   resDocXml.response = `No se encontró el documento XML para procesar.`
+
+    //   this.showError(resDocXml);
+
+    //   return;
+    // }
+
+
+    // let docXml: DocXMLInterface = docsXMl[0];
 
 
     //TODO:Proceso para obtene el token de un api aqui
@@ -313,16 +346,16 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     let paramFel: DataInfileInterface = {
-      docXML: docXml.xml_Contenido,
+      docXML: templatesXMl[0].xml_Contenido,
       identificador: uuidDoc,
       llaveApi: llaveApi,
       llaveFirma: llaveFirma,
       usuarioApi: usuarioApi,
-      usuarioFirma:usuarioFirma,
+      usuarioFirma: usuarioFirma,
     }
 
 
-    let resCertDoc:ResApiInterface = await this._felService.postInfile(
+    let resCertDoc: ResApiInterface = await this._felService.postInfile(
       apiUse,
       paramFel,
       this.token,
@@ -336,19 +369,19 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    let doc:any = resCertDoc.response;
+    let doc: any = resCertDoc.response;
 
-    let paramUpdate : ParamUpdateXMLInterface = {
+    let paramUpdate: ParamUpdateXMLInterface = {
       documento: doc,
-      documentoCompleto:doc,
-      usuario:this.user,
-      uuid:uuidDoc,
+      documentoCompleto: doc,
+      usuario: this.user,
+      uuid: uuidDoc,
     }
 
 
     //actualizar
-    let resUpdateXml:ResApiInterface = await this._felService.postXmlUpdate(
-      this.token, 
+    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+      this.token,
       paramUpdate,
     )
 
@@ -1508,13 +1541,16 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-
-
     this.consecutivoDoc = resDoc.response.data;
 
 
     //Si todo está correcto mostrar alerta
-    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+
+    if (!this.facturaService.valueParametro(349)) {
+
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+    }
+
   }
 
 
