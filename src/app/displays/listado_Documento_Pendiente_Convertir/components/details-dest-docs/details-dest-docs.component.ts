@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { ReceptionService } from '../../services/reception.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
@@ -7,10 +7,11 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PrintConvertInterface } from '../../interfaces/print-convert.interface';
-import { Empresa, DocumentoData, Cliente, Item, Montos, Certificador, PoweredBy,  } from 'src/app/interfaces/doc-print.interface';
+import { Empresa, DocumentoData, Cliente, Item, Montos, Certificador, PoweredBy, } from 'src/app/interfaces/doc-print.interface';
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 
 @Component({
   selector: 'app-details-dest-docs',
@@ -36,6 +37,7 @@ export class DetailsDestDocsComponent {
     private _translate: TranslateService,
     private currencyPipe: CurrencyPipe,
     private _printService: PrinterService,
+    public dataUserService: DataUserService,
 
   ) {
 
@@ -179,7 +181,7 @@ export class DetailsDestDocsComponent {
       nit: encabezado?.documento_Nit ?? "",
       tel: encabezado?.documento_Telefono ?? "",
       fecha: currentDate,
-      correo:encabezado.documento_EMail ?? "",
+      correo: encabezado.documento_EMail ?? "",
     }
 
     //monstos
@@ -209,8 +211,8 @@ export class DetailsDestDocsComponent {
       //Agregar transaccion
       items.push(
         {
-          precioDia:"",
-          sku:detail.producto_Id ?? "",
+          precioDia: "",
+          sku: detail.producto_Id ?? "",
           descripcion: detail.des_Producto ?? "",
           cantidad: detail.cantidad ?? 0,
           //Calcular preco untario, si la cantidad es 0 agregar el total de la transaccion
@@ -231,12 +233,12 @@ export class DetailsDestDocsComponent {
       total: this.currencyPipe.transform(total, ' ', 'symbol', '2.2-2')!,
       totalLetras: encabezado.monto_Letras!.toUpperCase(),
     }
-    
+
     //Cuenta correntista ref (vendedor)
     let vendedor: string = encabezado.atendio ?? "";
 
 
-    
+
     let certificador: Certificador;
 
     //Asignar mensaje al final del formato
@@ -255,7 +257,7 @@ export class DetailsDestDocsComponent {
 
     //Ebojeto completo con los datos de impresion
     this.globalConvertSrevice.docPrint = {
-      noDoc:encabezado.id_Documento ?? "0",
+      noDoc: encabezado.id_Documento ?? "0",
       empresa: empresa,
       documento: documento,
       cliente: cliente,
@@ -274,8 +276,8 @@ export class DetailsDestDocsComponent {
 
     pdfMake.createPdf(docDefinition).open();
 
-    
-    
+
+
 
     //TODO:Proceso de impresion debe testearse y optimizarse
     //Verificar que ya se haya configurado antes 
@@ -383,7 +385,7 @@ export class DetailsDestDocsComponent {
 
       }
 
-    const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
+      const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
 
       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
@@ -428,7 +430,7 @@ export class DetailsDestDocsComponent {
   //Mostrar error
   async showError(res: ResApiInterface) {
 
-      //Diaogo de confirmacion
+    //Diaogo de confirmacion
     let verificador = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.salioMal'),
@@ -458,6 +460,25 @@ export class DetailsDestDocsComponent {
     this.globalConvertSrevice.mostrarError(13);
 
     return;
+  }
+
+
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
+  //Manejo de eventos del declado
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // console.log("Tecla presionada:", event.key);
+
+    // Debe dirigirse a imprimir cuando:
+    //la fecha presionada sea F9,
+    //el display sea de Facturas
+    if (event.key.toLowerCase() === "f9" && this.globalConvertSrevice.verDetalleDocConversion) {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Imprimir
+      this.printDoc();
+    }
   }
 
 }
