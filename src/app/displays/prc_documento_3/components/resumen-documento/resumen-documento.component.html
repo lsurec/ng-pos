@@ -204,19 +204,19 @@
 
                         </div>
 
-                        <!-- <div class="informacion" *ngIf="facturaService.valueParametro(58)">
+                        <div class="informacion" *ngIf="consecutivoDoc !=-1">
                             <p class="subtitulo-borde ">{{ 'pos.factura.detalle' | translate }}</p>
                             <div class="descripciones">
-                                <p class="textos">Id: 14217</p>
-                                <p class="textos"> {{ 'pos.documento.usuario' |translate }} Ventas502</p>
+                                <p class="textos">Id: {{consecutivoDoc}}</p>
+                                <!-- <p class="textos"> {{ 'pos.documento.usuario' |translate }} Ventas502</p>
                                 <p class="textos"> {{ 'pos.factura.referencia' |translate }}: 14217</p>
                                 <p class="textos">{{ 'pos.factura.estado' |translate }}: Activo</p>
-                                <p class="textos">{{ 'pos.documento.fechaHora' |translate }} 15/03/2024 - 11:00 AM</p>
+                                <p class="textos">{{ 'pos.documento.fechaHora' |translate }} 15/03/2024 - 11:00 AM</p> -->
                             </div>
-                        </div> -->
+                        </div>
 
-                        <div class="informacion" >
-                            <textarea class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"
+                        <div class="informacion"  >
+                            <textarea [disabled]="consecutivoDoc == -1 ? false  : true "  class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"
                                 [(ngModel)]="facturaService. observacion"></textarea>
                         </div>
 
