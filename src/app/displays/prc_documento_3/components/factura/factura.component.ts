@@ -1,5 +1,5 @@
 import { ClienteInterface } from '../../interfaces/cliente.interface';
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { components } from 'src/app/providers/componentes.provider';
 import { CuentaService } from '../../services/cuenta.service';
 import { DataUserService } from '../../services/data-user.service';
@@ -1063,6 +1063,37 @@ export class FacturaComponent implements OnInit {
 
     //ver pantlla d error
     this.verInformeError();
+  }
+
+
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
+  //Manejo de eventos del declado
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // console.log("Tecla presionada:", event.key);
+
+    // Debe dirigirse a imprimir cuando:
+    //la fecha presionada sea F9,
+    //el display sea de Facturas
+    if (event.key.toLowerCase() === "f9" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Imprimir
+      this.verResumen();
+    }
+
+
+    // ebe limpiar el formulario para un nuevo documento cuando:
+    //la fecha presionada sea F1,
+    //el display sea de Facturas
+    if (event.key.toLowerCase() === "f1" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Nuevo documento
+      this.newDoc();
+    }
   }
 
 }

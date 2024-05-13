@@ -114,8 +114,8 @@ export class FacturaService {
             nombre: this._translate.instant('pos.factura.descripcion'),
         },
     ];
-    
-  filtrosProductos: number = 1; //filtro producto
+
+    filtrosProductos: number = 1; //filtro producto
 
 
     constructor(
