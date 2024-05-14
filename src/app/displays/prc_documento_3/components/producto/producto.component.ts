@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { FacturaService } from '../../services/factura.service';
@@ -26,12 +26,11 @@ import { ImagenComponent } from '../imagen/imagen.component';
     ProductService,
   ]
 })
-export class ProductoComponent implements OnInit {
+export class ProductoComponent implements OnInit, AfterViewInit {
 
+  //para seleciconar el valor del texto del input
   @ViewChild('cantidadInput') myInput?: ElementRef;
-
-  saludo: string = "Hola";
-
+  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
 
   isLoading: boolean = false; //pantalla de carga
 
@@ -41,7 +40,6 @@ export class ProductoComponent implements OnInit {
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
 
-  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
 
   constructor(
     //Servicios que se van a utilizar
@@ -60,7 +58,11 @@ export class ProductoComponent implements OnInit {
   ngOnInit(): void {
     // this.seleccionarTexto();
     // console.log("init");
-    
+
+  }
+
+  ngAfterViewInit(): void {
+    this.inputCantidad!.nativeElement.select();
   }
 
   seleccionarTexto() {
