@@ -233,14 +233,14 @@
                         </div>
                         
                         <!-- TIPOS DE CARGA -->
-                        <div class="informacion">
+                        <!-- <div class="informacion">
                             <div class="dFlex">
                                 <button mat-stroked-button (click)="isLoading = true">Carga normal.</button>
                                 <span class="spacer"></span>
                                 <button mat-stroked-button (click)="facturaService.isStepLoading = true">Carga por
                                     pasos.</button>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="informacion" *ngIf="consecutivoDoc != -1">
                             <div class="dFlex">
                                 <button mat-stroked-button (click)="goBack()"> {{ 'pos.botones.listo' |
