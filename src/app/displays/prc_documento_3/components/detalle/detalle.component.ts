@@ -40,9 +40,6 @@ export class DetalleComponent {
   empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
   documento: number = this.facturaService.tipoDocumento!; //Tipo docuemtno seleccioando (display)
-
-  searchText: string = "";  //Texto para bsucar productos
-
   tipoDesCar: number = 1; //tipo de cargo o descuento (monto o porcentaje)
 
 
@@ -352,13 +349,13 @@ export class DetalleComponent {
   async buscarProducto() {
 
     //validar que siempre hay nun texto para buscar
-    if (!this.searchText) {
+    if (!this.facturaService. searchText) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
 
     //eliminar espacios al final de la cadena
-    this.searchText = this.searchText.trim()
+    this.facturaService.searchText = this.facturaService.searchText.trim()
 
 
     let res: ResApiInterface;
@@ -369,7 +366,7 @@ export class DetalleComponent {
     if (this.facturaService.filtrosProductos == 1) {
       res = await this._productService.getProductId(
         this.token,
-        this.searchText,
+        this.facturaService.searchText,
       );
     }
 
@@ -377,7 +374,7 @@ export class DetalleComponent {
     if (this.facturaService.filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
-        this.searchText,
+        this.facturaService. searchText,
       );
     }
 
