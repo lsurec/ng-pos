@@ -70,6 +70,8 @@ import { HomeConvertComponent } from './displays/listado_Documento_Pendiente_Con
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { InformeProductosComponent } from './displays/prc_documento_3/components/informe-productos/informe-productos.component';
 import { ImagenComponent } from './displays/prc_documento_3/components/imagen/imagen.component';
+import { PasosComponent } from './components/pasos/pasos.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,7 @@ import { ImagenComponent } from './displays/prc_documento_3/components/imagen/im
     HomeConvertComponent,
     InformeProductosComponent,
     ImagenComponent,
+    PasosComponent,
   ],
   imports: [
     BrowserModule,
@@ -151,7 +154,8 @@ import { ImagenComponent } from './displays/prc_documento_3/components/imagen/im
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatProgressBarModule
   ],
   providers: [
     // DataUserService,
