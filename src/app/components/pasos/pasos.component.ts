@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
+import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 import { loadStepInterface } from 'src/app/interfaces/language.interface';
 
 @Component({
@@ -31,7 +32,9 @@ export class PasosComponent implements OnInit {
     }
   ]
 
-  constructor() {
+  constructor(
+    public facturaService: FacturaService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -129,5 +132,9 @@ export class PasosComponent implements OnInit {
     })
     this.completado = false;
     this.pasosCompletos = 0;
+  }
+
+  regresar() {
+    this.facturaService.isStepLoading = false;
   }
 }

@@ -20,7 +20,7 @@ import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { Router } from '@angular/router';
-import { RouteNamesService } from 'src/app/services/route.names.service';
+import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 
 @Component({
   selector: 'app-producto',
@@ -44,7 +44,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
 
 
-
   constructor(
     //Servicios que se van a utilizar
     private _dialog: MatDialog,
@@ -56,7 +55,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     public facturaService: FacturaService,
     private _translate: TranslateService,
     private _dataUserService: DataUserService,
-    private _router: Router,
   ) {
 
   }
@@ -161,8 +159,11 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     if (!resPrecio.status) {
       this.isLoading = false;
 
-      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
-      console.log(resPrecio);
+      let error: TypeErrorInterface = {
+        error: resPrecio,
+        type: 1,
+      }
+      this.dialogRef.close(error);
       return;
     }
 
@@ -197,8 +198,12 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       if (!resfactor.status) {
 
         this.isLoading = false;
-        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.error'));
-        console.log(resfactor);
+       
+        let error: TypeErrorInterface = {
+          error: resfactor,
+          type: 1,
+        }
+        this.dialogRef.close(error);
         return;
       }
 
@@ -405,10 +410,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       //TODO:Translate
       this.isLoading = false;
 
-      this.showError(resDisponibiladProducto, "No se pudo verificar la disponibilidad del producto");
-
-      // this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
-      console.error(resDisponibiladProducto);
+   
+      let error: TypeErrorInterface = {
+        error: resDisponibiladProducto,
+        type: 1,
+      }
+      this.dialogRef.close(error);
+      
       return;
     }
 
@@ -433,10 +441,11 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         }
       ]
 
-      this.dialogRef.close(
-        validaciones
-      );
-
+      let error: TypeErrorInterface = {
+        error: validaciones,
+        type: 2,
+      }
+      this.dialogRef.close(error);
 
       return;
     }
@@ -483,10 +492,14 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       if (!res.status) {
         this.isLoading = false;
 
-        this._notificationsService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+        //TODO:Translate
 
-        console.error(res);
-
+        let error: TypeErrorInterface = {
+          error: res,
+          type: 1,
+        }
+        this.dialogRef.close(error);
+  
         return;
       }
 
@@ -574,7 +587,11 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       //TODO:Translate
 
 
-      this._notificationsService.openSnackbar("Algo salió mal.");
+      let error: TypeErrorInterface = {
+        error: resObjProduct,
+        type: 2,
+      }
+      this.dialogRef.close(error);
 
       return;
 
@@ -612,40 +629,5 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
   }
-
-  //mostrar error
-  //TODO: Dialogo de error
-  async showError(res: ResApiInterface, mensaje: string) {
-
-    //Dialogo de confirmacion
-    let verificador = await this._notificationsService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.salioMal'),
-        description: mensaje,
-        verdadero: this._translate.instant('pos.botones.informe'),
-        falso: this._translate.instant('pos.botones.aceptar'),
-      }
-    );
-
-    //cancelar
-    if (!verificador) return;
-
-    //Objeto error
-    let dateNow: Date = new Date(); //fecha del error
-
-    //Crear error
-    let error: ErrorInterface = {
-      date: dateNow,
-      description: res.response,
-      storeProcedure: res.storeProcedure,
-      url: res.url,
-    }
-
-    //guardar error
-    PreferencesService.error = error;
-
-    //mostrar informe de error en pantalla
-    // this._router.navigate([RouteNamesService.ERROR]);
-
-  }
+ 
 }

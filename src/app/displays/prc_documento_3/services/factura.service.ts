@@ -27,12 +27,13 @@ import { FiltroInterface } from '../interfaces/filtro.interface';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
-  searchText: string = "";  //Texto para bsucar productos
+    searchText: string = "";  //Texto para bsucar productos
 
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
 
     isLoading: boolean = false; //Pantalla de carga
+    isStepLoading: boolean = false; //pantalla de carga de pasos
     tipoDocumento?: number; //Tipo de documento
     documentoName: string = ""; //Descripcion tipo de documento
     series: SerieInterface[] = [] //Series disponibles para un odcumento

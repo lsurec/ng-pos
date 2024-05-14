@@ -2,8 +2,10 @@
 <app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver" [pantalla]="1"
     [document]="docPrint"></app-printer-configuration>
 <div *ngIf="!verError && !verVistaPrevia">
-    <app-progress *ngIf="isLoading" class="progress"></app-progress>
-    <div *ngIf="!isLoading">
+    <!-- <app-progress *ngIf="isLoading" class="progress"></app-progress> -->
+    <app-progress *ngIf="isLoading && !facturaService.isStepLoading " class="progress"></app-progress>
+    <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
+    <div *ngIf="!isLoading && !facturaService.isStepLoading">
         <mat-toolbar-row class="head__sidenav">
             <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
                 (click)="goBack()">
@@ -204,19 +206,19 @@
 
                         </div>
 
-                        <div class="informacion" *ngIf="consecutivoDoc !=-1">
+                        <!-- <div class="informacion" *ngIf="facturaService.valueParametro(58)">
                             <p class="subtitulo-borde ">{{ 'pos.factura.detalle' | translate }}</p>
                             <div class="descripciones">
-                                <p class="textos">Id: {{consecutivoDoc}}</p>
-                                <!-- <p class="textos"> {{ 'pos.documento.usuario' |translate }} Ventas502</p>
+                                <p class="textos">Id: 14217</p>
+                                <p class="textos"> {{ 'pos.documento.usuario' |translate }} Ventas502</p>
                                 <p class="textos"> {{ 'pos.factura.referencia' |translate }}: 14217</p>
                                 <p class="textos">{{ 'pos.factura.estado' |translate }}: Activo</p>
-                                <p class="textos">{{ 'pos.documento.fechaHora' |translate }} 15/03/2024 - 11:00 AM</p> -->
+                                <p class="textos">{{ 'pos.documento.fechaHora' |translate }} 15/03/2024 - 11:00 AM</p>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="informacion"  >
-                            <textarea [disabled]="consecutivoDoc == -1 ? false  : true "  class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"
+                        <div class="informacion">
+                            <textarea class="observacion" placeholder="{{ 'pos.factura.observacion' | translate }}"
                                 [(ngModel)]="facturaService. observacion"></textarea>
                         </div>
 
@@ -229,6 +231,16 @@
                                     }}</button>
                             </div>
                         </div>
+                        
+                        <!-- TIPOS DE CARGA -->
+                        <!-- <div class="informacion">
+                            <div class="dFlex">
+                                <button mat-stroked-button (click)="isLoading = true">Carga normal.</button>
+                                <span class="spacer"></span>
+                                <button mat-stroked-button (click)="facturaService.isStepLoading = true">Carga por
+                                    pasos.</button>
+                            </div>
+                        </div> -->
                         <div class="informacion" *ngIf="consecutivoDoc != -1">
                             <div class="dFlex">
                                 <button mat-stroked-button (click)="goBack()"> {{ 'pos.botones.listo' |
