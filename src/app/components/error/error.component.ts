@@ -112,6 +112,11 @@ export class ErrorComponent implements OnInit {
         //desde error de detalle de conversion de documento
         this._globalConvertSrevice.mostrarDetalleDocConversion();
         break;
+      case 14:
+        //desde error de detalle de conversion de documento
+        //TODO: no se aplicó
+        this._eventService.regresarErrorProductoEvent(true);
+        break;
       default:
         this._location.back();
 

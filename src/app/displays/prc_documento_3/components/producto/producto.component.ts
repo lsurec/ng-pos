@@ -18,6 +18,9 @@ import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pen
 import { DataUserService } from '../../services/data-user.service';
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { Router } from '@angular/router';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 
 @Component({
   selector: 'app-producto',
@@ -55,13 +58,14 @@ export class ProductoComponent implements OnInit {
     public facturaService: FacturaService,
     private _translate: TranslateService,
     private _dataUserService: DataUserService,
+    private _router: Router,
   ) {
 
   }
   ngOnInit(): void {
     // this.seleccionarTexto();
     // console.log("init");
-    
+
   }
 
   seleccionarTexto() {
@@ -397,8 +401,11 @@ export class ProductoComponent implements OnInit {
 
     if (!resDisponibiladProducto.status) {
       //TODO:Translate
+      this.isLoading = false;
 
-      this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
+      this.showError(resDisponibiladProducto, "No se pudo verificar la disponibilidad del producto");
+
+      // this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
       console.error(resDisponibiladProducto);
       return;
     }
@@ -571,18 +578,18 @@ export class ProductoComponent implements OnInit {
 
     }
 
-    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
+    let imagenesObj: ObjetoProductoInterface[] = resObjProduct.response;
 
 
-    if(imagenesObj.length == 0){
+    if (imagenesObj.length == 0) {
       //TODO:Translate
       this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
       return;
     }
-    
 
 
-    let imagenes:string [] = [];
+
+    let imagenes: string[] = [];
 
 
     imagenesObj.forEach(element => {
@@ -602,5 +609,41 @@ export class ProductoComponent implements OnInit {
     const inputElement = this.myInput!.nativeElement;
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
+  }
+
+  //mostrar error
+  //TODO: Dialogo de error
+  async showError(res: ResApiInterface, mensaje: string) {
+
+    //Dialogo de confirmacion
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: mensaje,
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    //cancelar
+    if (!verificador) return;
+
+    //Objeto error
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    //guardar error
+    PreferencesService.error = error;
+
+    //mostrar informe de error en pantalla
+    // this._router.navigate([RouteNamesService.ERROR]);
+
   }
 }
