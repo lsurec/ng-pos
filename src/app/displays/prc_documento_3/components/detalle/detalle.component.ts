@@ -3,7 +3,6 @@ import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
-import { ProductoComponent } from '../producto/producto.component';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../services/product.service';
@@ -332,12 +331,36 @@ export class DetalleComponent {
 
 
     if (resDialogProd) {
-      if (resDialogProd.length > 0) {
-        let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
+
+
+      //1 api /2 validaciones //para productos
+
+      if (resDialogProd.type == 1) {
+
+
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resDialogProd.error);
+      
+        return;
+      }
+
+
+
+      if (resDialogProd.type == 2) {
+         this._notificationsService.openDialogValidations(resDialogProd.error);
 
       }
     }
-
 
 
 
@@ -349,7 +372,7 @@ export class DetalleComponent {
   async buscarProducto() {
 
     //validar que siempre hay nun texto para buscar
-    if (!this.facturaService. searchText) {
+    if (!this.facturaService.searchText) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
@@ -374,7 +397,7 @@ export class DetalleComponent {
     if (this.facturaService.filtrosProductos == 2) {
       res = await this._productService.getProductDesc(
         this.token,
-        this.facturaService. searchText,
+        this.facturaService.searchText,
       );
     }
 
@@ -624,13 +647,36 @@ export class DetalleComponent {
 
 
       if (resDialogProd) {
-        if (resDialogProd.length > 0) {
-          let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
 
+
+        //1 api /2 validaciones //para productos
+  
+        if (resDialogProd.type == 1) {
+  
+  
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+  
+          if (!verificador) return;
+  
+          this.verError(resDialogProd.error);
+        
+          return;
+        }
+  
+  
+  
+        if (resDialogProd.type == 2) {
+           this._notificationsService.openDialogValidations(resDialogProd.error);
+  
         }
       }
-
-
 
       return;
 
@@ -652,17 +698,36 @@ export class DetalleComponent {
 
 
         if (resDialogProd) {
-          if (resDialogProd.length > 0) {
 
-            let resDialogInforme = await this._notificationsService.openDialogValidations(resDialogProd);
 
-            //TODO:VAlidar respuesta
-
-            // if(!resDialogInforme)return;
-
+          //1 api /2 validaciones //para productos
+    
+          if (resDialogProd.type == 1) {
+    
+    
+            let verificador = await this._notificationsService.openDialogActions(
+              {
+                title: this._translate.instant('pos.alertas.salioMal'),
+                description: this._translate.instant('pos.alertas.error'),
+                verdadero: this._translate.instant('pos.botones.informe'),
+                falso: this._translate.instant('pos.botones.aceptar'),
+              }
+            );
+    
+            if (!verificador) return;
+    
+            this.verError(resDialogProd.error);
+          
+            return;
+          }
+    
+    
+    
+          if (resDialogProd.type == 2) {
+             this._notificationsService.openDialogValidations(resDialogProd.error);
+    
           }
         }
-
 
         // let producto: ProductoInterface = result[0];
         // this.producto = producto;
@@ -899,18 +964,18 @@ export class DetalleComponent {
 
     }
 
-    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
+    let imagenesObj: ObjetoProductoInterface[] = resObjProduct.response;
 
 
-    if(imagenesObj.length == 0){
+    if (imagenesObj.length == 0) {
       //TODO:Translate
       this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
       return;
     }
-    
 
 
-    let imagenes:string [] = [];
+
+    let imagenes: string[] = [];
 
 
     imagenesObj.forEach(element => {
