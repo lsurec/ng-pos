@@ -27,6 +27,8 @@ import { FiltroInterface } from '../interfaces/filtro.interface';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
+  searchText: string = "";  //Texto para bsucar productos
+
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
 

@@ -24,6 +24,12 @@ import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente
 import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
 import { PrintFormatService } from '../../services/print-format.service';
 import { CotizacionInterface } from '../../interfaces/cotizacion.interface';
+import { FelService } from '../../services/fel.service';
+import { APIInterface } from '../../interfaces/api.interface';
+import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
+import { DataInfileInterface } from '../../interfaces/data.infile.interface';
+import { CredencialInterface } from '../../interfaces/credencial.interface';
+import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
 import { DataUserService } from '../../services/data-user.service';
 
 @Component({
@@ -36,6 +42,7 @@ import { DataUserService } from '../../services/data-user.service';
     PrinterService,
     ReceptionService,
     PrintFormatService,
+    FelService,
   ]
 })
 export class ResumenDocumentoComponent implements OnInit {
@@ -71,7 +78,8 @@ export class ResumenDocumentoComponent implements OnInit {
     public globalConvertService: GlobalConvertService,
     private _recpetionService: ReceptionService,
     private _printFormatService: PrintFormatService,
-    private _dataUserService:DataUserService,
+    private _felService: FelService,
+    private _dataUserService: DataUserService,
 
 
   ) {
@@ -130,16 +138,280 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //Si se permite fel entrar al proceso
-    // if (this.facturaService.valueParametro(349)) {
-      if (this._dataUserService.switchState) {
+    if (this.facturaService.valueParametro(349)) {
+      // if (DataUserService.switchState) {
       //alerta FEL no disponible
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+      // this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+
+      await this.sendDocument();
+
+      //Empezar proceso FEL 
+      this.felProcess();
+
+
     } else {
       //Enviar documento a tbl_documento estructura
       this.sendDocument()
     }
 
 
+
+  }
+
+
+  async felProcess() {
+
+    //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
+    // let apiToken: number = 0;
+    // let tokenFel: string = "";
+
+
+    //TODO:Replece for value in database
+    let uuidDoc = ''
+
+    //TODO:Asiganr el api 
+    let apiUse: string = "";
+
+    //TODO:Reemplzar y parametrizar
+    let certificador: number = 1;
+
+
+    this.isLoading = true;
+
+
+    //buscar documento, plantilla xml
+
+    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+      this.user,
+      this.token,
+      this.consecutivoDoc,
+    )
+
+
+    if (!resXMlCert.status) {
+      this.isLoading = false;
+      this.showError(resXMlCert);
+      return;
+    }
+
+
+    let templatesXMl: DocXMLInterface[] = resXMlCert.response;
+
+
+    if (templatesXMl.length == 0) {
+
+      //TODO: Translate}
+      this.isLoading = false;
+      resXMlCert.response = "No se pudo encontrar el docuemnto xml para certificar.";
+      this.showError(resXMlCert);
+      return;
+    }
+
+
+    uuidDoc = templatesXMl[0].d_Id_Unc;
+
+
+    //buscar las credenciales del certificador
+    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+      certificador,
+      this.empresa,
+      this.user,
+      this.token,
+    )
+
+
+    if (!resCredenciales.status) {
+      this.isLoading = false;
+      this.showError(resCredenciales);
+      return;
+    }
+
+    //TODO:Api que se va a usar debe buscarse y asignarse aqui 
+    let credecniales: CredencialInterface[] = resCredenciales.response;
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+
+      if (element.campo_Nombre == "apiUnificadaInfile") {
+
+        apiUse = element.campo_Valor;
+        break;
+
+      }
+
+    }
+
+    // //buscar api en catalogo api 
+    // let resApi: ResApiInterface = await this._felService.getApi(this.user, this.token, apiUse);
+
+    // if (!resApi.status) {
+    //   this.isLoading = false;
+    //   this.showError(resApi);
+    //   return;
+    // }
+
+    //apis encontradas
+    // let apis: APIInterface[] = resApi.response;
+
+    // //verificar que hay elemnetos en el catalogo de apis
+    // if (apis.length == 0) {
+    //   //TODO:Translate
+    //   this.isLoading = false;
+    //   resApi.response = `No se encontró el api con consecutivo ${apiUse}, verifica su existencia en el catalogo de apis.`
+
+    //   this.showError(resApi);
+
+    //   return;
+    // }
+
+
+    // //api que se va a usar
+    // let api: APIInterface = apis[0];
+
+    //buscar documento xml para porcesar
+
+    // let resDocXml: ResApiInterface = await this._felService.getDocXml(this.user, this.token, uuidDoc);
+
+    // if (!resDocXml.status) {
+    //   this.isLoading = false;
+    //   this.showError(resDocXml);
+    //   return;
+    // }
+
+    // let docsXMl: DocXMLInterface[] = resDocXml.response;
+
+
+    // //verificar que hay documentos que procesar
+    // if (docsXMl.length == 0) {
+    //   //TODO:Translate
+    //   this.isLoading = false;
+    //   resDocXml.response = `No se encontró el documento XML para procesar.`
+
+    //   this.showError(resDocXml);
+
+    //   return;
+    // }
+
+
+    // let docXml: DocXMLInterface = docsXMl[0];
+
+
+    //TODO:Proceso para obtene el token de un api aqui
+    //Omitido por falat de tiempo
+
+
+    //Obtener parametros del api
+    // let resParamsApi: ResApiInterface = await this._felService.getParamsApi(
+    //   apiUse, this.user, this.token,
+    // )
+
+
+    // if (!resParamsApi.status) {
+    //   this.isLoading = false;
+    //   this.showError(resParamsApi);
+    //   return;
+    // }
+
+
+    //Buscvar credenciales de infile
+    let llaveApi: string = "";
+    let llaveFirma: string = "";
+    let usuarioApi: string = "";
+    let usuarioFirma: string = "";
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+      switch (element.campo_Nombre) {
+        case "LlaveApi":
+          llaveApi = element.campo_Valor;
+
+          break;
+        case "LlaveFirma":
+          llaveFirma = element.campo_Valor;
+          break;
+
+        case "UsuarioApi":
+          usuarioApi = element.campo_Valor;
+          break;
+        case "UsuarioFirma":
+          usuarioFirma = element.campo_Valor;
+          break;
+        default:
+          break;
+      }
+
+    }
+
+
+    let paramFel: DataInfileInterface = {
+      docXML: templatesXMl[0].xml_Contenido,
+      identificador: uuidDoc,
+      llaveApi: llaveApi,
+      llaveFirma: llaveFirma,
+      usuarioApi: usuarioApi,
+      usuarioFirma: usuarioFirma,
+    }
+
+
+    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+      apiUse,
+      paramFel,
+      this.token,
+    )
+
+
+    if (!resCertDoc.status) {
+      this.isLoading = false;
+      this.showError(resCertDoc);
+      return;
+    }
+
+
+    let doc: any = resCertDoc.response;
+
+    let paramUpdate: ParamUpdateXMLInterface = {
+      documento: doc,
+      documentoCompleto: doc,
+      usuario: this.user,
+      uuid: uuidDoc,
+    }
+
+
+    //actualizar
+    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+      this.token,
+      paramUpdate,
+    )
+
+
+    if (!resUpdateXml.status) {
+      this.isLoading = false;
+      this.showError(resUpdateXml);
+      return;
+    }
+
+    this.isLoading = false;
+    this._notificationService.openSnackbar("Documento creado y certificado correctamente.");
+
+  }
+
+  async showError(res: ResApiInterface) {
+
+
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.mostrarError(res);
 
 
   }
@@ -1269,13 +1541,16 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-
-
     this.consecutivoDoc = resDoc.response.data;
 
 
     //Si todo está correcto mostrar alerta
-    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+
+    if (!this.facturaService.valueParametro(349)) {
+
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+    }
+
   }
 
 

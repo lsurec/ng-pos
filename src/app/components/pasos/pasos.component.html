@@ -1,0 +1,96 @@
+<!-- Contenido del componente -->
+<div class="container_main">
+
+
+    <div class="centrar">
+        <span class="spacer"></span>
+
+        <div class="logo_pasos">
+
+            <div class="dFlex">
+                <span class="spacer"></span>
+                <p class="completado"> {{pasosCompletos}}/{{pasos.length}} </p>
+            </div>
+
+            <!-- Imagen de carga -->
+            <img class="logo" src="assets/logo_demosoft.png" alt="{{ 'pos.progress.cargar' | translate }}">
+
+            <div class="pasos_opciones">
+
+                <span class="spacer"></span>
+
+                <div class="contenido">
+
+                    <div class="dFlex">
+                        <button mat-stroked-button (click)="sinDocumento()">SIN DOCUMENTO</button>
+                        <button mat-stroked-button (click)="sinFirma()">SIN FIRMA</button>
+                        <button mat-stroked-button (click)="correcto()">PASOS CORRECTOS</button>
+                        <button mat-stroked-button (click)="reestablecer()">REINICIAR</button>
+                    </div>
+
+                    <div class="" *ngFor="let paso of pasos">
+                        <div class="barra_paso">
+                            <div class="pasos">
+                                <p>{{paso.value}}</p>
+                                <span class="spacer"></span>
+                                <mat-icon *ngIf="paso.status == 1" class="cargando">loop</mat-icon>
+                                <mat-icon *ngIf="paso.status == 2" class="correcto">check</mat-icon>
+                                <mat-icon *ngIf="paso.status == 3 " class="fallo">close</mat-icon>
+                            </div>
+                            <mat-progress-bar [mode]="paso.progress!" value="40"
+                                *ngIf="paso.visible"></mat-progress-bar>
+                        </div>
+                    </div>
+                </div>
+                <span class="spacer"></span>
+            </div>
+
+            <!-- VOLVER A INTENTARLO CUANDO NO SE CREÓ EL DOCUMENTO -->
+            <div class="dFlex" *ngIf="pasos[0].status == 3">
+                <span class="spacer"></span>
+                <div class="botones_descripcion">
+                    <div class="dFlex">
+                        <button mat-stroked-button>{{ 'pos.botones.reintentar' | translate}}</button>
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate}}</button>
+                    </div>
+                    <p class="descripcion">NO SE CREÓ EL DOCUMENTO</p>
+                </div>
+                <span class="spacer"></span>
+            </div>
+
+            <!-- DOCUMENTO CREADO Y NO SE GENERÓ LA FIRMA -->
+            <div class="dFlex" *ngIf="pasos[0].status == 2 && pasos[1].status == 3">
+                <span class="spacer"></span>
+                <div class="botones_descripcion">
+                    <div class="dFlex">
+                        <button mat-stroked-button>Continuar sin Firma</button>
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>Volver a Generar Firma</button>
+                    </div>
+                    <p class="descripcion">NO SE GENERÓ LA FIRMA DEL DOCUMENTO</p>
+                </div>
+                <span class="spacer"></span>
+            </div>
+
+            <!-- TODOS LOS PASOS CORRECTOS -->
+            <div class="dFlex" *ngIf="completado">
+                <span class="spacer"></span>
+                <div class="botones_descripcion">
+                    <div class="dFlex">
+                        <span class="spacer"></span>
+                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate}}</button>
+                        <span class="spacer"></span>
+                    </div>
+                    <p class="descripcion">PROCESO EXITOSO</p>
+                </div>
+                <span class="spacer"></span>
+            </div>
+
+        </div>
+        <span class="spacer"></span>
+
+    </div>
+
+
+</div>

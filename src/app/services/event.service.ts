@@ -144,4 +144,14 @@ export class EventService {
     regresarDesdeImpresionEvent(eventData: boolean) {
         this.regresarDesdeImpresion.next(eventData);
     }
+
+    //regresar error desde producto 
+    //TODO: No se usó
+    private regresarErrorProducto = new Subject<any>();
+
+    regresarErrorProducto$ = this.regresarErrorProducto.asObservable();
+
+    regresarErrorProductoEvent(eventData: boolean) {
+        this.regresarErrorProducto.next(eventData);
+    }
 }

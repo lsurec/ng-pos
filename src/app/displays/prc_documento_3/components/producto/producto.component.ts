@@ -17,6 +17,10 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { ImagenComponent } from '../imagen/imagen.component';
+import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
+import { Router } from '@angular/router';
+import { RouteNamesService } from 'src/app/services/route.names.service';
 
 @Component({
   selector: 'app-producto',
@@ -52,6 +56,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     public facturaService: FacturaService,
     private _translate: TranslateService,
     private _dataUserService: DataUserService,
+    private _router: Router,
   ) {
 
   }
@@ -398,8 +403,11 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     if (!resDisponibiladProducto.status) {
       //TODO:Translate
+      this.isLoading = false;
 
-      this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
+      this.showError(resDisponibiladProducto, "No se pudo verificar la disponibilidad del producto");
+
+      // this._notificationsService.openSnackbar("No se pudo verificar la disponibilidad del producto");
       console.error(resDisponibiladProducto);
       return;
     }
@@ -546,26 +554,98 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     this.dialogRef.close([]);
 
   }
+  async imagen(producto: ProductoInterface) {
 
-  imagenes: string[] = [
-    "https://guateplast.com/wp-content/uploads/2022/03/Silla-Petatillo-VR.jpg",
-    "https://img.freepik.com/psd-gratis/mesa-cafe-aislada-fondo-transparente_191095-13806.jpg",
-    "https://mobeduc.com/wordpress/wp-content/uploads/2017/03/600120-Mesa-hexagonal_r-e1488989978398.jpg"
-  ]
+    this.isLoading = true;
 
-  imagen(producto: ProductoInterface) {
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+      this.token,
+      producto.producto,
+      producto.unidad_Medida,
+      this.empresa,
+    )
+    this.isLoading = false;
+
+
+    //si no feue posible controrar los factores de conversion mostrar error
+    if (!resObjProduct.status) {
+
+      //TODO:Translate
+
+
+      this._notificationsService.openSnackbar("Algo salió mal.");
+
+      return;
+
+    }
+
+    let imagenesObj: ObjetoProductoInterface[] = resObjProduct.response;
+
+
+    if (imagenesObj.length == 0) {
+      //TODO:Translate
+      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      return;
+    }
+
+
+
+    let imagenes: string[] = [];
+
+
+    imagenesObj.forEach(element => {
+      imagenes.push(element.url_Img);
+    });
+
 
     let imagenesProducto: ImagenProductoInterface = {
       producto: producto,
-      imagenesUrl: this.imagenes,
+      imagenesUrl: imagenes,
     }
 
-    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
+    this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 
   selectText() {
     const inputElement = this.myInput!.nativeElement;
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
+  }
+
+  //mostrar error
+  //TODO: Dialogo de error
+  async showError(res: ResApiInterface, mensaje: string) {
+
+    //Dialogo de confirmacion
+    let verificador = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: mensaje,
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    //cancelar
+    if (!verificador) return;
+
+    //Objeto error
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    //guardar error
+    PreferencesService.error = error;
+
+    //mostrar informe de error en pantalla
+    // this._router.navigate([RouteNamesService.ERROR]);
+
   }
 }

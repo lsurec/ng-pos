@@ -3,22 +3,178 @@ import { Injectable } from '@angular/core';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { DataInfileInterface } from '../interfaces/data.infile.interface';
+import { ParamUpdateXMLInterface } from '../interfaces/param-update-xml.interface';
 
 @Injectable()
-export class ProductService {
-
+export class FelService {
     private _urlBase: string = PreferencesService.baseUrl;
 
     //inicializar http
     constructor(private _http: HttpClient) {
     }
 
+
+    
+    //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
+    private _postXmlUpdate(
+        token:string,
+        credenciales: ParamUpdateXMLInterface) {
+        //configurar headers
+        let paramsStr = JSON.stringify(credenciales); //JSON to String
+        let headers = new HttpHeaders({ "Content-Type": "application/json", "Authorization": "bearer " + token, })
+        
+        //consumo de api
+        return this._http.post(`${this._urlBase}Fel/doc/xml`, paramsStr, { headers: headers, observe: 'response' });
+
+    }
+
+    //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
+    postXmlUpdate(
+        token:string,
+        credenciales: ParamUpdateXMLInterface): Promise<ResApiInterface> {
+        //consumo primer servicio
+        return new Promise((resolve, reject) => {
+            this._postXmlUpdate(token, credenciales).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        })
+    }
+
+    //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
+    private _posInfile(
+        api:string,
+        data:DataInfileInterface,     
+        token:string,   
+        ) {
+        //configurar headers
+        let paramsStr = JSON.stringify(data); //JSON to String
+        let headers = new HttpHeaders({ "Content-Type": "application/json",  "Authorization": "bearer " + token, })
+        
+        //consumo de api
+        return this._http.post(`${this._urlBase}Fel/infile/${api}`, paramsStr, { headers: headers, observe: 'response' });
+
+    }
+
+    //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
+    postInfile(
+        api:string,
+        data:DataInfileInterface,  
+        token:string, 
+    ): Promise<ResApiInterface> {
+        //consumo primer servicio
+        return new Promise((resolve, reject) => {
+            this._posInfile(
+                api,
+                data,
+                token,
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        })
+    }
+
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getObjetosProducto(
-        token: string,
-        producto: number,
-        um: number,
-        empresa: number
+    private _getParamsApi(
+        api: number,
+        user: string,
+        token: string
     ) {
 
         let headers = new HttpHeaders(
@@ -28,22 +184,20 @@ export class ProductService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/imagenes/${producto}/${um}/${empresa}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/parametros/${api}/${user}`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getObjetosProducto(
-        token: string,
-        producto: number,
-        um: number,
-        empresa: number
+    getParamsApi(
+        api: number,
+        user: string,
+        token: string
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getObjetosProducto(
+            this._getParamsApi(
+                api,
+                user,
                 token,
-                producto,
-                um,
-                empresa,
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -98,82 +252,36 @@ export class ProductService {
     }
 
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getValidateProduct(
-        user: string,
-        serie: string,
-        tipoDocumento: number,
-        estacion: number,
+    private _getCredenciales(
+        certificador: number,
         empresa: number,
-        bodega: number,
-        tipoTransaccion: number,
-        unidadMedida: number,
-        producto: number,
-        cantidad: number,
-        tipoCambio: number,
-        moneda: number,
-        tipoPrecio: number,
-        token: string,
+        user: string,
+        token: string
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
-                "user": user,
-                "serie": serie,
-                "tipoDocumento": tipoDocumento,
-                "estacion": estacion,
-                "empresa": empresa,
-                "bodega": bodega,
-                "tipoTransaccion": tipoTransaccion,
-                "unidadMedida": unidadMedida,
-                "producto": producto,
-                "cantidad": cantidad,
-                "tipoCambio": tipoCambio,
-                "moneda": moneda,
-                "tipoPrecio": tipoPrecio,
-                "token": token,
             }
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/validate`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/credenciales/${certificador}/${empresa}/${user}`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getValidateProducts(
-
-        user: string,
-        serie: string,
-        tipoDocumento: number,
-        estacion: number,
+    getCredenciales(
+        certificador: number,
         empresa: number,
-        bodega: number,
-        tipoTransaccion: number,
-        unidadMedida: number,
-        producto: number,
-        cantidad: number,
-        tipoCambio: number,
-        moneda: number,
-        tipoPrecio: number,
-        token: string,
+        user: string,
+        token: string
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getValidateProduct(
-                user,
-                serie,
-                tipoDocumento,
-                estacion,
+            this._getCredenciales(
+                certificador,
                 empresa,
-                bodega,
-                tipoTransaccion,
-                unidadMedida,
-                producto,
-                cantidad,
-                tipoCambio,
-                moneda,
-                tipoPrecio,
+                user,
                 token,
-
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -223,226 +331,129 @@ export class ProductService {
 
                     }
                 }
-            )
-        }
-        )
+            );
+        });
     }
 
+
+     //funcion que va a realizar el consumo privado para obtener las empresas
+     private _getDocXmlCert(
+        user: string,
+        token: string,
+        consecutivo: number,
+
+    ) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Fel/xml/cert/${user}/${consecutivo}`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getDocXmlCert(
+        user: string,
+        token: string,
+        consecutivo: number,
+
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getDocXmlCert(
+                user,
+                token,
+                consecutivo,
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            );
+        });
+    }
+
+
+    ///-------------------------
 
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getFormulaPrecioU(
+    private _getDocXml(
+        user: string,
         token: string,
-        fechaIni: string,
-        fechaFin: string,
-        precioU: string,
+        uuid: string,
+
+
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
-                "fechaIni": fechaIni,
-                "fechaFin": fechaFin,
-                "precioU": precioU,
+                "uuid": uuid,
+                "user": user,
             }
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/formula/precio/unitario`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/doc/xml`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getFormulaPrecioU(
-        token: string,
-        fechaIni: string,
-        fechaFin: string,
-        precioU: string,
-
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getFormulaPrecioU(
-                token,
-                fechaIni,
-                fechaFin,
-                precioU,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado para obtner el sku de un producto enviando el id
-    private _getSku(
-        token: string,
-        producto: number,
-        um: number,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/sku/${producto}/${um}`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner el sku de un producto enviando el id
-    getSku(
-        token: string,
-        producto: number,
-        um: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getSku(
-                token,
-                producto,
-                um,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado para obtner las bodegas y existencias en las que está un producto
-    private _getBodegaProducto(
+    getDocXml(
         user: string,
         token: string,
-        empresa: number,
-        estacion: number,
-        producto: number,
-        um: number,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-                "user": user,
-                "empresa": empresa,
-                "estacion": estacion,
-                "producto": producto,
-                "um": um,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}producto/Bodega`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa  para obtner las bodegas y existencias en las que está un producto
-    getBodegaProducto(
-        user: string,
-        token: string,
-        empresa: number,
-        estacion: number,
-        producto: number,
-        um: number,
+        uuid: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getBodegaProducto(
+            this._getDocXml(
                 user,
                 token,
-                empresa,
-                estacion,
-                producto,
-                um,
+                uuid
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -492,302 +503,36 @@ export class ProductService {
 
                     }
                 }
-            )
-        }
-        )
+            );
+        });
     }
 
-    //funcion que va a realizar el consumo privado  para obtner los productos en una busqueda por sku
-    private _getProductId(
-        token: string,
-        id: string,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/buscar/id/${id}`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner los productos en una busqueda por sku
-    getProductId(
-        token: string,
-        id: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getProductId
-                (
-                    token,
-                    id,
-                ).subscribe(
-                    //si esta correcto
-                    res => {
-                        let response: ResponseInterface = <ResponseInterface>res.body;
-
-                        let resApi: ResApiInterface = {
-                            status: true,
-                            response: response.data,
-                            storeProcedure: response.storeProcedure
-                        }
-                        resolve(resApi);
-                    },
-                    //si algo sale mal
-                    err => {
-
-                        try {
-                            let response: ResponseInterface = <ResponseInterface>err.error;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err.error,
-                                storeProcedure: response.storeProcedure,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        } catch (e) {
-
-
-                            try {
-                                let message = err.message;
-
-                                let resApi: ResApiInterface = {
-                                    status: false,
-                                    response: message,
-                                    url: err.url,
-                                }
-                                resolve(resApi);
-
-                            } catch (ex) {
-                                let resApi: ResApiInterface = {
-                                    status: false,
-                                    response: err,
-                                    url: err.url,
-                                }
-                                resolve(resApi);
-                            }
-
-
-                        }
-                    }
-                )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado para obtner los prodictos en una busqueda por descripcion
-    private _getProductDesc(
-        token: string,
-        descripcion: string,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/buscar/descripcion/${descripcion}`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner los prodictos en una busqueda por descripcion
-    getProductDesc(
-        token: string,
-        descripcion: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getProductDesc(
-                token,
-                descripcion,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado para obtner los tipos de precios para un producto
-    private _getPrecios(
+    private _getApi(
         user: string,
         token: string,
-        bodega: number,
-        producto: number,
-        um: number,
+        api: number,
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
-                "bodega": bodega,
-                "producto": producto,
-                'um': um,
-                'user': user,
             }
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/precios`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/api/${api}/${user}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa para obtner los tipos de precios para un producto
-    getPrecios(
+    getApi(
         user: string,
         token: string,
-        bodega: number,
-        producto: number,
-        um: number,
+        api: number,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getPrecios(
+            this._getApi(
                 user,
                 token,
-                bodega,
-                producto,
-                um,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-    //funcion que va a realizar el consumo privado para obtner el factor de conversion para un producto
-    private _getFactorConversion(
-        user: string,
-        token: string,
-        bodega: number,
-        producto: number,
-        um: number,
-    ) {
-
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-                "bodega": bodega,
-                "producto": producto,
-                'um': um,
-                'user': user,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/factor/conversion`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner el factor de conversion para un producto
-    getFactorConversion(
-        user: string,
-        token: string,
-        bodega: number,
-        producto: number,
-        um: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getFactorConversion(
-                user,
-                token,
-                bodega,
-                producto,
-                um,
+                api,
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -838,7 +583,8 @@ export class ProductService {
                     }
                 }
             )
-        }
-        )
+        });
     }
+
+
 }
