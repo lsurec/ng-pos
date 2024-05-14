@@ -52,7 +52,7 @@
                     <div class="dFlex">
                         <button mat-stroked-button>{{ 'pos.botones.reintentar' | translate}}</button>
                         <span class="spacer"></span>
-                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate}}</button>
+                        <button mat-stroked-button (click)="regresar()">{{ 'pos.botones.aceptar' | translate}}</button>
                     </div>
                     <p class="descripcion">NO SE CREÓ EL DOCUMENTO</p>
                 </div>
@@ -68,7 +68,13 @@
                         <span class="spacer"></span>
                         <button mat-stroked-button>Volver a Generar Firma</button>
                     </div>
-                    <p class="descripcion">NO SE GENERÓ LA FIRMA DEL DOCUMENTO</p>
+                    <div class="dFlex">
+                        <p class="descripcion">
+                            EL DOCUMENTO SE CREÓ CORRECTAMENTE, PERO NO SE GENERÓ LA FIRMA LECTRÓNICA
+                        </p>
+                        <span class="spacer"></span>
+                        <p class="verError">Ver informe de error.</p>
+                    </div>
                 </div>
                 <span class="spacer"></span>
             </div>
@@ -79,7 +85,7 @@
                 <div class="botones_descripcion">
                     <div class="dFlex">
                         <span class="spacer"></span>
-                        <button mat-stroked-button>{{ 'pos.botones.aceptar' | translate}}</button>
+                        <button mat-stroked-button (click)="regresar()">{{ 'pos.botones.aceptar' | translate}}</button>
                         <span class="spacer"></span>
                     </div>
                     <p class="descripcion">PROCESO EXITOSO</p>

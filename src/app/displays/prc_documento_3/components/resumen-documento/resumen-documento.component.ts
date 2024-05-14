@@ -129,6 +129,9 @@ export class ResumenDocumentoComponent implements OnInit {
 
   //Confirmar documento
   async sendDoc() {
+    //carga los pasos
+    // this.facturaService.isStepLoading = true;
+    // return
 
     //validar si es editar doc
     if (this.globalConvertService.editDoc) {

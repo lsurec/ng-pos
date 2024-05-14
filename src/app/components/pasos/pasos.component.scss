@@ -112,6 +112,16 @@ p {
     padding: 10px 20px;
 }
 
+.verError {
+    color      : $color-azul;
+    font-weight: 450;
+}
+
+.verError:hover {
+    cursor       : pointer;
+    border-bottom: $color-blanco solid 1px;
+}
+
 @media screen and (max-width: 767px) {
     .container_main {
         width: 100%;
