@@ -92,7 +92,7 @@ export class PasosComponent implements OnInit {
       //si falló el pasó uno no procede al paso dos
       if (this.pasos[0].status == 3) {
         this.pasos[1].status = 3; //fallo
-        this.pasosCompletos = 1;
+        this.pasosCompletos = 0;
       }
 
     }, 3000);
