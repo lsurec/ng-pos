@@ -10,6 +10,8 @@ import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { ImagenComponent } from '../imagen/imagen.component';
+import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -205,18 +207,56 @@ export class ProductosEncontradosComponent {
 
   }
 
-  imagenes: string[] = [
-    "https://cemacogt.vtexassets.com/arquivos/ids/403500-800-800?v=638439347056370000&width=800&height=800&aspect=true",
-    "https://i1.wp.com/primatextil.com.gt/wp-content/uploads/2020/05/Mantel-Peque%C3%B1o.png?fit=1080%2C1080&ssl=1",
-  ]
+  async imagen(producto: ProductoInterface) {
 
-  imagen(producto: ProductoInterface) {
+    this.isLoading = true;
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+      this.token,
+      producto.producto,
+      producto.unidad_Medida,
+      this.empresa,
+    )
+    this.isLoading = false;
+
+
+    //si no feue posible controrar los factores de conversion mostrar error
+    if (!resObjProduct.status) {
+
+      //TODO:Translate
+
+
+      this._notificationsService.openSnackbar("Algo salió mal.");
+
+      return;
+
+    }
+
+    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
+
+
+    if(imagenesObj.length == 0){
+      //TODO:Translate
+      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      return;
+    }
+    
+
+
+    let imagenes:string [] = [];
+
+
+    imagenesObj.forEach(element => {
+      imagenes.push(element.url_Img);
+    });
+
 
     let imagenesProducto: ImagenProductoInterface = {
       producto: producto,
-      imagenesUrl: this.imagenes,
+      imagenesUrl: imagenes,
     }
 
-    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
+    this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }
