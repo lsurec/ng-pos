@@ -17,6 +17,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { ImagenComponent } from '../imagen/imagen.component';
+import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 
 @Component({
   selector: 'app-producto',
@@ -544,21 +545,57 @@ export class ProductoComponent implements OnInit {
     this.dialogRef.close([]);
 
   }
+  async imagen(producto: ProductoInterface) {
 
-  imagenes: string[] = [
-    "https://guateplast.com/wp-content/uploads/2022/03/Silla-Petatillo-VR.jpg",
-    "https://img.freepik.com/psd-gratis/mesa-cafe-aislada-fondo-transparente_191095-13806.jpg",
-    "https://mobeduc.com/wordpress/wp-content/uploads/2017/03/600120-Mesa-hexagonal_r-e1488989978398.jpg"
-  ]
+    this.isLoading = true;
 
-  imagen(producto: ProductoInterface) {
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+      this.token,
+      producto.producto,
+      producto.unidad_Medida,
+      this.empresa,
+    )
+    this.isLoading = false;
+
+
+    //si no feue posible controrar los factores de conversion mostrar error
+    if (!resObjProduct.status) {
+
+      //TODO:Translate
+
+
+      this._notificationsService.openSnackbar("Algo salió mal.");
+
+      return;
+
+    }
+
+    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
+
+
+    if(imagenesObj.length == 0){
+      //TODO:Translate
+      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      return;
+    }
+    
+
+
+    let imagenes:string [] = [];
+
+
+    imagenesObj.forEach(element => {
+      imagenes.push(element.url_Img);
+    });
+
 
     let imagenesProducto: ImagenProductoInterface = {
       producto: producto,
-      imagenesUrl: this.imagenes,
+      imagenesUrl: imagenes,
     }
 
-    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
+    this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 
   selectText() {
