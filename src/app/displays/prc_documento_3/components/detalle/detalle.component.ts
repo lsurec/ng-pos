@@ -19,6 +19,7 @@ import { CargoDescuentoComponent } from '../cargo-descuento/cargo-descuento.comp
 import { EventService } from 'src/app/services/event.service';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ImagenComponent } from '../imagen/imagen.component';
+import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -864,29 +865,67 @@ export class DetalleComponent {
   }
 
 
-  //Para el dialogo
 
 
+  async imagen(producto: ProductoInterface) {
 
-  verInforme() {
-    // //abre el dialogo
-    // this._dialog.open(InformeProductosComponent, {
-    //   data: this.productos,
-    // });
-  }
+    this.facturaService.isLoading = true;
 
-  imagenes: string[] = [
-    "https://ferreteriavidri.com/images/items/large/405515.jpg",
-    "https://http2.mlstatic.com/D_NQ_NP_828517-MLA43045758475_082020-O.webp",
-  ]
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+      this.token,
+      producto.producto,
+      producto.unidad_Medida,
+      this.empresa,
+    )
+    this.facturaService.isLoading = false;
 
-  imagen(producto: ProductoInterface) {
+
+    //si no feue posible controrar los factores de conversion mostrar error
+    if (!resObjProduct.status) {
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.verError(resObjProduct);
+
+      return;
+
+    }
+
+    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
+
+
+    if(imagenesObj.length == 0){
+      //TODO:Translate
+      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      return;
+    }
+    
+
+
+    let imagenes:string [] = [];
+
+
+    imagenesObj.forEach(element => {
+      imagenes.push(element.url_Img);
+    });
+
 
     let imagenesProducto: ImagenProductoInterface = {
       producto: producto,
-      imagenesUrl: this.imagenes,
+      imagenesUrl: imagenes,
     }
 
-    let productosDialog = this._dialog.open(ImagenComponent, { data: imagenesProducto })
+    this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 }
