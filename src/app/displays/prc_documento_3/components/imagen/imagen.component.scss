@@ -3,6 +3,7 @@ $background-scrollbar : #134895; //barra azul
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000; //bordes y texto azul
+$borde-toolbar        : rgba(0, 0, 0, 0.12);
 
 
 .progress {
@@ -206,4 +207,26 @@ img {
 //importante para cetrar el carrusel
 .carousel {
     position: unset !important;
+}
+
+.container {
+    position: relative;
+}
+
+.contolarFlechas {
+    position : absolute;
+    top      : 50%;
+    transform: translateY(-50%);
+}
+
+.contolarFlechas:focus {
+    outline: none;
+}
+
+.contolarFlechas:nth-of-type(1) {
+    left: 10px;
+}
+
+.contolarFlechas:nth-of-type(2) {
+    right: 10px;
 }
