@@ -31,6 +31,7 @@ import { DataInfileInterface } from '../../interfaces/data.infile.interface';
 import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
 import { DataUserService } from '../../services/data-user.service';
+import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -135,16 +136,20 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //validar si es editar doc
     if (this.globalConvertService.editDoc) {
+      
+
       this.modifyDoc();
+
       return;
     }
 
 
+    //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
-    if (this.facturaService.valueParametro(349)) {
-      // if (DataUserService.switchState) {
-      //alerta FEL no disponible
-      // this._notificationService.openSnackbar(this._translate.instant('pos.alertas.certificacionNoDisponible'));
+    // if (this.facturaService.valueParametro(349)) {
+    if (this._dataUserService.switchState) {
+
+
 
       await this.sendDocument();
 
@@ -154,10 +159,21 @@ export class ResumenDocumentoComponent implements OnInit {
 
     } else {
       //Enviar documento a tbl_documento estructura
-      this.sendDocument()
+      this.isLoading = true;
+
+      let resCreateDoc:TypeErrorInterface = await this.sendDocument()
+      
+      this.isLoading = false;
+
+      if(resCreateDoc.type == 1){
+        this.showError(resCreateDoc.error);
+        return;
+      }
+
+      if(resCreateDoc.type == 0){
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+      }
     }
-
-
 
   }
 
@@ -1277,8 +1293,11 @@ export class ResumenDocumentoComponent implements OnInit {
   }
 
 
+  //errro 1: error de api
+  //error 2: error inerno
+  //error 0: correcto
   //Creacion del documnto en tbl_documento estructura
-  async sendDocument() {
+  async sendDocument(): Promise<TypeErrorInterface> {
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
     let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
@@ -1514,32 +1533,19 @@ export class ResumenDocumentoComponent implements OnInit {
       user: this.user,
     }
 
-    this.isLoading = true;
     //consumo del servico para crear el documento
     let resDoc = await this._documentService.postDocument(this.token, document);
 
-    this.isLoading = false;
 
     //Si algo salió mal mostrar error
     if (!resDoc.status) {
 
-      this.isLoading = false;
+      let error: TypeErrorInterface = {
+        error: resDoc,
+        type: 1,
+      }
 
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.mostrarError(resDoc);
-
-      return;
+      return error;
 
     }
 
@@ -1549,10 +1555,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //Si todo está correcto mostrar alerta
 
-    if (!this.facturaService.valueParametro(349)) {
-
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+    let error: TypeErrorInterface = {
+      error: this.consecutivoDoc,
+      type: 0,
     }
+
+    return error;
+
 
   }
 
