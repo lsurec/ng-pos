@@ -1,7 +1,7 @@
-<app-error *ngIf="verError" [regresar]="regresar"></app-error>
-<app-printer-configuration *ngIf="!verError && verVistaPrevia" [volver]="volver" [pantalla]="1"
+<app-error *ngIf="facturaService.verError" [regresar]="regresar"></app-error>
+<app-printer-configuration *ngIf="!facturaService.verError && verVistaPrevia" [volver]="volver" [pantalla]="1"
     [document]="docPrint"></app-printer-configuration>
-<div *ngIf="!verError && !verVistaPrevia">
+<div *ngIf="!facturaService.verError && !verVistaPrevia">
     <!-- <app-progress *ngIf="isLoading" class="progress"></app-progress> -->
     <app-progress *ngIf="isLoading && !facturaService.isStepLoading " class="progress"></app-progress>
     <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
@@ -231,7 +231,7 @@
                                     }}</button>
                             </div>
                         </div>
-                        
+
                         <!-- TIPOS DE CARGA -->
                         <!-- <div class="informacion">
                             <div class="dFlex">

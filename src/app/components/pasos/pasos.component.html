@@ -23,8 +23,11 @@
 
                     <div class="dFlex">
                         <button mat-stroked-button (click)="sinDocumento()">SIN DOCUMENTO</button>
+                        <span class="spacer"></span>
                         <button mat-stroked-button (click)="sinFirma()">SIN FIRMA</button>
+                        <span class="spacer"></span>
                         <button mat-stroked-button (click)="correcto()">PASOS CORRECTOS</button>
+                        <span class="spacer"></span>
                         <button mat-stroked-button (click)="reestablecer()">REINICIAR</button>
                     </div>
 
@@ -52,7 +55,7 @@
                     <div class="dFlex">
                         <button mat-stroked-button>{{ 'pos.botones.reintentar' | translate}}</button>
                         <span class="spacer"></span>
-                        <button mat-stroked-button (click)="regresar()">{{ 'pos.botones.aceptar' | translate}}</button>
+                        <button mat-stroked-button (click)="backPage()">{{ 'pos.botones.aceptar' | translate}}</button>
                     </div>
                     <p class="descripcion">NO SE CREÓ EL DOCUMENTO</p>
                 </div>
@@ -73,7 +76,7 @@
                             EL DOCUMENTO SE CREÓ CORRECTAMENTE, PERO NO SE GENERÓ LA FIRMA LECTRÓNICA
                         </p>
                         <span class="spacer"></span>
-                        <p class="verError">Ver informe de error.</p>
+                        <p class="verError" (click)="verInformeError()">Ver informe de error.</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
@@ -85,7 +88,7 @@
                 <div class="botones_descripcion">
                     <div class="dFlex">
                         <span class="spacer"></span>
-                        <button mat-stroked-button (click)="regresar()">{{ 'pos.botones.aceptar' | translate}}</button>
+                        <button mat-stroked-button (click)="backPage()">{{ 'pos.botones.aceptar' | translate}}</button>
                         <span class="spacer"></span>
                     </div>
                     <p class="descripcion">PROCESO EXITOSO</p>

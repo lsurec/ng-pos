@@ -41,6 +41,10 @@ export class PasosComponent implements OnInit {
 
   }
 
+  verInformeError() {
+    this.facturaService.verError = true;
+  }
+
   verBotones() {
     this.botones = !this.botones;
   }
@@ -134,7 +138,7 @@ export class PasosComponent implements OnInit {
     this.pasosCompletos = 0;
   }
 
-  regresar() {
+  backPage() {
     this.facturaService.isStepLoading = false;
   }
 }

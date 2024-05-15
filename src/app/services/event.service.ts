@@ -154,4 +154,13 @@ export class EventService {
     regresarErrorProductoEvent(eventData: boolean) {
         this.regresarErrorProducto.next(eventData);
     }
+
+    //Eventos para regresar a pantalla de pasos desde error
+    private regresarAPasos = new Subject<any>();
+
+    regresarAPasos$ = this.regresarAPasos.asObservable();
+
+    regresarAPasosEvent(eventData: boolean) {
+        this.regresarAPasos.next(eventData);
+    }
 }

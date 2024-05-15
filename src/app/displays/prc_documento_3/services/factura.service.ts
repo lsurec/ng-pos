@@ -31,7 +31,7 @@ export class FacturaService {
 
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
-
+    verError: boolean = false; //ocultar y mostrar pantalla de error
     isLoading: boolean = false; //Pantalla de carga
     isStepLoading: boolean = false; //pantalla de carga de pasos
     tipoDocumento?: number; //Tipo de documento

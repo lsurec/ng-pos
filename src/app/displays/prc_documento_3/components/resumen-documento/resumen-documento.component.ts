@@ -49,7 +49,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga
   readonly regresar: number = 4; //id de la pantalla
-  verError: boolean = false; //ocultar y mostrar pantalla de error
+  // verError: boolean = false; //ocultar y mostrar pantalla de error
 
   volver: number = 2;//volver a resumen desde configurar impresora
 
@@ -86,7 +86,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //suscripcion a eventos del hijo (pantalla error)
     this._eventService.regresarResumen$.subscribe((eventData) => {
-      this.verError = false;
+      this.facturaService.verError = false;
     });
     //regreesar desde configuracion de la impresora con vista previa activa
     this._eventService.regresarResumen$.subscribe((eventData) => {
@@ -124,7 +124,7 @@ export class ResumenDocumentoComponent implements OnInit {
     PreferencesService.error = error;
 
     //ver pantalla de error
-    this.verError = true;
+    this.facturaService.verError = true;
   }
 
   //Confirmar documento
