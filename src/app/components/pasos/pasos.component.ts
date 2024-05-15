@@ -47,88 +47,13 @@ export class PasosComponent implements OnInit {
     this.botones = !this.botones;
   }
 
-  sinFirma() {
-
-    this.pasos.forEach(element => {
-      element.visible = true; //mostrar barras
-    });
-
-    this.timer = setTimeout(() => {
-
-      this.pasos.forEach(element => {
-        element.visible = false; //ocultar barras
-      });
-      this.pasos[0].status = 2; //correcto
-      this.pasos[1].status = 3; //fallo
-
-      if (this.pasos[0].status == 2 && this.pasos[1].status == 3) {
-        this.pasosCompletos = 1;
-      }
-
-    }, 3000);
-    this.completado = false;
-  }
 
   losStatus() {
     console.log(this.pasos[0].status);
     console.log(this.pasos[1].status);
   }
 
-  sinDocumento() {
-    this.pasos.forEach(element => {
-      element.visible = true; //mostrar barras
-    });
 
-    this.timer = setTimeout(() => {
-
-      this.pasos.forEach(element => {
-        element.visible = false; //ocultar barras
-
-      });
-      this.pasos[0].status = 3; //incorrecto
-
-      //si falló el pasó uno no procede al paso dos
-      if (this.pasos[0].status == 3) {
-        this.pasos[1].status = 3; //fallo
-        this.pasosCompletos = 0;
-      }
-
-    }, 3000);
-    this.completado = false;
-  }
-
-  correcto() {
-    this.pasos.forEach(element => {
-      element.visible = true; //mostrar barras
-
-    });
-
-    this.timer = setTimeout(() => {
-
-      this.pasos.forEach(element => {
-        element.visible = false; //ocultar barras
-      });
-      this.pasos[0].status = 2; //correcto
-      this.pasos[1].status = 2; //correcto
-
-      this.completado = true;
-
-      if (this.completado) {
-        this.pasosCompletos = 2;
-      }
-
-    }, 3000);
-  }
-
-  reestablecer() {
-    //todos los pasos en cargando
-    this.pasos.forEach(element => {
-      element.status = 1;
-      element.visible = true; //mostrar barras
-    })
-    this.completado = false;
-    this.pasosCompletos = 0;
-  }
 
   backPage() {
     this.facturaService.isStepLoading = false;
