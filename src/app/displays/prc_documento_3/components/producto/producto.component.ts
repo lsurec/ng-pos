@@ -472,7 +472,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     let precioDias: number = 0;
 
-    if (this.facturaService.valueParametro(351)) {
+    if (this.facturaService.valueParametro(44)) {
 
 
       let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
@@ -492,7 +492,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       if (!res.status) {
         this.isLoading = false;
 
-        //TODO:Translate
 
         let error: TypeErrorInterface = {
           error: res,
