@@ -12,7 +12,7 @@
                 <p class="verDetalle">{{ 'pos.factura.sku' | translate }}: </p>
                 <p class="subtitulo"> {{producto.producto_Id}} </p>
                 <span class="spacer"></span>
-                <button mat-icon-button (click)="imagen(producto)">
+                <button mat-icon-button (click)="imagen(producto)" [disabled]="habilitarImagen">
                     <mat-icon>image</mat-icon>
                 </button>
             </div>
