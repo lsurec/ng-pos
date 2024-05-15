@@ -36,4 +36,26 @@ export class RetryService {
   homeRetry() {
     this.home.next();
   }
+
+
+
+  ///volver a cargar proceso
+  private createDoc = new Subject<void>();
+
+  createDoc$ = this.createDoc.asObservable();
+
+  createDocRetry() {
+    this.createDoc.next();
+  }
+
+
+  ///volver a cargar firma electroncia
+  private felProcess = new Subject<void>();
+
+  felProcess$ = this.felProcess.asObservable();
+
+  felProcessRetry() {
+    this.felProcess.next();
+  }
+
 }

@@ -32,6 +32,7 @@ import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -81,6 +82,8 @@ export class ResumenDocumentoComponent implements OnInit {
     private _printFormatService: PrintFormatService,
     private _felService: FelService,
     private _dataUserService: DataUserService,
+    private _retryService: RetryService,
+
   ) {
 
     //suscripcion a eventos del hijo (pantalla error)
@@ -97,6 +100,13 @@ export class ResumenDocumentoComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.consecutivoDoc);
 
+    this._retryService.createDoc$.subscribe(() => {
+      this.sendDoc();
+    });
+
+    this._retryService.felProcess$.subscribe(() => {
+      this.retryFel();
+    });
   }
 
   //Regresar al modulo de facturacion (tabs)
@@ -141,6 +151,52 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //guardar error en preferencias
     PreferencesService.error = error;
+  }
+
+  async retryFel() {
+
+    //cargar paso en pantalla d carga
+    this.facturaService.pasos[1].visible = true;
+    this.facturaService.pasos[1].status = 1;
+
+
+    //Empezar proceso FEL 
+    let resFelProcess: TypeErrorInterface = await this.felProcess();
+
+
+    //evaluar respuesta proceso fel 
+    if (resFelProcess.type == 1) {
+
+      //No se completo el proceso fel
+      this.facturaService.pasos[1].visible = false;
+      this.facturaService.pasos[1].status = 3;
+
+
+      this.facturaService.viewErrorFel = true;
+      this.facturaService.viewError = true;
+      this.facturaService.viewMessage = true;
+
+
+      //TODO:Translate
+      this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+
+      this.saveError(resFelProcess.error);
+
+
+      return;
+    }
+
+
+    //si todo está correcto
+    this.facturaService.pasosCompletos++;
+    this.facturaService.pasos[1].status = 2;
+    this.facturaService.pasos[1].visible = false;
+
+
+    this.facturaService.viewSucces = true;
+    this.facturaService.viewMessage = true;
+    this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+
   }
 
   //Confirmar documento
