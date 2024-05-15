@@ -56,8 +56,8 @@ p {
 }
 
 .logo {
-    height: 200px;
-    margin: 10px;
+    height   : 200px;
+    // margin: 10px;
 }
 
 .contenido {
@@ -74,6 +74,11 @@ p {
     padding: 10px 20px;
 }
 
+.texto {
+    padding    : 10px 20px;
+    display    : flex;
+    align-items: center;
+}
 
 .pasos_opciones {
     display: flex;
@@ -114,13 +119,10 @@ p {
 }
 
 .verError {
-    color      : $color-azul;
-    font-weight: 450;
-}
-
-.verError:hover {
+    color        : $color-azul;
+    font-weight  : 450;
+    border-bottom: $color-azul solid 1px;
     cursor       : pointer;
-    border-bottom: $color-blanco solid 1px;
 }
 
 @media screen and (max-width: 767px) {

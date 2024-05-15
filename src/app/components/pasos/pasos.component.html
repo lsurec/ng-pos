@@ -39,9 +39,16 @@
                                 <mat-icon *ngIf="paso.status == 2" class="correcto">check</mat-icon>
                                 <mat-icon *ngIf="paso.status == 3 " class="fallo">close</mat-icon>
                             </div>
-                            <mat-progress-bar [mode]="modoBarra" value="40"
-                                *ngIf="paso.visible"></mat-progress-bar>
+                            <mat-progress-bar [mode]="modoBarra" value="40" *ngIf="paso.visible"></mat-progress-bar>
                         </div>
+                    </div>
+                    <div class="texto">
+                        <p>NO SE CREÓ EL DOCUMENTO (o texto) </p>
+                        <span class="spacer"></span>
+                    </div>
+                    <div class="texto">
+                        <span class="spacer"></span>
+                        <p class="verError" (click)="verInformeError()">Ver informe de error.</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
@@ -74,8 +81,6 @@
                         <p class="descripcion">
                             EL DOCUMENTO SE CREÓ CORRECTAMENTE, PERO NO SE GENERÓ LA FIRMA LECTRÓNICA
                         </p>
-                        <span class="spacer"></span>
-                        <p class="verError" (click)="verInformeError()">Ver informe de error.</p>
                     </div>
                 </div>
                 <span class="spacer"></span>
