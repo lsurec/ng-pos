@@ -39,7 +39,7 @@
                                 <mat-icon *ngIf="paso.status == 2" class="correcto">check</mat-icon>
                                 <mat-icon *ngIf="paso.status == 3 " class="fallo">close</mat-icon>
                             </div>
-                            <mat-progress-bar [mode]="paso.progress!" value="40"
+                            <mat-progress-bar [mode]="modoBarra" value="40"
                                 *ngIf="paso.visible"></mat-progress-bar>
                         </div>
                     </div>

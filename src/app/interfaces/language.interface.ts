@@ -26,5 +26,4 @@ export interface loadStepInterface {
     value: string;
     status: number;
     visible: boolean;
-    progress?: ProgressBarMode;
 }
