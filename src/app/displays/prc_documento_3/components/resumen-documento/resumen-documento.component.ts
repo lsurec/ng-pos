@@ -142,10 +142,13 @@ export class ResumenDocumentoComponent implements OnInit {
     if (this._dataUserService.switchState) {
 
 
-      await this.sendDocument();
+
+      this.facturaService.isStepLoading = true;
+
+      let resSendDoc: TypeErrorInterface = await this.sendDocument();
 
       //Empezar proceso FEL 
-      this.felProcess();
+      let resFelProcess: TypeErrorInterface = await this.felProcess();
 
 
     } else {
@@ -419,7 +422,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     if (!resUpdateXml.status) {
 
-     let error: TypeErrorInterface = {
+      let error: TypeErrorInterface = {
         error: resUpdateXml,
         type: 1,
       }
