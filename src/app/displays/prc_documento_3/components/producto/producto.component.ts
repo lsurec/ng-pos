@@ -33,11 +33,11 @@ import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 export class ProductoComponent implements OnInit, AfterViewInit {
 
   //para seleciconar el valor del texto del input
-  @ViewChild('cantidadInput') myInput?: ElementRef;
-  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
+  @ViewChild('cantidadInput') cantidadInput?: ElementRef;
 
   isLoading: boolean = false; //pantalla de carga
-  habilitarImagen: boolean = true;
+  habilitarImagen: boolean = true; //desabilitar temporalmente el boton de imagenes de prducti
+  timer: any; //temporizador
   user: string = PreferencesService.user; //Usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
   empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
@@ -66,21 +66,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    // Asegúrate de que el `input` esté enfocado y el texto esté seleccionado
-    setTimeout(() => {
-      this.inputCantidad!.nativeElement.focus();
-      this.inputCantidad!.nativeElement.select();
-      this.habilitarImagen = false; // Habilita el botón después de la inicialización
-    }, 0);
-    // this.inputCantidad!.nativeElement.select();
   }
 
-  seleccionarTexto() {
-    const inputEl = this.inputCantidad!.nativeElement;
-    inputEl.focus(); // Asegúrate de que el input tenga el foco
-    inputEl.setSelectionRange(0, inputEl.value.length); // Selecciona todo el texto
-  }
-  timer: any; //temporizador
 
   desabilitarIconoTem() {
     this.timer = setTimeout(() => {
@@ -639,7 +626,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
   selectText() {
-    const inputElement = this.myInput!.nativeElement;
+    const inputElement = this.cantidadInput!.nativeElement;
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
   }
