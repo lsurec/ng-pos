@@ -108,19 +108,31 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
+
+    //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
     pasos: loadStepInterface[] = [
         {
-          value: "1: Creando documento.",
-          status: 1,
-          visible: true,
+            value: "1. Creando documento.",
+            status: 1,
+            visible: true,
         },
         {
-          value: "2.Generando firma electronica.",
-          status: 1,
-          visible: true,
+            value: "2. Generando firma electronica.",
+            status: 1,
+            visible: true,
         }
-      ]
+    ];
+
+    pasosCompletos:number  = 0;
+    viewMessage:boolean = false;
+    viewError:boolean = false;
+    viewErrorFel:boolean = false;
+    viewErrorProcess:boolean = false;
+    viewSucces:boolean = false;
+
+    stepMessage:string = "";
+
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
@@ -168,7 +180,6 @@ export class FacturaService {
     addLeadingZero(number: number): string {
         return number.toString().padStart(2, '0');
     }
-
 
     formatstrDateForPriceU(date: Date) {
         return `${date.getFullYear()}${this.addLeadingZero(date.getMonth() + 1)}${this.addLeadingZero(date.getDate())} ${this.addLeadingZero(date.getHours())}:${this.addLeadingZero(date.getMinutes())}:${this.addLeadingZero(date.getSeconds())}`;

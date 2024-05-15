@@ -126,6 +126,23 @@ export class ResumenDocumentoComponent implements OnInit {
     this.facturaService.verError = true;
   }
 
+  saveError(res: ResApiInterface) {
+    //fecha actual
+    let dateNow: Date = new Date();
+
+    //Detalles del error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardar error en preferencias
+    PreferencesService.error = error;
+  }
+
   //Confirmar documento
   async sendDoc() {
 
@@ -141,14 +158,98 @@ export class ResumenDocumentoComponent implements OnInit {
     // if (this.facturaService.valueParametro(349)) {
     if (this._dataUserService.switchState) {
 
+      //reinciiar valores
+
+
+      //iniciar cargas (steps)
+      this.facturaService.pasosCompletos = 0;
+
+      //iniciar cargas
+      this.facturaService.pasos.forEach(element => {
+        element.visible = true;
+        element.status = 1;
+      });
+
+      //ocultar botones y mensajes
+      this.facturaService.viewMessage = false;
+      this.facturaService.viewError = false;
+      this.facturaService.viewErrorFel = false;
+      this.facturaService.viewErrorProcess = false;
+      this.facturaService.viewSucces = false;
 
 
       this.facturaService.isStepLoading = true;
 
       let resSendDoc: TypeErrorInterface = await this.sendDocument();
 
+
+      if (resSendDoc.type == 1) {
+
+
+        //iniciar cargas
+        this.facturaService.pasos.forEach(element => {
+          element.visible = false;
+          element.status = 3;
+        });
+
+
+        this.facturaService.viewErrorProcess = true;
+        this.facturaService.viewError = true;
+        this.facturaService.viewMessage = true;
+
+
+        //TODO:Translate
+        this.facturaService.stepMessage = "Algo salió mal al crear el documento. Intenta mas tarde."
+
+        this.saveError(resSendDoc.error);
+
+
+        return;
+      }
+
+
+      //primer paso completo
+      this.facturaService.pasosCompletos++;
+      this.facturaService.pasos[0].status = 2;
+      this.facturaService.pasos[0].visible = false;
+
+
       //Empezar proceso FEL 
       let resFelProcess: TypeErrorInterface = await this.felProcess();
+
+
+      //evaluar respuesta proceso fel 
+      if (resFelProcess.type == 1) {
+
+        //No se completo el proceso fel
+        this.facturaService.pasos[1].visible = false;
+        this.facturaService.pasos[1].status = 3;
+
+
+        this.facturaService.viewErrorFel = true;
+        this.facturaService.viewError = true;
+        this.facturaService.viewMessage = true;
+
+
+        //TODO:Translate
+        this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+
+        this.saveError(resFelProcess.error);
+
+
+        return;
+      }
+
+
+      //si todo está correcto
+      this.facturaService.pasosCompletos++;
+      this.facturaService.pasos[1].status = 2;
+      this.facturaService.pasos[1].visible = false;
+
+
+      this.facturaService.viewSucces = true;
+      this.facturaService.viewMessage = true;
+      this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
 
     } else {

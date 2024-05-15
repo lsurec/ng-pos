@@ -11,7 +11,7 @@
             <img class="logo" src="assets/logo_demosoft.png" alt="{{ 'pos.progress.cargar' | translate }}">
             <div class="dFlex">
                 <span class="spacer"></span>
-                <p class="completado">Tareas completadas: {{pasosCompletos}}/{{facturaService. pasos.length}} </p>
+                <p class="completado">Tareas completadas: {{facturaService. pasosCompletos}}/{{facturaService. pasos.length}} </p>
             </div>
 
             <div class="pasos_opciones">
@@ -20,9 +20,7 @@
 
                 <div class="contenido">
 
-                   
-
-                    <div class="" *ngFor="let paso of facturaService. pasos">
+                    <div  *ngFor="let paso of facturaService. pasos">
                         <div class="barra_paso">
                             <div class="pasos">
                                 <p>{{paso.value}}</p>
@@ -31,14 +29,14 @@
                                 <mat-icon *ngIf="paso.status == 2" class="correcto">check</mat-icon>
                                 <mat-icon *ngIf="paso.status == 3 " class="fallo">close</mat-icon>
                             </div>
-                            <mat-progress-bar [mode]="modoBarra" value="40" *ngIf="paso.visible"></mat-progress-bar>
+                            <mat-progress-bar mode="indeterminate" value="40" *ngIf="paso.visible"></mat-progress-bar>
                         </div>
                     </div>
-                    <div class="texto">
-                        <p>NO SE CREÓ EL DOCUMENTO (o texto) </p>
+                    <div class="texto" *ngIf="facturaService.viewMessage">
+                        <p>{{facturaService.stepMessage}}</p>
                         <span class="spacer"></span>
                     </div>
-                    <div class="texto">
+                    <div class="texto" *ngIf="facturaService.viewError">
                         <span class="spacer"></span>
                         <p class="verError" (click)="verInformeError()">Ver informe de error.</p>
                     </div>
@@ -47,7 +45,7 @@
             </div>
 
             <!-- VOLVER A INTENTARLO CUANDO NO SE CREÓ EL DOCUMENTO -->
-            <div class="dFlex" *ngIf="facturaService. pasos[0].status == 3">
+            <div class="dFlex" *ngIf="facturaService.viewErrorProcess">
                 <span class="spacer"></span>
                 <div class="botones_descripcion">
                     <div class="dFlex">
@@ -55,13 +53,12 @@
                         <span class="spacer"></span>
                         <button mat-stroked-button (click)="backPage()">{{ 'pos.botones.aceptar' | translate}}</button>
                     </div>
-                    <p class="descripcion">NO SE CREÓ EL DOCUMENTO</p>
                 </div>
                 <span class="spacer"></span>
             </div>
 
             <!-- DOCUMENTO CREADO Y NO SE GENERÓ LA FIRMA -->
-            <div class="dFlex" *ngIf="facturaService. pasos[0].status == 2 &&facturaService. pasos[1].status == 3">
+            <div class="dFlex" *ngIf="facturaService.viewErrorFel">
                 <span class="spacer"></span>
                 <div class="botones_descripcion">
                     <div class="dFlex">
@@ -69,17 +66,12 @@
                         <span class="spacer"></span>
                         <button mat-stroked-button>Volver a Generar Firma</button>
                     </div>
-                    <div class="dFlex">
-                        <p class="descripcion">
-                            EL DOCUMENTO SE CREÓ CORRECTAMENTE, PERO NO SE GENERÓ LA FIRMA LECTRÓNICA
-                        </p>
-                    </div>
                 </div>
                 <span class="spacer"></span>
             </div>
 
             <!-- TODOS LOS PASOS CORRECTOS -->
-            <div class="dFlex" *ngIf="completado">
+            <div class="dFlex" *ngIf="facturaService.viewSucces" >
                 <span class="spacer"></span>
                 <div class="botones_descripcion">
                     <div class="dFlex">
@@ -87,7 +79,6 @@
                         <button mat-stroked-button (click)="backPage()">{{ 'pos.botones.aceptar' | translate}}</button>
                         <span class="spacer"></span>
                     </div>
-                    <p class="descripcion">PROCESO EXITOSO</p>
                 </div>
                 <span class="spacer"></span>
             </div>

@@ -8,14 +8,7 @@ import { loadStepInterface } from 'src/app/interfaces/language.interface';
   templateUrl: './pasos.component.html',
   styleUrls: ['./pasos.component.scss']
 })
-export class PasosComponent implements OnInit {
-
-  modoBarra: ProgressBarMode = "indeterminate";
-  completado: boolean = false;
-  pasosCompletos: number = 0;
-  timer: any; //temporizador
-
-  botones: boolean = false;
+export class PasosComponent {
 
 
 
@@ -24,18 +17,11 @@ export class PasosComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
 
-  }
 
   verInformeError() {
     this.facturaService.verError = true;
   }
-
-  verBotones() {
-    this.botones = !this.botones;
-  }
-
 
 
   backPage() {
