@@ -33,11 +33,11 @@ import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 export class ProductoComponent implements OnInit, AfterViewInit {
 
   //para seleciconar el valor del texto del input
-  @ViewChild('cantidadInput') myInput?: ElementRef;
-  @ViewChild('miInput') inputCantidad: ElementRef | undefined;
+  @ViewChild('cantidadInput') cantidadInput?: ElementRef;
 
   isLoading: boolean = false; //pantalla de carga
-
+  habilitarImagen: boolean = true; //desabilitar temporalmente el boton de imagenes de prducti
+  timer: any; //temporizador
   user: string = PreferencesService.user; //Usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
   empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
@@ -61,17 +61,18 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // this.seleccionarTexto();
     // console.log("init");
-
+    this.desabilitarIconoTem();
   }
 
   ngAfterViewInit(): void {
-    this.inputCantidad!.nativeElement.select();
+
   }
 
-  seleccionarTexto() {
-    const inputEl = this.inputCantidad!.nativeElement;
-    inputEl.focus(); // Asegúrate de que el input tenga el foco
-    inputEl.setSelectionRange(0, inputEl.value.length); // Selecciona todo el texto
+
+  desabilitarIconoTem() {
+    this.timer = setTimeout(() => {
+      this.habilitarImagen = false;
+    }, 250);
   }
 
   //Calcular totral de la transaccion
@@ -198,7 +199,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       if (!resfactor.status) {
 
         this.isLoading = false;
-       
+
         let error: TypeErrorInterface = {
           error: resfactor,
           type: 1,
@@ -410,13 +411,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       //TODO:Translate
       this.isLoading = false;
 
-   
+
       let error: TypeErrorInterface = {
         error: resDisponibiladProducto,
         type: 1,
       }
       this.dialogRef.close(error);
-      
+
       return;
     }
 
@@ -500,7 +501,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
           type: 1,
         }
         this.dialogRef.close(error);
-  
+
         return;
       }
 
@@ -626,9 +627,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
   selectText() {
-    const inputElement = this.myInput!.nativeElement;
+    const inputElement = this.cantidadInput!.nativeElement;
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
   }
- 
+
 }
