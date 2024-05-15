@@ -81,8 +81,6 @@ export class ResumenDocumentoComponent implements OnInit {
     private _printFormatService: PrintFormatService,
     private _felService: FelService,
     private _dataUserService: DataUserService,
-
-
   ) {
 
     //suscripcion a eventos del hijo (pantalla error)
@@ -95,6 +93,7 @@ export class ResumenDocumentoComponent implements OnInit {
     });
 
   }
+
   ngOnInit(): void {
     // console.log(this.consecutivoDoc);
 
@@ -104,7 +103,6 @@ export class ResumenDocumentoComponent implements OnInit {
   goBack() {
     this._eventService.verDocumentoEvent(true);
   }
-
 
   //visualizar pantalla de error
   mostrarError(res: ResApiInterface) {
@@ -130,16 +128,10 @@ export class ResumenDocumentoComponent implements OnInit {
 
   //Confirmar documento
   async sendDoc() {
-    //carga los pasos
-    // this.facturaService.isStepLoading = true;
-    // return
 
     //validar si es editar doc
     if (this.globalConvertService.editDoc) {
-      
-
       this.modifyDoc();
-
       return;
     }
 
@@ -148,7 +140,6 @@ export class ResumenDocumentoComponent implements OnInit {
     //Si se permite fel entrar al proceso
     // if (this.facturaService.valueParametro(349)) {
     if (this._dataUserService.switchState) {
-
 
 
       await this.sendDocument();
@@ -161,16 +152,16 @@ export class ResumenDocumentoComponent implements OnInit {
       //Enviar documento a tbl_documento estructura
       this.isLoading = true;
 
-      let resCreateDoc:TypeErrorInterface = await this.sendDocument()
-      
+      let resCreateDoc: TypeErrorInterface = await this.sendDocument()
+
       this.isLoading = false;
 
-      if(resCreateDoc.type == 1){
+      if (resCreateDoc.type == 1) {
         this.showError(resCreateDoc.error);
         return;
       }
 
-      if(resCreateDoc.type == 0){
+      if (resCreateDoc.type == 0) {
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
       }
     }
@@ -178,7 +169,7 @@ export class ResumenDocumentoComponent implements OnInit {
   }
 
 
-  async felProcess() {
+  async felProcess(): Promise<TypeErrorInterface> {
 
     //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
     // let apiToken: number = 0;
@@ -195,9 +186,6 @@ export class ResumenDocumentoComponent implements OnInit {
     let certificador: number = 1;
 
 
-    this.isLoading = true;
-
-
     //buscar documento, plantilla xml
 
     let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
@@ -206,24 +194,28 @@ export class ResumenDocumentoComponent implements OnInit {
       this.consecutivoDoc,
     )
 
-
     if (!resXMlCert.status) {
-      this.isLoading = false;
-      this.showError(resXMlCert);
-      return;
-    }
 
+      let error: TypeErrorInterface = {
+        error: resXMlCert,
+        type: 1,
+      }
+
+      return error;
+    }
 
     let templatesXMl: DocXMLInterface[] = resXMlCert.response;
 
-
     if (templatesXMl.length == 0) {
 
-      //TODO: Translate}
-      this.isLoading = false;
       resXMlCert.response = "No se pudo encontrar el docuemnto xml para certificar.";
-      this.showError(resXMlCert);
-      return;
+
+      let error: TypeErrorInterface = {
+        error: resXMlCert,
+        type: 1,
+      }
+
+      return error;
     }
 
 
@@ -240,9 +232,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     if (!resCredenciales.status) {
-      this.isLoading = false;
-      this.showError(resCredenciales);
-      return;
+
+      let error: TypeErrorInterface = {
+        error: resCredenciales,
+        type: 1,
+      }
+
+      return error;
     }
 
     //TODO:Api que se va a usar debe buscarse y asignarse aqui 
@@ -259,6 +255,18 @@ export class ResumenDocumentoComponent implements OnInit {
 
       }
 
+    }
+
+    if (!apiUse) {
+
+      resCredenciales.response = "No se pudo enonctrar el servicio para procesar el documento, verifica que la configuracion de credendiales y api cataloog esté correcta";
+
+      let error: TypeErrorInterface = {
+        error: resCredenciales,
+        type: 1,
+      }
+
+      return error;
     }
 
     // //buscar api en catalogo api 
@@ -382,9 +390,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     if (!resCertDoc.status) {
-      this.isLoading = false;
-      this.showError(resCertDoc);
-      return;
+
+      let error: TypeErrorInterface = {
+        error: resCertDoc,
+        type: 1,
+      }
+
+      return error;
     }
 
 
@@ -406,18 +418,25 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     if (!resUpdateXml.status) {
-      this.isLoading = false;
-      this.showError(resUpdateXml);
-      return;
+
+     let error: TypeErrorInterface = {
+        error: resUpdateXml,
+        type: 1,
+      }
+
+      return error;
     }
 
-    this.isLoading = false;
-    this._notificationService.openSnackbar("Documento creado y certificado correctamente.");
+    let error: TypeErrorInterface = {
+      error: resUpdateXml,
+      type: 0,
+    }
+
+    return error;
 
   }
 
   async showError(res: ResApiInterface) {
-
 
     let verificador = await this._notificationService.openDialogActions(
       {
@@ -431,7 +450,6 @@ export class ResumenDocumentoComponent implements OnInit {
     if (!verificador) return;
 
     this.mostrarError(res);
-
 
   }
 
@@ -768,7 +786,6 @@ export class ResumenDocumentoComponent implements OnInit {
     this._notificationService.openSnackbar("Documento editado correctamente.");
 
   }
-
 
   async printCotizacion() {
 
@@ -1269,9 +1286,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
   }
-
-
-
 
   findTipoProducto(tipoTra: number) {
 
