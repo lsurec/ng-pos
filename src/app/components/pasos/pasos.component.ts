@@ -22,13 +22,13 @@ export class PasosComponent implements OnInit {
       value: "1: Creando documento.",
       status: 1,
       visible: true,
-      progress: "determinate",
+      progress: "indeterminate", //siempre estará cargando
     },
     {
       value: "2.Generando firma electronica.",
       status: 1,
       visible: true,
-      progress: "determinate",
+      progress: "indeterminate", //siempre estará cargando
     }
   ]
 
