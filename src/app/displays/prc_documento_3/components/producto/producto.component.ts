@@ -59,9 +59,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit(): void {
-    // this.seleccionarTexto();
-    // console.log("init");
-    this.desabilitarIconoTem();
+    this.deshabilitarImagenTemp();
   }
 
   ngAfterViewInit(): void {
@@ -69,7 +67,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
 
-  desabilitarIconoTem() {
+  deshabilitarImagenTemp() {
     this.timer = setTimeout(() => {
       this.habilitarImagen = false;
     }, 250);
