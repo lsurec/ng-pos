@@ -10,7 +10,7 @@ import { loadStepInterface } from 'src/app/interfaces/language.interface';
 })
 export class PasosComponent implements OnInit {
 
-  modoBarra: ProgressBarMode = "determinate";
+  modoBarra: ProgressBarMode = "indeterminate";
   completado: boolean = false;
   pasosCompletos: number = 0;
   timer: any; //temporizador
@@ -22,13 +22,11 @@ export class PasosComponent implements OnInit {
       value: "1: Creando documento.",
       status: 1,
       visible: true,
-      progress: "indeterminate", //siempre estará cargando
     },
     {
       value: "2.Generando firma electronica.",
       status: 1,
       visible: true,
-      progress: "indeterminate", //siempre estará cargando
     }
   ]
 
@@ -52,14 +50,12 @@ export class PasosComponent implements OnInit {
   sinFirma() {
 
     this.pasos.forEach(element => {
-      element.progress = "indeterminate"; //asiganer valorcorrecto
       element.visible = true; //mostrar barras
     });
 
     this.timer = setTimeout(() => {
 
       this.pasos.forEach(element => {
-        element.progress = "determinate"; //asiganer valorcorrecto
         element.visible = false; //ocultar barras
       });
       this.pasos[0].status = 2; //correcto
@@ -80,14 +76,12 @@ export class PasosComponent implements OnInit {
 
   sinDocumento() {
     this.pasos.forEach(element => {
-      element.progress = "indeterminate"; //asiganer valorcorrecto
       element.visible = true; //mostrar barras
     });
 
     this.timer = setTimeout(() => {
 
       this.pasos.forEach(element => {
-        element.progress = "determinate"; //asiganer valorcorrecto
         element.visible = false; //ocultar barras
 
       });
@@ -105,7 +99,6 @@ export class PasosComponent implements OnInit {
 
   correcto() {
     this.pasos.forEach(element => {
-      element.progress = "indeterminate"; //asiganer valorcorrecto
       element.visible = true; //mostrar barras
 
     });
@@ -113,7 +106,6 @@ export class PasosComponent implements OnInit {
     this.timer = setTimeout(() => {
 
       this.pasos.forEach(element => {
-        element.progress = "determinate"; //asiganer valorcorrecto
         element.visible = false; //ocultar barras
       });
       this.pasos[0].status = 2; //correcto
