@@ -22,7 +22,7 @@
                 </button>
                 <span class="spacer"></span>
                 <div class="container">
-                    <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="true">
+                    <ngb-carousel #carousel [showNavigationArrows]="false" [showNavigationIndicators]="false">
                         <ng-template ngbSlide *ngFor="let url of imagenes; let i = index">
                             <div class="picsum-img-wrapper">
                                 <img [src]="url" alt="Slide {{i + 1}}" />
