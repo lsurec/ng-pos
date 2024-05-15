@@ -5,6 +5,7 @@ $color-gris           : #666666; //texto gris
 $color-gris-s         : #777; //sombra y texto gris
 $font-serif           : sans-serif; //fuente del texto
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
+$completado           : rgba(0, 0, 0, 0.5);
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra rosada
@@ -98,7 +99,7 @@ p {
 
 .completado {
     padding     : 10px;
-    color       : $color-azul;
+    color       : $completado;
     font-weight : bold;
     margin-right: 15px;
     font-size   : 20px;
