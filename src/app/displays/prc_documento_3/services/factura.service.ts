@@ -18,6 +18,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { FiltroInterface } from '../interfaces/filtro.interface';
+import { loadStepInterface } from 'src/app/interfaces/language.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -107,7 +108,19 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
-
+    //pasos para pantalla de carga
+    pasos: loadStepInterface[] = [
+        {
+          value: "1: Creando documento.",
+          status: 1,
+          visible: true,
+        },
+        {
+          value: "2.Generando firma electronica.",
+          status: 1,
+          visible: true,
+        }
+      ]
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,

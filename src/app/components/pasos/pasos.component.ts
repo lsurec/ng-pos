@@ -17,18 +17,7 @@ export class PasosComponent implements OnInit {
 
   botones: boolean = false;
 
-  pasos: loadStepInterface[] = [
-    {
-      value: "1: Creando documento.",
-      status: 1,
-      visible: true,
-    },
-    {
-      value: "2.Generando firma electronica.",
-      status: 1,
-      visible: true,
-    }
-  ]
+
 
   constructor(
     public facturaService: FacturaService,
@@ -45,12 +34,6 @@ export class PasosComponent implements OnInit {
 
   verBotones() {
     this.botones = !this.botones;
-  }
-
-
-  losStatus() {
-    console.log(this.pasos[0].status);
-    console.log(this.pasos[1].status);
   }
 
 
