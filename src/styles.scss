@@ -57,6 +57,16 @@ body {
     .completado {
         font-size: 12px !important;
     }
+
+    //Numeros de la hora de los Relojes
+    .timepicker-dial__item {
+        font-size: 50px !important;
+    }
+
+    //Textos "AM"/"PM" de los Relojes
+    .timepicker-period__btn {
+        font-size: 28px !important;
+    }
 }
 
 /* Importing Bootstrap SCSS file. */
