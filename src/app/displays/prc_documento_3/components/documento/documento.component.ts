@@ -17,6 +17,7 @@ import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
+import { ReferenciaService } from '../../services/referencia.service';
 
 @Component({
   selector: 'app-documento',
@@ -27,6 +28,7 @@ import { ProductService } from '../../services/product.service';
     TipoTransaccionService,
     ParametroService,
     PagoService,
+    ReferenciaService,
   ]
 })
 export class DocumentoComponent {
@@ -61,6 +63,7 @@ export class DocumentoComponent {
     private _formaPagoService: PagoService,
     public globalConvertService: GlobalConvertService,
     private _productService: ProductService,
+    private _referenciaService: ReferenciaService,
   ) {
 
   }
@@ -534,10 +537,43 @@ export class DocumentoComponent {
 
     }
 
-    this.facturaService.isLoading = false;
-
 
     this.facturaService.formasPago = resFormaPago.response;
+
+
+    if (this.facturaService.valueParametro(58)) {
+
+
+      this.facturaService.tipoReferencia = undefined;
+      this.facturaService.tiposReferencia = [];
+
+
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+
+      if (this.facturaService.tiposReferencia.length == 1) {
+        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
+      }
+
+    }
+
+
+    this.facturaService.isLoading = false;
+
 
 
   }
@@ -547,7 +583,7 @@ export class DocumentoComponent {
     this.switchState = !this.switchState;
 
     console.log(this.switchState);
-    
+
 
     if (this.switchState) {
       this.facturaService.cuenta = {

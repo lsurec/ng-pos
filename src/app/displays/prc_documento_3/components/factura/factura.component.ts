@@ -497,7 +497,6 @@ export class FacturaComponent implements OnInit {
         this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
       }
 
-
     }
 
 
