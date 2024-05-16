@@ -124,14 +124,14 @@ export class FacturaService {
         }
     ];
 
-    pasosCompletos:number  = 0;
-    viewMessage:boolean = false;
-    viewError:boolean = false;
-    viewErrorFel:boolean = false;
-    viewErrorProcess:boolean = false;
-    viewSucces:boolean = false;
+    pasosCompletos: number = 0;
+    viewMessage: boolean = false;
+    viewError: boolean = false;
+    viewErrorFel: boolean = false;
+    viewErrorProcess: boolean = false;
+    viewSucces: boolean = false;
 
-    stepMessage:string = "";
+    stepMessage: string = "";
 
     constructor(
         //instancias de los servicios utilizados
@@ -192,35 +192,30 @@ export class FacturaService {
         let localDoc = PreferencesService.documento;
 
         //si no hay un documento guardado no hacer nada
-        if (!localDoc) {
-            return;
-        }
+        if (!localDoc) return;
 
         //str to object para documento estructura
         let doc: DocLocalInterface = JSON.parse(localDoc);
 
         //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
-        if (doc.documento != this.tipoDocumento) {
-            return;
-        }
+        if (doc.documento != this.tipoDocumento) return;
+
 
         //si el suario del documento guardado y el usuario de la sesion no coinciden
-        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) {
-            return;
-        }
+        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) return;
+
 
         //si las empresas son distinitas no cargar el documento
-        if (doc.empresa.empresa != PreferencesService.empresa.empresa) {
-            return;
-        }
+        if (doc.empresa.empresa != PreferencesService.empresa.empresa) return;
+
 
         //si las estaciones son distinitas no cargar el documento
-        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) {
-            return;
-        }
+        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) return;
+
 
         //validar serie solo si existe en el documento guardado
         if (doc.serie) {
+
 
 
             //evaluar series de la sesion si existen
@@ -251,9 +246,8 @@ export class FacturaService {
                 }
 
                 //si la serie no existe no cargar el documento guardado
-                if (!existSerie) {
-                    return;
-                }
+                if (!existSerie) return;
+
             } else {
                 //si no hay series no cargar el documento guardado
                 return;
