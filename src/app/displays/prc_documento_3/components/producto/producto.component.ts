@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { DetalleComponent } from '../detalle/detalle.component';
 import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
 import { FacturaService } from '../../services/factura.service';
@@ -628,6 +628,23 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     const inputElement = this.cantidadInput!.nativeElement;
     inputElement.focus();
     inputElement.setSelectionRange(0, inputElement.value.length);
+  }
+
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
+  //Manejo de eventos del declado
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // console.log("Tecla presionada:", event.key);
+
+    // Debe dirigirse a imprimir cuando:
+    //la fecha presionada sea enter,
+    if (event.key.toLowerCase() === "enter") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Agregar transaccion
+      this.enviar();
+    }
   }
 
 }
