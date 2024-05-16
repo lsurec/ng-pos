@@ -211,8 +211,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
-    // if (this.facturaService.valueParametro(349)) {
-    if (this._dataUserService.switchState) {
+    if (this.facturaService.valueParametro(349)) {
+    // if (this._dataUserService.switchState) {
 
       //reinciiar valores
 
