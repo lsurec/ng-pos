@@ -203,11 +203,8 @@ export class DocumentoComponent {
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
 
-
-
             let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
             let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
-
 
             this.facturaService.isLoading = true;
 
@@ -219,7 +216,6 @@ export class DocumentoComponent {
             );
 
             this.facturaService.isLoading = false;
-
 
             if (!res.status) {
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
