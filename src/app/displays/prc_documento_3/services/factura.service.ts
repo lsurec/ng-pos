@@ -184,30 +184,30 @@ export class FacturaService {
     }
 
     //cargar documento guardado en el strorage
-    async loadDocSave() {
+    async loadDocSave(): Promise<boolean> {
 
         let localDoc = PreferencesService.documento;
 
         //si no hay un documento guardado no hacer nada
-        if (!localDoc) return;
+        if (!localDoc) return false;
 
         //str to object para documento estructura
         let doc: DocLocalInterface = JSON.parse(localDoc);
 
         //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
-        if (doc.documento != this.tipoDocumento) return;
+        if (doc.documento != this.tipoDocumento) return false;
 
 
         //si el suario del documento guardado y el usuario de la sesion no coinciden
-        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) return;
+        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) return false;
 
 
         //si las empresas son distinitas no cargar el documento
-        if (doc.empresa.empresa != PreferencesService.empresa.empresa) return;
+        if (doc.empresa.empresa != PreferencesService.empresa.empresa) return false;
 
 
         //si las estaciones son distinitas no cargar el documento
-        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) return;
+        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) return false;
 
 
         //validar serie solo si existe en el documento guardado
@@ -221,7 +221,7 @@ export class FacturaService {
                 if (this.serie) {
                     //si las series son distinitas no hacer nada
                     if (this.serie.serie_Documento != doc.serie.serie_Documento) {
-                        return;
+                        return false;
                     }
 
 
@@ -243,19 +243,19 @@ export class FacturaService {
                 }
 
                 //si la serie no existe no cargar el documento guardado
-                if (!existSerie) return;
+                if (!existSerie) return false;
 
             } else {
                 //si no hay series no cargar el documento guardado
-                return;
+                return false;
             }
 
 
         } else {
-            return;
+            return false;
         }
 
-       //TODO:Return
+        return true;
 
     }
 

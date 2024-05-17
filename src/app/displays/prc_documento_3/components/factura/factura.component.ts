@@ -224,7 +224,6 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    //TODO: Cargar datos de la serie
 
     this.facturaService.isLoading = true;
 
@@ -399,6 +398,9 @@ export class FacturaComponent implements OnInit {
 
     //calcular totales del documento y pagos
     this.facturaService.calculateTotales();
+
+    this.facturaService.isLoading = false;
+
   }
 
   //nuevo documento
@@ -727,7 +729,16 @@ export class FacturaComponent implements OnInit {
 
       this.facturaService.isLoading = false;
 
-      this.facturaService.loadDocSave();
+      
+       let reloadDoc:boolean = await this.facturaService.loadDocSave();
+      
+
+
+       if(!reloadDoc) return;
+
+       this.loadDocumentLocal();
+
+      
       return;
     }
 
@@ -737,10 +748,6 @@ export class FacturaComponent implements OnInit {
     //Verificar serie
 
     let docOrigin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
-
-
-    let serieOrigen = docOrigin.serie_Documento;
-
 
     let existRef: number = -1;
 
