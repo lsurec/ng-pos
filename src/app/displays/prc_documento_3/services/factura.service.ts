@@ -17,7 +17,6 @@ import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
-import { FiltroInterface } from '../interfaces/filtro.interface';
 import { loadStepInterface } from 'src/app/interfaces/language.interface';
 
 @Injectable({
@@ -27,9 +26,7 @@ import { loadStepInterface } from 'src/app/interfaces/language.interface';
 
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
-
     searchText: string = "";  //Texto para bsucar productos
-
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
     verError: boolean = false; //ocultar y mostrar pantalla de error
@@ -254,117 +251,11 @@ export class FacturaService {
             }
 
 
+        } else {
+            return;
         }
 
-        //Dialogo para cargar documento guardado
-        let verificador = await this._notificationsService.openDialogActions(
-            {
-                title: this._translate.instant('pos.alertas.docEncontrado'),
-                description: this._translate.instant('pos.alertas.recuperar'),
-            }
-        );
-
-        if (!verificador) return;
-
-
-        //Cargar documento
-
-        //buscar serie guardada en las series disponobles
-        if (doc.serie) {
-            for (let i = 0; i < this.series.length; i++) {
-
-                const element = this.series[i];
-
-                //Asignar serie guardada
-                if (element.serie_Documento == doc.serie.serie_Documento) {
-                    this.serie = element;
-                    break;
-                }
-
-            }
-
-        }
-
-
-        //Buscar vendedor asigando en el documento guardado
-        if (doc.vendedor) {
-
-            for (let i = 0; i < this.vendedores.length; i++) {
-                const element = this.vendedores[i];
-
-                //Asignaer vendedor guardado
-                if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
-                    this.vendedor = element;
-                }
-            }
-        }
-
-
-        this.cuenta = doc.cliente; //asignar cliente
-        this.traInternas = doc.detalles; //asignar detalles
-        this.montos = doc.pagos; //asignar pagos
-
-
-        if (doc.tipoRef) {
-            for (let i = 0; i < this.tiposReferencia.length; i++) {
-                const element = this.tiposReferencia[i];
-                if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
-                    this.tipoReferencia = element;;
-
-                }
-            }
-
-        }
-
-
-        //load dates 
-        this.fechaRefIni = new Date(doc.refFechaEntrega!);
-        this.fechaRefFin = new Date(doc.refFechaRecoger!);
-        this.fechaIni = new Date(doc.refFechaInicio!);
-        this.fechaFin = new Date(doc.refFechaFin!);
-
-
-        //set dates in inputs
-        this.inputFechaRefIni = {
-            year: this.fechaRefIni.getFullYear(),
-            day: this.fechaRefIni.getDate(),
-            month: this.fechaRefIni.getMonth() + 1,
-        }
-
-        this.inputFechaRefFin = {
-            year: this.fechaRefFin.getFullYear(),
-            day: this.fechaRefFin.getDate(),
-            month: this.fechaRefFin.getMonth() + 1,
-        }
-
-        this.inputFechaInicial = {
-            year: this.fechaIni.getFullYear(),
-            day: this.fechaIni.getDate(),
-            month: this.fechaIni.getMonth() + 1,
-        }
-
-        this.inputFechaFinal = {
-            year: this.fechaFin.getFullYear(),
-            day: this.fechaFin.getDate(),
-            month: this.fechaFin.getMonth() + 1,
-        }
-
-        //set time
-        this.horaIncial = UtilitiesService.getHoraInput(this.fechaIni);
-        this.horaFinal = UtilitiesService.getHoraInput(this.fechaFin);
-        this.horaRefIni = UtilitiesService.getHoraInput(this.fechaRefIni);
-        this.horaRefFin = UtilitiesService.getHoraInput(this.fechaRefFin);
-
-
-        // set observaciones
-        this.refContacto = doc.refContacto;
-        this.refDescripcion = doc.refDescripcion;
-        this.refDireccionEntrega = doc.refDireccionEntrega;
-        this.refObservacion = doc.refObservacion;
-
-
-        //calcular totales del documento y pagos
-        this.calculateTotales();
+       //TODO:Return
 
     }
 

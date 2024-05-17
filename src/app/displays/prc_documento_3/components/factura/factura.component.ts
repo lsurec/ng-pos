@@ -27,6 +27,7 @@ import { PrecioInterface } from '../../interfaces/precio.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
+import { DocLocalInterface } from '../../interfaces/doc-local.interface';
 
 @Component({
   selector: 'app-factura',
@@ -180,6 +181,130 @@ export class FacturaComponent implements OnInit {
     this.tabDocummento = false;
     this.tabDetalle = false;
     this.tabPago = true;
+  }
+
+
+
+
+  async loadDocumentLocal() {
+
+
+    //si no hay un documento guardado no hacer nada
+
+    //str to object para documento estructura
+    let doc: DocLocalInterface = JSON.parse(PreferencesService.documento);
+
+    //Dialogo para cargar documento guardado
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.docEncontrado'),
+        description: this._translate.instant('pos.alertas.recuperar'),
+      }
+    );
+
+    if (!verificador) return;
+
+
+    //Cargar documento
+
+
+
+    //buscar serie guardada en las series disponobles
+
+    for (let i = 0; i < this.facturaService.series.length; i++) {
+
+      const element = this.facturaService.series[i];
+
+      //Asignar serie guardada
+      if (element.serie_Documento == doc.serie!.serie_Documento) {
+        this.facturaService.serie = element;
+        break;
+      }
+
+    }
+
+    //TODO: Cargar datos de la serie
+
+
+    //Buscar vendedor asigando en el documento guardado
+    if (doc.vendedor) {
+
+      for (let i = 0; i < this.facturaService .vendedores.length; i++) {
+        const element = this.facturaService .vendedores[i];
+
+        //Asignaer vendedor guardado
+        if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
+          this.facturaService .vendedor = element;
+        }
+      } 
+    }
+
+
+    this.facturaService.cuenta = doc.cliente; //asignar cliente
+    this.facturaService. traInternas = doc.detalles; //asignar detalles
+    this.facturaService. montos = doc.pagos; //asignar pagos
+
+
+    if (doc.tipoRef) {
+      for (let i = 0; i < this.facturaService. tiposReferencia.length; i++) {
+        const element = this.facturaService. tiposReferencia[i];
+        if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
+          this.facturaService. tipoReferencia = element;;
+
+        }
+      }
+
+    }
+
+
+    //load dates 
+    this.facturaService. fechaRefIni = new Date(doc.refFechaEntrega!);
+    this.facturaService. fechaRefFin = new Date(doc.refFechaRecoger!);
+    this.facturaService. fechaIni = new Date(doc.refFechaInicio!);
+    this.facturaService. fechaFin = new Date(doc.refFechaFin!);
+
+
+    //set dates in inputs
+    this.facturaService. inputFechaRefIni = {
+      year: this.facturaService. fechaRefIni.getFullYear(),
+      day: this.facturaService. fechaRefIni.getDate(),
+      month: this.facturaService. fechaRefIni.getMonth() + 1,
+    }
+
+    this.facturaService. inputFechaRefFin = {
+      year: this.facturaService. fechaRefFin.getFullYear(),
+      day: this.facturaService. fechaRefFin.getDate(),
+      month: this.facturaService. fechaRefFin.getMonth() + 1,
+    }
+
+    this.facturaService. inputFechaInicial = {
+      year: this.facturaService. fechaIni.getFullYear(),
+      day: this.facturaService. fechaIni.getDate(),
+      month: this.facturaService. fechaIni.getMonth() + 1,
+    }
+
+    this.facturaService. inputFechaFinal = {
+      year: this.facturaService. fechaFin.getFullYear(),
+      day: this.facturaService. fechaFin.getDate(),
+      month: this.facturaService. fechaFin.getMonth() + 1,
+    }
+
+    //set time
+    this.facturaService. horaIncial = UtilitiesService.getHoraInput(this.facturaService. fechaIni);
+    this.facturaService. horaFinal = UtilitiesService.getHoraInput(this.facturaService. fechaFin);
+    this.facturaService. horaRefIni = UtilitiesService.getHoraInput(this.facturaService. fechaRefIni);
+    this.facturaService. horaRefFin = UtilitiesService.getHoraInput(this.facturaService. fechaRefFin);
+
+
+    // set observaciones
+    this.facturaService. refContacto = doc.refContacto;
+    this.facturaService. refDescripcion = doc.refDescripcion;
+    this.facturaService. refDireccionEntrega = doc.refDireccionEntrega;
+    this.facturaService. refObservacion = doc.refObservacion;
+
+
+    //calcular totales del documento y pagos
+    this.facturaService. calculateTotales();
   }
 
   //nuevo documento
@@ -507,7 +632,7 @@ export class FacturaComponent implements OnInit {
     if (!this.globalConvertService.editDoc) {
 
       this.facturaService.isLoading = false;
-      
+
       this.facturaService.loadDocSave();
       return;
     }
