@@ -50,7 +50,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateEntrega()">
+                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateEntrega()" [min]="facturaService.minHoraRefIni">
                             <ngx-material-timepicker #horaEntregaPiker
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
@@ -83,7 +83,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRecoger()">
+                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRecoger()" [min]="facturaService.minHoraRefFin">
                             <ngx-material-timepicker #horaRegogerPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -105,7 +105,7 @@
                     <form class="calendarios">
                         <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaInicial"
-                                (ngModelChange)="setDateIncio()" ngbDatepicker #fInicio="ngbDatepicker" />
+                                (ngModelChange)="setDateIncio()" ngbDatepicker #fInicio="ngbDatepicker"/>
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -116,11 +116,11 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()">
+                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()" [min]="facturaService.minHoraInicial">
                             <ngx-material-timepicker #horaInicioPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker)"
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker) "
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
@@ -151,7 +151,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()">
+                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()" [min]="facturaService.minHoraFinal">
                             <ngx-material-timepicker #horaFinalPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
