@@ -97,6 +97,12 @@ export class FacturaService {
     horaRefIni!: string;
     horaRefFin!: string;
 
+    //horas minimas
+    minHoraInicial!:string;
+    minHoraFinal!:string;
+    minHoraRefIni!:string;
+    minHoraRefFin!:string;
+
 
     //observacuion1, observacion del documento
     observacion = ""; //input para agreagar una observacion
