@@ -1,9 +1,9 @@
 import { InConstructionComponent } from "../components/in-construction/in-construction.component";
 import { SelectedConfigurationComponent } from "../components/selected-configuration/selected-configuration.component";
 import { HomeConvertComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component";
-import { OriginDocsComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/origin-docs/origin-docs.component";
-import { TypesDocsComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/types-docs/types-docs.component";
+import { CalendarioComponent } from "../displays/prcTarea_1/components/calendario/calendario.component";
 import { FacturaComponent } from "../displays/prc_documento_3/components/factura/factura.component";
+import { TareasComponent } from "../displays/shrTarea_3/components/tareas/tareas.component";
 import { ComponentesInterface } from "../interfaces/components.interface";
 
 export const components: ComponentesInterface[] = [
@@ -27,5 +27,14 @@ export const components: ComponentesInterface[] = [
         componente: HomeConvertComponent,
         visible: false,
     },
-   
+    {
+        id: "Tareas",
+        componente: TareasComponent,
+        visible: false,
+    },
+    {
+        id: "Calenadario Tareas",
+        componente: CalendarioComponent,
+        visible: false,
+    },
 ]
