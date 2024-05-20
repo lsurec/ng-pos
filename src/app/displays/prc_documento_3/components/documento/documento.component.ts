@@ -123,21 +123,117 @@ export class DocumentoComponent {
 
   setDateRefIni() {
 
-
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
 
     if (this.facturaService.fechaRefIni > this.facturaService.fechaRefFin!) {
 
-      this.facturaService.fechaRefFin = this.facturaService.fechaRefIni;
+      //asignar fehca inicio doc
+      this.facturaService.fechaIni = new Date(this.facturaService.fechaRefIni);
 
-      this.facturaService.fechaRefFin.setTime(this.facturaService.fechaRefIni.getTime() + (30 * 60000));
+      //a la fehca inicio documento sumarle 30 minutos
+      let addDateIni: Date = new Date(this.facturaService.fechaIni);
 
-      this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni)
+      //nueva fecha ini + 30 min
+      this.facturaService.fechaIni.setTime(addDateIni.getTime() + (30 * 60000));
 
-      this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+      //asiganr fecha fin
+      this.facturaService.fechaFin = new Date(this.facturaService.fechaIni);
 
+      //a la fehca inicio documento sumarle 30 minutos
+      let addDateFin: Date = new Date(this.facturaService.fechaFin);
+
+      //nueva fecha fin + 30 min
+      this.facturaService.fechaFin.setTime(addDateFin.getTime() + (30 * 60000));
+
+      //asignar fehca fin ref
+      this.facturaService.fechaRefFin = new Date(this.facturaService.fechaFin);
+
+
+      //a la fehca inicio documento sumarle 30 minutos
+      let addDateFinRef: Date = new Date(this.facturaService.fechaRefFin);
+
+      //nueva fecha fin + 30 min
+      this.facturaService.fechaRefFin.setTime(addDateFinRef.getTime() + (30 * 60000));
+
+
+      // Inicializar selectedDate con la fecha de hoy
+      this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+      this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+      this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+      this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
+
+      //agregar horas a las selectTime
+      this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+      this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+      this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+      this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+
+
+      this.facturaService.minHoraRefIni = UtilitiesService.getHoraInput(this.facturaService.fecha!);
+      this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+      this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+      this.facturaService.minHoraFinal = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+
+      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+
+      //validar horas minimas 
+      if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni)) {
+
+        let horaCero: Date = new Date(this.facturaService.fechaRefFin);
+        horaCero.setHours(0);
+        horaCero.setMinutes(0);
+
+        this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(horaCero);
+        this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(horaCero);
+      }
+
+
+      if (!UtilitiesService.isEqualDate(this.facturaService.fechaRefFin, this.facturaService.fechaIni)) {
+        // Crear una nueva instancia de Date basada en la fecha de referencia fin
+        let horaMaxima: Date = new Date(this.facturaService.fechaRefFin);
+
+        // Establecer la hora máxima del día: 23:59:59.999
+        horaMaxima.setHours(23);
+        horaMaxima.setMinutes(59);
+
+        this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(horaMaxima);
+
+      }
+
+      if (!UtilitiesService.isEqualDate(this.facturaService.fechaRefFin, this.facturaService.fechaFin)) {
+        // Crear una nueva instancia de Date basada en la fecha de referencia fin
+        let horaMaxima: Date = new Date(this.facturaService.fechaRefFin);
+
+        // Establecer la hora máxima del día: 23:59:59.999
+        horaMaxima.setHours(23);
+        horaMaxima.setMinutes(59);
+
+        this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
+      }
 
     }
+
+
+
+    //validar horas minimas 
+    if (UtilitiesService.compareDate(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+
+      //Restamblecer la fecha mayor con la hora 12:00 am
+      let horaCero: Date = new Date(this.facturaService.fechaRefIni);
+      horaCero.setHours(0);
+      horaCero.setMinutes(0);
+
+      this.facturaService.minHoraRefIni = UtilitiesService.getHoraInput(horaCero);
+
+    } else if (UtilitiesService.isEqualDate(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+
+      this.facturaService.minHoraRefIni = UtilitiesService.getHoraInput(this.facturaService.fecha!);
+
+    }
+
+
+
     //Copiar valores
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
@@ -150,18 +246,16 @@ export class DocumentoComponent {
 
 
 
+
   setDateRefFin() {
 
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
 
+    if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
 
-    if (this.facturaService.fechaRefFin < this.facturaService.fechaRefIni!) {
-
-      //TODO:Translate
-      this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
-      this.restartDates();
-      return;
     }
+
+
 
 
     //Copiar valores
