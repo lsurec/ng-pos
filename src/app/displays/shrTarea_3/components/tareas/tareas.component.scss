@@ -10,6 +10,11 @@ $background-scrollbar : #134895; //barra rosada
 $background-botones   : #134895; //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte, 
 
+
+.spacer {
+    flex: 1 1 auto;
+}
+
 /*Contendo derecho*/
 
 .head__sidenav {

@@ -94,7 +94,13 @@ export class TareasComponent {
       this.activeLang = languagesProvider[this.idioma];
       this._translate.setDefaultLang(this.activeLang.lang);
     }
+    
+    //inicialmente mostrar las cantidad de ultimas tareas establecidas
+    if (this.searchText.length == 0) {
+      this.obtenerUltimasTareas();
+    };
 
+    this.getLrCode();
 
   }
 
