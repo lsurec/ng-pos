@@ -9,6 +9,8 @@ export class GlobalTareasService {
 
     idPantalla: number = 0;
 
+    idActualizar: number = 0;
+
     vistaDia: boolean = false;
 
     inputFechaInicial?: NgbDateStruct; //fecha inicial 

@@ -1,4 +1,4 @@
-export interface ActualizarTareaInterface{
+export interface ActualizarDetalleTareaInterface{
     tarea:            number;
     userName:         string;
     actualizacion:    number;

@@ -411,6 +411,8 @@ export class DetalleTareaComponent {
 
   //abrir dialgo y selecionar responsables
   actualizarTarea(): void {
+    this.tareasGlobalService.idActualizar = 1;
+
     let tarea: DetalleInterface = {
       tarea: this.tareaDetalle!,
       comentarios: this.comentarios,
@@ -453,6 +455,9 @@ export class DetalleTareaComponent {
   };
 
   actualizarPrioridad() {
+
+    this.tareasGlobalService.idActualizar = 2;
+
     let tarea: DetalleInterface = {
       tarea: this.tareaDetalle!,
       comentarios: this.comentarios,

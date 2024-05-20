@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { PreferencesService } from "./preferences.service";
-import { ActualizarTareaInterface } from "../displays/shrTarea_3/interfaces/detalle-tarea.interface";
+import { ActualizarEstadoInterface, ActualizarNivelPrioridadInterface } from "../displays/shrTarea_3/interfaces/actualizar-tarea.interface";
 
 @Injectable()
 
-export class ActualizarEstadoTareaService {
+export class ActualizarTareaService {
 
     private _token: string = "";
 
@@ -20,7 +20,7 @@ export class ActualizarEstadoTareaService {
     }
 
     //nuevo estado
-    private _postNuevoEstado(estado: ActualizarTareaInterface) {
+    private _postNuevoEstado(estado: ActualizarEstadoInterface) {
 
         let paramsStr = JSON.stringify(estado); //JSON to String
 
@@ -36,7 +36,7 @@ export class ActualizarEstadoTareaService {
     }
 
     //funcion asyncrona con promesa
-    postNuevoEstado(estado: ActualizarTareaInterface): Promise<ResApiInterface> {
+    postNuevoEstado(estado: ActualizarEstadoInterface): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postNuevoEstado(estado).subscribe(
                 //si esta correcto
@@ -65,7 +65,7 @@ export class ActualizarEstadoTareaService {
         })
     }
 
-    private _postNuevoNivelPrioridad(prioridad: ActualizarTareaInterface) {
+    private _postNuevoNivelPrioridad(prioridad: ActualizarNivelPrioridadInterface) {
 
         let paramsStr = JSON.stringify(prioridad); //JSON to String
 
@@ -81,7 +81,7 @@ export class ActualizarEstadoTareaService {
     }
 
     //funcion asyncrona con promesa
-    postNuevoNivelPrioridad(prioridad: ActualizarTareaInterface): Promise<ResApiInterface> {
+    postNuevoNivelPrioridad(prioridad: ActualizarNivelPrioridadInterface): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postNuevoNivelPrioridad(prioridad).subscribe(
                 //si esta correcto
