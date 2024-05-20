@@ -94,8 +94,10 @@ hr {
 }
 
 .email {
-    min-width: 60%;
-    font-size: 12px;
+    padding-left: 5px;
+    min-width   : 60%;
+    font-size   : 12px;
+    word-wrap   : break-word;
 }
 
 .detalleUsuario {
@@ -129,68 +131,24 @@ p {
     margin: 0px;
 }
 
-@media screen and (max-width: 415px) {
-
-    .progress,
-    .dialog {
-        padding: 10px 0px 0px 10px !important;
-        width  : 325px !important;
-    }
-
-    .detalle {
-        padding: 10px 0px !important;
-    }
-
-    .seleccionar {
-        display: flow !important;
-        height : 50px !important;
-    }
-
-    .verDetalle {
-        font-size: 14px !important;
-        padding  : 5px !important;
-    }
-}
-
-@media screen and (max-width: 400px) {
-
-    .dialog {
-        max-width: 250px !important;
-    }
-
-    .verDetalle {
-        font-size: 14px !important;
-        padding  : 5px !important;
-    }
-
-    .close {
-        font-size  : 22px !important;
-        align-items: center !important;
-        height     : 30px !important;
-    }
-
-    hr {
-        margin: 0.3rem 0;
-    }
-
-    .progress,
-    .dialog {
-        padding: 10px 20px;
-        width  : 325px !important;
-    }
-
-}
-
 .seleccionar {
-    display         : flex;
-    width           : 100%;
-    cursor          : pointer;
-    align-items     : center;
-    height          : 30px;
-    // border-bottom: 1px solid $color-bordes;
+    display    : flex;
+    width      : 100%;
+    cursor     : pointer;
+    align-items: center;
+    min-height : 30px;
+    padding    : 5px 0px;
 }
 
-.seleccionar:hover {
+.seleccionar-invitados {
+    width     : calc(100% - 50px);
+    cursor    : pointer;
+    min-height: 30px;
+    padding   : 5px 0px;
+}
+
+.seleccionar:hover,
+.seleccionar-invitados:hover {
     background-color: #ebebeb;
 }
 
@@ -280,4 +238,17 @@ p {
 
 .display-flex {
     display: flex;
+}
+
+@media screen and (max-width: 767px) {
+
+    .dialog,
+    .progress {
+        width: 400px !important;
+    }
+
+    .seleccionar {
+        min-height: 30px !important;
+        display   : block !important;
+    }
 }

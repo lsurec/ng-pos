@@ -23,7 +23,7 @@
             *ngFor="let usuario of usuariosResInv">
             <mat-checkbox [(ngModel)]="usuario.select" color="primary" *ngIf="buscar === 2"></mat-checkbox>
             <span class="spacer"></span>
-            <div class="seleccionar" [mat-dialog-close]="[usuario]">
+            <div class="seleccionar" [mat-dialog-close]="[usuario]" [ngClass]="{'seleccionar': buscar === 1, 'seleccionar-invitados': buscar === 2}">
                 <p class="nombre">{{usuario.name}}</p>
                 <span class="spacer"></span>
                 <p class="email">{{usuario.email}}</p>
