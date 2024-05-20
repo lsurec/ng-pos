@@ -36,19 +36,8 @@ export class BuscarIdReferenciaComponent {
 
   //cerrar dialogo
   closeDialog(): void {
-    console.log("que pasa");
-
     this.dialogRef.close();
-
-    console.log("y aqui");
-
   }
-
-  enviar() {
-    // this.usuariosResponsables = this.usuarios.filter(usuario => usuario.select)
-    // this.dialogRef.close(this.usuariosResponsables);
-  }
-
 
   timer: any; //temporizador
 
