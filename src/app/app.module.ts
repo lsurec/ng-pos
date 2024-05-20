@@ -81,6 +81,7 @@ import { BuscarIdReferenciaComponent } from './components/buscar-id-referencia/b
 import { ActualizarUsuariosComponent } from './components/actualizar-usuarios/actualizar-usuarios.component';
 import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.component';
 import { NotFoundItemComponent } from './components/not-found-item/not-found-item.component';
+import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-dialog.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { NotFoundItemComponent } from './components/not-found-item/not-found-ite
     ActualizarUsuariosComponent,
     CrearTareaComponent,
     NotFoundItemComponent,
+    UsuariosDialogComponent,
   ],
   imports: [
     BrowserModule,

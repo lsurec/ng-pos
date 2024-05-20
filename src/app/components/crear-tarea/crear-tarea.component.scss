@@ -1,0 +1,700 @@
+$color-negro          : #000; //texto negro
+$color-azul           : #134895; //bordes y texto azul
+$color-blanco         : #fff; //resaltar texto blanco
+$color-gris           : #666666; //texto gris
+$color-gris-s         : #777; //sombra y texto gris
+$color-bordes         : #CED4DA; //bordes del calendario
+$color-naranja        : #DF9722; //resaltar tareas naranja
+$border-color         : rgba(0, 0, 0, .09);
+$font-serif           : sans-serif; //fuente del texto
+$background-options   : #fff; //fondo blanco
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra rosada
+$background-botones   : #134895; //resaltar botones azul
+$background-transparent: transparent; //fondo transparennte,
+
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $background-oficial;
+}
+
+.head__sidenav {
+    height       : 64px !important;
+    padding      : 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.llenar-formulario::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.llenar-formulario::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.llenar-formulario::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.container-page {
+    height  : calc(100% - 128px);
+    width   : 100vw;
+    position: fixed;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.crear-tarea {
+    padding: 10px 15px 25px;
+}
+
+.fecha-hora {
+    // padding: 10px 0px 0px 15px;
+    padding    : 0px 15px;
+    // width: 50%;
+    // display : flex;
+    // width   : 100%;
+}
+
+.titulo-tarea {
+    min-height      : 30px;
+    width           : 100%;
+    border-style    : none;
+    border-bottom   : 1px solid $color-bordes;
+    font-size       : 15px;
+    padding-left    : 5px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+}
+
+.fechas {
+    cursor                : pointer;
+    height                : 30px;
+    width                 : 150px;
+    border-style          : none;
+    // border-bottom   : 1px solid $color-bordes;
+    font-size             : 15px;
+    // padding-left       : 5px;
+    padding               : 6px 12px;
+    outline               : none;
+    color                 : $color-azul;
+    background-color      : transparent;
+    text-align            : center;
+}
+
+// .hora-calendario {
+//     border       : 1px solid $color-bordes;
+//     border-radius: 5px;
+//     margin-left  : 15px;
+// }
+
+.hora-calendario {
+    width                    : 100%;
+    height                   : 35px;
+    border                   : 1px solid $color-bordes;
+    display                  : flex;
+    align-items              : center;
+    border-top-left-radius   : 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.horas {
+    width      : 45%;
+    display    : flex;
+    align-items: center;
+}
+
+.hora {
+    cursor          : pointer;
+    border-style    : none;
+    width           : 100%;
+    font-size       : 13px;
+    // padding: 6px 12px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+    text-align      : center;
+}
+
+.ver-hora {
+    height                    : 35px;
+    border                    : 1px solid $color-bordes;
+    border-top-right-radius   : 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius    : 0px;
+    border-bottom-left-radius : 0px;
+
+}
+
+
+.detalles-tarea {
+    border: 1px solid $color-bordes;
+    margin: 25px 75px;
+    width : 100%;
+    height: max-content;
+}
+
+mat-form-field {
+    margin-right: 12px;
+}
+
+
+//No se esta utilizando
+
+.informacion-impo {
+    min-height: 100px;
+    margin    : 0px 50px 5px;
+    border    : 1px solid $color-bordes;
+    padding   : 10px;
+}
+
+.id-Tarea {
+    min-height      : 30px;
+    width           : 150px;
+    border-style    : none;
+    border          : 0.5px solid $color-bordes;
+    font-size       : 12px;
+    padding-left    : 5px;
+    margin-bottom   : 5px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+}
+
+.descripcion-tarea:hover {
+    border: 1px solid $color-bordes;
+}
+
+.opciones {
+    min-height    : 25px;
+    margin        : 25px 50px 0px;
+    // border-left: 1px solid $color-bordes;
+    display       : flex;
+    font-size     : 12px;
+}
+
+.opcion {
+    width           : 75px;
+    text-align      : center;
+    padding         : 5px;
+    cursor          : pointer;
+    border-right    : 0.5px solid $color-bordes;
+    border-top      : 0.5px solid $color-bordes;
+    background-color: #134895;
+    color           : $color-blanco;
+}
+
+//quitarla
+
+.opcion-info {
+    width           : 75px;
+    text-align      : center;
+    padding         : 5px;
+    cursor          : pointer;
+    border-right    : 0.5px solid $color-bordes;
+    border-top      : 0.5px solid $color-bordes;
+    background-color: transparent;
+    color           : $color-negro;
+}
+
+.opcion:hover {
+    background-color: transparent;
+    color           : $color-negro;
+}
+
+.opcion-info:hover {
+    background-color: #134895;
+    color           : $color-blanco;
+}
+
+//SE ESTAN USANDO:
+
+.detalles {
+    min-height      : 100px;
+    margin          : 0px 50px 5px;
+    // border       : 1px solid $color-bordes;
+    display         : flex;
+}
+
+.lista {
+    width: 50%;
+}
+
+//LADO IZQUIERDO
+.contenido-izquierdo {
+    //corregir ancho del contenedor
+    min-height      : 35px;
+    align-items     : center;
+    // margin-bottom: 5px;
+    width           : 100%;
+    padding-left    : 5px;
+    padding-right   : 5px;
+}
+
+.titulos-izquierda {
+    width     : 25%;
+    text-align: right;
+}
+
+.campo-detalle {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
+}
+
+.campo-tarea {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    width      : 100%;
+}
+
+.campo-obligatorio {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    min-width  : 25px;
+}
+
+.campo-izquierda {
+    // width      : 75%;
+    // padding    : 3px 0px 3px 15px;
+    display    : flex;
+    align-items: center;
+    width      : calc(100% - 100px);
+}
+
+.observacion {
+    border-style    : none;
+    border          : 0.5px solid $color-bordes;
+    font-size       : 12px;
+    padding         : 1px 5px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+    width           : 100%;
+}
+
+.espacio-observacion {
+    padding: 0px 5px;
+}
+
+.observacion:hover {
+    border: 1px solid $color-azul;
+}
+
+.tipo-tarea {
+    border-style       : none;
+    border             : 1px solid $color-bordes;
+    // width           : 400px;
+    background-color   : transparent;
+    min-height         : 30px;
+    padding            : 2px 10px;
+    font-size          : 12px;
+    // min-width: 140px;
+}
+
+.usuarios {
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    height          : 30px;
+    padding         : 2px 10px;
+    font-size       : 12px;
+    width           : 250px;
+    margin-left     : 5px;
+    outline         : none;
+}
+
+
+mat-icon {
+    font-size: 20px;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    width        : 40px;
+    height       : 40px;
+    padding      : 9px;
+    /* background: yellow; */
+}
+
+.seleccionar-tiempo,
+.tipo-recordar {
+    min-width       : 120px;
+    max-width       : 150px;
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    min-height      : 30px;
+    padding         : 2px 10px;
+    font-size       : 12px;
+    outline         : none;
+}
+
+.id-tarea,
+.referencia {
+    max-width       : 200px;
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    min-height      : 30px;
+    padding         : 2px 10px;
+    font-size       : 12px;
+    outline         : none;
+}
+
+.minutos {
+    width           : 40px;
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    min-height      : 30px;
+    padding         : 2px 5px;
+    font-size       : 12px;
+    outline         : none;
+    text-align      : center;
+    margin          : 0px 5px;
+    color           : $color-azul;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
+}
+
+//LADO DERECHO
+
+// .contenido-derecho {
+//     // width: 100%;
+//     width      : 100%;
+//     min-height : 35px;
+//     align-items: center;
+//     margin     : 10px 0px;
+// }
+
+.contenido-derecho {
+    min-height   : 35px;
+    align-items  : center;
+    margin-bottom: 5px;
+    padding      : 0px 5px 0px;
+}
+
+.titulos-derecha {
+    text-align: justify;
+}
+
+.campo-derecha {
+    width: 100%;
+}
+
+.izquierda {
+    background-color: #134895;
+    min-height      : 500px;
+    width           : 50%;
+}
+
+.espacio-comentarios {
+    min-height   : 35px;
+    align-items  : center;
+    margin-bottom: 5px;
+    padding      : 0px 15px;
+}
+
+.comentarios {
+    height     : 30px;
+    display    : flex;
+    align-items: center;
+}
+
+.comentarios-text {
+    border-style    : none;
+    border          : 0.5px solid $color-bordes;
+    font-size       : 12px;
+    padding         : 1px 5px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+    width           : 100%;
+}
+
+.subir-comentarios {
+    font-size: 12px;
+    height   : 30px;
+}
+
+.seleccionar-fechas {
+    width           : 45%;
+    min-height      : 30px;
+    border-style    : none;
+    border          : 0.5px solid $color-bordes;
+    font-size       : 12px;
+    padding-left    : 5px;
+    margin-bottom   : 5px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent;
+}
+
+.example-full-width {
+    background-color: none !important;
+}
+
+.datos-tarea {
+    min-height : 30px;
+    padding    : 10px 10px 0px;
+    display    : flex;
+    align-items: center;
+}
+
+.descripcion-guardar {
+    min-height: 50px;
+    padding   : 10px 10px 0px;
+    width     : 100%;
+}
+
+//selector de horas
+
+.dds__time-picker__input {
+    background-color: rgb(24, 26, 27);
+    border-color    : rgb(98, 91, 81);
+    color           : rgb(223, 220, 216);
+}
+
+.dds__time-picker__input {
+    font-size       : 1rem;
+    font-weight     : 400;
+    letter-spacing  : .005em;
+    line-height     : 1.5rem;
+    display         : block;
+    width           : 100%;
+    background-color: #fff;
+    border          : 0.0625rem solid #7e7e7e;
+    color           : #0e0e0e;
+    border-radius   : 0.125rem;
+    padding         : 0.6875rem 4.5rem 0.6875rem 0.9375rem;
+    filter          : none;
+}
+
+.form-control-sm {
+    min-height   : calc(1.5em + 0.5rem + 2px);
+    padding      : 0.25rem 0.5rem;
+    font-size    : .875rem;
+    border-radius: 0.25rem;
+}
+
+.form-control {
+    background-color: transparent !important;
+    height          : 35px;
+    font-size       : 14px;
+    border          : 1px solid $color-bordes;
+    color           : $color-azul;
+}
+
+.ico-calendario {
+    font-size: 20px;
+}
+
+.ver-calendario {
+    border     : 1px solid $color-bordes;
+    align-items: center;
+    height     : 35px;
+}
+
+.fecha-calendario {
+    height: 35px;
+    width : 45%;
+}
+
+.descripcion-tarea {
+    color           : $color-azul;
+    width           : calc(100% - 10px);
+    border-style    : none;
+    background-color: transparent;
+    outline         : none;
+    font-size       : 12px;
+    border-bottom   : 1px solid $color-bordes;
+    padding         : 3px;
+}
+
+.linea {
+    box-shadow: 0px -3px 10px 1.5px rgba(0, 0, 0, 0.2);
+    width     : 100%;
+}
+
+.botones {
+    text-align: right;
+    display   : flex;
+    width     : 100%;
+}
+
+.llenar-formulario {
+    height        : 100%;
+    // align-items: center;
+    display       : flex;
+    overflow-y    : auto;
+}
+
+.subir-archivos {
+    margin: 5px;
+}
+
+.lista-archivos {
+    margin-left   : 15px;
+    padding       : 5px;
+    padding-bottom: 0px;
+}
+
+.eliminar:hover {
+    cursor: pointer;
+    color : #ff0000;
+}
+
+.nombre-archivos {
+    font-size     : 12px;
+    font-weight   : 450;
+    // padding    : 2px 0px;
+    width         : 50%;
+}
+
+.selected {
+    background-color: lightgray;
+    /* Cambia el color de fondo cuando se seleccionan archivos */
+    cursor          : pointer;
+    /* Cambia el cursor al seleccionar archivos */
+    padding         : 5px;
+    border-radius   : 4px;
+    border          : 1px solid #ccc;
+}
+
+.email-usuarios {
+    font-size: 12px;
+    width    : 60%;
+}
+
+.usuarios-seleccionados {
+    min-height: 30px;
+    padding   : 5px 10px 0px;
+    display   : flex;
+}
+
+.usuarios-lista {
+    min-height : 30px;
+    padding    : 5px 10px 0px;
+    margin-left: 5px;
+    width      : 50%;
+}
+
+.fechas-hora {
+    display: flex;
+}
+
+.nombre-usuarios {
+    font-size  : 10px;
+    font-weight: 450;
+    min-width  : 100px;
+}
+
+.notificaciones {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    min-width  : 120px;
+}
+
+
+
+.usuario-y-email {
+    cursor       : pointer;
+    border-bottom: 1px solid $color-bordes;
+    margin-bottom: 2px;
+    padding      : 0px 5px;
+}
+
+.referenciaObtenida {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    min-width  : 100px;
+    margin-left: 10px;
+    color      : $color-azul;
+}
+
+.obligatorio {
+    color       : #ff0000;
+    font-weight : bold;
+    font-size   : 12px;
+    padding-left: 3px;
+}
+
+//sidenav bottom y logos
+
+.head__sidenav__bottom {
+    height     : 64px !important;
+    padding    : 0px;
+    border-top : 1px solid rgba(0, 0, 0, 0.12);
+    display    : flex;
+    align-items: center;
+    position   : fixed;
+    bottom     : 0;
+}
+
+.reloj-calendario {
+    display: flex;
+}
+
+
+@media screen and (max-width: 280px) {
+
+    .detalles-tarea {
+        margin: 20px 5px !important;
+    }
+
+    .datos-tarea,
+    .fechas-hora,
+    .reloj-calendario {
+        display: block !important;
+    }
+
+    .fecha-hora {
+        display    : block !important;
+        padding-top: 5px;
+    }
+
+    .hora-calendario {
+        margin-left: 0px !important;
+        margin-top : 5px !important;
+    }
+
+    .descripcion-tarea {
+        width: 100% !important;
+    }
+
+    .llenar-formulario {
+        align-items: normal !important;
+    }
+
+    .crear-tarea {
+        padding: 10px 15px !important;
+    }
+
+}
+
+/*Fin logos*/
