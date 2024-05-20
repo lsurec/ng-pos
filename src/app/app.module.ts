@@ -72,6 +72,10 @@ import { InformeProductosComponent } from './displays/prc_documento_3/components
 import { ImagenComponent } from './displays/prc_documento_3/components/imagen/imagen.component';
 import { PasosComponent } from './components/pasos/pasos.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TareasComponent } from './displays/shrTarea_3/components/tareas/tareas.component';
+import { CalendarioComponent } from './displays/prcTarea_1/components/calendario/calendario.component';
+import { DialogTareaComponent } from './displays/prcTarea_1/components/dialog-tarea/dialog-tarea.component';
+import { DetalleTareaComponent } from './displays/shrTarea_3/components/detalle-tarea/detalle-tarea.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +122,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     InformeProductosComponent,
     ImagenComponent,
     PasosComponent,
+    TareasComponent,
+    CalendarioComponent,
+    DialogTareaComponent,
+    DetalleTareaComponent,
   ],
   imports: [
     BrowserModule,
