@@ -1,0 +1,355 @@
+$color-negro          : #000; //texto
+$color-bordes         : #CED4DA; //bordes del calendario
+$color-azul           : #134895; //bordes y texto azul
+$color-gris           : #968989cb; // bordes de comentarios
+$color-2-gris         : #857373c9; //texto, bordes
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
+$background-detalles  : #dad2d286; //fondo detalles 
+$background-flecha    : #3b3939cb; //fondo triangulo
+$background-transparent: transparent; //fondo transparennte, 
+
+.progress {
+    padding         : 0px;
+    width           : 850px;
+    height          : 430px;
+    overflow-y      : auto;
+    background-color: $background-oficial;
+}
+
+.dialog {
+    padding         : 0px 20px 30px;
+    width           : 850px;
+    height          : 430px;
+    padding-bottom  : 30px;
+    overflow-y      : auto;
+    background-color: $background-oficial;
+    overflow-x      : hidden;
+}
+
+.head__sidenav {
+    height          : 64px !important;
+    padding         : 0px 10px;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    background-color: $background-oficial;
+}
+
+.head_bottom_sidenav {
+    height          : 20px !important;
+    padding         : 0px 10px;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    background-color: $background-oficial;
+}
+
+.botones {
+    padding    : 0px;
+    display    : flex;
+    width      : 100%;
+    align-items: center;
+}
+
+.titulos {
+    display: flex;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.close {
+    width      : 40px;
+    color      : #aaa;
+    float      : left !important;
+    font-size  : 28px;
+    font-weight: bold;
+    cursor     : pointer;
+    text-align : center;
+}
+
+.close:hover,
+.close:focus {
+    color          : black;
+    text-decoration: none;
+    cursor         : pointer;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.dialog::-webkit-scrollbar {
+    width: 7px;
+}
+
+.dialog::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.dialog::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.verDetalle {
+    font-weight  : 500;
+    text-align   : center;
+    margin-bottom: 0px;
+    padding      : 0px 10px;
+}
+
+.titulo {
+    margin-bottom: 5px;
+}
+
+.detallesTarea {
+    text-align: left !important;
+    font-size : 14px;
+}
+
+/* alinea fecha a la derecha */
+.alingLeft {
+    float: right;
+}
+
+p {
+    margin: 0px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .imagen,
+    .flecha-comentario {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    .dialog {
+        max-width: 250px !important;
+    }
+
+    .verDetalle {
+        font-size: 14px !important;
+        padding  : 5px !important;
+    }
+
+    .close {
+        font-size  : 22px !important;
+        align-items: center !important;
+        height     : 30px !important;
+    }
+
+    .alingLeft {
+        font-size: 13px;
+    }
+
+    hr {
+        margin: 0.3rem 0;
+    }
+}
+
+.barra-titulo,
+.titulo-cerrar {
+    display    : flex;
+    min-height : 20px;
+    align-items: center;
+}
+
+.bloque-comentario {
+    width     : 100%;
+    margin-top: 15px;
+}
+
+.comentario-icono {
+    display: flex;
+}
+
+.imagen {
+    margin-top: -5px;
+    font-size : 50px;
+    width     : 50px;
+    height    : 50px;
+}
+
+.flecha-comentario {
+    width        : 0;
+    height       : 0;
+    border-top   : 7px solid $background-transparent;
+    border-right : 14px solid $background-flecha;
+    border-bottom: 7px solid $background-transparent;
+    margin-top   : 10px;
+    margin-left  : 4.5px;
+    margin-right : -20px;
+}
+
+.contenedor_comentarios {
+    margin-left : 20px;
+    width       : 90% !important;
+    margin-right: 10px;
+}
+
+.comentario {
+    display      : flex;
+    height       : 30px;
+    border       : 1px solid $color-gris;
+    border-bottom: none;
+    font-weight  : bold;
+    font-size    : 12px;
+    padding      : 0px 5px;
+    align-items  : center;
+}
+
+.comentario_desc {
+    padding                   : 5px 10px;
+    text-align                : justify;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius : 20px;
+    border                    : $color-gris 1px solid;
+    font-size                 : 14px;
+}
+
+.ico_link {
+    width       : 25px;
+    height      : 25px;
+    margin-right: 5px;
+}
+
+.linea {
+    margin-bottom: -15px;
+    height       : 30px;
+    border-left  : $color-gris 2px solid;
+    margin-left  : 20px
+}
+
+.escribir-comentario {
+    width     : 100%;
+    border    : none;
+    outline   : none;
+    background: transparent;
+}
+
+.subir-archivos {
+    margin: 5px;
+}
+
+.form-control {
+    background-color: transparent !important;
+    height          : 35px;
+    font-size       : 14px;
+    border          : 1px solid $color-bordes;
+    color           : $color-azul;
+}
+
+.lista-archivos {
+    margin-left   : 15px;
+    padding       : 5px;
+    padding-bottom: 0px;
+}
+
+.campo-tarea {
+    font-size: 12px;
+    padding  : 2px 0px;
+}
+
+.campo-detalle {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    width      : 100px;
+}
+
+.nombre-archivos {
+    font-size  : 12px;
+    font-weight: 450;
+}
+
+.eliminar:hover {
+    cursor: pointer;
+    color : #ff0000;
+}
+
+.archivos-comentar {
+    display: flex;
+}
+
+.subir-archivos {
+    margin: 5px;
+}
+
+@media screen and (max-width: 280px) {
+
+    .verDetalle {
+        font-size    : 13px !important;
+        padding      : 5px !important;
+        white-space  : nowrap !important;
+        overflow     : hidden !important;
+        text-overflow: ellipsis !important;
+        width        : 100px !important;
+    }
+
+    .close {
+        font-size  : 22px !important;
+        align-items: center !important;
+        height     : 30px !important;
+    }
+
+    hr {
+        margin: 0.3rem 0;
+    }
+
+    .progress {
+        padding: 0px !important;
+        width  : 220px !important;
+    }
+
+    .dialog {
+        padding: 10px 10px 20px !important;
+        width  : 220px !important;
+    }
+
+    .seleccionar {
+        padding    : 3px 0px !important;
+        align-items: center !important;
+    }
+
+    .contenedor {
+        padding-left: 5px !important;
+    }
+
+    .barra-titulo {
+        display: block !important;
+    }
+
+    .contenedor_comentarios {
+        width : 100% !important;
+        margin: 0px 5px !important;
+    }
+
+    .nombre-archivos {
+        width        : 100px !important;
+        word-wrap    : break-word !important;
+        white-space  : nowrap !important;
+        text-overflow: ellipsis !important;
+        overflow     : hidden !important;
+    }
+
+    .titulos {
+        display: block !important;
+    }
+
+    .comentario {
+        display: block !important;
+        height : auto !important;
+    }
+}
+
+.subir-comentarios {
+    font-size: 12px;
+    height   : 30px;
+}

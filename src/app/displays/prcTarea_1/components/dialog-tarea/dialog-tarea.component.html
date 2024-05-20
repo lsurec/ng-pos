@@ -1,1 +1,134 @@
-<p>dialog-tarea works!</p>
+<app-progress *ngIf="isLoading && !detalles" class="progress"></app-progress>
+<!-- Dialogo de los detalles de las tareas -->
+<mat-toolbar-row class="head__sidenav" *ngIf="detalles && !isLoading">
+    <div class="botones">
+        <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="loadData()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <div class="titulos">
+            <!-- Titulo de la tarea -->
+            <p class="verDetalle">{{data.tarea.descripcion}}</p>
+            <span class="spacer"></span>
+            <!-- Fecha de la tarea -->
+            <p class="verDetalle">{{data.tarea.fecha_Ini | date: 'dd/MM/yyyy hh:mm a'}}</p>
+        </div>
+        <span class="spacer"></span>
+        <span class="close" (click)="closeDialog()">&times;</span>
+    </div>
+</mat-toolbar-row>
+<div mat-dialog-content class="dialog" *ngIf="detalles && !isLoading">
+    <div class="comentarios">
+        <div class="detallesTarea">
+            <div class="titulo-cerrar">
+                <p class="campo-detalle">{{ 'crm.dialog.tarea' | translate}}</p>
+                <!-- Numero de la tarea -->
+                <p class="campo-tarea"> {{data.tarea.tarea}} </p>
+            </div>
+            <div class="barra-titulo">
+                <p class="campo-detalle">{{'crm.dialog.descripcion' | translate}}</p>
+                <!-- Descripcion de la tarea -->
+                <p class="campo-tarea">{{data.tarea.descripcion_Tarea}}</p>
+            </div>
+            <div class="barra-titulo">
+                <p class="campo-detalle">Tipo:</p>
+                <!-- Descripcion de la tarea -->
+                <p class="campo-tarea">{{data.tarea.des_Tipo_Tarea}}</p>
+            </div>
+            <div class="barra-titulo">
+                <p class="campo-detalle">Estado:</p>
+                <!-- Descripcion de la tarea -->
+                <p class="campo-tarea">{{data.tarea.des_Tarea}}</p>
+            </div>
+            <div class="barra-titulo">
+                <p class="campo-detalle">Prioridad:</p>
+                <!-- Descripcion de la tarea -->
+                <p class="campo-tarea">{{data.tarea.nom_Nivel_Prioridad}}</p>
+            </div>
+            <div class="barra-titulo">
+                <p class="campo-detalle">Responsable:</p>
+                <!-- Descripcion de la tarea -->
+                <p class="campo-tarea">{{resolveObject(data.tarea.usuario_Responsable)}}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="bloque-comentario" *ngFor="let comentario of comentarios; let index = index">
+            <div class="d-flex">
+                <mat-icon class="imagen">account_circle_outlined</mat-icon>
+                <p class="flecha-comentario"></p>
+                <!-- comentario -->
+                <div class="contenedor_comentarios">
+                    <div class="comentario">
+                        <p>{{comentario.comentario.nameUser}}</p>
+                        <span class="spacer"></span>
+                        <p>{{comentario.comentario.fecha_Hora | date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                    <!-- decripcion de comentario -->
+                    <div class="comentario_desc">
+                        <p>{{comentario.comentario.comentario}}</p>
+                        <div class="" *ngIf="data.comentarios[index].files.length >0">
+                            <button mat-button *ngFor="let file of data.comentarios[index].files" class="d-flex">
+                                <!-- arvhivos del comentario -->
+                                <mat-icon class="ico_link"> description </mat-icon>
+                                <p class="nombre-archivos">{{file.objeto_Nombre}}</p>
+                                <!-- fin archios del comentario -->
+                            </button>
+                        </div>
+                    </div>
+                    <!-- linea para conectar los comentarios -->
+                    <p class="linea"></p>
+                </div>
+                <!-- fin comentario -->
+            </div>
+        </div>
+
+        <div class="bloque-comentario">
+            <div class="comentario_icono">
+                <div class="d-flex">
+                    <mat-icon class="imagen">account_circle_outlined</mat-icon>
+                    <p class="flecha-comentario"></p>
+                    <div class="contenedor_comentarios">
+                        <div class="comentario">
+                            <p>{{usuarioTarea}}</p>
+                            <span class="spacer"></span>
+                            <p>{{fechaHoy | date: 'dd/MM/yyyy'}}</p>
+                        </div>
+                        <div class="comentario_desc">
+                            <textarea name="notas" id="descripcion" cols="30" rows="2"
+                                placeholder="{{'crm.crear.comentario' | translate}}" [(ngModel)]="comentarioDesc"
+                                class="escribir-comentario"></textarea>
+                            <div class="subir-archivos">
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="inputGroupFile04"
+                                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
+                                            (change)="onFilesSelected($event)" [placeholder]="selectedFiles"
+                                            style="display: none;" #fileInput>
+                                    </div>
+                                    <button mat-button (click)="fileInput.click()" class="subir-comentarios">
+                                        <mat-icon>attach_file</mat-icon>{{'crm.crear.archivos' | translate}}
+                                    </button>
+                                </div>
+                                <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
+                                    <div *ngFor="let file of selectedFiles; let i = index" class="d-flex">
+                                        <p class="nombre-archivos"> - {{ file.name }}</p>
+                                        <!-- <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
+                                            matTooltip="{{'crm.crear.eliminar' | translate}}">close</mat-icon>
+                                        <span class="spacer"></span> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="archivos-comentar">
+                                <span class="spacer"></span>
+                                <button mat-button class="subir-comentarios" (click)="validarComentario()">
+                                    <mat-icon>post_add</mat-icon>{{ 'crm.crear.comentar' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-toolbar-row class="head_bottom_sidenav">
+</mat-toolbar-row>
