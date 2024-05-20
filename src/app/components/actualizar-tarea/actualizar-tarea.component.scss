@@ -4,16 +4,17 @@ $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
 
 .progress {
-    width           : 360px;
-    height          : 350px;
+    width           : 100%;
+    height          : 100%;
+    padding         : 10px;
     background-color: $background-oficial;
 }
 
 .dialog {
     padding         : 10px 20px;
     padding-right   : 0px;
-    width           : 360px;
-    height          : 350px;
+    width           : 380px;
+    height          : 400px;
     background-color: $background-oficial;
 }
 
