@@ -1,0 +1,902 @@
+$color-negro            : #000; //texto negro
+$color-blanco           : #ffff; //resaltar texto blanco
+$color-gris             : darkgray; //numeros que no son del mes
+$color-bordes           : #323f8550; //bordes del calendario
+$background-oficial     : #FEF5E7; //fondo Demosoft
+$background-scrollbar   : #134895; //barra rosada
+$background-hoy         : #134895; //resaltar dia de hoy azul
+$background-tareas      : #DF9722; //resaltar tareas naranja
+$background-tareas-rojo : #e61212d5; //resaltar tareas rojo
+$borde-tarea            : rgba(0, 0, 0, 0.12);
+
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $background-oficial;
+}
+
+/*SideNav*/
+.icon_close_head {
+    cursor: pointer;
+}
+
+.head_carr_end {
+    color      : $color-negro;
+    font-weight: 300;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+mat-sidenav {
+    width     : 100%;
+    background: $background-oficial;
+}
+
+.vistasOcultas {
+    display: none;
+}
+
+@media screen and (max-width: 950px) {
+    mat-sidenav {
+        width: 100% !important;
+    }
+
+    .dia-tarea-mes,
+    .dia-tarea-semana,
+    .dia-nombre,
+    .dia-crear {
+        max-width: 110px !important;
+        min-width: 60px !important;
+    }
+
+    .verTareas {
+        min-width: 70px !important;
+        max-width: 125px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    mat-sidenav {
+        width: 100% !important;
+    }
+
+    .dia-tarea-mes,
+    .dia-nombre,
+    .dia-crear,
+    .dia-tarea-semana {
+        max-width: 110px !important;
+        min-width: 60px !important;
+    }
+
+    .verTareas {
+        min-width: 60px !important;
+        max-width: 125px !important;
+    }
+
+    .num-dia-anterior,
+    .num-dia,
+    .hoy-semana {
+        width       : 80% !important;
+        padding-left: 15px !important;
+    }
+
+    .nueva,
+    .nuevo-hoy {
+        width    : 20% !important;
+        display  : flex !important;
+        font-size: 18px !important;
+    }
+
+    .num_hora_dia {
+        font-size: 12px !important;
+    }
+
+    .vistasOcultas {
+        display: block !important;
+    }
+
+    .centrarTareas {
+        width : 44px !important;
+        margin: 0px 1px !important;
+    }
+}
+
+.sidenav_container {
+    display       : flex;
+    flex-direction: column;
+    position      : absolute;
+    top           : 0;
+    bottom        : 0;
+    left          : 0;
+    right         : 0;
+    background    : $background-oficial;
+}
+
+/*Fin SideNav*/
+
+/*Toolbar*/
+
+.icon_toolbar {
+    font-size: 22px;
+}
+
+.mat-toolbar-row {
+    padding      : 0px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.toolbarPhone {
+    display   : none;
+    background: $background-oficial;
+}
+
+.toolbarPhone {
+    position  : fixed !important;
+    background: $background-oficial;
+}
+
+.toolbarlarge {
+    position     : fixed !important;
+    background   : $background-oficial;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.nombre-oculto {
+    display: none !important;
+}
+
+// @media screen and (max-width: 767px) {
+//     .toolbarlarge {
+//         display: none !important;
+//     }
+
+//     .toolbarPhone {
+//         display: block !important;
+//     }
+
+//     .nombre-oculto {
+//         display    : block !important;
+//         align-items: center !important;
+//     }
+
+//     .nombre-cambiar {
+//         align-items : center;
+//         display     : flex !important;
+//         padding-left: 10px;
+//     }
+
+//     .nombre-pp {
+//         align-items   : center !important;
+//         padding-bottom: -10px;
+//     }
+
+// }
+
+.nombre-cambiar {
+    display: none;
+}
+
+/*Fin Toolbar*/
+
+/*Contendo derecho*/
+
+.container_main::-webkit-scrollbar {
+    width: 7px;
+}
+
+.container_main::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.container_page {
+    height    : 100vh;
+    width     : 100vw;
+    margin-top: 65px;
+    position  : fixed;
+    background: $background-oficial;
+}
+
+.container_start {
+    width       : 250px;
+    height      : calc(100% - 129px);
+    float       : left;
+    overflow    : auto;
+    background  : $background-oficial;
+    border-right: 1px solid rgba(0, 0, 0, .12);
+}
+
+.container_main {
+    width     : calc(100% - 250px) !important;
+    height    : calc(100% - 128px) !important;
+    float     : left;
+    background: $background-oficial;
+    overflow  : auto;
+}
+
+@media screen and (max-width: 767px) {
+
+    .container_start {
+        display: none;
+    }
+
+    .container_page {
+        margin-top: 64px;
+    }
+
+    .container_main {
+        width : 100% !important;
+        height: calc(100%);
+    }
+
+}
+
+.head__sidenav {
+    height       : 55px !important;
+    background   : $background-oficial;
+    padding      : 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/*Fin Contendo derecho*/
+/* ********************** sidenav *************************** */
+/* datepiker */
+.selector-calendario {
+    margin: 15px !important;
+}
+
+.selector-calendario-oculto {
+    margin: 15px !important;
+
+}
+
+.demo-inline-calendar-card {
+    width     : 100% !important;
+    background: $background-oficial;
+}
+
+.mat-calendar-header {
+    padding: 8px 8px 0 8px;
+}
+
+.mat-calendar-controls {
+    display    : flex;
+    align-items: center;
+    margin     : 5% calc(4.7142857143% - 16px);
+}
+
+/* Calendario mes */
+
+.calendario-mes {
+    // width        : 95%;
+    // margin       : 10px;
+    margin-bottom: calc(20px);
+    overflow-x   : hidden;
+}
+
+.mes-nombre,
+.semana-nombre,
+.dia-nombre-pc {
+    text-align   : center;
+    font-weight  : 400;
+    padding      : 10px 0;
+    height       : 45px;
+    display      : flex;
+    margin-bottom: 10px;
+    cursor       : context-menu;
+}
+
+.mes-dias {
+    /* display: flex; */
+    display              : grid;
+    grid-template-columns: repeat(7, 1fr) !important;
+    margin-bottom        : 0px;
+    border-top           : none;
+}
+
+.bl {
+    border-left: 1px solid $color-bordes;
+}
+
+.dia-nombre {
+    padding      : 5px;
+    height       : 35px;
+    text-align   : center;
+    place-items  : center;
+    border-right : 1px solid $color-bordes;
+    border-bottom: none;
+    margin       : 0px;
+    font-weight  : 550;
+    font-size    : 14px;
+    cursor       : context-menu;
+    max-width    : 166px;
+    min-width    : 125px
+}
+
+.mes-tareas {
+    margin-top: 0px;
+    display   : flex;
+}
+
+.dia-tarea-mes {
+    border-bottom : 1px solid $color-bordes;
+    border-right  : 1px solid $color-bordes;
+    border-top    : none;
+    min-height    : calc(100px);
+    padding-bottom: 3px;
+    max-width     : 166px;
+    min-width     : 125px;
+}
+
+.dia-tarea-semana {
+    border-bottom : 1px solid $color-bordes;
+    border-right  : 1px solid $color-bordes;
+    border-top    : none;
+    min-height    : calc(100vh - 163px);
+    padding-bottom: 3px;
+    max-width     : 166px;
+    min-width     : 125px;
+}
+
+.num-dia {
+    /* background: #fac0c0; */
+    // padding      : 0px 5px;
+    padding-left : 30px;
+    margin       : 0px;
+    margin-bottom: 8px;
+    font-size    : 15px;
+    font-weight  : 550;
+    text-align   : center;
+    cursor       : pointer;
+    width        : 80%;
+}
+
+.num-otro-dia {
+    /* background: #fac0c0; */
+    margin     : 0px;
+    font-weight: 550;
+    text-align : center;
+    cursor     : pointer;
+}
+
+.num-dia:hover,
+.hoy:hover {
+    font-weight: 600;
+}
+
+.hoy-semana {
+    background   : $background-hoy;
+    color        : $color-blanco;
+    padding      : 0px 5px;
+    padding-left : 24px;
+    margin       : 0px;
+    margin-bottom: 8px;
+    font-size    : 15px;
+    font-weight  : 550;
+    text-align   : center;
+    cursor       : pointer;
+    width        : 80%;
+}
+
+.hoy {
+    background   : $background-hoy;
+    color        : $color-blanco;
+    padding      : 0px 5px;
+    padding-left : 24px;
+    margin       : 0px;
+    margin-bottom: 8px;
+    font-size    : 15px;
+    font-weight  : 550;
+    text-align   : center;
+    cursor       : pointer;
+}
+
+/* **************** dias que no son del mes selecionados ******************** */
+
+.num-dia-anterior {
+    padding-left : 30px;
+    margin       : 0px;
+    margin-bottom: 8px;
+    font-size    : 15px;
+    font-weight  : 550;
+    text-align   : center;
+    color        : $color-gris;
+    width        : 80%;
+}
+
+
+/* ***************dias dem mes anterior o siguiente ********************* */
+
+/* Fin Calendario mes */
+
+/* Calendario Semana */
+.calendario-semana {
+    // padding-bottom: 30px;
+    overflow-x: hidden;
+    // height: 100% ;
+}
+
+.nombre_semana {
+    text-align : center;
+    font-weight: 400;
+    padding    : 10px 0;
+    height     : 45px;
+    display    : flex;
+    margin     : 5px;
+    cursor     : context-menu;
+}
+
+.dias-semana {
+    display              : grid;
+    grid-template-columns: repeat(7, 1fr) !important;
+    margin-bottom        : 0px;
+}
+
+
+/* Fin calendario Semana */
+
+/* ***************************** fin nuevas clases ********************************** */
+
+/* Calendario Dia */
+
+.calendario-dia {
+    width        : 100%;
+    margin-bottom: calc(20px) !important;
+    overflow-x   : hidden;
+}
+
+
+.btn_flechas {
+    width       : 50px;
+    border-style: none;
+    padding     : 0px;
+    margin      : 0px;
+    background  : transparent;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.nombre {
+    margin     : 0px;
+    font-size  : 20px;
+    font-weight: 450;
+}
+
+//vista de tareas por hora en calendario dia
+.descripciones-hora-tarea {
+    display   : flex;
+    width     : 100%;
+    height    : 100%;
+    overflow-x: hidden;
+}
+
+.nombre-horario-tarea {
+    margin       : 0px;
+    font-size    : 15px;
+    font-weight  : 550;
+    padding      : 10px 5px;
+    font-weight  : 500;
+    border-bottom: solid 1px $color-bordes;
+}
+
+.detalles-hora {
+    align-items : center !important;
+    min-width   : 80px !important;
+    border-right: 1px solid $color-bordes;
+}
+
+.numero-de-hora {
+    padding      : 14px 5px;
+    font-size    : 14px;
+    margin-bottom: 0px;
+}
+
+.detalles-tarea {
+    align-items: center !important;
+    width      : 100%;
+}
+
+.alto-cuadro-tarea {
+    min-height   : 50px !important;
+    border-bottom: 1px solid $color-bordes;
+}
+
+.cuadro-tarea {
+    width      : 100%;
+    padding    : 5px;
+    display    : flex;
+    flex-wrap  : wrap;
+    overflow-x : hidden;
+    align-items: center;
+}
+
+.tareas-dia-hora {
+    display      : flex;
+    align-items  : center;
+    margin       : 0px 5px;
+    max-width    : 150px;
+    padding      : 0px 5px;
+    border-radius: 25px;
+    border       : $borde-tarea 1px solid;
+    height       : 25px;
+}
+
+.num_hora_dia {
+    padding      : 13px 5px;
+    text-align   : left;
+    font-size    : 14px;
+    border-bottom: solid 1px $color-bordes;
+    border-right : solid 1px $color-bordes;
+    height       : 45px;
+    margin-bottom: 0px;
+}
+
+/* Fin Calendario Dia */
+
+/* Estilos de Tareas */
+
+
+.tareass {
+    width     : 100%;
+    text-align: center !important;
+    cursor    : pointer;
+}
+
+.centrarTareas {
+    width         : calc(130px - 15px);
+    text-align    : center !important;
+    margin        : 1px calc(10px - 5px);
+    padding-bottom: 4px;
+}
+
+.cursor {
+    cursor: pointer;
+    margin: 2.5px;
+}
+
+.tarea-detalles {
+    border-radius: 25px;
+    font-size    : 10.5px;
+    padding      : 2px 5px;
+    white-space  : nowrap;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    font-weight  : 450;
+}
+
+.tareas:hover,
+.tarea-detalles:hover {
+    font-weight : 500;
+    white-space : nowrap !important;
+    font-size   : 10.5px;
+    border-style: none;
+}
+
+/* Fin Estilos de Tareas */
+
+/* Calendario Mes */
+
+.contenedor_mes {
+    width         : 90%;
+    margin        : 0 auto;
+    padding-bottom: 30px;
+}
+
+.nombre_mes {
+    text-align : center;
+    font-weight: 400;
+    padding    : 10px 0;
+    height     : 45px;
+    display    : flex;
+}
+
+.dias {
+    display              : grid;
+    grid-template-columns: repeat(7, 1fr);
+    place-items          : center;
+    height               : 35px;
+    border               : 1px solid $color-bordes;
+}
+
+.dias_dos {
+    display      : flex;
+    place-items  : center;
+    margin-bottom: 0px;
+}
+
+.dia_tarea {
+    border    : 1px solid $color-bordes;
+    width     : 25%;
+    min-height: 100px;
+}
+
+.dias_item_dos {
+    padding    : 5px;
+    height     : 35px;
+    width      : 25%;
+    text-align : center;
+    place-items: center;
+    border     : 1px solid $color-bordes;
+    margin     : 0px;
+    font-weight: 550;
+}
+
+
+.dias__item {
+    font-weight: 500;
+    height     : 35px;
+    width      : 25%;
+    display    : flex;
+    text-align : center;
+    place-items: center;
+    margin     : 0px;
+    border-left: $color-bordes 1px solid
+}
+
+.calendario {
+    display              : grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows       : 130px;
+}
+
+.calendario_dos {
+    margin-top: 0px;
+    display   : flex;
+}
+
+.bordes {
+    border: 1px solid $color-bordes;
+}
+
+.bordes_dos {
+    width : 25%;
+    border: 1px solid $color-bordes;
+}
+
+/* Fin Calendario Mes */
+
+/* Calendario Semana */
+
+.contenedor_semana {
+    width         : 95%;
+    padding-bottom: 30px;
+    margin        : 10px;
+}
+
+.num_nom_dia {
+    margin     : 0px;
+    margin-left: 5px;
+    font-size  : 15px;
+    font-weight: 550;
+}
+
+.horarios {
+    border: 1px solid $color-bordes;
+}
+
+.num_hora {
+    padding   : 13px 5px;
+    text-align: left;
+    font-size : 14px;
+    /* border : solid 1px $color-bordes; */
+}
+
+/* Fin Calendario Semana */
+
+/* Estilos de Botones */
+
+p {
+    margin-bottom: 0;
+}
+
+.opciones {
+    align-items : end;
+    margin-right: 10px;
+}
+
+.hoy-btn {
+    align-items: initial;
+    margin-left: 10px;
+}
+
+.btn {
+    margin-right: 10px;
+    color       : $color-negro;
+    font-size   : 14px;
+    font-weight : 550;
+}
+
+.regresar {
+    border-style    : none;
+    width           : 30px !important;
+    background-color: transparent !important;
+    margin-right    : 10px;
+    align-items     : center !important;
+}
+
+.ico-regresar {
+    font-size  : 20px !important;
+    align-items: center !important;
+}
+
+/* Fin Estilos de Botones */
+
+.opciones-ocultas {
+    text-align: justify !important;
+    margin    : 10px;
+}
+
+.btn-ocultos {
+    margin     : 10px 5px;
+    color      : $color-negro;
+    font-size  : 14px;
+    font-weight: 550;
+}
+
+.acordeon_oculto {
+    display: flow-root;
+}
+
+.detalles_acordeon_oculto {
+    margin          : 0px 5px;
+    background-color: $background-oficial !important;
+    display         : block !important;
+}
+
+.opcionesMenuVistas {
+    height          : 38px;
+    background-color: $background-oficial !important;
+    padding         : 10px;
+}
+
+.color_fondo {
+    background-color: $background-oficial !important;
+    position        : relative;
+}
+
+.acordeon {
+    background-color: $background-oficial !important;
+
+}
+
+.vistaCalendario {
+    width: 100%;
+}
+
+.vistasMenu {
+    padding-right: 10px;
+    text-align   : right;
+    width        : 100px;
+}
+
+.verVistas {
+    width: 100px;
+}
+
+.seleccionarVista {
+    width           : 100%;
+    padding         : 3px 5px;
+    background-color: transparent;
+    border-style    : none;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    text-align      : justify;
+    font-size       : 14px;
+}
+
+.lista-menu {
+    margin : 10px;
+    padding: 0px 10px;
+}
+
+.opciones-menu {
+    height: calc(100%);
+}
+
+.menuVistas {
+    background-color: $background-oficial;
+    padding         : 5px 1px;
+    margin          : -8px 0px;
+    text-align      : center;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.opcion-vista {
+    text-align      : justify;
+    width           : 100px;
+    height          : 40px;
+    font-size       : 14px;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-style    : none;
+    background-color: $background-oficial;
+}
+
+.nueva {
+    font-size : 20px;
+    cursor    : pointer;
+    text-align: center;
+    color     : $color-bordes;
+    height    : 22.5px;
+}
+
+.nueva-dia {
+    font-size : 20px;
+    padding   : 3px 0px;
+    cursor    : pointer;
+    text-align: center;
+    color     : $color-bordes;
+    height    : 22.5px;
+}
+
+.nuevo-hoy {
+    color           : $color-blanco;
+    background-color: $background-hoy;
+    width           : 20%;
+}
+
+.nueva:hover {
+    font-weight: bold;
+    color      : $color-gris;
+}
+
+.nuevo-hoy:hover {
+    font-weight: bold;
+    color      : $color-blanco;
+}
+
+.dia-agregar {
+    width: calc(100% - 24px);
+}
+
+//nuevooooo
+
+.dia-crear {
+    display: flex;
+    width  : 100%;
+}
+
+.circulo {
+    width        : 8px; //diámetro total 
+    height       : 8px; //diámetro total
+    border-radius: 50%;
+}
+
+//mostrar tareas en semana 
+
+.mostrar-tareas {
+    text-align   : center;
+    display      : flex;
+    align-items  : center;
+    margin       : 3px 5px;
+    border-radius: 25px;
+    padding      : 0px 3px;
+    border       : 1px solid $borde-tarea;
+    cursor       : pointer;
+    width        : calc(100% - 10px);
+}
+
+.descripcion-tarea {
+    width        : calc(100% - 10px);
+    font-size    : 10.5px;
+    padding      : 2px;
+    white-space  : nowrap;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    font-weight  : 450;
+    font-size    : 10px;
+}
+
+.verTareas {
+    min-width: 125px;
+    max-width: 160px !important;
+}

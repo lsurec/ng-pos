@@ -82,7 +82,7 @@ import { ActualizarUsuariosComponent } from './components/actualizar-usuarios/ac
 import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.component';
 import { NotFoundItemComponent } from './components/not-found-item/not-found-item.component';
 import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-dialog.component';
-
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -140,6 +140,7 @@ import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-d
     UsuariosDialogComponent,
   ],
   imports: [
+    MatCardModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
