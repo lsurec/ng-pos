@@ -38,7 +38,7 @@
                     <form class="calendarios">
                         <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaRefIni"
-                                ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateEntrega()"
+                                ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateRefIni()"
                                 [minDate]="facturaService.fechaStruct!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
                                 type="button">
@@ -50,7 +50,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateEntrega()" [min]="facturaService.minHoraRefIni">
+                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateRefIni()" [min]="facturaService.minHoraRefIni">
                             <ngx-material-timepicker #horaEntregaPiker
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
@@ -71,7 +71,7 @@
                     <form class="calendarios">
                         <div class="input-group">
                             <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaRefFin"
-                                (ngModelChange)="setDateRecoger()" ngbDatepicker #fRecoger="ngbDatepicker"
+                                (ngModelChange)="setDateRefFin()" ngbDatepicker #fRecoger="ngbDatepicker"
                                 [minDate]="facturaService.inputFechaRefIni!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
                                 type="button">
@@ -83,7 +83,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRecoger()" [min]="facturaService.minHoraRefFin">
+                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRefFin()" [min]="facturaService.minHoraRefFin">
                             <ngx-material-timepicker #horaRegogerPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>

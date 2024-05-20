@@ -121,7 +121,7 @@ export class DocumentoComponent {
   }
 
 
-  setDateEntrega() {
+  setDateRefIni() {
 
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
@@ -150,7 +150,7 @@ export class DocumentoComponent {
 
 
 
-  setDateRecoger() {
+  setDateRefFin() {
 
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
 
