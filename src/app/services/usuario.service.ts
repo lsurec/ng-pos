@@ -11,7 +11,7 @@ import { EnviarInvitadoInterface } from "../displays/shrTarea_3/interfaces/invit
 
 @Injectable()
 
-export class UsuariosService {
+export class UsuarioService {
 
     private _user: string = "";
     private _token: string = "";
