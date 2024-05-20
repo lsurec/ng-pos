@@ -493,26 +493,36 @@ export class FacturaComponent implements OnInit {
     //fecha min para los pickers
     this.facturaService.fechaStruct = UtilitiesService.getStructureDate(dateNow);
 
-    //asignar fechas a fechas referencia
+    //asignar fechas a fechas referencia inicio
     this.facturaService.fechaRefIni = new Date(dateNow);
-    this.facturaService.fechaRefFin = new Date(dateNow);
+    
+    //asignar fehca inicio doc
+    this.facturaService.fechaIni = new Date(this.facturaService.fechaRefIni);
 
-    //Agregar 30 mmin a la fecha fin ref
-    let modifyFechaRefFin: Date = new Date(dateNow);
+    //a la fehca inicio documento sumarle 30 minutos
+    let addDateIni: Date = new Date(this.facturaService.fechaIni);
 
-    //sumar 30 minutos
-    this.facturaService.fechaRefFin.setTime(modifyFechaRefFin.getTime() + (30 * 60000));
+    //nueva fecha ini + 30 min
+    this.facturaService.fechaIni.setTime(addDateIni.getTime() + (30 * 60000));
 
-    //asignar fechas a las fechas del documento
-    this.facturaService.fechaIni = new Date(dateNow);
-    this.facturaService.fechaFin = new Date(dateNow);
+    //asiganr fecha fin
+    this.facturaService.fechaFin = new Date(this.facturaService.fechaIni);
+
+    //a la fehca inicio documento sumarle 30 minutos
+    let addDateFin: Date = new Date(this.facturaService.fechaFin);
+
+    //nueva fecha fin + 30 min
+    this.facturaService.fechaFin.setTime(addDateFin.getTime() + (30 * 60000));
+
+    //asignar fehca fin ref
+    this.facturaService.fechaRefFin = new Date(this.facturaService.fechaFin);
 
 
-    //agregar 30 min a la fecha final del documetno
-    let modifyFechaFin: Date = new Date(dateNow);
+    //a la fehca inicio documento sumarle 30 minutos
+    let addDateFinRef: Date = new Date(this.facturaService.fechaRefFin);
 
-    //sumar 30 min
-    this.facturaService.fechaFin.setTime(modifyFechaFin.getTime() + (30 * 60000));
+    //nueva fecha fin + 30 min
+    this.facturaService.fechaRefFin.setTime(addDateFinRef.getTime() + (30 * 60000));
 
 
     // Inicializar selectedDate con la fecha de hoy
@@ -532,6 +542,9 @@ export class FacturaComponent implements OnInit {
     this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
     this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.minHoraFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+
+    this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
 
     //Copiar valores (Valores anteriores a una modificacion)
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);

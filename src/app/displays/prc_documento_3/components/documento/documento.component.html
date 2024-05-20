@@ -118,7 +118,9 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()" [min]="facturaService.minHoraInicial">
+                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()" 
+                                [min]="facturaService.minHoraInicial"
+                                [max]="facturaService.maxHoraIni">
                             <ngx-material-timepicker #horaInicioPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -154,7 +156,9 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()" [min]="facturaService.minHoraFinal">
+                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()" 
+                                [min]="facturaService.minHoraFinal"
+                                [max]="facturaService.maxHoraFin">
                             <ngx-material-timepicker #horaFinalPiker
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>

@@ -102,6 +102,8 @@ export class FacturaService {
     minHoraFinal!:string;
     minHoraRefIni!:string;
     minHoraRefFin!:string;
+    maxHoraIni!:string;
+    maxHoraFin!:string;
 
 
     //observacuion1, observacion del documento
