@@ -1,5 +1,5 @@
 import { ComentarioInterface } from "src/app/interfaces/comentario.interface";
-import { InvitadosInterface } from "./invitado.interface";
+import { InvitadoInterface } from "./invitado.interface";
 import { ObjetoInterface } from "./objetos-comentario.interface";
 import { ResponsablesInterface } from "./responsable.interface";
 import { TareaInterface } from "./tarea-user.interface";
@@ -7,7 +7,7 @@ import { TareaInterface } from "./tarea-user.interface";
 export interface DetalleInterface {
     tarea: TareaInterface;
     comentarios: ComentariosDetalle[]
-    invitados: InvitadosInterface[]
+    invitados: InvitadoInterface[]
     responsables: ResponsablesInterface[]
 }
 
@@ -19,5 +19,5 @@ export interface ComentariosDetalle {
 export interface ActualizarTareaInterface {
     tarea: TareaInterface,
     responsable: ResponsablesInterface[],
-    invitados: InvitadosInterface[],
+    invitados: InvitadoInterface[],
 }

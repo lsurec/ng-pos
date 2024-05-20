@@ -6,7 +6,7 @@ import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { DetalleInterface } from '../../interfaces/detalle-tarea.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
-import { InvitadosInterface } from '../../interfaces/invitado.interface';
+import { InvitadoInterface } from '../../interfaces/invitado.interface';
 import { ResponsablesInterface } from '../../interfaces/responsable.interface';
 import { FiltroInterface } from 'src/app/interfaces/filtro.interface';
 import { TranslateService } from '@ngx-translate/core';
@@ -49,7 +49,7 @@ export class TareasComponent {
   idioma: number = indexDefaultLang;
 
   //invitados y respomsable de la tarea
-  invitados!: InvitadosInterface[];
+  invitados!: InvitadoInterface[];
   responsables!: ResponsablesInterface[];
   selectedOption: number | null = 1;
 

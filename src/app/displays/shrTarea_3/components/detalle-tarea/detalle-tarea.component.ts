@@ -7,7 +7,7 @@ import { CrearTareasComentariosService } from 'src/app/services/crear-tarea-come
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
 import { ComentarInterface, ComentarioInterface } from 'src/app/interfaces/comentario.interface';
-import { InvitadosInterface } from '../../interfaces/invitado.interface';
+import { InvitadoInterface } from '../../interfaces/invitado.interface';
 import { ResponsablesInterface } from '../../interfaces/responsable.interface';
 import { EstadoInterface } from '../../interfaces/estado-tarea.interface';
 import { TareaInterface } from '../../interfaces/tarea-user.interface';
@@ -55,7 +55,7 @@ export class DetalleTareaComponent {
   descripcionComentario: string = '';
   selectedFiles: File[] = [];
 
-  usuariosInvitados!: InvitadosInterface[];
+  usuariosInvitados!: InvitadoInterface[];
   usuariosResposables!: ResponsablesInterface[];
   estadoTarea!: EstadoInterface;
   //mostrar y ocultar pantallas
@@ -65,7 +65,7 @@ export class DetalleTareaComponent {
   responsableActivo!: string;
   tareaDetalle?: TareaInterface;
   comentarios: ComentariosDetalle[] = [];
-  invitados: InvitadosInterface[] = [];
+  invitados: InvitadoInterface[] = [];
   responsables: ResponsablesInterface[] = [];
 
   //Abrir/Cerrar SideNav
@@ -546,6 +546,9 @@ export class DetalleTareaComponent {
   }
 
   cambiarResponsable(): void {
+
+    this.tareasGlobalService.idUsuarios = 1;
+
     let tarea: DetalleInterface = {
       tarea: this.tareaDetalle!,
       comentarios: this.comentarios,
@@ -578,6 +581,7 @@ export class DetalleTareaComponent {
   };
 
   cambiarInvitados() {
+    this.tareasGlobalService.idUsuarios = 2;
     let tarea: DetalleInterface = {
       tarea: this.tareaDetalle!,
       comentarios: this.comentarios,
@@ -593,7 +597,7 @@ export class DetalleTareaComponent {
     let usuario = this._dialog.open(ActualizarUsuariosComponent, { data: tarea })
     usuario.afterClosed().subscribe(result => {
       if (result) {
-        let invitados: InvitadosInterface[] = result;
+        let invitados: InvitadoInterface[] = result;
         let invitadosSet = new Set(this.invitados.map(invitado => invitado.userName));
 
         invitados.forEach(element => {
@@ -608,7 +612,7 @@ export class DetalleTareaComponent {
 
   }
 
-  async eliminarInvitado(usuario: InvitadosInterface, index: number) {
+  async eliminarInvitado(usuario: InvitadoInterface, index: number) {
 
     let verificador = await this._widgetsService.openDialogActions(
       {

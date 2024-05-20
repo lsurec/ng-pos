@@ -15,7 +15,7 @@ export interface EnviarInvitadoInterface {
     user: string
 }
 
-export interface InvitadosInterface {
+export interface InvitadoInterface {
     tarea_UserName: number;
     eMail:          string;
     userName:       string;
