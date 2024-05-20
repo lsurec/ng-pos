@@ -76,6 +76,10 @@ import { TareasComponent } from './displays/shrTarea_3/components/tareas/tareas.
 import { CalendarioComponent } from './displays/prcTarea_1/components/calendario/calendario.component';
 import { DialogTareaComponent } from './displays/prcTarea_1/components/dialog-tarea/dialog-tarea.component';
 import { DetalleTareaComponent } from './displays/shrTarea_3/components/detalle-tarea/detalle-tarea.component';
+import { ActualizarTareaComponent } from './components/actualizar-tarea/actualizar-tarea.component';
+import { BuscarIdReferenciaComponent } from './components/buscar-id-referencia/buscar-id-referencia.component';
+import { ActualizarUsuariosComponent } from './components/actualizar-usuarios/actualizar-usuarios.component';
+import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +130,10 @@ import { DetalleTareaComponent } from './displays/shrTarea_3/components/detalle-
     CalendarioComponent,
     DialogTareaComponent,
     DetalleTareaComponent,
+    ActualizarTareaComponent,
+    BuscarIdReferenciaComponent,
+    ActualizarUsuariosComponent,
+    CrearTareaComponent,
   ],
   imports: [
     BrowserModule,
