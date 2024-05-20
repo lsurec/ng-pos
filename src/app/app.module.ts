@@ -80,6 +80,7 @@ import { ActualizarTareaComponent } from './components/actualizar-tarea/actualiz
 import { BuscarIdReferenciaComponent } from './components/buscar-id-referencia/buscar-id-referencia.component';
 import { ActualizarUsuariosComponent } from './components/actualizar-usuarios/actualizar-usuarios.component';
 import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.component';
+import { NotFoundItemComponent } from './components/not-found-item/not-found-item.component';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.compon
     BuscarIdReferenciaComponent,
     ActualizarUsuariosComponent,
     CrearTareaComponent,
+    NotFoundItemComponent,
   ],
   imports: [
     BrowserModule,

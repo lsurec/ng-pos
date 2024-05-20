@@ -53,7 +53,7 @@
             <mat-icon>south</mat-icon>
         </button>
         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-        <!-- <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item> -->
+        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
         <!--Lista de todas las tareas-->
         <div *ngIf="buscarTareas.length != 0" class="tareas">
             <div *ngFor="let item of buscarTareas">
