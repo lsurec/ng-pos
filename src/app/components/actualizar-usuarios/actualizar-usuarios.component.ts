@@ -64,17 +64,23 @@ export class ActualizarUsuariosComponent {
     }
     this.usuarioTarea = PreferencesService.user;
 
+    this.loadData();
+  }
 
-    if (this.tarea.responsables.length > 0) {
-      for (let index = 0; index < this.tarea.responsables.length; index++) {
-        const element = this.tarea.responsables[index];
-        if (element.estado.toLowerCase() == "activo") {
-          this.responsable = element;
-          break;
+  loadData() {
+    if (this.tareasGlobalService.idUsuarios == 1) {
+      if (this.tarea.responsables.length > 0) {
+        for (let index = 0; index < this.tarea.responsables.length; index++) {
+          const element = this.tarea.responsables[index];
+          if (element.estado.toLowerCase() == "activo") {
+            this.responsable = element;
+            break;
+          }
         }
       }
     }
   }
+
   //cerrar dialogo
   closeDialog(): void {
     this.dialogRef.close();
