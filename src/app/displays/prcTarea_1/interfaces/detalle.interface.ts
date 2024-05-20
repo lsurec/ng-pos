@@ -1,5 +1,5 @@
 import { ComentarioInterface } from "src/app/interfaces/comentario.interface";
-import { ObjetoInterface } from "../../prcTarea_1/interfaces/objetos-comentario.interface";
+import { ObjetoInterface } from "../../shrTarea_3/interfaces/objetos-comentario.interface";
 
 export interface ComentariosDetalle {
     comentario: ComentarioInterface,

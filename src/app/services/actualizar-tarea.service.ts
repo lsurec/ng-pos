@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ResponseInterface } from "../interfaces/response.interface";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { PreferencesService } from "./preferences.service";
-import { ActualizarTareaInterface } from "../displays/prcTarea_1/interfaces/detalle-tarea.interface";
+import { ActualizarTareaInterface } from "../displays/shrTarea_3/interfaces/detalle-tarea.interface";
 
 @Injectable()
 

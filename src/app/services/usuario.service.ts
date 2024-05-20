@@ -4,9 +4,9 @@ import { Injectable } from "@angular/core";
 import { ResApiInterface } from "src/app/interfaces/res-api.interface";
 import { ResponseInterface } from "src/app/interfaces/response.interface";
 import { PreferencesService } from "src/app/services/preferences.service";
-import { EnviarResponsableInterface } from "../displays/prcTarea_1/interfaces/responsable.interface";
-import { EliminarUsuarioInterface } from "../displays/prcTarea_1/interfaces/eliminar-usuario.interface";
-import { EnviarInvitadoInterface } from "../displays/prcTarea_1/interfaces/invitado.interface";
+import { EnviarResponsableInterface } from "../displays/shrTarea_3/interfaces/responsable.interface";
+import { EliminarUsuarioInterface } from "../displays/shrTarea_3/interfaces/eliminar-usuario.interface";
+import { EnviarInvitadoInterface } from "../displays/shrTarea_3/interfaces/invitado.interface";
 
 
 @Injectable()
