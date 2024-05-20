@@ -546,10 +546,10 @@ mat-icon {
 }
 
 .llenar-formulario {
-    height        : 100%;
-    // align-items: center;
-    display       : flex;
-    overflow-y    : auto;
+    height    : 100%;
+    display   : flex;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .subir-archivos {
