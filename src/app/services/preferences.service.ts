@@ -31,6 +31,11 @@ export class PreferencesService {
     private static readonly sizeKey: string = 'fontSize';
     private static readonly idSizeKey: string = 'idFontSize';
     private static readonly felKey: string = 'fel';
+    private static readonly diaKey: string = 'primerDia';
+    private static readonly inicioLaboresKey: string = 'horaInicio';
+    private static readonly finLaboresKey: string = 'horaFin';
+
+
 
 
     //Borrar datos al cerrar sesion
@@ -300,5 +305,38 @@ export class PreferencesService {
         let value = localStorage.getItem(this.felKey);
         if (!value) return "";
         return value;
+    }
+
+    @Input()
+    static set inicioSemana(value: string) {
+        localStorage.setItem(this.diaKey, value);
+    }
+
+    static get inicioSemana(): string {
+        let primerDia = localStorage.getItem(this.diaKey);
+        if (!primerDia) return "";
+        return primerDia;
+    }
+
+    @Input()
+    static set inicioLabores(value: string) {
+        localStorage.setItem(this.inicioLaboresKey, value);
+    }
+
+    static get inicioLabores(): string {
+        let rangoInicial = localStorage.getItem(this.inicioLaboresKey);
+        if (!rangoInicial) return "";
+        return rangoInicial;
+    }
+
+    @Input()
+    static set finLabores(value: string) {
+        localStorage.setItem(this.finLaboresKey, value);
+    }
+
+    static get finLabores(): string {
+        let rangoFinal = localStorage.getItem(this.finLaboresKey);
+        if (!rangoFinal) return "";
+        return rangoFinal;
     }
 }
