@@ -533,15 +533,9 @@ export class FacturaComponent implements OnInit {
     this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.minHoraFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
-
-
-    
-
     //Copiar valores (Valores anteriores a una modificacion)
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin);
-
-
 
   }
 
