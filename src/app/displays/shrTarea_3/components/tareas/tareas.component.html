@@ -4,7 +4,7 @@
 
 
 <div *ngIf="!isLoading && mostrarTareas" class="container_page">
-    <!-- <app-detalle-tarea (newItemEvent)="backPage($event)" *ngIf="!hideDetalle"></app-detalle-tarea> -->
+    <app-detalle-tarea (newItemEvent)="backPage($event)" *ngIf="!hideDetalle"></app-detalle-tarea>
     <mat-toolbar-row class="head__sidenav" *ngIf="hideDetalle">
         <button (click)="backHome()" mat-icon-button aria-label class="flecha-regresar"
             matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">

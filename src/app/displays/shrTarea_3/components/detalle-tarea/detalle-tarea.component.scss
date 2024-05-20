@@ -1,0 +1,552 @@
+$color-negro          : #000; //texto
+$color-bordes         : #CED4DA; //bordes del calendario
+$color-azul           : #134895; //bordes y texto azul
+$color-gris           : #968989cb; // bordes de comentarios
+$color-2-gris         : #857373c9; //texto, bordes
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
+$background-detalles  : #dad2d286; //fondo detalles
+$background-flecha    : #3b3939cb; //fondo triangulo
+$background-transparent: transparent; //fondo transparennte,
+
+/*SideNav*/
+
+.head__sidenav {
+    height          : 64px !important;
+    background-color: $background-oficial;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.icon_close_head {
+    cursor: pointer;
+}
+
+.head_carr_end {
+    color      : $color-negro;
+    font-weight: 300;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+mat-sidenav {
+    width     : 365px;
+    background: $background-oficial;
+}
+
+@media screen and (max-width: 280px) {
+    .nombre-archivos {
+        width        : 100px !important;
+        word-wrap    : break-word !important;
+        white-space  : nowrap !important;
+        text-overflow: ellipsis !important;
+        overflow     : hidden !important;
+    }
+}
+
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100%;
+    padding-bottom  : 30px;
+    overflow-y      : auto;
+    background-color: $background-oficial;
+}
+
+.sidenav_container {
+    display       : flex;
+    flex-direction: column;
+    position      : absolute;
+    top           : 0;
+    bottom        : 0;
+    left          : 0;
+    right         : 0;
+    background    : $background-oficial;
+}
+
+/*Fin SideNav*/
+
+/*Toolbar*/
+
+.toolbarPhone {
+    display   : none;
+    background: $background-oficial;
+}
+
+.toolbarPhone,
+.toolbarlarge {
+    position  : fixed !important;
+    background: $background-oficial;
+}
+
+.acordeon_oculto {
+    display: none;
+}
+
+
+@media screen and (max-width: 767px) {
+    .toolbarlarge {
+        display: none !important;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+    }
+
+    .acordeon_oculto {
+        display: block !important;
+    }
+}
+
+/*Fin Toolbar*/
+
+/*Contendo derecho*/
+
+.container_main::-webkit-scrollbar {
+    width: 7px;
+}
+
+.container_main::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.container_page {
+    height    : calc(100% - 128px);
+    width     : 100vw;
+    position  : fixed;
+    background: $background-oficial;
+}
+
+.container_start {
+    height    : 100%;
+    float     : left;
+    overflow  : auto;
+    background: $background-oficial;
+}
+
+.container_main {
+    width     : 100%;
+    height    : 100%;
+    float     : left;
+    background: $background-oficial;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .container_start,
+    .detalle,
+    .imagen,
+    .flecha-comentario {
+        display: none;
+    }
+
+    .container_main,
+    .comentarios {
+        width       : 100% !important;
+        height      : 100% !important;
+        padding-left: 0px !important;
+    }
+}
+
+/*Fin Contendo derecho*/
+
+/*Contenido detalles*/
+.comentarios {
+    float         : left;
+    overflow      : auto;
+    height        : 100%;
+    width         : calc(100% - 250px);
+    padding-left  : 15px;
+    padding-bottom: 15px;
+}
+
+.detalle {
+    height        : 100%;
+    width         : 250PX;
+    float         : left;
+    overflow      : auto;
+    background    : $background-oficial;
+    border-left   : 1px solid rgba(0, 0, 0, .12);
+    padding-bottom: 10px;
+}
+
+.comentarios::-webkit-scrollbar {
+    width: 7px;
+}
+
+.comentarios::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.comentarios::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.detalle::-webkit-scrollbar {
+    width: 7px;
+}
+
+.detalle::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.detalle::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+/*Fin Contenido detalles*/
+
+/* Parrafos y titulos color de fondo y botones*/
+
+p {
+    margin: 0px;
+}
+
+.titulo-flecha {
+    display      : flex;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    align-items  : center;
+}
+
+.tituloTarea {
+    padding    : 10px 10px;
+    font-weight: bold;
+    text-align : center;
+}
+
+/* color de fondo de toda la pantalla */
+.color_fondo {
+    background-color: $background-transparent;
+}
+
+.mat-expansion-panel-body {
+    padding         : 0 !important;
+    background-color: $background-oficial !important;
+    margin          : 0px -20px;
+    border-radius   : 0px !important;
+}
+
+/*Fin parrafos y titulos color de fondo y botones*/
+
+/* Observacion Estilos */
+
+.observacion {
+    margin          : 15px;
+    word-wrap       : break-word;
+    background-color: $background-oficial !important;
+}
+
+.observaciones {
+    height          : 35px;
+    background-color: $background-transparent;
+    font-weight     : bold;
+    padding         : 5px;
+}
+
+.observaciones_desc {
+    padding   : 5px 10px;
+    text-align: justify;
+}
+
+/* Fin observacion Estilos */
+
+/* Comentarios Estilos */
+
+.comentario_icono {
+    width     : 99%;
+    margin-top: 15px;
+}
+
+.comentario__icono {
+    display: flex;
+}
+
+.imagen {
+    margin-top: -5px;
+    font-size : 50px;
+    width     : 50px;
+    height    : 50px;
+}
+
+.flecha-comentario {
+    width        : 0;
+    height       : 0;
+    border-top   : 7px solid $background-transparent;
+    border-right : 14px solid $background-flecha;
+    border-bottom: 7px solid $background-transparent;
+    margin-top   : 10px;
+    margin-left  : 4.5px;
+    margin-right : -20px;
+}
+
+.contenedor_comentarios {
+    margin-left : 20px;
+    width       : 90% !important;
+    margin-right: 10px;
+}
+
+.comentario {
+    display      : flex;
+    height       : 30px;
+    border       : 1px solid $color-gris;
+    border-bottom: none;
+    font-weight  : bold;
+    font-size    : 13px;
+    padding      : 5px;
+}
+
+.comentario_desc {
+    padding                   : 5px 10px 10px;
+    text-align                : justify;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius : 20px;
+    border                    : $color-gris 1px solid;
+}
+
+.ico_link {
+    width       : 25px;
+    height      : 25px;
+    margin-right: 5px;
+}
+
+.linea {
+    margin-bottom: -15px;
+    height       : 30px;
+    border-left  : $color-gris 2px solid;
+    margin-left  : 20px
+}
+
+/* Fin Comentarios Estilos */
+
+/* detalles lado derecho */
+.detalles {
+    min-width: 250;
+}
+
+.detalle-derecho {
+    background-color: $background-detalles;
+    padding         : 8px;
+    font-size       : 14px;
+    align-items     : center;
+}
+
+.detalle-actualizar {
+    background-color   : $background-detalles;
+    padding            : 8px;
+    font-size          : 14px;
+    // display         : flex;
+    min-height         : 30px;
+}
+
+.ico {
+    width      : 40px;
+    height     : 25px;
+    margin     : 10px;
+    margin-left: 5px;
+}
+
+.ico-editar {
+    height   : 20px;
+    margin   : 0px;
+    font-size: 20px;
+    cursor   : pointer;
+}
+
+
+.elemento-derecho {
+    min-width: 100px;
+}
+
+.editar {
+    width  : calc(100% - 24px);
+    padding: 3px 0px;
+}
+
+.editar-oculto {
+    width: 100%;
+}
+
+.invitado,
+.responsable {
+    width    : calc(100% - 24px);
+    font-size: 12px;
+    padding  : 3px 0px;
+}
+
+.editar-eliminar {
+    width        : 100%;
+    display      : flex;
+    border-bottom: 1px solid $color-gris;
+}
+
+// .editar-eliminar:hover {
+//     background-color: $color-bordes
+// }
+
+.eliminar {
+    font-size: 20px;
+}
+
+.eliminar:hover {
+    cursor: pointer;
+    color : #ff0000;
+}
+
+/* fin detalles lado derecho */
+
+/* detalles en acordeon ocultos */
+
+mat-accordion {
+    box-shadow: none !important;
+}
+
+.detalles_acordeon_oculto {
+    margin          : 10px 15px;
+    width           : 90%;
+    background-color: $background-oficial !important;
+    padding         : 0px;
+}
+
+.elementos-detalle {
+    display      : flex;
+    min-height   : 50px;
+    border       : 1px solid $color-2-gris;
+    border-radius: 20px;
+    margin       : 10px;
+    font-size    : 14px;
+    padding-right: 10px;
+}
+
+.editar-detalle {
+    min-height   : 50px;
+    display      : flex;
+    border       : 1px solid $color-2-gris;
+    border-radius: 20px;
+    margin       : 10px;
+    font-size    : 14px;
+    padding-right: 10px;
+    padding-top  : 5px;
+}
+
+.actualizarOculto {
+    width      : 100%;
+    padding-top: 5px;
+}
+
+.ico_uno {
+    width  : 25px;
+    height : 25px;
+    margin : 10px;
+    display: block !important;
+}
+
+.elementos {
+    padding-top: 5px;
+    min-width  : 90px;
+}
+
+.elemento-estado {
+    width: 90%;
+}
+
+.negrita {
+    font-weight: bold;
+    word-wrap  : break-word;
+    font-size  : 13px;
+}
+
+.responsables {
+    word-wrap    : break-word;
+    border-bottom: 1px solid $color-gris;
+    font-size    : 12px;
+    padding      : 3px 0px;
+}
+
+.invitados {
+    word-wrap: break-word;
+    font-size: 11px;
+}
+
+.agregar {
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+}
+
+.agregar-icono {
+    font-size: 20px;
+    cursor   : pointer;
+}
+
+/* fin detalles en acordeon ocultos */
+
+.escribir-comentario {
+    width     : 100%;
+    border    : none;
+    outline   : none;
+    background: transparent;
+    min-height: 25px;
+}
+
+.archivos-comentar {
+    display: flex;
+}
+
+.subir-archivos {
+    margin: 5px;
+}
+
+.lista-archivos {
+    margin-left   : 15px;
+    padding       : 5px;
+    padding-bottom: 0px;
+}
+
+.nombre-archivos {
+    font-size  : 12px;
+    font-weight: 450;
+}
+
+.campo-tarea {
+    font-size  : 12px;
+    font-weight: 450;
+    padding    : 2px 0px;
+    width      : 100%;
+}
+
+.form-control {
+    background-color: transparent !important;
+    height          : 35px;
+    font-size       : 14px;
+    border          : 1px solid $color-bordes;
+    color           : $color-azul;
+}
+
+.detalle-titulos {
+    display    : flex;
+    align-items: center;
+}
+
+.icono-detalle {
+    width : 30px;
+    height: 25px;
+    margin: 0px;
+}
+
+.icono-titulo {
+    padding-top: 10px;
+    margin     : 0px 10px;
+}

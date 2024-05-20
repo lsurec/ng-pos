@@ -6,7 +6,7 @@ import { PreferencesService } from "src/app/services/preferences.service";
 
 @Injectable()
 
-export class TareasService {
+export class TareaCalendarioService {
 
     private _user: string = "";
     private _token: string = "";
