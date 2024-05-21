@@ -538,50 +538,6 @@ export class FacturaComponent implements OnInit {
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
 
 
-    this.facturaService.minHoraRefIni = UtilitiesService.getHoraInput(this.facturaService.fecha);
-    this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.minHoraFinal = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-
-    this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
-    this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
-
-
-    //validar horas minimas 
-    if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni)) {
-
-      let horaCero: Date = new Date(this.facturaService.fechaRefFin);
-      horaCero.setHours(0);
-      horaCero.setMinutes(0);
-
-      this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(horaCero);
-      this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(horaCero);
-    }
-
-
-    if (!UtilitiesService.isEqualDate(this.facturaService.fechaRefFin, this.facturaService.fechaIni)) {
-      // Crear una nueva instancia de Date basada en la fecha de referencia fin
-      let horaMaxima: Date = new Date(this.facturaService.fechaRefFin);
-
-      // Establecer la hora máxima del día: 23:59:59.999
-      horaMaxima.setHours(23);
-      horaMaxima.setMinutes(59);
-
-      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(horaMaxima);
-
-    }
-
-    if (!UtilitiesService.isEqualDate(this.facturaService.fechaRefFin, this.facturaService.fechaFin)) {
-      // Crear una nueva instancia de Date basada en la fecha de referencia fin
-      let horaMaxima: Date = new Date(this.facturaService.fechaRefFin);
-
-      // Establecer la hora máxima del día: 23:59:59.999
-      horaMaxima.setHours(23);
-      horaMaxima.setMinutes(59);
-
-      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
-    }
-
 
     //Copiar valores (Valores anteriores a una modificacion)
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni);
