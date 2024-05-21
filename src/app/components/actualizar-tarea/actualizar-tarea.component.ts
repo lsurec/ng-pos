@@ -69,8 +69,6 @@ export class ActualizarTareaComponent {
 
     this.loadData();
 
-    console.log(tareasGlobalService.idActualizar, "actualizar");
-
   }
 
   loadData() {

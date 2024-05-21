@@ -15,6 +15,8 @@ $color-verde             : #44ff14;
 $color-rojo              : #f93c3c;
 $producto                : rgba(0, 0, 0, 0.12);
 $navegacion              : #252323;
+$negro                   : #000;
+$tareas                  :#939292;
 
 html,
 body {
@@ -68,7 +70,7 @@ body {
         font-size: 18px !important;
     }
 
-    .descripcion-tarea{
+    .descripcion-tarea {
         font-size: 10.5px !important;
     }
 }
@@ -116,7 +118,40 @@ body {
 .dark-theme .dialog,
 .dark-theme .informacion,
 .dark-theme .head__sidenav_config,
-.dark-theme .barra-cerrar-titulo {
+.dark-theme .barra-cerrar-titulo,
+.dark-theme .container_main,
+.dark-theme .container-main,
+.dark-theme .sidenav_container,
+.dark-theme .observaciones,
+.dark-theme .observaciones_desc,
+.dark-theme .detalle,
+.dark-theme .elementos-detalle,
+.dark-theme .editar-detalle,
+.dark-theme .mat-expansion-panel-body,
+.dark-theme .detalles,
+.dark-theme .color_fondo,
+.dark-theme mat-expansion-panel-header-0,
+.dark-theme .progress,
+.dark-theme #notfound,
+.dark-theme mat-calendar,
+.dark-theme .llenar-formulario,
+.dark-theme .mdc-menu-surface.mat-mdc-select-panel,
+.dark-theme mat-dialog-content,
+.dark-theme .dialog,
+.dark-theme .head_bottom_sidenav,
+.dark-theme mat-sidenav,
+.dark-theme .ajustes,
+.dark-theme .primerDia,
+.dark-theme .example-radio-button,
+.dark-theme .mat-mdc-radio-button .mdc-form-field,
+.dark-theme .detallesUsuario,
+.dark-theme .horarioLaboral,
+.dark-theme .lenguajes,
+.dark-theme .row,
+.dark-theme .container,
+.dark-theme .acciones,
+.dark-theme .menuVistas,
+.dark-theme .opcion-vista {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }
@@ -127,6 +162,28 @@ body {
     padding         : 0px !important;
 }
 
+.dark-theme .detalle-derecho,
+.dark-theme .detalle-actualizar {
+    background-color: $negro !important;
+    font-weight     : none !important;
+}
+
+.dark-theme .negrita .dark-theme .tituloTarea,
+.dark-theme .negrita,
+.dark-theme .comentario,
+.dark-theme .pTitulo,
+.dark-theme .userName,
+.dark-theme .ajustesMenu,
+.dark-theme .titulo-tema {
+    font-weight: normal !important;
+}
+
+.dark-theme .tarea,
+.dark-theme .mat-mdc-outlined-button {
+    background-color: #333 !important;
+    color           : #ffffff !important;
+    border          : 1px solid #CED4DA !important;
+}
 
 //FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
 .dark-theme .container_start {
@@ -162,7 +219,37 @@ body {
 .dark-theme .form-control,
 .dark-theme .hora,
 .dark-theme .campos,
-.dark-theme .precio-unitario {
+.dark-theme .precio-unitario,
+.dark-theme .contenedorModulo,
+.dark-theme .desa,
+.dark-theme .mat-mdc-button.mat-unthemed,
+.dark-theme .barra-de-busqueda,
+.dark-theme .iconoLupa,
+.dark-theme .escribir-comentario,
+.dark-theme .mat-expansion-panel-header-description,
+.dark-theme .nueva-dia,
+.dark-theme .nueva,
+.dark-theme .mat-calendar-body-cell-content,
+.dark-theme .mat-calendar-body-label,
+.dark-theme .mat-calendar-table-header th,
+.dark-theme .mat-calendar-arrow,
+.dark-theme .mat-mdc-select-value-text,
+.dark-theme .form-control,
+.dark-theme .fechas,
+.dark-theme .descripcion-tarea,
+.dark-theme .titulo-tarea,
+.dark-theme .minutos,
+.dark-theme .referenciaObtenida,
+.dark-theme .ico-calendario,
+.dark-theme .mat-mdc-option .mdc-list-item__primary-text,
+.dark-theme .mat-mdc-select-arrow svg,
+.dark-theme .close,
+.dark-theme .inputSearch,
+.dark-theme .ajustesMenu,
+.dark-theme h4,
+.dark-theme h2,
+.dark-theme p,
+.dark-theme .hora {
     color: $color-blanco !important;
 }
 
@@ -184,6 +271,24 @@ body {
 .dark-theme .toolbar-row {
     border-bottom: 1px solid $bordes !important;
 }
+
+.dark-theme .dia-nombre,
+.dark-theme .dia-tarea-mes,
+.dark-theme .dia-tarea-semana,
+.dark-theme .nombre-horario-tarea {
+    border-bottom: 1px solid $bordes !important;
+    border-right : 1px solid $bordes !important;
+}
+
+.dark-theme mat-toolbar,
+.dark-theme .head__sidenav {
+    border-bottom: 1px solid $bordes !important;
+}
+
+.dark-theme .mostrar-tareas {
+    border: 0.5px solid $tareas !important;
+}
+
 
 //BORDE ARRIBA
 .dark-theme .backColorNavBar,
@@ -222,7 +327,10 @@ body {
     cursor: pointer;
 }
 
-.dark-theme .mat-mdc-select-value,
+// .dark-theme .mat-mdc-select-value {
+//     background-color: rgb(127 121 121 / 18%) !important;
+// }
+
 .dark-theme .mat-mdc-select-arrow svg,
 .dark-theme .informacion-fondo,
 .dark-theme .detalles-fondo,
@@ -365,7 +473,21 @@ body {
 .dark-theme .contenido::-webkit-scrollbar,
 .dark-theme .contenido::-webkit-scrollbar-track,
 .dark-theme .pagos-gregados::-webkit-scrollbar,
-.dark-theme .pagos-gregados::-webkit-scrollbar-track {
+.dark-theme .pagos-gregados::-webkit-scrollbar-track,
+.dark-theme .container_main::-webkit-scrollbar,
+.dark-theme .container_main::-webkit-scrollbar-track,
+.dark-theme .comentarios::-webkit-scrollbar-track,
+.dark-theme .comentarios::-webkit-scrollbar,
+.dark-theme .detalle::-webkit-scrollbar-track,
+.dark-theme .detalle::-webkit-scrollbar,
+.dark-theme .dialog::-webkit-scrollbar-track,
+.dark-theme .dialog::-webkit-scrollbar,
+.dark-theme .horarioLaboral::-webkit-scrollbar,
+.dark-theme .horarioLaboral::-webkit-scrollbar-track,
+.dark-theme .contenedor::-webkit-scrollbar,
+.dark-theme .contenedor::-webkit-scrollbar-track,
+.dark-theme .llenar-formulario::-webkit-scrollbar,
+.dark-theme .llenar-formulario::-webkit-scrollbar-track {
     background-color: $fondo-oscuro !important;
 }
 
@@ -385,6 +507,15 @@ body {
 .dark-theme .detalle-container::-webkit-scrollbar-thumb,
 .dark-theme .lista-bancos::-webkit-scrollbar-thumb,
 .dark-theme .contenido::-webkit-scrollbar-thumb,
-.dark-theme .pagos-gregados::-webkit-scrollbar-thumb {
+.dark-theme .pagos-gregados::-webkit-scrollbar-thumb,
+.dark-theme .button_up_content,
+.dark-theme .button_down_content,
+.dark-theme .container_main::-webkit-scrollbar-thumb,
+.dark-theme .comentarios::-webkit-scrollbar-thumb,
+.dark-theme .detalle::-webkit-scrollbar-thumb,
+.dark-theme .dialog::-webkit-scrollbar-thumb,
+.dark-theme .horarioLaboral::-webkit-scrollbar-thumb,
+.dark-theme .contenedor::-webkit-scrollbar-thumb,
+.dark-theme .llenar-formulario::-webkit-scrollbar-thumb {
     background-color: $scrollbars !important;
 }

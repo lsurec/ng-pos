@@ -23,7 +23,7 @@
     <div class="container_main" *ngIf="hideDetalle">
         <!-- Buscar tareas por coincidencias -->
         <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
-            <div class="input-container">
+            <div class="input-container-tarea">
                 <button class="iconoLupa" mat-icon-button>
                     <mat-icon>search</mat-icon> </button>
                 <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText" autocomplete="off"
