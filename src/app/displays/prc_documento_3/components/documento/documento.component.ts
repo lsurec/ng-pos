@@ -179,7 +179,7 @@ export class DocumentoComponent {
 
       //validar horas minimas 
       if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni)) {
-        
+
 
         let horaCero: Date = new Date(this.facturaService.fechaRefFin);
         horaCero.setHours(0);
@@ -213,7 +213,7 @@ export class DocumentoComponent {
         this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
       }
 
-     
+
 
     }
 
@@ -236,8 +236,8 @@ export class DocumentoComponent {
     }
 
 
-    if(UtilitiesService.compareDate(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni)){
-          //Restamblecer la fecha mayor con la hora 12:00 am
+    if (UtilitiesService.compareDate(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni)) {
+      //Restamblecer la fecha mayor con la hora 12:00 am
       let horaCero: Date = new Date(this.facturaService.fechaRefFin!);
       horaCero.setHours(0);
       horaCero.setMinutes(0);
@@ -246,8 +246,8 @@ export class DocumentoComponent {
     }
 
 
-    if(UtilitiesService.isEqualDate(this.facturaService.fechaRefIni, this.facturaService.fechaRefFin!)){
-        this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaRefIni, this.facturaService.fechaRefFin!)) {
+      this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
     }
 
 
@@ -269,8 +269,8 @@ export class DocumentoComponent {
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
 
     //validar horas minimas 
-     //validar horas minimas 
-     if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
+    //validar horas minimas 
+    if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
 
       //Restamblecer la fecha mayor con la hora 12:00 am
       let horaCero: Date = new Date(this.facturaService.fechaRefFin);
@@ -286,6 +286,53 @@ export class DocumentoComponent {
     }
 
     //TODO:Validar fechas minimas y maximas de fecha ini y fecha fin
+    if (this.facturaService.fechaIni! > this.facturaService.fechaRefFin) {
+
+      this.facturaService.fechaIni = new Date(this.facturaService.fechaRefFin);
+      this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+      this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+
+    }
+
+    if (this.facturaService.fechaFin! > this.facturaService.fechaRefFin) {
+
+      this.facturaService.fechaFin = new Date(this.facturaService.fechaRefFin);
+      this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+      this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
+
+    }
+
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaIni!, this.facturaService.fechaRefFin)) {
+      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    }
+
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaFin!, this.facturaService.fechaRefFin)) {
+      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    }
+
+
+    if (UtilitiesService.compareDate(this.facturaService.fechaRefFin!, this.facturaService.fechaIni!)) {
+      
+      let horaMaxima: Date = new Date(this.facturaService.fechaIni!);
+
+      // Establecer la hora máxima del día: 23:59:59.999
+      horaMaxima.setHours(23);
+      horaMaxima.setMinutes(59);
+
+      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(horaMaxima);
+    }
+
+    if (!UtilitiesService.isEqualDate(this.facturaService.fechaRefFin!, this.facturaService.fechaFin!)) {
+      // Crear una nueva instancia de Date basada en la fecha de referencia fin
+      let horaMaxima: Date = new Date(this.facturaService.fechaFin!);
+
+      // Establecer la hora máxima del día: 23:59:59.999
+      horaMaxima.setHours(23);
+      horaMaxima.setMinutes(59);
+
+      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
+
+    }
 
 
     //Copiar valores
