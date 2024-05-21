@@ -151,15 +151,22 @@
         <div class="container_page">
             <!-- Contenido lado izquierdo -->
             <div class="container_start">
+                <span class="spacer"></span>
                 <div class="dFlex">
+                    <button (click)="verAjustes()" mat-icon-button *ngIf="inicio || fin || dias">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
                     <span class="spacer"></span>
-                    <p class="ajustesMenu" *ngIf="tituloAjustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
+                    <p class="ajustesMenu" *ngIf="tituloAjustes">{{ 'crm.ajustes.configuraciones' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="inicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="fin"> {{'crm.ajustes.finLab' | translate}} </p>
                     <p class="ajustesMenu" *ngIf="dias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                     <span class="spacer"></span>
-                    <button mat-icon-button (click)="verAjustes()">
+                    <button mat-icon-button (click)="verAjustes()" *ngIf="tituloAjustes && picker">
                         <mat-icon>settings</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="verPiker()" *ngIf="!picker && ajustes">
+                        <mat-icon>calendar_month</mat-icon>
                     </button>
                 </div>
 
@@ -186,7 +193,7 @@
                         <div class="detalle">
                             <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
                             <p class="descripcion">
-                                {{nombreHoraInicial}} {{ 'crm.ajustes.rango' | translate }} {{nombreHoraFinal}}
+                                {{horaInicio.hora12}} {{ 'crm.ajustes.rango' | translate }} {{horaFin.hora12}}
                             </p>
                         </div>
                     </div>

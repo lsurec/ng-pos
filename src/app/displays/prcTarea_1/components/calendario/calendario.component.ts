@@ -59,6 +59,18 @@ export class CalendarioComponent implements OnInit {
   cargarCalendario: boolean = true;
 
   horas: HoraInterface[] = horas; //horas del día (vista del usuario)
+  horarios: HoraInterface[] = horas; //lista de horas 12h
+  inicioLabores!: number;
+  finLabores!: number;
+  horaInicio: HoraInterface = horas[indexHoraInicioDefault];
+  horaFin: HoraInterface = horas[indexHoraFinDefault];
+  picker: boolean = true;
+  dias: boolean = false;
+  inicio: boolean = false;
+  fin: boolean = false;
+  ajustes: boolean = false;
+  tituloAjustes: boolean = true;
+
   tareas: TareaCalendarioInterface[] = []; //Todas las tareas disponibles
   tareasUsuario: TareaCalendarioInterface[] = []; //Todas las tareas disponibles
 
@@ -93,10 +105,6 @@ export class CalendarioComponent implements OnInit {
   indexWeekActive: number = 0;
   //semanas del mes actual
   semanas: DayInterface[][] = [];
-
-  //Horas que se muestran en vista horas (Format 12horas)
-  inicioHorasLabores: number = indexHoraInicioDefault;
-  finHorasLabores: number = indexHoraFinDefault;
 
   //Seleccionar una vista de calendario
   // verVistas: boolean = false;
@@ -177,28 +185,6 @@ export class CalendarioComponent implements OnInit {
     this.loadData();
 
     this.refresh();
-    this.obtenerHoras();
-  }
-
-  obtenerHoras() {
-    //buscamos si hay una hora guardado para el inicio del horario laboral
-    let getPrimeraHora = PreferencesService.inicioLabores;
-    if (getPrimeraHora) {
-      let horaInicial: number = +getPrimeraHora;
-      this.inicioHorasLabores = horaInicial;
-    }
-
-    this.nombreHoraInicial = this.horarios[this.inicioHorasLabores].hora12
-    this.nombreHoraFinal = this.horarios[this.finHorasLabores].hora12;
-
-
-    //buscamos si hay una hora guardado para el fin del horario laboral
-    let getUltomaHora = PreferencesService.finLabores;
-    if (getUltomaHora) {
-      let horaFinal: number = +getUltomaHora;
-      this.finHorasLabores = horaFinal;
-    }
-
   }
 
   async refresh() {
@@ -208,12 +194,9 @@ export class CalendarioComponent implements OnInit {
     await this.loadData();
     //obtener todas las tareas
     await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
-
-    this.obtenerHoras();
-
+    this.obtenerHorarioLaboral();
     this.isLoading = false;
   }
-
 
   //Cargar dias en el idioma seleccionado
   loadDiasView(): void {
@@ -1243,8 +1226,12 @@ export class CalendarioComponent implements OnInit {
 
   //funcion para mostrar el rango de horas laborales
   hora8(): void {
+
+    console.log(this.horaInicio.hora24, "incio");
+    console.log(this.horaFin.hora24, "fin");
+
     this.horas.forEach((objeto) => {
-      if (objeto.hora24 >= this.inicioHorasLabores && objeto.hora24 <= this.finHorasLabores) {
+      if (objeto.hora24 >= this.horaInicio.hora24 && objeto.hora24 <= this.horaFin.hora24) {
         objeto.visible = true;
       } else {
         objeto.visible = false;
@@ -1601,22 +1588,9 @@ export class CalendarioComponent implements OnInit {
 
   }
 
-  horarios: HoraInterface[] = horas; //lista de horas 12h
-  inicioLabores!: number;
-  finLabores!: number;
-  nombreHoraInicial: string = '';
-  nombreHoraFinal: string = '';
-
-  picker: boolean = true;
-  dias: boolean = false;
-  inicio: boolean = false;
-  fin: boolean = false;
-  ajustes: boolean = false;
-  tituloAjustes: boolean = true;
-
-
   verAjustes(): void {
     this.ajustes = true;
+    this.tituloAjustes = true;
     this.dias = false;
     this.inicio = false;
     this.fin = false;
@@ -1674,12 +1648,36 @@ export class CalendarioComponent implements OnInit {
   setHoras(): void {
     PreferencesService.inicioLabores = this.inicioLabores.toString();
     PreferencesService.finLabores = this.finLabores.toString();
-    this.nombreHoraInicial = this.horarios[this.inicioLabores].hora12;
-    this.nombreHoraFinal = this.horarios[this.finLabores].hora12;
+
+    this.horaInicio = horas[this.inicioLabores];
+    this.horaFin = horas[this.finLabores];
+
     //Regresar a pantalla de ajustes y ocultar las demas
     this.refresh();
+
+    if (this.verDia) {
+      this.hora8();
+    }
     this.verAjustes();
   };
+
+  obtenerHorarioLaboral() {
+    let getHoraInicio: string = PreferencesService.inicioLabores;
+    if (getHoraInicio) {
+      let hora: number = +getHoraInicio;
+      this.horaInicio = this.horas[hora];
+    } else {
+      this.horaInicio = this.horas[indexHoraInicioDefault];
+    }
+
+    let getHoraFin: string = PreferencesService.finLabores;
+    if (getHoraFin) {
+      let hora: number = +getHoraFin;
+      this.horaFin = this.horas[hora];
+    } else {
+      this.horaFin = this.horas[indexHoraFinDefault];
+    }
+  }
 
   cambiarPrimerDia(): void {
     PreferencesService.inicioSemana = this.primerDiaSemana.toString();

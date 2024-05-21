@@ -429,7 +429,8 @@
             "regresar": "Go back",
             "continuar": "Continue",
             "ajustes": "Settings",
-            "cerrar": "Close"
+            "cerrar": "Close",
+            "configuraciones": "Settings"
         },
         "crear": {
             "crear": "Create",
