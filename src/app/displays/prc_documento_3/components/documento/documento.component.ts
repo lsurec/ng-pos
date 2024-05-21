@@ -100,23 +100,17 @@ export class DocumentoComponent {
     return `${horas % 12 || 12}:${minutos < 10 ? '0' : ''}${minutos} ${ampm}`;
   };
 
-
   restartDates() {
-
 
     this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
-
 
     // Inicializar selectedDate con la fecha de hoy
     this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
-
     this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
     this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-
-
 
   }
 
