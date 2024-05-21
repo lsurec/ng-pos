@@ -231,6 +231,20 @@ export class DocumentoComponent {
       this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
     }
 
+    //validar horas minimas fecha uinicio y fecha fin del documento
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaIni!, this.facturaService.fechaRefIni)) {
+      this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    } else {
+      let horaCero: Date = new Date();
+      horaCero.setHours(0);
+      horaCero.setMinutes(0);
+
+      this.facturaService.minHoraInicial = UtilitiesService.getHoraInput(horaCero);
+    }
+
+ 
+
+
     //Copiar valores
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
@@ -245,11 +259,51 @@ export class DocumentoComponent {
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
 
 
+    if (this.facturaService.fechaIni! > this.facturaService.fechaRefFin) {
+      this.facturaService.fechaIni = new Date(this.facturaService.fechaRefFin);
+      this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+      this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
+    }
+
+    if (this.facturaService.fechaFin! > this.facturaService.fechaRefFin) {
+      this.facturaService.fechaFin = new Date(this.facturaService.fechaRefFin);
+      this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
+      this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+    }
+
+
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaIni!, this.facturaService.fechaRefFin)) {
+
+      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+
+    } else {
+      // Crear una nueva instancia de Date basada en la fecha de referencia fin
+      let horaMaxima: Date = new Date();
+
+      // Establecer la hora máxima del día: 23:59:59.999
+      horaMaxima.setHours(23);
+      horaMaxima.setMinutes(59);
+
+      this.facturaService.maxHoraIni = UtilitiesService.getHoraInput(horaMaxima);
+    }
+
+    if (UtilitiesService.isEqualDate(this.facturaService.fechaFin!, this.facturaService.fechaRefFin)) {
+      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    } else {
+      let horaMaxima: Date = new Date();
+
+      // Establecer la hora máxima del día: 23:59:59.999
+      horaMaxima.setHours(23);
+      horaMaxima.setMinutes(59);
+
+      this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
+    }
+
     //Copiar valores
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
-    this.facturaService.saveDocLocal()
+    this.facturaService.saveDocLocal();
 
   }
 
