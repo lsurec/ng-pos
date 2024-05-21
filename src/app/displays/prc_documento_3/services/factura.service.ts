@@ -108,6 +108,9 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
+    filtroPreferencia: number = 1;
+    idFiltroPreferencia: number = 1;
+
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
@@ -124,14 +127,14 @@ export class FacturaService {
         }
     ];
 
-    pasosCompletos:number  = 0;
-    viewMessage:boolean = false;
-    viewError:boolean = false;
-    viewErrorFel:boolean = false;
-    viewErrorProcess:boolean = false;
-    viewSucces:boolean = false;
+    pasosCompletos: number = 0;
+    viewMessage: boolean = false;
+    viewError: boolean = false;
+    viewErrorFel: boolean = false;
+    viewErrorProcess: boolean = false;
+    viewSucces: boolean = false;
 
-    stepMessage:string = "";
+    stepMessage: string = "";
 
     constructor(
         //instancias de los servicios utilizados
@@ -139,7 +142,12 @@ export class FacturaService {
         private _notificationsService: NotificationsService,
         private _translate: TranslateService,
         private _convertService: GlobalConvertService,
-    ) { }
+    ) {
+
+        if (!PreferencesService.filtroProducto) {
+            PreferencesService.filtroProducto = 1;
+        }
+    }
 
 
 

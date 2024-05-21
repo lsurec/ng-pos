@@ -254,7 +254,7 @@ mat-sidenav {
 .contenido-sidenav {
     background-color: $background-oficial;
     height          : calc(100% - 44px) !important;
-    padding         : 0px;
+    padding-bottom  : 10px;
     overflow        : auto;
 }
 
@@ -263,6 +263,18 @@ mat-sidenav {
     border-bottom: 1px solid $color-bordes;
     display      : flex;
     align-items  : center;
+}
+
+.cambioFiltro {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+    cursor       : pointer;
+}
+
+.cambioFiltro:hover {
+    background-color: $color-bordes;
 }
 
 .detalle {
@@ -494,4 +506,34 @@ label[for*='6']:before {
     display    : flex;
     align-items: center;
     width      : 100%;
+}
+
+.contenido-sidenav::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.contenido-sidenav::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.contenido-sidenav::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.separador {
+    margin-top   : 0px;
+    border-bottom: 0.8px solid #c4c4c4 !important;
+    margin-bottom: 0px;
+    width        : 100%;
+}
+
+.aqui {
+    width: 100%;
+}
+
+.opciones {
+    margin-bottom: 5px;
 }
