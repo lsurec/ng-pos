@@ -29,6 +29,9 @@ import { TypesDocConvertInterface } from 'src/app/displays/listado_Documento_Pen
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import { HttpClient } from '@angular/common/http';
+import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.interface';
+import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
+import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 
 
 @Component({
@@ -88,6 +91,20 @@ export class HomeComponent implements OnInit {
   temaOscuro: boolean = false;
   //Guardar el nombre del usuario
 
+
+  //horario laboral
+  horarios: HoraInterface[] = horas; //lista de horas 12h
+  horaInicio: boolean = false;
+  horaFin: boolean = false;
+  inicioHorasLabores: number = indexHoraInicioDefault;
+  finHorasLabores: number = indexHoraFinDefault;
+  inicioLabores!: number;
+  finLabores!: number;
+  setDias: boolean = false;
+  horasLaborales: boolean = false;
+  nombreHoraInicial: string = '';
+  nombreHoraFinal: string = '';
+  primerDiaSemana: number = 0;
 
   //Variables para mostrar componentes segun el menu
   components: ComponentesInterface[] = components;
@@ -165,6 +182,32 @@ export class HomeComponent implements OnInit {
     } else {
       this.size = +getFontSize;
     }
+
+    //buscamos si hay un dia guardado para el inicio de la semana
+    let getDias = PreferencesService.inicioSemana;
+    if (getDias) {
+      let dia: number = +getDias;
+      this.primerDiaSemana = dia;
+    };
+
+    //buscamos si hay una hora guardado para el inicio del horario laboral
+    let getPrimeraHora = PreferencesService.inicioLabores;
+    if (getPrimeraHora) {
+      let horaInicial: number = +getPrimeraHora;
+      this.inicioHorasLabores = horaInicial;
+    }
+    //Asignamos el nombre de la hora inicial para mostrarla
+    this.nombreHoraInicial = this.horarios[this.inicioHorasLabores].hora12
+
+    //buscamos si hay una hora guardado para el fin del horario laboral
+    let getUltimaHora = PreferencesService.finLabores;
+    if (getUltimaHora) {
+      let horaFinal: number = +getUltimaHora;
+      this.finHorasLabores = horaFinal;
+    }
+    //Asignamos el nombre de la hora final para mostrarla
+    this.nombreHoraFinal = this.horarios[this.finHorasLabores].hora12;
+
   }
 
   fontsSizes: FontSizeInterface[] = [
@@ -657,7 +700,7 @@ export class HomeComponent implements OnInit {
     this.themeService.isDarkTheme = this.temaOscuro;
     this.themeService.updateTheme();
 
-    // this.temaOscuro ? StorageService.tema = '1' : StorageService.tema = '0';
+    // this.temaOscuro ? PreferencesService.tema = '1' : PreferencesService.tema = '0';
     if (this.temaOscuro == true) {
       PreferencesService.theme = '1';
       this.tema = 1;
@@ -667,6 +710,72 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  //Mostrar pantalla de "DIAS" y mantener ocultas todas las demas
+  verDias(): void {
+    this.setDias = true;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+    this.idiomas = false;
+    this.horasLaborales = false;
+    this.horaInicio = false;
+    this.horaFin = false;
+  };
+
+  //Mostrar pantalla de "HORA INICIAL" y mantener ocultas todas las demas
+  horaInicial(): void {
+    this.horaInicio = true;
+    this.horaFin = false;
+    this.idiomas = false;
+    this.setDias = false;
+    this.ajustes = false;
+    this.horasLaborales = false;
+    this.detallesUsuario = false;
+  };
+
+  //Mostrar pantalla de "HORA FINAL" y mantener ocultas todas las demas
+  horaFinal(): void {
+    this.horaFin = true;
+    this.horaInicio = false;
+    this.idiomas = false;
+    this.setDias = false;
+    this.ajustes = false;
+    this.horasLaborales = false;
+    this.detallesUsuario = false;
+  };
+
+  //Guardar horas del horario laboral seleccionado y regresar a ajustes 
+  setHoras(): void {
+    PreferencesService.inicioLabores = this.inicioLabores.toString();
+    PreferencesService.finLabores = this.finLabores.toString();
+    this.nombreHoraInicial = this.horarios[this.inicioLabores].hora12;
+    this.nombreHoraFinal = this.horarios[this.finLabores].hora12;
+    //Regresar a pantalla de ajustes y ocultar las demas
+    this.verDetalles();
+  };
+
+  //Ocultar boton de continuar y mostrarlo cuando se regrese
+  verContinuar(): void {
+    this.btnRegresar = true;
+    this.horaInicial();
+  };
+
+  cambiarPrimerDia(): void {
+    PreferencesService.inicioSemana = this.primerDiaSemana.toString();
+    this.verDetalles();
+  };
+
+  //Obtener el lenguaje y region activo y mostrar los dias en el idioma acivo
+  getLrCode(): string[] {
+    let lrCode = `${this.activeLang.lang}-${this.activeLang.reg}`
+    if (lrCode == 'es-GT') return diasEspaniol;
+    if (lrCode == 'en-US') return diasIngles;
+    return [];
+  };
+
+  capitalizarTexto(texto: string): string {
+    return texto.charAt(0).toUpperCase() + texto.slice(1).toLocaleLowerCase();
+  };
+
   //Mostrar pantalla de "AJUSTES" y mantener ocultas todas las demas
   verAjustes(): void {
     this.ajustes = true;
@@ -674,6 +783,10 @@ export class HomeComponent implements OnInit {
     this.temas = false;
     this.idiomas = false;
     this.sizes = false;
+    this.setDias = false;
+    this.horasLaborales = false;
+    this.horaInicio = false;
+    this.horaFin = false;
   };
 
   verTema(): void {
@@ -698,6 +811,9 @@ export class HomeComponent implements OnInit {
     this.ajustes = false;
     this.idiomas = false;
     this.temas = false;
+    this.setDias = false;
+    this.horaInicio = false;
+    this.horaFin = false;
   };
 
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas

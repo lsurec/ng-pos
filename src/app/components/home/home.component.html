@@ -71,6 +71,9 @@
                     <p class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</p>
+                    <p class="ajustesMenu" *ngIf="horaInicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
+                    <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
+                    <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="sizes">Tamaño de fuente.</p>
                 </div>
                 <span class="spacer"></span>
@@ -115,6 +118,30 @@
                         <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
                     </div>
                 </div>
+
+                <!-- Seleccionar hora inicial -->
+                <div class="configuraciones" (click)="horaInicial()">
+                    <mat-icon class="iconos-detalles">history_toggle_off</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
+                        <p class="descripcion">
+                            {{nombreHoraInicial}} {{ 'crm.ajustes.rango' | translate }} {{nombreHoraFinal}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="configuraciones" (click)="verDias()">
+                    <mat-icon class="iconos-detalles">today</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{ 'crm.ajustes.semana' | translate }}</p>
+                        <p class="descripcion">
+                            {{capitalizarTexto(getLrCode()[primerDiaSemana])}}
+                        </p>
+                    </div>
+                </div>
+
                 <!-- <p class="separador"></p> -->
                 <div class="configuraciones">
                     <mat-icon class="iconos-detalles">info</mat-icon>
@@ -152,6 +179,37 @@
                         (click)="changeLang(i)">
                         {{getNameByLanguageRegion(item)}}
                     </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <!-- Seleccionar primer dia semana -->
+            <div class="lenguajes" *ngIf="setDias">
+                <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
+                    (ngModelChange)="cambiarPrimerDia()">
+                    <mat-radio-button class="example-radio-button separador"
+                        *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
+                        {{capitalizarTexto(dia)}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <!-- Seleccionar inicio de labores -->
+            <div class="horarioLaboral" *ngIf="horaInicio">
+                <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores" (ngModelChange)="horaFinal()">
+                    <mat-radio-button class="example-radio-button separador"
+                        *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
+                        {{hora.hora12}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="horarioLaboral" *ngIf="horaFin">
+                <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
+                    <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
+                        <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores" [value]="i"
+                            color="primary">
+                            {{hora.hora12}}
+                        </mat-radio-button>
+                    </div>
                 </mat-radio-group>
             </div>
             <!-- Seleccionar tamaño de fuente -->
@@ -273,6 +331,27 @@
                 <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
+            </mat-toolbar>
+
+            <!-- Regresar primer dia -->
+            <mat-toolbar class="backColorNavBar" *ngIf="setDias">
+                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'crm.ajustes.regresar' | translate">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+
+            <!-- botones regresar continuar a ajustes -->
+            <mat-toolbar class="backColorNavBar" *ngIf="horaInicio">
+                <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
+                <span class="spacer"></span>
+                <button mat-button *ngIf="btnRegresar" (click)="horaFinal()"> {{'crm.ajustes.continuar' | translate}}
+                </button>
+            </mat-toolbar>
+            <!-- botones regresar, cancelar a ajustes -->
+            <mat-toolbar class="backColorNavBar" *ngIf="horaFin">
+                <button mat-button (click)="verContinuar()"> {{'crm.ajustes.regresar' | translate}} </button>
+                <span class="spacer"></span>
+                <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
             </mat-toolbar>
         </mat-sidenav>
 
