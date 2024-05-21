@@ -60,11 +60,11 @@ export class DetalleComponent {
   filtrosBusqueda: FiltroInterface[] = [
     {
       id: 1,
-      nombre: "SKU",
+      nombre: this._translate.instant('pos.factura.descripcion'),
     },
     {
       id: 2,
-      nombre: this._translate.instant('pos.factura.descripcion'),
+      nombre: "SKU",
     },
   ];
 
@@ -78,7 +78,10 @@ export class DetalleComponent {
     private _productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
-  ) { }
+  ) {
+    //filtro producto
+    facturaService.filtrosProductos = PreferencesService.filtroProducto;
+  }
 
 
   //editar transacciines que ay fueron agregadas
@@ -350,14 +353,14 @@ export class DetalleComponent {
         if (!verificador) return;
 
         this.verError(resDialogProd.error);
-      
+
         return;
       }
 
 
 
       if (resDialogProd.type == 2) {
-         this._notificationsService.openDialogValidations(resDialogProd.error);
+        this._notificationsService.openDialogValidations(resDialogProd.error);
 
       }
     }
@@ -650,10 +653,10 @@ export class DetalleComponent {
 
 
         //1 api /2 validaciones //para productos
-  
+
         if (resDialogProd.type == 1) {
-  
-  
+
+
           let verificador = await this._notificationsService.openDialogActions(
             {
               title: this._translate.instant('pos.alertas.salioMal'),
@@ -662,19 +665,19 @@ export class DetalleComponent {
               falso: this._translate.instant('pos.botones.aceptar'),
             }
           );
-  
+
           if (!verificador) return;
-  
+
           this.verError(resDialogProd.error);
-        
+
           return;
         }
-  
-  
-  
+
+
+
         if (resDialogProd.type == 2) {
-           this._notificationsService.openDialogValidations(resDialogProd.error);
-  
+          this._notificationsService.openDialogValidations(resDialogProd.error);
+
         }
       }
 
@@ -701,10 +704,10 @@ export class DetalleComponent {
 
 
           //1 api /2 validaciones //para productos
-    
+
           if (resDialogProd.type == 1) {
-    
-    
+
+
             let verificador = await this._notificationsService.openDialogActions(
               {
                 title: this._translate.instant('pos.alertas.salioMal'),
@@ -713,19 +716,19 @@ export class DetalleComponent {
                 falso: this._translate.instant('pos.botones.aceptar'),
               }
             );
-    
+
             if (!verificador) return;
-    
+
             this.verError(resDialogProd.error);
-          
+
             return;
           }
-    
-    
-    
+
+
+
           if (resDialogProd.type == 2) {
-             this._notificationsService.openDialogValidations(resDialogProd.error);
-    
+            this._notificationsService.openDialogValidations(resDialogProd.error);
+
           }
         }
 

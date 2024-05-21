@@ -69,6 +69,28 @@
                         ({{facturaService.serie.serie_Documento}}) </p>
                 </div>
             </div>
+            <div class="cambioFiltro" (click)="verFiltros()">
+                <mat-icon class="iconos-detalles">filter_alt</mat-icon>
+                <span class="spacer"></span>
+                <div class="detalle">
+                    <p class="subtitulo">Filtro de Busqueda</p>
+                    <p class="descripcion">
+                        {{filtroNombre}}
+                    </p>
+                </div>
+            </div>
+            <div class="detalles-usuario" *ngIf="cambiarFiltro">
+                <div class="aqui">
+                    <mat-radio-group [(ngModel)]="facturaService.filtroPreferencia">
+                        <div *ngFor="let filtro of filtrosBusqueda; let i = index" class="opciones">
+                            <mat-radio-button class="example-radio-button" [value]="filtro.id" color="primary"
+                                (click)="guardarFiltro(filtro.id , i)">
+                                {{filtro.nombre}}
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                </div>
+            </div>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -91,7 +113,9 @@
                         <mat-icon>refresh</mat-icon>
                     </button>
                     <span class="spacer"></span>
-                    <p class="titulo">{{dataUserService.nameDisplay }} </p><p  *ngIf="globalConvertService.editDoc"  class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
+                    <p class="titulo">{{dataUserService.nameDisplay }} </p>
+                    <p *ngIf="globalConvertService.editDoc" class="titulo" style="margin-left: 5px;">
+                        ({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
                     <span class="spacer"></span>
                     <div class="circulo-inicial" (click)="sidenavend.open()">
                         <p class="inicial-usuario">{{user[0]}}</p>
@@ -141,7 +165,9 @@
             </button>
             <span class="spacer"></span>
             <!-- Titulo de la tarea -->
-            <p class="titulo">{{dataUserService.nameDisplay }} </p><p  *ngIf="globalConvertService.editDoc"  class="titulo" style="margin-left: 5px;">({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
+            <p class="titulo">{{dataUserService.nameDisplay }} </p>
+            <p *ngIf="globalConvertService.editDoc" class="titulo" style="margin-left: 5px;">
+                ({{globalConvertService.docOriginSelect?.iD_Documento}})</p>
 
             <span class="spacer"></span>
 

@@ -35,6 +35,8 @@ export class PreferencesService {
     private static readonly inicioLaboresKey: string = 'horaInicio';
     private static readonly finLaboresKey: string = 'horaFin';
 
+    private static readonly filtroProductoKey: string = 'filtroProducto';
+    private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
 
 
 
@@ -339,4 +341,27 @@ export class PreferencesService {
         if (!rangoFinal) return "";
         return rangoFinal;
     }
+    //filtro para buscar productos
+    @Input()
+    static set filtroProducto(value: number) {
+        sessionStorage.setItem(this.filtroProductoKey, value.toString());
+    }
+
+    static get filtroProducto(): number {
+        let value = sessionStorage.getItem(this.filtroProductoKey);
+        return parseFloat(value!);
+    }
+
+    //id del filto
+    //filtro para buscar productos
+    @Input()
+    static set idFiltroProducto(value: number) {
+        sessionStorage.setItem(this.idFiltroProductoKey, value.toString());
+    }
+
+    static get idFiltroProducto(): number {
+        let value = sessionStorage.getItem(this.idFiltroProductoKey);
+        return parseFloat(value!);
+    }
+
 }
