@@ -1,7 +1,7 @@
 // importacion de la libreria moment
 import *as moment from 'moment'
 
-import { Component, EventEmitter, Inject, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TareaCalendarioService } from '../../services/calendario.service';
 import { MatCalendar } from '@angular/material/datepicker';
@@ -36,7 +36,7 @@ import { CrearTareaComponent } from 'src/app/components/crear-tarea/crear-tarea.
     TareaService
   ]
 })
-export class CalendarioComponent {
+export class CalendarioComponent implements OnInit {
 
   //Sicronizacion de todos los datePicker del componente
   @ViewChildren(MatCalendar)
@@ -157,19 +157,6 @@ export class CalendarioComponent {
     //Cambiar dia incio de la semana (domingo:0, lunes:1...sabado:6)
     date.getFirstDayOfWeek = () => this.primerDiaSemana;
 
-    //buscamos si hay una hora guardado para el inicio del horario laboral
-    let getPrimeraHora = PreferencesService.inicioLabores;
-    if (getPrimeraHora) {
-      let horaInicial: number = +getPrimeraHora;
-      this.inicioHorasLabores = horaInicial;
-    }
-
-    //buscamos si hay una hora guardado para el fin del horario laboral
-    let getUltomaHora = PreferencesService.finLabores;
-    if (getUltomaHora) {
-      let horaFinal: number = +getUltomaHora;
-      this.finHorasLabores = horaFinal;
-    }
 
     //traducir frase del ToolTip de regresar 
 
@@ -186,6 +173,34 @@ export class CalendarioComponent {
   }
 
 
+  ngOnInit() {
+    this.loadData();
+
+    this.refresh();
+    this.obtenerHoras();
+  }
+
+  obtenerHoras() {
+    //buscamos si hay una hora guardado para el inicio del horario laboral
+    let getPrimeraHora = PreferencesService.inicioLabores;
+    if (getPrimeraHora) {
+      let horaInicial: number = +getPrimeraHora;
+      this.inicioHorasLabores = horaInicial;
+    }
+
+    this.nombreHoraInicial = this.horarios[this.inicioHorasLabores].hora12
+    this.nombreHoraFinal = this.horarios[this.finHorasLabores].hora12;
+
+
+    //buscamos si hay una hora guardado para el fin del horario laboral
+    let getUltomaHora = PreferencesService.finLabores;
+    if (getUltomaHora) {
+      let horaFinal: number = +getUltomaHora;
+      this.finHorasLabores = horaFinal;
+    }
+
+  }
+
   async refresh() {
     this.isLoading = true;
     this.crearTarea = false; //ocultar formulario de crear tareas
@@ -193,6 +208,8 @@ export class CalendarioComponent {
     await this.loadData();
     //obtener todas las tareas
     await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
+
+    this.obtenerHoras();
 
     this.isLoading = false;
   }
@@ -1584,4 +1601,89 @@ export class CalendarioComponent {
 
   }
 
+  horarios: HoraInterface[] = horas; //lista de horas 12h
+  inicioLabores!: number;
+  finLabores!: number;
+  nombreHoraInicial: string = '';
+  nombreHoraFinal: string = '';
+
+  picker: boolean = true;
+  dias: boolean = false;
+  inicio: boolean = false;
+  fin: boolean = false;
+  ajustes: boolean = false;
+  tituloAjustes: boolean = true;
+
+
+  verAjustes(): void {
+    this.ajustes = true;
+    this.dias = false;
+    this.inicio = false;
+    this.fin = false;
+    this.picker = false;
+  }
+
+  verHoraInicio(): void {
+    this.inicio = true;
+    this.ajustes = false;
+    this.dias = false;
+    this.fin = false;
+    this.tituloAjustes = false;
+  }
+
+  verHoraFin(): void {
+    this.fin = true;
+    this.ajustes = false;
+    this.dias = false;
+    this.inicio = false;
+    this.tituloAjustes = false;
+
+  }
+
+  verDias(): void {
+    this.dias = true;
+    this.ajustes = false;
+    this.inicio = false;
+    this.fin = false;
+    this.tituloAjustes = false;
+
+  }
+
+
+  verPiker(): void {
+    this.picker = true;
+    this.ajustes = false;
+    this.inicio = false;
+    this.fin = false;
+    this.dias = false;
+    this.tituloAjustes = true;
+  }
+
+  capitalizarTexto(texto: string): string {
+    return texto.charAt(0).toUpperCase() + texto.slice(1).toLocaleLowerCase();
+  };
+
+  //Obtener el lenguaje y region activo y mostrar los dias en el idioma acivo
+  getLrCode(): string[] {
+    let lrCode = `${this.activeLang.lang}-${this.activeLang.reg}`
+    if (lrCode == 'es-GT') return diasEspaniol;
+    if (lrCode == 'en-US') return diasIngles;
+    return [];
+  };
+
+  setHoras(): void {
+    PreferencesService.inicioLabores = this.inicioLabores.toString();
+    PreferencesService.finLabores = this.finLabores.toString();
+    this.nombreHoraInicial = this.horarios[this.inicioLabores].hora12;
+    this.nombreHoraFinal = this.horarios[this.finLabores].hora12;
+    //Regresar a pantalla de ajustes y ocultar las demas
+    this.refresh();
+    this.verAjustes();
+  };
+
+  cambiarPrimerDia(): void {
+    PreferencesService.inicioSemana = this.primerDiaSemana.toString();
+    this.refresh();
+    this.verAjustes();
+  };
 }

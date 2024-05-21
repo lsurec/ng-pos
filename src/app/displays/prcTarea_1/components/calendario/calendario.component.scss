@@ -8,6 +8,7 @@ $background-hoy         : #134895; //resaltar dia de hoy azul
 $background-tareas      : #DF9722; //resaltar tareas naranja
 $background-tareas-rojo : #e61212d5; //resaltar tareas rojo
 $borde-tarea            : rgba(0, 0, 0, 0.12);
+$color-gris-s           : #777; //sombra y texto gris
 
 .progress {
     height          : 100vh;
@@ -214,7 +215,7 @@ mat-sidenav {
     width       : 250px;
     height      : calc(100% - 129px);
     float       : left;
-    overflow    : auto;
+    overflow    : hidden;
     background  : $background-oficial;
     border-right: 1px solid rgba(0, 0, 0, .12);
 }
@@ -903,4 +904,96 @@ p {
 .verTareas {
     min-width: 125px;
     max-width: 160px !important;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.configuraciones {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+    cursor       : pointer;
+    min-height   : 50px;
+}
+
+.iconos-detalles {
+    color: $color-gris-s;
+}
+
+.detalle {
+    width: calc(100% - 40px);
+}
+
+.descripcion {
+    color    : $color-gris-s;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.horarioLaboral::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-track {
+    background-color: $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px #f3c5d3;
+}
+
+.ajustes,
+.horarioLaboral {
+    background-color: $background-oficial;
+    height          : calc(100% - 24px) !important;
+    padding         : 0px;
+    overflow        : auto;
+}
+
+.separador {
+    margin-top   : 0px;
+    border-bottom: 0.8px solid #c4c4c4 !important;
+    margin-bottom: 0px;
+    width        : 100%;
+}
+
+//Primer dia de la semana
+.example-radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+    font-size     : 12px;
+}
+
+.example-radio-button {
+    margin      : 5px 0px;
+    padding-left: 15px;
+    color       : #134895;
+}
+
+.radio-button {
+    font-size: 12px;
+}
+
+.ajustesMenu {
+    font-size      : 14px;
+    font-weight    : bold;
+    display        : flex;
+    justify-content: center;
+    padding        : 0px;
+}
+
+.listaHoras {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
 }

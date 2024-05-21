@@ -151,15 +151,88 @@
         <div class="container_page">
             <!-- Contenido lado izquierdo -->
             <div class="container_start">
-                <span class="spacer"></span>
+                <div class="dFlex">
+                    <span class="spacer"></span>
+                    <p class="ajustesMenu" *ngIf="tituloAjustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
+                    <p class="ajustesMenu" *ngIf="inicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
+                    <p class="ajustesMenu" *ngIf="fin"> {{'crm.ajustes.finLab' | translate}} </p>
+                    <p class="ajustesMenu" *ngIf="dias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="verAjustes()">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </div>
+
+                <div class="separador"></div>
+
+                <div class="ajustes" *ngIf="ajustes">
+
+                    <!-- PRIMER DIA DE LA SEMANA -->
+                    <div class="configuraciones" (click)="verDias()">
+                        <mat-icon class="iconos-detalles">today</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{ 'crm.ajustes.semana' | translate }}</p>
+                            <p class="descripcion">
+                                {{capitalizarTexto(getLrCode()[primerDiaSemana])}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Seleccionar hora inicial -->
+                    <div class="configuraciones" (click)="verHoraInicio()">
+                        <mat-icon class="iconos-detalles">history_toggle_off</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
+                            <p class="descripcion">
+                                {{nombreHoraInicial}} {{ 'crm.ajustes.rango' | translate }} {{nombreHoraFinal}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ajustes" *ngIf="inicio">
+                    <!-- Seleccionar inicio de labores -->
+                    <div class="horarioLaboral">
+                        <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores"
+                            (ngModelChange)="verHoraFin()">
+                            <mat-radio-button class="example-radio-button separador"
+                                *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
+                                {{hora.hora12}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="ajustes" *ngIf="fin">
+                    <div class="horarioLaboral">
+                        <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
+                            <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
+                                <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores"
+                                    [value]="i" color="primary">
+                                    {{hora.hora12}}
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="ajustes" *ngIf="dias">
+                    <!-- Seleccionar primer dia semana -->
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
+                        (ngModelChange)="cambiarPrimerDia()">
+                        <mat-radio-button class="example-radio-button separador"
+                            *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
+                            {{capitalizarTexto(dia)}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
                 <!-- Date Picker -->
-                <div class="selector-calendario">
+                <div class="selector-calendario" *ngIf="picker">
                     <mat-card class="demo-inline-calendar-card">
                         <mat-calendar [(selected)]="datePicker" (click)="fechaSeleccionada()"
                             (selectedChange)="syncCalendars($event)"></mat-calendar>
                     </mat-card>
                 </div>
-                <span class="spacer"></span>
             </div>
             <!-- Mostrar el calendario segun la vista seleccionada -->
             <div class="container_main">
