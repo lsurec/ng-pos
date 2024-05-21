@@ -34,7 +34,6 @@ export class PreferencesService {
     private static readonly diaKey: string = 'primerDia';
     private static readonly inicioLaboresKey: string = 'horaInicio';
     private static readonly finLaboresKey: string = 'horaFin';
-
     private static readonly filtroProductoKey: string = 'filtroProducto';
     private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
 
