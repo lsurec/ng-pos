@@ -149,32 +149,36 @@ mat-sidenav {
     display: none !important;
 }
 
-// @media screen and (max-width: 767px) {
-//     .toolbarlarge {
-//         display: none !important;
-//     }
+@media screen and (max-width: 767px) {
+    .toolbarlarge {
+        display: none !important;
+    }
 
-//     .toolbarPhone {
-//         display: block !important;
-//     }
+    .toolbarPhone {
+        display: block !important;
+    }
 
-//     .nombre-oculto {
-//         display    : block !important;
-//         align-items: center !important;
-//     }
+    .nombre-oculto {
+        display    : block !important;
+        align-items: center !important;
+    }
 
-//     .nombre-cambiar {
-//         align-items : center;
-//         display     : flex !important;
-//         padding-left: 10px;
-//     }
+    .nombre-cambiar {
+        align-items : center;
+        display     : flex !important;
+        padding-left: 10px;
+    }
 
-//     .nombre-pp {
-//         align-items   : center !important;
-//         padding-bottom: -10px;
-//     }
+    .nombre-pp {
+        align-items   : center !important;
+        padding-bottom: -10px;
+    }
 
-// }
+    .dia-nombre {
+        border-top: 1px solid $color-bordes;
+    }
+
+}
 
 .nombre-cambiar {
     display: none;

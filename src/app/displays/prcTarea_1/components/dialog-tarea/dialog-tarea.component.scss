@@ -11,7 +11,7 @@ $background-transparent: transparent; //fondo transparennte,
 
 .progress {
     padding         : 0px;
-    width           : 850px;
+    width           : 750px;
     height          : 430px;
     overflow-y      : auto;
     background-color: $background-oficial;
@@ -19,7 +19,7 @@ $background-transparent: transparent; //fondo transparennte,
 
 .dialog {
     padding         : 0px 20px 30px;
-    width           : 850px;
+    width           : 750px;
     height          : 430px;
     padding-bottom  : 30px;
     overflow-y      : auto;
@@ -126,12 +126,22 @@ p {
     .flecha-comentario {
         display: none;
     }
+
+    .dialog,
+    .progress {
+        width: 500px !important;
+    }
 }
 
 @media screen and (max-width: 400px) {
 
-    .dialog {
-        max-width: 250px !important;
+    .dialog,
+    .progress {
+        width: 100% !important;
+    }
+
+    .titulos {
+        display: block !important;
     }
 
     .verDetalle {
