@@ -179,6 +179,7 @@ export class DocumentoComponent {
 
       //validar horas minimas 
       if (UtilitiesService.compareDate(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni)) {
+        
 
         let horaCero: Date = new Date(this.facturaService.fechaRefFin);
         horaCero.setHours(0);
@@ -212,6 +213,8 @@ export class DocumentoComponent {
         this.facturaService.maxHoraFin = UtilitiesService.getHoraInput(horaMaxima);
       }
 
+     
+
     }
 
 
@@ -232,6 +235,20 @@ export class DocumentoComponent {
 
     }
 
+
+    if(UtilitiesService.compareDate(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni)){
+          //Restamblecer la fecha mayor con la hora 12:00 am
+      let horaCero: Date = new Date(this.facturaService.fechaRefFin!);
+      horaCero.setHours(0);
+      horaCero.setMinutes(0);
+
+      this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(horaCero);
+    }
+
+
+    if(UtilitiesService.isEqualDate(this.facturaService.fechaRefIni, this.facturaService.fechaRefFin!)){
+        this.facturaService.minHoraRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
+    }
 
 
     //Copiar valores
