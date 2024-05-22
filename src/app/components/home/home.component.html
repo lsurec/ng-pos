@@ -118,31 +118,6 @@
                         <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
                     </div>
                 </div>
-
-                <!-- Seleccionar hora inicial -->
-                <div class="configuraciones" (click)="horaInicial()">
-                    <mat-icon class="iconos-detalles">history_toggle_off</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
-                        <p class="descripcion">
-                            {{nombreHoraInicial}} {{ 'crm.ajustes.rango' | translate }} {{nombreHoraFinal}}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="configuraciones" (click)="verDias()">
-                    <mat-icon class="iconos-detalles">today</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{ 'crm.ajustes.semana' | translate }}</p>
-                        <p class="descripcion">
-                            {{capitalizarTexto(getLrCode()[primerDiaSemana])}}
-                        </p>
-                    </div>
-                </div>
-
-                <!-- <p class="separador"></p> -->
                 <div class="configuraciones">
                     <mat-icon class="iconos-detalles">info</mat-icon>
                     <span class="spacer"></span>
