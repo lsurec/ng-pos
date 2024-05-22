@@ -380,6 +380,13 @@ export class DetalleComponent {
       return;
     }
 
+    //validar que exista una serie
+    if (!this.facturaService.serie) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinSerie'));
+      return;
+    }
+
+
     //eliminar espacios al final de la cadena
     this.facturaService.searchText = this.facturaService.searchText.trim()
 
