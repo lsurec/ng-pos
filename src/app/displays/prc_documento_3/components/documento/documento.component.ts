@@ -141,24 +141,43 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   };
 
 
+
+  copyDates() {
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+  }
+
   restartDates() {
 
-    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
-    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
     this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
 
     // Inicializar selectedDate con la fecha de hoy
-    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
-    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
     this.facturaService.inputFechaIni = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
 
-    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni));
-    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+
+  }
+
+  restartDateRefIni() {
+    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
+    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+
+
+
+  }
+
+
+  restartDateRefFin() {
+    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
+    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
 
   }
 
@@ -167,9 +186,46 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
+
+    //validaciones para la fecha de incio ref
+    if (this.facturaService.fechaRefIni > this.facturaService.fechaRefFin!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}.`);
+      this.restartDateRefIni();
+      return;
+
+    }
+
+    if (this.facturaService.fechaRefIni > this.facturaService.fechaIni!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha inicio.`);
+      this.restartDateRefIni();
+      return;
+    }
+
+    if (this.facturaService.fechaRefIni > this.facturaService.fechaFin!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha fin.`);
+      this.restartDateRefIni();
+      return;
+    }
+
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+      this.restartDateRefIni();
+      return;
+    }
+
+
+
     //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+    this.copyDates();
 
     this.facturaService.saveDocLocal()
 
@@ -178,11 +234,34 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
   setDateRefFin() {
 
-    // this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
+    this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.formControlHoraRefFin.value);
+
+    //validaciones para la fehca fin ref
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
+      this.restartDateRefFin();
+      return;
+    }
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha incio.`);
+      this.restartDateRefFin();
+      return;
+    }
+
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaFin!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
+      this.restartDateRefFin();
+      return;
+    }
 
     //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+    this.copyDates();
 
     this.facturaService.saveDocLocal()
 
@@ -190,7 +269,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
 
   async setDateIni() {
-    // this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaIni!, this.facturaService.formControlHoraIni.value);
 
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -284,7 +363,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   }
 
   async setDateFin() {
-    // this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
 
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
