@@ -77,8 +77,20 @@ export class DocumentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.facturaService. formControlHoraRefIni.valueChanges.subscribe(valor => {
-      console.log('El valor ha cambiado:', valor);
-      // Aquí puedes ejecutar la lógica que necesitas cuando cambia el valor
+     this.setDateRefIni();
+    });
+
+
+    this.facturaService. formControlHoraRefFin.valueChanges.subscribe(valor => {
+      this.setDateRefFin();
+    });
+
+    this.facturaService. formControlHoraIni.valueChanges.subscribe(valor => {
+      this.setDateIni();
+    });
+
+    this.facturaService.formControlHoraFin.valueChanges.subscribe(valor => {
+      this.setDateFin();
     });
   }
 
@@ -166,7 +178,7 @@ export class DocumentoComponent implements OnInit {
   }
 
 
-  async setDateIncio() {
+  async setDateIni() {
     // this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
 
     //si se debe calcular el preciuo por dias

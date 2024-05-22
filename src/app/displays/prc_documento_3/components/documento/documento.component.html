@@ -105,7 +105,7 @@
                     <form class="calendarios">
                         <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaInicial"
-                                (ngModelChange)="setDateIncio()" ngbDatepicker #fInicio="ngbDatepicker" 
+                                (ngModelChange)="setDateIni()" ngbDatepicker #fInicio="ngbDatepicker" 
                                 [minDate]="facturaService.inputFechaRefIni!" 
                                 [maxDate]="facturaService.inputFechaRefFin!"/>
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
