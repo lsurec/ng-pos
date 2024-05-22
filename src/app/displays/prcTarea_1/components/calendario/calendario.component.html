@@ -248,9 +248,9 @@
                     <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
                     <div class="nombre-cambiar">
                         <div class="nombre-oculto">
-                            <p class="nombre">{{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' |
-                                translate
-                                }} {{yearSelect}} </p>
+                            <p class="nombre-fecha">{{obtenerNombreMes(monthSelectView)}}
+                                {{ 'crm.calendario.delMes' |translate}} {{yearSelect}}
+                            </p>
                         </div>
                         <span class="spacer"></span>
                         <button mat-icon-button (click)="backMonth()">
@@ -332,7 +332,7 @@
                     <!-- mostrar fecha de la semana, cambiar a ls semana siguiente y semana anterior -->
                     <div class="nombre-cambiar">
                         <div class="nombre-oculto">
-                            <p class="nombre">{{generateNameWeeck()}} </p>
+                            <p class="nombre-fecha">{{generateNameWeeck()}} </p>
                         </div>
                         <span class="spacer"></span>
                         <button mat-icon-button (click)="backWeek()">
@@ -388,7 +388,7 @@
                     <div class="nombre-cambiar">
                         <div class="nombre-oculto">
                             <!-- Mostrar nombre de la dia seleccionado -->
-                            <p class="nombre">
+                            <p class="nombre-fecha">
                                 {{daySelect}} {{ 'crm.calendario.delMes' | translate }}
                                 {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' | translate }}
                                 {{yearSelect}}

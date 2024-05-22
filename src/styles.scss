@@ -54,7 +54,8 @@ body {
         font-size: 14px !important;
     }
 
-    .form-switch .form-check-input {
+    .form-switch .form-check-input,
+    .nombre-fecha {
         font-size: 20px !important;
     }
 
@@ -100,6 +101,20 @@ body {
     background-color: $producto !important;
 }
 
+@media screen and (max-width: 767px) {
+
+    .dark-theme .mes-dias,
+    .dark-theme .dias-semana,
+    .dark-theme .textos-hora-tarea {
+        border-top: 1px solid $bordes !important;
+    }
+}
+
+.dark-theme body,
+.dark-theme html {
+    background-color: $fondo-oscuro !important;
+}
+
 //Aplica el tema oscuro a elementos específicos si es necesario 
 .dark-theme .container_start,
 .dark-theme .toolbarlarge,
@@ -126,7 +141,7 @@ body {
 .dark-theme .sidenav_container,
 .dark-theme .observaciones,
 .dark-theme .observaciones_desc,
-.dark-theme .detalle,
+.dark-theme .detalle-tarea,
 .dark-theme .elementos-detalle,
 .dark-theme .editar-detalle,
 .dark-theme .mat-expansion-panel-body,
@@ -287,10 +302,26 @@ body {
     border-bottom: 1px solid $bordes !important;
 }
 
-.dark-theme .mostrar-tareas {
+.dark-theme .mostrar-tareas,
+.dark-theme .tareas-dia-hora {
     border: 0.5px solid $tareas !important;
 }
 
+// Borde derecho
+.dark-theme .detalles-hora {
+    border-right: 1px solid #FFF3E0 !important;
+}
+
+// Borde izquierdo 
+.dark-theme .detalle-tarea {
+    border-left: 1px solid #ffffff !important;
+}
+
+// Borde de abajo
+.dark-theme .alto-cuadro-tarea,
+.dark-theme .mat-calendar-table-header-divider {
+    border-bottom: 1px solid #c4c4c4 !important;
+}
 
 //BORDE ARRIBA
 .dark-theme .backColorNavBar,
@@ -320,7 +351,8 @@ body {
 .dark-theme .mat-expansion-panel-header-description,
 .dark-theme .mat-expansion-panel-header-description,
 .mat-expansion-indicator::after,
-.dark-theme .chip {
+.dark-theme .chip,
+.dark-theme mat-calendar-arrow {
     color: $color-blanco !important;
 }
 
@@ -489,7 +521,9 @@ body {
 .dark-theme .contenedor::-webkit-scrollbar,
 .dark-theme .contenedor::-webkit-scrollbar-track,
 .dark-theme .llenar-formulario::-webkit-scrollbar,
-.dark-theme .llenar-formulario::-webkit-scrollbar-track {
+.dark-theme .llenar-formulario::-webkit-scrollbar-track,
+.dark-theme .detalle-tarea::-webkit-scrollbar,
+.dark-theme .detalle-tarea::-webkit-scrollbar-track {
     background-color: $fondo-oscuro !important;
 }
 
@@ -518,7 +552,8 @@ body {
 .dark-theme .dialog::-webkit-scrollbar-thumb,
 .dark-theme .horarioLaboral::-webkit-scrollbar-thumb,
 .dark-theme .contenedor::-webkit-scrollbar-thumb,
-.dark-theme .llenar-formulario::-webkit-scrollbar-thumb {
+.dark-theme .llenar-formulario::-webkit-scrollbar-thumb,
+.dark-theme .detalle-tarea::-webkit-scrollbar-thumb {
     background-color: $scrollbars !important;
 }
 

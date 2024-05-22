@@ -58,6 +58,12 @@ mat-sidenav {
         min-width: 70px !important;
         max-width: 125px !important;
     }
+
+    .mes-dias,
+    .dias-semana,
+    .textos-hora-tarea {
+        border-top: solid 1px $color-bordes;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -472,7 +478,7 @@ mat-sidenav {
     flex: 1 1 auto;
 }
 
-.nombre {
+.nombre-fecha {
     margin     : 0px;
     font-size  : 20px;
     font-weight: 450;
@@ -529,7 +535,7 @@ mat-sidenav {
 .tareas-dia-hora {
     display      : flex;
     align-items  : center;
-    margin       : 0px 5px;
+    margin       : 5px;
     max-width    : 150px;
     padding      : 0px 5px;
     border-radius: 25px;
