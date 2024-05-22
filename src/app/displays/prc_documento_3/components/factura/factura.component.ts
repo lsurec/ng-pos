@@ -370,7 +370,7 @@ export class FacturaComponent implements OnInit {
       month: this.facturaService.fechaRefFin.getMonth() + 1,
     }
 
-    this.facturaService.inputFechaInicial = {
+    this.facturaService.inputFechaIni = {
       year: this.facturaService.fechaIni.getFullYear(),
       day: this.facturaService.fechaIni.getDate(),
       month: this.facturaService.fechaIni.getMonth() + 1,
@@ -528,7 +528,7 @@ export class FacturaComponent implements OnInit {
     // Inicializar selectedDate con la fecha de hoy
     this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
     this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
-    this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+    this.facturaService.inputFechaIni = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
     //agregar horas a las selectTime
@@ -880,7 +880,7 @@ export class FacturaComponent implements OnInit {
       month: this.facturaService.fechaRefFin.getMonth() + 1,
     }
 
-    this.facturaService.inputFechaInicial = {
+    this.facturaService.inputFechaIni = {
       year: this.facturaService.fechaIni.getFullYear(),
       day: this.facturaService.fechaIni.getDate(),
       month: this.facturaService.fechaIni.getMonth() + 1,

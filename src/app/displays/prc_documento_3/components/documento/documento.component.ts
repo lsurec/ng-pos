@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
@@ -19,6 +19,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
 import { ReferenciaService } from '../../services/referencia.service';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-documento',
@@ -32,17 +33,18 @@ import { FormControl } from '@angular/forms';
     ReferenciaService,
   ]
 })
-export class DocumentoComponent implements OnInit {
+export class DocumentoComponent implements OnInit, OnDestroy {
   //abrir selectores de horas
-  @ViewChild('defaultTime') horaInicioPiker?: NgxMaterialTimepickerComponent;
-  @ViewChild('defaultTime') horaFinalPiker?: NgxMaterialTimepickerComponent;
-
-
   @ViewChild('horaRefIni') horaRefIni: any;
   @ViewChild('horaRefFin') horaRefFin: any;
   @ViewChild('horaIni') horaIni: any;
   @ViewChild('horaFin') horaFin: any;
-  
+
+  private controlSubFechaRefIni: Subscription | undefined;
+  private controlSubFechaRefFin: Subscription | undefined;
+  private controlSubFechaIni: Subscription | undefined;
+  private controlSubFechaFin: Subscription | undefined;
+
 
 
   @Output() newItemEvent = new EventEmitter<string>();
@@ -73,28 +75,40 @@ export class DocumentoComponent implements OnInit {
   ) {
 
   }
+  ngOnDestroy(): void {
+    if (this.controlSubFechaRefIni)
+      this.controlSubFechaRefIni.unsubscribe();
 
+    if (this.controlSubFechaRefFin)
+      this.controlSubFechaRefFin.unsubscribe();
 
-  ngOnInit(): void {
-    this.facturaService. formControlHoraRefIni.valueChanges.subscribe(valor => {
-     this.setDateRefIni();
-    });
+    if (this.controlSubFechaIni)
+      this.controlSubFechaIni.unsubscribe();
 
+    if (this.controlSubFechaFin)
+      this.controlSubFechaFin.unsubscribe();
 
-    this.facturaService. formControlHoraRefFin.valueChanges.subscribe(valor => {
-      this.setDateRefFin();
-    });
-
-    this.facturaService. formControlHoraIni.valueChanges.subscribe(valor => {
-      this.setDateIni();
-    });
-
-    this.facturaService.formControlHoraFin.valueChanges.subscribe(valor => {
-      this.setDateFin();
-    });
   }
 
 
+
+  ngOnInit(): void {
+    this.controlSubFechaRefIni = this.facturaService.formControlHoraRefIni.valueChanges.subscribe(valor => {
+      this.setDateRefIni();
+    });
+
+    this.controlSubFechaRefFin = this.facturaService.formControlHoraRefFin.valueChanges.subscribe(valor => {
+      this.setDateRefFin();
+    });
+
+    this.controlSubFechaIni = this.facturaService.formControlHoraIni.valueChanges.subscribe(valor => {
+      this.setDateIni();
+    });
+
+    this.controlSubFechaFin = this.facturaService.formControlHoraFin.valueChanges.subscribe(valor => {
+      this.setDateFin();
+    });
+  }
 
   convertValidDate(date: NgbDateStruct, timeString: string): Date {
     // Separar la cadena de tiempo en horas, minutos y AM/PM
@@ -129,20 +143,22 @@ export class DocumentoComponent implements OnInit {
 
   restartDates() {
 
-
+    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
+    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
     this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
 
-
     // Inicializar selectedDate con la fecha de hoy
-    this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.inputFechaIni = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
 
-    // this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-    // this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-
-
+    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
   }
 
@@ -150,7 +166,7 @@ export class DocumentoComponent implements OnInit {
   setDateRefIni() {
 
     console.log("Cambiando");
-    
+
 
     return;
 

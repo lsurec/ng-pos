@@ -104,7 +104,7 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaInicial"
+                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaIni"
                                 (ngModelChange)="setDateIni()" ngbDatepicker #fInicio="ngbDatepicker" 
                                 [minDate]="facturaService.inputFechaRefIni!" 
                                 [maxDate]="facturaService.inputFechaRefFin!"/>
@@ -141,7 +141,7 @@
                         <div class="input-group">
                             <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaFinal"
                                 (ngModelChange)="setDateFin()" ngbDatepicker #fFinal="ngbDatepicker"
-                                [minDate]="facturaService.inputFechaInicial!"
+                                [minDate]="facturaService.inputFechaIni!"
                                 [maxDate]="facturaService.inputFechaRefFin!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
                                 type="button">

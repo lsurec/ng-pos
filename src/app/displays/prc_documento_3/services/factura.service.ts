@@ -84,7 +84,7 @@ export class FacturaService {
 
 
     //fechas
-    inputFechaInicial?: NgbDateStruct; //fecha inicial 
+    inputFechaIni?: NgbDateStruct; //fecha inicial 
     inputFechaFinal?: NgbDateStruct;
     inputFechaRefIni?: NgbDateStruct;
     inputFechaRefFin?: NgbDateStruct;
