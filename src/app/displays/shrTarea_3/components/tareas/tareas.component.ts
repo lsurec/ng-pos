@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TareaService } from '../../services/tarea.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -17,10 +17,6 @@ import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { busquedaEspaniol, busquedaIngles } from 'src/app/providers/dias.provider';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 
-//declarar $ para usar JQuery
-declare var $: any;
-
-
 @Component({
   selector: 'app-tareas',
   templateUrl: './tareas.component.html',
@@ -32,6 +28,8 @@ declare var $: any;
   ]
 })
 export class TareasComponent {
+  // Referencia al elemento con la clase container_main
+  @ViewChild('contentContainer') contentContainer!: ElementRef;
 
   isLoading: boolean = false;
   hideDetalle: boolean = true;
@@ -94,7 +92,7 @@ export class TareasComponent {
       this.activeLang = languagesProvider[this.idioma];
       this._translate.setDefaultLang(this.activeLang.lang);
     }
-    
+
     //inicialmente mostrar las cantidad de ultimas tareas establecidas
     if (this.searchText.length == 0) {
       this.obtenerUltimasTareas();
@@ -221,18 +219,6 @@ export class TareasComponent {
     window.removeEventListener('scroll', this.scrollEvent, true);
   }
 
-  //Subir contenido
-  contentUp(): void {
-    $('.container_main').animate({ scrollTop: (0) }, 2000);
-  }
-
-  contentDown(): void {
-    const containerMain = $('.container_main');
-    const contentHeight = containerMain[0].scrollHeight - containerMain.height();
-
-    containerMain.animate({ scrollTop: contentHeight }, 2000);
-  }
-
   //Ver Detalles de la Tarea Seleccionada
   async viewTask(tarea: TareaInterface): Promise<void> {
 
@@ -278,6 +264,48 @@ export class TareasComponent {
 
   onOptionChange(optionId: number) {
     this.selectedOption = optionId;
+  }
+
+  //IR HACIA ABAJO
+  scrollDown() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, container.scrollHeight, 2000); // Desliza en 2 segundos
+  }
+
+  //IR HACIA ARRIBA
+  scrollUp() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, 0, 2000); // Desliza en 2 segundos
+  }
+
+  //REALIZAR EL SCROLL
+  smoothScroll(element: HTMLElement, target: number, duration: number) {
+    const start = element.scrollTop; // Posición inicial del desplazamiento
+    const change = target - start; // Cambio total necesario en la posición
+    const increment = 20; // Intervalo de tiempo entre cada frame de la animación
+    let currentTime = 0; // Tiempo actual transcurrido
+
+    // Función que anima el desplazamiento
+
+    const animateScroll = () => {
+      currentTime += increment; // Incrementa el tiempo actual
+      // Calcula la nueva posición usando la función de easing
+      const val = this.easeInOutQuad(currentTime, start, change, duration);
+      element.scrollTop = val; // Ajusta la posición del elemento
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment); // Continúa la animación si no ha terminado
+      }
+    };
+
+    animateScroll(); // Inicia la animación
+  }
+
+  //CREAR ANIMACION
+  easeInOutQuad(t: number, b: number, c: number, d: number): number {
+    t /= d / 2; // Normaliza el tiempo en la mitad de la duración
+    if (t < 1) return c / 2 * t * t + b; // Aceleración cuadrática
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b; // Desaceleración cuadrática
   }
 
 }

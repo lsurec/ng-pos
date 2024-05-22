@@ -20,7 +20,7 @@
     </mat-toolbar-row>
     <!-- Mostrar logos -->
     <app-barra-logo-demosoft></app-barra-logo-demosoft>
-    <div class="container_main" *ngIf="hideDetalle">
+    <div class="container_main" *ngIf="hideDetalle" #contentContainer>
         <!-- Buscar tareas por coincidencias -->
         <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
             <div class="input-container-tarea">
@@ -43,12 +43,12 @@
             </div>
         </form>
         <!--Boton ir arriba-->
-        <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="contentUp()">
+        <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
             <mat-icon>arrow_upward</mat-icon>
         </button>
-
+        <!--Boton ir abajo-->
         <button *ngIf="botonIrAbajo && ! botonIrArriba" mat-mini-fab class="button_down_content"
-            (click)="contentDown()">
+            (click)="scrollDown()">
             <mat-icon>south</mat-icon>
         </button>
         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
