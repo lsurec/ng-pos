@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
@@ -17,6 +17,9 @@ import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
+import { ReferenciaService } from '../../services/referencia.service';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-documento',
@@ -27,14 +30,21 @@ import { ProductService } from '../../services/product.service';
     TipoTransaccionService,
     ParametroService,
     PagoService,
+    ReferenciaService,
   ]
 })
-export class DocumentoComponent {
+export class DocumentoComponent implements OnInit, OnDestroy {
   //abrir selectores de horas
-  @ViewChild('defaultTime') horaEntregaPiker?: NgxMaterialTimepickerComponent;
-  @ViewChild('defaultTime') horaRegogerPiker?: NgxMaterialTimepickerComponent;
-  @ViewChild('defaultTime') horaInicioPiker?: NgxMaterialTimepickerComponent;
-  @ViewChild('defaultTime') horaFinalPiker?: NgxMaterialTimepickerComponent;
+  @ViewChild('horaRefIni') horaRefIni: any;
+  @ViewChild('horaRefFin') horaRefFin: any;
+  @ViewChild('horaIni') horaIni: any;
+  @ViewChild('horaFin') horaFin: any;
+
+  private controlSubFechaRefIni: Subscription | undefined;
+  private controlSubFechaRefFin: Subscription | undefined;
+  private controlSubFechaIni: Subscription | undefined;
+  private controlSubFechaFin: Subscription | undefined;
+
 
 
   @Output() newItemEvent = new EventEmitter<string>();
@@ -61,11 +71,44 @@ export class DocumentoComponent {
     private _formaPagoService: PagoService,
     public globalConvertService: GlobalConvertService,
     private _productService: ProductService,
+    private _referenciaService: ReferenciaService,
   ) {
+
+  }
+  ngOnDestroy(): void {
+    if (this.controlSubFechaRefIni)
+      this.controlSubFechaRefIni.unsubscribe();
+
+    if (this.controlSubFechaRefFin)
+      this.controlSubFechaRefFin.unsubscribe();
+
+    if (this.controlSubFechaIni)
+      this.controlSubFechaIni.unsubscribe();
+
+    if (this.controlSubFechaFin)
+      this.controlSubFechaFin.unsubscribe();
 
   }
 
 
+
+  ngOnInit(): void {
+    this.controlSubFechaRefIni = this.facturaService.formControlHoraRefIni.valueChanges.subscribe(valor => {
+      this.setDateRefIni();
+    });
+
+    this.controlSubFechaRefFin = this.facturaService.formControlHoraRefFin.valueChanges.subscribe(valor => {
+      this.setDateRefFin();
+    });
+
+    this.controlSubFechaIni = this.facturaService.formControlHoraIni.valueChanges.subscribe(valor => {
+      this.setDateIni();
+    });
+
+    this.controlSubFechaFin = this.facturaService.formControlHoraFin.valueChanges.subscribe(valor => {
+      this.setDateFin();
+    });
+  }
 
   convertValidDate(date: NgbDateStruct, timeString: string): Date {
     // Separar la cadena de tiempo en horas, minutos y AM/PM
@@ -98,80 +141,157 @@ export class DocumentoComponent {
   };
 
 
-  restartDates() {
 
+  copyDates() {
+    this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
+    this.facturaService.copyFechaRefFin = new Date(this.facturaService.fechaRefFin!);
+    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+  }
 
-    this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
+  restartDateFin() {
+
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
 
-
     // Inicializar selectedDate con la fecha de hoy
-    this.facturaService.inputFechaInicial = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
 
-    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+
+  }
+
+  restartDateRefIni() {
+    this.facturaService.fechaRefIni = new Date(this.facturaService.copyFechaRefIni!);
+    this.facturaService.inputFechaRefIni = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni);
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
 
 
 
   }
 
 
-  setDateEntrega() {
+  restartDateRefFin() {
+    this.facturaService.fechaRefFin = new Date(this.facturaService.copyFechaRefFin!);
+    this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefFin);
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+
+  }
 
 
-    this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
+  restartDateIni() {
+    this.facturaService.fechaIni = new Date(this.facturaService.copyFechaIni!);
+    this.facturaService.inputFechaIni = UtilitiesService.getStructureDate(this.facturaService.fechaIni);
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
 
+  }
+
+
+  setDateRefIni() {
+
+    this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
+
+
+    //validaciones para la fecha de incio ref
     if (this.facturaService.fechaRefIni > this.facturaService.fechaRefFin!) {
 
-      this.facturaService.fechaRefFin = this.facturaService.fechaRefIni;
-
-      this.facturaService.fechaRefFin.setTime(this.facturaService.fechaRefIni.getTime() + (30 * 60000));
-
-      this.facturaService.inputFechaRefFin = UtilitiesService.getStructureDate(this.facturaService.fechaRefIni)
-
-      this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}.`);
+      this.restartDateRefIni();
+      return;
 
     }
-    //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
 
-
-    this.facturaService.saveDocLocal()
-
-
-  }
-
-
-
-  setDateRecoger() {
-
-    this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.horaRefFin);
-
-
-    if (this.facturaService.fechaRefFin < this.facturaService.fechaRefIni!) {
+    if (this.facturaService.fechaRefIni > this.facturaService.fechaIni!) {
 
       //TODO:Translate
-      this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
-      this.restartDates();
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha inicio.`);
+      this.restartDateRefIni();
+      return;
+    }
+
+    if (this.facturaService.fechaRefIni > this.facturaService.fechaFin!) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha fin.`);
+      this.restartDateRefIni();
       return;
     }
 
 
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+      this.restartDateRefIni();
+      return;
+    }
+
+
+
     //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+    this.copyDates();
 
     this.facturaService.saveDocLocal()
 
   }
 
 
-  async setDateIncio() {
-    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaInicial!, this.facturaService.horaIncial);
+  setDateRefFin() {
+
+    this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.formControlHoraRefFin.value);
+
+    //validaciones para la fehca fin ref
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
+      this.restartDateRefFin();
+      return;
+    }
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha incio.`);
+      this.restartDateRefFin();
+      return;
+    }
+
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaFin!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
+      this.restartDateRefFin();
+      return;
+    }
+
+    //Copiar valores
+    this.copyDates();
+
+    this.facturaService.saveDocLocal()
+
+  }
+
+
+  async setDateIni() {
+    this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaIni!, this.facturaService.formControlHoraIni.value);
+
+    //Validaciones para la fehca inicio
+
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
+      this.restartDateIni();
+      return;
+    }
+
+
+    if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
+      this.restartDateIni();
+      return;
+    }
 
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -189,7 +309,7 @@ export class DocumentoComponent {
         );
 
         if (!verificador) {
-          this.restartDates();
+          this.restartDateIni();
           return;
         };
 
@@ -200,11 +320,8 @@ export class DocumentoComponent {
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
 
-
-
             let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
             let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
-
 
             this.facturaService.isLoading = true;
 
@@ -217,7 +334,6 @@ export class DocumentoComponent {
 
             this.facturaService.isLoading = false;
 
-
             if (!res.status) {
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -228,10 +344,8 @@ export class DocumentoComponent {
 
             let precioDias: number = res.response.data;
 
-
             this.facturaService.traInternas[count].precioDia = precioDias;
             this.facturaService.traInternas[count].total = precioDias;
-
 
             count++;
 
@@ -239,25 +353,7 @@ export class DocumentoComponent {
 
           this.facturaService.calculateTotales();
         }
-
-
       }
-
-    }
-
-
-
-    if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
-
-      this.facturaService.fechaFin = this.facturaService.fechaIni;
-
-      this.facturaService.fechaFin.setTime(this.facturaService.fechaIni.getTime() + (30 * 60000));
-
-      this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaIni)
-
-      this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-
-
     }
 
     //Copiar valores
@@ -269,7 +365,23 @@ export class DocumentoComponent {
   }
 
   async setDateFin() {
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.horaFinal);
+    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
+
+
+    //vañidaciones para la fecha fin
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
+      this.restartDateFin();
+      return;
+    }
+
+    if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
+      this.restartDateFin();
+      return;
+    }
 
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
@@ -287,7 +399,7 @@ export class DocumentoComponent {
         );
 
         if (!verificador) {
-          this.restartDates();
+          this.restartDateFin();
           return;
         };
 
@@ -346,13 +458,13 @@ export class DocumentoComponent {
 
 
 
-    if (this.facturaService.fechaFin < this.facturaService.fechaIni!) {
+    // if (this.facturaService.fechaFin < this.facturaService.fechaIni!) {
 
-      //TODO:Translate
-      this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
-      this.restartDates();
-      return;
-    }
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
+    //   this.restartDates();
+    //   return;
+    // }
 
 
     //Actuali<ar copaias 
@@ -398,9 +510,6 @@ export class DocumentoComponent {
     if (!resVendedor.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -534,10 +643,43 @@ export class DocumentoComponent {
 
     }
 
-    this.facturaService.isLoading = false;
-
 
     this.facturaService.formasPago = resFormaPago.response;
+
+
+    if (this.facturaService.valueParametro(58)) {
+
+
+      this.facturaService.tipoReferencia = undefined;
+      this.facturaService.tiposReferencia = [];
+
+
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+
+      if (this.facturaService.tiposReferencia.length == 1) {
+        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
+      }
+
+    }
+
+
+    this.facturaService.isLoading = false;
+
 
 
   }
@@ -547,7 +689,7 @@ export class DocumentoComponent {
     this.switchState = !this.switchState;
 
     console.log(this.switchState);
-    
+
 
     if (this.switchState) {
       this.facturaService.cuenta = {

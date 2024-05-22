@@ -9,6 +9,39 @@ import { Subject } from 'rxjs';
 //eventos para pantalla volver a cargar
 export class UtilitiesService {
 
+    static isEqualDate(fechaInicio: Date, fechaFinal: Date) {
+        const fecha1SinHora: Date = new Date(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate());
+        const fecha2SinHora: Date = new Date(fechaFinal.getFullYear(), fechaFinal.getMonth(), fechaFinal.getDate());
+
+        // Comparar las fechas sin hora, minutos y segundos
+        if (fecha1SinHora > fecha2SinHora) {
+            return false;
+        } else if (fecha1SinHora < fecha2SinHora) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    static compareDate(fechaInicio: Date, fechaFin: Date) {
+        const fecha1SinHora: Date = new Date(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate());
+        const fecha2SinHora: Date = new Date(fechaFin.getFullYear(), fechaFin.getMonth(), fechaFin.getDate());
+
+        return fecha1SinHora > fecha2SinHora ? true : false;
+    }
+
+    static minorDateWithoutSeconds(date1: Date, date2: Date): boolean {
+        // Crear nuevas instancias de fechas sin segundos
+        const dateWithoutSeconds1 = new Date(date1);
+        dateWithoutSeconds1.setSeconds(0, 0);
+
+        const dateWithoutSeconds2 = new Date(date2);
+        dateWithoutSeconds2.setSeconds(0, 0);
+
+        // Comparar las fechas
+        return dateWithoutSeconds1 < dateWithoutSeconds2 ? true : false;
+
+    }
 
     //convierte un string a numero si es valido
     static convertirTextoANumero(texto: string): number | null {

@@ -17,7 +17,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogosComponent } from './components/logos/logos.component';
 import { ProgressComponent } from './components/progress/progress.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -157,6 +157,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatSnackBarModule,
     FormsModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,

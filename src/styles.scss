@@ -17,6 +17,8 @@ $producto                : rgba(0, 0, 0, 0.12);
 $navegacion              : #252323;
 $negro                   : #000;
 $tareas                  :#939292;
+$notificaciones          : #182420;
+$texto-notificacion      :#ff4081;
 
 html,
 body {
@@ -518,4 +520,12 @@ body {
 .dark-theme .contenedor::-webkit-scrollbar-thumb,
 .dark-theme .llenar-formulario::-webkit-scrollbar-thumb {
     background-color: $scrollbars !important;
+}
+
+.dark-theme .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: $notificaciones !important;
+}
+
+.dark-theme .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    color: $texto-notificacion !important;
 }

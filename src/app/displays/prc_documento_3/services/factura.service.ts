@@ -17,8 +17,8 @@ import { TipoReferenciaInterface } from '../interfaces/tipo-referencia';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
-import { FiltroInterface } from '../interfaces/filtro.interface';
 import { loadStepInterface } from 'src/app/interfaces/language.interface';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -27,9 +27,7 @@ import { loadStepInterface } from 'src/app/interfaces/language.interface';
 
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
-
     searchText: string = "";  //Texto para bsucar productos
-
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
     verError: boolean = false; //ocultar y mostrar pantalla de error
@@ -74,11 +72,8 @@ export class FacturaService {
     fechaIni?: Date;
     fechaFin?: Date;
 
-    // horaRefIniMin?:Date;
-    // horaRefFinMin?:Date;
-    // horaIniMin?:Date;
-    // horaFinMin?:Date;
-
+    copyFechaRefIni?: Date;
+    copyFechaRefFin?: Date;
     copyFechaIni?: Date;
     copyFechaFin?: Date;
 
@@ -89,16 +84,17 @@ export class FacturaService {
 
 
     //fechas
-    inputFechaInicial?: NgbDateStruct; //fecha inicial 
+    inputFechaIni?: NgbDateStruct; //fecha inicial 
     inputFechaFinal?: NgbDateStruct;
     inputFechaRefIni?: NgbDateStruct;
     inputFechaRefFin?: NgbDateStruct;
 
-    //horas
-    horaIncial!: string; //hora actual
-    horaFinal!: string //hora final +10 min
-    horaRefIni!: string;
-    horaRefFin!: string;
+    formControlHoraRefIni: FormControl = new FormControl('');
+    formControlHoraRefFin: FormControl = new FormControl('');
+    formControlHoraIni: FormControl = new FormControl('');
+    formControlHoraFin: FormControl = new FormControl('');
+  
+
 
 
     //observacuion1, observacion del documento
@@ -195,40 +191,35 @@ export class FacturaService {
     }
 
     //cargar documento guardado en el strorage
-    async loadDocSave() {
+    async loadDocSave(): Promise<boolean> {
 
         let localDoc = PreferencesService.documento;
 
         //si no hay un documento guardado no hacer nada
-        if (!localDoc) {
-            return;
-        }
+        if (!localDoc) return false;
 
         //str to object para documento estructura
         let doc: DocLocalInterface = JSON.parse(localDoc);
 
         //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
-        if (doc.documento != this.tipoDocumento) {
-            return;
-        }
+        if (doc.documento != this.tipoDocumento) return false;
+
 
         //si el suario del documento guardado y el usuario de la sesion no coinciden
-        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) {
-            return;
-        }
+        if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) return false;
+
 
         //si las empresas son distinitas no cargar el documento
-        if (doc.empresa.empresa != PreferencesService.empresa.empresa) {
-            return;
-        }
+        if (doc.empresa.empresa != PreferencesService.empresa.empresa) return false;
+
 
         //si las estaciones son distinitas no cargar el documento
-        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) {
-            return;
-        }
+        if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) return false;
+
 
         //validar serie solo si existe en el documento guardado
         if (doc.serie) {
+
 
 
             //evaluar series de la sesion si existen
@@ -237,7 +228,7 @@ export class FacturaService {
                 if (this.serie) {
                     //si las series son distinitas no hacer nada
                     if (this.serie.serie_Documento != doc.serie.serie_Documento) {
-                        return;
+                        return false;
                     }
 
 
@@ -259,126 +250,19 @@ export class FacturaService {
                 }
 
                 //si la serie no existe no cargar el documento guardado
-                if (!existSerie) {
-                    return;
-                }
+                if (!existSerie) return false;
+
             } else {
                 //si no hay series no cargar el documento guardado
-                return;
+                return false;
             }
 
 
+        } else {
+            return false;
         }
 
-        //Dialogo para cargar documento guardado
-        let verificador = await this._notificationsService.openDialogActions(
-            {
-                title: this._translate.instant('pos.alertas.docEncontrado'),
-                description: this._translate.instant('pos.alertas.recuperar'),
-            }
-        );
-
-        if (!verificador) return;
-
-
-        //Cargar documento
-
-        //buscar serie guardada en las series disponobles
-        if (doc.serie) {
-            for (let i = 0; i < this.series.length; i++) {
-
-                const element = this.series[i];
-
-                //Asignar serie guardada
-                if (element.serie_Documento == doc.serie.serie_Documento) {
-                    this.serie = element;
-                    break;
-                }
-
-            }
-
-        }
-
-
-        //Buscar vendedor asigando en el documento guardado
-        if (doc.vendedor) {
-
-            for (let i = 0; i < this.vendedores.length; i++) {
-                const element = this.vendedores[i];
-
-                //Asignaer vendedor guardado
-                if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
-                    this.vendedor = element;
-                }
-            }
-        }
-
-
-        this.cuenta = doc.cliente; //asignar cliente
-        this.traInternas = doc.detalles; //asignar detalles
-        this.montos = doc.pagos; //asignar pagos
-
-
-        if (doc.tipoRef) {
-            for (let i = 0; i < this.tiposReferencia.length; i++) {
-                const element = this.tiposReferencia[i];
-                if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
-                    this.tipoReferencia = element;;
-
-                }
-            }
-
-        }
-
-
-        //load dates 
-        this.fechaRefIni = new Date(doc.refFechaEntrega!);
-        this.fechaRefFin = new Date(doc.refFechaRecoger!);
-        this.fechaIni = new Date(doc.refFechaInicio!);
-        this.fechaFin = new Date(doc.refFechaFin!);
-
-
-        //set dates in inputs
-        this.inputFechaRefIni = {
-            year: this.fechaRefIni.getFullYear(),
-            day: this.fechaRefIni.getDate(),
-            month: this.fechaRefIni.getMonth() + 1,
-        }
-
-        this.inputFechaRefFin = {
-            year: this.fechaRefFin.getFullYear(),
-            day: this.fechaRefFin.getDate(),
-            month: this.fechaRefFin.getMonth() + 1,
-        }
-
-        this.inputFechaInicial = {
-            year: this.fechaIni.getFullYear(),
-            day: this.fechaIni.getDate(),
-            month: this.fechaIni.getMonth() + 1,
-        }
-
-        this.inputFechaFinal = {
-            year: this.fechaFin.getFullYear(),
-            day: this.fechaFin.getDate(),
-            month: this.fechaFin.getMonth() + 1,
-        }
-
-        //set time
-        this.horaIncial = UtilitiesService.getHoraInput(this.fechaIni);
-        this.horaFinal = UtilitiesService.getHoraInput(this.fechaFin);
-        this.horaRefIni = UtilitiesService.getHoraInput(this.fechaRefIni);
-        this.horaRefFin = UtilitiesService.getHoraInput(this.fechaRefFin);
-
-
-        // set observaciones
-        this.refContacto = doc.refContacto;
-        this.refDescripcion = doc.refDescripcion;
-        this.refDireccionEntrega = doc.refDireccionEntrega;
-        this.refObservacion = doc.refObservacion;
-
-
-        //calcular totales del documento y pagos
-        this.calculateTotales();
+        return true;
 
     }
 
