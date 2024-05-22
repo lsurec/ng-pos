@@ -28,6 +28,7 @@ import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { DocLocalInterface } from '../../interfaces/doc-local.interface';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
+import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
 @Component({
   selector: 'app-factura',
@@ -1067,18 +1068,17 @@ export class FacturaComponent implements OnInit {
 
 
       let precioDias: number = 0;
+      let cantidadDias: number = 0;
 
       if (this.facturaService.valueParametro(351)) {
 
 
-        let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
-        let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
 
 
         let res: ResApiInterface = await this._productService.getFormulaPrecioU(
           token,
-          strFechaIni,
-          strFechaFin,
+          this.facturaService.fechaIni,
+          this.facturaService.fechaFin,
           precioSelect.precioU.toString(),
         );
 
@@ -1090,7 +1090,21 @@ export class FacturaComponent implements OnInit {
           return;
         }
 
-        precioDias = res.response.data;
+        let calculoDias:PrecioDiaInterface [] = res.response;
+
+        if(calculoDias.length == 0){
+
+          res.response = "No se pudo obtener el resultafos al hacer el calculo de precio por dias, verifica el procedimeinto."
+
+          this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+          console.error(res);
+
+          return;
+        }
+
+        precioDias = calculoDias[0].monto_Calculado;
+        cantidadDias = calculoDias[0].catidad_Dia;
 
       }
 
@@ -1108,7 +1122,7 @@ export class FacturaComponent implements OnInit {
           cantidad: tra.detalle.disponible,
           total: tra.detalle.monto,
           cargo: 0,
-          cantidadDias:0,
+          cantidadDias:cantidadDias,
           descuento: 0,
           operaciones: [],
         }
