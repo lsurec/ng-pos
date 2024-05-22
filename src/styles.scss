@@ -15,6 +15,7 @@ $color-verde             : #44ff14;
 $color-rojo              : #f93c3c;
 $producto                : rgba(0, 0, 0, 0.12);
 $navegacion              : #252323;
+$notificaciones          : #213b33;
 
 html,
 body {
@@ -383,4 +384,8 @@ body {
 .dark-theme .contenido::-webkit-scrollbar-thumb,
 .dark-theme .pagos-gregados::-webkit-scrollbar-thumb {
     background-color: $scrollbars !important;
+}
+
+.dark-theme .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: $notificaciones !important;
 }
