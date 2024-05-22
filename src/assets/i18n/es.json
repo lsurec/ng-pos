@@ -305,7 +305,8 @@
             "buscarPor": "Buscar por",
             "tipoCuenta": "TIPO CUENTA",
             "seleccionartipoCuenta": "Seleccione un tipo de cuenta.",
-            "cantidadProducto": "Cantidad Producto"
+            "cantidadProducto": "Cantidad Producto",
+            "consecutivo": "Consecutivo interno"
         },
         "documento": {
             "fechaIni": "Fecha Inicio: ",
