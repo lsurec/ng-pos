@@ -165,12 +165,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
   setDateRefIni() {
 
-    console.log("Cambiando");
-
-
-    return;
-
-    // this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
+    this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
     //Copiar valores
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
