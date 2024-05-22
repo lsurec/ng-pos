@@ -34,17 +34,24 @@ import { FormControl } from '@angular/forms';
 })
 export class DocumentoComponent {
   //abrir selectores de horas
-  @ViewChild('defaultTime') horaEntregaPiker?: NgxMaterialTimepickerComponent;
-  @ViewChild('defaultTime') horaRegogerPiker?: NgxMaterialTimepickerComponent;
   @ViewChild('defaultTime') horaInicioPiker?: NgxMaterialTimepickerComponent;
   @ViewChild('defaultTime') horaFinalPiker?: NgxMaterialTimepickerComponent;
 
 
-  formControlItem: FormControl = new FormControl('');
-  @ViewChild('timepicker') timepicker: any;
+  formControlHoraRefIni: FormControl = new FormControl('');
+  @ViewChild('horaRefIni') horaRefIni: any;
+
+  formControlHoraRefFin: FormControl = new FormControl('');
+  @ViewChild('horaRefFin') horaRefFin: any;
+
+  formControlHoraIni: FormControl = new FormControl('');
+  @ViewChild('horaIni') horaIni: any;
+
+  formControlHoraFin: FormControl = new FormControl('');
+  @ViewChild('horaFin') horaFin: any;
 
   onClear() {
-    this.formControlItem.setValue(null);
+    this.formControlHoraRefIni.setValue("13:00");
   }
 
 
@@ -131,6 +138,9 @@ export class DocumentoComponent {
 
 
   setDateRefIni() {
+
+    console.log("Cambiando");
+    
 
     this.onClear();
 

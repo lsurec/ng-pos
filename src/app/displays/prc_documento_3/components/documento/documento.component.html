@@ -49,12 +49,12 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="timepicker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateRefIni()">
-                            <ngx-material-timepicker #timepicker
+                            <input [ngxTimepicker]="horaRefIni" readonly class="hora"
+                            [formControl]="formControlHoraRefIni" (ngModelChange)="setDateRefIni()">
+                            <ngx-material-timepicker #horaRefIni
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(timepicker)"
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRefIni)"
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
@@ -82,12 +82,12 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaRegogerPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaRefFin" (ngModelChange)="setDateRefFin()">
-                            <ngx-material-timepicker #horaRegogerPiker
+                            <input [ngxTimepicker]="horaRefFin" readonly class="hora"
+                            [formControl]="formControlHoraRefFin" (ngModelChange)="setDateRefFin()">
+                            <ngx-material-timepicker #horaRefFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRegogerPiker)"
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRefFin)"
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
@@ -117,13 +117,12 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaIncial" (ngModelChange)="setDateIncio()" 
-                              >
-                            <ngx-material-timepicker #horaInicioPiker
+                            <input [ngxTimepicker]="horaIni" readonly class="hora"
+                            [formControl]="formControlHoraIni" (ngModelChange)="setDateIncio()"   >
+                            <ngx-material-timepicker #horaIni
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaInicioPiker) "
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaIni) "
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
@@ -154,12 +153,12 @@
 
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                [(ngModel)]="facturaService. horaFinal" (ngModelChange)="setDateFin()" >
-                            <ngx-material-timepicker #horaFinalPiker
+                            <input [ngxTimepicker]="horaFin" readonly class="hora"
+                            [formControl]="formControlHoraFin" (ngModelChange)="setDateFin()" >
+                            <ngx-material-timepicker #horaFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFinalPiker)"
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaFin)"
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>
