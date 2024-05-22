@@ -26,8 +26,8 @@ import { BodegaProductoInterface } from '../../interfaces/bodega-produto.interfa
 import { PrecioInterface } from '../../interfaces/precio.interface';
 import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
 import { DocLocalInterface } from '../../interfaces/doc-local.interface';
+import { FiltroInterface } from '../../interfaces/filtro.interface';
 
 @Component({
   selector: 'app-factura',
@@ -70,15 +70,7 @@ export class FacturaComponent implements OnInit {
   tabDetalle: boolean = false;  //controlador para la pestaña de detalle
   tabPago: boolean = false; //Contorlador para la pestaña de pago
 
-
-  key = {
-    F1: 112,
-    F2: 113,
-    a: 65
-    // Agrega más teclas según sea necesario
-  }
-
-
+  cambiarFiltro: boolean = false;
 
   constructor(
     //Instancia de los servicios que se van a utilizar
@@ -135,10 +127,15 @@ export class FacturaComponent implements OnInit {
   }
 
 
+  filtroNombre: string = "";
+
   ngOnInit(): void {
 
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
+
+    this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
+    this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
 
 
     // if (!this.globalConvertService.editDoc) {
@@ -148,17 +145,14 @@ export class FacturaComponent implements OnInit {
     // }
 
 
-
-  }
-
-  //evento 
-  handleKeyPress(event: KeyboardEvent) {
-    switch (event.keyCode) {
-      case this.key.a:
-        console.log(new Date());
-        break;
-      // Agrega más casos para otras teclas si es necesario
+    if (PreferencesService.filtroProducto == 1) {
+      this.filtroNombre = this.filtrosBusqueda[0].nombre;
     }
+
+    if (PreferencesService.filtroProducto == 2) {
+      this.filtroNombre = this.filtrosBusqueda[1].nombre;
+    }
+
   }
 
 
@@ -1333,6 +1327,39 @@ export class FacturaComponent implements OnInit {
       //Nuevo documento
       this.newDoc();
     }
+  }
+
+  //filtros disponibles para bsuqueda de productos
+  filtrosBusqueda: FiltroInterface[] = [
+    {
+      id: 1,
+      nombre: this._translate.instant('pos.factura.descripcion'),
+    },
+    {
+      id: 2,
+      nombre: "SKU",
+    },
+  ];
+
+  verFiltros() {
+    this.cambiarFiltro = !this.cambiarFiltro;
+  }
+
+  async guardarFiltro(filtro: number, index: number) {
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: "Filtro para la busqueda de productos",
+        description: "Haz seleccionado el filtro para la busqueda de productos de tu preferencia, cada vez que inicies siempre estará seleccionado.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    PreferencesService.filtroProducto = filtro;
+    this.facturaService.filtrosProductos = filtro;
+    this.facturaService.idFiltroPreferencia = index;
+
   }
 
 }

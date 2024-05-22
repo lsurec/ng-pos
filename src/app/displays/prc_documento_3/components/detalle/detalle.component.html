@@ -17,8 +17,9 @@
                     </div>
                     <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
                     <div class="input-container">
-                        <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="facturaService. searchText"
-                            autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
+                        <input class="barra-de-busqueda" type="search" name="search"
+                            [(ngModel)]="facturaService. searchText" autocomplete="off"
+                            placeholder="{{'pos.inputs.buscar' | translate}}">
                         <button mat-icon-button class="iconoLupa" type="submit">
                             <mat-icon>search</mat-icon>
                         </button>
@@ -119,11 +120,23 @@
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="transaccion.isChecked">
                     </mat-checkbox>
                     <div class="descripcion-producto">
-                        <p class="subtitulo"> {{transaccion.cantidad}} x ({{transaccion.producto.producto_Id}})
-                            {{transaccion.producto.des_Producto}}</p>
+                        <div class="dFlex">
+                            <p class="subtitulo">{{ 'pos.factura.cantidadProducto' | translate }}:
+                                {{transaccion.cantidad}}
+                            </p>
+                            <p class="padding-right"></p>
+                            <p class="subtitulo">{{ 'pos.factura.producto' | translate }}:
+                                ({{transaccion.producto.producto_Id}})
+                                {{transaccion.producto.des_Producto}}
+                            </p>
+                        </div>
 
                         <div class="precios">
-
+                            <!--TODO:Translate-->
+                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Cantitad días:
+                                {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
+                            </p>
+                            <span class="spacer" *ngIf="facturaService.valueParametro(44)"></span>
                             <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
                                 {{transaccion.precio?.precioU | currency:' ':'symbol':'2.2-2' }}
                             </p>
@@ -132,11 +145,6 @@
                             <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Precio total por
                                 cantidad:
                                 {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
-                            </p>
-                            <span class="spacer"></span>
-
-                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Precio total por día:
-                                {{transaccion.precioDia | currency:' ':'symbol':'2.2-2' }}
                             </p>
                             <span class="spacer"></span>
                             <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |

@@ -31,6 +31,9 @@ export class PreferencesService {
     private static readonly sizeKey: string = 'fontSize';
     private static readonly idSizeKey: string = 'idFontSize';
     private static readonly felKey: string = 'fel';
+    private static readonly filtroProductoKey: string = 'filtroProducto';
+    private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
+
 
 
     //Borrar datos al cerrar sesion
@@ -301,4 +304,28 @@ export class PreferencesService {
         if (!value) return "";
         return value;
     }
+
+    //filtro para buscar productos
+    @Input()
+    static set filtroProducto(value: number) {
+        sessionStorage.setItem(this.filtroProductoKey, value.toString());
+    }
+
+    static get filtroProducto(): number {
+        let value = sessionStorage.getItem(this.filtroProductoKey);
+        return parseFloat(value!);
+    }
+
+    //id del filto
+    //filtro para buscar productos
+    @Input()
+    static set idFiltroProducto(value: number) {
+        sessionStorage.setItem(this.idFiltroProductoKey, value.toString());
+    }
+
+    static get idFiltroProducto(): number {
+        let value = sessionStorage.getItem(this.idFiltroProductoKey);
+        return parseFloat(value!);
+    }
+
 }

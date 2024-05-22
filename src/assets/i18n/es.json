@@ -304,7 +304,8 @@
             "actualizarFechas": "No hay documentos disponibles para esta fecha, intente cambiar el rango de fechas para actualizar la lista.",
             "buscarPor": "Buscar por",
             "tipoCuenta": "TIPO CUENTA",
-            "seleccionartipoCuenta": "Seleccione un tipo de cuenta."
+            "seleccionartipoCuenta": "Seleccione un tipo de cuenta.",
+            "cantidadProducto": "Cantidad Producto"
         },
         "documento": {
             "fechaIni": "Fecha Inicio: ",
