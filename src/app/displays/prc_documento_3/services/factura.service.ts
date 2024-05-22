@@ -18,6 +18,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { GlobalConvertService } from '../../listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { loadStepInterface } from 'src/app/interfaces/language.interface';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -71,11 +72,8 @@ export class FacturaService {
     fechaIni?: Date;
     fechaFin?: Date;
 
-    // horaRefIniMin?:Date;
-    // horaRefFinMin?:Date;
-    // horaIniMin?:Date;
-    // horaFinMin?:Date;
-
+    copyFechaRefIni?: Date;
+    copyFechaRefFin?: Date;
     copyFechaIni?: Date;
     copyFechaFin?: Date;
 
@@ -91,11 +89,11 @@ export class FacturaService {
     inputFechaRefIni?: NgbDateStruct;
     inputFechaRefFin?: NgbDateStruct;
 
-    //horas
-    horaIncial!: string; //hora actual
-    horaFinal!: string //hora final +10 min
-    horaRefIni!: string;
-    horaRefFin!: string;
+    formControlHoraRefIni: FormControl = new FormControl('');
+    formControlHoraRefFin: FormControl = new FormControl('');
+    formControlHoraIni: FormControl = new FormControl('');
+    formControlHoraFin: FormControl = new FormControl('');
+  
 
 
 

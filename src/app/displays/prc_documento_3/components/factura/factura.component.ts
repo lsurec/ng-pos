@@ -383,10 +383,10 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
+    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
     // set observaciones
@@ -532,10 +532,10 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
     //agregar horas a las selectTime
-    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
-    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
+    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
+    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin)) ;
+    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
+    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin)) ;
 
 
 
@@ -893,10 +893,10 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.horaIncial = UtilitiesService.getHoraInput(this.facturaService.fechaIni);
-    this.facturaService.horaFinal = UtilitiesService.getHoraInput(this.facturaService.fechaFin);
-    this.facturaService.horaRefIni = UtilitiesService.getHoraInput(this.facturaService.fechaRefIni);
-    this.facturaService.horaRefFin = UtilitiesService.getHoraInput(this.facturaService.fechaRefFin);
+    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
     //Set min time for inputs
 

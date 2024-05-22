@@ -50,7 +50,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRefIni" readonly class="hora"
-                            [formControl]="formControlHoraRefIni" (ngModelChange)="setDateRefIni()">
+                            [formControl]="facturaService. formControlHoraRefIni" >
                             <ngx-material-timepicker #horaRefIni
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
@@ -83,7 +83,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRefFin" readonly class="hora"
-                            [formControl]="formControlHoraRefFin" (ngModelChange)="setDateRefFin()">
+                            [formControl]="facturaService. formControlHoraRefFin" >
                             <ngx-material-timepicker #horaRefFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -118,7 +118,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaIni" readonly class="hora"
-                            [formControl]="formControlHoraIni" (ngModelChange)="setDateIncio()"   >
+                            [formControl]="facturaService. formControlHoraIni"    >
                             <ngx-material-timepicker #horaIni
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -154,7 +154,7 @@
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaFin" readonly class="hora"
-                            [formControl]="formControlHoraFin" (ngModelChange)="setDateFin()" >
+                            [formControl]=" facturaService.formControlHoraFin">
                             <ngx-material-timepicker #horaFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
