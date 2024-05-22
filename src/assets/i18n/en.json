@@ -302,7 +302,10 @@
             "escribir": "Type here.",
             "tipoCli": "Customer type.",
             "actualizarFechas": "No documents available for this date, try changing the date range to update the list.",
-            "buscarPor": "Search by"
+            "buscarPor": "Search by",
+            "tipoCuenta": "ACCOUNT TYPE",
+            "seleccionartipoCuenta": "Select an account type.",
+            "cantidadProducto": "Product Quantity"
         },
         "documento": {
             "fechaIni": "Start Date: ",
