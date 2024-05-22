@@ -17,6 +17,7 @@ $producto                : rgba(0, 0, 0, 0.12);
 $navegacion              : #252323;
 $notificaciones          : #182420;
 $texto-notificacion      :#ff4081;
+$azul-menu               : #134895;
 
 html,
 body {
@@ -68,6 +69,10 @@ body {
     //Textos "AM"/"PM" de los Relojes
     .timepicker-period__btn {
         font-size: 18px !important;
+    }
+
+    .mat-mdc-select-value-text {
+        color: $azul-menu !important;
     }
 }
 
