@@ -1108,6 +1108,7 @@ export class FacturaComponent implements OnInit {
           cantidad: tra.detalle.disponible,
           total: tra.detalle.monto,
           cargo: 0,
+          cantidadDias:0,
           descuento: 0,
           operaciones: [],
         }

@@ -848,6 +848,7 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
+            cantidadDias:0,
             consecutivo: 0,
             estadoTra: 0,
             precioCantidad: null,

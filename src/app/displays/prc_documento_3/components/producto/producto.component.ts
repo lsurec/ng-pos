@@ -527,6 +527,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
           producto: this.producto,
           precio: this.productoService.precio!,
           cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+          cantidadDias: this.facturaService.valueParametro(44) ?  this.getDaysBetweenDates(this.facturaService.fechaIni!, this.facturaService.fechaFin!) : 0,
           total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
           cargo: 0,
           descuento: 0,
@@ -542,14 +543,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.traInternas[this.productoService.indexEdit] = {
         consecutivo: this.facturaService.traInternas[this.productoService.indexEdit].consecutivo,
         estadoTra: 1,
-        precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
+        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        total: this.facturaService.valueParametro(351) ? precioDias : this.productoService.total,
+        cantidadDias: this.facturaService.valueParametro(44) ?  this.getDaysBetweenDates(this.facturaService.fechaIni!, this.facturaService.fechaFin!) : 0,
+        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
@@ -567,6 +569,27 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     this.dialogRef.close([]);
 
   }
+
+
+  //TODO:ELiminar cuendo se obvtengan los dias del PA
+  getDaysBetweenDates(date1: Date, date2: Date): number {
+    // Normalizar las fechas eliminando las horas, minutos, segundos y milisegundos
+    const startDate = new Date(date1);
+    startDate.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(date2);
+    endDate.setHours(0, 0, 0, 0);
+
+    // Calcular la diferencia en milisegundos
+    const differenceInTime = endDate.getTime() - startDate.getTime();
+
+    // Convertir la diferencia de tiempo a días
+    const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+    // Contar tanto el día de inicio como el día de fin
+    return differenceInDays + 1;
+  }
+
   async imagen(producto: ProductoInterface) {
 
     this.isLoading = true;
