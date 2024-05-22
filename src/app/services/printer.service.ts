@@ -1491,7 +1491,7 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
 
                         body: [
                             ...transacciones
