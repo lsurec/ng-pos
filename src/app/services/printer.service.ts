@@ -1478,7 +1478,6 @@ export class PrinterService {
                                     text: 'Precio Unitario',
                                     style: 'normalTextBold'
                                 },
-                               
                                 {
                                     text: 'Total',
                                     style: 'normalTextBold'
