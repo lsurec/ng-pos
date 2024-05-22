@@ -40,6 +40,7 @@ export interface Empresa {
     sku:string;
     descripcion: string;
     cantidad: number;
+    cantidadDias: number;
     unitario: string;
     precioDia:string,
     total: string;

@@ -20,6 +20,7 @@ import { ProductService } from '../../services/product.service';
 import { ReferenciaService } from '../../services/referencia.service';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
 @Component({
   selector: 'app-documento',
@@ -320,15 +321,13 @@ export class DocumentoComponent implements OnInit, OnDestroy {
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
 
-            let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
-            let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
-
+           
             this.facturaService.isLoading = true;
 
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
               this.token,
-              strFechaIni,
-              strFechaFin,
+              this.facturaService.fechaIni,
+              this.facturaService.fechaFin!,
               tra.precioCantidad!.toString(),
             );
 
@@ -342,10 +341,24 @@ export class DocumentoComponent implements OnInit, OnDestroy {
               return;
             }
 
-            let precioDias: number = res.response.data;
+            let calculoDias:PrecioDiaInterface [] = res.response;
 
-            this.facturaService.traInternas[count].precioDia = precioDias;
-            this.facturaService.traInternas[count].total = precioDias;
+            if(calculoDias.length == 0){
+
+
+                res.response = "No se están obteiiendo valores del procedimiento almacenado"
+
+                this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+  
+                console.error(res);
+  
+                return;
+            }
+
+            this.facturaService.traInternas[count].precioDia =  calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].total =  calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
 
             count++;
 
@@ -411,17 +424,12 @@ export class DocumentoComponent implements OnInit, OnDestroy {
             let count: number = 0;
 
 
-
-            let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
-            let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
-
-
             this.facturaService.isLoading = true;
 
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
               this.token,
-              strFechaIni,
-              strFechaFin,
+              this.facturaService.fechaIni!,
+              this.facturaService.fechaFin,
               tra.precioCantidad!.toString(),
             );
 
@@ -436,11 +444,23 @@ export class DocumentoComponent implements OnInit, OnDestroy {
               return;
             }
 
-            let precioDias: number = res.response.data;
+            let calculoDias:PrecioDiaInterface [] = res.response;
+
+            if(calculoDias.length == 0){
+
+              res.response = "El procedimiento almacenado no esta devolviendo valores, verificar.";
+
+              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+              console.error(res);
+
+              return;
+            }
 
 
-            this.facturaService.traInternas[count].precioDia = precioDias;
-            this.facturaService.traInternas[count].total = precioDias;
+            this.facturaService.traInternas[count].precioDia =  calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
 
 
             count++;
@@ -454,17 +474,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
       }
 
     }
-
-
-
-
-    // if (this.facturaService.fechaFin < this.facturaService.fechaIni!) {
-
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
-    //   this.restartDates();
-    //   return;
-    // }
 
 
     //Actuali<ar copaias 

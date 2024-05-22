@@ -305,7 +305,8 @@
             "buscarPor": "Search by",
             "tipoCuenta": "ACCOUNT TYPE",
             "seleccionartipoCuenta": "Select an account type.",
-            "cantidadProducto": "Product Quantity"
+            "cantidadProducto": "Product Quantity",
+            "consecutivo": "Internal consecutive"
         },
         "documento": {
             "fechaIni": "Start Date: ",
