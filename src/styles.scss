@@ -15,7 +15,8 @@ $color-verde             : #44ff14;
 $color-rojo              : #f93c3c;
 $producto                : rgba(0, 0, 0, 0.12);
 $navegacion              : #252323;
-$notificaciones          : #213b33;
+$notificaciones          : #182420;
+$texto-notificacion      :#ff4081;
 
 html,
 body {
@@ -388,4 +389,8 @@ body {
 
 .dark-theme .mat-mdc-snack-bar-container .mdc-snackbar__surface {
     background-color: $notificaciones !important;
+}
+
+.dark-theme .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    color: $texto-notificacion !important;
 }
