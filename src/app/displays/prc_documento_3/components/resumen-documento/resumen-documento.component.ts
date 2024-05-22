@@ -1188,6 +1188,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       items.push(
         {
+          cantidadDias:detail.cantidadDias,
           sku: detail.producto.producto_Id,
           descripcion: detail.producto.des_Producto,
           cantidad: detail.cantidad,
