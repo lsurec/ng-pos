@@ -32,6 +32,7 @@ export interface OriginDocInterface {
     referencia_D_Observacion_3:       null | string;
     tipo_Referencia:                  number;
     referencia_D_Des_Tipo_Referencia: string | null;
+    consecutivo_Interno_Ref: number | null;
 }
 
 
