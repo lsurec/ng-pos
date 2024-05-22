@@ -274,7 +274,7 @@ export class DetalleTareaComponent {
   //cuando la informacion de los detalles esta vacia
   resolveObject(objeto: any): string {
     if (objeto == null)
-      return this._translate.instant('crm.tareas.noAsignado');
+      return this._translate.instant('pos.home.noAsignado');
     return objeto;
   }
 
@@ -353,7 +353,7 @@ export class DetalleTareaComponent {
     if (this.selectedFiles.length == 0) {
       this.isLoading = false;
       this.descripcionComentario = '';
-      this._widgetsService.openSnackbar(`${this._translate.instant('crm.alertas.comentarioCreado')}${this.comentarios[this.comentarios.length - 1].comentario.tarea_Comentario}`);
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
       return;
     }
 

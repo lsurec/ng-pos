@@ -236,7 +236,7 @@ export class TareasComponent {
   //cuando la informacion de los detalles esta vacia
   resolveObject(objeto: any): string {
     if (objeto == null)
-      return this._translate.instant('crm.tareas.noAsignado');
+      return this._translate.instant('pos.home.noAsignado');
     return objeto;
   }
 
