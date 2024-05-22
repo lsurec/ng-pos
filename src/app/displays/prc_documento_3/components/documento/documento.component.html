@@ -49,12 +49,12 @@
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
-                            <input [ngxTimepicker]="horaEntregaPiker" readonly class="hora"
+                            <input [ngxTimepicker]="timepicker" readonly class="hora"
                                 [(ngModel)]="facturaService. horaRefIni" (ngModelChange)="setDateRefIni()">
-                            <ngx-material-timepicker #horaEntregaPiker
+                            <ngx-material-timepicker #timepicker
                                 [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
-                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaEntregaPiker)"
+                        <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(timepicker)"
                             type="button">
                             <mat-icon class="ico-calendario">access_time</mat-icon>
                         </button>

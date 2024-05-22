@@ -18,6 +18,7 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
 import { ReferenciaService } from '../../services/referencia.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-documento',
@@ -37,6 +38,14 @@ export class DocumentoComponent {
   @ViewChild('defaultTime') horaRegogerPiker?: NgxMaterialTimepickerComponent;
   @ViewChild('defaultTime') horaInicioPiker?: NgxMaterialTimepickerComponent;
   @ViewChild('defaultTime') horaFinalPiker?: NgxMaterialTimepickerComponent;
+
+
+  formControlItem: FormControl = new FormControl('');
+  @ViewChild('timepicker') timepicker: any;
+
+  onClear() {
+    this.formControlItem.setValue(null);
+  }
 
 
   @Output() newItemEvent = new EventEmitter<string>();
@@ -122,6 +131,10 @@ export class DocumentoComponent {
 
 
   setDateRefIni() {
+
+    this.onClear();
+
+    return;
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.horaRefIni);
 
