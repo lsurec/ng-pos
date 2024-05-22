@@ -476,17 +476,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     }
 
 
-
-
-    // if (this.facturaService.fechaFin < this.facturaService.fechaIni!) {
-
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar("Cambio invalido: Fecha y hora menor a la fecha inicial.");
-    //   this.restartDates();
-    //   return;
-    // }
-
-
     //Actuali<ar copaias 
     //Copiar valores
     this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
