@@ -149,7 +149,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
   }
 
-  restartDates() {
+  restartDateFin() {
 
     this.facturaService.fechaFin = new Date(this.facturaService.copyFechaFin!);
 
@@ -367,6 +367,22 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   async setDateFin() {
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
 
+
+    //vañidaciones para la fecha fin
+    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
+      this.restartDateFin();
+      return;
+    }
+
+    if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
+      //TODO:Translate
+      this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
+      this.restartDateFin();
+      return;
+    }
+
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(351)) {
       //si hay productos agregados no se puede cambiar la fechha
@@ -383,7 +399,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
         );
 
         if (!verificador) {
-          this.restartDates();
+          this.restartDateFin();
           return;
         };
 
