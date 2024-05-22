@@ -1027,6 +1027,10 @@ export class PrinterService {
                         style: 'normalText'
                     },
                     {
+                        text: item.cantidadDias, //TODO:set precio dia
+                        style: 'normalText'
+                    },
+                    {
                         text: item.sku,
                         style: 'normalText'
                     },
@@ -1044,10 +1048,7 @@ export class PrinterService {
                         text: item.unitario,
                         style: 'normalText'
                     },
-                    {
-                        text: item.precioDia, //TODO:set precio dia
-                        style: 'normalText'
-                    },
+                   
                     {
                         text: item.total,
                         style: 'normalText'
@@ -1439,7 +1440,7 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%','10%', '23%', '15%', '10%',  '10%',],
                         body: [
                             [
                                 {
@@ -1449,6 +1450,10 @@ export class PrinterService {
 
                                 {
                                     text: 'Cantidad',
+                                    style: 'normalTextBold'
+                                },
+                                {
+                                    text: 'Cantidad Dias',
                                     style: 'normalTextBold'
                                 },
                                 {
@@ -1474,10 +1479,6 @@ export class PrinterService {
                                     style: 'normalTextBold'
                                 },
                                 {
-                                    text: 'Precio x Dia',
-                                    style: 'normalTextBold'
-                                },
-                                {
                                     text: 'Total',
                                     style: 'normalTextBold'
                                 },
@@ -1489,7 +1490,7 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['12%', '10%', '10%', '23%', '15%', '10%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
 
                         body: [
                             ...transacciones

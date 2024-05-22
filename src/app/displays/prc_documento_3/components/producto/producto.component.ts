@@ -21,6 +21,7 @@ import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interf
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { Router } from '@angular/router';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
 @Component({
   selector: 'app-producto',
@@ -470,21 +471,21 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     let precioDias: number = 0;
+    let cantidadDias: number = 0;
 
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
     if (this.facturaService.valueParametro(44)) {
 
 
-      let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
-      let strFechaFin: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaFin!);
+      // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
 
 
 
       let res: ResApiInterface = await this._productService.getFormulaPrecioU(
         this.token,
-        strFechaIni,
-        strFechaFin,
+        this.facturaService.fechaIni!,
+        this.facturaService.fechaFin!,
         this.productoService.total.toString(),
       );
 
@@ -503,8 +504,24 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         return;
       }
 
+      
 
-      precioDias = res.response.data;
+      let preciosDia:PrecioDiaInterface[] = res.response;
+
+      if(preciosDia.length == 0){
+        res.response = 'No ude posible obtner los valores calculados para el precio dia'
+        let error: TypeErrorInterface = {
+          error: res,
+          type: 1,
+        }
+        this.dialogRef.close(error);
+
+        return;
+      
+      }
+      
+      precioDias = preciosDia[0].monto_Calculado;
+      cantidadDias = preciosDia[0].catidad_Dia;
 
     }
 
@@ -527,6 +544,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
           producto: this.producto,
           precio: this.productoService.precio!,
           cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+          cantidadDias: this.facturaService.valueParametro(44) ?  cantidadDias : 0,
           total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
           cargo: 0,
           descuento: 0,
@@ -542,14 +560,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.traInternas[this.productoService.indexEdit] = {
         consecutivo: this.facturaService.traInternas[this.productoService.indexEdit].consecutivo,
         estadoTra: 1,
-        precioCantidad: this.facturaService.valueParametro(351) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(351) ? precioDias : null,
+        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        total: this.facturaService.valueParametro(351) ? precioDias : this.productoService.total,
+        cantidadDias: this.facturaService.valueParametro(44) ?  cantidadDias : 0,
+        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
@@ -567,6 +586,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     this.dialogRef.close([]);
 
   }
+
+
   async imagen(producto: ProductoInterface) {
 
     this.isLoading = true;

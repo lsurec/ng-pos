@@ -19,6 +19,7 @@ $negro                   : #000;
 $tareas                  :#939292;
 $notificaciones          : #182420;
 $texto-notificacion      :#ff4081;
+$azul-menu               : #134895;
 
 html,
 body {
@@ -73,8 +74,8 @@ body {
         font-size: 18px !important;
     }
 
-    .descripcion-tarea {
-        font-size: 10.5px !important;
+    .mat-mdc-select-value-text {
+        color: $azul-menu !important;
     }
 }
 
