@@ -1,0 +1,92 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<app-crear-tarea *ngIf="crearTarea" (desdeTareas)="backPageTareas($event)"
+    (nuevaTarea)="addItem($event)"></app-crear-tarea>
+
+
+<div *ngIf="!isLoading && mostrarTareas" class="container_page">
+    <app-detalle-tarea (newItemEvent)="backPage($event)" *ngIf="!hideDetalle"></app-detalle-tarea>
+    <mat-toolbar-row class="head__sidenav" *ngIf="hideDetalle">
+        <button (click)="backHome()" mat-icon-button aria-label class="flecha-regresar"
+            matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="refresh()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-button (click)="nuevaTarea()" class="nueva" matTooltip="{{'crm.crear.crear' | translate}}">
+            <mat-icon>add</mat-icon> {{'crm.crear.crear' | translate}}
+        </button>
+    </mat-toolbar-row>
+    <!-- Mostrar logos -->
+    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+    <div class="container_main" *ngIf="hideDetalle" #contentContainer>
+        <!-- Buscar tareas por coincidencias -->
+        <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
+            <div class="input-container-tarea">
+                <button class="iconoLupa" mat-icon-button>
+                    <mat-icon>search</mat-icon> </button>
+                <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText" autocomplete="off"
+                    placeholder="{{'crm.crear.busqueda' | translate}}">
+            </div>
+            <div class="tipo-busqueda">
+                <p class="buscar-opcion">{{ 'crm.home.buscar' | translate }}</p>
+                <div class="buscar">
+                    <div *ngFor="let option of filtrosBusqueda">
+                        <div class="chip" [class.selected]="option.id === selectedOption"
+                            (click)="onOptionChange(option.id)">{{ option.nombre }}
+                        </div>
+                    </div>
+                </div>
+                <p class="coincidencias">{{'crm.home.registros' | translate}}
+                    {{buscarTareas.length}}</p>
+            </div>
+        </form>
+        <!--Boton ir arriba-->
+        <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+            <mat-icon>arrow_upward</mat-icon>
+        </button>
+        <!--Boton ir abajo-->
+        <button *ngIf="botonIrAbajo && ! botonIrArriba" mat-mini-fab class="button_down_content" (click)="scrollDown()">
+            <mat-icon>south</mat-icon>
+        </button>
+        <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
+        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+        <!--Lista de todas las tareas-->
+        <div *ngIf="buscarTareas.length != 0" class="tareas">
+            <div *ngFor="let item of buscarTareas">
+                <div class="list-group espacioLista " (click)="viewTask(item)">
+                    <a class="tarea list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <!-- Titulo Tarea -->
+                            <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
+                        </div>
+                        <!-- Numero de tarea y fecha inicial -->
+                        <small class="">{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</small>
+                        <small class="alingLeft fuente negrita"
+                            [ngStyle]="{'color': item.backColor ? item.backColor : '#000' }">
+                            {{
+                            item.tarea_Estado}}</small>
+                        <br>
+                        <small>{{ 'crm.tarea.creador' | translate }}
+                            {{item.usuario_Creador}}</small>
+                        <small class="alingLeft fuente"> {{ 'crm.tarea.responsable' | translate }} {{
+                            resolveObject(item.usuario_Responsable)}}</small>
+                        <br>
+                        <!-- id de la referencia y descripcion -->
+                        <small>{{ 'crm.tarea.idReferencia' | translate }} {{item.iD_Referencia}}</small>
+                        <small class="alingLeft fuente"> {{ 'crm.tarea.fechaIni' | translate }} {{item.fecha_Inicial |
+                            date: 'dd/MM/yyyy'}}</small>
+                        <br>
+                        <!-- Descripcion (observacion) Tarea -->
+                        <div class="dFlex">
+                            <small>{{ 'crm.tarea.descripcion' | translate }}</small>
+                            <p class="descripcion">{{item.tarea_Observacion_1}}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

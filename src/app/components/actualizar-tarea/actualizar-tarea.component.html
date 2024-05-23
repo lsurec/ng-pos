@@ -1,0 +1,50 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+    <div class="contenedor">
+        <div class="d-flex">
+            <span class="spacer"></span>
+            <!-- Titulo -->
+            <p class="verDetalle" *ngIf="tareasGlobalService.idActualizar == 1">
+                {{ 'crm.actualizar.estado' | translate}} {{tarea.tarea.iD_Tarea}}
+            </p>
+            <p class="verDetalle" *ngIf="tareasGlobalService.idActualizar == 2">
+                {{ 'crm.actualizar.prioridad' | translate }} {{tarea.tarea.iD_Tarea}}
+            </p>
+            <span class="spacer"></span>
+            <!-- Cerrar dialogo -->
+            <span class="close" (click)="closeDialog()">&times;</span>
+        </div>
+        <hr>
+        <div class="busqueda">
+            <div class="d-flex">
+                <div class="contenido-izquierdo" *ngIf="tareasGlobalService.idActualizar == 1">
+                    <div class="d-flex">
+                        <p class="campo-obligatorio">{{ 'crm.crear.estado' | translate }}</p>
+                        <p class="obligatorio">*</p>
+                    </div>
+                    <mat-select name="estado" class="tipo-tarea" placeholder="{{ 'crm.crear.estadoTarea' | translate }}"
+                        [(ngModel)]="estadoTarea">
+                        <mat-option *ngFor="let estado of estadosTarea" [value]="estado" (click)="nuevoEstadoTarea()">
+                            {{estado.descripcion}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+
+                <div class="contenido-izquierdo" *ngIf="tareasGlobalService.idActualizar == 2">
+                    <div class="d-flex">
+                        <p class="campo-obligatorio">{{ 'crm.crear.prioridad' | translate }}</p>
+                        <p class="obligatorio">*</p>
+                    </div>
+                    <mat-select name="prioridad" class="tipo-tarea"
+                        placeholder="{{ 'crm.crear.estadoTarea' | translate }}" [(ngModel)]="prioridadTarea">
+                        <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad"
+                            (click)="nuevoNivelPrioridad()">
+                            {{prioridad.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
