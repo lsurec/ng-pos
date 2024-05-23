@@ -1698,7 +1698,7 @@ export class PrinterService {
     async getPDFDocTMU(doc: DocPrintModel) {
 
 
-        let logo_empresa = await this._generateBase64('/assets/empresa.png');;
+        // let logo_empresa = await this._generateBase64('/assets/empresa.png');;
 
         let date: Date = doc.cliente.fecha;
 
@@ -1793,11 +1793,11 @@ export class PrinterService {
             pageMargins: [5.66, 0, 5.66, 5.66],
             content: [
                 //DATOS EMPRESA
-                {
-                    image: logo_empresa,
-                    fit: [161.73, 76.692],
-                    alignment: 'center',
-                },
+                // {
+                //     image: logo_empresa,
+                //     fit: [161.73, 76.692],
+                //     alignment: 'center',
+                // },
                 {
                     text: doc.empresa.razonSocial,
                     style: 'centerBold',
