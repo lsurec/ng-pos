@@ -51,8 +51,7 @@
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRefIni" readonly class="hora"
                             [formControl]="facturaService. formControlHoraRefIni" >
-                            <ngx-material-timepicker #horaRefIni
-                                [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
+                            <ngx-material-timepicker #horaRefIni  [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRefIni)"
                             type="button">

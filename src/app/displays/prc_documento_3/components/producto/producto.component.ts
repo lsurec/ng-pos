@@ -429,6 +429,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     //si hay mensjaes hay inconvenientes
     if (mensajes.length > 0) {
+      this.isLoading = false;
+
 
       let validaciones: ValidateProductInterface[] = [
         {
@@ -453,6 +455,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     //si todo ha salido bien, agregamos el producto al documento
     //Buscar la moneda, v
     if (this.facturaService.traInternas.length > 0) {
+      this.isLoading = false;
+
       let monedaDoc = 0;
       let monedaTra = 0;
 
@@ -509,6 +513,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       let preciosDia:PrecioDiaInterface[] = res.response;
 
       if(preciosDia.length == 0){
+      this.isLoading = false;
+
+        
         res.response = 'No ude posible obtner los valores calculados para el precio dia'
         let error: TypeErrorInterface = {
           error: res,
@@ -581,6 +588,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this._notificationsService.openSnackbar("Transaccion modificada");
 
     }
+
+    this.isLoading = false;
+
 
 
     this.dialogRef.close([]);
