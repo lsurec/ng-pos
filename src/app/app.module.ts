@@ -10,7 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerI18n, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -83,6 +83,7 @@ import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.compon
 import { NotFoundItemComponent } from './components/not-found-item/not-found-item.component';
 import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-dialog.component';
 import { MatCardModule } from '@angular/material/card';
+import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -180,6 +181,10 @@ import { MatCardModule } from '@angular/material/card';
     MatProgressBarModule
   ],
   providers: [
+    {
+      provide: NgbDatepickerI18n,
+      useClass: CustomDatepickerI18n
+    }
     // DataUserService,
   ],
   bootstrap: [AppComponent]

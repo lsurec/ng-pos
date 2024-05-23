@@ -7,6 +7,9 @@ import { TareaInterface } from "../displays/shrTarea_3/interfaces/tarea-user.int
 })
 export class GlobalTareasService {
 
+    fechaInicialFormat?: string;
+    fechaFinalFormat?: string;
+
     idPantalla: number = 0;
 
     idActualizar: number = 0;

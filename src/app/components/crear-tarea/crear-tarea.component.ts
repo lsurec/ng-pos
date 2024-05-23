@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbCalendar, NgbDateStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,6 +31,7 @@ import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { BuscarIdReferenciaComponent } from '../buscar-id-referencia/buscar-id-referencia.component';
 import { UsuariosDialogComponent } from '../usuarios-dialog/usuarios-dialog.component';
+import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
 
 @Component({
   selector: 'app-crear-tarea',
@@ -48,7 +49,7 @@ import { UsuariosDialogComponent } from '../usuarios-dialog/usuarios-dialog.comp
     CrearTareasComentariosService,
   ]
 })
-export class CrearTareaComponent implements OnChanges {
+export class CrearTareaComponent implements OnChanges, OnInit {
 
   @Output() newItemEvent = new EventEmitter<boolean>();
   @Output() desdeCalendario = new EventEmitter<boolean>();
@@ -128,6 +129,7 @@ export class CrearTareaComponent implements OnChanges {
     private _nuevaTarea: CrearTareasComentariosService,
     private _nuevoComentario: CrearTareasComentariosService,
     public tareasGlobalService: GlobalTareasService,
+    private customDatepickerI18n: CustomDatepickerI18n
   ) {
     this.usuarioTarea = PreferencesService.user.toUpperCase();
     // Inicializar selectedDate con la fecha de hoy
@@ -139,11 +141,13 @@ export class CrearTareaComponent implements OnChanges {
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
       this._translate.setDefaultLang(this.activeLang.lang);
+      this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     } else {
       //sino se encuentra asignar el idioma por defecto
       this.idioma = +getLanguage;
       this.activeLang = languagesProvider[this.idioma];
       this._translate.setDefaultLang(this.activeLang.lang);
+      this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     };
     //Funcion que carga datos
     this.loadData();
@@ -153,6 +157,14 @@ export class CrearTareaComponent implements OnChanges {
 
   };
 
+  ngOnInit(): void {
+    if (this.tareasGlobalService.inputFechaInicial) {
+      this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.inputFechaInicial);
+    }
+    if (this.tareasGlobalService.inputFechaFinal) {
+      this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.inputFechaFinal);
+    }
+  }
 
   fechaActual() {
 
@@ -1168,4 +1180,26 @@ export class CrearTareaComponent implements OnChanges {
       event.preventDefault();
     }
   }
+
+  onDateChange(date: NgbDateStruct) {
+    this.tareasGlobalService.fechaInicialFormat = this.formatDate(date);
+    this.tareasGlobalService.inputFechaInicial = date;
+
+    this.onEndDateChange(date);
+  }
+
+  formatDate(date: NgbDateStruct): string {
+    return `${this.padZero(date.day)}-${this.padZero(date.month)}-${date.year}`;
+  }
+
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  onEndDateChange(date: NgbDateStruct) {
+    this.tareasGlobalService.fechaFinalFormat = this.formatDate(date);
+    this.tareasGlobalService.inputFechaFinal = date;
+    // this.validateEndDate();
+  }
+
 }

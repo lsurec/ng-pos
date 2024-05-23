@@ -32,6 +32,7 @@ import { HttpClient } from '@angular/common/http';
 import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.interface';
 import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
+import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
 
 
 @Component({
@@ -141,6 +142,7 @@ export class HomeComponent implements OnInit {
     private _globalConvertService: GlobalConvertService,
     private _receptionService: ReceptionService,
     private _http: HttpClient,
+    private customDatepickerI18n: CustomDatepickerI18n
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -160,11 +162,13 @@ export class HomeComponent implements OnInit {
     if (!getLanguage) {
       this.activeLang = languagesProvider[indexDefaultLang];
       this._translate.setDefaultLang(this.activeLang.lang);
+      this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     } else {
       //sino se encuentra asignar el idioma por defecto
       this.idioma = +getLanguage;
       this.activeLang = languagesProvider[this.idioma];
       this._translate.setDefaultLang(this.activeLang.lang);
+      this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     };
 
     this.temaOscuro = themeService.isDarkTheme;
@@ -253,8 +257,8 @@ export class HomeComponent implements OnInit {
 
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
-        title: "Tamaño de fuente.",
-        description: "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+        title: this._translate.instant('crm.alertas.fuete'),
+        description: this._translate.instant('crm.alertas.cambioFuente'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
       }
     );
@@ -298,11 +302,26 @@ export class HomeComponent implements OnInit {
   };
 
   //Asigna un nuevo lenguaje
-  changeLang(lang: number): void {
+  async changeLang(lang: number): Promise<void> {
     this.idioma = lang;
     this.activeLang = languagesProvider[lang];
     this._translate.use(this.activeLang.lang);
     PreferencesService.lang = JSON.stringify(lang);
+    this.customDatepickerI18n.setLanguage(languagesProvider[lang].lang);
+
+    //dialogo
+    //TODO: Translate
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('crm.alertas.nuevoIdioma'),
+        description: this._translate.instant('crm.alertas.cambioIdioma'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+    // Usando window.location.reload()
+    window.location.reload();
   };
 
   viewHome(value: boolean): void {
