@@ -1,0 +1,39 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="busqueda && !isLoading">
+    <div class="contenedor">
+        <div class="d-flex">
+            <span class="spacer"></span>
+            <!-- Titulo -->
+            <p class="verDetalle">{{'crm.crear.buscarIdReferencia' | translate}}</p>
+            <span class="spacer"></span>
+            <!-- Cerrar dialogo -->
+            <span class="close" [mat-dialog-close]="">&times;</span>
+        </div>
+        <div class="busqueda">
+            <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
+            <input type="search" class="inputSearch" [(ngModel)]="searchIdReferencia"
+                placeholder="{{'crm.crear.busqueda' | translate}}" (ngModelChange)="onInputChange()">
+        </div>
+        <div class="titulos" *ngIf="referencias.length > 0">
+            <p class="referencia">{{'crm.crear.referencia' | translate}}</p>
+            <span class="spacer"></span>
+            <p class="tipo-referencia">{{'crm.crear.descripcionRef' | translate}}</p>
+            <span class="spacer"></span>
+            <p class="estado">{{'crm.crear.estadoReferencia' | translate}}</p>
+        </div>
+        <div class="detalle-idReferencia" *ngFor="let referencia of referencias">
+            <span class="spacer"></span>
+            <div class="seleccionar" [mat-dialog-close]="[referencia]">
+                <p class="referencia" [matTooltip]="referencia.descripcion">{{referencia.referencia_Id}}</p>
+                <span class="spacer"></span>
+                <p class="tipo-referencia">{{referencia.descripcion}}</p>
+                <span class="spacer"></span>
+                <p class="estado">{{referencia.fDes_Estado_Objeto}}</p>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="botones">
+        <button mat-button [mat-dialog-close]="" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
+    </div>
+</div>

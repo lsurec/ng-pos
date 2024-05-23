@@ -10,7 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerI18n, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -72,7 +72,18 @@ import { InformeProductosComponent } from './displays/prc_documento_3/components
 import { ImagenComponent } from './displays/prc_documento_3/components/imagen/imagen.component';
 import { PasosComponent } from './components/pasos/pasos.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { TareasComponent } from './displays/shrTarea_3/components/tareas/tareas.component';
+import { CalendarioComponent } from './displays/prcTarea_1/components/calendario/calendario.component';
+import { DialogTareaComponent } from './displays/prcTarea_1/components/dialog-tarea/dialog-tarea.component';
+import { DetalleTareaComponent } from './displays/shrTarea_3/components/detalle-tarea/detalle-tarea.component';
+import { ActualizarTareaComponent } from './components/actualizar-tarea/actualizar-tarea.component';
+import { BuscarIdReferenciaComponent } from './components/buscar-id-referencia/buscar-id-referencia.component';
+import { ActualizarUsuariosComponent } from './components/actualizar-usuarios/actualizar-usuarios.component';
+import { CrearTareaComponent } from './components/crear-tarea/crear-tarea.component';
+import { NotFoundItemComponent } from './components/not-found-item/not-found-item.component';
+import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,8 +129,19 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     InformeProductosComponent,
     ImagenComponent,
     PasosComponent,
+    TareasComponent,
+    CalendarioComponent,
+    DialogTareaComponent,
+    DetalleTareaComponent,
+    ActualizarTareaComponent,
+    BuscarIdReferenciaComponent,
+    ActualizarUsuariosComponent,
+    CrearTareaComponent,
+    NotFoundItemComponent,
+    UsuariosDialogComponent,
   ],
   imports: [
+    MatCardModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
@@ -159,6 +181,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule
   ],
   providers: [
+    {
+      provide: NgbDatepickerI18n,
+      useClass: CustomDatepickerI18n
+    }
     // DataUserService,
   ],
   bootstrap: [AppComponent]

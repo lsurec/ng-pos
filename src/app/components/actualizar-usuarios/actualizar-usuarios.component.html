@@ -1,0 +1,65 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="busqueda && !isLoading">
+    <div class="contenedor">
+        <div class="d-flex">
+            <span class="spacer"></span>
+            <!-- Titulo -->
+            <p class="verDetalle" *ngIf="tareasGlobalService.idUsuarios == 2">
+                {{ 'crm.actualizar.invitados' | translate}} {{tarea.tarea.iD_Tarea}}
+            </p>
+
+            <p class="verDetalle" *ngIf="tareasGlobalService.idUsuarios == 1">
+                {{ 'crm.actualizar.responsable' | translate }} {{tarea.tarea.iD_Tarea}}
+            </p>
+            <span class="spacer"></span>
+            <!-- Cerrar dialogo -->
+            <span class="close" (click)="closeDialog()">&times;</span>
+        </div>
+        <hr>
+        <div class="busqueda">
+            <!-- RESPONSABLE ACTUAL -->
+            <div class="invitados" *ngIf="tareasGlobalService.idUsuarios == 1">
+                <p class="campo-obligatorio">{{ 'crm.actualizar.responsableActual' | translate }}</p>
+                <div class="responsable">
+                    <p>{{tarea.responsables.length == 0 ? noAsignado : responsable.t_UserName }}</p>
+                    <span class="spacer"></span>
+                </div>
+            </div>
+            <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
+            <input type="search" class="inputSearch" [(ngModel)]="searchUser"
+                placeholder="{{'crm.crear.busqueda' | translate}}" (ngModelChange)="onInputChange()">
+        </div>
+        <div class="titulos" *ngIf="usuariosResInv.length > 0 ">
+            <p class="nombre">{{ 'crm.crear.usuario' | translate }}</p>
+        </div>
+
+        <div *ngIf="tareasGlobalService.idUsuarios == 1">
+            <div class="detalleResponsable" *ngFor="let usuario of usuariosResInv">
+                <span class="spacer"></span>
+                <div class="seleccionar-responsable" (click)="asignarResponsable(usuario)">
+                    <p class="nombre">{{usuario.name}}</p>
+                    <p class="email">{{usuario.email}}</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="tareasGlobalService.idUsuarios == 2">
+            <div class="detalleInvitado" *ngFor="let usuario of usuariosResInv">
+                <mat-checkbox [(ngModel)]="usuario.select" color="primary"></mat-checkbox>
+                <span class="spacer"></span>
+                <div class="seleccionar" (click)="usuario.select = true; agregarInvitados()">
+                    <p class="nombre">{{usuario.name}}</p>
+                    <p class="email">{{usuario.email}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="botones" *ngIf="tareasGlobalService.idUsuarios == 2">
+        <button mat-button (click)="closeDialog()" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
+        <button mat-button (click)="agregarInvitados()">{{'crm.crear.guardar' | translate}}</button>
+    </div>
+
+    <div mat-dialog-actions class="botones" *ngIf="tareasGlobalService.idUsuarios == 1">
+        <button mat-button (click)="closeDialog()" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
+    </div>
+</div>
