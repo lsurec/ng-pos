@@ -95,6 +95,11 @@ export class FacturaService {
     formControlHoraFin: FormControl = new FormControl('');
   
 
+    fechaInicialFormat?: string;
+    fechaFinalFormat?: string;
+    fechaRefInicialFormat?: string;
+    fechaRefFinalFormat?: string;
+
 
 
     //observacuion1, observacion del documento
