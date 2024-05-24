@@ -146,10 +146,12 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
   //funciones para el fotmato de las fechas
 
+  //Formato de fecha dia-mes-año
   formatDate(date: NgbDateStruct): string {
     return `${this.padZero(date.day)}-${this.padZero(date.month)}-${date.year}`;
   }
 
+  //agregar 0 al inicio de los dias o meses menores a 10
   padZero(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
   }
@@ -175,18 +177,21 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
   }
 
+  //formato fecha inicio del evento
   fechaIni(date: NgbDateStruct) {
     this.facturaService.fechaInicialFormat = this.formatDate(date);
     this.facturaService.inputFechaIni = date;
     this.setDateIni();
   }
 
+  //formato fecha fin del evento
   fechaFin(date: NgbDateStruct) {
     this.facturaService.fechaFinalFormat = this.formatDate(date);
     this.facturaService.inputFechaFinal = date;
     this.setDateFin();
   }
 
+  //formato fecha ref inicio del evento
   fechaIniRef(date: NgbDateStruct) {
     this.facturaService.fechaRefInicialFormat = this.formatDate(date);
     this.facturaService.inputFechaRefIni = date;
@@ -194,6 +199,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     this.setDateRefIni();
   }
 
+  //formato fecha ref fin del evento
   fechaFinRef(date: NgbDateStruct) {
     this.facturaService.fechaRefFinalFormat = this.formatDate(date);
     this.facturaService.inputFechaRefFin = date;
