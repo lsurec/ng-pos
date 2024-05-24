@@ -405,4 +405,88 @@ export class DocumentService {
         }
         )
     }
+
+
+     //funcion que va a realizar el consumo privado para crear un nuevo documento
+     private _updateDocument(
+        token: string,
+        document: PostDocumentInterface
+    ) {
+
+        let paramsStr = JSON.stringify(document); //JSON to String
+
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "Content-Type": "application/json",
+
+            }
+        )
+
+        //consumo de api
+        return this._http.post(`${this._urlBase}Documento/update/estructura`, paramsStr, { headers: headers, observe: 'response' });
+
+    }
+
+    //funcion asyncrona con promesa para crear un nuevo documento
+    updateDocument(
+        token: string,
+        document: PostDocumentInterface
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._updateDocument(token, document,).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        }
+        )
+    }
 }

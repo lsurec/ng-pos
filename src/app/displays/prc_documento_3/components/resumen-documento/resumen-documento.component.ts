@@ -68,7 +68,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
   consecutivoDoc: number = -1;
   docPrint?: DocPrintModel;
-  dataFel?:DataFelInterface;
+  dataFel?: DataFelInterface;
+  docGlobal?: Documento;
 
   constructor(
     //instancias de los servicios necesarios
@@ -211,11 +212,13 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
+    this.docGlobal = undefined;
+
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
     //Inciar FEL
     if (this.facturaService.valueParametro(349)) {
-    // if (this._dataUserService.switchState) {
+      // if (this._dataUserService.switchState) {
 
       //reinciiar valores
 
@@ -338,6 +341,7 @@ export class ResumenDocumentoComponent implements OnInit {
     // let apiToken: number = 0;
     // let tokenFel: string = "";
 
+    this.dataFel = undefined;
 
     //TODO:Replece for value in database
     let uuidDoc = ''
@@ -590,13 +594,42 @@ export class ResumenDocumentoComponent implements OnInit {
 
       return error;
     }
-    
-    let datFel:DataFelInterface[] = resUpdateXml.response;
 
-    if(datFel.length != 0){
+    let datFel: DataFelInterface[] = resUpdateXml.response;
+
+    if (datFel.length != 0) {
       this.dataFel = datFel[0];
+
+      //actualizar doc esrctiura
+
+
+      this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
+      this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
+      this.docGlobal!.Doc_FEL_fechaCertificacion = this.dataFel.fechaHoraCertificacion.toISOString();
+      this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
+
+
+      //onjeto para el api
+      let document: PostDocumentInterface = {
+        estructura: JSON.stringify(this.docGlobal),
+        user: this.user,
+      }
+
+
+      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+        this.token,
+        document,
+      );
+
+
+      //TODO:Mensjaje de error
+      if (!resUpdateEstructura.status) {
+        console.error("No se pudo actalizar documento estructura", resUpdateEstructura);
+
+      }
+
     }
-    
+
 
     let error: TypeErrorInterface = {
       error: resUpdateXml,
@@ -1144,18 +1177,18 @@ export class ResumenDocumentoComponent implements OnInit {
     let isFel: boolean = this.facturaService.valueParametro(349);
 
 
-let fechaCert:string = "";
-let horaCert:string = "";
+    let fechaCert: string = "";
+    let horaCert: string = "";
 
 
 
 
-    if(this.dataFel){
+    if (this.dataFel) {
       let date: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
 
 
-       fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
       horaCert = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     }
 
@@ -1170,7 +1203,7 @@ let horaCert:string = "";
     }
 
     console.log(documento);
-    
+
 
     let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
 
@@ -1219,7 +1252,7 @@ let horaCert:string = "";
 
       items.push(
         {
-          cantidadDias:detail.cantidadDias,
+          cantidadDias: detail.cantidadDias,
           sku: detail.producto.producto_Id,
           descripcion: detail.producto.des_Producto,
           cantidad: detail.cantidad,
@@ -1263,10 +1296,10 @@ let horaCert:string = "";
 
     let certificador: Certificador;
 
-      certificador = {
-        nit: this.dataFel?.nitCertificador ?? '',
-        nombre: this.dataFel?.nombreCertificador ?? "",
-      }
+    certificador = {
+      nit: this.dataFel?.nitCertificador ?? '',
+      nombre: this.dataFel?.nombreCertificador ?? "",
+    }
 
     let mensajes: string[] = [
       //TODO: Mostrar frase
@@ -1696,7 +1729,7 @@ let horaCert:string = "";
 
 
     //documento estructura
-    let doc: Documento = {
+    this.docGlobal = {
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
@@ -1733,7 +1766,7 @@ let horaCert:string = "";
 
     //onjeto para el api
     let document: PostDocumentInterface = {
-      estructura: JSON.stringify(doc),
+      estructura: JSON.stringify(this.docGlobal),
       user: this.user,
     }
 
