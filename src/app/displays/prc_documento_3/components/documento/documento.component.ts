@@ -250,34 +250,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
-
-    //validaciones para la fecha de incio ref
-    if (this.facturaService.fechaRefIni > this.facturaService.fechaRefFin!) {
-
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}.`);
-      this.restartDateRefIni();
-      return;
-
-    }
-
-    if (this.facturaService.fechaRefIni > this.facturaService.fechaIni!) {
-
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha inicio.`);
-      this.restartDateRefIni();
-      return;
-    }
-
-    if (this.facturaService.fechaRefIni > this.facturaService.fechaFin!) {
-
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a fecha fin.`);
-      this.restartDateRefIni();
-      return;
-    }
-
-
     if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
 
       //TODO:Translate
@@ -285,8 +257,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
       this.restartDateRefIni();
       return;
     }
-
-
 
     //Copiar valores
     this.copyDates();
@@ -304,22 +274,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
     if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
       //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
-      this.restartDateRefFin();
-      return;
-    }
-
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha incio.`);
-      this.restartDateRefFin();
-      return;
-    }
-
-
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaFin!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a la fecha fin.`);
+      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
       this.restartDateRefFin();
       return;
     }

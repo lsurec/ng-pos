@@ -18,8 +18,6 @@ import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pen
 import { DataUserService } from '../../services/data-user.service';
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
-import { ErrorInterface } from 'src/app/interfaces/error.interface';
-import { Router } from '@angular/router';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
@@ -516,7 +514,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.isLoading = false;
 
         
-        res.response = 'No ude posible obtner los valores calculados para el precio dia'
+        res.response = 'No fue posible obtner los valores calculados para el precio dia'
         let error: TypeErrorInterface = {
           error: res,
           type: 1,
