@@ -570,7 +570,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-    //actualizar
+    //actualizar odcumento con firma
     let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
       this.token,
       paramUpdate,
