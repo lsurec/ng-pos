@@ -1741,7 +1741,9 @@ export class PrinterService {
                                 { text: pago.pago, style: 'endText', },
                             ],
                             [
-                                { text: this._translate.instant('pos.factura.recibido'), style: 'normalText' },
+                                //TODO:REvisar traduccion
+                                // { text: this._translate.instant('pos.factura.recibido'), style: 'normalText' },
+                                { text: 'Monto:', style: 'normalText' },
                                 { text: pago.monto, style: 'endText', },
                             ],
                             [

@@ -410,7 +410,8 @@ export class DocumentService {
      //funcion que va a realizar el consumo privado para crear un nuevo documento
      private _updateDocument(
         token: string,
-        document: PostDocumentInterface
+        document: PostDocumentInterface,
+        consecutivo:number,
     ) {
 
         let paramsStr = JSON.stringify(document); //JSON to String
@@ -425,17 +426,18 @@ export class DocumentService {
         )
 
         //consumo de api
-        return this._http.post(`${this._urlBase}Documento/update/estructura`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.post(`${this._urlBase}Documento/update/estructura/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
 
     }
 
     //funcion asyncrona con promesa para crear un nuevo documento
     updateDocument(
         token: string,
-        document: PostDocumentInterface
+        document: PostDocumentInterface,
+        consecutivo:number,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._updateDocument(token, document,).subscribe(
+            this._updateDocument(token, document,consecutivo).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res.body;

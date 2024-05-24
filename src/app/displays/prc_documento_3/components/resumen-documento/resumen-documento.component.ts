@@ -211,9 +211,6 @@ export class ResumenDocumentoComponent implements OnInit {
       return;
     }
 
-
-    this.docGlobal = undefined;
-
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
     //Inciar FEL
@@ -602,13 +599,15 @@ export class ResumenDocumentoComponent implements OnInit {
 
       //actualizar doc esrctiura
 
+      let fechaAnt:Date = new Date(this.dataFel.fechaHoraCertificacion);
 
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
-      this.docGlobal!.Doc_FEL_fechaCertificacion = this.dataFel.fechaHoraCertificacion.toISOString();
+      this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
       this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
 
 
+      
       //onjeto para el api
       let document: PostDocumentInterface = {
         estructura: JSON.stringify(this.docGlobal),
@@ -619,6 +618,7 @@ export class ResumenDocumentoComponent implements OnInit {
       let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
         this.token,
         document,
+        this.consecutivoDoc,
       );
 
 
@@ -1202,8 +1202,6 @@ export class ResumenDocumentoComponent implements OnInit {
       noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
     }
 
-    console.log(documento);
-
 
     let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
 
@@ -1535,6 +1533,9 @@ export class ResumenDocumentoComponent implements OnInit {
   //error 0: correcto
   //Creacion del documnto en tbl_documento estructura
   async sendDocument(): Promise<TypeErrorInterface> {
+    this.docGlobal = undefined;
+    this.dataFel = undefined;
+    this.consecutivoDoc = -1;
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
     let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
@@ -1727,7 +1728,6 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-
     //documento estructura
     this.docGlobal = {
       Consecutivo_Interno: randomNumber1,
@@ -1796,6 +1796,7 @@ export class ResumenDocumentoComponent implements OnInit {
       error: this.consecutivoDoc,
       type: 0,
     }
+
 
     return error;
 
