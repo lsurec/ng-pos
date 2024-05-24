@@ -109,6 +109,8 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     this.controlSubFechaFin = this.facturaService.formControlHoraFin.valueChanges.subscribe(valor => {
       this.setDateFin();
     });
+
+    this.formatoFecha();
   }
 
   convertValidDate(date: NgbDateStruct, timeString: string): Date {
@@ -173,6 +175,31 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
   }
 
+  fechaIni(date: NgbDateStruct) {
+    this.facturaService.fechaInicialFormat = this.formatDate(date);
+    this.facturaService.inputFechaIni = date;
+    this.setDateIni();
+  }
+
+  fechaFin(date: NgbDateStruct) {
+    this.facturaService.fechaFinalFormat = this.formatDate(date);
+    this.facturaService.inputFechaFinal = date;
+    this.setDateFin();
+  }
+
+  fechaIniRef(date: NgbDateStruct) {
+    this.facturaService.fechaRefInicialFormat = this.formatDate(date);
+    this.facturaService.inputFechaRefIni = date;
+
+    this.setDateRefIni();
+  }
+
+  fechaFinRef(date: NgbDateStruct) {
+    this.facturaService.fechaRefFinalFormat = this.formatDate(date);
+    this.facturaService.inputFechaRefFin = date;
+
+    this.setDateRefFin();
+  }
 
   copyDates() {
     this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);

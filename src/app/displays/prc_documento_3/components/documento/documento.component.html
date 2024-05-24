@@ -37,6 +37,16 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
+                            <input class="form-control" name="dp" (dateSelect)="fechaIniRef($event)" ngbDatepicker
+                                #fEntrega="ngbDatepicker" (ngModelChange)="setDateRefIni()"
+                                [value]="facturaService.fechaRefInicialFormat"
+                                [minDate]="facturaService.fechaStruct!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fEntrega.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                        <!-- <div class="input-group">
                             <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaRefIni"
                                 ngbDatepicker #fEntrega="ngbDatepicker" (ngModelChange)="setDateRefIni()"
                                 [minDate]="facturaService.fechaStruct!" />
@@ -44,14 +54,15 @@
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
                             </button>
-                        </div>
+                        </div> -->
                     </form>
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRefIni" readonly class="hora"
-                            [formControl]="facturaService. formControlHoraRefIni" >
-                            <ngx-material-timepicker #horaRefIni  [defaultTime]=" getHoraInput(facturaService.fecha!)"></ngx-material-timepicker>
+                                [formControl]="facturaService. formControlHoraRefIni">
+                            <ngx-material-timepicker #horaRefIni [defaultTime]=" getHoraInput(facturaService.fecha!)">
+                            </ngx-material-timepicker>
                         </div>
                         <button class="btn btn-outline-secondary ver-hora" (click)="abrirTimePicker(horaRefIni)"
                             type="button">
@@ -69,6 +80,15 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
+                            <input class="form-control" name="dp2" (dateSelect)="fechaFinRef($event)"
+                                [value]="facturaService.fechaRefFinalFormat" (ngModelChange)="setDateRefFin()"
+                                ngbDatepicker #fRecoger="ngbDatepicker" [minDate]="facturaService.inputFechaRefIni!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fRecoger.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                        <!-- <div class="input-group">
                             <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaRefFin"
                                 (ngModelChange)="setDateRefFin()" ngbDatepicker #fRecoger="ngbDatepicker"
                                 [minDate]="facturaService.inputFechaRefIni!" />
@@ -76,13 +96,13 @@
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
                             </button>
-                        </div>
+                        </div> -->
                     </form>
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaRefFin" readonly class="hora"
-                            [formControl]="facturaService. formControlHoraRefFin" >
+                                [formControl]="facturaService. formControlHoraRefFin">
                             <ngx-material-timepicker #horaRefFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -103,21 +123,31 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
-                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaIni"
-                                (ngModelChange)="setDateIni()" ngbDatepicker #fInicio="ngbDatepicker" 
-                                [minDate]="facturaService.inputFechaRefIni!" 
-                                [maxDate]="facturaService.inputFechaRefFin!"/>
+                            <input class="form-control" name="dp" (dateSelect)="fechaIni($event)"
+                                (ngModelChange)="setDateIni()" ngbDatepicker #fInicio="ngbDatepicker"
+                                [minDate]="facturaService.inputFechaRefIni!" [value]="facturaService.fechaInicialFormat"
+                                [maxDate]="facturaService.inputFechaRefFin!" />
                             <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
                             </button>
                         </div>
+                        <!-- <div class="input-group">
+                            <input class="form-control" name="dp" [(ngModel)]="facturaService.inputFechaIni"
+                                (ngModelChange)="setDateIni()" ngbDatepicker #fInicio="ngbDatepicker"
+                                [minDate]="facturaService.inputFechaRefIni!"
+                                [maxDate]="facturaService.inputFechaRefFin!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fInicio.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div> -->
                     </form>
                     <span class="spacer"></span>
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaIni" readonly class="hora"
-                            [formControl]="facturaService. formControlHoraIni"    >
+                                [formControl]="facturaService. formControlHoraIni">
                             <ngx-material-timepicker #horaIni
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
@@ -138,6 +168,16 @@
                 <div class="fechas">
                     <form class="calendarios">
                         <div class="input-group">
+                            <input class="form-control" name="dp2" (dateSelect)="fechaFin($event)"
+                                (ngModelChange)="setDateFin()" ngbDatepicker #fFinal="ngbDatepicker"
+                                [minDate]="facturaService.inputFechaIni!" [value]="facturaService.fechaFinalFormat"
+                                [maxDate]="facturaService.inputFechaRefFin!" />
+                            <button class="btn btn-outline-secondary ver-calendario" (click)="fFinal.toggle()"
+                                type="button">
+                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                            </button>
+                        </div>
+                        <!-- <div class="input-group">
                             <input class="form-control" name="dp2" [(ngModel)]="facturaService.inputFechaFinal"
                                 (ngModelChange)="setDateFin()" ngbDatepicker #fFinal="ngbDatepicker"
                                 [minDate]="facturaService.inputFechaIni!"
@@ -146,14 +186,14 @@
                                 type="button">
                                 <mat-icon class="ico-calendario">calendar_month</mat-icon>
                             </button>
-                        </div>
+                        </div> -->
                     </form>
                     <span class="spacer"></span>
 
                     <div class="horas">
                         <div class="hora-calendario">
                             <input [ngxTimepicker]="horaFin" readonly class="hora"
-                            [formControl]=" facturaService.formControlHoraFin">
+                                [formControl]=" facturaService.formControlHoraFin">
                             <ngx-material-timepicker #horaFin
                                 [defaultTime]="getHoraInput(facturaService. fecha!)"></ngx-material-timepicker>
                         </div>
