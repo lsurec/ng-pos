@@ -224,6 +224,9 @@ export class CrearTareaComponent implements OnChanges, OnInit {
 
     this.tareasGlobalService.horaInicial = this.getHoraInput(dateNow);
     this.tareasGlobalService.horaFinal = this.getHoraInput(horaFinalInput30);
+
+    this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+    this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
   }
 
 
@@ -256,6 +259,9 @@ export class CrearTareaComponent implements OnChanges, OnInit {
 
     this.tareasGlobalService.horaInicial = this.getHoraInput(this.tareasGlobalService.fechaIni);
     this.tareasGlobalService.horaFinal = this.getHoraInput(this.tareasGlobalService.fechaFin);
+
+    this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+    this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
   }
 
 
@@ -331,6 +337,12 @@ export class CrearTareaComponent implements OnChanges, OnInit {
       this.tareasGlobalService.calendarioHoraFinMinima = new Date(this.tareasGlobalService.fechaIni);
 
     }
+
+    //cuando la fecha es la misma y la hora sea inicial sea mayor a la hora actual se pueden cambiar entre las horas
+    //ejemplo Hora actual 12:30 pm y Hora inicio  2:30 pm la Hora Final cambia a 2:40 pm
+    //pero la hora inicial puede volver a cambiar a una hora mayor a la Hora Actual 12:30 pm
+    this.tareasGlobalService.calendarioHoraFinMinima = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaInicial);
+
   }
 
   validateEndDateCalendar() {
@@ -792,7 +804,10 @@ export class CrearTareaComponent implements OnChanges, OnInit {
     this.tareasGlobalService.fechaIni = this.convertValidDate(this.tareasGlobalService.inputFechaInicial!, this.tareasGlobalService.horaInicial);
     this.tareasGlobalService.fechaFin = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaFinal);
 
-    //return
+    // console.log(this.formatDate(this.tareasGlobalService.inputFechaInicial!), this.getHoraInput(this.tareasGlobalService.fechaIni));
+    // console.log(this.formatDate(this.tareasGlobalService.inputFechaFinal!), this.getHoraInput(this.tareasGlobalService.fechaFin));
+    // return
+
     if (this.tituloTarea.length === 0 || this.tipoTarea === null || this.estadoTarea === null || this.prioridadTarea === null || this.idReferencia === null || this.descripcion.length === 0 || this.usuariosResponsables.length == 0) {
       this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
 
@@ -1205,7 +1220,14 @@ export class CrearTareaComponent implements OnChanges, OnInit {
   onEndDateChange(date: NgbDateStruct) {
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(date);
     this.tareasGlobalService.inputFechaFinal = date;
-    this.validateEndDate();
+
+    if (this.tareasGlobalService.idPantalla == 1) {
+      this.validateEndDate();
+    }
+
+    if (this.tareasGlobalService.idPantalla == 2) {
+      this.validateEndDateCalendar();
+    }
   }
 
 }
