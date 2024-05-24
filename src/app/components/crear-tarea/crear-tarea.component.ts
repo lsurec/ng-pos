@@ -190,6 +190,9 @@ export class CrearTareaComponent implements OnChanges, OnInit {
 
     this.tareasGlobalService.copyFechaIni = new Date(this.tareasGlobalService.fechaIni);
     this.tareasGlobalService.copyFechaFin = new Date(this.tareasGlobalService.fechaFin);
+
+    this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+    this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
   }
 
   fechaCalendario() {
@@ -302,6 +305,8 @@ export class CrearTareaComponent implements OnChanges, OnInit {
       this.tareasGlobalService.horaInicial = this.getHoraInput(this.tareasGlobalService.horaInicioMinima)
     }
 
+    //para establecer la hora final minima. 
+    this.tareasGlobalService.horaFinMinima = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaInicial);
   }
 
   validateStartDateCalendar() {
@@ -1185,6 +1190,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
     this.tareasGlobalService.fechaInicialFormat = this.formatDate(date);
     this.tareasGlobalService.inputFechaInicial = date;
 
+    this.validateStartDate();
     this.onEndDateChange(date);
   }
 
@@ -1199,7 +1205,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
   onEndDateChange(date: NgbDateStruct) {
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(date);
     this.tareasGlobalService.inputFechaFinal = date;
-    // this.validateEndDate();
+    this.validateEndDate();
   }
 
 }

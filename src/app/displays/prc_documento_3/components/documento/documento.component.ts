@@ -142,6 +142,37 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   };
 
 
+  //funciones para el fotmato de las fechas
+
+  formatDate(date: NgbDateStruct): string {
+    return `${this.padZero(date.day)}-${this.padZero(date.month)}-${date.year}`;
+  }
+
+  padZero(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  //cargar los textos de las fechas
+  formatoFecha() {
+
+    if (this.facturaService.inputFechaRefIni) {
+      this.facturaService.fechaRefInicialFormat = this.formatDate(this.facturaService.inputFechaRefIni);
+    }
+
+    if (this.facturaService.inputFechaRefFin) {
+      this.facturaService.fechaRefFinalFormat = this.formatDate(this.facturaService.inputFechaRefFin);
+    }
+
+    if (this.facturaService.inputFechaIni) {
+      this.facturaService.fechaInicialFormat = this.formatDate(this.facturaService.inputFechaIni);
+    }
+
+    if (this.facturaService.inputFechaFinal) {
+      this.facturaService.fechaFinalFormat = this.formatDate(this.facturaService.inputFechaFinal);
+    }
+
+  }
+
 
   copyDates() {
     this.facturaService.copyFechaRefIni = new Date(this.facturaService.fechaRefIni!);
@@ -321,7 +352,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
 
-           
+
             this.facturaService.isLoading = true;
 
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
@@ -341,22 +372,22 @@ export class DocumentoComponent implements OnInit, OnDestroy {
               return;
             }
 
-            let calculoDias:PrecioDiaInterface [] = res.response;
+            let calculoDias: PrecioDiaInterface[] = res.response;
 
-            if(calculoDias.length == 0){
+            if (calculoDias.length == 0) {
 
 
-                res.response = "No se están obteiiendo valores del procedimiento almacenado"
+              res.response = "No se están obteiiendo valores del procedimiento almacenado"
 
-                this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-  
-                console.error(res);
-  
-                return;
+              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+              console.error(res);
+
+              return;
             }
 
-            this.facturaService.traInternas[count].precioDia =  calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total =  calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
             this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
 
 
@@ -444,9 +475,9 @@ export class DocumentoComponent implements OnInit, OnDestroy {
               return;
             }
 
-            let calculoDias:PrecioDiaInterface [] = res.response;
+            let calculoDias: PrecioDiaInterface[] = res.response;
 
-            if(calculoDias.length == 0){
+            if (calculoDias.length == 0) {
 
               res.response = "El procedimiento almacenado no esta devolviendo valores, verificar.";
 
@@ -458,7 +489,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
             }
 
 
-            this.facturaService.traInternas[count].precioDia =  calculoDias[0].monto_Calculado;
+            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
             this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
             this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
 
