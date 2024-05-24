@@ -621,6 +621,9 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = nextMonthPicker;
       calendar.selected = nextMonthPicker;
     });
+
+    console.log(this.indexWeekActive, "indice de la semana", this.monthSelectView);
+
   }
 
   //Cambiar a la semana siguiente
@@ -717,6 +720,9 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = nextMonthPicker;
       calendar.selected = nextMonthPicker;
     });
+
+    console.log(this.indexWeekActive, "indice de la semana", this.monthSelectView);
+
   }
 
   //crear nombre de la semanas por rango
@@ -974,6 +980,12 @@ export class CalendarioComponent implements OnInit {
       if (this.indexWeekActive == 0 && semanasMesActual[0][index].value <= 31 && mes == this.month && anio == this.year) {
         return false;
       }
+
+      //solo en dias mayeres al dia de hoy en el mes 
+      if (dia.value < this.today && this.month == mes && this.year == anio) {
+        return false;
+      }
+
       return true;
     }
 
