@@ -33,6 +33,7 @@ import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.inter
 import { DataUserService } from '../../services/data-user.service';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { RetryService } from 'src/app/services/retry.service';
+import { DataFelInterface } from '../../interfaces/data-fel.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -67,6 +68,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
   consecutivoDoc: number = -1;
   docPrint?: DocPrintModel;
+  dataFel?:DataFelInterface;
 
   constructor(
     //instancias de los servicios necesarios
@@ -380,6 +382,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     uuidDoc = templatesXMl[0].d_Id_Unc;
+    // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
 
 
     //buscar las credenciales del certificador
@@ -586,6 +589,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
       return error;
     }
+    
+    let datFel:DataFelInterface[] = resUpdateXml.response;
+
+    if(datFel.length != 0){
+      this.dataFel = datFel[0];
+    }
+    
 
     let error: TypeErrorInterface = {
       error: resUpdateXml,
@@ -1131,13 +1141,24 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let isFel: boolean = this.facturaService.valueParametro(349);
 
+
+let fechaCert:string = "";
+let horaCert:string = "";
+
+    if(this.dataFel){
+      let date: Date = this.dataFel.fechaHoraCertificacion;
+
+       fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      horaCert = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
+
     let documento: DocumentoData = {
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
-      fechaCert: isFel ? encabezado.feL_fechaCertificacion : "",
-      serie: isFel ? encabezado.feL_Serie : "",
-      no: isFel ? encabezado.feL_numeroDocumento : "",
-      autorizacion: isFel ? encabezado.feL_UUID : "",
+      fechaCert: isFel ? `${fechaCert} ${horaCert}` : "",
+      serie: isFel ? this.dataFel?.serieDocumento ?? "" : "",
+      no: isFel ? this.dataFel?.numeroDocumento ?? "" : "",
+      autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
       noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
     }
 
@@ -1232,12 +1253,10 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let certificador: Certificador;
 
-    if (isFel) {
       certificador = {
-        nit: encabezado.certificador_DTE_NIT!,
-        nombre: encabezado.certificador_DTE_Nombre!,
+        nit: this.dataFel?.nitCertificador ?? '',
+        nombre: this.dataFel?.nombreCertificador ?? "",
       }
-    }
 
     let mensajes: string[] = [
       //TODO: Mostrar frase
