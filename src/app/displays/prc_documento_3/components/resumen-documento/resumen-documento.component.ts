@@ -33,6 +33,7 @@ import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.inter
 import { DataUserService } from '../../services/data-user.service';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { RetryService } from 'src/app/services/retry.service';
+import { DataFelInterface } from '../../interfaces/data-fel.interface';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -67,6 +68,8 @@ export class ResumenDocumentoComponent implements OnInit {
 
   consecutivoDoc: number = -1;
   docPrint?: DocPrintModel;
+  dataFel?: DataFelInterface;
+  docGlobal?: Documento;
 
   constructor(
     //instancias de los servicios necesarios
@@ -208,11 +211,11 @@ export class ResumenDocumentoComponent implements OnInit {
       return;
     }
 
-
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
+    //Inciar FEL
     if (this.facturaService.valueParametro(349)) {
-    // if (this._dataUserService.switchState) {
+      // if (this._dataUserService.switchState) {
 
       //reinciiar valores
 
@@ -335,6 +338,7 @@ export class ResumenDocumentoComponent implements OnInit {
     // let apiToken: number = 0;
     // let tokenFel: string = "";
 
+    this.dataFel = undefined;
 
     //TODO:Replece for value in database
     let uuidDoc = ''
@@ -380,6 +384,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     uuidDoc = templatesXMl[0].d_Id_Unc;
+    // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
 
 
     //buscar las credenciales del certificador
@@ -586,6 +591,45 @@ export class ResumenDocumentoComponent implements OnInit {
 
       return error;
     }
+
+    let datFel: DataFelInterface[] = resUpdateXml.response;
+
+    if (datFel.length != 0) {
+      this.dataFel = datFel[0];
+
+      //actualizar doc esrctiura
+
+      let fechaAnt:Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+      this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
+      this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
+      this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
+      this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
+
+
+      
+      //onjeto para el api
+      let document: PostDocumentInterface = {
+        estructura: JSON.stringify(this.docGlobal),
+        user: this.user,
+      }
+
+
+      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+        this.token,
+        document,
+        this.consecutivoDoc,
+      );
+
+
+      //TODO:Mensjaje de error
+      if (!resUpdateEstructura.status) {
+        console.error("No se pudo actalizar documento estructura", resUpdateEstructura);
+
+      }
+
+    }
+
 
     let error: TypeErrorInterface = {
       error: resUpdateXml,
@@ -1129,17 +1173,35 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
+    // let isFel: boolean = true;
     let isFel: boolean = this.facturaService.valueParametro(349);
+
+
+    let fechaCert: string = "";
+    let horaCert: string = "";
+
+
+
+
+    if (this.dataFel) {
+      let date: Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+
+
+      fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      horaCert = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
 
     let documento: DocumentoData = {
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
-      fechaCert: isFel ? encabezado.feL_fechaCertificacion : "",
-      serie: isFel ? encabezado.feL_Serie : "",
-      no: isFel ? encabezado.feL_numeroDocumento : "",
-      autorizacion: isFel ? encabezado.feL_UUID : "",
+      fechaCert: isFel ? `${fechaCert} ${horaCert}` : "",
+      serie: isFel ? this.dataFel?.serieDocumento ?? "" : "",
+      no: isFel ? this.dataFel?.numeroDocumento ?? "" : "",
+      autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
       noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
     }
+
 
     let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
 
@@ -1188,7 +1250,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       items.push(
         {
-          cantidadDias:detail.cantidadDias,
+          cantidadDias: detail.cantidadDias,
           sku: detail.producto.producto_Id,
           descripcion: detail.producto.des_Producto,
           cantidad: detail.cantidad,
@@ -1232,11 +1294,9 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let certificador: Certificador;
 
-    if (isFel) {
-      certificador = {
-        nit: encabezado.certificador_DTE_NIT!,
-        nombre: encabezado.certificador_DTE_Nombre!,
-      }
+    certificador = {
+      nit: this.dataFel?.nitCertificador ?? '',
+      nombre: this.dataFel?.nombreCertificador ?? "",
     }
 
     let mensajes: string[] = [
@@ -1473,6 +1533,9 @@ export class ResumenDocumentoComponent implements OnInit {
   //error 0: correcto
   //Creacion del documnto en tbl_documento estructura
   async sendDocument(): Promise<TypeErrorInterface> {
+    this.docGlobal = undefined;
+    this.dataFel = undefined;
+    this.consecutivoDoc = -1;
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
     let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
@@ -1665,9 +1728,8 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
-
     //documento estructura
-    let doc: Documento = {
+    this.docGlobal = {
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
@@ -1704,7 +1766,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //onjeto para el api
     let document: PostDocumentInterface = {
-      estructura: JSON.stringify(doc),
+      estructura: JSON.stringify(this.docGlobal),
       user: this.user,
     }
 
@@ -1734,6 +1796,7 @@ export class ResumenDocumentoComponent implements OnInit {
       error: this.consecutivoDoc,
       type: 0,
     }
+
 
     return error;
 

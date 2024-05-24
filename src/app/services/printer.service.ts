@@ -1048,7 +1048,7 @@ export class PrinterService {
                         text: item.unitario,
                         style: 'normalText'
                     },
-                   
+
                     {
                         text: item.total,
                         style: 'normalText'
@@ -1440,7 +1440,7 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%','10%', '23%', '15%', '10%',  '10%',],
+                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1741,7 +1741,9 @@ export class PrinterService {
                                 { text: pago.pago, style: 'endText', },
                             ],
                             [
-                                { text: this._translate.instant('pos.factura.recibido'), style: 'normalText' },
+                                //TODO:REvisar traduccion
+                                // { text: this._translate.instant('pos.factura.recibido'), style: 'normalText' },
+                                { text: 'Monto:', style: 'normalText' },
                                 { text: pago.monto, style: 'endText', },
                             ],
                             [
@@ -1836,7 +1838,28 @@ export class PrinterService {
 
                 },
                 //TODO:Agregar datos de certificacion
+                {
+                    margin: [0, 10, 0, 0],
 
+                    text: `Serie: ${doc.documento.serie}`,
+                    style: 'centerBold',
+                },
+                {
+                    text: `No. ${doc.documento.no}`,
+                    style: 'centerBold',
+                },
+                {
+                    text: `Fecha: ${doc.documento.fechaCert}`,
+                    style: 'centerBold',
+                },
+                {
+                    text: `No Autorizacion`,
+                    style: 'centerBold',
+                },
+                {
+                    text: doc.documento.autorizacion,
+                    style: 'centerBold',
+                },
 
                 //CLiente
                 {
@@ -1876,7 +1899,7 @@ export class PrinterService {
                     },
                     layout: 'noBorders',
                 },
-               
+
                 //TABLA PRODUCTOS
                 {
                     layout: 'headerLineOnly',
@@ -1974,16 +1997,23 @@ export class PrinterService {
 
                 ...pagos,
 
-               
-
-                //TODO:Agregar informacion del certificador
 
                 {
                     margin: [0, 10],
                     text: doc.mensajes[0],
                     style: 'centerBold',
                 },
+                //TODO:Agregar informacion del certificador
+                {
+                    text: `Certificador: ${doc.certificador.nombre}`,
+                    style: 'center',
 
+                },
+                {
+                    text: `NIT: ${doc.certificador.nit}`,
+                    style: 'center',
+
+                },
                 {
                     margin: [0, 20, 0, 0],
                     text: '---------------------------------------------------------------',
