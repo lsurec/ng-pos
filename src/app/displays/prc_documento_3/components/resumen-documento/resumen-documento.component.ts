@@ -213,6 +213,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
+    //Inciar FEL
     if (this.facturaService.valueParametro(349)) {
     // if (this._dataUserService.switchState) {
 
@@ -1139,14 +1140,20 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
 
+    // let isFel: boolean = true;
     let isFel: boolean = this.facturaService.valueParametro(349);
 
 
 let fechaCert:string = "";
 let horaCert:string = "";
 
+
+
+
     if(this.dataFel){
-      let date: Date = this.dataFel.fechaHoraCertificacion;
+      let date: Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+
 
        fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
       horaCert = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
@@ -1161,6 +1168,9 @@ let horaCert:string = "";
       autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
       noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
     }
+
+    console.log(documento);
+    
 
     let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
 
