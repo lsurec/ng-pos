@@ -36,6 +36,7 @@ export class PreferencesService {
     private static readonly finLaboresKey: string = 'horaFin';
     private static readonly filtroProductoKey: string = 'filtroProducto';
     private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
+    private static readonly noMostrarKey: string = 'noMostrar';
 
 
 
@@ -360,6 +361,16 @@ export class PreferencesService {
 
     static get idFiltroProducto(): number {
         let value = sessionStorage.getItem(this.idFiltroProductoKey);
+        return parseFloat(value!);
+    }
+
+    @Input()
+    static set noMostrarAlerta(value: number) {
+        sessionStorage.setItem(this.noMostrarKey, value.toString());
+    }
+
+    static get noMostrarAlerta(): number {
+        let value = sessionStorage.getItem(this.noMostrarKey);
         return parseFloat(value!);
     }
 

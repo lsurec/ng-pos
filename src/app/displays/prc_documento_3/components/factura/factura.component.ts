@@ -137,6 +137,7 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
+    this.facturaService.verCheckBox = 1;
 
 
     // if (!this.globalConvertService.editDoc) {
@@ -401,17 +402,23 @@ export class FacturaComponent implements OnInit {
   //nuevo documento
   async newDoc() {
 
-    //Dialofo de confirmacion
-    let verificador: boolean = await this._notificationService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('pos.alertas.perderDatos'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-        falso: this._translate.instant('pos.botones.cancelar'),
-      }
-    );
+    //si la preferencia guardada es distinda de 1, mostrará la alerta
+    if (PreferencesService.noMostrarAlerta != 1) {
 
-    if (!verificador) return;
+      //Dialofo de confirmacion
+      let verificador: boolean = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.eliminar'),
+          description: this._translate.instant('pos.alertas.perderDatos'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.cancelar'),
+        }
+      );
+
+      if (!verificador) return;
+    }
+
+    //en caso contrario, limpiará el formulario sin mostrar la alerta
 
     //limpiar todos los datos relacionados al documennto
     this.facturaService.cuenta = undefined; //cuneta correntista seleccionada

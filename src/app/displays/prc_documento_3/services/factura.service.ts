@@ -49,6 +49,10 @@ export class FacturaService {
 
     selectAllTra: boolean = false; //Seleccionar todas las transacciones
 
+    noMostrar: boolean = false;
+
+    verCheckBox: number = 0;
+
     //totales del documento
     subtotal: number = 0;
     cargo: number = 0;
