@@ -361,14 +361,13 @@ mat-sidenav {
 .num-dia {
     /* background: #fac0c0; */
     // padding      : 0px 5px;
-    padding-left : 30px;
-    margin       : 0px;
-    margin-bottom: 8px;
-    font-size    : 15px;
-    font-weight  : 550;
-    text-align   : center;
-    cursor       : pointer;
-    width        : 80%;
+    padding-left: 30px;
+    margin      : 0px;
+    font-size   : 15px;
+    font-weight : 550;
+    text-align  : center;
+    cursor      : pointer;
+    width       : 80%;
 }
 
 .num-otro-dia {
@@ -385,43 +384,40 @@ mat-sidenav {
 }
 
 .hoy-semana {
-    background   : $background-hoy;
-    color        : $color-blanco;
-    padding      : 0px 5px;
-    padding-left : 24px;
-    margin       : 0px;
-    margin-bottom: 8px;
-    font-size    : 15px;
-    font-weight  : 550;
-    text-align   : center;
-    cursor       : pointer;
-    width        : 80%;
+    background  : $background-hoy;
+    color       : $color-blanco;
+    padding     : 0px 5px;
+    padding-left: 24px;
+    margin      : 0px;
+    font-size   : 15px;
+    font-weight : 550;
+    text-align  : center;
+    cursor      : pointer;
+    width       : 80%;
 }
 
 .hoy {
-    background   : $background-hoy;
-    color        : $color-blanco;
-    padding      : 0px 5px;
-    padding-left : 24px;
-    margin       : 0px;
-    margin-bottom: 8px;
-    font-size    : 15px;
-    font-weight  : 550;
-    text-align   : center;
-    cursor       : pointer;
+    background  : $background-hoy;
+    color       : $color-blanco;
+    padding     : 0px 5px;
+    padding-left: 24px;
+    margin      : 0px;
+    font-size   : 15px;
+    font-weight : 550;
+    text-align  : center;
+    cursor      : pointer;
 }
 
 /* **************** dias que no son del mes selecionados ******************** */
 
 .num-dia-anterior {
-    padding-left : 30px;
-    margin       : 0px;
-    margin-bottom: 8px;
-    font-size    : 15px;
-    font-weight  : 550;
-    text-align   : center;
-    color        : $color-gris;
-    width        : 80%;
+    padding-left: 30px;
+    margin      : 0px;
+    font-size   : 15px;
+    font-weight : 550;
+    text-align  : center;
+    color       : $color-gris;
+    width       : 80%;
 }
 
 
@@ -876,6 +872,10 @@ p {
     width  : 100%;
 }
 
+.dia-crear:hover {
+    background-color: $borde-tarea;
+}
+
 .circulo {
     width        : 8px; //diámetro total 
     height       : 8px; //diámetro total
@@ -908,8 +908,9 @@ p {
 }
 
 .verTareas {
-    min-width: 125px;
-    max-width: 160px !important;
+    min-width  : 125px;
+    max-width  : 160px !important;
+    padding-top: 5px;
 }
 
 .dFlex {
