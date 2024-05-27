@@ -1410,12 +1410,8 @@ export class FacturaComponent implements OnInit {
   }
 
   activarDialogo() {
-
-    this.timer = setTimeout(() => {
-      this.facturaService.noMostrar = false;
-      PreferencesService.noMostrarAlerta = 0;
-    }, 150);
-    
+    this.facturaService.noMostrar = false;
+    PreferencesService.noMostrarAlerta = 0;
   }
 
 }
