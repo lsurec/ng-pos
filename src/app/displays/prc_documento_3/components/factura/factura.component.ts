@@ -62,6 +62,7 @@ export class FacturaComponent implements OnInit {
   tipoCambio: number = PreferencesService.tipoCambio; ///tipo cambio disponioble
   tipoDocumento?: number = this.facturaService.tipoDocumento; //tipo docuemnto seleccionado
   nombreDocumento: string = this.facturaService.documentoName; //Descripcion del tipo de documento
+  timer: any; //temporizador
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -138,6 +139,13 @@ export class FacturaComponent implements OnInit {
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
     this.facturaService.verCheckBox = 1;
+
+    if (PreferencesService.noMostrarAlerta == 1) {
+      this.facturaService.noMostrar = true;
+    } else {
+      this.facturaService.noMostrar = false;
+
+    }
 
 
     // if (!this.globalConvertService.editDoc) {
@@ -1399,6 +1407,15 @@ export class FacturaComponent implements OnInit {
     this.facturaService.filtrosProductos = filtro;
     this.facturaService.idFiltroPreferencia = index;
 
+  }
+
+  activarDialogo() {
+
+    this.timer = setTimeout(() => {
+      this.facturaService.noMostrar = false;
+      PreferencesService.noMostrarAlerta = 0;
+    }, 150);
+    
   }
 
 }
