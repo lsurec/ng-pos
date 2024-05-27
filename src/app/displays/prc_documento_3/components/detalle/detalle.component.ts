@@ -374,6 +374,9 @@ export class DetalleComponent {
   //bsuqueda de productos
   async buscarProducto() {
 
+    let productos: ProductoInterface[] = [];
+
+
     //validar que siempre hay nun texto para buscar
     if (!this.facturaService.searchText) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
@@ -388,32 +391,20 @@ export class DetalleComponent {
 
 
     //eliminar espacios al final de la cadena
-    this.facturaService.searchText = this.facturaService.searchText.trim()
+    this.facturaService.searchText = this.facturaService.searchText.trim();
 
 
-    let res: ResApiInterface;
-
+    //consumo api busqueda id
 
     this.facturaService.isLoading = true;
-    //filtro 1 = sku
-    if (this.facturaService.filtrosProductos == 1) {
-      res = await this._productService.getProductId(
-        this.token,
-        this.facturaService.searchText,
-      );
-    }
 
-    //filtro 2 = descripcion
-    if (this.facturaService.filtrosProductos == 2) {
-      res = await this._productService.getProductDesc(
-        this.token,
-        this.facturaService.searchText,
-      );
-    }
+    let resProductId: ResApiInterface = await this._productService.getProductId(
+      this.token,
+      this.facturaService.searchText,
+    );
 
 
-    //si fallo el servioo mostrar eror
-    if (!res!.status) {
+    if (!resProductId.status) {
 
       this.facturaService.isLoading = false;
 
@@ -428,14 +419,48 @@ export class DetalleComponent {
 
       if (!verificador) return;
 
-      this.verError(res!);
+      this.verError(resProductId);
 
       return;
 
-    }
+    };
 
-    //prodsuyctos encontrados
-    let productos: ProductoInterface[] = res!.response;
+
+    productos = resProductId.response;
+
+    if(productos.length == 0){
+
+      let resproductoDesc = await this._productService.getProductDesc(
+        this.token,
+        this.facturaService.searchText,
+      );
+
+
+      if (!resproductoDesc.status) {
+
+        this.facturaService.isLoading = false;
+  
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+  
+        if (!verificador) return;
+  
+        this.verError(resproductoDesc);
+  
+        return;
+  
+      };
+
+
+      productos = resproductoDesc.response;
+
+    }
 
 
     //si no hay coincie¿dencias mostrar alerta
@@ -445,7 +470,6 @@ export class DetalleComponent {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
       return;
     }
-
 
     //reiniciar valores 
     this._productoService.total = 0;
