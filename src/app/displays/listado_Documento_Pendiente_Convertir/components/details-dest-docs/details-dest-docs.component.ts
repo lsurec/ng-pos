@@ -168,7 +168,8 @@ export class DetailsDestDocsComponent {
       serie: "",
       no: "",
       autorizacion: "",
-      noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
+      serieInterna: encabezado.serie_Documento!,
+      noInterno: encabezado.ref_Id_Documento,
     }
 
     //Fecha actual

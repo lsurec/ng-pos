@@ -15,6 +15,7 @@ export interface Empresa {
     serie: string;
     no: string;
     autorizacion: string;
+    serieInterna:string;
     noInterno: string;
   }
   

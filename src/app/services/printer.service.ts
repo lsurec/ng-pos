@@ -1831,11 +1831,15 @@ export class PrinterService {
                     text: doc.documento.descripcion,
                     style: 'centerBold',
                 },
+                //TODO:Transalte
                 {
-                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
+                    text: `Serie Interna: ${doc.documento.serieInterna}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
-
+                },
+                {
+                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    style: 'center',
                 },
                 //TODO:Agregar datos de certificacion
                 {

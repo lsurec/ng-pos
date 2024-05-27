@@ -1199,7 +1199,8 @@ export class ResumenDocumentoComponent implements OnInit {
       serie: isFel ? this.dataFel?.serieDocumento ?? "" : "",
       no: isFel ? this.dataFel?.numeroDocumento ?? "" : "",
       autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
-      noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
+      serieInterna: encabezado.serie_Documento!,
+      noInterno: encabezado.iD_Documento_Ref!,
     }
 
 
