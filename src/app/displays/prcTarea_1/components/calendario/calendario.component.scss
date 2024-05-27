@@ -49,7 +49,8 @@ mat-sidenav {
     .dia-tarea-mes,
     .dia-tarea-semana,
     .dia-nombre,
-    .dia-crear {
+    .dia-crear,
+    .dia-hoy-crear {
         max-width: 110px !important;
         min-width: 60px !important;
     }
@@ -74,6 +75,7 @@ mat-sidenav {
     .dia-tarea-mes,
     .dia-nombre,
     .dia-crear,
+    .dia-hoy-crear,
     .dia-tarea-semana {
         max-width: 110px !important;
         min-width: 60px !important;
@@ -872,7 +874,17 @@ p {
     width  : 100%;
 }
 
+.dia-hoy-crear {
+    display         : flex;
+    width           : 100%;
+    background-color: $background-hoy;
+}
+
 .dia-crear:hover {
+    background-color: $borde-tarea;
+}
+
+.dia-hoy-crear:hover {
     background-color: $borde-tarea;
 }
 

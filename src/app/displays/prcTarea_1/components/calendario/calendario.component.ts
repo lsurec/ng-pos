@@ -937,6 +937,20 @@ export class CalendarioComponent implements OnInit {
       this.indexHoy = i;
       return true
     }
+
+    //si estamos en el año actual y el messeleccionado es igual al mes actual +1 y el dia de hoy es igual a date
+    if (this.yearSelect == this.year && (this.monthSelectView == this.month + 1) && this.today == date && i <= this.semanas[0][6].indexWeek) {
+      return true;
+    }
+
+    let semanasMesAnterior: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, this.month - 1, this.primerDiaSemana));
+
+
+    //si estamos en la ultoma semana del mes anterior pero invluye el dia de hoy es true
+    if (this.yearSelect == this.year && (this.monthSelectView == this.month) && this.today == date && i >= semanasMesAnterior[semanasMesAnterior.length - 1][6].indexWeek) {
+      return true;
+    }
+
     return false;
   }
 
@@ -958,6 +972,37 @@ export class CalendarioComponent implements OnInit {
     }
 
     //si no se cumple ningula condicion retornar falso
+    return false;
+  }
+
+  mostrarIconoMes(dia: DayInterface, index: number, mes: number, anio: number) {
+    if (mes > this.month && anio >= this.year && index >= 0) {
+      return true;
+    }
+    //si el año seleccionado es mayor al año del dia de hoy
+    if (anio > this.year) {
+      return true;
+    }
+
+    if (this.monthCurrent(dia.value, index) && this.monthSelect[index].value >= this.today) {
+      return true;
+    }
+
+    return false;
+  }
+
+  esMenor(dia: DayInterface) {
+    if (dia.value < this.today) {
+      return true;
+    }
+    return false;
+  }
+
+  indiceMenor(indexDay: number) {
+
+    if (indexDay < this.indexHoy) {
+      return true;
+    }
     return false;
   }
 

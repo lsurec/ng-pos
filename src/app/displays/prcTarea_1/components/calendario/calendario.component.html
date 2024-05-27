@@ -269,7 +269,7 @@
                             *ngFor="let dia of monthSelect; let first = first; let inDay = index; let c = count"
                             class="dia-tarea-mes">
                             <!-- Resaltar el dia de hoy -->
-                            <div class="dia-crear">
+                            <div [ngClass]="[ isToday(dia.value, inDay)  ? 'dia-hoy-crear': 'dia-crear']">
 
                                 <div (click)="irAlDia(dia, inDay, resolveMonth(inDay))" [ngClass]="[ 
                                 isToday(dia.value, inDay)  ? 'hoy': 'num-dia',
@@ -280,6 +280,7 @@
                                     <span>{{dia?.value}}</span>
                                 </div>
                                 <span class="spacer"></span>
+                                <!-- <mat-icon *ngIf="mostrarIconoMes( dia,inDay, monthSelectView, yearSelect)" -->
                                 <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)"
                                     (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)" class="nueva"
                                     matTooltip="crear nueva tarea" [ngClass]="[ 
@@ -354,14 +355,15 @@
                             <div class="dia-crear">
                                 <!-- Resaltar el dia de hoy en semana -->
                                 <div (click)="irAlDiaSemana(diaSemana, iDia)"
-                                    [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'hoy-semana': 'num-dia']">
+                                    [ngClass]="[today == diaSemana?.value && resolveMonth(iDia) == month && yearSelect == year ? 'hoy-semana': 'num-dia']">
                                     <!-- Numero de dia -->
                                     <span>{{diaSemana?.value}}</span>
                                 </div>
                                 <span class="spacer"></span>
                                 <!-- <mat-icon class="nueva" matTooltip="crear nueva tarea" [ngClass]="[  -->
                                 <!-- <mat-icon (click)="nuevaTareaSemana(diaSemana.value, resolveMonth(i))" class="nueva" -->
-                                <mat-icon *ngIf="mostrarIconoSemana(diaSemana, iDia , monthSelectView, yearSelect)"
+                                <mat-icon
+                                    *ngIf="mostrarIconoSemana(diaSemana, iDia , resolveMonth(iDia), resolveYear(iDia))"
                                     class="nueva" matTooltip="crear nueva tarea"
                                     (click)="crearTareaSemana(diaSemana, iDia, resolveMonth(iDia), yearSelect)"
                                     [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
