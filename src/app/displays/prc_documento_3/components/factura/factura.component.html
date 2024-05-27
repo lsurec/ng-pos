@@ -78,7 +78,7 @@
                     <p class="descripcion">Nuevo Documento</p>
                 </div>
             </div>
-            <div class="cambioFiltro" (click)="verFiltros()">
+            <!-- <div class="cambioFiltro" (click)="verFiltros()">
                 <mat-icon class="iconos-detalles">filter_alt</mat-icon>
                 <span class="spacer"></span>
                 <div class="detalle">
@@ -87,7 +87,7 @@
                         {{filtroNombre}}
                     </p>
                 </div>
-            </div>
+            </div> -->
             <div class="detalles-usuario" *ngIf="cambiarFiltro">
                 <div class="aqui">
                     <mat-radio-group [(ngModel)]="facturaService.filtroPreferencia">
