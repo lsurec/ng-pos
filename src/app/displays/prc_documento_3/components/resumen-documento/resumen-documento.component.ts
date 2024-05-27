@@ -1233,30 +1233,30 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //TODO:Usar transacciones de la base de datos
-    this.facturaService.traInternas.forEach(detail => {
+    detalles.forEach(detail => {
 
 
 
-      if (detail.cantidad == 0 && detail.total > 0) {
+      if (detail.cantidad == 0 && detail. monto > 0) {
         //4 cargo
-        cargo += detail.total;
-      } else if (detail.cantidad == 0 && detail.total < 0) {
+        cargo += detail.monto;
+      } else if (detail.cantidad == 0 && detail.monto < 0) {
         //5 descuento
-        descuento += detail.total;
+        descuento += detail.monto;
       } else {
         //cualquier otro
-        subtotal += detail.total;
+        subtotal += detail.monto;
       }
 
       items.push(
         {
-          cantidadDias: detail.cantidadDias,
-          sku: detail.producto.producto_Id,
-          descripcion: detail.producto.des_Producto,
+          cantidadDias: detail.cantidad, //TODO:Verificar dias
+          sku: detail.producto_Id,
+          descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.precioCantidad! / detail.cantidad : detail.precioCantidad, ' ', 'symbol', '2.2-2')!,
-          total: this.currencyPipe.transform(detail.total, ' ', 'symbol', '2.2-2')!,
-          precioDia: this.currencyPipe.transform(detail.precioDia, ' ', 'symbol', '2.2-2')!,
+          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
         }
       );
     });

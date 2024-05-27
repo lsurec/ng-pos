@@ -378,9 +378,9 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
     this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
@@ -527,10 +527,10 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
     //agregar horas a las selectTime
-    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin)) ;
-    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
-    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin)) ;
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
 
@@ -890,10 +890,10 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni));
-    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
     //Set min time for inputs
 
@@ -1090,11 +1090,11 @@ export class FacturaComponent implements OnInit {
           return;
         }
 
-        let calculoDias:PrecioDiaInterface [] = res.response;
+        let calculoDias: PrecioDiaInterface[] = res.response;
 
-        if(calculoDias.length == 0){
+        if (calculoDias.length == 0) {
 
-          res.response = "No se pudo obtener el resultafos al hacer el calculo de precio por dias, verifica el procedimeinto."
+          res.response = "No se pudo obtener los resultados al hacer el calculo de precio por dias, verifica el procedimeinto."
 
           this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -1122,7 +1122,7 @@ export class FacturaComponent implements OnInit {
           cantidad: tra.detalle.disponible,
           total: tra.detalle.monto,
           cargo: 0,
-          cantidadDias:cantidadDias,
+          cantidadDias: cantidadDias,
           descuento: 0,
           operaciones: [],
         }
@@ -1246,6 +1246,23 @@ export class FacturaComponent implements OnInit {
         return;
       }
     }
+
+    // //vaidar fecha de incio
+    // if (this.facturaService.valueParametro(381)) {
+
+    //   if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
+    //     //TODO:Tranlate
+    //     this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+    //     return;
+
+    //   }
+
+    // }
+
+
+
+
+    //validar fechas si existen
 
     //ir a resumen
     this.vistaResumen = true;
