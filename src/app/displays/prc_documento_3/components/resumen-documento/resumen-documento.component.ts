@@ -610,6 +610,7 @@ export class ResumenDocumentoComponent implements OnInit {
       
       //onjeto para el api
       let document: PostDocumentInterface = {
+        estado:11,
         estructura: JSON.stringify(this.docGlobal),
         user: this.user,
       }
@@ -1136,8 +1137,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let pagos: PagoPrintInterface[] = resPagos.response;
 
-
-
     if (encabezados.length == 0) {
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -1539,13 +1538,20 @@ export class ResumenDocumentoComponent implements OnInit {
     this.consecutivoDoc = -1;
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
-    let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
-    let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
+
+    let dateConsecutivo: Date = new Date();
+
+    let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
 
     // Combinar los dos números para formar uno de 14 dígitos
     let strNum1: string = randomNumber1.toString();
-    let strNum2: string = randomNumber2.toString();
-    let combinedStr: string = strNum1 + strNum2;
+    let combinedStr: string = strNum1 + 
+    dateConsecutivo.getDate() + 
+    (dateConsecutivo.getMonth()+1) +
+    dateConsecutivo.getFullYear() + 
+    dateConsecutivo.getHours() + 
+    dateConsecutivo.getMinutes() +
+    dateConsecutivo.getSeconds();
 
     //ref id
     let combinedNum: number = parseInt(combinedStr, 10);
@@ -1769,6 +1775,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let document: PostDocumentInterface = {
       estructura: JSON.stringify(this.docGlobal),
       user: this.user,
+      estado:this.facturaService.valueParametro(349) ? 1 : 11, 
     }
 
     //consumo del servico para crear el documento
