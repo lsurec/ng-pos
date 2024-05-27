@@ -473,8 +473,8 @@ export class CalendarioComponent implements OnInit {
       calendar.selected = previousMonth;
     });
     //agregar que la fgecha del picker sea 1
+    // await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
     this.datePicker.setDate(1);
-    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
   }
 
   //Cambiar al mes siguiente
@@ -495,8 +495,8 @@ export class CalendarioComponent implements OnInit {
     });
 
     //agregar que la fgecha del picker sea 1
+    // await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
     this.datePicker.setDate(1);
-    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
   }
 
   indexWeekDiaHoy: number = 0;
