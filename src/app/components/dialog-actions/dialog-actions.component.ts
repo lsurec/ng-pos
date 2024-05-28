@@ -41,6 +41,5 @@ export class DialogActionsComponent {
     } else if (this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "1";
     }
-    console.log(PreferencesService.mostrarAlerta, "dialogo");
   }
 }
