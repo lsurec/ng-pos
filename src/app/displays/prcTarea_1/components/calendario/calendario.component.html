@@ -269,10 +269,10 @@
                             *ngFor="let dia of monthSelect; let first = first; let inDay = index; let c = count"
                             class="dia-tarea-mes">
                             <!-- Resaltar el dia de hoy -->
-                            <div [ngClass]="[ isToday(dia.value, inDay)  ? 'dia-hoy-crear': 'dia-crear']">
+                            <div [ngClass]="[ nuevaHoy(dia, inDay)  ? 'dia-hoy-crear': 'dia-crear']">
 
                                 <div (click)="irAlDia(dia, inDay, resolveMonth(inDay))" [ngClass]="[ 
-                                isToday(dia.value, inDay)  ? 'hoy': 'num-dia',
+                                nuevaHoy(dia, inDay)  ? 'hoy': 'num-dia',
                                 inDay >=0  && inDay<7  && dia.value   > semanas[0][6].value  ? 'num-dia-anterior':'num-dia',
                                     inDay >=monthSelect.length -6  && inDay<monthSelect.length   && dia.value   < semanas[semanas.length -1][0].value  ? 'num-dia-anterior':'num-dia' 
                                     ]">
@@ -280,11 +280,11 @@
                                     <span>{{dia?.value}}</span>
                                 </div>
                                 <span class="spacer"></span>
-                                <!-- <mat-icon *ngIf="mostrarIconoMes( dia,inDay, monthSelectView, yearSelect)" -->
-                                <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)"
+                                <!-- <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)" -->
+                                <mat-icon *ngIf="isValidDate( dia,inDay, monthSelectView, yearSelect)"
                                     (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)" class="nueva"
                                     matTooltip="crear nueva tarea" [ngClass]="[ 
-                                isToday(dia.value, inDay)  ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
+                                nuevaHoy(dia, inDay)  ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
                                 <!-- Mostrar las tareas por en la primera y ultima semana del mes seleccionado -->
                             </div>
 

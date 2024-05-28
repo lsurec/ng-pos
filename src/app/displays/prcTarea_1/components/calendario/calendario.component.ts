@@ -941,20 +941,54 @@ export class CalendarioComponent implements OnInit {
     let mesAnterior: number = this.month - 1;
     let mesSiguiente: number = this.month + 1;
 
+
+    let semanasMesAnterior: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, mesAnterior, this.primerDiaSemana));
+    let semanasMesSiguiente: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, mesSiguiente, this.primerDiaSemana));
+
+
+
     //si estamos en el año actual y el messeleccionado es igual al mes actual +1 y el dia de hoy es igual a date
-    if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente) && this.today == date && (i >= this.semanas[0][0].indexWeek && i <= this.semanas[0][6].indexWeek)) {
+    if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente) && this.today == date && (i >= semanasMesSiguiente[0][0].indexWeek && i <= semanasMesSiguiente[0][6].indexWeek)) {
       return true;
     }
+    // // //si estamos en la ultoma semana del mes anterior pero invluye el dia de hoy es true
+    // if (this.yearSelect == this.year && (this.monthSelectView == mesAnterior ) && this.today == date && (i >= semanasMesAnterior[semanasMesAnterior.length - 1][0].indexWeek && i <= semanasMesAnterior[semanasMesAnterior.length - 1][6].indexWeek)) {
 
-    let semanasMesAnterior: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, this.month - 1, this.primerDiaSemana));
-
-
-    // //si estamos en la ultoma semana del mes anterior pero invluye el dia de hoy es true
-    // if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente ) && this.today == date && i >= semanasMesAnterior[semanasMesAnterior.length - 1][6].indexWeek) {
-    //   return true;
+    //  return true;
     // }
 
     return false;
+  }
+
+  nuevaHoy(dia: DayInterface, i: number) {
+
+    //verificar mes y año de la fecha de hpy
+    if (this.today == dia.value && this.monthSelectView == this.month && this.yearSelect == this.year) {
+      if (i >= 0 && i < 7 && dia.value > this.semanas[0][6].value)
+        return false;
+      if (i >= this.monthSelect.length - 6 && i < this.monthSelect.length && dia.value < this.semanas[this.semanas.length - 1][0].value)
+        return false;
+      this.indexHoy = i;
+      return true
+    }
+
+    let mesAnterior: number = this.month - 1;
+    let mesSiguiente: number = this.month + 1;
+
+    let semanasMesAnterior: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, mesAnterior, this.primerDiaSemana));
+    let semanasMesSiguiente: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, mesSiguiente, this.primerDiaSemana));
+
+    //si estamos en el mes anterior y la ultima semana incluye el dia de hoy 
+    if (this.yearSelect == this.year && (this.monthSelectView == mesAnterior) && (this.monthSelect[i].indexWeek == this.monthSelect[this.indexHoy].indexWeek) && dia.value == this.today && (dia.indexWeek >= semanasMesAnterior[semanasMesAnterior.length - 1][dia.indexWeek].indexWeek && dia.indexWeek <= semanasMesAnterior[semanasMesAnterior.length - 1][dia.indexWeek].indexWeek)) {
+      return true;
+    }
+    //si estamos en el mes siguiente y la primera semana incluye el dia de hoy 
+    if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente) && (this.monthSelect[i].indexWeek == this.monthSelect[this.indexHoy].indexWeek) && dia.value == this.today && (dia.indexWeek >= semanasMesSiguiente[0][dia.indexWeek].indexWeek && dia.indexWeek <= semanasMesSiguiente[0][dia.indexWeek].indexWeek)) {
+      return true;
+    }
+
+    return false;
+
   }
 
   //Mostrar el icono para mostrar tareas en el mes apartir de la fecha de hoy
@@ -979,20 +1013,64 @@ export class CalendarioComponent implements OnInit {
   }
 
   mostrarIconoMes(dia: DayInterface, index: number, mes: number, anio: number) {
-    if (mes > this.month && anio >= this.year && index >= 0) {
-      return true;
-    }
-    //si el año seleccionado es mayor al año del dia de hoy
-    if (anio > this.year) {
+
+    if (mes == this.month && index >= this.indexHoy) {
       return true;
     }
 
-    if (this.monthCurrent(dia.value, index) && this.monthSelect[index].value >= this.today) {
+    if (mes >= this.month && anio >= this.year) {
       return true;
+    }
+
+    if (mes > this.month && this.semanas[0][dia.indexWeek].value < this.today) {
+      return false;
     }
 
     return false;
   }
+
+
+
+  isValidDate(day: DayInterface, indice: number, mes: number, anio: number): boolean {
+
+    // Comparar años
+    if (anio > this.year) {
+      // Año mayor al actual, todos los meses son válidos
+      return true;
+    } else if (anio === this.year) {
+      // Mismo año, comparar meses
+      if (mes > this.month) {
+        let mesSiguienteActual: number = this.month + 1;
+
+        if (mes == mesSiguienteActual) {
+          if (indice > this.obtenerIndiceDia(mesSiguienteActual, anio)) {
+            return true;
+          } else {
+            if (this.monthSelect[indice].value < this.today && !this.monthCurrent(day.value, indice)) {
+              return false;
+            }
+          }
+        }
+
+        // Mes mayor al actual, todos los días son válidos
+        return true;
+      } else if (mes === this.month) {
+        // Mismo mes, comparar días
+        if (indice >= this.indexHoy) {
+          return true;
+        }
+        return false;
+      } else {
+        // Mes menor al actual
+        //TODO: realizar la validacion cuando el dia dehoy está en la ultima semana del mes anterior
+        return false;
+      }
+    } else {
+      // Año menor al actual
+      return false;
+    }
+  }
+
 
   esMenor(dia: DayInterface) {
     if (dia.value < this.today) {
@@ -1007,6 +1085,24 @@ export class CalendarioComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  obtenerIndiceDia(mes: number, anio: number) {
+
+    let mesSiguienteActual: DayInterface[];
+    let indiceDia: number = 0;
+
+    mesSiguienteActual = this.obtenerDiasMes(anio, mes, this.primerDiaSemana);
+
+    for (let index = 0; index < mesSiguienteActual.length; index++) {
+      const element = mesSiguienteActual[index];
+
+      if (element.value == this.today) {
+        indiceDia = index;
+        break;
+      }
+    }
+    return indiceDia;
   }
 
   //mostrar el icono en los dias de la semana apartir del dia de hoy
