@@ -287,6 +287,13 @@
                 (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
+        <div class="detalles-fondo">
+            <p class="textosBold14">Observaciones</p>
+            <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservaciones"
+                (ngModelChange)="facturaService.saveDocLocal()"></textarea>
+        </div>
+
         <!-- <div class="detalles-fondo-v" *ngIf="facturaService.valueParametro(58)">
             <div class="dFlex">
                 <p class="textosBold14">Id:</p>

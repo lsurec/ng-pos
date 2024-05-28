@@ -89,6 +89,7 @@ export class FacturaService {
     refDescripcion?: string;
     refDireccionEntrega?: string;
     refObservacion?: string;
+    refObservaciones?: string; //nueva
 
 
     //fechas
