@@ -622,8 +622,6 @@ export class CalendarioComponent implements OnInit {
       calendar.selected = nextMonthPicker;
     });
 
-    console.log(this.indexWeekActive, "indice de la semana", this.monthSelectView);
-
   }
 
   //Cambiar a la semana siguiente
@@ -721,8 +719,6 @@ export class CalendarioComponent implements OnInit {
       calendar.selected = nextMonthPicker;
     });
 
-    console.log(this.indexWeekActive, "indice de la semana", this.monthSelectView);
-
   }
 
   //crear nombre de la semanas por rango
@@ -776,8 +772,6 @@ export class CalendarioComponent implements OnInit {
 
   //Se activa cuando se selecciona una fecha en el picker
   fechaSeleccionada(): void {
-    console.log("entro aqui");
-    
 
     //si hay una fecha en picker
     if (this.datePicker) {
@@ -1409,9 +1403,6 @@ export class CalendarioComponent implements OnInit {
 
   //funcion para mostrar el rango de horas laborales
   hora8(): void {
-
-    console.log(this.horaInicio.hora24, "incio");
-    console.log(this.horaFin.hora24, "fin");
 
     this.horas.forEach((objeto) => {
       if (objeto.hora24 >= this.horaInicio.hora24 && objeto.hora24 <= this.horaFin.hora24) {
