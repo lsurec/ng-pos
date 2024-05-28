@@ -1780,14 +1780,51 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
 
     //TODO:Validar impresion
 
-    
+    const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
+    
+    //validar si es impresion directa o no
+
+
+    // return;
+    pdfDocGenerator.getBlob(async (blob) => {
+      // ...
+      var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+      this.facturaService.isLoading = true;
+
+      let resPrint: ResApiInterface = await this._printService.postPrint(
+        pdfFile,
+        PreferencesService.impresora,
+        PreferencesService.copies
+      );
+
+      this.facturaService.isLoading = false;
+
+
+      if (!resPrint.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.showError(resPrint);
+
+        return;
+
+      }
+      this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+
+    });
+
+
+    //Impresion por defecto
     pdfMake.createPdf(docDefinition).print();
+
 
     return;
   }
