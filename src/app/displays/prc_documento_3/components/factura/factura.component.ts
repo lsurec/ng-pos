@@ -131,7 +131,7 @@ export class FacturaComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private _printService: PrinterService,
     private _retryService: RetryService,
-    private _dataUserService:DataUserService,
+    private _dataUserService: DataUserService,
   ) {
 
     //sucripcion a eventos desde componentes hijo
@@ -1392,7 +1392,7 @@ export class FacturaComponent implements OnInit {
     // }
 
     //validar fechas si existen
-    
+
     this.sendDoc();
 
 
@@ -1403,6 +1403,7 @@ export class FacturaComponent implements OnInit {
   async sendDoc() {
 
     //validar si es editar doc
+    //TODO:Valiudar impresion
     if (this.globalConvertService.editDoc) {
       this.modifyDoc();
       return;
@@ -1412,7 +1413,7 @@ export class FacturaComponent implements OnInit {
     //Si se permite fel entrar al proceso
     //Inciar FEL
     // if (this.facturaService.valueParametro(349)) {
-      if (this._dataUserService.switchState) {
+    if (this._dataUserService.switchState) {
 
       //iniciar cargas (steps)
       this.facturaService.pasosCompletos = 0;
@@ -1496,6 +1497,9 @@ export class FacturaComponent implements OnInit {
       this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
 
+      this.printFormat();
+
+
     } else {
       //Enviar documento a tbl_documento estructura
       this.facturaService.isLoading = true;
@@ -1512,6 +1516,8 @@ export class FacturaComponent implements OnInit {
       if (resCreateDoc.type == 0) {
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
       }
+
+      this.printFormat();
     }
   }
 
@@ -1594,7 +1600,6 @@ export class FacturaComponent implements OnInit {
       return;
     }
 
-
     let encabezado: EncabezadoPrintInterface = encabezados[0];
 
     let empresa: Empresa = {
@@ -1604,7 +1609,6 @@ export class FacturaComponent implements OnInit {
       razonSocial: encabezado.razon_Social ?? "",
       tel: encabezado.empresa_Telefono ?? "",
     }
-
 
     // let isFel: boolean = true;
     let isFel: boolean = this.facturaService.valueParametro(349);
@@ -1712,7 +1716,6 @@ export class FacturaComponent implements OnInit {
       );
     });
 
-
     let vendedor: string = "";
 
     if (this.facturaService.vendedores.length > 0) {
@@ -1761,16 +1764,12 @@ export class FacturaComponent implements OnInit {
       fechas: fechas,
     }
 
-
     //Imprimir doc 
-
     if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
 
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).print();
-
-
 
       return;
 
@@ -1781,9 +1780,6 @@ export class FacturaComponent implements OnInit {
     pdfMake.createPdf(docDefinition).print();
 
     return;
-
-
-
   }
 
   async retryFel() {
