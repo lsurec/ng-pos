@@ -29,6 +29,28 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { DocLocalInterface } from '../../interfaces/doc-local.interface';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
+import { UpdateDocInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-doc.interface';
+import { UpdateRefInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/update-ref-interface';
+import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { NewTransactionInterface } from '../../interfaces/new-transaction.interface';
+import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
+import { Certificador, Cliente, DocPrintModel, DocumentoData, Empresa, Fechas, Item, Montos, ObservacionesRef, Pago, PoweredBy } from 'src/app/interfaces/doc-print.interface';
+import { DataFelInterface } from '../../interfaces/data-fel.interface';
+import { CargoAbono, Documento, Transaccion } from '../../interfaces/doc-estructura.interface';
+import { PostDocumentInterface } from '../../interfaces/post-document.interface';
+import { DocumentService } from '../../services/document.service';
+import { FelService } from '../../services/fel.service';
+import { CredencialInterface } from '../../interfaces/credencial.interface';
+import { DataInfileInterface } from '../../interfaces/data.infile.interface';
+import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
+import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
+import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
+import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
+import { CurrencyPipe } from '@angular/common';
+import { PrinterService } from 'src/app/services/printer.service';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-factura',
@@ -42,9 +64,25 @@ import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
     PagoService,
     ReferenciaService,
     ProductService,
+    ReceptionService,
+    DocumentService,
+    FelService,
+    CurrencyPipe,
+    PrinterService,
   ]
 })
 export class FacturaComponent implements OnInit {
+
+
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
+
+  verVistaPrevia: boolean = false;
+
+  consecutivoDoc: number = -1;
+  docPrint?: DocPrintModel;
+  dataFel?: DataFelInterface;
+  docGlobal?: Documento;
 
   readonly regresar: number = 1; //id de la pnatalla
   cuenta?: ClienteInterface; //cuenta que se va a editar 
@@ -63,6 +101,7 @@ export class FacturaComponent implements OnInit {
   tipoDocumento?: number = this.facturaService.tipoDocumento; //tipo docuemnto seleccionado
   nombreDocumento: string = this.facturaService.documentoName; //Descripcion del tipo de documento
   timer: any; //temporizador
+  serie: string = this.facturaService.serie!.serie_Documento; //serie de la sesion
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -90,6 +129,12 @@ export class FacturaComponent implements OnInit {
     private _calendar: NgbCalendar,
     public globalConvertService: GlobalConvertService,
     private _productService: ProductService,
+    private _recpetionService: ReceptionService,
+    private _documentService: DocumentService,
+    private _felService:FelService,
+    private currencyPipe: CurrencyPipe,
+    private _printService:PrinterService,
+    private _retryService: RetryService,
 
   ) {
 
@@ -130,6 +175,14 @@ export class FacturaComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
+    this._retryService.createDoc$.subscribe(() => {
+      this.sendDoc();
+    });
+
+    this._retryService.felProcess$.subscribe(() => {
+      this.retryFel();
+    });
 
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
@@ -1139,10 +1192,6 @@ export class FacturaComponent implements OnInit {
 
   }
 
-  async editDoc() {
-    //TODO:
-  }
-
   //ver oabtalal crear cuenta correntista
   verNuevoCliente() {
     this.nuevoCliente = true;
@@ -1171,6 +1220,111 @@ export class FacturaComponent implements OnInit {
     this.vistaResumen = false;
     this.vistaHistorial = false;
     this.vistaInforme = false;
+  }
+
+  //ver histirial de documentos recienetes
+  verHistorial() {
+    this.vistaHistorial = true;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaInforme = false;
+  }
+
+  //ver informe de erroes
+  verInformeError() {
+    this.vistaInforme = true;
+    this.vistaHistorial = false;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+  }
+
+  //regresear a menu (pantalla de inicio)
+  goBack(): void {
+    components.forEach(element => {
+      element.visible = false;
+    });
+
+    this.facturaService.verCheckBox = 0;
+    this._eventService.emitCustomEvent(false);
+  }
+
+  //Abrir cerrar Sidenav
+  close(reason: string) {
+    this.sidenavend.close();
+  }
+
+
+  //verError
+  verError(res: ResApiInterface) {
+
+    //fehca y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardar error
+    PreferencesService.error = error;
+
+    //ver pantlla d error
+    this.verInformeError();
+  }
+
+
+  //Manejo de eventos del declado
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // console.log("Tecla presionada:", event.key);
+
+    // Debe dirigirse a imprimir cuando:
+    //la fecha presionada sea F9,
+    //el display sea de Facturas
+    if (event.key.toLowerCase() === "f9" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Imprimir
+      this.printDoc();
+    }
+
+
+    // ebe limpiar el formulario para un nuevo documento cuando:
+    //la fecha presionada sea F1,
+    //el display sea de Facturas
+    if (event.key.toLowerCase() === "f1" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      //Nuevo documento
+      this.newDoc();
+    }
+  }
+
+  activarDialogo() {
+    if (!this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "0";
+    } else if (this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "1";
+    }
+  }
+
+  nuevoDocImprimir() {
+    //si es verdadero, la preferencia será 1;
+    if (this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "1";
+    } else if (!this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "0";
+    }
+
   }
 
   //Confirmar documento
@@ -1243,66 +1397,1200 @@ export class FacturaComponent implements OnInit {
     //TODO:Procesar documento 
 
 
+  }
+
+
+  //Confirmar documento
+  async sendDoc() {
+
+    //validar si es editar doc
+    if (this.globalConvertService.editDoc) {
+      this.modifyDoc();
+      return;
+    }
+
+    //TODO:En produccion evaluar parametro
+    //Si se permite fel entrar al proceso
+    //Inciar FEL
+    if (this.facturaService.valueParametro(349)) {
+      // if (this._dataUserService.switchState) {
+
+      //iniciar cargas (steps)
+      this.facturaService.pasosCompletos = 0;
+
+      //iniciar cargas
+      this.facturaService.pasos.forEach(element => {
+        element.visible = true;
+        element.status = 1;
+      });
+
+      //ocultar botones y mensajes
+      this.facturaService.viewMessage = false;
+      this.facturaService.viewError = false;
+      this.facturaService.viewErrorFel = false;
+      this.facturaService.viewErrorProcess = false;
+      this.facturaService.viewSucces = false;
+      this.facturaService.isStepLoading = true;
+
+      let resSendDoc: TypeErrorInterface = await this.sendDocument();
+
+      if (resSendDoc.type == 1) {
+        //iniciar cargas
+        this.facturaService.pasos.forEach(element => {
+          element.visible = false;
+          element.status = 3;
+        });
+
+        this.facturaService.viewErrorProcess = true;
+        this.facturaService.viewError = true;
+        this.facturaService.viewMessage = true;
+
+
+        //TODO:Translate
+        this.facturaService.stepMessage = "Algo salió mal al crear el documento. Intenta mas tarde."
+
+        this.saveError(resSendDoc.error);
+
+
+        return;
+      }
+
+      //primer paso completo
+      this.facturaService.pasosCompletos++;
+      this.facturaService.pasos[0].status = 2;
+      this.facturaService.pasos[0].visible = false;
+
+      //Empezar proceso FEL 
+      let resFelProcess: TypeErrorInterface = await this.felProcess();
+
+      //evaluar respuesta proceso fel 
+      if (resFelProcess.type == 1) {
+
+        //No se completo el proceso fel
+        this.facturaService.pasos[1].visible = false;
+        this.facturaService.pasos[1].status = 3;
+
+
+        this.facturaService.viewErrorFel = true;
+        this.facturaService.viewError = true;
+        this.facturaService.viewMessage = true;
+
+
+        //TODO:Translate
+        this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+
+        this.saveError(resFelProcess.error);
+
+
+        return;
+      }
+
+
+      //si todo está correcto
+      this.facturaService.pasosCompletos++;
+      this.facturaService.pasos[1].status = 2;
+      this.facturaService.pasos[1].visible = false;
+
+
+      this.facturaService.viewSucces = true;
+      this.facturaService.viewMessage = true;
+      this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+
+
+    } else {
+      //Enviar documento a tbl_documento estructura
+      this.facturaService. isLoading = true;
+ 
+      let resCreateDoc: TypeErrorInterface = await this.sendDocument()
+
+      this.facturaService. isLoading = false;
+
+      if (resCreateDoc.type == 1) {
+        this.showError(resCreateDoc.error);
+        return;
+      }
+
+      if (resCreateDoc.type == 0) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+      }
+    }
+  }
+
+  async printFormat() {
+
+    //TODO:Verificar tipo de documento, imprimir cotizacion alfa y omega
+    // if (this.facturaService.tipoDocumento == 20) {
+    //   //Generar datos apra impresion de cotizacion
+
+    //   this.printCotizacion();
+    //   return;
+    // }
+
+    this.facturaService.isLoading = true;
+
+    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+    if (!resEncabezado.status) {
+
+      this.facturaService.isLoading = false;
+      this.showError(resEncabezado);
+
+      return;
+
+    }
+
+    let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
+
+    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+    if (!resDetalles.status) {
+
+      this.facturaService .isLoading = false;
+
+      this.showError(resDetalles);
+      
+      return;
+
+    }
+
+    let detalles: DetallePrintInterface[] = resDetalles.response;
+
+    let resPagos: ResApiInterface = await this._documentService.getPagos(
+      this.user,
+      this.token,
+      this.consecutivoDoc!,
+    );
+
+
+    if (!resPagos.status) {
+
+      this.facturaService. isLoading = false;
+
+      this.showError(resPagos);
+
+      return;
+
+    }
+
+    this.facturaService .isLoading = false;
+
+    let pagos: PagoPrintInterface[] = resPagos.response;
+
+    if (encabezados.length == 0) {
+     
+      this.facturaService.isLoading = false;
+
+      resEncabezado.response = this._translate.instant('pos.factura.sin_encabezados'); 
+
+      this.showError(resEncabezado);
+
+      return;
+    }
+
+
+    let encabezado: EncabezadoPrintInterface = encabezados[0];
+
+    let empresa: Empresa = {
+      direccion: encabezado.empresa_Direccion ?? "",
+      nit: encabezado.empresa_Nit ?? "",
+      nombre: encabezado.empresa_Nombre ?? "",
+      razonSocial: encabezado.razon_Social ?? "",
+      tel: encabezado.empresa_Telefono ?? "",
+    }
+
+
+    // let isFel: boolean = true;
+    let isFel: boolean = this.facturaService.valueParametro(349);
+
+
+    let fechaCert: string = "";
+    let horaCert: string = "";
+
+    if (this.dataFel) {
+      let date: Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+      fechaCert = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      horaCert = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
+
+    let documento: DocumentoData = {
+      titulo: encabezado.tipo_Documento?.toUpperCase()!,
+      descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
+      fechaCert: isFel ? `${fechaCert} ${horaCert}` : "",
+      serie: isFel ? this.dataFel?.serieDocumento ?? "" : "",
+      no: isFel ? this.dataFel?.numeroDocumento ?? "" : "",
+      autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
+      serieInterna: encabezado.serie_Documento!,
+      noInterno: encabezado.iD_Documento_Ref!,
+    }
+
+    let cuenta: ClienteInterface | undefined = this.facturaService.cuenta;
+
+    let currentDate: Date = new Date();
+
+    let cliente: Cliente = {
+      correo: cuenta?.eMail ?? "",
+      nombre: cuenta?.factura_Nombre ?? "",
+      direccion: cuenta?.factura_Direccion ?? "",
+      nit: cuenta?.factura_NIT ?? "",
+      tel: cuenta?.telefono ?? "",
+      fecha: currentDate,
+    }
+
+    let fechas: Fechas = {
+      fechaInicio: this.facturaService.fechaIni!,
+      fechaInicioRef: this.facturaService.fechaFin!,
+      fechaFin: this.facturaService.fechaFin!,
+      fechaFinRef: this.facturaService.fechaRefFin!,
+    }
+
+    let cargo: number = 0;
+    let descuento: number = 0;
+    let subtotal: number = 0;
+    let total: number = 0;
+
+    let items: Item[] = [];
+
+
+    //TODO:Usar transacciones de la base de datos
+    detalles.forEach(detail => {
 
 
 
+      if (detail.cantidad == 0 && detail. monto > 0) {
+        //4 cargo
+        cargo += detail.monto;
+      } else if (detail.cantidad == 0 && detail.monto < 0) {
+        //5 descuento
+        descuento += detail.monto;
+      } else {
+        //cualquier otro
+        subtotal += detail.monto;
+      }
 
-    
-    
-    //ir a resumen
-    // this.vistaResumen = true;
-    // this.vistaFactura = false;
-    // this.actualizarCliente = false;
-    // this.nuevoCliente = false;
-    // this.vistaHistorial = false;
-    // this.vistaInforme = false;
+      items.push(
+        {
+          cantidadDias: detail.cantidad, //TODO:Verificar dias
+          sku: detail.producto_Id,
+          descripcion: detail.des_Producto,
+          cantidad: detail.cantidad,
+          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+        }
+      );
+    });
+
+    total += (subtotal + cargo) + descuento;
+
+    let montos: Montos = {
+      subtotal: this.currencyPipe.transform(subtotal, ' ', 'symbol', '2.2-2')!,
+      cargos: this.currencyPipe.transform(cargo, ' ', 'symbol', '2.2-2')!,
+      descuentos: this.currencyPipe.transform(descuento, ' ', 'symbol', '2.2-2')!,
+      total: this.currencyPipe.transform(total, ' ', 'symbol', '2.2-2')!,
+      totalLetras: encabezado.monto_Letras!.toUpperCase(),
+    }
+
+    let pagosP: Pago[] = [];
+
+    pagos.forEach(pago => {
+
+      pagosP.push(
+        {
+          tipoPago: pago.fDes_Tipo_Cargo_Abono,
+          monto: this.currencyPipe.transform(pago.monto, ' ', 'symbol', '2.2-2')!,
+          pago: this.currencyPipe.transform((pago.monto + pago.cambio), ' ', 'symbol', '2.2-2')!,
+          cambio: this.currencyPipe.transform(pago.cambio, ' ', 'symbol', '2.2-2')!,
+        }
+      );
+    });
+
+
+    let vendedor: string = "";
+
+    if (this.facturaService.vendedores.length > 0) {
+      vendedor = this.facturaService.vendedor!.nom_Cuenta_Correntista;
+    }
+
+    let certificador: Certificador;
+
+    certificador = {
+      nit: this.dataFel?.nitCertificador ?? '',
+      nombre: this.dataFel?.nombreCertificador ?? "",
+    }
+
+    let mensajes: string[] = [
+      //TODO: Mostrar frase
+      // "**Sujeto a pagos trimestrales**",
+      this._translate.instant('pos.factura.sin_devoluciones')
+    ];
+
+    let poweredBy: PoweredBy = {
+      nombre: "Desarrollo Moderno de Software S.A.",
+      website: "www.demosoft.com.gt",
+    }
+
+    let observaciones: ObservacionesRef = {
+      descripcion: this.facturaService.refDescripcion ?? "",
+      observacion: this.facturaService.refObservacion ?? "",
+      observacion2: this.facturaService.refContacto ?? "",
+      observacion3: this.facturaService.refDireccionEntrega ?? "",
+    }
+
+    this.docPrint = {
+      noDoc: this.consecutivoDoc.toString(),
+      refObservacones: observaciones,
+      empresa: empresa,
+      documento: documento,
+      cliente: cliente,
+      items: items,
+      montos: montos,
+      pagos: pagosP,
+      vendedor: vendedor,
+      certificador: certificador!,
+      observacion: this.facturaService.observacion,
+      mensajes: mensajes,
+      poweredBy: poweredBy,
+      fechas: fechas,
+    }
+
+
+    //Imprimir doc 
+
+    if (this.facturaService.tipoDocumento! == 20) {
+      //immmpirmir cotizacion
+
+      const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
+      pdfMake.createPdf(docDefinition).print();
+
+
+
+      return;
+
+    }
+
+    const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
+
+    pdfMake.createPdf(docDefinition).print();
+
+    return;
+
+
+
+  }
+
+  async retryFel() {
+
+    //cargar paso en pantalla d carga
+    this.facturaService.pasos[1].visible = true;
+    this.facturaService.pasos[1].status = 1;
+
+
+    //Empezar proceso FEL 
+    let resFelProcess: TypeErrorInterface = await this.felProcess();
+
+
+    //evaluar respuesta proceso fel 
+    if (resFelProcess.type == 1) {
+
+      //No se completo el proceso fel
+      this.facturaService.pasos[1].visible = false;
+      this.facturaService.pasos[1].status = 3;
+
+
+      this.facturaService.viewErrorFel = true;
+      this.facturaService.viewError = true;
+      this.facturaService.viewMessage = true;
+
+
+      //TODO:Translate
+      this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+
+      this.saveError(resFelProcess.error);
+
+
+      return;
+    }
+
+
+    //si todo está correcto
+    this.facturaService.pasosCompletos++;
+    this.facturaService.pasos[1].status = 2;
+    this.facturaService.pasos[1].visible = false;
+
+
+    this.facturaService.viewSucces = true;
+    this.facturaService.viewMessage = true;
+    this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+
   }
 
   
 
-  //ver histirial de documentos recienetes
-  verHistorial() {
-    this.vistaHistorial = true;
-    this.vistaResumen = false;
-    this.vistaFactura = false;
-    this.actualizarCliente = false;
-    this.nuevoCliente = false;
-    this.vistaInforme = false;
+  async felProcess(): Promise<TypeErrorInterface> {
+
+    //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
+    // let apiToken: number = 0;
+    // let tokenFel: string = "";
+
+    this.dataFel = undefined;
+
+    //TODO:Replece for value in database
+    let uuidDoc = ''
+
+    //TODO:Asiganr el api 
+    let apiUse: string = "";
+
+    //TODO:Reemplzar y parametrizar
+    let certificador: number = 1;
+
+
+    //buscar documento, plantilla xml
+
+    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+      this.user,
+      this.token,
+      this.consecutivoDoc,
+    )
+
+    if (!resXMlCert.status) {
+
+      let error: TypeErrorInterface = {
+        error: resXMlCert,
+        type: 1,
+      }
+
+      return error;
+    }
+
+    let templatesXMl: DocXMLInterface[] = resXMlCert.response;
+
+    if (templatesXMl.length == 0) {
+
+      resXMlCert.response = "No se pudo encontrar el docuemnto xml para certificar.";
+
+      let error: TypeErrorInterface = {
+        error: resXMlCert,
+        type: 1,
+      }
+
+      return error;
+    }
+
+    uuidDoc = templatesXMl[0].d_Id_Unc;
+    // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
+
+    //buscar las credenciales del certificador
+    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+      certificador,
+      this.empresa.empresa,
+      this.user,
+      this.token,
+    )
+
+    if (!resCredenciales.status) {
+
+      let error: TypeErrorInterface = {
+        error: resCredenciales,
+        type: 1,
+      }
+      return error;
+    }
+
+    //TODO:Api que se va a usar debe buscarse y asignarse aqui 
+    let credecniales: CredencialInterface[] = resCredenciales.response;
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+      if (element.campo_Nombre == "apiUnificadaInfile") {
+
+        apiUse = element.campo_Valor;
+        break;
+      }
+    }
+
+    if (!apiUse) {
+
+      resCredenciales.response = "No se pudo enonctrar el servicio para procesar el documento, verifica que la configuracion de credendiales y api cataloog esté correcta";
+
+      let error: TypeErrorInterface = {
+        error: resCredenciales,
+        type: 1,
+      }
+
+      return error;
+    }
+
+    //Buscvar credenciales de infile
+    let llaveApi: string = "";
+    let llaveFirma: string = "";
+    let usuarioApi: string = "";
+    let usuarioFirma: string = "";
+
+    for (let i = 0; i < credecniales.length; i++) {
+      const element = credecniales[i];
+
+      switch (element.campo_Nombre) {
+        case "LlaveApi":
+          llaveApi = element.campo_Valor;
+
+          break;
+        case "LlaveFirma":
+          llaveFirma = element.campo_Valor;
+          break;
+
+        case "UsuarioApi":
+          usuarioApi = element.campo_Valor;
+          break;
+        case "UsuarioFirma":
+          usuarioFirma = element.campo_Valor;
+          break;
+        default:
+          break;
+      }
+
+    }
+
+    let paramFel: DataInfileInterface = {
+      docXML: templatesXMl[0].xml_Contenido,
+      identificador: uuidDoc,
+      llaveApi: llaveApi,
+      llaveFirma: llaveFirma,
+      usuarioApi: usuarioApi,
+      usuarioFirma: usuarioFirma,
+    }
+
+
+    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+      apiUse,
+      paramFel,
+      this.token,
+    )
+
+    if (!resCertDoc.status) {
+
+      let error: TypeErrorInterface = {
+        error: resCertDoc,
+        type: 1,
+      }
+
+      return error;
+    }
+
+    let doc: any = resCertDoc.response;
+
+    let paramUpdate: ParamUpdateXMLInterface = {
+      documento: doc,
+      documentoCompleto: doc,
+      usuario: this.user,
+      uuid: uuidDoc,
+    }
+
+    //actualizar odcumento con firma
+    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+      this.token,
+      paramUpdate,
+    )
+
+    if (!resUpdateXml.status) {
+
+      let error: TypeErrorInterface = {
+        error: resUpdateXml,
+        type: 1,
+      }
+
+      return error;
+    }
+
+    let datFel: DataFelInterface[] = resUpdateXml.response;
+
+    if (datFel.length != 0) {
+      this.dataFel = datFel[0];
+
+      //actualizar doc esrctiura
+
+      let fechaAnt:Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+      this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
+      this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
+      this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
+      this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
+
+      //onjeto para el api
+      let document: PostDocumentInterface = {
+        estado:11,
+        estructura: JSON.stringify(this.docGlobal),
+        user: this.user,
+      }
+
+      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+        this.token,
+        document,
+        this.consecutivoDoc,
+      );
+
+      //TODO:Mensjaje de error
+      if (!resUpdateEstructura.status) {
+        console.error("No se pudo actalizar documento estructura", resUpdateEstructura);
+      }
+    }
+
+    let error: TypeErrorInterface = {
+      error: resUpdateXml,
+      type: 0,
+    }
+
+    return error;
   }
 
-  //ver informe de erroes
-  verInformeError() {
-    this.vistaInforme = true;
-    this.vistaHistorial = false;
-    this.vistaResumen = false;
-    this.vistaFactura = false;
-    this.actualizarCliente = false;
-    this.nuevoCliente = false;
-  }
+  //errro 1: error de api
+  //error 2: error inerno
+  //error 0: correcto
+  //Creacion del documnto en tbl_documento estructura
+  async sendDocument(): Promise<TypeErrorInterface> {
+    this.docGlobal = undefined;
+    this.dataFel = undefined;
+    this.consecutivoDoc = -1;
 
-  //regresear a menu (pantalla de inicio)
-  goBack(): void {
-    components.forEach(element => {
-      element.visible = false;
+    // Generar dos números aleatorios de 7 dígitos cada uno?
+
+    let dateConsecutivo: Date = new Date();
+
+    let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    let strNum1: string = randomNumber1.toString();
+    let combinedStr: string = strNum1 +
+      dateConsecutivo.getDate() +
+      (dateConsecutivo.getMonth() + 1) +
+      dateConsecutivo.getFullYear() +
+      dateConsecutivo.getHours() +
+      dateConsecutivo.getMinutes() +
+      dateConsecutivo.getSeconds();
+
+    //ref id
+    let combinedNum: number = parseInt(combinedStr, 10);
+
+    //Cargo abono  para el documento
+    let pagos: CargoAbono[] = [];
+    //transacciones para el docummento
+    let transacciones: Transaccion[] = [];
+
+    //id transaccion
+    let consecutivo: number = 1;
+
+    //recorre transacciones
+    this.facturaService.traInternas.forEach(transaccion => {
+
+      //id padre
+      let padre: number = consecutivo;
+
+      //cargos
+      let cargos: Transaccion[] = [];
+
+      //descuentos
+      let descuentos: Transaccion[] = [];
+
+      //buscar cargos y descuentos
+      transaccion.operaciones.forEach(operacion => {
+        //agregar cargo
+        if (operacion.cargo > 0) {
+
+          //aumnetar id de la transaccion
+          consecutivo++;
+
+          //agregar cargos
+          cargos.push(
+            {
+              D_Consecutivo_Interno: randomNumber1,
+              Tra_Consecutivo_Interno: consecutivo,
+              Tra_Consecutivo_Interno_Padre: padre,
+              Tra_Bodega: transaccion.bodega!.bodega,
+              Tra_Producto: transaccion.producto.producto,
+              Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+              Tra_Cantidad: 0,
+              Tra_Tipo_Cambio: this.tipoCambio,
+              Tra_Moneda: transaccion.precio!.moneda,
+              Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
+              Tra_Monto: operacion.cargo,
+              Tra_Monto_Dias: null,
+            }
+          );
+
+        }
+
+        //Agregar descuentos
+        if (operacion.descuento < 0) {
+
+          //aumnetar id de la transaccion
+          consecutivo++;
+
+          descuentos.push(
+            {
+              D_Consecutivo_Interno: randomNumber1,
+              Tra_Consecutivo_Interno: consecutivo,
+              Tra_Consecutivo_Interno_Padre: padre,
+              Tra_Bodega: transaccion.bodega!.bodega,
+              Tra_Producto: transaccion.producto.producto,
+              Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+              Tra_Cantidad: 0,
+              Tra_Tipo_Cambio: this.tipoCambio,
+              Tra_Moneda: transaccion.precio!.moneda,
+              Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+              Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
+              Tra_Monto: operacion.descuento,
+              Tra_Monto_Dias: null,
+
+            }
+          );
+        }
+
+      });
+
+      //agregar transacion (que no sea cargo o descuento)
+      transacciones.push(
+        {
+          D_Consecutivo_Interno: randomNumber1,
+          Tra_Consecutivo_Interno: padre,
+          Tra_Consecutivo_Interno_Padre: null,
+          Tra_Bodega: transaccion.bodega!.bodega,
+          Tra_Producto: transaccion.producto.producto,
+          Tra_Unidad_Medida: transaccion.producto.unidad_Medida,
+          Tra_Cantidad: transaccion.cantidad,
+          Tra_Tipo_Cambio: this.tipoCambio,
+          Tra_Moneda: transaccion.precio!.moneda,
+          Tra_Tipo_Precio: transaccion.precio!.precio ? transaccion.precio!.id : null,
+          Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
+          Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
+          Tra_Monto: transaccion.total,
+          //TODO:veridificar monto por dias
+          Tra_Monto_Dias: transaccion.precioDia,
+        }
+
+      );
+
+      //agregar cargos al documento
+      cargos.forEach(cargo => {
+        transacciones.push(cargo);
+      });
+
+
+      //agegar descuentos   al documento
+      descuentos.forEach(descuento => {
+        transacciones.push(descuento);
+      });
+
+      //aumnetar id de la transaccion
+      consecutivo++;
+
     });
 
-    this.facturaService.verCheckBox = 0;
-    this._eventService.emitCustomEvent(false);
+
+    let consecutivoPago: number = 1;
+
+    //agreagar cargo abono a la estructrura
+    this.facturaService.montos.forEach(monto => {
+      pagos.push(
+        {
+          Consecutivo_Interno: consecutivoPago,
+          D_Consecutivo_Interno: randomNumber1,
+          Tipo_Cargo_Abono: monto.payment.tipo_Cargo_Abono,
+          Monto: monto.amount,
+          Cambio: monto.difference,
+          Tipo_Cambio: this.tipoCambio,
+          Moneda: transacciones[0].Tra_Moneda,
+          Monto_Moneda: monto.amount / this.tipoCambio,
+          Referencia: monto.reference,
+          Autorizacion: monto.authorization,
+          Banco: monto.bank?.banco ?? null,
+          Cuenta_Bancaria: monto.account?.cuenta_Bancaria ?? null,
+        }
+      );
+      consecutivoPago++;
+    });
+
+
+
+    //total cargo abono
+    let totalCA: number = 0;
+
+    this.facturaService.montos.forEach(monto => {
+      totalCA += monto.amount;
+    });
+
+
+    //Obtener fecha y hora actual
+    let currentDate: Date = new Date();
+
+
+    //Solucion para que las horas sean correctas
+    //Modificar la hora segun la diferencia horaria 
+    let fEntrega: Date = this.facturaService.fechaRefIni!;
+    let fRecoger: Date = this.facturaService.fechaRefFin!;
+    let fIni: Date = this.facturaService.fechaIni!;
+    let fFin: Date = this.facturaService.fechaFin!;
+
+    let diferenciaHoraria: number = fEntrega.getTimezoneOffset() / 60;
+
+
+    if (diferenciaHoraria > 0) {
+      //es positivo
+      fEntrega.setHours(this.facturaService.fechaRefIni!.getHours() - diferenciaHoraria);
+      fRecoger.setHours(this.facturaService.fechaRefFin!.getHours() - diferenciaHoraria);
+      fIni.setHours(this.facturaService.fechaIni!.getHours() - diferenciaHoraria);
+      fFin.setHours(this.facturaService.fechaFin!.getHours() - diferenciaHoraria);
+    } else {
+      fEntrega.setHours(this.facturaService.fechaRefIni!.getHours() + diferenciaHoraria)
+      fRecoger.setHours(this.facturaService.fechaRefFin!.getHours() + diferenciaHoraria)
+      fIni.setHours(this.facturaService.fechaIni!.getHours() + diferenciaHoraria)
+      fFin.setHours(this.facturaService.fechaFin!.getHours() + diferenciaHoraria)
+    }
+
+
+    //documento estructura
+    this.docGlobal = {
+      Consecutivo_Interno: randomNumber1,
+      Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
+      Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
+      Doc_Ref_Fecha_Fin: this.facturaService.valueParametro(382) ? fRecoger : null,
+      Doc_Fecha_Ini: this.facturaService.valueParametro(44) ? fIni : null,
+      Doc_Fecha_Fin: this.facturaService.valueParametro(44) ? fFin : null,
+      Doc_Ref_Observacion_2: this.facturaService.valueParametro(385) ? this.facturaService.refContacto : null,
+      Doc_Ref_Descripcion: this.facturaService.valueParametro(383) ? this.facturaService.refDescripcion : null,
+      Doc_Ref_Observacion_3: this.facturaService.valueParametro(386) ? this.facturaService.refDireccionEntrega : null,
+      Doc_Ref_Observacion: this.facturaService.valueParametro(384) ? this.facturaService.refObservacion : null,
+      Doc_Tra_Monto: this.facturaService.total,
+      Doc_CA_Monto: totalCA,
+      Doc_ID_Certificador: 1, //TODO:Parametrizar
+      Doc_Cuenta_Correntista_Ref: this.facturaService.vendedor?.cuenta_Correntista ?? null,
+      Doc_ID_Documento_Ref: combinedNum,
+      Doc_FEL_numeroDocumento: null,
+      Doc_FEL_Serie: null,
+      Doc_FEL_UUID: null,
+      Doc_FEL_fechaCertificacion: null,
+      Doc_Fecha_Documento: currentDate.toISOString(),
+      Doc_Cuenta_Correntista: this.facturaService.cuenta!.cuenta_Correntista,
+      Doc_Cuenta_Cta: this.facturaService.cuenta!.cuenta_Cta,
+      Doc_Tipo_Documento: this.tipoDocumento!,
+      Doc_Serie_Documento: this.serie,
+      Doc_Empresa: this.empresa.empresa,
+      Doc_Estacion_Trabajo: this.estacion.estacion_Trabajo,
+      Doc_UserName: this.user,
+      Doc_Observacion_1: this.facturaService.observacion,
+      Doc_Tipo_Pago: 1, //TODO:preguntar
+      Doc_Elemento_Asignado: 1, //TODO:Preguntar
+      Doc_Transaccion: transacciones,
+      Doc_Cargo_Abono: pagos,
+    }
+
+    //onjeto para el api
+    let document: PostDocumentInterface = {
+      estructura: JSON.stringify(this.docGlobal),
+      user: this.user,
+      estado: this.facturaService.valueParametro(349) ? 1 : 11,
+    }
+
+    //consumo del servico para crear el documento
+    let resDoc = await this._documentService.postDocument(this.token, document);
+
+    //Si algo salió mal mostrar error
+    if (!resDoc.status) {
+
+      let error: TypeErrorInterface = {
+        error: resDoc,
+        type: 1,
+      }
+
+      return error;
+
+    }
+
+    this.consecutivoDoc = resDoc.response.data;
+
+    //Si todo está correcto mostrar alerta
+
+    let error: TypeErrorInterface = {
+      error: this.consecutivoDoc,
+      type: 0,
+    }
+
+    return error;
   }
 
-  //Abrir cerrar Sidenav
-  close(reason: string) {
-    this.sidenavend.close();
+  async modifyDoc() {
+    //TODO:Translate
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: "¿Estás seguro?",
+        description: "Se aplicaran los cambios al documento.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    const partesFecha = this.globalConvertService.docOriginSelect!.fecha_Documento.toString().split('/');
+    const dia = partesFecha[0];
+    const mes = partesFecha[1];
+    const anio = partesFecha[2];
+
+    // Crea un objeto Date con el formato esperado ('YYYY-MM-DD')
+    const fechaFormateada = new Date(`${anio}-${mes}-${dia}`);
+
+    // Actualizar documento (ewncabezados)
+    let docModify: UpdateDocInterface = {
+      consecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+      cuentaCorrentista: this.facturaService.cuenta!.cuenta_Correntista,
+      cuentaCorrentistaRef: this.facturaService.vendedor?.cuenta_Correntista,
+      cuentaCuenta: this.facturaService.cuenta!.cuenta_Cta,
+      documentoDireccion: this.facturaService.cuenta!.factura_Direccion,
+      documentoNit: this.facturaService.cuenta!.factura_NIT,
+      documentoNombre: this.facturaService.cuenta!.factura_Nombre,
+      empresa: this.globalConvertService.docOriginSelect!.empresa,
+      estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+      fechaDocumento: fechaFormateada,
+      fechaFin: this.facturaService.fechaFin,
+      fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
+      fechaIni: this.facturaService.fechaIni,
+      localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+      mUser: this.user,
+      observacion: this.facturaService.observacion,
+      serieDocumento: this.globalConvertService.docOriginSelect!.serie_Documento,
+      tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
+      user: this.globalConvertService.docOriginSelect!.usuario,
+      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
+      referencia: this.globalConvertService.docOriginSelect!.referencia,
+    }
+
+    this.facturaService.isLoading = true;
+    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+      this.token,
+      docModify,
+    );
+
+    if (!resUpdateEncabezado.status) {
+      this.facturaService.isLoading = false;
+
+      this.showError(resUpdateEncabezado);
+
+      return;
+    }
+
+    let refModify: UpdateRefInterface = {
+      descripcion: this.facturaService.refDescripcion ?? "",
+      empresa: this.globalConvertService.docOriginSelect!.empresa,
+      fechaFin: this.facturaService.fechaRefFin!,
+      fechaIni: this.facturaService.fechaRefIni!,
+      mUser: this.user,
+      observacion: this.facturaService.refObservacion ?? "",
+      observacion2: this.facturaService.refContacto ?? "",
+      observacion3: this.facturaService.refDireccionEntrega ?? "",
+      referencia: this.globalConvertService.docOriginSelect!.referencia!,
+      referenciaID: '92144684365752',//TODO:Preguntar
+      tipoReferencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
+    }
+
+    let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+      this.token,
+      refModify,
+    );
+
+    if (!resRefUpdate.status) {
+      this.facturaService.isLoading = false;
+      this.showError(resRefUpdate);
+      return;
+    }
+
+    //eliminar transacciones
+    for (const eliminar of this.facturaService.transaccionesPorEliminar) {
+
+      let transactionEliminar: NewTransactionInterface = {
+        bodega: eliminar.bodega!.bodega,
+        cantidad: eliminar.cantidad!,
+        documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+        empresa: this.globalConvertService.docOriginSelect!.empresa,
+        estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+        localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+        moneda: eliminar.precio!.moneda,
+        monto: eliminar.total,
+        montoMoneda: eliminar.total / this.tipoCambio,
+        producto: eliminar.producto.producto,
+        tipoCambio: this.tipoCambio,
+        tipoPrecio: eliminar.precio!.id,
+        tipoTransaccion: this.facturaService.resolveTipoTransaccion(eliminar.producto.tipo_Producto),
+        transaccionConsecutivoInterno: eliminar.consecutivo,
+        unidadMedida: eliminar.producto.unidad_Medida,
+        usuario: this.user,
+      }
+
+
+      let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+        this.token,
+        transactionEliminar,
+      );
+
+      if (!resTransDelete.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.showError(resTransDelete);
+
+        return;
+      }
+    }
+
+    //lipiar lista de eliminados
+    this.facturaService.transaccionesPorEliminar = [];
+
+    let indexUpdate: number = 0;
+    //Actualizar transacciones
+    for (const actualizar of this.facturaService.traInternas) {
+
+      if (actualizar.estadoTra != 0 && actualizar.consecutivo != 0) {
+
+        ///Anular y actualizar
+        let transactionActualizar: NewTransactionInterface = {
+          bodega: actualizar.bodega!.bodega,
+          cantidad: actualizar.cantidad!,
+          documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+          empresa: this.globalConvertService.docOriginSelect!.empresa,
+          estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+          localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+          moneda: actualizar.precio!.moneda,
+          monto: actualizar.total,
+          montoMoneda: actualizar.total / this.tipoCambio,
+          producto: actualizar.producto.producto,
+          tipoCambio: this.tipoCambio,
+          tipoPrecio: actualizar.precio!.id,
+          tipoTransaccion: this.facturaService.resolveTipoTransaccion(actualizar.producto.tipo_Producto),
+          transaccionConsecutivoInterno: actualizar.consecutivo,
+          unidadMedida: actualizar.producto.unidad_Medida,
+          usuario: this.user,
+        }
+
+
+        let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+          this.token,
+          transactionActualizar,
+        );
+
+
+        if (!resTransDelete.status) {
+
+          this.facturaService.isLoading = false;
+
+          this.showError(resTransDelete);
+
+          return;
+
+        }
+
+        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+          this.token,
+          transactionActualizar,
+        );
+
+        if (!resActualizarTransaccion.status) {
+
+          this.facturaService.isLoading = false;
+
+          this.showError(resActualizarTransaccion);
+
+          return;
+
+        }
+
+        this.facturaService.traInternas[indexUpdate].consecutivo = resActualizarTransaccion.response;
+        indexUpdate++;
+      }
+    }
+
+    let indexInsert: number = 0;
+    //insertar tranasacciones
+    for (const nueva of this.facturaService.traInternas) {
+
+      if (nueva.estadoTra != 0 && nueva.consecutivo == 0) {
+        ///Nueva transaccion
+        let transactionNueva: NewTransactionInterface = {
+          bodega: nueva.bodega!.bodega,
+          cantidad: nueva.cantidad!,
+          documentoConsecutivoInterno: this.globalConvertService.docOriginSelect!.consecutivo_Interno,
+          empresa: this.globalConvertService.docOriginSelect!.empresa,
+          estacionTrabajo: this.globalConvertService.docOriginSelect!.estacion_Trabajo,
+          localizacion: this.globalConvertService.docOriginSelect!.localizacion,
+          moneda: nueva.precio!.moneda,
+          monto: nueva.total,
+          montoMoneda: nueva.total / this.tipoCambio,
+          producto: nueva.producto.producto,
+          tipoCambio: this.tipoCambio,
+          tipoPrecio: nueva.precio!.id,
+          tipoTransaccion: this.facturaService.resolveTipoTransaccion(nueva.producto.tipo_Producto),
+          transaccionConsecutivoInterno: nueva.consecutivo,
+          unidadMedida: nueva.producto.unidad_Medida,
+          usuario: this.user,
+        }
+
+        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+          this.token,
+          transactionNueva,
+        );
+
+        if (!resActualizarTransaccion.status) {
+
+          this.facturaService.isLoading = false;
+
+          this.showError(resActualizarTransaccion);
+
+          return;
+
+        }
+
+        this.facturaService.traInternas[indexInsert].consecutivo = resActualizarTransaccion.response;
+        indexInsert++;
+
+      }
+    }
+
+    this.facturaService.isLoading = false;
+
+    this._notificationService.openSnackbar("Documento editado correctamente.");
   }
 
 
-  //verError
-  verError(res: ResApiInterface) {
+  async showError(res: ResApiInterface) {
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
 
-    //fehca y hora ctual
+    if (!verificador) return;
+
+    this.verError(res);
+  }
+
+
+  saveError(res: ResApiInterface) {
+    //fecha actual
     let dateNow: Date = new Date();
 
-    //informe de error
+    //Detalles del error
     let error = {
       date: dateNow,
       description: res.response,
@@ -1311,64 +2599,8 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    //guardar error
+    //guardar error en preferencias
     PreferencesService.error = error;
-
-    //ver pantlla d error
-    this.verInformeError();
-  }
-
-
-  //detectamos la tecla precionada
-  @HostListener('document:keydown', ['$event'])
-  //Manejo de eventos del declado
-  handleKeyboardEvent(event: KeyboardEvent) {
-    // console.log("Tecla presionada:", event.key);
-
-    // Debe dirigirse a imprimir cuando:
-    //la fecha presionada sea F9,
-    //el display sea de Facturas
-    if (event.key.toLowerCase() === "f9" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
-      //evita o bloquea la funcion que tiene por defecto
-      event.preventDefault();
-      //realiza la funcion que se necesite
-      //Imprimir
-      this.printDoc();
-    }
-
-
-    // ebe limpiar el formulario para un nuevo documento cuando:
-    //la fecha presionada sea F1,
-    //el display sea de Facturas
-    if (event.key.toLowerCase() === "f1" && this.dataUserService.nameDisplay.toLowerCase() == "facturas") {
-      //evita o bloquea la funcion que tiene por defecto
-      event.preventDefault();
-      //realiza la funcion que se necesite
-      //Nuevo documento
-      this.newDoc();
-    }
-  }
-
-  activarDialogo() {
-    if (!this.facturaService.noMostrar) {
-      PreferencesService.mostrarAlerta = "0";
-    } else if (this.facturaService.noMostrar) {
-      PreferencesService.mostrarAlerta = "1";
-    }
-  }
-
-  nuevoDocImprimir() {
-    //si es verdadero, la preferencia será 1;
-    if (this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "1";
-    } else if (!this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "0";
-    }
-
-  }
-
-  verPasos(){
-    this.facturaService.isStepLoading = true;
   }
 
 }

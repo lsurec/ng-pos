@@ -133,7 +133,7 @@
                         <span class="spacer"></span>
                         <!--TODO:Tranlate-->
                         <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label
-                            matTooltip="Guardar cambios" (click)="editDoc()">
+                            matTooltip="Guardar cambios" (click)="sendDoc()">
                             <mat-icon>save</mat-icon>
                         </button>
                         <ng-container *ngIf="!globalConvertService.editDoc">
@@ -177,7 +177,7 @@
 
                 <!--TODO:Tranlate-->
                 <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
-                    (click)="editDoc()">
+                    (click)="sendDoc()">
                     <mat-icon>save</mat-icon>
                 </button>
 
@@ -198,9 +198,6 @@
                 <div class="circulo-inicial" (click)="sidenavend.open()">
                     <p class="inicial-usuario">{{user[0]}}</p>
                 </div>
-                <button *ngIf="!globalConvertService.editDoc" (click)="verPasos()" mat-icon-button>
-                    <mat-icon>close</mat-icon>
-                </button>
             </mat-toolbar>
 
             <!-- Contenido del componente -->
