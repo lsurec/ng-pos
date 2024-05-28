@@ -938,18 +938,21 @@ export class CalendarioComponent implements OnInit {
       return true
     }
 
+    let mesAnterior: number = this.month - 1;
+    let mesSiguiente: number = this.month + 1;
+
     //si estamos en el año actual y el messeleccionado es igual al mes actual +1 y el dia de hoy es igual a date
-    if (this.yearSelect == this.year && (this.monthSelectView == this.month + 1) && this.today == date && i <= this.semanas[0][6].indexWeek) {
+    if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente) && this.today == date && (i >= this.semanas[0][0].indexWeek && i <= this.semanas[0][6].indexWeek)) {
       return true;
     }
 
     let semanasMesAnterior: DayInterface[][] = this.addWeeks(this.obtenerDiasMes(this.year, this.month - 1, this.primerDiaSemana));
 
 
-    //si estamos en la ultoma semana del mes anterior pero invluye el dia de hoy es true
-    if (this.yearSelect == this.year && (this.monthSelectView == this.month) && this.today == date && i >= semanasMesAnterior[semanasMesAnterior.length - 1][6].indexWeek) {
-      return true;
-    }
+    // //si estamos en la ultoma semana del mes anterior pero invluye el dia de hoy es true
+    // if (this.yearSelect == this.year && (this.monthSelectView == mesSiguiente ) && this.today == date && i >= semanasMesAnterior[semanasMesAnterior.length - 1][6].indexWeek) {
+    //   return true;
+    // }
 
     return false;
   }
