@@ -74,10 +74,7 @@ import { RetryService } from 'src/app/services/retry.service';
 export class FacturaComponent implements OnInit {
 
 
-  //detectamos la tecla precionada
-  @HostListener('document:keydown', ['$event'])
 
-  verVistaPrevia: boolean = false;
 
   consecutivoDoc: number = -1;
   docPrint?: DocPrintModel;
@@ -101,7 +98,6 @@ export class FacturaComponent implements OnInit {
   tipoDocumento?: number = this.facturaService.tipoDocumento; //tipo docuemnto seleccionado
   nombreDocumento: string = this.facturaService.documentoName; //Descripcion del tipo de documento
   timer: any; //temporizador
-  serie: string = this.facturaService.serie!.serie_Documento; //serie de la sesion
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -131,9 +127,9 @@ export class FacturaComponent implements OnInit {
     private _productService: ProductService,
     private _recpetionService: ReceptionService,
     private _documentService: DocumentService,
-    private _felService:FelService,
+    private _felService: FelService,
     private currencyPipe: CurrencyPipe,
-    private _printService:PrinterService,
+    private _printService: PrinterService,
     private _retryService: RetryService,
 
   ) {
@@ -175,7 +171,7 @@ export class FacturaComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
     this._retryService.createDoc$.subscribe(() => {
       this.sendDoc();
     });
@@ -1281,6 +1277,8 @@ export class FacturaComponent implements OnInit {
   }
 
 
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
   //Manejo de eventos del declado
   handleKeyboardEvent(event: KeyboardEvent) {
     // console.log("Tecla presionada:", event.key);
@@ -1394,7 +1392,8 @@ export class FacturaComponent implements OnInit {
     // }
 
     //validar fechas si existen
-    //TODO:Procesar documento 
+    
+    this.sendDoc();
 
 
   }
@@ -1499,11 +1498,11 @@ export class FacturaComponent implements OnInit {
 
     } else {
       //Enviar documento a tbl_documento estructura
-      this.facturaService. isLoading = true;
- 
+      this.facturaService.isLoading = true;
+
       let resCreateDoc: TypeErrorInterface = await this.sendDocument()
 
-      this.facturaService. isLoading = false;
+      this.facturaService.isLoading = false;
 
       if (resCreateDoc.type == 1) {
         this.showError(resCreateDoc.error);
@@ -1553,10 +1552,10 @@ export class FacturaComponent implements OnInit {
 
     if (!resDetalles.status) {
 
-      this.facturaService .isLoading = false;
+      this.facturaService.isLoading = false;
 
       this.showError(resDetalles);
-      
+
       return;
 
     }
@@ -1572,7 +1571,7 @@ export class FacturaComponent implements OnInit {
 
     if (!resPagos.status) {
 
-      this.facturaService. isLoading = false;
+      this.facturaService.isLoading = false;
 
       this.showError(resPagos);
 
@@ -1580,15 +1579,15 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    this.facturaService .isLoading = false;
+    this.facturaService.isLoading = false;
 
     let pagos: PagoPrintInterface[] = resPagos.response;
 
     if (encabezados.length == 0) {
-     
+
       this.facturaService.isLoading = false;
 
-      resEncabezado.response = this._translate.instant('pos.factura.sin_encabezados'); 
+      resEncabezado.response = this._translate.instant('pos.factura.sin_encabezados');
 
       this.showError(resEncabezado);
 
@@ -1665,7 +1664,7 @@ export class FacturaComponent implements OnInit {
 
 
 
-      if (detail.cantidad == 0 && detail. monto > 0) {
+      if (detail.cantidad == 0 && detail.monto > 0) {
         //4 cargo
         cargo += detail.monto;
       } else if (detail.cantidad == 0 && detail.monto < 0) {
@@ -1833,7 +1832,7 @@ export class FacturaComponent implements OnInit {
 
   }
 
-  
+
 
   async felProcess(): Promise<TypeErrorInterface> {
 
@@ -2018,7 +2017,7 @@ export class FacturaComponent implements OnInit {
 
       //actualizar doc esrctiura
 
-      let fechaAnt:Date = new Date(this.dataFel.fechaHoraCertificacion);
+      let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
@@ -2027,7 +2026,7 @@ export class FacturaComponent implements OnInit {
 
       //onjeto para el api
       let document: PostDocumentInterface = {
-        estado:11,
+        estado: 11,
         estructura: JSON.stringify(this.docGlobal),
         user: this.user,
       }
@@ -2060,6 +2059,10 @@ export class FacturaComponent implements OnInit {
     this.docGlobal = undefined;
     this.dataFel = undefined;
     this.consecutivoDoc = -1;
+
+
+    let serie: string = this.facturaService.serie!.serie_Documento; //serie de la sesion
+
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
 
@@ -2259,6 +2262,7 @@ export class FacturaComponent implements OnInit {
     }
 
 
+
     //documento estructura
     this.docGlobal = {
       Consecutivo_Interno: randomNumber1,
@@ -2284,7 +2288,7 @@ export class FacturaComponent implements OnInit {
       Doc_Cuenta_Correntista: this.facturaService.cuenta!.cuenta_Correntista,
       Doc_Cuenta_Cta: this.facturaService.cuenta!.cuenta_Cta,
       Doc_Tipo_Documento: this.tipoDocumento!,
-      Doc_Serie_Documento: this.serie,
+      Doc_Serie_Documento: serie,
       Doc_Empresa: this.empresa.empresa,
       Doc_Estacion_Trabajo: this.estacion.estacion_Trabajo,
       Doc_UserName: this.user,
