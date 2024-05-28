@@ -180,6 +180,11 @@ export class FacturaComponent implements OnInit {
       this.retryFel();
     });
 
+
+    this._retryService.printFormat$.subscribe(() => {
+      this.printFormat();
+    });
+
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
 
@@ -1776,6 +1781,11 @@ export class FacturaComponent implements OnInit {
     }
 
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
+
+
+    //TODO:Validar impresion
+
+    
 
     pdfMake.createPdf(docDefinition).print();
 

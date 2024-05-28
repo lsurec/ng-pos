@@ -18,6 +18,12 @@ export class PasosComponent {
   ) {
   }
 
+
+  pintFormat(){
+    this.facturaService.isStepLoading = false;
+    this._retryService.printFormatRetry();
+  }
+
   reloadDoc(){
     this._retryService.createDocRetry();
 
