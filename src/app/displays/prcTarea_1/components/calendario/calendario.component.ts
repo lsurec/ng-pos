@@ -1060,11 +1060,18 @@ export class CalendarioComponent implements OnInit {
           return true;
         }
         return false;
-      } else {
+      } else if (mes < this.month) {
+
+        let mesAnteriorActual: number = this.month - 1;
+
+        if (mes == mesAnteriorActual && indice >= this.obtenerIndiceDiaAnterior(mesAnteriorActual, anio)) {
+
+          return true;
+        }
         // Mes menor al actual
-        //TODO: realizar la validacion cuando el dia dehoy está en la ultima semana del mes anterior
         return false;
       }
+      return false;
     } else {
       // Año menor al actual
       return false;
@@ -1098,6 +1105,24 @@ export class CalendarioComponent implements OnInit {
       const element = mesSiguienteActual[index];
 
       if (element.value == this.today) {
+        indiceDia = index;
+        break;
+      }
+    }
+    return indiceDia;
+  }
+
+  obtenerIndiceDiaAnterior(mes: number, anio: number) {
+
+    let mesAnteriorActual: DayInterface[];
+    let indiceDia: number = 0;
+
+    mesAnteriorActual = this.obtenerDiasMes(anio, mes, this.primerDiaSemana);
+
+    for (let index = 0; index < mesAnteriorActual.length; index++) {
+      const element = mesAnteriorActual[index];
+
+      if (index >= mesAnteriorActual.length - 7 && element.value == this.today) {
         indiceDia = index;
         break;
       }
