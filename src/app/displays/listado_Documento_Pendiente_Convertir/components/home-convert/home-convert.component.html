@@ -3,8 +3,6 @@
 <ng-container *ngIf="!globalConvertService.editDoc">
     <app-error *ngIf="globalConvertService.showError" [regresar]="globalConvertService.regresar"></app-error>
     <ng-container *ngIf="!globalConvertService.showError">
-            <app-printer-configuration *ngIf="globalConvertService.verPrint" [volver]="3"
-                [document]="globalConvertService. docPrint"></app-printer-configuration>
             <app-types-docs *ngIf="globalConvertService.verTiposDocConversion"></app-types-docs>
             <app-origin-docs *ngIf="globalConvertService.verDocOrigen"></app-origin-docs>
             <app-destination-docs *ngIf="globalConvertService.verDocDestino"></app-destination-docs>

@@ -1,6 +1,5 @@
 <app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
-<app-printer-configuration *ngIf="impresora && hideHome" [volver]="volver"
-    [pantalla]="idPantalla"></app-printer-configuration>
+
 <div *ngIf="!showError">
     <div *ngFor="let component of components">
         <ng-container *ngIf="component.visible">

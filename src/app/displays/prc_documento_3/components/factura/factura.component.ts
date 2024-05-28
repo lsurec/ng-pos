@@ -1812,14 +1812,14 @@ export class FacturaComponent implements OnInit {
     }
 
     //verificar estado de la impresora
-    // let resStatusPrint:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
+    // let resStatusPrint:ResApiInterface = await this._printService.getStatusPrint('POS-80');
     let resStatusPrint:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
 
     if(!resStatusPrint.status){
       this.facturaService.isLoading = false;
 
       this._notificationService.openSnackbarAction(
-        this._translate.instant('pos.alertas.sin_servicio_impresion'),
+        this._translate.instant(`Impresora ${encabezado.impresora} no disponible.`),
         this._translate.instant('pos.botones.imprimir'),
         () => pdfMake.createPdf(docDefinition).print(),
       );
@@ -1837,8 +1837,9 @@ export class FacturaComponent implements OnInit {
 
       let resPrint: ResApiInterface = await this._printService.postPrint(
         pdfFile,
-        PreferencesService.impresora,
-        PreferencesService.copies
+        // 'POS-80'
+        encabezado.impresora,
+        encabezado.copias ?? 1,
       );
 
       this.facturaService.isLoading = false;
@@ -1857,10 +1858,7 @@ export class FacturaComponent implements OnInit {
 
     });
 
-
     this.facturaService.isLoading = false;
-
-
 
   }
 
