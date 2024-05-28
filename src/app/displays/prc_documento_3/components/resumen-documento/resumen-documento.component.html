@@ -3,7 +3,7 @@
     [document]="docPrint"></app-printer-configuration>
 <div *ngIf="!facturaService.verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading && !facturaService.isStepLoading " class="progress"></app-progress>
-    <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
+    <!-- <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos> -->
     <div *ngIf="!isLoading && !facturaService.isStepLoading">
         <mat-toolbar-row class="head__sidenav">
             <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"

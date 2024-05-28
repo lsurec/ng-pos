@@ -35,7 +35,9 @@ export class PreferencesService {
     private static readonly finLaboresKey: string = 'horaFin';
     private static readonly filtroProductoKey: string = 'filtroProducto';
     private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
-    private static readonly noMostrarKey: string = 'noMostrar';
+    private static readonly mostrarKey: string = 'mostrar';
+    private static readonly nuevoDocKey: string = 'mostrar';
+
 
 
 
@@ -351,15 +353,26 @@ export class PreferencesService {
         let value = sessionStorage.getItem(this.idFiltroProductoKey);
         return parseFloat(value!);
     }
+    @Input()
+    static set mostrarAlerta(value: string) {
+        localStorage.setItem(this.mostrarKey, value);
+    }
+
+    static get mostrarAlerta(): string {
+        let value = localStorage.getItem(this.mostrarKey);
+        if (!value) return "";
+        return value;
+    }
+
 
     @Input()
-    static set noMostrarAlerta(value: number) {
-        sessionStorage.setItem(this.noMostrarKey, value.toString());
+    static set nuevoDoc(value: string) {
+        localStorage.setItem(this.nuevoDocKey, value);
     }
 
-    static get noMostrarAlerta(): number {
-        let value = sessionStorage.getItem(this.noMostrarKey);
-        return parseFloat(value!);
+    static get nuevoDoc(): string {
+        let value = localStorage.getItem(this.nuevoDocKey);
+        if (!value) return "";
+        return value;
     }
-
 }

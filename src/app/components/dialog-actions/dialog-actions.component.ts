@@ -27,16 +27,20 @@ export class DialogActionsComponent {
     if (!data.falso) {
       data.falso = this.translate.instant('pos.botones.cancelar');
     }
+
+    if (PreferencesService.mostrarAlerta == "0") {
+      facturaService.noMostrar = false;
+    }
+
   }
 
   //guardar el valor del CheckBox en las preferencias
   ocultar() {
-    this.facturaService.noMostrar = !this.facturaService.noMostrar;
-
     if (!this.facturaService.noMostrar) {
-      PreferencesService.noMostrarAlerta = 0;
+      PreferencesService.mostrarAlerta = "0";
     } else if (this.facturaService.noMostrar) {
-      PreferencesService.noMostrarAlerta = 1;
+      PreferencesService.mostrarAlerta = "1";
     }
+    console.log(PreferencesService.mostrarAlerta, "dialogo");
   }
 }
