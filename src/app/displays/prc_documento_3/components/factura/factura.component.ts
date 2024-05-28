@@ -1230,7 +1230,7 @@ export class FacturaComponent implements OnInit {
   }
 
   //Confirmar documento
-  verResumen() {
+  printDoc() {
 
     //Si no hay serie seleccionado mostrar mensaje
     if (!this.facturaService.serie) {
@@ -1295,18 +1295,20 @@ export class FacturaComponent implements OnInit {
 
     // }
 
-
-
-
     //validar fechas si existen
+    //TODO:Procesar documento 
 
+
+
+    
+    
     //ir a resumen
-    this.vistaResumen = true;
-    this.vistaFactura = false;
-    this.actualizarCliente = false;
-    this.nuevoCliente = false;
-    this.vistaHistorial = false;
-    this.vistaInforme = false;
+    // this.vistaResumen = true;
+    // this.vistaFactura = false;
+    // this.actualizarCliente = false;
+    // this.nuevoCliente = false;
+    // this.vistaHistorial = false;
+    // this.vistaInforme = false;
   }
 
   //ver histirial de documentos recienetes
@@ -1382,7 +1384,7 @@ export class FacturaComponent implements OnInit {
       event.preventDefault();
       //realiza la funcion que se necesite
       //Imprimir
-      this.verResumen();
+      this.printDoc();
     }
 
 
