@@ -776,6 +776,8 @@ export class CalendarioComponent implements OnInit {
 
   //Se activa cuando se selecciona una fecha en el picker
   fechaSeleccionada(): void {
+    console.log("entro aqui");
+    
 
     //si hay una fecha en picker
     if (this.datePicker) {

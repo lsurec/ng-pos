@@ -47,7 +47,7 @@
         <!-- Date-Picker oculto  -->
         <div class="selector-calendario-oculto">
             <mat-card class="demo-inline-calendar-card">
-                <mat-calendar [(selected)]="datePicker" (click)="fechaSeleccionada()"
+                <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
                     (selectedChange)="syncCalendars($event)"></mat-calendar>
             </mat-card>
         </div>
@@ -236,7 +236,7 @@
                 <!-- Date Picker -->
                 <div class="selector-calendario" *ngIf="picker">
                     <mat-card class="demo-inline-calendar-card">
-                        <mat-calendar [(selected)]="datePicker" (click)="fechaSeleccionada()"
+                        <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
                             (selectedChange)="syncCalendars($event)"></mat-calendar>
                     </mat-card>
                 </div>
