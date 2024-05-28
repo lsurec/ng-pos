@@ -1590,8 +1590,6 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    this.facturaService.isLoading = false;
-
     let pagos: PagoPrintInterface[] = resPagos.response;
 
     if (encabezados.length == 0) {
@@ -1773,6 +1771,9 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
 
+      //TODO:Verificar impresion directa
+      this.facturaService.isLoading = false;
+
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).print();
 
@@ -1780,16 +1781,28 @@ export class FacturaComponent implements OnInit {
 
     }
 
-
-
-    //TODO:Validar impresion
-
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
-
-    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
     
     //validar si es impresion directa o no
+    if (encabezado.preview == 1) {
+      this.facturaService.isLoading = false;
+
+      //Impresion por defecto
+      pdfMake.createPdf(docDefinition).print();
+      return;
+    }
+
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
+
+    let resStatusServicePrint:ResApiInterface = await this._printService.getStatus();
+    
+    if(resStatusServicePrint){
+      this.facturaService.isLoading = false;
+
+      this._notificationService.openSnackbarAction("Impresion directa no disponible", "Imprimir de todas formas", )
+    } 
 
 
     // return;
@@ -1822,11 +1835,10 @@ export class FacturaComponent implements OnInit {
     });
 
 
-    //Impresion por defecto
-    pdfMake.createPdf(docDefinition).print();
+    this.facturaService.isLoading = false;
 
 
-    return;
+
   }
 
   async retryFel() {
