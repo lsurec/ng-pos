@@ -8,8 +8,9 @@
 <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
 
 <div *ngIf="vistaFactura && !facturaService.isStepLoading">
+    <app-error *ngIf="facturaService.verError" [regresar]="pasos"></app-error>
 
-    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="!facturaService.verError">
 
         <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
             <mat-toolbar class="barra-cerrar-titulo">
@@ -94,28 +95,7 @@
                         <p class="descripcion">Nuevo Documento</p>
                     </div>
                 </div>
-                <!-- <div class="cambioFiltro" (click)="verFiltros()">
-                    <mat-icon class="iconos-detalles">filter_alt</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">Filtro de Busqueda</p>
-                        <p class="descripcion">
-                            {{filtroNombre}}
-                        </p>
-                    </div>
-                </div> -->
-                <div class="detalles-usuario" *ngIf="cambiarFiltro">
-                    <div class="aqui">
-                        <mat-radio-group [(ngModel)]="facturaService.filtroPreferencia">
-                            <div *ngFor="let filtro of filtrosBusqueda; let i = index" class="opciones">
-                                <mat-radio-button class="example-radio-button" [value]="filtro.id" color="primary"
-                                    (click)="guardarFiltro(filtro.id , i)">
-                                    {{filtro.nombre}}
-                                </mat-radio-button>
-                            </div>
-                        </mat-radio-group>
-                    </div>
-                </div>
+
             </div>
         </mat-sidenav>
         <mat-sidenav-content>
@@ -154,7 +134,7 @@
                         <span class="spacer"></span>
                         <!--TODO:Tranlate-->
                         <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label
-                            matTooltip="Guardar cambios" (click)="modifyDoc()">
+                            matTooltip="Guardar cambios" (click)="sendDoc()">
                             <mat-icon>save</mat-icon>
                         </button>
                         <ng-container *ngIf="!globalConvertService.editDoc">
@@ -198,7 +178,7 @@
 
                 <!--TODO:Tranlate-->
                 <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
-                    (click)="modifyDoc()">
+                    (click)="sendDoc()">
                     <mat-icon>save</mat-icon>
                 </button>
 
@@ -219,9 +199,6 @@
                 <div class="circulo-inicial" (click)="sidenavend.open()">
                     <p class="inicial-usuario">{{user[0]}}</p>
                 </div>
-                <button *ngIf="!globalConvertService.editDoc" (click)="verPasos()" mat-icon-button>
-                    <mat-icon>close</mat-icon>
-                </button>
             </mat-toolbar>
 
             <!-- Contenido del componente -->
@@ -285,6 +262,5 @@
                 </div>
             </div>
         </mat-sidenav-content>
-
     </mat-sidenav-container>
 </div>

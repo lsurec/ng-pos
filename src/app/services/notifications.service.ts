@@ -13,6 +13,7 @@ import { ValidateProductInterface } from "../displays/listado_Documento_Pendient
 import { ProductoInterface } from "../displays/prc_documento_3/interfaces/producto.interface";
 import { ProductoComponent } from "../displays/prc_documento_3/components/producto/producto.component";
 import { InformeProductosComponent } from "../displays/prc_documento_3/components/informe-productos/informe-productos.component";
+import { ConfirmarNuevoDocComponent } from "../components/confirmar-nuevo-doc/confirmar-nuevo-doc.component";
 
 @Injectable({
     providedIn: 'root'
@@ -55,6 +56,28 @@ export class NotificationsService {
     openDialogActions(data: DialogActionInterface): Promise<boolean> {
         return new Promise((resolve, reject) => {
             const dialogRef = this._dialog.open(DialogActionsComponent, {
+                data: {
+                    title: data.title,
+                    description: data.description,
+                    verdadero: data.verdadero,
+                    falso: data.falso
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
+
+    //Abrir dialogo de confirmacion, devuelve falso o verdadero dependiendo de la opcion seleccioanda
+    openDialogNewDoc(data: DialogActionInterface): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const dialogRef = this._dialog.open(ConfirmarNuevoDocComponent, {
                 data: {
                     title: data.title,
                     description: data.description,

@@ -11,8 +11,6 @@ import { RetryService } from 'src/app/services/retry.service';
 })
 export class PasosComponent {
 
-
-
   constructor(
     public facturaService: FacturaService,
     private _retryService: RetryService,
@@ -21,21 +19,26 @@ export class PasosComponent {
   }
 
 
+  pintFormat(){
+    this.facturaService.isStepLoading = false;
+    this._retryService.printFormatRetry();
+  }
+
   reloadDoc(){
     this._retryService.createDocRetry();
 
   }
 
-
   reloadFel(){
     this._retryService.felProcessRetry();
-
   }
 
   verInformeError() {
+    console.log("aqui");
+    
     this.facturaService.verError = true;
+    this.facturaService.isStepLoading = false;
   }
-
 
   backPage() {
     this.facturaService.isStepLoading = false;

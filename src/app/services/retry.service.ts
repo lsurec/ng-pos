@@ -58,4 +58,13 @@ export class RetryService {
     this.felProcess.next();
   }
 
+  
+  private printFormat = new Subject<void>();
+
+  printFormat$ = this.printFormat.asObservable();
+
+  printFormatRetry() {
+    this.printFormat.next();
+  }
+
 }

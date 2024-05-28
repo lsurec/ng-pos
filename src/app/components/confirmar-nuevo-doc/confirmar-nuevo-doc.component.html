@@ -6,6 +6,10 @@
         <p>{{data.description}}</p>
     </mat-dialog-content>
 
+    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.noMostrar"
+        (ngModelChange)="ocultar()">
+        No volver a mostrar.
+    </mat-checkbox>
     <!-- Aceptar / Cancelar -->
     <mat-dialog-actions align="end">
         <button mat-button [mat-dialog-close]="false">{{data.falso}}</button>
