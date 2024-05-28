@@ -147,20 +147,13 @@ export class FacturaComponent implements OnInit {
       this.facturaService.nuevoDoc = true;
     }
 
-    console.log(PreferencesService.nuevoDoc, "nuevo doc factura");
-
     //mostrar alerta
     if (PreferencesService.mostrarAlerta == "") {
-      console.log("aqui");
       PreferencesService.mostrarAlerta = "1";
       this.facturaService.noMostrar = false;
     } else if (PreferencesService.mostrarAlerta == "1") {
-      console.log("aqui x2");
       this.facturaService.noMostrar = true;
     }
-
-    console.log(PreferencesService.mostrarAlerta, "alerta factura");
-
 
     // if (!this.globalConvertService.editDoc) {
 
@@ -427,9 +420,6 @@ export class FacturaComponent implements OnInit {
 
   //nuevo documento
   async newDoc() {
-
-    console.log(PreferencesService.mostrarAlerta, "Nuevo doc");
-
 
     //si la preferencia guardada es distinda de 1, mostrará la alerta
     if (PreferencesService.mostrarAlerta == "0") {
@@ -1439,9 +1429,6 @@ export class FacturaComponent implements OnInit {
     } else if (this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "1";
     }
-
-    console.log(PreferencesService.mostrarAlerta, "factura");
-
   }
 
   nuevoDocImprimir() {
@@ -1451,8 +1438,6 @@ export class FacturaComponent implements OnInit {
     } else if (!this.facturaService.nuevoDoc) {
       PreferencesService.nuevoDoc = "0";
     }
-
-    console.log(PreferencesService.nuevoDoc, "nuvo doc impirmir");
 
   }
 
