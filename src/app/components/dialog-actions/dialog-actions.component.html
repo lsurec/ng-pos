@@ -5,6 +5,13 @@
     <mat-dialog-content class="mat-typography">
         <p>{{data.description}}</p>
     </mat-dialog-content>
+
+    <div *ngIf="facturaService.verCheckBox == 1">
+        <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.noMostrar"
+            (ngModelChange)="ocultar()">
+            No volver a mostrar.
+        </mat-checkbox>
+    </div>
     <!-- Aceptar / Cancelar -->
     <mat-dialog-actions align="end">
         <button mat-button [mat-dialog-close]="false">{{data.falso}}</button>

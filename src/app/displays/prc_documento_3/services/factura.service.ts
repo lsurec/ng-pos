@@ -49,6 +49,14 @@ export class FacturaService {
 
     selectAllTra: boolean = false; //Seleccionar todas las transacciones
 
+    noMostrar: boolean = false;
+
+    nuevoDoc : boolean = false;
+
+    verCheckBox: number = 0;
+
+    verDialogoFactura: number = 1;
+
     //totales del documento
     subtotal: number = 0;
     cargo: number = 0;
@@ -81,6 +89,7 @@ export class FacturaService {
     refDescripcion?: string;
     refDireccionEntrega?: string;
     refObservacion?: string;
+    refObservaciones?: string; //nueva
 
 
     //fechas

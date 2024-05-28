@@ -13,12 +13,10 @@ import { ValidateProductInterface } from '../displays/listado_Documento_Pendient
 export class PrinterService {
 
     private _urlBase: string = urlApi.apiServer.urlPrint;
-    private _port: string = PreferencesService.port;
 
     //inicializar http
     constructor(private _http: HttpClient,
         private _translate: TranslateService,
-        private _convertService: GlobalConvertService,
     ) {
     }
 
@@ -27,7 +25,7 @@ export class PrinterService {
         printer: string,
     ) {
 
-        return this._http.get(`${this._urlBase}${this._port}/api/printer/online/${printer}`, { observe: 'response' });
+        return this._http.get(`${this._urlBase}printer/online/${printer}`, { observe: 'response' });
 
     }
 
@@ -68,7 +66,7 @@ export class PrinterService {
         port: string,
     ) {
 
-        return this._http.get(`${this._urlBase}${port}/api/Printer/status`, { observe: 'response' });
+        return this._http.get(`${this._urlBase}Printer/status`, { observe: 'response' });
 
     }
 
@@ -116,7 +114,7 @@ export class PrinterService {
             }
         )
         //consumo de api
-        return this._http.post(`${this._urlBase}${this._port}/api/Printer`, formData, { headers: headers, observe: 'response' });
+        return this._http.post(`${this._urlBase}Printer`, formData, { headers: headers, observe: 'response' });
     }
 
     postPrint(
@@ -166,7 +164,7 @@ export class PrinterService {
     private _getPrinters() {
 
         //consumo de api
-        return this._http.get(`${this._urlBase}${this._port}/api/printer`, { observe: 'response' });
+        return this._http.get(`${this._urlBase}printer`, { observe: 'response' });
     }
 
     getPrinters(): Promise<ResApiInterface> {
@@ -1831,11 +1829,15 @@ export class PrinterService {
                     text: doc.documento.descripcion,
                     style: 'centerBold',
                 },
+                //TODO:Transalte
                 {
-                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
+                    text: `Serie Interna: ${doc.documento.serieInterna}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
-
+                },
+                {
+                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    style: 'center',
                 },
                 //TODO:Agregar datos de certificacion
                 {
@@ -2118,8 +2120,6 @@ export class PrinterService {
 
         return docDefinition;
     }
-
-
 
     async getTestTemplate() {
 

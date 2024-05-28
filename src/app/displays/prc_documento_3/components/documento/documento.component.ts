@@ -47,7 +47,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   private controlSubFechaFin: Subscription | undefined;
 
 
-
   @Output() newItemEvent = new EventEmitter<string>();
 
   switchState: boolean = false;
@@ -57,8 +56,6 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   empresa: number = PreferencesService.empresa.empresa;
   estacion: number = PreferencesService.estacion.estacion_Trabajo;
   documento: number = this.facturaService.tipoDocumento!;
-
-
 
   constructor(
     private _dialog: MatDialog,

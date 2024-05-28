@@ -62,6 +62,7 @@ export class FacturaComponent implements OnInit {
   tipoCambio: number = PreferencesService.tipoCambio; ///tipo cambio disponioble
   tipoDocumento?: number = this.facturaService.tipoDocumento; //tipo docuemnto seleccionado
   nombreDocumento: string = this.facturaService.documentoName; //Descripcion del tipo de documento
+  timer: any; //temporizador
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -137,7 +138,22 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
+    this.facturaService.verCheckBox = 1;
 
+    if (PreferencesService.nuevoDoc.length == 0) {
+      PreferencesService.nuevoDoc = "0";
+      this.facturaService.nuevoDoc = false;
+    } else if (PreferencesService.nuevoDoc == "1") {
+      this.facturaService.nuevoDoc = true;
+    }
+
+    //mostrar alerta
+    if (PreferencesService.mostrarAlerta == "") {
+      PreferencesService.mostrarAlerta = "1";
+      this.facturaService.noMostrar = false;
+    } else if (PreferencesService.mostrarAlerta == "1") {
+      this.facturaService.noMostrar = true;
+    }
 
     // if (!this.globalConvertService.editDoc) {
 
@@ -184,6 +200,8 @@ export class FacturaComponent implements OnInit {
 
   async loadDocumentLocal() {
 
+    //ocultar el check 
+    this.facturaService.verCheckBox = 0;
 
     //si no hay un documento guardado no hacer nada
 
@@ -378,9 +396,9 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
     this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
@@ -396,22 +414,30 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = false;
 
+    //mostrar el check 
+    this.facturaService.verCheckBox = 1;
   }
 
   //nuevo documento
   async newDoc() {
 
-    //Dialofo de confirmacion
-    let verificador: boolean = await this._notificationService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('pos.alertas.perderDatos'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-        falso: this._translate.instant('pos.botones.cancelar'),
-      }
-    );
+    //si la preferencia guardada es distinda de 1, mostrará la alerta
+    if (PreferencesService.mostrarAlerta == "0") {
 
-    if (!verificador) return;
+      //Dialofo de confirmacion
+      let verificador: boolean = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.eliminar'),
+          description: this._translate.instant('pos.alertas.perderDatos'),
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: this._translate.instant('pos.botones.cancelar'),
+        }
+      );
+
+      if (!verificador) return;
+    }
+
+    //en caso contrario, limpiará el formulario sin mostrar la alerta
 
     //limpiar todos los datos relacionados al documennto
     this.facturaService.cuenta = undefined; //cuneta correntista seleccionada
@@ -527,10 +553,10 @@ export class FacturaComponent implements OnInit {
     this.facturaService.inputFechaFinal = UtilitiesService.getStructureDate(this.facturaService.fechaFin);
 
     //agregar horas a las selectTime
-    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni)) ;
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin)) ;
-    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni)) ;
-    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin)) ;
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
 
@@ -890,10 +916,10 @@ export class FacturaComponent implements OnInit {
     }
 
     //set time
-    this.facturaService.formControlHoraRefIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-    this.facturaService.formControlHoraRefFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaIni));
-    this.facturaService.formControlHoraFin.setValue( UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
     //Set min time for inputs
 
@@ -1090,11 +1116,11 @@ export class FacturaComponent implements OnInit {
           return;
         }
 
-        let calculoDias:PrecioDiaInterface [] = res.response;
+        let calculoDias: PrecioDiaInterface[] = res.response;
 
-        if(calculoDias.length == 0){
+        if (calculoDias.length == 0) {
 
-          res.response = "No se pudo obtener el resultafos al hacer el calculo de precio por dias, verifica el procedimeinto."
+          res.response = "No se pudo obtener los resultados al hacer el calculo de precio por dias, verifica el procedimeinto."
 
           this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -1122,7 +1148,7 @@ export class FacturaComponent implements OnInit {
           cantidad: tra.detalle.disponible,
           total: tra.detalle.monto,
           cargo: 0,
-          cantidadDias:cantidadDias,
+          cantidadDias: cantidadDias,
           descuento: 0,
           operaciones: [],
         }
@@ -1247,6 +1273,23 @@ export class FacturaComponent implements OnInit {
       }
     }
 
+    // //vaidar fecha de incio
+    // if (this.facturaService.valueParametro(381)) {
+
+    //   if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
+    //     //TODO:Tranlate
+    //     this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+    //     return;
+
+    //   }
+
+    // }
+
+
+
+
+    //validar fechas si existen
+
     //ir a resumen
     this.vistaResumen = true;
     this.vistaFactura = false;
@@ -1282,6 +1325,7 @@ export class FacturaComponent implements OnInit {
       element.visible = false;
     });
 
+    this.facturaService.verCheckBox = 0;
     this._eventService.emitCustomEvent(false);
   }
 
@@ -1375,6 +1419,34 @@ export class FacturaComponent implements OnInit {
     this.facturaService.filtrosProductos = filtro;
     this.facturaService.idFiltroPreferencia = index;
 
+  }
+
+  activarDialogo() {
+    if (!this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "0";
+    } else if (this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "1";
+    }
+  }
+
+  nuevoDocImprimir() {
+    //si es verdadero, la preferencia será 1;
+    if (this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "1";
+    } else if (!this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "0";
+    }
+
+  }
+
+  verPasos(){
+    this.facturaService.isStepLoading = true;
+    this.vistaInforme = false;
+    this.vistaHistorial = false;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
   }
 
 }

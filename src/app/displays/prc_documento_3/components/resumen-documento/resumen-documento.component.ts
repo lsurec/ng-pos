@@ -610,6 +610,7 @@ export class ResumenDocumentoComponent implements OnInit {
       
       //onjeto para el api
       let document: PostDocumentInterface = {
+        estado:11,
         estructura: JSON.stringify(this.docGlobal),
         user: this.user,
       }
@@ -1136,8 +1137,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let pagos: PagoPrintInterface[] = resPagos.response;
 
-
-
     if (encabezados.length == 0) {
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -1199,7 +1198,8 @@ export class ResumenDocumentoComponent implements OnInit {
       serie: isFel ? this.dataFel?.serieDocumento ?? "" : "",
       no: isFel ? this.dataFel?.numeroDocumento ?? "" : "",
       autorizacion: isFel ? this.dataFel?.numeroAutorizacion ?? "" : "",
-      noInterno: `${encabezado.serie_Documento}-${encabezado.id_Documento}`,
+      serieInterna: encabezado.serie_Documento!,
+      noInterno: encabezado.iD_Documento_Ref!,
     }
 
 
@@ -1233,30 +1233,30 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
     //TODO:Usar transacciones de la base de datos
-    this.facturaService.traInternas.forEach(detail => {
+    detalles.forEach(detail => {
 
 
 
-      if (detail.cantidad == 0 && detail.total > 0) {
+      if (detail.cantidad == 0 && detail. monto > 0) {
         //4 cargo
-        cargo += detail.total;
-      } else if (detail.cantidad == 0 && detail.total < 0) {
+        cargo += detail.monto;
+      } else if (detail.cantidad == 0 && detail.monto < 0) {
         //5 descuento
-        descuento += detail.total;
+        descuento += detail.monto;
       } else {
         //cualquier otro
-        subtotal += detail.total;
+        subtotal += detail.monto;
       }
 
       items.push(
         {
-          cantidadDias: detail.cantidadDias,
-          sku: detail.producto.producto_Id,
-          descripcion: detail.producto.des_Producto,
+          cantidadDias: detail.cantidad, //TODO:Verificar dias
+          sku: detail.producto_Id,
+          descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.precioCantidad! / detail.cantidad : detail.precioCantidad, ' ', 'symbol', '2.2-2')!,
-          total: this.currencyPipe.transform(detail.total, ' ', 'symbol', '2.2-2')!,
-          precioDia: this.currencyPipe.transform(detail.precioDia, ' ', 'symbol', '2.2-2')!,
+          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
         }
       );
     });
@@ -1538,13 +1538,20 @@ export class ResumenDocumentoComponent implements OnInit {
     this.consecutivoDoc = -1;
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
-    let randomNumber1: number = Math.floor(Math.random() * 9000000) + 1000000;
-    let randomNumber2: number = Math.floor(Math.random() * 9000000) + 1000000;
+
+    let dateConsecutivo: Date = new Date();
+
+    let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
 
     // Combinar los dos números para formar uno de 14 dígitos
     let strNum1: string = randomNumber1.toString();
-    let strNum2: string = randomNumber2.toString();
-    let combinedStr: string = strNum1 + strNum2;
+    let combinedStr: string = strNum1 + 
+    dateConsecutivo.getDate() + 
+    (dateConsecutivo.getMonth()+1) +
+    dateConsecutivo.getFullYear() + 
+    dateConsecutivo.getHours() + 
+    dateConsecutivo.getMinutes() +
+    dateConsecutivo.getSeconds();
 
     //ref id
     let combinedNum: number = parseInt(combinedStr, 10);
@@ -1768,6 +1775,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let document: PostDocumentInterface = {
       estructura: JSON.stringify(this.docGlobal),
       user: this.user,
+      estado:this.facturaService.valueParametro(349) ? 1 : 11, 
     }
 
     //consumo del servico para crear el documento
