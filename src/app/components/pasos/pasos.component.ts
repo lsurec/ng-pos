@@ -34,7 +34,10 @@ export class PasosComponent {
   }
 
   verInformeError() {
+    console.log("aqui");
+    
     this.facturaService.verError = true;
+    this.facturaService.isStepLoading = false;
   }
 
   backPage() {

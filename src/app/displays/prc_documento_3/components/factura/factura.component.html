@@ -8,8 +8,9 @@
 <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
 
 <div *ngIf="vistaFactura && !facturaService.isStepLoading">
+    <app-error *ngIf="facturaService.verError" [regresar]="pasos"></app-error>
 
-    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="!facturaService.verError">
 
         <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
             <mat-toolbar class="barra-cerrar-titulo">
@@ -94,7 +95,7 @@
                         <p class="descripcion">Nuevo Documento</p>
                     </div>
                 </div>
-               
+
             </div>
         </mat-sidenav>
         <mat-sidenav-content>

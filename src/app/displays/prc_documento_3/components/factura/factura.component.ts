@@ -82,6 +82,7 @@ export class FacturaComponent implements OnInit {
   docGlobal?: Documento;
 
   readonly regresar: number = 1; //id de la pnatalla
+  readonly pasos: number = 15; //id de regresar a pasos
   cuenta?: ClienteInterface; //cuenta que se va a editar 
   vistaFactura: boolean = true; //mostrar mmodulo (tabs)
   nuevoCliente: boolean = false;  //mostrar pantalla para crear cuenta correntista
@@ -165,6 +166,11 @@ export class FacturaComponent implements OnInit {
     //Ver pantalla de informe de errores
     this._eventService.verInformeError$.subscribe((eventData) => {
       this.verInformeError();
+    });
+
+    //Ver pantalla de informe de errores
+    this._eventService.regresarAPasos$.subscribe((eventData) => {
+      this.verPasos();
     });
 
   }
@@ -1788,7 +1794,7 @@ export class FacturaComponent implements OnInit {
 
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
-    
+
     //validar si es impresion directa o no
 
 
@@ -2645,6 +2651,12 @@ export class FacturaComponent implements OnInit {
 
     //guardar error en preferencias
     PreferencesService.error = error;
+  }
+
+
+  verPasos() {
+    this.facturaService.verError = false;
+    this.facturaService.isStepLoading = true;
   }
 
 }
