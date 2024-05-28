@@ -135,9 +135,9 @@ export class CalendarioComponent implements OnInit {
     // this.nuevaTarea()
 
     //obtener feccha de hoy y asignar 
-    this.today = this.fechaHoy.getDate() //fecha del dia
+    this.today = this.fechaHoy.getDate(); //fecha del dia
     this.month = this.fechaHoy.getMonth() + 1; //mes
-    this.year = this.fechaHoy.getFullYear() //año 
+    this.year = this.fechaHoy.getFullYear(); //año 
     this.horaActual = this.fechaHoy.getHours(); //hora
     this.minuto = this.fechaHoy.getMinutes(); // minuto
 
@@ -1031,7 +1031,7 @@ export class CalendarioComponent implements OnInit {
 
 
 
-  isValidDate(day: DayInterface, indice: number, mes: number, anio: number): boolean {
+  iconoVistaMes(day: DayInterface, indice: number, mes: number, anio: number): boolean {
 
     // Comparar años
     if (anio > this.year) {

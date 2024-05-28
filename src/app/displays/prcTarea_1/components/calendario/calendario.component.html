@@ -281,7 +281,7 @@
                                 </div>
                                 <span class="spacer"></span>
                                 <!-- <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)" -->
-                                <mat-icon *ngIf="isValidDate( dia,inDay, monthSelectView, yearSelect)"
+                                <mat-icon *ngIf="iconoVistaMes( dia,inDay, monthSelectView, yearSelect)"
                                     (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)" class="nueva"
                                     matTooltip="crear nueva tarea" [ngClass]="[ 
                                 nuevaHoy(dia, inDay)  ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
