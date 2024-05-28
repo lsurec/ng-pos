@@ -1785,11 +1785,18 @@ export class FacturaComponent implements OnInit {
 
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
+
+    let resService:ResApiInterface = await this._printService.getStatus();
+
+    if(!resService.status){
+
+      
+
+    }
+
+
+
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-
-
-    //validar si es impresion directa o no
-
 
     // return;
     pdfDocGenerator.getBlob(async (blob) => {

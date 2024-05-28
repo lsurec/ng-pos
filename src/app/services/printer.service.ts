@@ -63,7 +63,6 @@ export class PrinterService {
 
     private _getStatus(
 
-        port: string,
     ) {
 
         return this._http.get(`${this._urlBase}Printer/status`, { observe: 'response' });
@@ -71,10 +70,9 @@ export class PrinterService {
     }
 
     getStatus(
-        port: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getStatus(port).subscribe(
+            this._getStatus().subscribe(
                 //si esta correcto
                 res => {
 
