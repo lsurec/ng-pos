@@ -129,8 +129,6 @@ export class FacturaComponent implements OnInit {
   }
 
 
-  filtroNombre: string = "";
-
   ngOnInit(): void {
 
     //cargar datos necearios al inicio de la aplicacion
@@ -154,22 +152,6 @@ export class FacturaComponent implements OnInit {
     } else if (PreferencesService.mostrarAlerta == "1") {
       this.facturaService.noMostrar = true;
     }
-
-    // if (!this.globalConvertService.editDoc) {
-
-    //   this.loadData();
-    //   return;
-    // }
-
-
-    if (PreferencesService.filtroProducto == 1) {
-      this.filtroNombre = this.filtrosBusqueda[0].nombre;
-    }
-
-    if (PreferencesService.filtroProducto == 2) {
-      this.filtroNombre = this.filtrosBusqueda[1].nombre;
-    }
-
   }
 
 
@@ -194,9 +176,6 @@ export class FacturaComponent implements OnInit {
     this.tabDetalle = false;
     this.tabPago = true;
   }
-
-
-
 
   async loadDocumentLocal() {
 
@@ -502,9 +481,6 @@ export class FacturaComponent implements OnInit {
 
   }
 
-
-
-
   setDateNow() {
 
     //Fecha Actual
@@ -569,13 +545,8 @@ export class FacturaComponent implements OnInit {
 
   }
 
-
-
-
   //cargar datos necesarios
   async loadData() {
-
-
 
     //limpiar datos del modulo
     this.facturaService.clearData();
@@ -1168,26 +1139,9 @@ export class FacturaComponent implements OnInit {
 
   }
 
-
-  async modifyDoc() {
-
-
-    //Navegar a resumen de documento
-
-
-    //ir a resumen
-    this.vistaResumen = true;
-    this.vistaFactura = false;
-    this.actualizarCliente = false;
-    this.nuevoCliente = false;
-    this.vistaHistorial = false;
-    this.vistaInforme = false;
-
-
-
-    // let resUpdateEncabezados:ResApiInterface = await _rec
+  async editDoc() {
+    //TODO:
   }
-
 
   //ver oabtalal crear cuenta correntista
   verNuevoCliente() {
@@ -1393,39 +1347,6 @@ export class FacturaComponent implements OnInit {
       //Nuevo documento
       this.newDoc();
     }
-  }
-
-  //filtros disponibles para bsuqueda de productos
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: this._translate.instant('pos.factura.descripcion'),
-    },
-    {
-      id: 2,
-      nombre: "SKU",
-    },
-  ];
-
-  verFiltros() {
-    this.cambiarFiltro = !this.cambiarFiltro;
-  }
-
-  async guardarFiltro(filtro: number, index: number) {
-    let verificador: boolean = await this._notificationService.openDialogActions(
-      {
-        title: "Filtro para la busqueda de productos",
-        description: "Haz seleccionado el filtro para la busqueda de productos de tu preferencia, cada vez que inicies siempre estará seleccionado.",
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-      }
-    );
-
-    if (!verificador) return;
-
-    PreferencesService.filtroProducto = filtro;
-    this.facturaService.filtrosProductos = filtro;
-    this.facturaService.idFiltroPreferencia = index;
-
   }
 
   activarDialogo() {

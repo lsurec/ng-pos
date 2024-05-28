@@ -100,7 +100,7 @@
                     </p>
                 </div>
             </div> -->
-            <div class="detalles-usuario" *ngIf="cambiarFiltro">
+            <!-- <div class="detalles-usuario" *ngIf="cambiarFiltro">
                 <div class="aqui">
                     <mat-radio-group [(ngModel)]="facturaService.filtroPreferencia">
                         <div *ngFor="let filtro of filtrosBusqueda; let i = index" class="opciones">
@@ -111,7 +111,7 @@
                         </div>
                     </mat-radio-group>
                 </div>
-            </div>
+            </div> -->
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -150,7 +150,7 @@
                     <span class="spacer"></span>
                     <!--TODO:Tranlate-->
                     <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
-                        (click)="modifyDoc()">
+                        (click)="editDoc()">
                         <mat-icon>save</mat-icon>
                     </button>
                     <ng-container *ngIf="!globalConvertService.editDoc">
@@ -194,7 +194,7 @@
 
             <!--TODO:Tranlate-->
             <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
-                (click)="modifyDoc()">
+                (click)="editDoc()">
                 <mat-icon>save</mat-icon>
             </button>
 
