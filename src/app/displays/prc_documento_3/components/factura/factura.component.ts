@@ -1290,6 +1290,9 @@ export class FacturaComponent implements OnInit {
 
 
 
+
+
+
     
     
     //ir a resumen
@@ -1300,6 +1303,8 @@ export class FacturaComponent implements OnInit {
     // this.vistaHistorial = false;
     // this.vistaInforme = false;
   }
+
+  
 
   //ver histirial de documentos recienetes
   verHistorial() {
