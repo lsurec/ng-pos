@@ -248,29 +248,29 @@ export class PrinterConfigurationComponent implements OnInit {
     this.isLoading = true;
 
 
-    let resStatus: ResApiInterface = await this._printerService.getStatus(PreferencesService.port);
+    // let resStatus: ResApiInterface = await this._printerService.getStatus(PreferencesService.port);
 
-    if (!resStatus.status) {
-      this.isLoading = false;
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
+    // if (!resStatus.status) {
+    //   this.isLoading = false;
+    //   this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
-      if (this.volver != 3) {
+    //   if (this.volver != 3) {
 
-        const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
+    //     const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
-        pdfMake.createPdf(docDefinition).print();
-      } else {
+    //     pdfMake.createPdf(docDefinition).print();
+    //   } else {
 
-        const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
+    //     const docDefinition = await this._printerService.getPDFDocTMU(this.document!);
 
-        pdfMake.createPdf(docDefinition).print();
-      }
+    //     pdfMake.createPdf(docDefinition).print();
+    //   }
       
 
-      return;
+    //   return;
 
 
-    }
+    // }
 
     if (!this.impresora && !this.formato) {
       this.isLoading = false;

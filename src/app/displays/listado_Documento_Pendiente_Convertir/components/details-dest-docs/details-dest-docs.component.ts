@@ -278,149 +278,146 @@ export class DetailsDestDocsComponent {
 
     pdfMake.createPdf(docDefinition).open();
 
-
-
-
     //TODO:Proceso de impresion debe testearse y optimizarse
     //Verificar que ya se haya configurado antes 
-    if (!PreferencesService.port) {
+    // if (!PreferencesService.port) {
 
-      let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
+    //   let resStatus5000: ResApiInterface = await this._printService.getStatus("5000");
 
-      if (!resStatus5000.status) {
-        let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
+    //   if (!resStatus5000.status) {
+    //     let resStatus5001: ResApiInterface = await this._printService.getStatus("5001");
 
-        if (!resStatus5001.status) {
+    //     if (!resStatus5001.status) {
 
-          this.globalConvertSrevice.isLoading = false;
-
-
-          this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
+    //       this.globalConvertSrevice.isLoading = false;
 
 
-          const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
-
-          pdfMake.createPdf(docDefinition).print();
-
-          return;
-        } else {
-
-          PreferencesService.port = "5001";
-        }
-
-      } else {
-        PreferencesService.port = "5000";
-      }
-
-      this.globalConvertSrevice.isLoading = false;
+    //       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
 
-      this.globalConvertSrevice.mostrarImpresion();
+    //       const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
 
-    } else {
+    //       pdfMake.createPdf(docDefinition).print();
 
+    //       return;
+    //     } else {
 
-      if (PreferencesService.localPrint) {
-        this.globalConvertSrevice.isLoading = false;
+    //       PreferencesService.port = "5001";
+    //     }
 
-        const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
+    //   } else {
+    //     PreferencesService.port = "5000";
+    //   }
 
-        pdfMake.createPdf(docDefinition).print();
-
-        return;
-      }
-
-      if (!PreferencesService.vistaPrevia) {
-        this.globalConvertSrevice.isLoading = false;
+    //   this.globalConvertSrevice.isLoading = false;
 
 
-        this.globalConvertSrevice.mostrarImpresion();
-        return;
+    //   this.globalConvertSrevice.mostrarImpresion();
 
-      }
-
-
-      let resStatus: ResApiInterface = await this._printService.getStatus(PreferencesService.port);
+    // } else {
 
 
-      if (!resStatus.status) {
+    //   if (PreferencesService.localPrint) {
+    //     this.globalConvertSrevice.isLoading = false;
 
-        this.globalConvertSrevice.isLoading = false;
+    //     const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
 
+    //     pdfMake.createPdf(docDefinition).print();
 
-        this._notificationsService.openSnackbarAction(
-          this._translate.instant('pos.alertas.sin_servicio_impresion'),
-          this._translate.instant('pos.botones.imprimir'),
-          async () => {
-            const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint!);
+    //     return;
+    //   }
 
-            pdfMake.createPdf(docDefinition).print();
-          }
-        );
+    //   if (!PreferencesService.vistaPrevia) {
+    //     this.globalConvertSrevice.isLoading = false;
 
 
-        return;
-      }
+    //     this.globalConvertSrevice.mostrarImpresion();
+    //     return;
+
+    //   }
 
 
-      let isOnline: ResApiInterface = await this._printService.getStatusPrint(PreferencesService.impresora);
+    //   let resStatus: ResApiInterface = await this._printService.getStatus(PreferencesService.port);
 
 
-      if (!isOnline.status) {
-        this.globalConvertSrevice.isLoading = false;
+    //   if (!resStatus.status) {
+
+    //     this.globalConvertSrevice.isLoading = false;
 
 
-        this._notificationsService.openSnackbar(`${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`);
+    //     this._notificationsService.openSnackbarAction(
+    //       this._translate.instant('pos.alertas.sin_servicio_impresion'),
+    //       this._translate.instant('pos.botones.imprimir'),
+    //       async () => {
+    //         const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint!);
 
-        this._notificationsService.openSnackbarAction(
-          `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
-          this._translate.instant('pos.botones.imprimir'),
-          async () => {
-            const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint!);
-
-            pdfMake.createPdf(docDefinition).print();
-          }
-        );
+    //         pdfMake.createPdf(docDefinition).print();
+    //       }
+    //     );
 
 
-        return;
-
-      }
-
-      const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
-
-      const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    //     return;
+    //   }
 
 
-      // return;
-      pdfDocGenerator.getBlob(async (blob) => {
-        // ...
-        var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+    //   let isOnline: ResApiInterface = await this._printService.getStatusPrint(PreferencesService.impresora);
 
 
-        let resPrint: ResApiInterface = await this._printService.postPrint(
-          pdfFile,
-          PreferencesService.impresora,
-          PreferencesService.copies
-        );
-
-        this.globalConvertSrevice.isLoading = false;
+    //   if (!isOnline.status) {
+    //     this.globalConvertSrevice.isLoading = false;
 
 
-        if (!resPrint.status) {
+    //     this._notificationsService.openSnackbar(`${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`);
 
-          this.globalConvertSrevice.isLoading = false;
+    //     this._notificationsService.openSnackbarAction(
+    //       `${PreferencesService.impresora}  ${this._translate.instant('pos.factura.no_disponible')}`,
+    //       this._translate.instant('pos.botones.imprimir'),
+    //       async () => {
+    //         const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint!);
 
-          this.showError(resPrint);
+    //         pdfMake.createPdf(docDefinition).print();
+    //       }
+    //     );
 
-          return;
 
-        }
-        this._notificationsService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+    //     return;
 
-      });
+    //   }
 
-    }
+    //   const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
+
+    //   const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+
+
+    //   // return;
+    //   pdfDocGenerator.getBlob(async (blob) => {
+    //     // ...
+    //     var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+
+    //     let resPrint: ResApiInterface = await this._printService.postPrint(
+    //       pdfFile,
+    //       PreferencesService.impresora,
+    //       PreferencesService.copies
+    //     );
+
+    //     this.globalConvertSrevice.isLoading = false;
+
+
+    //     if (!resPrint.status) {
+
+    //       this.globalConvertSrevice.isLoading = false;
+
+    //       this.showError(resPrint);
+
+    //       return;
+
+    //     }
+    //     this._notificationsService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+
+    //   });
+
+    // }
 
 
     this.globalConvertSrevice.isLoading = false;
