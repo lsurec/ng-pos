@@ -1780,17 +1780,30 @@ export class FacturaComponent implements OnInit {
     }
 
 
-
     //TODO:Validar impresion
 
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
 
-    let resService:ResApiInterface = await this._printService.getStatus();
+    let resService: ResApiInterface = await this._printService.getStatus();
 
-    if(!resService.status){
+    if (!resService.status) {
 
-      
+      this.facturaService.isLoading = false;
+
+
+      this._notificationService.openSnackbarAction(
+        this._translate.instant('pos.alertas.sin_servicio_impresion'),
+        this._translate.instant('pos.botones.imprimir'),
+        async () => {
+
+          pdfMake.createPdf(docDefinition).print();
+        }
+      );
+
+
+      return;
+
 
     }
 
