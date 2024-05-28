@@ -131,7 +131,7 @@ export class FacturaComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private _printService: PrinterService,
     private _retryService: RetryService,
-
+    private _dataUserService:DataUserService,
   ) {
 
     //sucripcion a eventos desde componentes hijo
@@ -1411,8 +1411,8 @@ export class FacturaComponent implements OnInit {
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
     //Inciar FEL
-    if (this.facturaService.valueParametro(349)) {
-      // if (this._dataUserService.switchState) {
+    // if (this.facturaService.valueParametro(349)) {
+      if (this._dataUserService.switchState) {
 
       //iniciar cargas (steps)
       this.facturaService.pasosCompletos = 0;
@@ -1831,7 +1831,6 @@ export class FacturaComponent implements OnInit {
     this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
   }
-
 
 
   async felProcess(): Promise<TypeErrorInterface> {
@@ -2573,7 +2572,6 @@ export class FacturaComponent implements OnInit {
     this._notificationService.openSnackbar("Documento editado correctamente.");
   }
 
-
   async showError(res: ResApiInterface) {
     let verificador = await this._notificationService.openDialogActions(
       {
@@ -2588,7 +2586,6 @@ export class FacturaComponent implements OnInit {
 
     this.verError(res);
   }
-
 
   saveError(res: ResApiInterface) {
     //fecha actual
