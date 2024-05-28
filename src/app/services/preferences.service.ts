@@ -36,7 +36,7 @@ export class PreferencesService {
     private static readonly filtroProductoKey: string = 'filtroProducto';
     private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
     private static readonly mostrarKey: string = 'mostrar';
-    private static readonly nuevoDocKey: string = 'mostrar';
+    private static readonly nuevoDocKey: string = 'nuevoDoc';
 
 
 

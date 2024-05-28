@@ -84,6 +84,7 @@ import { NotFoundItemComponent } from './components/not-found-item/not-found-ite
 import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-dialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service';
+import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/confirmar-nuevo-doc.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,6 +140,7 @@ import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service'
     CrearTareaComponent,
     NotFoundItemComponent,
     UsuariosDialogComponent,
+    ConfirmarNuevoDocComponent,
   ],
   imports: [
     MatCardModule,

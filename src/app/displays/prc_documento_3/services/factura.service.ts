@@ -53,8 +53,6 @@ export class FacturaService {
 
     nuevoDoc : boolean = false;
 
-    verCheckBox: number = 0;
-
     verDialogoFactura: number = 1;
 
     //totales del documento

@@ -196,7 +196,6 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
-    this.facturaService.verCheckBox = 1;
 
     if (PreferencesService.nuevoDoc.length == 0) {
       PreferencesService.nuevoDoc = "0";
@@ -238,9 +237,6 @@ export class FacturaComponent implements OnInit {
   }
 
   async loadDocumentLocal() {
-
-    //ocultar el check 
-    this.facturaService.verCheckBox = 0;
 
     //si no hay un documento guardado no hacer nada
 
@@ -453,8 +449,6 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = false;
 
-    //mostrar el check 
-    this.facturaService.verCheckBox = 1;
   }
 
   //nuevo documento
@@ -464,7 +458,7 @@ export class FacturaComponent implements OnInit {
     if (PreferencesService.mostrarAlerta == "0") {
 
       //Dialofo de confirmacion
-      let verificador: boolean = await this._notificationService.openDialogActions(
+      let verificador: boolean = await this._notificationService.openDialogNewDoc(
         {
           title: this._translate.instant('pos.alertas.eliminar'),
           description: this._translate.instant('pos.alertas.perderDatos'),
@@ -1255,7 +1249,6 @@ export class FacturaComponent implements OnInit {
       element.visible = false;
     });
 
-    this.facturaService.verCheckBox = 0;
     this._eventService.emitCustomEvent(false);
   }
 
