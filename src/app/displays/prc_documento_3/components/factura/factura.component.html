@@ -5,6 +5,7 @@
 <app-error *ngIf="!vistaFactura && vistaInforme" [regresar]="regresar"></app-error>
 
 <app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
+<app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
 <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="vistaFactura">
 
     <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
@@ -214,6 +215,9 @@
             <div class="circulo-inicial" (click)="sidenavend.open()">
                 <p class="inicial-usuario">{{user[0]}}</p>
             </div>
+            <button *ngIf="!globalConvertService.editDoc" (click)="verPasos()" mat-icon-button>
+                <mat-icon>close</mat-icon>
+            </button>
         </mat-toolbar>
 
         <!-- Contenido del componente -->

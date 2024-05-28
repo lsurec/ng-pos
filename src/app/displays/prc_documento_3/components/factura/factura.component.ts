@@ -1454,4 +1454,14 @@ export class FacturaComponent implements OnInit {
 
   }
 
+  verPasos(){
+    this.facturaService.isStepLoading = true;
+    this.vistaInforme = false;
+    this.vistaHistorial = false;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+  }
+
 }
