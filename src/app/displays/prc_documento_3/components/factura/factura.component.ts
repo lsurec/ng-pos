@@ -140,12 +140,26 @@ export class FacturaComponent implements OnInit {
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
     this.facturaService.verCheckBox = 1;
 
-    if (PreferencesService.noMostrarAlerta == 1) {
-      this.facturaService.noMostrar = true;
-    } else {
-      this.facturaService.noMostrar = false;
-
+    if (PreferencesService.nuevoDoc.length == 0) {
+      PreferencesService.nuevoDoc = "0";
+      this.facturaService.nuevoDoc = false;
+    } else if (PreferencesService.nuevoDoc == "1") {
+      this.facturaService.nuevoDoc = true;
     }
+
+    console.log(PreferencesService.nuevoDoc, "nuevo doc factura");
+
+    //mostrar alerta
+    if (PreferencesService.mostrarAlerta == "") {
+      console.log("aqui");
+      PreferencesService.mostrarAlerta = "1";
+      this.facturaService.noMostrar = false;
+    } else if (PreferencesService.mostrarAlerta == "1") {
+      console.log("aqui x2");
+      this.facturaService.noMostrar = true;
+    }
+
+    console.log(PreferencesService.mostrarAlerta, "alerta factura");
 
 
     // if (!this.globalConvertService.editDoc) {
@@ -193,6 +207,8 @@ export class FacturaComponent implements OnInit {
 
   async loadDocumentLocal() {
 
+    //ocultar el check 
+    this.facturaService.verCheckBox = 0;
 
     //si no hay un documento guardado no hacer nada
 
@@ -405,13 +421,18 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = false;
 
+    //mostrar el check 
+    this.facturaService.verCheckBox = 1;
   }
 
   //nuevo documento
   async newDoc() {
 
+    console.log(PreferencesService.mostrarAlerta, "Nuevo doc");
+
+
     //si la preferencia guardada es distinda de 1, mostrará la alerta
-    if (PreferencesService.noMostrarAlerta != 1) {
+    if (PreferencesService.mostrarAlerta == "0") {
 
       //Dialofo de confirmacion
       let verificador: boolean = await this._notificationService.openDialogActions(
@@ -1314,6 +1335,7 @@ export class FacturaComponent implements OnInit {
       element.visible = false;
     });
 
+    this.facturaService.verCheckBox = 0;
     this._eventService.emitCustomEvent(false);
   }
 
@@ -1410,8 +1432,26 @@ export class FacturaComponent implements OnInit {
   }
 
   activarDialogo() {
-    this.facturaService.noMostrar = false;
-    PreferencesService.noMostrarAlerta = 0;
+    if (!this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "0";
+    } else if (this.facturaService.noMostrar) {
+      PreferencesService.mostrarAlerta = "1";
+    }
+
+    console.log(PreferencesService.mostrarAlerta, "factura");
+
+  }
+
+  nuevoDocImprimir() {
+    //si es verdadero, la preferencia será 1;
+    if (this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "1";
+    } else if (!this.facturaService.nuevoDoc) {
+      PreferencesService.nuevoDoc = "0";
+    }
+
+    console.log(PreferencesService.nuevoDoc, "nuvo doc impirmir");
+
   }
 
 }
