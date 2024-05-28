@@ -1783,7 +1783,7 @@ export class FacturaComponent implements OnInit {
 
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
-    
+
     //validar si es impresion directa o no
     if (encabezado.preview == 1) {
       this.facturaService.isLoading = false;
@@ -1796,13 +1796,36 @@ export class FacturaComponent implements OnInit {
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
 
-    let resStatusServicePrint:ResApiInterface = await this._printService.getStatus();
-    
-    if(resStatusServicePrint){
+    //validarque el servicio esté disponible
+    let resStatusServicePrint: ResApiInterface = await this._printService.getStatus();
+
+    if (!resStatusServicePrint.status) {
       this.facturaService.isLoading = false;
 
-      this._notificationService.openSnackbarAction("Impresion directa no disponible", "Imprimir de todas formas", )
-    } 
+      this._notificationService.openSnackbarAction(
+        this._translate.instant('pos.alertas.sin_servicio_impresion'),
+        this._translate.instant('pos.botones.imprimir'),
+        () => pdfMake.createPdf(docDefinition).print(),
+      );
+
+      return;
+    }
+
+    //verificar estado de la impresora
+    // let resStatusPrint:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
+    let resStatusPrint:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
+
+    if(!resStatusPrint.status){
+      this.facturaService.isLoading = false;
+
+      this._notificationService.openSnackbarAction(
+        this._translate.instant('pos.alertas.sin_servicio_impresion'),
+        this._translate.instant('pos.botones.imprimir'),
+        () => pdfMake.createPdf(docDefinition).print(),
+      );
+
+      return;
+    }
 
 
     // return;
