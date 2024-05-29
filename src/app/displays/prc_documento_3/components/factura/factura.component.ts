@@ -51,6 +51,7 @@ import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import { RetryService } from 'src/app/services/retry.service';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 @Component({
   selector: 'app-factura',
@@ -1783,11 +1784,10 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    //TODO:Validar impresion
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
 
 
-    if (encabezado.preview) {
+    if (encabezado.preview != 0) {
       pdfMake.createPdf(docDefinition).print();
       return;
     }
@@ -1799,35 +1799,21 @@ export class FacturaComponent implements OnInit {
 
       this.facturaService.isLoading = false;
 
-
-      this._notificationService.openSnackbarAction(
-        this._translate.instant('pos.alertas.sin_servicio_impresion'),
-        this._translate.instant('pos.botones.imprimir'),
-        async () => {
-
-          pdfMake.createPdf(docDefinition).print();
-        }
-      );
+      this.printAnyway(docDefinition, this._translate.instant('pos.alertas.sin_servicio_impresion'));
 
       return;
     }
 
+    //TODO:Eliminar linea
     encabezado.impresora = "POS-80"
 
-    let resPrintStatus:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
+    let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
 
-    if(!resPrintStatus.status){
+    if (!resPrintStatus.status) {
 
       this.facturaService.isLoading = false;
 
-      this._notificationService.openSnackbarAction(
-        `Impresora ${encabezado.impresora} no dispinible.`,
-        this._translate.instant('pos.botones.imprimir'),
-        async () => {
-
-          pdfMake.createPdf(docDefinition).print();
-        }
-      );
+      this.printAnyway(docDefinition, `Impresora ${encabezado.impresora} no dispinible.`);
 
       return;
     }
@@ -1854,17 +1840,8 @@ export class FacturaComponent implements OnInit {
 
         this.facturaService.isLoading = false;
 
+        this.printAnyway(docDefinition, "Algo salió mal, intenta mas tarde.");
 
-        this._notificationService.openSnackbarAction(
-          //TODO:Translate
-          "Algo salió mal, intenta mas tarde.",
-          this._translate.instant('pos.botones.imprimir'),
-          async () => {
-  
-            pdfMake.createPdf(docDefinition).print();
-          }
-        );
-  
         return;
 
       }
@@ -1883,6 +1860,25 @@ export class FacturaComponent implements OnInit {
 
 
     return;
+  }
+
+  async printAnyway(doc: TDocumentDefinitions, descripcion: string) {
+
+
+    //TODO:Translate
+
+    let verificador: boolean = await this._notificationService.openDialogActions(
+      {
+        title: "Fallo en la Impresión",
+        description: descripcion,
+        verdadero: "Imprimir con otro metodo.",
+        falso: this._translate.instant("Aceptar"),
+      }
+    );
+
+    if (!verificador) return;
+
+    pdfMake.createPdf(doc).print();
   }
 
   async retryFel() {
