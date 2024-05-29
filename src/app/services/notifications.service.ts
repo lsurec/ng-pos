@@ -35,7 +35,7 @@ export class NotificationsService {
 
     //Abrir o mostar  snackbar
     openSnackbar(message: string) {
-        this._snackBar.open(message, this._translate.instant('pos.alertas.ok'), { duration: 5 * 1000 })
+        this._snackBar.open(message, this._translate.instant('pos.alertas.ok'), { duration: 5 * 3000 })
     }
 
     openSnackbarAction(

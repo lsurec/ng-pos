@@ -471,6 +471,12 @@ export class FacturaComponent implements OnInit {
       if (!verificador) return;
     }
 
+    this.setValuesNewDoc();
+
+  }
+
+
+  setValuesNewDoc() {
     //en caso contrario, limpiará el formulario sin mostrar la alerta
 
     //limpiar todos los datos relacionados al documennto
@@ -533,7 +539,6 @@ export class FacturaComponent implements OnInit {
 
     //limpiar documento local 
     PreferencesService.documento = "";
-
   }
 
   setDateNow() {
@@ -1780,6 +1785,17 @@ export class FacturaComponent implements OnInit {
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).print();
 
+
+
+      if (
+        this.facturaService.nuevoDoc) {
+
+        this.setValuesNewDoc();
+        
+      }
+      
+      this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
+
       return;
 
     }
@@ -1845,21 +1861,24 @@ export class FacturaComponent implements OnInit {
         return;
 
       }
-
+      
       this.facturaService.isLoading = false;
+
+      if (
+        this.facturaService.nuevoDoc) {
+
+        this.setValuesNewDoc();
+        
+      }
+      
+      this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
+
 
       // this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
     });
 
-    this.facturaService.isLoading = false;
 
-
-    //Impresion por defecto
-    // pdfMake.createPdf(docDefinition).print();
-
-
-    return;
   }
 
   async printAnyway(doc: TDocumentDefinitions, descripcion: string) {
@@ -1876,9 +1895,23 @@ export class FacturaComponent implements OnInit {
       }
     );
 
+
+    if (
+      this.facturaService.nuevoDoc) {
+
+      this.setValuesNewDoc();
+      
+    }
+    
+    this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
+
+
     if (!verificador) return;
 
     pdfMake.createPdf(doc).print();
+
+
+
   }
 
   async retryFel() {
