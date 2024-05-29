@@ -263,6 +263,14 @@ mat-sidenav {
     border-bottom: 1px solid $color-bordes;
     display      : flex;
     align-items  : center;
+    min-height   : 50px;
+}
+
+.borde-detalles {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
 }
 
 .cambioFiltro {

@@ -10,7 +10,8 @@
 <div *ngIf="vistaFactura && !facturaService.isStepLoading">
     <app-error *ngIf="facturaService.verError" [regresar]="pasos"></app-error>
 
-    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="!facturaService.verError">
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
+        *ngIf="!facturaService.verError">
 
         <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
             <mat-toolbar class="barra-cerrar-titulo">
@@ -33,7 +34,7 @@
                     <p class="userName">{{user.toUpperCase()}}</p>
                     <span class="spacer"></span>
                 </div>
-                <div class="detalles-usuario"></div>
+                <div class="borde-detalles"></div>
                 <div class="detalles-usuario">
                     <mat-icon class="iconos-detalles">business</mat-icon>
                     <span class="spacer"></span>
@@ -73,6 +74,21 @@
                         <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
                         <p class="descripcion"> {{facturaService.serie.descripcion}}
                             ({{facturaService.serie.serie_Documento}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">dvr</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <div class="d-flex">
+                            <p class="subtitulo">Fel</p>
+                            <span class="spacer"></span>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckDefault" (click)="switchFel()"
+                                    [(ngModel)]="dataUserService.switchState">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="detalles-usuario">

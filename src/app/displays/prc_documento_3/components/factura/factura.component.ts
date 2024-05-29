@@ -2744,4 +2744,19 @@ export class FacturaComponent implements OnInit {
     this.facturaService.isStepLoading = true;
   }
 
+  // Función para manejar el cambio de estado del switch
+  switchFel(): void {
+    this.dataUserService.switchState = !this.dataUserService.switchState;
+
+    //falso es 0
+    if (this.dataUserService.switchState == false) {
+      PreferencesService.sitchFelStorage = "0"
+    }
+
+    if (this.dataUserService.switchState == true) {
+      //verdadero es 1
+      PreferencesService.sitchFelStorage = "1"
+    }
+  }
+
 }

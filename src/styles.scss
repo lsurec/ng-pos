@@ -299,7 +299,8 @@ body {
 .dark-theme .seleccionar,
 .dark-theme .head__sidenav,
 .dark-theme .toolbarlargeTitle,
-.dark-theme .toolbar-row {
+.dark-theme .toolbar-row,
+.dark-theme .borde-detalles {
     border-bottom: 1px solid $bordes !important;
 }
 
@@ -537,7 +538,9 @@ body {
 .dark-theme .llenar-formulario::-webkit-scrollbar,
 .dark-theme .llenar-formulario::-webkit-scrollbar-track,
 .dark-theme .detalle-tarea::-webkit-scrollbar,
-.dark-theme .detalle-tarea::-webkit-scrollbar-track {
+.dark-theme .detalle-tarea::-webkit-scrollbar-track,
+.dark-theme .contenido-sidenav::-webkit-scrollbar,
+.dark-theme .contenido-sidenav::-webkit-scrollbar-track {
     background-color: $fondo-oscuro !important;
 }
 
@@ -567,7 +570,8 @@ body {
 .dark-theme .horarioLaboral::-webkit-scrollbar-thumb,
 .dark-theme .contenedor::-webkit-scrollbar-thumb,
 .dark-theme .llenar-formulario::-webkit-scrollbar-thumb,
-.dark-theme .detalle-tarea::-webkit-scrollbar-thumb {
+.dark-theme .detalle-tarea::-webkit-scrollbar-thumb,
+.dark-theme .contenido-sidenav::-webkit-scrollbar-thumb {
     background-color: $scrollbars !important;
 }
 
