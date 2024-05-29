@@ -1503,7 +1503,7 @@ export class FacturaComponent implements OnInit {
 
       this.facturaService.isStepLoading = false;
 
-      this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+      // this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
 
       this.printFormat();
@@ -1522,9 +1522,9 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
-      if (resCreateDoc.type == 0) {
-        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
-      }
+      // if (resCreateDoc.type == 0) {
+      //   this._notificationService.openSnackbar(this._translate.instant('pos.alertas.documentoCreado'));
+      // }
 
       this.printFormat();
     }
@@ -1927,7 +1927,7 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isStepLoading = false;
 
-    this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+    // this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
     this.printFormat();
 
