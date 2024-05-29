@@ -103,13 +103,13 @@ export class ResumenDocumentoComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.consecutivoDoc);
 
-    this._retryService.createDoc$.subscribe(() => {
-      this.sendDoc();
-    });
+    // this._retryService.createDoc$.subscribe(() => {
+    //   this.sendDoc();
+    // });
 
-    this._retryService.felProcess$.subscribe(() => {
-      this.retryFel();
-    });
+    // this._retryService.felProcess$.subscribe(() => {
+    //   this.retryFel();
+    // });
   }
 
   //Regresar al modulo de facturacion (tabs)
