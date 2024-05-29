@@ -1498,6 +1498,10 @@ export class FacturaComponent implements OnInit {
 
       this.facturaService.viewSucces = true;
       this.facturaService.viewMessage = true;
+
+
+      this.facturaService.isStepLoading = false;
+
       this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
 
 
@@ -1589,7 +1593,6 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    this.facturaService.isLoading = false;
 
     let pagos: PagoPrintInterface[] = resPagos.response;
 
@@ -1771,6 +1774,7 @@ export class FacturaComponent implements OnInit {
     //Imprimir doc 
     if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
+      this.facturaService.isLoading = false;
 
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).print();
@@ -1779,10 +1783,14 @@ export class FacturaComponent implements OnInit {
 
     }
 
-
     //TODO:Validar impresion
-
     const docDefinition = await this._printService.getPDFDocTMU(this.docPrint);
+
+
+    if (encabezado.preview) {
+      pdfMake.createPdf(docDefinition).print();
+      return;
+    }
 
 
     let resService: ResApiInterface = await this._printService.getStatus();
@@ -1801,10 +1809,27 @@ export class FacturaComponent implements OnInit {
         }
       );
 
+      return;
+    }
+
+    encabezado.impresora = "POS-80"
+
+    let resPrintStatus:ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
+
+    if(!resPrintStatus.status){
+
+      this.facturaService.isLoading = false;
+
+      this._notificationService.openSnackbarAction(
+        `Impresora ${encabezado.impresora} no dispinible.`,
+        this._translate.instant('pos.botones.imprimir'),
+        async () => {
+
+          pdfMake.createPdf(docDefinition).print();
+        }
+      );
 
       return;
-
-
     }
 
 
@@ -1820,29 +1845,41 @@ export class FacturaComponent implements OnInit {
 
       let resPrint: ResApiInterface = await this._printService.postPrint(
         pdfFile,
-        PreferencesService.impresora,
-        PreferencesService.copies
+        encabezado.impresora,
+        encabezado.copias ?? 1,
       );
-
-      this.facturaService.isLoading = false;
 
 
       if (!resPrint.status) {
 
         this.facturaService.isLoading = false;
 
-        this.showError(resPrint);
 
+        this._notificationService.openSnackbarAction(
+          //TODO:Translate
+          "Algo salió mal, intenta mas tarde.",
+          this._translate.instant('pos.botones.imprimir'),
+          async () => {
+  
+            pdfMake.createPdf(docDefinition).print();
+          }
+        );
+  
         return;
 
       }
-      this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
+
+      this.facturaService.isLoading = false;
+
+      // this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
     });
 
+    this.facturaService.isLoading = false;
+
 
     //Impresion por defecto
-    pdfMake.createPdf(docDefinition).print();
+    // pdfMake.createPdf(docDefinition).print();
 
 
     return;
@@ -1890,7 +1927,13 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.viewSucces = true;
     this.facturaService.viewMessage = true;
+
+
+    this.facturaService.isStepLoading = false;
+
     this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
+
+    this.printFormat();
 
   }
 

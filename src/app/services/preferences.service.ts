@@ -23,10 +23,6 @@ export class PreferencesService {
     private static readonly errorKey: string = 'error';
     private static readonly tipoCambioKey: string = 'tipoCambio';
     private static readonly documentkey: string = 'document';
-    private static readonly previewKey: string = 'preview';
-    private static readonly impresoraKey: string = 'impresora';
-    private static readonly printServiceKey: string = 'printlocal';
-    private static readonly copiesKey: string = 'copies';
     private static readonly sizeKey: string = 'fontSize';
     private static readonly idSizeKey: string = 'idFontSize';
     private static readonly felKey: string = 'fel';
@@ -213,52 +209,6 @@ export class PreferencesService {
     static get documento(): string {
         let value = localStorage.getItem(this.documentkey);
 
-        if (!value) return "";
-        return value;
-    }
-
-    //vista previa 
-    @Input()
-    static set vistaPrevia(value: string) {
-        localStorage.setItem(this.previewKey, value);
-    }
-
-    static get vistaPrevia(): string {
-        let value = localStorage.getItem(this.previewKey);
-        if (!value) return "";
-        return value;
-    }
-
-    @Input()
-    static set impresora(value: string) {
-        localStorage.setItem(this.impresoraKey, value);
-    }
-
-    static get impresora(): string {
-        let value = localStorage.getItem(this.impresoraKey);
-        if (!value) return "";
-        return value;
-    }
-
-    @Input()
-    static set localPrint(value: string) {
-        localStorage.setItem(this.printServiceKey, value);
-    }
-
-    static get localPrint(): string {
-        let value = localStorage.getItem(this.printServiceKey);
-        if (!value) return "";
-        return value;
-    }
-
-
-    @Input()
-    static set copies(value: string) {
-        localStorage.setItem(this.copiesKey, value);
-    }
-
-    static get copies(): string {
-        let value = localStorage.getItem(this.copiesKey);
         if (!value) return "";
         return value;
     }

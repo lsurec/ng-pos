@@ -136,6 +136,9 @@ export class PrinterService {
                 },
                 //si algo sale mal
                 err => {
+
+                    console.error(err);
+                    
                     try {
                         let message = err.message;
 

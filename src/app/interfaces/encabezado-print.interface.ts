@@ -25,4 +25,8 @@ export interface EncabezadoPrintInterface {
     feL_UUID?: any;
     feL_fechaCertificacion?: any;
     monto_Letras?: string;
+    preview:   number;
+    impresora: any;
+    copias:    any;
+    formato:   any;
 }

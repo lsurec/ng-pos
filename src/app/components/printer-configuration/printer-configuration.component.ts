@@ -78,51 +78,51 @@ export class PrinterConfigurationComponent implements OnInit {
   ngOnInit(): void {
 
 
-    if (!PreferencesService.copies) {
-      this.copias = "1";
-      PreferencesService.copies = this.copias;
-    } else {
-      this.copias = PreferencesService.copies;
-    }
+    // if (!PreferencesService.copies) {
+    //   this.copias = "1";
+    //   PreferencesService.copies = this.copias;
+    // } else {
+    //   this.copias = PreferencesService.copies;
+    // }
 
-    if (!PreferencesService.localPrint) {
-      this.imprimirNavegador = false;
-    } else {
-      this.imprimirNavegador = true;
-    }
-
-
-    if (!PreferencesService.vistaPrevia) {
-      this.vistaPrevia = false;
-    } else {
-      this.vistaPrevia = true;
-    }
+    // if (!PreferencesService.localPrint) {
+    //   this.imprimirNavegador = false;
+    // } else {
+    //   this.imprimirNavegador = true;
+    // }
 
 
-    this.loadData();
+    // if (!PreferencesService.vistaPrevia) {
+    //   this.vistaPrevia = false;
+    // } else {
+    //   this.vistaPrevia = true;
+    // }
+
+
+    // this.loadData();
   }
 
 
   preview() {
-    if (this.vistaPrevia) {
-      PreferencesService.vistaPrevia = "1";
-    } else {
-      PreferencesService.vistaPrevia = "";
-    }
+    // if (this.vistaPrevia) {
+    //   PreferencesService.vistaPrevia = "1";
+    // } else {
+    //   PreferencesService.vistaPrevia = "";
+    // }
   }
 
   localPrint() {
-    if (this.imprimirNavegador) {
-      PreferencesService.localPrint = "1";
-    } else {
-      PreferencesService.localPrint = "";
-    }
+    // if (this.imprimirNavegador) {
+    //   PreferencesService.localPrint = "1";
+    // } else {
+    //   PreferencesService.localPrint = "";
+    // }
   }
 
 
 
   selectPrint() {
-    PreferencesService.impresora = this.impresora!;
+    // PreferencesService.impresora = this.impresora!;
   }
 
 
@@ -160,10 +160,10 @@ export class PrinterConfigurationComponent implements OnInit {
 
     for (let i = 0; i < this.impresoras.length; i++) {
       const impresora = this.impresoras[i];
-      if (PreferencesService.impresora == impresora) {
-        this.impresora = impresora;
-        break;
-      }
+      // if (PreferencesService.impresora == impresora) {
+      //   this.impresora = impresora;
+      //   break;
+      // }
 
     }
 
@@ -204,31 +204,31 @@ export class PrinterConfigurationComponent implements OnInit {
       var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
       //TODO:copias
-      let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, PreferencesService.copies);
+      // let resPrint: ResApiInterface = await this._printerService.postPrint(pdfFile, this.impresora!, PreferencesService.copies);
 
       this.isLoading = false;
 
 
-      if (!resPrint.status) {
+      // if (!resPrint.status) {
 
-        this.isLoading = false;
+      //   this.isLoading = false;
 
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
+      //   let verificador = await this._notificationService.openDialogActions(
+      //     {
+      //       title: this._translate.instant('pos.alertas.salioMal'),
+      //       description: this._translate.instant('pos.alertas.error'),
+      //       verdadero: this._translate.instant('pos.botones.informe'),
+      //       falso: this._translate.instant('pos.botones.aceptar'),
+      //     }
+      //   );
 
-        if (!verificador) return;
+      //   if (!verificador) return;
 
-        this.showError(resPrint);
+      //   this.showError(resPrint);
 
-        return;
+      //   return;
 
-      }
+      // }
 
       this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
@@ -336,35 +336,35 @@ export class PrinterConfigurationComponent implements OnInit {
 
       this.isLoading = true;
 
-      let resPrint: ResApiInterface = await this._printerService.postPrint(
-        pdfFile,
-        this.impresora!,
-        PreferencesService.copies
-      );
+      // let resPrint: ResApiInterface = await this._printerService.postPrint(
+      //   pdfFile,
+      //   this.impresora!,
+      //   PreferencesService.copies
+      // );
 
       this.isLoading = false;
 
 
-      if (!resPrint.status) {
+      // if (!resPrint.status) {
 
-        this.isLoading = false;
+      //   this.isLoading = false;
 
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
+      //   let verificador = await this._notificationService.openDialogActions(
+      //     {
+      //       title: this._translate.instant('pos.alertas.salioMal'),
+      //       description: this._translate.instant('pos.alertas.error'),
+      //       verdadero: this._translate.instant('pos.botones.informe'),
+      //       falso: this._translate.instant('pos.botones.aceptar'),
+      //     }
+      //   );
 
-        if (!verificador) return;
+      //   if (!verificador) return;
 
-        this.showError(resPrint);
+      //   this.showError(resPrint);
 
-        return;
+      //   return;
 
-      }
+      // }
 
       this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
@@ -443,7 +443,7 @@ export class PrinterConfigurationComponent implements OnInit {
     //guarda la nueva cantidad
     this.copias = cantidad!.toString();
 
-    PreferencesService.copies = this.copias;
+    // PreferencesService.copies = this.copias;
 
   }
 
@@ -464,7 +464,7 @@ export class PrinterConfigurationComponent implements OnInit {
     //nueva cantidad
     this.copias = cantidad!.toString();
 
-    PreferencesService.copies = this.copias;
+    // PreferencesService.copies = this.copias;
 
 
   }
@@ -479,7 +479,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
     //calcular total de la trnsaccion
 
-    PreferencesService.copies = this.copias;
+    // PreferencesService.copies = this.copias;
 
   }
 
