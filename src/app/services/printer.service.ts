@@ -1716,9 +1716,6 @@ export class PrinterService {
             );
         });
 
-        console.log(transacciones);
-
-
         let pagos: any[] = [];
 
         doc.pagos.forEach(pago => {
