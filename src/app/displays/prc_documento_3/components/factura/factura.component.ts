@@ -1820,8 +1820,7 @@ export class FacturaComponent implements OnInit {
       return;
     }
 
-    //TODO:Eliminar linea
-    encabezado.impresora = "POS-80"
+    // encabezado.impresora = "POS-80"
 
     let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(encabezado.impresora);
 

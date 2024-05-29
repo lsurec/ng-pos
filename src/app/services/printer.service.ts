@@ -46,7 +46,7 @@ export class PrinterService {
                 //si algo sale mal
                 err => {
 
-                    console.log(err);
+                    console.error(err);
 
 
                     let resApi: ResApiInterface = {
@@ -84,6 +84,9 @@ export class PrinterService {
                 },
                 //si algo sale mal
                 err => {
+
+                    console.error(err);
+
 
                     let resApi: ResApiInterface = {
                         status: false,
@@ -182,6 +185,9 @@ export class PrinterService {
                 },
                 //si algo sale mal
                 err => {
+
+                    console.error(err);
+
                     try {
                         let message = err.message;
 
