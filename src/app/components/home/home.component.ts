@@ -34,6 +34,8 @@ import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/prov
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { CurrencyPipe } from '@angular/common';
+import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 
 
 @Component({
@@ -46,6 +48,8 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
     MenuService,
     PrinterService,
     ReceptionService,
+    CurrencyPipe,
+    CurrencyFormatPipe,
   ]
 })
 export class HomeComponent implements OnInit {
@@ -966,8 +970,8 @@ export class HomeComponent implements OnInit {
       this.dataUserService.decimalPlaces!--;
 
       //si es menor o igual a cero, volver a 1 y mostrar
-      if (this.dataUserService.decimalPlaces! <= 0) {
-        this.dataUserService.decimalPlaces = 0;
+      if (this.dataUserService.decimalPlaces! <= 1) {
+        this.dataUserService.decimalPlaces = 1;
       }
 
       //guarda la nueva cantidad
@@ -981,8 +985,8 @@ export class HomeComponent implements OnInit {
       this.dataUserService.integerDigits!--;
 
       //si es menor o igual a cero, volver a 1 y mostrar
-      if (this.dataUserService.integerDigits! <= 0) {
-        this.dataUserService.integerDigits = 0;
+      if (this.dataUserService.integerDigits! <= 1) {
+        this.dataUserService.integerDigits = 1;
       }
 
       //guarda la nueva cantidad

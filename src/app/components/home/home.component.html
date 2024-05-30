@@ -125,7 +125,7 @@
                     <span class="spacer"></span>
                     <div class="detalle-digitos ">
                         <p class="subtitulo">DIGITOS</p>
-                        <p class="descripcion">{{ dataUserService.integerDigits }} </p>
+                        <p class="descripcion">{{ dataUserService.integerDigits | currencyFormat}} </p>
                     </div>
                     <span class="spacer"></span>
                     <div class="dFlex">
@@ -133,7 +133,7 @@
                             <mat-icon class="sumar-restar">remove</mat-icon>
                         </div>
                         <div class="width40">
-                            <p class="cantidad"> {{dataUserService.integerDigits}} </p>
+                            <p class="cantidad"> {{dataUserService.integerDigits }} </p>
                         </div>
                         <div class="sumar" (click)="mas(2)">
                             <mat-icon class="sumar-restar">add</mat-icon>
@@ -146,7 +146,7 @@
                     <span class="spacer"></span>
                     <div class="detalle-digitos ">
                         <p class="subtitulo">DECIMALES</p>
-                        <p class="descripcion">{{ dataUserService.decimalPlaces }} </p>
+                        <p class="descripcion">{{ dataUserService.decimalPlaces | currencyFormat }} </p>
                     </div>
                     <span class="spacer"></span>
                     <div class="dFlex">
