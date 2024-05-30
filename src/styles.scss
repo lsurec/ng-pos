@@ -280,7 +280,8 @@ body {
 .dark-theme h4,
 .dark-theme h2,
 .dark-theme p,
-.dark-theme .hora {
+.dark-theme .hora,
+.dark-theme .cantidad-detalle {
     color: $color-blanco !important;
 }
 
@@ -300,7 +301,8 @@ body {
 .dark-theme .head__sidenav,
 .dark-theme .toolbarlargeTitle,
 .dark-theme .toolbar-row,
-.dark-theme .borde-detalles {
+.dark-theme .borde-detalles,
+.dark-theme .cantidad-detalle {
     border-bottom: 1px solid $bordes !important;
 }
 
@@ -384,7 +386,9 @@ body {
 .dark-theme .informacion-fondo,
 .dark-theme .detalles-fondo,
 .dark-theme .buscar-cliente,
-.dark-theme .detalles-fondo-v {
+.dark-theme .detalles-fondo-v,
+.dark-theme .cantidad-producto,
+.dark-theme .cantidad-fondo {
     background-color: rgb(127 121 121 / 18%) !important;
 }
 
