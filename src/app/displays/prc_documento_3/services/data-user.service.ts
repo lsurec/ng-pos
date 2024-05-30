@@ -9,7 +9,7 @@ export class DataUserService {
   //Nombre del display al que se está navegando
   nameDisplay: string = "";
 
-  simboloMoneda: string = "$";
+  simboloMoneda: string = " ";
   decimalPlaces: number = 2;
   integerDigits: number = 2;
 

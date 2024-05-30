@@ -270,6 +270,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // asiganr moneda 
+    this.dataUserService.simboloMoneda = this.empresa.moneda_Simbolo;
+
     this._retryService.home$.subscribe(() => {
       this.showError = false;
       this.loadDataMenu();
