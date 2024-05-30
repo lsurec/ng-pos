@@ -202,8 +202,6 @@ export class FacturaComponent implements OnInit {
 
     //mostrar alerta sino hay preferencia guardada
     if (PreferencesService.mostrarAlerta.length == 0 || PreferencesService.mostrarAlerta == "1") {
-      console.log("preferencia vacia, mostrar la alerta");
-
       //no marcar checkbox 
       this.facturaService.noMostrar = false;
       //si es 0 ocular y marcar el checkbox
