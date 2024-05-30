@@ -79,7 +79,7 @@ export class DetalleComponent implements AfterViewInit {
     private _translate: TranslateService,
     private _productService: ProductService,
     public facturaService: FacturaService,
-    public _productoService: ProductoService,
+    public productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
     public dataUserService:DataUserService,
@@ -94,12 +94,12 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //Limpiar bodegas previas
-    this._productoService.bodegas = [];
+    this.productoService.bodegas = [];
     //limpiar precios
-    this._productoService.precios = [];
+    this.productoService.precios = [];
 
     //Asiganar cantidad de la transaccion
-    this._productoService.cantidad = this.facturaService.traInternas[indexTra].cantidad.toString();
+    this.productoService.cantidad = this.facturaService.traInternas[indexTra].cantidad.toString();
 
 
     let productTra = this.facturaService.traInternas[indexTra].producto; //producto de la transaccion
@@ -140,11 +140,11 @@ export class DetalleComponent implements AfterViewInit {
     }
 
     //bodegas encontradas
-    this._productoService.bodegas = resBodega.response;
+    this.productoService.bodegas = resBodega.response;
 
 
     //validar que existan bodegas
-    if (this._productoService.bodegas.length == 0) {
+    if (this.productoService.bodegas.length == 0) {
       this.facturaService.isLoading = false;
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
       return;
@@ -152,9 +152,9 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //Si solo hay una bodega
-    if (this._productoService.bodegas.length == 1) {
-      this._productoService.bodega = this._productoService.bodegas[0];
-      let bodega: number = this._productoService.bodega.bodega;
+    if (this.productoService.bodegas.length == 1) {
+      this.productoService.bodega = this.productoService.bodegas[0];
+      let bodega: number = this.productoService.bodega.bodega;
 
       //buscar precios
       let resPrecio = await this._productService.getPrecios(
@@ -195,7 +195,7 @@ export class DetalleComponent implements AfterViewInit {
 
       //arammar nuevo objeo precio
       precios.forEach(element => {
-        this._productoService.precios.push(
+        this.productoService.precios.push(
           {
             id: element.tipo_Precio,
             precioU: element.precio_Unidad,
@@ -208,7 +208,7 @@ export class DetalleComponent implements AfterViewInit {
       });
 
       //si no hay precios buscar factor conversion
-      if (this._productoService.precios.length == 0) {
+      if (this.productoService.precios.length == 0) {
         let resfactor = await this._productService.getFactorConversion(
           this.user,
           this.token,
@@ -247,7 +247,7 @@ export class DetalleComponent implements AfterViewInit {
 
         //Armar objeto precios
         factores.forEach(element => {
-          this._productoService.precios.push(
+          this.productoService.precios.push(
             {
               id: element.tipo_Precio,
               precioU: element.precio_Unidad,
@@ -262,24 +262,24 @@ export class DetalleComponent implements AfterViewInit {
       }
 
       //Si solo ahy un precio seleccioarlo
-      if (this._productoService.precios.length == 1) {
+      if (this.productoService.precios.length == 1) {
 
-        let precioU: UnitarioInterface = this._productoService.precios[0];
+        let precioU: UnitarioInterface = this.productoService.precios[0];
 
-        this._productoService.precio = precioU;
-        this._productoService.total = precioU.precioU;
-        this._productoService.precioU = precioU.precioU;
-        this._productoService.precioText = precioU.precioU.toString();
+        this.productoService.precio = precioU;
+        this.productoService.total = precioU.precioU;
+        this.productoService.precioU = precioU.precioU;
+        this.productoService.precioText = precioU.precioU.toString();
 
         //si hay varios precios seleccionar uno por defeco segun campo orden
-      } else if (this._productoService.precios.length > 1) {
-        for (let i = 0; i < this._productoService.precios.length; i++) {
-          const element = this._productoService.precios[i];
+      } else if (this.productoService.precios.length > 1) {
+        for (let i = 0; i < this.productoService.precios.length; i++) {
+          const element = this.productoService.precios[i];
           if (element.orden) {
-            this._productoService.precio = element;
-            this._productoService.total = element.precioU;
-            this._productoService.precioU = element.precioU;
-            this._productoService.precioText = element.precioU.toString();
+            this.productoService.precio = element;
+            this.productoService.total = element.precioU;
+            this.productoService.precioU = element.precioU;
+            this.productoService.precioText = element.precioU.toString();
 
           }
           break;
@@ -296,8 +296,8 @@ export class DetalleComponent implements AfterViewInit {
     //bsucar bodega de la transaccion
     let existBodega: number = -1;
 
-    for (let i = 0; i < this._productoService.bodegas.length; i++) {
-      const element = this._productoService.bodegas[i];
+    for (let i = 0; i < this.productoService.bodegas.length; i++) {
+      const element = this.productoService.bodegas[i];
       if (element.bodega == boddegaTra!.bodega) {
         existBodega = i;
         break;
@@ -306,13 +306,13 @@ export class DetalleComponent implements AfterViewInit {
 
     //s i no se ecnotro la bodega crearla internamente y asiganrla
     if (existBodega == -1) {
-      this._productoService.bodegas.push(boddegaTra!);
+      this.productoService.bodegas.push(boddegaTra!);
 
-      this._productoService.bodega = this._productoService.bodegas[this._productoService.bodegas.length - 1];
+      this.productoService.bodega = this.productoService.bodegas[this.productoService.bodegas.length - 1];
 
     } else {
       //asiganr bodega de la transaccon 
-      this._productoService.bodega = this._productoService.bodegas[existBodega];
+      this.productoService.bodega = this.productoService.bodegas[existBodega];
     }
 
 
@@ -321,17 +321,17 @@ export class DetalleComponent implements AfterViewInit {
 
     //si no se encontro el procuto crearlo unetnamente
     if (existPrecio == -1) {
-      this._productoService.precios.push(precioTra!);
+      this.productoService.precios.push(precioTra!);
 
-      this._productoService.precio = this._productoService.precios[this._productoService.precios.length - 1];
+      this.productoService.precio = this.productoService.precios[this.productoService.precios.length - 1];
 
     } else {
       //asigar producto encontradp
-      this._productoService.precio = this._productoService.precios[existPrecio];
+      this.productoService.precio = this.productoService.precios[existPrecio];
     }
 
     //enviar indice de la transaccion para poder editarla despues
-    this._productoService.indexEdit = indexTra;
+    this.productoService.indexEdit = indexTra;
 
     //abrir dialogo producto con lo datos cargados
 
@@ -477,14 +477,14 @@ export class DetalleComponent implements AfterViewInit {
     }
 
     //reiniciar valores 
-    this._productoService.total = 0;
-    this._productoService.precios = [];
-    this._productoService.precio = undefined;
-    this._productoService.bodegas = [];
-    this._productoService.bodega = undefined;
-    this._productoService.cantidad = "1";
-    this._productoService.precioU = 0;
-    this._productoService.precioText = "0";
+    this.productoService.total = 0;
+    this.productoService.precios = [];
+    this.productoService.precio = undefined;
+    this.productoService.bodegas = [];
+    this.productoService.bodega = undefined;
+    this.productoService.cantidad = "1";
+    this.productoService.precioU = 0;
+    this.productoService.precioText = "0";
 
     //si solo hay un producto seleccioanrlo por defecto
     if (productos.length == 1) {
@@ -525,11 +525,11 @@ export class DetalleComponent implements AfterViewInit {
       }
 
       //bodegas encontradas
-      this._productoService.bodegas = resBodega.response;
+      this.productoService.bodegas = resBodega.response;
 
 
       //validar que existan bodegas
-      if (this._productoService.bodegas.length == 0) {
+      if (this.productoService.bodegas.length == 0) {
         this.facturaService.isLoading = false;
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
         return;
@@ -537,9 +537,9 @@ export class DetalleComponent implements AfterViewInit {
 
 
       //Si solo hay una bodega
-      if (this._productoService.bodegas.length == 1) {
-        this._productoService.bodega = this._productoService.bodegas[0];
-        let bodega: number = this._productoService.bodega.bodega;
+      if (this.productoService.bodegas.length == 1) {
+        this.productoService.bodega = this.productoService.bodegas[0];
+        let bodega: number = this.productoService.bodega.bodega;
 
         //buscar precios
         let resPrecio = await this._productService.getPrecios(
@@ -579,7 +579,7 @@ export class DetalleComponent implements AfterViewInit {
         let precios: PrecioInterface[] = resPrecio.response;
 
         precios.forEach(element => {
-          this._productoService.precios.push(
+          this.productoService.precios.push(
             {
               id: element.tipo_Precio,
               precioU: element.precio_Unidad,
@@ -592,7 +592,7 @@ export class DetalleComponent implements AfterViewInit {
         });
 
         //si no hay precios buscar factor conversion
-        if (this._productoService.precios.length == 0) {
+        if (this.productoService.precios.length == 0) {
           let resfactor = await this._productService.getFactorConversion(
             this.user,
             this.token,
@@ -628,7 +628,7 @@ export class DetalleComponent implements AfterViewInit {
 
           //nneyvo onbheoto precio interno
           factores.forEach(element => {
-            this._productoService.precios.push(
+            this.productoService.precios.push(
               {
                 id: element.tipo_Precio,
                 precioU: element.precio_Unidad,
@@ -643,35 +643,35 @@ export class DetalleComponent implements AfterViewInit {
         }
 
         //si solo ahy precio seleccoanrlo por defectp
-        if (this._productoService.precios.length == 1) {
+        if (this.productoService.precios.length == 1) {
 
-          let precioU: UnitarioInterface = this._productoService.precios[0];
+          let precioU: UnitarioInterface = this.productoService.precios[0];
 
-          this._productoService.precio = precioU;
-          this._productoService.total = precioU.precioU;
-          this._productoService.precioU = precioU.precioU;
-          this._productoService.precioText = precioU.precioU.toString();
+          this.productoService.precio = precioU;
+          this.productoService.total = precioU.precioU;
+          this.productoService.precioU = precioU.precioU;
+          this.productoService.precioText = precioU.precioU.toString();
 
-        } else if (this._productoService.precios.length > 1) {
+        } else if (this.productoService.precios.length > 1) {
           //si ahy mas de un precio seleccionar uno por defecto segun campo orden
-          for (let i = 0; i < this._productoService.precios.length; i++) {
-            const element = this._productoService.precios[i];
+          for (let i = 0; i < this.productoService.precios.length; i++) {
+            const element = this.productoService.precios[i];
             if (element.orden) {
-              this._productoService.precio = element;
-              this._productoService.total = element.precioU;
-              this._productoService.precioU = element.precioU;
-              this._productoService.precioText = element.precioU.toString();
+              this.productoService.precio = element;
+              this.productoService.total = element.precioU;
+              this.productoService.precioU = element.precioU;
+              this.productoService.precioText = element.precioU.toString();
 
             }
             break;
 
           }
 
-          if (!this._productoService.precio) {
-            this._productoService.precio = this._productoService.precios![0];
-            this._productoService.total = this._productoService.precios![0].precioU;
-            this._productoService.precioU = this._productoService.precios![0].precioU;
-            this._productoService.precioText = this._productoService.precios![0].precioU.toString();
+          if (!this.productoService.precio) {
+            this.productoService.precio = this.productoService.precios![0];
+            this.productoService.total = this.productoService.precios![0].precioU;
+            this.productoService.precioU = this.productoService.precios![0].precioU;
+            this.productoService.precioText = this.productoService.precios![0].precioU.toString();
           }
         }
 
@@ -680,7 +680,7 @@ export class DetalleComponent implements AfterViewInit {
       //finalizar proceso
       this.facturaService.isLoading = false;
 
-      this._productoService.indexEdit = -1;
+      this.productoService.indexEdit = -1;
 
       let resDialogProd = await this._notificationsService.openDetalleporoduct(productos[0]);
 
@@ -731,7 +731,7 @@ export class DetalleComponent implements AfterViewInit {
     productosDialog.afterClosed().subscribe(async result => {
       if (result) {
         //abrir gialofo de producto
-        this._productoService.indexEdit = -1;
+        this.productoService.indexEdit = -1;
 
         let resDialogProd = await this._notificationsService.openDetalleporoduct(result);
 
