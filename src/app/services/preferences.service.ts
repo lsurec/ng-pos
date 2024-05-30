@@ -33,6 +33,9 @@ export class PreferencesService {
     private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
     private static readonly mostrarKey: string = 'mostrar';
     private static readonly nuevoDocKey: string = 'nuevoDoc';
+    private static readonly digitosKey: string = 'digitos';
+    private static readonly decimalesKey: string = 'decimales';
+
 
 
 
@@ -322,6 +325,29 @@ export class PreferencesService {
 
     static get nuevoDoc(): string {
         let value = localStorage.getItem(this.nuevoDocKey);
+        if (!value) return "";
+        return value;
+    }
+
+    //para el dijitos
+    @Input()
+    static set digitos(value: string) {
+        localStorage.setItem(this.digitosKey, value);
+    }
+
+    static get digitos(): string {
+        let value = localStorage.getItem(this.digitosKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set decimales(value: string) {
+        localStorage.setItem(this.decimalesKey, value);
+    }
+
+    static get decimales(): string {
+        let value = localStorage.getItem(this.decimalesKey);
         if (!value) return "";
         return value;
     }

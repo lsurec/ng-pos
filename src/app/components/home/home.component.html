@@ -75,6 +75,9 @@
                     <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
                     <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="sizes">Tamaño de fuente.</p>
+                    <p class="ajustesMenu" *ngIf="decimales">Decimales</p>
+                    <p class="ajustesMenu" *ngIf="digitos">Digitos</p>
+
                 </div>
                 <span class="spacer"></span>
                 <span class="spacer" *ngIf="ajustes"></span>
@@ -116,6 +119,48 @@
                         <p class="subtitulo">{{'pos.preferencias.tema' | translate}}</p>
                         <p class="descripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
                         <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+                    </div>
+                </div>
+                <!-- Digitos -->
+                <div class="configuraciones-digitos">
+                    <mat-icon class="iconos-detalles">123</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle-digitos ">
+                        <p class="subtitulo">DIGITOS</p>
+                        <p class="descripcion">{{ dataUserService.integerDigits }} </p>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="dFlex">
+                        <div class="restar" (click)="menos(2)">
+                            <mat-icon class="sumar-restar">remove</mat-icon>
+                        </div>
+                        <div class="width40">
+                            <p class="cantidad"> {{dataUserService.integerDigits}} </p>
+                        </div>
+                        <div class="sumar" (click)="mas(2)">
+                            <mat-icon class="sumar-restar">add</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decimal -->
+                <div class="configuraciones-digitos">
+                    <mat-icon class="iconos-detalles">123</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle-digitos ">
+                        <p class="subtitulo">DECIMALES</p>
+                        <p class="descripcion">{{ dataUserService.decimalPlaces }} </p>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="dFlex">
+                        <div class="restar" (click)="menos(1)">
+                            <mat-icon class="sumar-restar">remove</mat-icon>
+                        </div>
+                        <div class="width40">
+                            <p class="cantidad"> {{ dataUserService.decimalPlaces }} </p>
+                        </div>
+                        <div class="sumar" (click)="mas(1)">
+                            <mat-icon class="sumar-restar">add</mat-icon>
+                        </div>
                     </div>
                 </div>
                 <div class="configuraciones">
@@ -197,6 +242,30 @@
                         {{size.name}}
                     </mat-radio-button>
                 </mat-radio-group>
+            </div>
+            <!-- Digitos -->
+            <div class="lenguajes" *ngIf="digitos">
+                <div class="dFlex">
+                    <div class="restar" (click)="menos(2)">
+                        <mat-icon class="sumar-restar">remove</mat-icon>
+                    </div>
+                    <p class="cantidad dFlex"> {{dataUserService.integerDigits}} </p>
+                    <div class="sumar" (click)="mas(2)">
+                        <mat-icon class="sumar-restar">add</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <!-- Decimales -->
+            <div class="lenguajes" *ngIf="decimales">
+                <div class="dFlex">
+                    <div class="restar" (click)="menos(1)">
+                        <mat-icon class="sumar-restar">remove</mat-icon>
+                    </div>
+                    <p class="cantidad dFlex"> {{ dataUserService.decimalPlaces }} </p>
+                    <div class="sumar" (click)="mas(1)">
+                        <mat-icon class="sumar-restar">add</mat-icon>
+                    </div>
+                </div>
             </div>
             <!-- Seleccionar tema -->
             <div class="lenguajes" *ngIf="temas">
@@ -298,6 +367,18 @@
             </mat-toolbar>
             <!-- Regresa tamaño fuente -->
             <mat-toolbar class="backColorNavBar" *ngIf="sizes">
+                <button mat-icon-button (click)="verAjustes()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- Regresar a ajustes -->
+            <mat-toolbar class="backColorNavBar" *ngIf="digitos">
+                <button mat-icon-button (click)="verAjustes()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- Regresar a ajustes -->
+            <mat-toolbar class="backColorNavBar" *ngIf="decimales">
                 <button mat-icon-button (click)="verAjustes()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>

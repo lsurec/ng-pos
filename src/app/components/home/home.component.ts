@@ -4,7 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
-import { FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
+import { DigitosInterface, FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
@@ -33,6 +33,7 @@ import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.inter
 import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 
 @Component({
@@ -82,6 +83,8 @@ export class HomeComponent implements OnInit {
   btnRegresar: boolean = false;
   tema!: number;
 
+  digitos: boolean = false;
+  decimales: boolean = false;
 
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
@@ -213,6 +216,27 @@ export class HomeComponent implements OnInit {
 
   }
 
+  loadData() {
+    //buscamos si hay un valor guardado para la cantidad de digitos
+    let getDigitos = PreferencesService.digitos;
+    if (getDigitos) {
+      let digitos: number = +getDigitos;
+      this.dataUserService.integerDigits = digitos;
+    } else {
+      this.dataUserService.integerDigits = 2;
+    }
+
+    //buscamos si hay un valor guardado para la cantidad de decimales
+    let getDecimales = PreferencesService.decimales;
+    if (getDecimales) {
+      let decimales: number = +getDecimales;
+      this.dataUserService.decimalPlaces = decimales;
+    } else {
+      this.dataUserService.decimalPlaces = 2;
+    }
+
+  }
+
   fontsSizes: FontSizeInterface[] = [
 
     {
@@ -236,6 +260,7 @@ export class HomeComponent implements OnInit {
       value: "20px"
     }
   ];
+
 
   sizeSelect?: FontSizeInterface;
 
@@ -488,6 +513,8 @@ export class HomeComponent implements OnInit {
 
     //Asignar recorrido de elementos
     this.addRouteMenu(primerElemento);
+
+    this.loadData();
 
     this.isLoading = false;
   };
@@ -805,6 +832,8 @@ export class HomeComponent implements OnInit {
     this.horasLaborales = false;
     this.horaInicio = false;
     this.horaFin = false;
+    this.decimales = false;
+    this.digitos = false;
   };
 
   verTema(): void {
@@ -832,6 +861,8 @@ export class HomeComponent implements OnInit {
     this.setDias = false;
     this.horaInicio = false;
     this.horaFin = false;
+    this.decimales = false;
+    this.digitos = false;
   };
 
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas
@@ -839,7 +870,28 @@ export class HomeComponent implements OnInit {
     this.idiomas = true;
     this.ajustes = false;
     this.detallesUsuario = false;
+    this.decimales = false;
+    this.digitos = false;
   };
+
+  verDecimales(): void {
+    this.decimales = true;
+    this.digitos = false;
+    this.sizes = false;
+    this.idiomas = false;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+  };
+
+  verDigitos(): void {
+    this.digitos = true;
+    this.decimales = false;
+    this.sizes = false;
+    this.idiomas = false;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+  };
+
 
   verSizes(): void {
     this.sizes = true;
@@ -847,6 +899,7 @@ export class HomeComponent implements OnInit {
     this.ajustes = false;
     this.detallesUsuario = false;
   };
+
 
   async verConfiguracion(): Promise<void> {
 
@@ -913,6 +966,73 @@ export class HomeComponent implements OnInit {
       //verdadero es 1
       PreferencesService.sitchFelStorage = "1"
     }
+  }
+
+  menos(tipo: number) {
+    //disminuir cantidad en 1
+
+    //D E C I M A L E S 
+    if (tipo == 1) {
+      this.dataUserService.decimalPlaces!--;
+
+      //si es menor o igual a cero, volver a 1 y mostrar
+      if (this.dataUserService.decimalPlaces! <= 0) {
+        this.dataUserService.decimalPlaces = 0;
+      }
+
+      //guarda la nueva cantidad
+      PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
+    }
+
+    //D I G I T O S 
+    if (tipo == 2) {
+
+      //disminuir cantidad en 1
+      this.dataUserService.integerDigits!--;
+
+      //si es menor o igual a cero, volver a 1 y mostrar
+      if (this.dataUserService.integerDigits! <= 0) {
+        this.dataUserService.integerDigits = 0;
+      }
+
+      //guarda la nueva cantidad
+      PreferencesService.digitos = this.dataUserService.integerDigits.toString();
+    }
+
+  }
+
+  mas(tipo: number) {
+    //disminuir cantidad en 1
+
+    //D E C I M A L E S 
+    if (tipo == 1) {
+
+      //aumentar cantidad
+      this.dataUserService.decimalPlaces!++;
+
+      //guarda la nueva cantidad
+      PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
+    }
+
+    //D I G I T O S
+    if (tipo == 2) {
+      //aumentar cantidad
+      this.dataUserService.integerDigits!++;
+
+      //guarda la nueva cantidad
+      PreferencesService.digitos = this.dataUserService.integerDigits.toString();
+    }
+
+  }
+
+  //Cambio en digitos
+  changeDigitos() {
+    PreferencesService.digitos = this.dataUserService.integerDigits.toString();
+  }
+
+  //Cambio en decimales
+  changeDecimales() {
+    PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
   }
 
 }

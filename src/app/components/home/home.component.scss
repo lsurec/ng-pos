@@ -268,6 +268,14 @@ label {
     min-height   : 50px;
 }
 
+.configuraciones-digitos {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $color-bordes;
+    display      : flex;
+    align-items  : center;
+    min-height   : 55px;
+}
+
 .cambiarTema {
 
     width           : 100%;
@@ -592,6 +600,10 @@ h2 {
     width: calc(100% - 40px);
 }
 
+.detalle-digitos {
+    width: calc(100% - 180px);
+}
+
 .subtitulo {
     font-size: 16px;
 }
@@ -600,4 +612,60 @@ h2 {
     color    : $color-gris-s;
     font-size: 14px;
     word-wrap: break-word;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.sumar,
+.restar {
+    cursor      : pointer;
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $color-bordes;
+    color       : $color-azul;
+    width       : 40px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width     : 100%;
+    text-align: center;
+}
+
+.cantidad {
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $color-bordes;
+    border-bottom: 0.5px solid $color-bordes;
+    color        : $color-azul;
+    width        : 100%;
+    text-align   : center;
+    padding-top  : 8px;
+}
+
+.width40 {
+    width      : 40px;
+    display    : flex;
+    align-items: center;
 }

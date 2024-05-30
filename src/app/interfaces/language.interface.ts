@@ -27,3 +27,8 @@ export interface loadStepInterface {
     status: number;
     visible: boolean;
 }
+
+export interface DigitosInterface {
+    id: number;
+    value: number;
+}
