@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
@@ -34,7 +34,7 @@ import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
     ReferenciaService,
   ]
 })
-export class DocumentoComponent implements OnInit, OnDestroy {
+export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   //abrir selectores de horas
   @ViewChild('horaRefIni') horaRefIni: any;
   @ViewChild('horaRefFin') horaRefFin: any;
