@@ -31,8 +31,8 @@
             <div *ngIf="pagoComponentService.pago!.autorizacion">
                 <p class="subtitulo">{{ 'pos.factura.autorizacion' | translate }}</p>
                 <input class="total" type="text" name="search"
-                    placeholder="{{ 'pos.factura.autorizacion' | translate }}" [(ngModel)]="pagoComponentService.autorizacion"
-                    autocomplete="off">
+                    placeholder="{{ 'pos.factura.autorizacion' | translate }}"
+                    [(ngModel)]="pagoComponentService.autorizacion" autocomplete="off">
             </div>
 
             <!--Referencia-->
@@ -107,16 +107,11 @@
                     <p class="info-pago" *ngIf="pago.account">{{ 'pos.factura.banco' | translate
                         }}{{pago.account.descripcion}}
                     </p>
-                    <p class="info-pago">{{ 'pos.factura.monto' | translate }} {{pago.amount | currency:'
-                        ':'symbol':'2.2-2' }}</p>
+                    <p class="info-pago">{{ 'pos.factura.monto' | translate }} {{pago.amount | currencyFormat }}</p>
                     <p class="info-pago" *ngIf="pago.difference>0">{{ 'pos.factura.diferencia' | translate}}
-                        {{pago.difference | currency:'
-                        ':'symbol':'2.2-2' }}</p>
+                        {{pago.difference | currencyFormat }}</p>
                     <p class="info-pago" *ngIf="pago.difference>0">{{ 'pos.factura.pagoTotal' | translate}}
-                        {{pago.amount
-                        +pago.difference|
-                        currency:'
-                        ':'symbol':'2.2-2' }}</p>
+                        {{pago.amount + pago.difference | currencyFormat }}</p>
                 </div>
             </div>
         </div>
@@ -130,17 +125,17 @@
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.subtotal' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.total | currency:' ':'symbol':'2.2-2' }}</p>
+            <p class="textos">{{facturaService.total | currencyFormat }}</p>
         </div>
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.saldo' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.saldo | currency:' ':'symbol':'2.2-2' }}</p>
+            <p class="textos">{{facturaService.saldo | currencyFormat }}</p>
         </div>
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.cambio' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.cambio | currency:' ':'symbol':'2.2-2' }}</p>
+            <p class="textos">{{facturaService.cambio | currencyFormat }}</p>
         </div>
     </div>
 </div>

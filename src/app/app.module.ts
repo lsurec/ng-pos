@@ -85,6 +85,7 @@ import { UsuariosDialogComponent } from './components/usuarios-dialog/usuarios-d
 import { MatCardModule } from '@angular/material/card';
 import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service';
 import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/confirmar-nuevo-doc.component';
+import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -141,6 +142,7 @@ import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/con
     NotFoundItemComponent,
     UsuariosDialogComponent,
     ConfirmarNuevoDocComponent,
+    CurrencyFormatPipe,
   ],
   imports: [
     MatCardModule,

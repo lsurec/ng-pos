@@ -13,11 +13,13 @@ import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.int
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { FiltroInterface } from 'src/app/displays/prc_documento_3/interfaces/filtro.interface';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-origin-docs',
   templateUrl: './origin-docs.component.html',
-  styleUrls: ['./origin-docs.component.scss']
+  styleUrls: ['./origin-docs.component.scss'],
+  providers:[CurrencyPipe]
 })
 export class OriginDocsComponent implements OnInit {
 

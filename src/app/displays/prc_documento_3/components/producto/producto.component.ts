@@ -20,6 +20,8 @@ import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
+import { CurrencyPipe } from '@angular/common';
+import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 
 @Component({
   selector: 'app-producto',
@@ -27,6 +29,8 @@ import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
   styleUrls: ['./producto.component.scss'],
   providers: [
     ProductService,
+    CurrencyPipe,
+    CurrencyFormatPipe,
   ]
 })
 export class ProductoComponent implements OnInit, AfterViewInit {
