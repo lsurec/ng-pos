@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ClienteInterface } from '../../interfaces/cliente.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesEncontradosComponent } from '../clientes-encontrados/clientes-encontrados.component';
@@ -40,6 +40,9 @@ export class DocumentoComponent implements OnInit, OnDestroy {
   @ViewChild('horaRefFin') horaRefFin: any;
   @ViewChild('horaIni') horaIni: any;
   @ViewChild('horaFin') horaFin: any;
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('clienteInput') clienteInput?: ElementRef;
 
   private controlSubFechaRefIni: Subscription | undefined;
   private controlSubFechaRefFin: Subscription | undefined;
@@ -814,6 +817,8 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     //si no hay coicidencias mostrar mensaje
     if (cuentas.length == 0) {
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
+      this.facturaService.searchClient = "";
+
       return;
     }
 
@@ -824,6 +829,7 @@ export class DocumentoComponent implements OnInit, OnDestroy {
       this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
+      this.facturaService.searchClient = "";
 
       return;
     }
@@ -839,11 +845,12 @@ export class DocumentoComponent implements OnInit, OnDestroy {
 
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
         this.facturaService.saveDocLocal();
+        this.facturaService.searchClient = "";
 
       }
     })
 
-
+    this.facturaService.searchClient = "";
 
   }
 
@@ -868,5 +875,24 @@ export class DocumentoComponent implements OnInit, OnDestroy {
     };
     return new Date();
   };
+
+  selectText() {
+    this.focusAndSelectText();
+  }
+
+
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.clienteInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
 
 }

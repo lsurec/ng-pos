@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,7 +28,10 @@ import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interf
     ProductService
   ]
 })
-export class DetalleComponent {
+export class DetalleComponent implements AfterViewInit {
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('cantidadInput') cantidadInput?: ElementRef;
 
   //abirir y cerrar el mat expander
   desplegarCarDes: boolean = false;
@@ -75,7 +78,7 @@ export class DetalleComponent {
     private _translate: TranslateService,
     private _productService: ProductService,
     public facturaService: FacturaService,
-    private _productoService: ProductoService,
+    public _productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
   ) {
@@ -428,7 +431,7 @@ export class DetalleComponent {
 
     productos = resProductId.response;
 
-    if(productos.length == 0){
+    if (productos.length == 0) {
 
       let resproductoDesc = await this._productService.getProductDesc(
         this.token,
@@ -439,7 +442,7 @@ export class DetalleComponent {
       if (!resproductoDesc.status) {
 
         this.facturaService.isLoading = false;
-  
+
         let verificador = await this._notificationsService.openDialogActions(
           {
             title: this._translate.instant('pos.alertas.salioMal'),
@@ -448,13 +451,13 @@ export class DetalleComponent {
             falso: this._translate.instant('pos.botones.aceptar'),
           }
         );
-  
+
         if (!verificador) return;
-  
+
         this.verError(resproductoDesc);
-  
+
         return;
-  
+
       };
 
 
@@ -872,7 +875,7 @@ export class DetalleComponent {
       if (element.isChecked) {
         element.operaciones.push(
           {
-            cantidadDias:0,
+            cantidadDias: 0,
             consecutivo: 0,
             estadoTra: 0,
             precioCantidad: null,
@@ -1025,4 +1028,24 @@ export class DetalleComponent {
 
     this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
+
+  selectText() {
+    this.focusAndSelectText();
+  }
+
+
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.cantidadInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
 }

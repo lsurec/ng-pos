@@ -223,19 +223,22 @@
                 <div *ngIf="!facturaService.isLoading">
                     <div class="container-main">
                         <!--Tabs-->
-                        <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]=" tabDocummento">
+                        <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
+                            [checked]="facturaService.tabDocummento">
                         <div class="pestana" for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}"
                             (click)=" showDocumento()">
                             {{'pos.factura.documento' | translate }}
                         </div>
 
-                        <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]=" tabDetalle">
+                        <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
+                            [checked]=" facturaService.tabDetalle">
                         <div class="pestana" for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
                             (click)=" showDetalle()">{{
                             'pos.factura.detalle' | translate }}
                         </div>
 
-                        <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]=" tabPago"
+                        <input class="titulo-pestana" id="tab3" type="radio" name="tabs"
+                            [checked]="facturaService.tabPago"
                             *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
 
                         <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
@@ -256,7 +259,7 @@
 
                         <section id="content2" class="content2 contenido-seleccionado">
                             <!-- <app-documento></app-documento> -->
-                            <app-detalle></app-detalle>
+                            <app-detalle *ngIf="facturaService.tabDetalle"></app-detalle>
                         </section>
 
                         <section id="content3" class="content3 contenido-seleccionado">

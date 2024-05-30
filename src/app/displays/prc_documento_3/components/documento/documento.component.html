@@ -183,9 +183,9 @@
             <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
                 <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
                 <div class="input-container">
-                    <input class="barra-de-busqueda" type="search" name="search"
+                    <input class="barra-de-busqueda" type="search" name="search" #clienteInput
                         [(ngModel)]="facturaService.searchClient" autocomplete="off"
-                        placeholder="{{'pos.inputs.buscar' | translate}}">
+                        placeholder="{{'pos.inputs.buscar' | translate}}" (focus)="selectText()">
                     <button mat-icon-button class="iconoLupa" type="submit">
                         <mat-icon>search</mat-icon>
                     </button>

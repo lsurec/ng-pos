@@ -27,6 +27,11 @@ import { FormControl } from '@angular/forms';
 
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
+
+    //controlar las vistas de las pestañas
+    tabDocummento: boolean = true; //contorlador para la pestaña documento
+    tabDetalle: boolean = false;  //controlador para la pestaña de detalle
+    tabPago: boolean = false; //Contorlador para la pestaña de pago
     searchText: string = "";  //Texto para bsucar productos
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
@@ -51,7 +56,7 @@ export class FacturaService {
 
     noMostrar: boolean = false;
 
-    nuevoDoc : boolean = false;
+    nuevoDoc: boolean = false;
 
     verDialogoFactura: number = 1;
 
@@ -100,7 +105,7 @@ export class FacturaService {
     formControlHoraRefFin: FormControl = new FormControl('');
     formControlHoraIni: FormControl = new FormControl('');
     formControlHoraFin: FormControl = new FormControl('');
-  
+
 
     fechaInicialFormat?: string;
     fechaFinalFormat?: string;
@@ -190,6 +195,8 @@ export class FacturaService {
         this.refDireccionEntrega = undefined;
         this.refObservacion = undefined;
         this.observacion = "";
+        this.searchClient = "";
+        this.searchText = "";
 
     }
 

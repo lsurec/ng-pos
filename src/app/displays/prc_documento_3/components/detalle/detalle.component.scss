@@ -77,10 +77,10 @@ p {
 
 
 .informacion-fondo {
-    padding            : 10px;
-    // width           : 80%;
-    margin-bottom      : 10px;
-    background-color   : $detalles;
+    padding         : 10px;
+    width           : 100%;
+    margin-bottom   : 10px;
+    background-color: $detalles;
 }
 
 .eliminar {
@@ -364,4 +364,18 @@ mat-accordion {
 
 .padding-right {
     padding-right: 50px;
+}
+
+.cantidad-detalle {
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    padding     : 0px 3px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $color-bordes;
+    color       : $color-azul;
+    width       : 40px;
+    text-align  : center;
+    margin-right: 15px;
 }
