@@ -24,6 +24,7 @@ import { ProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/p
 import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 import { ValidateProductInterface } from '../../interfaces/validate-product.interface';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-convert-docs',
@@ -37,6 +38,7 @@ import { ValidateProductInterface } from '../../interfaces/validate-product.inte
     PagoService,
     ReferenciaService,
     ProductService,
+    CurrencyPipe,
   ],
 })
 export class ConvertDocsComponent {
