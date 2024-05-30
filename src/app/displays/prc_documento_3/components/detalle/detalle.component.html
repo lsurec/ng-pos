@@ -145,28 +145,25 @@
                             </p>
                             <span class="spacer" *ngIf="facturaService.valueParametro(44)"></span>
                             <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
-                                {{transaccion.precio?.precioU | currency: dataUserService.simboloMoneda :'symbol':
-                                dataUserService. integerDigits + '.' + dataUserService.decimalPlaces + '-' +
-                                dataUserService.decimalPlaces }}
+                                {{transaccion.precio?.precioU | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
                             <!--TODO:Translate-->
                             <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Precio total por
                                 cantidad:
-                                {{transaccion.precioCantidad | currency:' ':'symbol':'2.2-2' }}
+                                {{transaccion.precioCantidad | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
-                            <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total |
-                                currency:' ':'symbol':'2.2-2' }}
+                            <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
                             <p class="info-producto" *ngIf="transaccion.cargo != 0">{{ 'pos.factura.cargos' | translate
                                 }}
-                                {{transaccion.cargo | currency:' ':'symbol':'2.2-2' }}
+                                {{transaccion.cargo | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
                             <p class="info-producto" *ngIf="transaccion.descuento != 0">{{ 'pos.factura.descuentos' |
-                                translate }} {{transaccion.descuento | currency:' ':'symbol':'2.2-2' }}
+                                translate }} {{transaccion.descuento | currencyFormat }}
                             </p>
                         </div>
                     </div>
@@ -192,22 +189,22 @@
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.subtotal' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.subtotal | currency:' ':'symbol':'2.2-2'}}</p>
+            <p class="textos">{{facturaService.subtotal |currencyFormat}}</p>
         </div>
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.cargos' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.cargo | currency:' ':'symbol':'2.2-2'}} </p>
+            <p class="textos">{{facturaService.cargo | currencyFormat}} </p>
         </div>
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.descuentos' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.descuento | currency:' ':'symbol':'2.2-2'}}</p>
+            <p class="textos">{{facturaService.descuento | currencyFormat}}</p>
         </div>
         <div class="dFlex total-barra">
             <p class="textos">{{ 'pos.factura.total' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textos">{{facturaService.total | currency:' ':'symbol':'1.2-2'}}</p>
+            <p class="textos">{{facturaService.total | currencyFormat}}</p>
         </div>
     </div>
 </div>
