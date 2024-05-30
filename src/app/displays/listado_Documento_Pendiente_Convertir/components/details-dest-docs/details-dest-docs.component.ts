@@ -212,7 +212,7 @@ export class DetailsDestDocsComponent {
       //Agregar transaccion
       items.push(
         {
-          cantidadDias:0,
+          cantidadDias: 0,
           precioDia: "",
           sku: detail.producto_Id ?? "",
           descripcion: detail.des_Producto ?? "",
@@ -241,7 +241,10 @@ export class DetailsDestDocsComponent {
 
 
 
-    let certificador: Certificador;
+    let certificador: Certificador = {
+      nit: "",
+      nombre: "",
+    };
 
     //Asignar mensaje al final del formato
     let mensajes: string[] = [
