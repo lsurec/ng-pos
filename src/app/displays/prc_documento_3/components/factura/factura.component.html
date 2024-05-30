@@ -254,7 +254,7 @@
                         <section id="content1" class="content1 contenido-seleccionado">
                             <!-- <app-pago></app-pago> -->
                             <!-- <app-detalle></app-detalle> -->
-                            <app-documento></app-documento>
+                            <app-documento *ngIf="facturaService.tabDocummento"></app-documento>
                         </section>
 
                         <section id="content2" class="content2 contenido-seleccionado">
@@ -263,7 +263,7 @@
                         </section>
 
                         <section id="content3" class="content3 contenido-seleccionado">
-                            <app-pago></app-pago>
+                            <app-pago *ngIf="facturaService.tabPago"></app-pago>
                         </section>
 
                         <!-- <section id="content4">
