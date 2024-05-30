@@ -36,9 +36,11 @@ export class ConfirmarNuevoDocComponent {
 
   //guardar el valor del CheckBox en las preferencias
   ocultar() {
-    if (!this.facturaService.noMostrar) {
+    if (this.facturaService.noMostrar) {
+      console.log("es verdadero, la oculta");
       PreferencesService.mostrarAlerta = "0";
-    } else if (this.facturaService.noMostrar) {
+    } else if (!this.facturaService.noMostrar) {
+      console.log("es falso, la muestra");
       PreferencesService.mostrarAlerta = "1";
     }
   }

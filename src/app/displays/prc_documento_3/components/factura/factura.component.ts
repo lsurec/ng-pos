@@ -200,11 +200,14 @@ export class FacturaComponent implements OnInit {
       this.facturaService.nuevoDoc = true;
     }
 
-    //mostrar alerta
-    if (PreferencesService.mostrarAlerta == "") {
-      PreferencesService.mostrarAlerta = "1";
+    //mostrar alerta sino hay preferencia guardada
+    if (PreferencesService.mostrarAlerta.length == 0 || PreferencesService.mostrarAlerta == "1") {
+      console.log("preferencia vacia, mostrar la alerta");
+
+      //no marcar checkbox 
       this.facturaService.noMostrar = false;
-    } else if (PreferencesService.mostrarAlerta == "1") {
+      //si es 0 ocular y marcar el checkbox
+    } else if (PreferencesService.mostrarAlerta == "0") {
       this.facturaService.noMostrar = true;
     }
   }
@@ -451,7 +454,7 @@ export class FacturaComponent implements OnInit {
   async newDoc() {
 
     //si la preferencia guardada es distinda de 1, mostrará la alerta
-    if (PreferencesService.mostrarAlerta == "0") {
+    if (PreferencesService.mostrarAlerta.length == 0 || PreferencesService.mostrarAlerta == "1") {
 
       //Dialofo de confirmacion
       let verificador: boolean = await this._notificationService.openDialogNewDoc(
@@ -1313,9 +1316,9 @@ export class FacturaComponent implements OnInit {
   }
 
   activarDialogo() {
-    if (!this.facturaService.noMostrar) {
+    if (this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "0";
-    } else if (this.facturaService.noMostrar) {
+    } else if (!this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "1";
     }
   }
