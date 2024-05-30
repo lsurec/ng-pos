@@ -215,6 +215,7 @@ export class EditarClienteComponent implements OnInit {
       correo: this.correo,
       direccion: this.direccion,
       cuenta: this.cuenta!.cuenta_Correntista,
+      cuentaCuenta:this.cuenta!.cuenta_Cta,
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,

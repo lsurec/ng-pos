@@ -1,9 +1,10 @@
 export interface CuentaCorrentistaInterface {
-    cuenta:        number;
-    nombre:    string;
+    cuenta: number;
+    cuentaCuenta: string;
+    nombre: string;
     direccion: string;
-    telefono:  string;
-    correo:    string;
-    nit:       string;
-    grupoCuenta:number;
+    telefono: string;
+    correo: string;
+    nit: string;
+    grupoCuenta: number;
 }
