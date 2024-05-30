@@ -19,6 +19,7 @@ import { EventService } from 'src/app/services/event.service';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-detalle',
@@ -78,6 +79,7 @@ export class DetalleComponent {
     private _productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
+    public dataUserService:DataUserService,
   ) {
     //filtro producto
     facturaService.filtrosProductos = PreferencesService.filtroProducto;

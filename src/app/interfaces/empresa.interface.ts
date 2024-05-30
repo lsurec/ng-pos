@@ -14,4 +14,8 @@ export interface EmpresaInterface {
     campo_6:           string;
     campo_7:           string;
     campo_8:           string;
+    moneda:          number;
+    moneda_Nombre:   string;
+    moneda_Simbolo:  string;
+    moneda_ISO_Code: string;
 }
