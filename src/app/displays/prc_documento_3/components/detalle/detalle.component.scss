@@ -78,7 +78,21 @@ p {
 
 .informacion-fondo {
     padding         : 10px;
-    width           : 100%;
+    margin-bottom   : 10px;
+    background-color: $detalles;
+}
+
+.cantidad-fondo {
+    padding         : 10px;
+    width           : 100px;
+    margin-bottom   : 10px;
+    background-color: $detalles;
+}
+
+
+.cantidad-producto {
+    width           : calc(100% - 120px);
+    padding         : 10px;
     margin-bottom   : 10px;
     background-color: $detalles;
 }
@@ -367,15 +381,14 @@ mat-accordion {
 }
 
 .cantidad-detalle {
-    height      : 40px;
-    background  : none;
-    font-size   : 14px;
-    padding     : 0px 3px;
-    outline     : none;
-    border-style: none;
-    border      : 0.5px solid $color-bordes;
-    color       : $color-azul;
-    width       : 40px;
-    text-align  : center;
-    margin-right: 15px;
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-bottom: 1px solid $color-bordes;
+    color        : $color-azul;
+    width        : 100%;
+    text-align   : center;
 }
