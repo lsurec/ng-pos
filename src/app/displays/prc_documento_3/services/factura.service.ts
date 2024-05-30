@@ -125,6 +125,8 @@ export class FacturaService {
     idFiltroPreferencia: number = 1;
 
 
+
+
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
     pasos: loadStepInterface[] = [

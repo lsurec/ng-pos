@@ -143,6 +143,7 @@ export class NuevoClienteComponent implements OnInit {
       correo: this.correo,
       direccion: this.direccion,
       cuenta: 0,
+      cuentaCuenta:"",
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,
