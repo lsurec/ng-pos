@@ -131,7 +131,6 @@ export class ProductService {
                 "tipoCambio": tipoCambio,
                 "moneda": moneda,
                 "tipoPrecio": tipoPrecio,
-                "token": token,
             }
         )
 
