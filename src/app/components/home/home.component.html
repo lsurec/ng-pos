@@ -75,8 +75,6 @@
                     <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
                     <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="sizes">Tamaño de fuente.</p>
-                    <p class="ajustesMenu" *ngIf="decimales">Decimales</p>
-                    <p class="ajustesMenu" *ngIf="digitos">Digitos</p>
 
                 </div>
                 <span class="spacer"></span>
@@ -243,30 +241,6 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
-            <!-- Digitos -->
-            <div class="lenguajes" *ngIf="digitos">
-                <div class="dFlex">
-                    <div class="restar" (click)="menos(2)">
-                        <mat-icon class="sumar-restar">remove</mat-icon>
-                    </div>
-                    <p class="cantidad dFlex"> {{dataUserService.integerDigits}} </p>
-                    <div class="sumar" (click)="mas(2)">
-                        <mat-icon class="sumar-restar">add</mat-icon>
-                    </div>
-                </div>
-            </div>
-            <!-- Decimales -->
-            <div class="lenguajes" *ngIf="decimales">
-                <div class="dFlex">
-                    <div class="restar" (click)="menos(1)">
-                        <mat-icon class="sumar-restar">remove</mat-icon>
-                    </div>
-                    <p class="cantidad dFlex"> {{ dataUserService.decimalPlaces }} </p>
-                    <div class="sumar" (click)="mas(1)">
-                        <mat-icon class="sumar-restar">add</mat-icon>
-                    </div>
-                </div>
-            </div>
             <!-- Seleccionar tema -->
             <div class="lenguajes" *ngIf="temas">
                 <div class="temaOscuro">
@@ -367,18 +341,6 @@
             </mat-toolbar>
             <!-- Regresa tamaño fuente -->
             <mat-toolbar class="backColorNavBar" *ngIf="sizes">
-                <button mat-icon-button (click)="verAjustes()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- Regresar a ajustes -->
-            <mat-toolbar class="backColorNavBar" *ngIf="digitos">
-                <button mat-icon-button (click)="verAjustes()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- Regresar a ajustes -->
-            <mat-toolbar class="backColorNavBar" *ngIf="decimales">
                 <button mat-icon-button (click)="verAjustes()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>

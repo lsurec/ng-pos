@@ -83,9 +83,6 @@ export class HomeComponent implements OnInit {
   btnRegresar: boolean = false;
   tema!: number;
 
-  digitos: boolean = false;
-  decimales: boolean = false;
-
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
   idioma: number = indexDefaultLang;
@@ -832,8 +829,6 @@ export class HomeComponent implements OnInit {
     this.horasLaborales = false;
     this.horaInicio = false;
     this.horaFin = false;
-    this.decimales = false;
-    this.digitos = false;
   };
 
   verTema(): void {
@@ -861,8 +856,6 @@ export class HomeComponent implements OnInit {
     this.setDias = false;
     this.horaInicio = false;
     this.horaFin = false;
-    this.decimales = false;
-    this.digitos = false;
   };
 
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas
@@ -870,13 +863,9 @@ export class HomeComponent implements OnInit {
     this.idiomas = true;
     this.ajustes = false;
     this.detallesUsuario = false;
-    this.decimales = false;
-    this.digitos = false;
   };
 
   verDecimales(): void {
-    this.decimales = true;
-    this.digitos = false;
     this.sizes = false;
     this.idiomas = false;
     this.ajustes = false;
@@ -884,8 +873,6 @@ export class HomeComponent implements OnInit {
   };
 
   verDigitos(): void {
-    this.digitos = true;
-    this.decimales = false;
     this.sizes = false;
     this.idiomas = false;
     this.ajustes = false;
