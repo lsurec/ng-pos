@@ -1385,17 +1385,40 @@ export class FacturaComponent implements OnInit {
       }
     }
 
-    // //vaidar fecha de incio
-    // if (this.facturaService.valueParametro(381)) {
+    //vaidar fecha de incio
+    if (this.facturaService.valueParametro(381) ) {
 
-    //   if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
-    //     //TODO:Tranlate
-    //     this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-    //     return;
+      if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
+        //TODO:Tranlate
+        this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+        return;
 
-    //   }
+      }
 
-    // }
+
+      if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!)) {
+        this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}`);
+        return;
+      }
+
+      if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefIni!)) {
+        this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a Fecha fin.`);
+        return;
+      }
+
+      if(UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)){
+        this._notificationService.openSnackbar(`Fecha incio debe ser menor a Fecha fin.`);
+        return;
+      }
+
+
+      
+      if(UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!)){
+        this._notificationService.openSnackbar(`Fecha incio debe ser menor a ${this.facturaService.getTextParam(382)}`);
+        return;
+      }
+
+    }
 
     //validar fechas si existen
 
