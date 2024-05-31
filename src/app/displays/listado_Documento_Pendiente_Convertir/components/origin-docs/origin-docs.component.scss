@@ -295,3 +295,31 @@ p {
 .padding-right {
     padding-right: 50px;
 }
+
+// Boton ir arriba
+.button_up_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    right           : 60px;
+    font-size       : 20px;
+    background-color: $color-azul;
+}
+
+
+.button_down_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    right           : 60px;
+    font-size       : 20px;
+    background-color: $color-azul;
+}
+
+@media screen and (max-width: 992px) {
+    .button_up_content {
+        bottom   : 75px;
+        right    : 30px;
+        font-size: 20px;
+    }
+}

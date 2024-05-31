@@ -29,7 +29,7 @@
 
 </mat-toolbar>
 
-<div class="container_main">
+<div class="container_main" #contentContainer>
 
     <div class="filtros">
         <div class="fechas">
@@ -80,6 +80,19 @@
 
     </div>
 
+
+    <div *ngIf="globalConvertSrevice.docsOrigin.length > 0">
+        <!--Boton ir arriba-->
+        <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+            <mat-icon>arrow_upward</mat-icon>
+        </button>
+        <!--Boton ir abajo-->
+        <button *ngIf="botonIrAbajo && ! botonIrArriba" mat-mini-fab class="button_down_content" (click)="scrollDown()">
+            <mat-icon>south</mat-icon>
+        </button>
+    </div>
+
+
     <!-- <div>
         <p class="textosBold14">Buscar por</p>
         <input class="barra-de-busqueda" type="text" name="search" placeholder="Buscar" [(ngModel)]="strFilter"
@@ -91,19 +104,19 @@
         <div class="dFlex">
             <div class="input-container">
                 <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="strFilter" autocomplete="off"
-                    placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filterDoc()">
+                    placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filtrar()">
                 <button mat-icon-button class="iconoLupa" type="submit">
                     <mat-icon>search</mat-icon>
                 </button>
             </div>
             <span class="spacer"></span>
-            <div class="dFlex">
+            <!-- <div class="dFlex">
                 <div *ngFor="let option of filtrosBusqueda">
                     <div class="chip" [class.selected]="option.id === filtroCliente"
                         (click)="filtroCliente = option.id">{{ option.nombre }}
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -125,7 +138,8 @@
         <div class="dFlex">
             <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
             <p class="padding-right"></p>
-            <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}: {{documento.consecutivo_Interno_Ref}}</p>
+            <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}: {{documento.consecutivo_Interno_Ref}}
+            </p>
             <span class="spacer"></span>
             <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.usuario}}</p>
         </div>

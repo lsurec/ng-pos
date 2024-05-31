@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
@@ -19,9 +19,18 @@ import { CurrencyPipe } from '@angular/common';
   selector: 'app-origin-docs',
   templateUrl: './origin-docs.component.html',
   styleUrls: ['./origin-docs.component.scss'],
-  providers:[CurrencyPipe]
+  providers: [CurrencyPipe]
 })
 export class OriginDocsComponent implements OnInit {
+
+  // Referencia al elemento con la clase container_main
+  @ViewChild('contentContainer') contentContainer!: ElementRef;
+
+  //Subir contenido
+  botonIrArriba: boolean = false;
+  botonIrAbajo: boolean = true;
+  showScrollHeight: number = 400; //En cuantos pixeles se va a mostrar el boton
+  hideScrollHeight: number = 200; //en cuantos se va a ocultar
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token del usuario de la sesion
@@ -32,7 +41,7 @@ export class OriginDocsComponent implements OnInit {
 
   ascendente: boolean = true; //orden de la lista
 
-  filtroCliente: number = 1; //Filtro de busqueda por defecto nombre
+  // filtroCliente: number = 1; //Filtro de busqueda por defecto nombre
 
   filtroSelect: any;  //Filtro seleccionado
 
@@ -48,17 +57,17 @@ export class OriginDocsComponent implements OnInit {
     },
   ]
 
-  //filtros dispinibles
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: this._translate.instant('pos.factura.nombre'),
-    },
-    {
-      id: 2,
-      nombre: "NIT",
-    },
-  ];
+  // //filtros dispinibles
+  // filtrosBusqueda: FiltroInterface[] = [
+  //   {
+  //     id: 1,
+  //     nombre: this._translate.instant('pos.factura.nombre'),
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: "NIT",
+  //   },
+  // ];
 
 
   constructor(
@@ -72,6 +81,8 @@ export class OriginDocsComponent implements OnInit {
     private _translate: TranslateService
 
   ) {
+    window.addEventListener('scroll', this.scrollEvent, true);
+
     //asiganr lenguaje a picker date
     this.setLangPicker();
 
@@ -84,41 +95,76 @@ export class OriginDocsComponent implements OnInit {
     this.ordenar();
   }
 
-  filterDoc() {
+  filtrar() {
     let timer: any;
-    //evaluar filtro de busqueda 
-    switch (this.filtroCliente) {
-      case 1: //Nombre
-        // Configurar un nuevo temporizador
-        clearTimeout(timer); // Limpiar el temporizador anterior
 
-        timer = setTimeout(() => {
-          this.globalConvertSrevice.docsOriginFilter =
-            this.globalConvertSrevice.docsOrigin.filter(
-              item => item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())
-            );
-          this.ordenar();
-        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+    // Limpiar el temporizador anterior
+    clearTimeout(timer);
 
-        break;
-      case 2: //Nit
-        clearTimeout(timer); // Limpiar el temporizador anterior
+    // Establecer un nuevo temporizador con un retraso de 500 milisegundos
+    timer = setTimeout(() => {
+      // // Convertir el filtro a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
+      // const lowerCaseFilter = this.strFilter.toLowerCase();
 
-        timer = setTimeout(() => {
-          this.globalConvertSrevice.docsOriginFilter =
-            this.globalConvertSrevice.docsOrigin.filter(
-              item => item.nit.toLowerCase().includes(this.strFilter.toLowerCase())
-            );
-          this.ordenar();
-        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+      // Inicializar docsOriginFilter como un array vacío
+      this.globalConvertSrevice.docsOriginFilter = [];
 
-        break;
+      // Recorrer todos los elementos de docsOrigin
+      this.globalConvertSrevice.docsOrigin.forEach(item => {
+        // Verificar si alguna de las propiedades coincide con el filtro
+        let coincidencias: boolean =
+          (item.nit && item.nit.toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.cliente && item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.consecutivo_Interno_Ref !== null && item.consecutivo_Interno_Ref.toString().toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.iD_Documento !== null && item.iD_Documento.toString().toLowerCase().includes(this.strFilter.toLowerCase()));
 
-      default:
-        break;
-    }
+        // Si hay una coincidencia, agregar el elemento a docsOriginFilter
+        if (coincidencias) {
+          this.globalConvertSrevice.docsOriginFilter.push(item);
+        }
+      });
 
+      // Llamar a la función ordenar para ordenar los resultados filtrados
+      this.ordenar();
+    }, 500); // 500 milisegundos (0.5 segundos) de retraso
   }
+
+
+  // filterDoc() {
+  //   let timer: any;
+  //   //evaluar filtro de busqueda 
+  //   switch (this.filtroCliente) {
+  //     case 1: //Nombre
+  //       // Configurar un nuevo temporizador
+  //       clearTimeout(timer); // Limpiar el temporizador anterior
+
+  //       timer = setTimeout(() => {
+  //         this.globalConvertSrevice.docsOriginFilter =
+  //           this.globalConvertSrevice.docsOrigin.filter(
+  //             item => item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())
+  //           );
+  //         this.ordenar();
+  //       }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+  //       break;
+  //     case 2: //Nit
+  //       clearTimeout(timer); // Limpiar el temporizador anterior
+
+  //       timer = setTimeout(() => {
+  //         this.globalConvertSrevice.docsOriginFilter =
+  //           this.globalConvertSrevice.docsOrigin.filter(
+  //             item => item.nit.toLowerCase().includes(this.strFilter.toLowerCase())
+  //           );
+  //         this.ordenar();
+  //       }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+
+  // }
 
   //cargar datos inciiales
   async loadData() {
@@ -339,7 +385,7 @@ export class OriginDocsComponent implements OnInit {
       doc.estacion_Trabajo,
     );
 
-      //finalizar  carga
+    //finalizar  carga
     this.globalConvertSrevice.isLoading = false;
 
     //si el servicio falló mostrar error
@@ -385,4 +431,72 @@ export class OriginDocsComponent implements OnInit {
     //msotrar antallad de error
     this.globalConvertSrevice.mostrarError(10);
   }
+
+  //Escuchando scroll en todos los elementos
+  scrollEvent = (event: any): void => {
+    const number = event.srcElement.scrollTop; //Donde inicia el scroll
+    //verificar que el scrool se ejecute dentro de la calse container_main
+    if (event.srcElement.className == "container_main") {
+      //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
+      if (number > this.showScrollHeight) {
+        console.log("que pacho");
+
+        this.botonIrArriba = true; //MMostatr boton
+      } else if (number < this.hideScrollHeight) {
+        console.log("pacho aqui");
+        this.botonIrArriba = false; //ocultar boton
+      }
+    }
+  }
+
+  //Evento del scroll
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollEvent, true);
+  }
+
+
+  //IR HACIA ABAJO
+  scrollDown() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, container.scrollHeight, 2000); // Desliza en 2 segundos
+  }
+
+  //IR HACIA ARRIBA
+  scrollUp() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, 0, 2000); // Desliza en 2 segundos
+  }
+
+  //REALIZAR EL SCROLL
+  smoothScroll(element: HTMLElement, target: number, duration: number) {
+    const start = element.scrollTop; // Posición inicial del desplazamiento
+    const change = target - start; // Cambio total necesario en la posición
+    const increment = 20; // Intervalo de tiempo entre cada frame de la animación
+    let currentTime = 0; // Tiempo actual transcurrido
+
+    // Función que anima el desplazamiento
+
+    const animateScroll = () => {
+      currentTime += increment; // Incrementa el tiempo actual
+      // Calcula la nueva posición usando la función de easing
+      const val = this.easeInOutQuad(currentTime, start, change, duration);
+      element.scrollTop = val; // Ajusta la posición del elemento
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment); // Continúa la animación si no ha terminado
+      }
+    };
+
+    animateScroll(); // Inicia la animación
+  }
+
+  //CREAR ANIMACION
+  easeInOutQuad(t: number, b: number, c: number, d: number): number {
+    t /= d / 2; // Normaliza el tiempo en la mitad de la duración
+    if (t < 1) return c / 2 * t * t + b; // Aceleración cuadrática
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b; // Desaceleración cuadrática
+  }
+
+
+
 }
