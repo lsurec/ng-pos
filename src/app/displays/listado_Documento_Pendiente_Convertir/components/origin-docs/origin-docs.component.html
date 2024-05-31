@@ -91,19 +91,19 @@
         <div class="dFlex">
             <div class="input-container">
                 <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="strFilter" autocomplete="off"
-                    placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filterDoc()">
+                    placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filtrar()">
                 <button mat-icon-button class="iconoLupa" type="submit">
                     <mat-icon>search</mat-icon>
                 </button>
             </div>
             <span class="spacer"></span>
-            <div class="dFlex">
+            <!-- <div class="dFlex">
                 <div *ngFor="let option of filtrosBusqueda">
                     <div class="chip" [class.selected]="option.id === filtroCliente"
                         (click)="filtroCliente = option.id">{{ option.nombre }}
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

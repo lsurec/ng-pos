@@ -19,7 +19,7 @@ import { CurrencyPipe } from '@angular/common';
   selector: 'app-origin-docs',
   templateUrl: './origin-docs.component.html',
   styleUrls: ['./origin-docs.component.scss'],
-  providers:[CurrencyPipe]
+  providers: [CurrencyPipe]
 })
 export class OriginDocsComponent implements OnInit {
 
@@ -32,7 +32,7 @@ export class OriginDocsComponent implements OnInit {
 
   ascendente: boolean = true; //orden de la lista
 
-  filtroCliente: number = 1; //Filtro de busqueda por defecto nombre
+  // filtroCliente: number = 1; //Filtro de busqueda por defecto nombre
 
   filtroSelect: any;  //Filtro seleccionado
 
@@ -48,17 +48,17 @@ export class OriginDocsComponent implements OnInit {
     },
   ]
 
-  //filtros dispinibles
-  filtrosBusqueda: FiltroInterface[] = [
-    {
-      id: 1,
-      nombre: this._translate.instant('pos.factura.nombre'),
-    },
-    {
-      id: 2,
-      nombre: "NIT",
-    },
-  ];
+  // //filtros dispinibles
+  // filtrosBusqueda: FiltroInterface[] = [
+  //   {
+  //     id: 1,
+  //     nombre: this._translate.instant('pos.factura.nombre'),
+  //   },
+  //   {
+  //     id: 2,
+  //     nombre: "NIT",
+  //   },
+  // ];
 
 
   constructor(
@@ -84,41 +84,76 @@ export class OriginDocsComponent implements OnInit {
     this.ordenar();
   }
 
-  filterDoc() {
+  filtrar() {
     let timer: any;
-    //evaluar filtro de busqueda 
-    switch (this.filtroCliente) {
-      case 1: //Nombre
-        // Configurar un nuevo temporizador
-        clearTimeout(timer); // Limpiar el temporizador anterior
 
-        timer = setTimeout(() => {
-          this.globalConvertSrevice.docsOriginFilter =
-            this.globalConvertSrevice.docsOrigin.filter(
-              item => item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())
-            );
-          this.ordenar();
-        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+    // Limpiar el temporizador anterior
+    clearTimeout(timer);
 
-        break;
-      case 2: //Nit
-        clearTimeout(timer); // Limpiar el temporizador anterior
+    // Establecer un nuevo temporizador con un retraso de 500 milisegundos
+    timer = setTimeout(() => {
+      // // Convertir el filtro a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
+      // const lowerCaseFilter = this.strFilter.toLowerCase();
 
-        timer = setTimeout(() => {
-          this.globalConvertSrevice.docsOriginFilter =
-            this.globalConvertSrevice.docsOrigin.filter(
-              item => item.nit.toLowerCase().includes(this.strFilter.toLowerCase())
-            );
-          this.ordenar();
-        }, 500); // 500 milisegundos (0.5 segundos) de retraso
+      // Inicializar docsOriginFilter como un array vacío
+      this.globalConvertSrevice.docsOriginFilter = [];
 
-        break;
+      // Recorrer todos los elementos de docsOrigin
+      this.globalConvertSrevice.docsOrigin.forEach(item => {
+        // Verificar si alguna de las propiedades coincide con el filtro
+        let coincidencias : boolean =
+          (item.nit && item.nit.toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.cliente && item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.consecutivo_Interno_Ref !== null && item.consecutivo_Interno_Ref.toString().toLowerCase().includes(this.strFilter.toLowerCase())) ||
+          (item.iD_Documento !== null && item.iD_Documento.toString().toLowerCase().includes(this.strFilter.toLowerCase()));
 
-      default:
-        break;
-    }
+        // Si hay una coincidencia, agregar el elemento a docsOriginFilter
+        if (coincidencias) {
+          this.globalConvertSrevice.docsOriginFilter.push(item);
+        }
+      });
 
+      // Llamar a la función ordenar para ordenar los resultados filtrados
+      this.ordenar();
+    }, 500); // 500 milisegundos (0.5 segundos) de retraso
   }
+
+
+  // filterDoc() {
+  //   let timer: any;
+  //   //evaluar filtro de busqueda 
+  //   switch (this.filtroCliente) {
+  //     case 1: //Nombre
+  //       // Configurar un nuevo temporizador
+  //       clearTimeout(timer); // Limpiar el temporizador anterior
+
+  //       timer = setTimeout(() => {
+  //         this.globalConvertSrevice.docsOriginFilter =
+  //           this.globalConvertSrevice.docsOrigin.filter(
+  //             item => item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())
+  //           );
+  //         this.ordenar();
+  //       }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+  //       break;
+  //     case 2: //Nit
+  //       clearTimeout(timer); // Limpiar el temporizador anterior
+
+  //       timer = setTimeout(() => {
+  //         this.globalConvertSrevice.docsOriginFilter =
+  //           this.globalConvertSrevice.docsOrigin.filter(
+  //             item => item.nit.toLowerCase().includes(this.strFilter.toLowerCase())
+  //           );
+  //         this.ordenar();
+  //       }, 500); // 500 milisegundos (0.5 segundos) de retraso
+
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+
+  // }
 
   //cargar datos inciiales
   async loadData() {
@@ -339,7 +374,7 @@ export class OriginDocsComponent implements OnInit {
       doc.estacion_Trabajo,
     );
 
-      //finalizar  carga
+    //finalizar  carga
     this.globalConvertSrevice.isLoading = false;
 
     //si el servicio falló mostrar error
