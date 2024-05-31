@@ -1386,7 +1386,7 @@ export class FacturaComponent implements OnInit {
     }
 
     //vaidar fecha de incio
-    if (this.facturaService.valueParametro(381) ) {
+    if (this.facturaService.valueParametro(381) && this.facturaService.valueParametro(382) && this.facturaService.valueParametro(44)) {
 
       if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
         //TODO:Tranlate
@@ -1394,7 +1394,6 @@ export class FacturaComponent implements OnInit {
         return;
 
       }
-
 
       if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!)) {
         this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}`);
@@ -1410,7 +1409,6 @@ export class FacturaComponent implements OnInit {
         this._notificationService.openSnackbar(`Fecha incio debe ser menor a Fecha fin.`);
         return;
       }
-
 
       
       if(UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!)){
