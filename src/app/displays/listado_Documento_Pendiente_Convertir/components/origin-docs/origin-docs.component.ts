@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
@@ -22,6 +22,15 @@ import { CurrencyPipe } from '@angular/common';
   providers: [CurrencyPipe]
 })
 export class OriginDocsComponent implements OnInit {
+
+  // Referencia al elemento con la clase container_main
+  @ViewChild('contentContainer') contentContainer!: ElementRef;
+
+  //Subir contenido
+  botonIrArriba: boolean = false;
+  botonIrAbajo: boolean = true;
+  showScrollHeight: number = 400; //En cuantos pixeles se va a mostrar el boton
+  hideScrollHeight: number = 200; //en cuantos se va a ocultar
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token del usuario de la sesion
@@ -72,6 +81,8 @@ export class OriginDocsComponent implements OnInit {
     private _translate: TranslateService
 
   ) {
+    window.addEventListener('scroll', this.scrollEvent, true);
+
     //asiganr lenguaje a picker date
     this.setLangPicker();
 
@@ -101,7 +112,7 @@ export class OriginDocsComponent implements OnInit {
       // Recorrer todos los elementos de docsOrigin
       this.globalConvertSrevice.docsOrigin.forEach(item => {
         // Verificar si alguna de las propiedades coincide con el filtro
-        let coincidencias : boolean =
+        let coincidencias: boolean =
           (item.nit && item.nit.toLowerCase().includes(this.strFilter.toLowerCase())) ||
           (item.cliente && item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())) ||
           (item.consecutivo_Interno_Ref !== null && item.consecutivo_Interno_Ref.toString().toLowerCase().includes(this.strFilter.toLowerCase())) ||
@@ -420,4 +431,72 @@ export class OriginDocsComponent implements OnInit {
     //msotrar antallad de error
     this.globalConvertSrevice.mostrarError(10);
   }
+
+  //Escuchando scroll en todos los elementos
+  scrollEvent = (event: any): void => {
+    const number = event.srcElement.scrollTop; //Donde inicia el scroll
+    //verificar que el scrool se ejecute dentro de la calse container_main
+    if (event.srcElement.className == "container_main") {
+      //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
+      if (number > this.showScrollHeight) {
+        console.log("que pacho");
+
+        this.botonIrArriba = true; //MMostatr boton
+      } else if (number < this.hideScrollHeight) {
+        console.log("pacho aqui");
+        this.botonIrArriba = false; //ocultar boton
+      }
+    }
+  }
+
+  //Evento del scroll
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollEvent, true);
+  }
+
+
+  //IR HACIA ABAJO
+  scrollDown() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, container.scrollHeight, 2000); // Desliza en 2 segundos
+  }
+
+  //IR HACIA ARRIBA
+  scrollUp() {
+    const container = this.contentContainer.nativeElement;
+    this.smoothScroll(container, 0, 2000); // Desliza en 2 segundos
+  }
+
+  //REALIZAR EL SCROLL
+  smoothScroll(element: HTMLElement, target: number, duration: number) {
+    const start = element.scrollTop; // Posición inicial del desplazamiento
+    const change = target - start; // Cambio total necesario en la posición
+    const increment = 20; // Intervalo de tiempo entre cada frame de la animación
+    let currentTime = 0; // Tiempo actual transcurrido
+
+    // Función que anima el desplazamiento
+
+    const animateScroll = () => {
+      currentTime += increment; // Incrementa el tiempo actual
+      // Calcula la nueva posición usando la función de easing
+      const val = this.easeInOutQuad(currentTime, start, change, duration);
+      element.scrollTop = val; // Ajusta la posición del elemento
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment); // Continúa la animación si no ha terminado
+      }
+    };
+
+    animateScroll(); // Inicia la animación
+  }
+
+  //CREAR ANIMACION
+  easeInOutQuad(t: number, b: number, c: number, d: number): number {
+    t /= d / 2; // Normaliza el tiempo en la mitad de la duración
+    if (t < 1) return c / 2 * t * t + b; // Aceleración cuadrática
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b; // Desaceleración cuadrática
+  }
+
+
+
 }
