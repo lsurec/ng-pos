@@ -487,51 +487,56 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
 
 
-
-      let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-        this.token,
-        this.facturaService.fechaIni!,
-        this.facturaService.fechaFin!,
-        this.productoService.total.toString(),
-      );
-
-
-
-      if (!res.status) {
-        this.isLoading = false;
+      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+          this.token,
+          this.facturaService.fechaIni!,
+          this.facturaService.fechaFin!,
+          this.productoService.total.toString(),
+        );
 
 
-        let error: TypeErrorInterface = {
-          error: res,
-          type: 1,
+
+        if (!res.status) {
+          this.isLoading = false;
+
+
+          let error: TypeErrorInterface = {
+            error: res,
+            type: 1,
+          }
+          this.dialogRef.close(error);
+
+          return;
         }
-        this.dialogRef.close(error);
 
-        return;
-      }
 
-      
 
-      let preciosDia:PrecioDiaInterface[] = res.response;
+        let preciosDia: PrecioDiaInterface[] = res.response;
 
-      if(preciosDia.length == 0){
-      this.isLoading = false;
+        if (preciosDia.length == 0) {
+          this.isLoading = false;
 
-        
-        res.response = 'No fue posible obtner los valores calculados para el precio dia'
-        let error: TypeErrorInterface = {
-          error: res,
-          type: 1,
+
+          res.response = 'No fue posible obtner los valores calculados para el precio dia'
+          let error: TypeErrorInterface = {
+            error: res,
+            type: 1,
+          }
+          this.dialogRef.close(error);
+
+          return;
+
         }
-        this.dialogRef.close(error);
 
-        return;
-      
+        precioDias = preciosDia[0].monto_Calculado;
+        cantidadDias = preciosDia[0].catidad_Dia;
+      } else {
+        precioDias = this.productoService.total;
+        cantidadDias = 1;
+
+        this._notificationsService.openSnackbar("No se calculó el precio por día. Verifica que las fechas sean validas.");
       }
-      
-      precioDias = preciosDia[0].monto_Calculado;
-      cantidadDias = preciosDia[0].catidad_Dia;
-
     }
 
     this.isLoading = false;
@@ -553,7 +558,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
           producto: this.producto,
           precio: this.productoService.precio!,
           cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-          cantidadDias: this.facturaService.valueParametro(44) ?  cantidadDias : 0,
+          cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
           total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
           cargo: 0,
           descuento: 0,
@@ -576,7 +581,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        cantidadDias: this.facturaService.valueParametro(44) ?  cantidadDias : 0,
+        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
         total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
         cargo: 0,
         descuento: 0,

@@ -448,7 +448,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           //   return;
           // };
 
-
           //Calcular nuevos totales
 
           for (const tra of this.facturaService.traInternas) {
