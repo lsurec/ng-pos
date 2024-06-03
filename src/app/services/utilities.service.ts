@@ -43,6 +43,19 @@ export class UtilitiesService {
 
     }
 
+    static majorOrEqualDateWithoutSeconds(date1: Date, date2: Date): boolean {
+        // Crear nuevas instancias de fechas sin segundos
+        const dateWithoutSeconds1 = new Date(date1);
+        dateWithoutSeconds1.setSeconds(0, 0);
+
+        const dateWithoutSeconds2 = new Date(date2);
+        dateWithoutSeconds2.setSeconds(0, 0);
+
+        // Comparar las fechas
+        return dateWithoutSeconds1 >= dateWithoutSeconds2 ? true : false;
+
+    }
+
     //convierte un string a numero si es valido
     static convertirTextoANumero(texto: string): number | null {
         // Verificar si la cadena es un número

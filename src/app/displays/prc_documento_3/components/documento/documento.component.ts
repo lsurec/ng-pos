@@ -256,13 +256,13 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
 
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-      this.restartDateRefIni();
-      return;
-    }
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+    //   this.restartDateRefIni();
+    //   return;
+    // }
 
     //Copiar valores
     this.copyDates();
@@ -278,15 +278,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //validaciones para la fehca fin ref
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-      this.restartDateRefFin();
-      return;
-    }
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
+    //   this.restartDateRefFin();
+    //   return;
+    // }
 
-    //Copiar valores
-    this.copyDates();
+    // //Copiar valores
+    // this.copyDates();
 
     this.facturaService.saveDocLocal()
 
@@ -298,44 +298,46 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //Validaciones para la fehca inicio
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-      this.restartDateIni();
-      return;
-    }
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
+    //   this.restartDateIni();
+    //   return;
+    // }
 
 
-    if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
-      this.restartDateIni();
-      return;
-    }
+    // if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
+    //   this.restartDateIni();
+    //   return;
+    // }
 
     //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
+    if (this.facturaService.valueParametro(44)) {
       //si hay productos agregados no se puede cambiar la fechha
-      if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
 
-        let verificador: boolean = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('¿Cambiar fecha?'),
-            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.cancelar'),
-          }
-        );
+      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
 
-        if (!verificador) {
-          this.restartDateIni();
-          return;
-        };
+        if (this.facturaService.traInternas.length > 0) {
+          // //TODO:Translate
+
+          // let verificador: boolean = await this._notificationService.openDialogActions(
+          //   {
+          //     title: this._translate.instant('¿Cambiar fecha?'),
+          //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+          //     verdadero: this._translate.instant('pos.botones.aceptar'),
+          //     falso: this._translate.instant('pos.botones.cancelar'),
+          //   }
+          // );
+
+          // if (!verificador) {
+          //   this.restartDateIni();
+          //   return;
+          // };
 
 
-        //Calcular nuevos totales
-        if (this.facturaService.valueParametro(351)) {
+          //Calcular nuevos totales
 
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
@@ -365,7 +367,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             if (calculoDias.length == 0) {
 
 
-              res.response = "No se están obteiiendo valores del procedimiento almacenado"
+              res.response = "No se están obteniendo valores del procedimiento almacenado"
 
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -384,8 +386,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.facturaService.calculateTotales();
+          this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
         }
+
+        //TODO:Translate
+      } else {
+        this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
       }
+
     }
 
     //Copiar valores
@@ -401,43 +409,47 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     //vañidaciones para la fecha fin
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
-      this.restartDateFin();
-      return;
-    }
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
+    //   this.restartDateFin();
+    //   return;
+    // }
 
-    if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
-      this.restartDateFin();
-      return;
-    }
+    // if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
+    //   this.restartDateFin();
+    //   return;
+    // }
 
     //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
+    
+    //si se debe calcular el preciuo por dias
+    if (this.facturaService.valueParametro(44)) {
       //si hay productos agregados no se puede cambiar la fechha
-      if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
 
-        let verificador: boolean = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('¿Cambiar fecha?'),
-            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.cancelar'),
-          }
-        );
+      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
 
-        if (!verificador) {
-          this.restartDateFin();
-          return;
-        };
+        if (this.facturaService.traInternas.length > 0) {
+          // //TODO:Translate
+
+          // let verificador: boolean = await this._notificationService.openDialogActions(
+          //   {
+          //     title: this._translate.instant('¿Cambiar fecha?'),
+          //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+          //     verdadero: this._translate.instant('pos.botones.aceptar'),
+          //     falso: this._translate.instant('pos.botones.cancelar'),
+          //   }
+          // );
+
+          // if (!verificador) {
+          //   this.restartDateIni();
+          //   return;
+          // };
 
 
-        //Calcular nuevos totales
-        if (this.facturaService.valueParametro(351)) {
+          //Calcular nuevos totales
 
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
@@ -454,7 +466,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.facturaService.isLoading = false;
 
-
             if (!res.status) {
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -467,7 +478,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (calculoDias.length == 0) {
 
-              res.response = "El procedimiento almacenado no esta devolviendo valores, verificar.";
+
+              res.response = "No se están obteniendo valores del procedimiento almacenado"
 
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -475,7 +487,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
               return;
             }
-
 
             this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
             this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
@@ -487,9 +498,12 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.facturaService.calculateTotales();
+          this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
         }
 
-
+        //TODO:Translate
+      } else {
+        this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
       }
 
     }
