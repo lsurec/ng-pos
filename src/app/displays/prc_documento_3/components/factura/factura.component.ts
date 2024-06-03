@@ -1380,42 +1380,18 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.valueParametro(58)) {
       if (!this.facturaService.tipoReferencia) {
 
+        //TODO:Translate
         this._notificationService.openSnackbar("Debe seelccionar un tipo de referencia.");
         return;
       }
     }
 
-    //vaidar fecha de incio
-    if (this.facturaService.valueParametro(381) && this.facturaService.valueParametro(382) && this.facturaService.valueParametro(44)) {
+    if (!this.validateDates()) {
 
-      // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
-      //   //TODO:Tranlate
-      //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-      //   return;
+      //TODO:Translate
+      this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
 
-      // }
-
-      // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!)) {
-      //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a ${this.facturaService.getTextParam(382)}`);
-      //   return;
-      // }
-
-      // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefIni!)) {
-      //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser menor a Fecha fin.`);
-      //   return;
-      // }
-
-      // if(UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)){
-      //   this._notificationService.openSnackbar(`Fecha incio debe ser menor a Fecha fin.`);
-      //   return;
-      // }
-
-      
-      // if(UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!)){
-      //   this._notificationService.openSnackbar(`Fecha incio debe ser menor a ${this.facturaService.getTextParam(382)}`);
-      //   return;
-      // }
-
+      return;
     }
 
     //validar fechas si existen
@@ -1426,6 +1402,28 @@ export class FacturaComponent implements OnInit {
   }
 
 
+
+  // Función para comparar fechas ignorando los segundos
+  compareDatesIgnoringSeconds(date1: Date, date2: Date): number {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setSeconds(0, 0);
+    d2.setSeconds(0, 0);
+    return d1.getTime() - d2.getTime();
+  }
+
+  // Función de validación
+  validateDates(): boolean {
+    const validInicioRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fechaRefFin!) <= 0;
+    const validFinRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!) >= 0;
+    const validInicio = this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaRefIni!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaFin!) <= 0;
+    const validFin = this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!) <= 0;
+
+    return validInicioRef && validFinRef && validInicio && validFin;
+  }
   //Confirmar documento
   async sendDoc() {
 
