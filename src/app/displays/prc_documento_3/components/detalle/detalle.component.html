@@ -3,9 +3,11 @@
         <div class="buscar-producto">
             <div class="d-flex">
                 <div class="cantidad-fondo">
+                   <form  #cantidadForm="ngForm" (ngSubmit)="buscarProducto()">
                     <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
                     <input #cantidadInput class="cantidad-detalle" type="text" name="search"
                         [(ngModel)]="productoService.cantidad" autocomplete="off" (focus)="selectText()">
+                   </form>
                 </div>
                 <span class="spacer"></span>
                 <div class="cantidad-producto">

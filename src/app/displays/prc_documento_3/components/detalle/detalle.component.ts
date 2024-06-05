@@ -20,6 +20,7 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { DataUserService } from '../../services/data-user.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-detalle',
@@ -82,7 +83,7 @@ export class DetalleComponent implements AfterViewInit {
     public productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
-    public dataUserService:DataUserService,
+    public dataUserService: DataUserService,
   ) {
     //filtro producto
     facturaService.filtrosProductos = PreferencesService.filtroProducto;
@@ -380,6 +381,25 @@ export class DetalleComponent implements AfterViewInit {
   async buscarProducto() {
 
     let productos: ProductoInterface[] = [];
+
+    //verificar que la cantidad sea numerica
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadNumerica'));
+      return;
+    }
+
+    //verificar que la cantidad sea mayor a 0
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadMayor'));
+      return;
+    }
+
+    //Verificar que no hyaa formas de pago previamente asignadas al documento
+    if (this.facturaService.montos.length > 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.eliminarPagos'));
+      return;
+    }
+
 
 
     //validar que siempre hay nun texto para buscar
