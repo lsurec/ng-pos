@@ -1386,12 +1386,14 @@ export class FacturaComponent implements OnInit {
       }
     }
 
-    if (!this.validateDates()) {
+    if (this.facturaService.valueParametro(44)) {
+      if (!this.validateDates()) {
 
-      //TODO:Translate
-      this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
+        //TODO:Translate
+        this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
 
-      return;
+        return;
+      }
     }
 
     //validar fechas si existen
