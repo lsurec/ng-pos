@@ -341,11 +341,7 @@ export class DetalleComponent implements AfterViewInit {
 
     this.productoService.cantidad = "1";
 
-    
-
     if (resDialogProd) {
-
-
       //1 api /2 validaciones //para productos
 
       if (resDialogProd.type == 1) {
