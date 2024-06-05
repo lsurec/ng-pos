@@ -671,6 +671,7 @@ export class HomeComponent implements OnInit {
       this._globalConvertService.docSelect!.tipo_Documento,
       this._globalConvertService.formatStrFilterDate(this._globalConvertService.fechaInicial!),
       this._globalConvertService.formatStrFilterDate(this._globalConvertService.fechaFinal!),
+      "",
     );
 
     this._globalConvertService.isLoading = false;

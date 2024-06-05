@@ -105,6 +105,7 @@ export class TypesDocsComponent {
       this.globalConvertSrevice.docSelect!.tipo_Documento,
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaInicial!),
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
+      "",
     );
 
     //Finalizar proceoso
