@@ -18,8 +18,8 @@ export class ReceptionService {
     }
 
 
-      //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
-      private _insertarTransaccion(
+    //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
+    private _insertarTransaccion(
         token: string,
         transaction: NewTransactionInterface,
     ) {
@@ -951,7 +951,7 @@ export class ReceptionService {
         doc: number,
         fechaIni: string,
         fechaFin: string,
-        criterio:string,
+        criterio: string,
     ) {
 
         let headers = new HttpHeaders(
@@ -961,7 +961,8 @@ export class ReceptionService {
                 "doc": doc,
                 "fechaIni": fechaIni,
                 "fechaFin": fechaFin,
-                "criterio": criterio,
+                "criterio": criterio ? criterio : "empty",
+                "opcion": criterio ? 0 : 1
             }
         )
 
@@ -976,7 +977,7 @@ export class ReceptionService {
         doc: number,
         fechaIni: string,
         fechaFin: string,
-        criterio:string,
+        criterio: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPendindgDocs(

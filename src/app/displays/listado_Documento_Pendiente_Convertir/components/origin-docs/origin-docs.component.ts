@@ -37,7 +37,6 @@ export class OriginDocsComponent implements OnInit {
   empresa: number = PreferencesService.empresa.empresa; // emporesa de la sesuin
   estacion: number = PreferencesService.estacion.estacion_Trabajo;//etsacion e la sesion
 
-  strFilter: string = ""; //texto para filtrar dicuemntos por nombre o nit
 
   ascendente: boolean = true; //orden de la lista
 
@@ -95,38 +94,14 @@ export class OriginDocsComponent implements OnInit {
     this.ordenar();
   }
 
+  timer:any;
+
   filtrar() {
-    let timer: any;
-
-    // Limpiar el temporizador anterior
-    clearTimeout(timer);
-
-    // Establecer un nuevo temporizador con un retraso de 500 milisegundos
-    timer = setTimeout(() => {
-      // // Convertir el filtro a minúsculas para hacer la búsqueda insensible a mayúsculas y minúsculas
-      // const lowerCaseFilter = this.strFilter.toLowerCase();
-
-      // Inicializar docsOriginFilter como un array vacío
-      this.globalConvertSrevice.docsOriginFilter = [];
-
-      // Recorrer todos los elementos de docsOrigin
-      this.globalConvertSrevice.docsOrigin.forEach(item => {
-        // Verificar si alguna de las propiedades coincide con el filtro
-        let coincidencias: boolean =
-          (item.nit && item.nit.toLowerCase().includes(this.strFilter.toLowerCase())) ||
-          (item.cliente && item.cliente.toLowerCase().includes(this.strFilter.toLowerCase())) ||
-          (item.consecutivo_Interno_Ref !== null && item.consecutivo_Interno_Ref.toString().toLowerCase().includes(this.strFilter.toLowerCase())) ||
-          (item.iD_Documento !== null && item.iD_Documento.toString().toLowerCase().includes(this.strFilter.toLowerCase()));
-
-        // Si hay una coincidencia, agregar el elemento a docsOriginFilter
-        if (coincidencias) {
-          this.globalConvertSrevice.docsOriginFilter.push(item);
-        }
-      });
-
-      // Llamar a la función ordenar para ordenar los resultados filtrados
+    clearTimeout(this.timer); // Cancelar el temporizador existente
+    this.timer = setTimeout(() => {
+      this.loadData();
       this.ordenar();
-    }, 500); // 500 milisegundos (0.5 segundos) de retraso
+    }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 
 
@@ -182,7 +157,7 @@ export class OriginDocsComponent implements OnInit {
       this.globalConvertSrevice.docSelect!.tipo_Documento,
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaInicial!),
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
-      this.strFilter,
+      this.globalConvertSrevice.performanSearchOrigin,
     );
 
     //finalizar proiceso
