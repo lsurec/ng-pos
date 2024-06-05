@@ -132,6 +132,7 @@ export class DetalleComponent implements AfterViewInit {
         }
       );
 
+
       if (!verificador) return;
 
       this.verError(resBodega);
@@ -338,6 +339,9 @@ export class DetalleComponent implements AfterViewInit {
 
     let resDialogProd = await this._notificationsService.openDetalleporoduct(productTra);
 
+    this.productoService.cantidad = "1";
+
+    
 
     if (resDialogProd) {
 
@@ -399,7 +403,6 @@ export class DetalleComponent implements AfterViewInit {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.eliminarPagos'));
       return;
     }
-
 
 
     //validar que siempre hay nun texto para buscar
@@ -502,7 +505,7 @@ export class DetalleComponent implements AfterViewInit {
     this.productoService.precio = undefined;
     this.productoService.bodegas = [];
     this.productoService.bodega = undefined;
-    this.productoService.cantidad = "1";
+    // this.productoService.cantidad = "1";
     this.productoService.precioU = 0;
     this.productoService.precioText = "0";
 

@@ -566,6 +566,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         }
       );
 
+    this.productoService.cantidad = "1";
       //Transacion agregada
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 
@@ -592,6 +593,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
       //Transacion agregada
       //TODO:Translate
+
       this._notificationsService.openSnackbar("Transaccion modificada");
 
     }
