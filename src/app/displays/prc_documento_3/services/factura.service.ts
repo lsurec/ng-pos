@@ -58,7 +58,7 @@ export class FacturaService {
 
     noMostrar: boolean = false;
 
-    nuevoDoc: boolean = false;
+    nuevoDoc: boolean = true;
 
     verDialogoFactura: number = 1;
 
