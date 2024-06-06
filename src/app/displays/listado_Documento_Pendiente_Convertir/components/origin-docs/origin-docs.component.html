@@ -103,7 +103,7 @@
         <p class="textosBold14">{{ 'pos.factura.buscarPor' | translate }}:</p>
         <div class="dFlex">
             <div class="input-container">
-                <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="globalConvertSrevice.performanSearchOrigin" autocomplete="off"
+                <input #inputFilterDoc class="barra-de-busqueda" type="search" name="search" [(ngModel)]="globalConvertSrevice.performanSearchOrigin" autocomplete="off"
                     placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filtrar()">
                 <button mat-icon-button class="iconoLupa" type="submit">
                     <mat-icon>search</mat-icon>
