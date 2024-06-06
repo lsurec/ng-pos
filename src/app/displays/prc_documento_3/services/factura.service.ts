@@ -28,6 +28,8 @@ import { FormControl } from '@angular/forms';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
+    idDocumentoRef:number = 0;
+
     //controlar las vistas de las pestañas
     tabDocummento: boolean = true; //contorlador para la pestaña documento
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
