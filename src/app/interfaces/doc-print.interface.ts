@@ -44,6 +44,8 @@ export interface Item {
   unitario: string;
   precioDia: string,
   total: string;
+  precioRepocision?:string;
+  imagen64?:string;
 }
 
 // montos.interface.ts
@@ -83,6 +85,7 @@ export interface ObservacionesRef {
 
 
 export interface DocPrintModel {
+  image64Empresa:string;
   evento?:string;
   cantidadDias?:number,
   noDoc: string;

@@ -1386,15 +1386,15 @@ export class FacturaComponent implements OnInit {
       }
     }
 
-    if (this.facturaService.valueParametro(44)) {
-      if (!this.validateDates()) {
+    // if (this.facturaService.valueParametro(44)) {
+    //   if (!this.validateDates()) {
 
-        //TODO:Translate
-        this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
+    //     //TODO:Translate
+    //     this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
 
-        return;
-      }
-    }
+    //     return;
+    //   }
+    // }
 
     //validar fechas si existen
 
@@ -1717,6 +1717,8 @@ export class FacturaComponent implements OnInit {
           unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          imagen64:detail.img_Producto,
+          precioRepocision:detail.precio_Reposicion ?? "00.00",
         }
       );
     });
@@ -1779,6 +1781,7 @@ export class FacturaComponent implements OnInit {
     }
 
     this.docPrint = {
+      image64Empresa:this.empresa.empresa_Img,
       evento:encabezado.fDes_Tipo_Referencia ??"",
       cantidadDias:encabezado.cantidad_Dias_Fecha_Ini_Fin,
       emailVendedor:emailVendedor,

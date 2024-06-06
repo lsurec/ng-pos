@@ -1010,6 +1010,12 @@ export class PrinterService {
     async getPDFCotizacionAlfaYOmega(doc: DocPrintModel) {
         let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
         let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+        // data:image/jpeg;base64,
+
+        console.log(backgroundimg);
+        console.log(logo_empresa);
+        
+        
 
         let date: Date = doc.cliente.fecha;
 
