@@ -83,6 +83,7 @@ export interface ObservacionesRef {
 
 
 export interface DocPrintModel {
+  evento?:string;
   cantidadDias?:number,
   noDoc: string;
   empresa: Empresa;

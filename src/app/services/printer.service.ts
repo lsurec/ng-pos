@@ -1438,9 +1438,22 @@ export class PrinterService {
                         ]
                     }
                 },
+                // {
+                //     marginTop: 10,
+                //     text: [
+                //         {
+                //             text: "Evento: ",
+                //             style: 'normalTextBold',
+                //         },
+                //         {
+                //             text: `${doc.cantidadDias ?? 0}`,
+                //             style: 'normalText',
+                //         }
+                //     ]
+                // },
                 {
-                    marginBottom: 10,
                     marginTop: 10,
+                    marginBottom: 10,
                     text: [
                         {
                             text: "Cantidad dias: ",

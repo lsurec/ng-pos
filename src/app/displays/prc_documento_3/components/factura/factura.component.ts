@@ -1779,6 +1779,7 @@ export class FacturaComponent implements OnInit {
     }
 
     this.docPrint = {
+      evento:encabezado.fDes_Tipo_Referencia ??"",
       cantidadDias:encabezado.cantidad_Dias_Fecha_Ini_Fin,
       emailVendedor:emailVendedor,
       noDoc: encabezado.iD_Documento_Ref ?? "",
