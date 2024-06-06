@@ -1032,10 +1032,6 @@ export class PrinterService {
                         style: 'normalText'
                     },
                     {
-                        text: item.cantidadDias, //TODO:set precio dia
-                        style: 'normalText'
-                    },
-                    {
                         text: item.sku,
                         style: 'normalText'
                     },
@@ -1443,9 +1439,23 @@ export class PrinterService {
                     }
                 },
                 {
+                    marginBottom: 10,
+                    marginTop: 10,
+                    text: [
+                        {
+                            text: "Cantidad dias: ",
+                            style: 'normalTextBold',
+                        },
+                        {
+                            text: `${doc.cantidadDias ?? 0}`,
+                            style: 'normalText',
+                        }
+                    ]
+                },
+                {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1457,10 +1467,7 @@ export class PrinterService {
                                     text: 'Cantidad',
                                     style: 'normalTextBold'
                                 },
-                                {
-                                    text: 'Cantidad Dias',
-                                    style: 'normalTextBold'
-                                },
+
                                 {
                                     text: 'Codigo',
                                     style: 'normalTextBold'
@@ -1495,7 +1502,7 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
 
                         body: [
                             ...transacciones

@@ -213,7 +213,6 @@ export class DetailsDestDocsComponent {
       //Agregar transaccion
       items.push(
         {
-          cantidadDias: 0,
           precioDia: "",
           sku: detail.producto_Id ?? "",
           descripcion: detail.des_Producto ?? "",

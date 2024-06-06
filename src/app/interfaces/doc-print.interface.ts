@@ -41,7 +41,6 @@ export interface Item {
   sku: string;
   descripcion: string;
   cantidad: number;
-  cantidadDias: number;
   unitario: string;
   precioDia: string,
   total: string;
@@ -84,6 +83,7 @@ export interface ObservacionesRef {
 
 
 export interface DocPrintModel {
+  cantidadDias?:number,
   noDoc: string;
   empresa: Empresa;
   documento: DocumentoData;

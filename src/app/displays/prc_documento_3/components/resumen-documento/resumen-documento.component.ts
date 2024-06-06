@@ -1250,7 +1250,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
       items.push(
         {
-          cantidadDias: detail.cantidad, //TODO:Verificar dias
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,

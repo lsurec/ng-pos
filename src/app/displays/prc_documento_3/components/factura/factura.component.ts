@@ -1711,7 +1711,6 @@ export class FacturaComponent implements OnInit {
 
       items.push(
         {
-          cantidadDias: detail.cantidad, //TODO:Verificar dias
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
@@ -1780,6 +1779,7 @@ export class FacturaComponent implements OnInit {
     }
 
     this.docPrint = {
+      cantidadDias:encabezado.cantidad_Dias_Fecha_Ini_Fin,
       emailVendedor:emailVendedor,
       noDoc: encabezado.iD_Documento_Ref ?? "",
       refObservacones: observaciones,
