@@ -29,7 +29,7 @@
                     <div class="detalle-documento" *ngFor="let documento of documentos"
                         (click)="verDetalle(); docSelect = documento">
                         <div class="info-documento">
-                            <p class="subtitulo">Ref:
+                            <p class="subtitulo">Id Documento Ref:
                                 {{documento.ref_id}} </p>
                             <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
                                 {{documento.item.consecutivo_Interno}} </p>
