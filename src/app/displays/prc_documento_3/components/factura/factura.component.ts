@@ -174,6 +174,7 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this._retryService.createDoc$.subscribe(() => {
       this.sendDoc();
     });
@@ -498,6 +499,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
     this.setDateNow();
+    this.facturaService.setIdDocumentoRef();
+
 
 
     //si hay solo una serie disponoble
@@ -603,6 +606,8 @@ export class FacturaComponent implements OnInit {
 
   //cargar datos necesarios
   async loadData() {
+    this.facturaService.setIdDocumentoRef();
+
 
     //limpiar datos del modulo
     this.facturaService.clearData();
@@ -1554,6 +1559,9 @@ export class FacturaComponent implements OnInit {
 
   async printFormat() {
 
+    this.facturaService.setIdDocumentoRef();
+
+
     //TODO:Verificar tipo de documento, imprimir cotizacion alfa y omega
     // if (this.facturaService.tipoDocumento == 20) {
     //   //Generar datos apra impresion de cotizacion
@@ -1714,11 +1722,11 @@ export class FacturaComponent implements OnInit {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.facturaService.tipoDocumento! == 20 ?  this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.facturaService.tipoDocumento! == 20 ? this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
-          imagen64:detail.img_Producto,
-          precioRepocision:detail.precio_Reposicion ?? "00.00",
+          imagen64: detail.img_Producto,
+          precioRepocision: detail.precio_Reposicion ?? "00.00",
         }
       );
     });
@@ -1748,7 +1756,7 @@ export class FacturaComponent implements OnInit {
     });
 
     let vendedor: string = "";
-    let emailVendedor: string =  encabezado.cuenta_Correntista_Ref_EMail ??= "";
+    let emailVendedor: string = encabezado.cuenta_Correntista_Ref_EMail ??= "";
     ;
 
     if (this.facturaService.vendedores.length > 0) {
@@ -1781,10 +1789,10 @@ export class FacturaComponent implements OnInit {
     }
 
     this.docPrint = {
-      image64Empresa:this.empresa.empresa_Img,
-      evento:encabezado.fDes_Tipo_Referencia ??"",
-      cantidadDias:encabezado.cantidad_Dias_Fecha_Ini_Fin,
-      emailVendedor:emailVendedor,
+      image64Empresa: this.empresa.empresa_Img,
+      evento: encabezado.fDes_Tipo_Referencia ?? "",
+      cantidadDias: encabezado.cantidad_Dias_Fecha_Ini_Fin,
+      emailVendedor: emailVendedor,
       noDoc: encabezado.iD_Documento_Ref ?? "",
       refObservacones: observaciones,
       empresa: empresa,
@@ -2290,22 +2298,10 @@ export class FacturaComponent implements OnInit {
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
 
-    let dateConsecutivo: Date = new Date();
 
     let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
 
     // Combinar los dos números para formar uno de 14 dígitos
-    let strNum1: string = randomNumber1.toString();
-    let combinedStr: string = strNum1 +
-      dateConsecutivo.getDate() +
-      (dateConsecutivo.getMonth() + 1) +
-      dateConsecutivo.getFullYear() +
-      dateConsecutivo.getHours() +
-      dateConsecutivo.getMinutes() +
-      dateConsecutivo.getSeconds();
-
-    //ref id
-    let combinedNum: number = parseInt(combinedStr, 10);
 
     //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
@@ -2503,7 +2499,7 @@ export class FacturaComponent implements OnInit {
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar
       Doc_Cuenta_Correntista_Ref: this.facturaService.vendedor?.cuenta_Correntista ?? null,
-      Doc_ID_Documento_Ref: combinedNum,
+      Doc_ID_Documento_Ref: this.facturaService.idDocumentoRef,
       Doc_FEL_numeroDocumento: null,
       Doc_FEL_Serie: null,
       Doc_FEL_UUID: null,
