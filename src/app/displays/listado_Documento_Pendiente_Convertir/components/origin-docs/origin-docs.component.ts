@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { GlobalConvertService } from '../../services/global-convert.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EventService } from 'src/app/services/event.service';
@@ -21,10 +21,12 @@ import { CurrencyPipe } from '@angular/common';
   styleUrls: ['./origin-docs.component.scss'],
   providers: [CurrencyPipe]
 })
-export class OriginDocsComponent implements OnInit {
+export class OriginDocsComponent implements OnInit, AfterViewInit {
 
   // Referencia al elemento con la clase container_main
   @ViewChild('contentContainer') contentContainer!: ElementRef;
+  //para seleciconar el valor del texto del input
+  @ViewChild('inputFilterDoc') inputFilterDoc?: ElementRef;
 
   //Subir contenido
   botonIrArriba: boolean = false;
@@ -94,7 +96,7 @@ export class OriginDocsComponent implements OnInit {
     this.ordenar();
   }
 
-  timer:any;
+  timer: any;
 
   filtrar() {
     clearTimeout(this.timer); // Cancelar el temporizador existente
@@ -415,11 +417,8 @@ export class OriginDocsComponent implements OnInit {
     if (event.srcElement.className == "container_main") {
       //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
       if (number > this.showScrollHeight) {
-        console.log("que pacho");
-
         this.botonIrArriba = true; //MMostatr boton
       } else if (number < this.hideScrollHeight) {
-        console.log("pacho aqui");
         this.botonIrArriba = false; //ocultar boton
       }
     }
@@ -473,6 +472,13 @@ export class OriginDocsComponent implements OnInit {
     return -c / 2 * (t * (t - 2) - 1) + b; // Desaceleración cuadrática
   }
 
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
 
+  focusAndSelectText() {
+    const inputElement = this.inputFilterDoc!.nativeElement;
+    inputElement.focus();
+  }
 
 }
