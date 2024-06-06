@@ -1722,11 +1722,11 @@ export class FacturaComponent implements OnInit {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.facturaService.tipoDocumento! == 20 ?  this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.facturaService.tipoDocumento! == 20 ? this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
-          imagen64:detail.img_Producto,
-          precioRepocision:detail.precio_Reposicion ?? "00.00",
+          imagen64: detail.img_Producto,
+          precioRepocision: detail.precio_Reposicion ?? "00.00",
         }
       );
     });
@@ -1756,7 +1756,7 @@ export class FacturaComponent implements OnInit {
     });
 
     let vendedor: string = "";
-    let emailVendedor: string =  encabezado.cuenta_Correntista_Ref_EMail ??= "";
+    let emailVendedor: string = encabezado.cuenta_Correntista_Ref_EMail ??= "";
     ;
 
     if (this.facturaService.vendedores.length > 0) {
@@ -1789,10 +1789,10 @@ export class FacturaComponent implements OnInit {
     }
 
     this.docPrint = {
-      image64Empresa:this.empresa.empresa_Img,
-      evento:encabezado.fDes_Tipo_Referencia ??"",
-      cantidadDias:encabezado.cantidad_Dias_Fecha_Ini_Fin,
-      emailVendedor:emailVendedor,
+      image64Empresa: this.empresa.empresa_Img,
+      evento: encabezado.fDes_Tipo_Referencia ?? "",
+      cantidadDias: encabezado.cantidad_Dias_Fecha_Ini_Fin,
+      emailVendedor: emailVendedor,
       noDoc: encabezado.iD_Documento_Ref ?? "",
       refObservacones: observaciones,
       empresa: empresa,
