@@ -1008,12 +1008,10 @@ export class PrinterService {
     }
 
     async getPDFCotizacionAlfaYOmega(doc: DocPrintModel) {
-        let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
-        let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+        let logo_empresa = await this._generateBase64('/assets/empresa.png');
+        let backgroundimg = await this._generateBase64('/assets/image-not-found-icon.png');
         // data:image/jpeg;base64,
 
-        console.log(backgroundimg);
-        console.log(logo_empresa);
         
         
 
@@ -1030,7 +1028,7 @@ export class PrinterService {
             transacciones.push(
                 [
                     {
-                        text: '50.00',
+                        text: item.precioRepocision,
                         style: 'normalText'
                     },
                     {
@@ -1047,7 +1045,7 @@ export class PrinterService {
                     },
 
                     {
-                        image: backgroundimg,
+                        image: item.imagen64 ?  `data:image/jpeg;base64,${item.imagen64}` :  backgroundimg,
                         fit: [50, 50],
 
                     },
@@ -1106,43 +1104,43 @@ export class PrinterService {
                             body: [
                                 [
                                     {
-                                        image: logo_empresa,
+                                        image: doc.image64Empresa ?  `data:image/jpeg;base64,${doc.image64Empresa}` :  logo_empresa,
                                         width: 115,
                                         absolutePosition: { x: 20, y: 10 }
                                     },
                                     [
                                         {
-                                            text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                                            text: doc.empresa.razonSocial,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: 'NIT: 7057806',
+                                            text: doc.empresa.nombre,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: 'ALFA Y OMEGA',
+                                            text: doc.empresa.direccion,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: '0 Avenida 5-35, Zona 9 Guatemala',
+                                            text: doc.empresa.nit,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: '(502) 2505 1000',
+                                            text: doc.empresa.tel,
                                             style: 'headerText'
                                         },
-                                        {
-                                            text: 'ALFA Y OMEGA ANTIGUA',
-                                            style: 'headerText'
-                                        },
-                                        {
-                                            text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
-                                            style: 'headerText'
-                                        },
-                                        {
-                                            text: '(502) 7822 8375',
-                                            style: 'headerText'
-                                        },
+                                        // {
+                                        //     text: 'ALFA Y OMEGA ANTIGUA',
+                                        //     style: 'headerText'
+                                        // },
+                                        // {
+                                        //     text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
+                                        //     style: 'headerText'
+                                        // },
+                                        // {
+                                        //     text: '(502) 7822 8375',
+                                        //     style: 'headerText'
+                                        // },
                                     ],
 
                                     [

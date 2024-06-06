@@ -1318,7 +1318,6 @@ export class ResumenDocumentoComponent implements OnInit {
 
     this.docPrint = {
       image64Empresa:"",
-
       emailVendedor: "",
       noDoc: this.consecutivoDoc.toString(),
       refObservacones: observaciones,
