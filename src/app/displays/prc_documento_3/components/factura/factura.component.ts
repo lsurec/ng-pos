@@ -1679,10 +1679,10 @@ export class FacturaComponent implements OnInit {
     }
 
     let fechas: Fechas = {
-      fechaInicio: this.facturaService.fechaIni!,
-      fechaInicioRef: this.facturaService.fechaFin!,
-      fechaFin: this.facturaService.fechaFin!,
-      fechaFinRef: this.facturaService.fechaRefFin!,
+      fechaInicio: encabezado.fecha_Ini,
+      fechaInicioRef: encabezado.ref_Fecha_Ini,
+      fechaFin: encabezado.fecha_Fin,
+      fechaFinRef: encabezado.ref_Fecha_Fin,
     }
 
     let cargo: number = 0;
@@ -1747,6 +1747,8 @@ export class FacturaComponent implements OnInit {
     });
 
     let vendedor: string = "";
+    let emailVendedor: string =  encabezado.cuenta_Correntista_Ref_EMail ??= "";
+    ;
 
     if (this.facturaService.vendedores.length > 0) {
       vendedor = this.facturaService.vendedor!.nom_Cuenta_Correntista;
@@ -1771,14 +1773,15 @@ export class FacturaComponent implements OnInit {
     }
 
     let observaciones: ObservacionesRef = {
-      descripcion: this.facturaService.refDescripcion ?? "",
-      observacion: this.facturaService.refObservacion ?? "",
-      observacion2: this.facturaService.refContacto ?? "",
-      observacion3: this.facturaService.refDireccionEntrega ?? "",
+      descripcion: encabezado.ref_Descripcion ?? "",
+      observacion: encabezado.ref_Observacion ?? "",
+      observacion2: encabezado.ref_Observacion_2 ?? "",
+      observacion3: encabezado.ref_Observacion_3 ?? "",
     }
 
     this.docPrint = {
-      noDoc: this.consecutivoDoc.toString(),
+      emailVendedor:emailVendedor,
+      noDoc: encabezado.iD_Documento_Ref ?? "",
       refObservacones: observaciones,
       empresa: empresa,
       documento: documento,

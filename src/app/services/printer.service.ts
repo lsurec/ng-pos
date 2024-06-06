@@ -141,7 +141,7 @@ export class PrinterService {
                 err => {
 
                     console.error(err);
-                    
+
                     try {
                         let message = err.message;
 
@@ -1326,7 +1326,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: `${this.formatDate(doc.fechas!.fechaInicio)} -  ${this.formatDate(doc.fechas!.fechaFin)}`,
+                                            text: doc.fechas!.fechaInicio && doc.fechas!.fechaFin ? `${this.formatDate(doc.fechas!.fechaInicio)} -  ${this.formatDate(doc.fechas!.fechaFin)}` : "",
                                             style: 'normalText',
                                         }
                                     ]
@@ -1349,7 +1349,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: this.formatDate(doc.fechas!.fechaInicioRef),
+                                            text: doc.fechas!.fechaInicioRef ? this.formatDate(doc.fechas!.fechaInicioRef) : "",
                                             style: 'normalText',
                                         }
                                     ]
@@ -1372,7 +1372,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: this.formatDate(doc.fechas!.fechaFinRef),
+                                            text: doc.fechas!.fechaFinRef ? this.formatDate(doc.fechas!.fechaFinRef) : "",
                                             style: 'normalText',
                                         }
                                     ]

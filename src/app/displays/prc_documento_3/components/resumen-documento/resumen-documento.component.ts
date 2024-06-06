@@ -1318,6 +1318,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     this.docPrint = {
+      emailVendedor: "",
       noDoc: this.consecutivoDoc.toString(),
       refObservacones: observaciones,
       empresa: empresa,

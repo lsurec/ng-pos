@@ -263,6 +263,7 @@ export class DetailsDestDocsComponent {
 
     //Ebojeto completo con los datos de impresion
     this.globalConvertSrevice.docPrint = {
+       emailVendedor:"",
       noDoc: encabezado.id_Documento ?? "0",
       empresa: empresa,
       documento: documento,
