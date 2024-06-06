@@ -1559,6 +1559,9 @@ export class FacturaComponent implements OnInit {
 
   async printFormat() {
 
+    this.facturaService.setIdDocumentoRef();
+
+
     //TODO:Verificar tipo de documento, imprimir cotizacion alfa y omega
     // if (this.facturaService.tipoDocumento == 20) {
     //   //Generar datos apra impresion de cotizacion
