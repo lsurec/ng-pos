@@ -174,6 +174,7 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this._retryService.createDoc$.subscribe(() => {
       this.sendDoc();
     });
@@ -498,6 +499,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
     this.setDateNow();
+    this.facturaService.setIdDocumentoRef();
+
 
 
     //si hay solo una serie disponoble
@@ -603,6 +606,8 @@ export class FacturaComponent implements OnInit {
 
   //cargar datos necesarios
   async loadData() {
+    this.facturaService.setIdDocumentoRef();
+
 
     //limpiar datos del modulo
     this.facturaService.clearData();
@@ -2290,22 +2295,10 @@ export class FacturaComponent implements OnInit {
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
 
-    let dateConsecutivo: Date = new Date();
 
     let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
 
     // Combinar los dos números para formar uno de 14 dígitos
-    let strNum1: string = randomNumber1.toString();
-    let combinedStr: string = strNum1 +
-      dateConsecutivo.getDate() +
-      (dateConsecutivo.getMonth() + 1) +
-      dateConsecutivo.getFullYear() +
-      dateConsecutivo.getHours() +
-      dateConsecutivo.getMinutes() +
-      dateConsecutivo.getSeconds();
-
-    //ref id
-    let combinedNum: number = parseInt(combinedStr, 10);
 
     //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
@@ -2503,7 +2496,7 @@ export class FacturaComponent implements OnInit {
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar
       Doc_Cuenta_Correntista_Ref: this.facturaService.vendedor?.cuenta_Correntista ?? null,
-      Doc_ID_Documento_Ref: combinedNum,
+      Doc_ID_Documento_Ref: this.facturaService.idDocumentoRef,
       Doc_FEL_numeroDocumento: null,
       Doc_FEL_Serie: null,
       Doc_FEL_UUID: null,
