@@ -194,12 +194,12 @@ export class FacturaComponent implements OnInit {
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
 
-    if (PreferencesService.nuevoDoc.length == 0) {
-      PreferencesService.nuevoDoc = "0";
-      this.facturaService.nuevoDoc = false;
-    } else if (PreferencesService.nuevoDoc == "1") {
-      this.facturaService.nuevoDoc = true;
-    }
+    // if (PreferencesService.nuevoDoc.length == 0) {
+    //   PreferencesService.nuevoDoc = "0";
+    //   this.facturaService.nuevoDoc = false;
+    // } else if (PreferencesService.nuevoDoc == "1") {
+    //   this.facturaService.nuevoDoc = true;
+    // }
 
     //mostrar alerta sino hay preferencia guardada
     if (PreferencesService.mostrarAlerta.length == 0 || PreferencesService.mostrarAlerta == "1") {
@@ -1326,15 +1326,15 @@ export class FacturaComponent implements OnInit {
     }
   }
 
-  nuevoDocImprimir() {
-    //si es verdadero, la preferencia será 1;
-    if (this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "1";
-    } else if (!this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "0";
-    }
+  // nuevoDocImprimir() {
+  //   //si es verdadero, la preferencia será 1;
+  //   if (this.facturaService.nuevoDoc) {
+  //     PreferencesService.nuevoDoc = "1";
+  //   } else if (!this.facturaService.nuevoDoc) {
+  //     PreferencesService.nuevoDoc = "0";
+  //   }
 
-  }
+  // }
 
   //Confirmar documento
   printDoc() {
