@@ -1012,8 +1012,8 @@ export class PrinterService {
         let backgroundimg = await this._generateBase64('assets/image-not-found-icon.png');
         // data:image/jpeg;base64,
 
-        
-        
+
+
 
         let date: Date = doc.cliente.fecha;
 
@@ -1045,7 +1045,7 @@ export class PrinterService {
                     },
 
                     {
-                        image: item.imagen64 ?  `data:image/jpeg;base64,${item.imagen64}` :  backgroundimg,
+                        image: item.imagen64 ? `data:image/jpeg;base64,${item.imagen64}` : backgroundimg,
                         fit: [50, 50],
 
                     },
@@ -1104,7 +1104,7 @@ export class PrinterService {
                             body: [
                                 [
                                     {
-                                        image: doc.image64Empresa ?  `data:image/jpeg;base64,${doc.image64Empresa}` :  logo_empresa,
+                                        image: doc.image64Empresa ? `data:image/jpeg;base64,${doc.image64Empresa}` : logo_empresa,
                                         width: 115,
                                         absolutePosition: { x: 20, y: 10 }
                                     },
@@ -1857,21 +1857,20 @@ export class PrinterService {
                     text: doc.documento.descripcion,
                     style: 'centerBold',
                 },
-                //TODO:Transalte
                 {
-                    text: `Serie Interna: ${doc.documento.serieInterna}`,
+                    text: `${this._translate.instant('pos.factura.serieInterna')}: ${doc.documento.serieInterna}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
                 },
                 {
-                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
                     style: 'center',
                 },
                 //TODO:Agregar datos de certificacion
                 {
                     margin: [0, 10, 0, 0],
 
-                    text: `Serie: ${doc.documento.serie}`,
+                    text: `${this._translate.instant('pos.factura.serie')}: ${doc.documento.serie}`,
                     style: 'centerBold',
                 },
                 {
@@ -1879,11 +1878,11 @@ export class PrinterService {
                     style: 'centerBold',
                 },
                 {
-                    text: `Fecha: ${doc.documento.fechaCert}`,
+                    text: `${this._translate.instant('pos.factura.fecha')} ${doc.documento.fechaCert}`,
                     style: 'centerBold',
                 },
                 {
-                    text: `No Autorizacion`,
+                    text: this._translate.instant('pos.factura.noAutorizacion'),
                     style: 'centerBold',
                 },
                 {

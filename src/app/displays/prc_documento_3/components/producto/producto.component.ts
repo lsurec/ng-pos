@@ -409,10 +409,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     if (!resDisponibiladProducto.status) {
-      //TODO:Translate
       this.isLoading = false;
-
-
       let error: TypeErrorInterface = {
         error: resDisponibiladProducto,
         type: 1,
@@ -534,8 +531,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       } else {
         precioDias = this.productoService.total;
         cantidadDias = 1;
-
-        this._notificationsService.openSnackbar("No se calculó el precio por día. Verifica que las fechas sean validas.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));
       }
     }
 
@@ -591,14 +587,10 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.calculateTotales();
 
       //Transacion agregada
-      //TODO:Translate
-      this._notificationsService.openSnackbar("Transaccion modificada");
-
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.traModificada'));
     }
 
     this.isLoading = false;
-
-
 
     this.dialogRef.close([]);
 
@@ -621,10 +613,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     //si no feue posible controrar los factores de conversion mostrar error
     if (!resObjProduct.status) {
-
-      //TODO:Translate
-
-
       let error: TypeErrorInterface = {
         error: resObjProduct,
         type: 2,
@@ -639,12 +627,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     if (imagenesObj.length == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
       return;
     }
-
-
 
     let imagenes: string[] = [];
 

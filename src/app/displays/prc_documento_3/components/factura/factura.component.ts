@@ -827,7 +827,7 @@ export class FacturaComponent implements OnInit {
 
 
     if (existRef == -1) {
-      this._notificationService.openSnackbar("No se pudo encontrar el tipo de referencia.");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.tipoRefNoEncontrado'));
     } else {
 
       this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
@@ -847,8 +847,7 @@ export class FacturaComponent implements OnInit {
 
 
     if (existCuentaRef == -1) {
-      this._notificationService.openSnackbar("No se pudo encontrar la cuenta correntista ref.");
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaNoEncontrada'));
     } else {
       this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
     }
@@ -1141,7 +1140,7 @@ export class FacturaComponent implements OnInit {
         );
 
         if (!res.status) {
-          this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
 
           console.error(res);
 
@@ -1154,7 +1153,7 @@ export class FacturaComponent implements OnInit {
 
           res.response = "No se pudo obtener los resultados al hacer el calculo de precio por dias, verifica el procedimeinto."
 
-          this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
 
           console.error(res);
 
@@ -1384,19 +1383,14 @@ export class FacturaComponent implements OnInit {
 
     if (this.facturaService.valueParametro(58)) {
       if (!this.facturaService.tipoReferencia) {
-
-        //TODO:Translate
-        this._notificationService.openSnackbar("Debe seelccionar un tipo de referencia.");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccioneTipoRef'));
         return;
       }
     }
 
     if (this.facturaService.valueParametro(44)) {
       if (!this.validateDates()) {
-
-        //TODO:Translate
-        this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
-
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.restriccionFechas'));
         return;
       }
     }
@@ -1477,12 +1471,9 @@ export class FacturaComponent implements OnInit {
         this.facturaService.viewError = true;
         this.facturaService.viewMessage = true;
 
-
-        //TODO:Translate
-        this.facturaService.stepMessage = "Algo salió mal al crear el documento. Intenta mas tarde."
+        this.facturaService.stepMessage = this._translate.instant('pos.alerta.docSalioMal');
 
         this.saveError(resSendDoc.error);
-
 
         return;
       }
@@ -1507,12 +1498,9 @@ export class FacturaComponent implements OnInit {
         this.facturaService.viewError = true;
         this.facturaService.viewMessage = true;
 
-
-        //TODO:Translate
-        this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+        this.facturaService.stepMessage = this._translate.instant('pos.alertas.firmaSalioMal');
 
         this.saveError(resFelProcess.error);
-
 
         return;
       }
@@ -1817,16 +1805,12 @@ export class FacturaComponent implements OnInit {
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
       pdfMake.createPdf(docDefinition).print();
 
-
-
       if (
         this.facturaService.nuevoDoc) {
-
         this.setValuesNewDoc();
-
       }
 
-      this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
+      this._notificationService.openSnackbar(`${this._translate.instant('pos.alertas.docCreado')}: ${this.consecutivoDoc}`);
 
       return;
 
@@ -1860,7 +1844,7 @@ export class FacturaComponent implements OnInit {
 
       this.facturaService.isLoading = false;
 
-      this.printAnyway(docDefinition, `Impresora ${encabezado.impresora} no dispinible.`);
+      this.printAnyway(docDefinition, `${this._translate.instant('pos.factura.impresora')} ${encabezado.impresora} ${this._translate.instant('pos.factura.noDisponible')}.`);
 
       return;
     }
@@ -1887,7 +1871,7 @@ export class FacturaComponent implements OnInit {
 
         this.facturaService.isLoading = false;
 
-        this.printAnyway(docDefinition, "Algo salió mal, intenta mas tarde.");
+        this.printAnyway(docDefinition, this._translate.instant('pos.botones.salioMal'));
 
         return;
 
@@ -1901,10 +1885,7 @@ export class FacturaComponent implements OnInit {
         this.setValuesNewDoc();
 
       }
-
-      this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
-
-
+      this._notificationService.openSnackbar(`${this._translate.instant('pos.alertas.docCreado')}: ${this.consecutivoDoc}`);
       // this._notificationService.openSnackbar(this._translate.instant('pos.factura.documento_procesado'));
 
     });
@@ -1914,28 +1895,20 @@ export class FacturaComponent implements OnInit {
 
   async printAnyway(doc: TDocumentDefinitions, descripcion: string) {
 
-
-    //TODO:Translate
-
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
-        title: "Fallo en la Impresión",
+        title: this._translate.instant('pos.alertas.falloImpresion'),
         description: descripcion,
-        verdadero: "Imprimir con otro metodo.",
-        falso: this._translate.instant("Aceptar"),
+        verdadero: this._translate.instant('pos.alertas.imprimirOtroMetodo'),
+        falso: this._translate.instant('pos.botones.aceptar'),
       }
     );
 
-
-    if (
-      this.facturaService.nuevoDoc) {
-
+    if (this.facturaService.nuevoDoc) {
       this.setValuesNewDoc();
-
     }
 
-    this._notificationService.openSnackbar(`Documento creado correctamente: ${this.consecutivoDoc}`);
-
+    this._notificationService.openSnackbar(`${this._translate.instant('pos.alertas.docCreado')}: ${this.consecutivoDoc}`);
 
     if (!verificador) return;
 
@@ -1968,9 +1941,7 @@ export class FacturaComponent implements OnInit {
       this.facturaService.viewError = true;
       this.facturaService.viewMessage = true;
 
-
-      //TODO:Translate
-      this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+      this.facturaService.stepMessage = this._translate.instant('pos.botones.firmaSalioMal');
 
       this.saveError(resFelProcess.error);
 
@@ -2554,11 +2525,10 @@ export class FacturaComponent implements OnInit {
   }
 
   async modifyDoc() {
-    //TODO:Translate
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
-        title: "¿Estás seguro?",
-        description: "Se aplicaran los cambios al documento.",
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.aplicaranCambios'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
         falso: this._translate.instant('pos.botones.cancelar'),
       }
@@ -2789,8 +2759,7 @@ export class FacturaComponent implements OnInit {
     }
 
     this.facturaService.isLoading = false;
-
-    this._notificationService.openSnackbar("Documento editado correctamente.");
+    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.docEditado'));
   }
 
   async showError(res: ResApiInterface) {

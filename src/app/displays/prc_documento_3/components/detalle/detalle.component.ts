@@ -82,7 +82,7 @@ export class DetalleComponent implements AfterViewInit {
     public productoService: ProductoService,
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
-    public dataUserService:DataUserService,
+    public dataUserService: DataUserService,
   ) {
     //filtro producto
     facturaService.filtrosProductos = PreferencesService.filtroProducto;
@@ -1008,8 +1008,7 @@ export class DetalleComponent implements AfterViewInit {
 
 
     if (imagenesObj.length == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
       return;
     }
 

@@ -32,8 +32,8 @@ export class EditarClienteComponent implements OnInit {
 
   isLoading: boolean = false; //pantalla de carga0
   verError: boolean = false; //informe de errores
-  
-  gruposCuenta:GrupoCuentaInterface[] =  [];
+
+  gruposCuenta: GrupoCuentaInterface[] = [];
   user: string = PreferencesService.user; //Usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
 
@@ -75,18 +75,18 @@ export class EditarClienteComponent implements OnInit {
     this.telefono = this.cuenta?.telefono;
     this.correo = this.cuenta?.eMail;
 
-    
+
 
   }
 
-  async loadData(){
+  async loadData() {
     //Consumo tipo cuneta
 
     this.gruposCuenta = [];
     this.tipoCuenta = undefined;
 
-    this.isLoading   = true;
-    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user,this.token);
+    this.isLoading = true;
+    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user, this.token);
 
     this.isLoading = false;
 
@@ -117,38 +117,38 @@ export class EditarClienteComponent implements OnInit {
 
 
     //Seleccionar tipo cuenta asigando a la cuenta correntista
-    let indexGrupoCuenta :number = -1;
+    let indexGrupoCuenta: number = -1;
 
     for (let i = 0; i < this.gruposCuenta.length; i++) {
       const element = this.gruposCuenta[i];
-      if(element.grupo_Cuenta == this.cuenta!.grupo_Cuenta){
-        
-        indexGrupoCuenta=i;
+      if (element.grupo_Cuenta == this.cuenta!.grupo_Cuenta) {
+
+        indexGrupoCuenta = i;
         break;
       }
-      
-    }
-    
 
-    if(this.cuenta!.grupo_Cuenta){
-      if(indexGrupoCuenta == -1){
+    }
+
+
+    if (this.cuenta!.grupo_Cuenta) {
+      if (indexGrupoCuenta == -1) {
         this.gruposCuenta.push(
           {
-            descripcion:this.cuenta!.des_Grupo_Cuenta,
-            grupo_Cuenta:this.cuenta!.grupo_Cuenta,
-            grupo_Cuenta_Padre :0,
-            nivel:0,
-            orden:0,
-            raiz:0,
+            descripcion: this.cuenta!.des_Grupo_Cuenta,
+            grupo_Cuenta: this.cuenta!.grupo_Cuenta,
+            grupo_Cuenta_Padre: 0,
+            nivel: 0,
+            orden: 0,
+            raiz: 0,
           }
         );
 
-        this.tipoCuenta	 = this.gruposCuenta[this.gruposCuenta.length-1];
-      }else{
+        this.tipoCuenta = this.gruposCuenta[this.gruposCuenta.length - 1];
+      } else {
         this.tipoCuenta = this.gruposCuenta[indexGrupoCuenta];
       }
     }
-    
+
   }
 
   //regresar a la pantalla anterior
@@ -205,8 +205,7 @@ export class EditarClienteComponent implements OnInit {
 
     //Validar Grupo Cuenta
     if (!this.validarCorreo(this.correo)) {
-      //TODO:Translate
-      this._notificationsServie.openSnackbar("Seleccione un tipo de cuenta");
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.tipoCuenta'));
       return;
     }
 
@@ -215,12 +214,12 @@ export class EditarClienteComponent implements OnInit {
       correo: this.correo,
       direccion: this.direccion,
       cuenta: this.cuenta!.cuenta_Correntista,
-      cuentaCuenta:this.cuenta!.cuenta_Cta,
+      cuentaCuenta: this.cuenta!.cuenta_Cta,
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,
-      grupoCuenta:this.tipoCuenta!.grupo_Cuenta,
-    
+      grupoCuenta: this.tipoCuenta!.grupo_Cuenta,
+
     }
 
 

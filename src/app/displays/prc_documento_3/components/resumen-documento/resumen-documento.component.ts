@@ -179,9 +179,7 @@ export class ResumenDocumentoComponent implements OnInit {
       this.facturaService.viewError = true;
       this.facturaService.viewMessage = true;
 
-
-      //TODO:Translate
-      this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+      this.facturaService.stepMessage = this._translate.instant('pos.alertas.firmaSalioMal');
 
       this.saveError(resFelProcess.error);
 
@@ -256,9 +254,7 @@ export class ResumenDocumentoComponent implements OnInit {
         this.facturaService.viewError = true;
         this.facturaService.viewMessage = true;
 
-
-        //TODO:Translate
-        this.facturaService.stepMessage = "Algo salió mal al crear el documento. Intenta mas tarde."
+        this.facturaService.stepMessage = this._translate.instant('pos.alertas.docSalioMal');
 
         this.saveError(resSendDoc.error);
 
@@ -289,9 +285,7 @@ export class ResumenDocumentoComponent implements OnInit {
         this.facturaService.viewError = true;
         this.facturaService.viewMessage = true;
 
-
-        //TODO:Translate
-        this.facturaService.stepMessage = "Algo salió mal al generar la firma electronica. Intenta mas tarde."
+        this.facturaService.stepMessage = this._translate.instant('pos.alertas.firmaSalioMal');
 
         this.saveError(resFelProcess.error);
 
@@ -599,7 +593,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
       //actualizar doc esrctiura
 
-      let fechaAnt:Date = new Date(this.dataFel.fechaHoraCertificacion);
+      let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
@@ -607,10 +601,10 @@ export class ResumenDocumentoComponent implements OnInit {
       this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
 
 
-      
+
       //onjeto para el api
       let document: PostDocumentInterface = {
-        estado:11,
+        estado: 11,
         estructura: JSON.stringify(this.docGlobal),
         user: this.user,
       }
@@ -659,11 +653,10 @@ export class ResumenDocumentoComponent implements OnInit {
   }
 
   async modifyDoc() {
-    //TODO:Translate
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
-        title: "¿Estás seguro?",
-        description: "Se aplicaran los cambios al documento.",
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.aplicaranCambios'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
         falso: this._translate.instant('pos.botones.cancelar'),
       }
@@ -1237,7 +1230,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
 
 
-      if (detail.cantidad == 0 && detail. monto > 0) {
+      if (detail.cantidad == 0 && detail.monto > 0) {
         //4 cargo
         cargo += detail.monto;
       } else if (detail.cantidad == 0 && detail.monto < 0) {
@@ -1317,7 +1310,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     this.docPrint = {
-      image64Empresa:"",
+      image64Empresa: "",
       emailVendedor: "",
       noDoc: this.consecutivoDoc.toString(),
       refObservacones: observaciones,
@@ -1546,13 +1539,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     // Combinar los dos números para formar uno de 14 dígitos
     let strNum1: string = randomNumber1.toString();
-    let combinedStr: string = strNum1 + 
-    dateConsecutivo.getDate() + 
-    (dateConsecutivo.getMonth()+1) +
-    dateConsecutivo.getFullYear() + 
-    dateConsecutivo.getHours() + 
-    dateConsecutivo.getMinutes() +
-    dateConsecutivo.getSeconds();
+    let combinedStr: string = strNum1 +
+      dateConsecutivo.getDate() +
+      (dateConsecutivo.getMonth() + 1) +
+      dateConsecutivo.getFullYear() +
+      dateConsecutivo.getHours() +
+      dateConsecutivo.getMinutes() +
+      dateConsecutivo.getSeconds();
 
     //ref id
     let combinedNum: number = parseInt(combinedStr, 10);
@@ -1776,7 +1769,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let document: PostDocumentInterface = {
       estructura: JSON.stringify(this.docGlobal),
       user: this.user,
-      estado:this.facturaService.valueParametro(349) ? 1 : 11, 
+      estado: this.facturaService.valueParametro(349) ? 1 : 11,
     }
 
     //consumo del servico para crear el documento

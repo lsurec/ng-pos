@@ -103,7 +103,8 @@
         <p class="textosBold14">{{ 'pos.factura.buscarPor' | translate }}:</p>
         <div class="dFlex">
             <div class="input-container">
-                <input #inputFilterDoc class="barra-de-busqueda" type="search" name="search" [(ngModel)]="globalConvertSrevice.performanSearchOrigin" autocomplete="off"
+                <input #inputFilterDoc class="barra-de-busqueda" type="search" name="search"
+                    [(ngModel)]="globalConvertSrevice.performanSearchOrigin" autocomplete="off"
                     placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filtrar()">
                 <button mat-icon-button class="iconoLupa" type="submit">
                     <mat-icon>search</mat-icon>
@@ -157,10 +158,8 @@
                 <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
                 <p class="textos14">{{documento.serie}} </p>
             </div>
-            <!--TODO:Translate-->
             <div class="dFlex">
-
-                <p class="textosBold14">Cliente:</p>
+                <p class="textosBold14">{{ 'pos.factura.cliente' | translate }}: </p>
                 <p class="textos14"> {{documento.cliente}} </p>
             </div>
             <div class="dFlex">
@@ -169,7 +168,7 @@
             </div>
             <div class="dFlex">
                 <span class="spacer"></span>
-                <p class="textosBold14">TOTAL: {{documento.monto | currencyFormat}} </p>
+                <p class="textosBold14">{{ 'pos.factura.total' | translate }}: {{documento.monto | currencyFormat}} </p>
             </div>
         </div>
     </div>
