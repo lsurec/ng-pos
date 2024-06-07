@@ -29,14 +29,14 @@
                                     autocomplete="off">
                                 <br>
                                 <!-- Ver y ocutar contraseña -->
-                                <p *ngIf="!mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">{{
-                                    'pos.login.ver'
-                                    |
-                                    translate }}</p>
-                                <p *ngIf="mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">{{
-                                    'pos.login.ocultar'
-                                    |
-                                    translate }}</p>
+                                <p class="ver-clave" *ngIf="!mostrarTexto"
+                                    (click)="this.mostrarTexto = !this.mostrarTexto">
+                                    {{'pos.login.ver' | translate }}
+                                </p>
+                                <p class="ver-clave" *ngIf="mostrarTexto"
+                                    (click)="this.mostrarTexto = !this.mostrarTexto">
+                                    {{'pos.login.ocultar' | translate }}
+                                </p>
                                 <!-- <a>Olvidaste tu contraseña?</a> -->
                                 <!-- <a>Registrate</a> -->
                             </div>

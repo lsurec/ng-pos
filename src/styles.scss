@@ -461,6 +461,10 @@ input[type='number'] {
     cursor: pointer;
 }
 
+.dark-theme .ver-clave:hover {
+    color: $color-naranja !important;
+}
+
 //BORDES DE BOTONES
 .dark-theme button:not(:disabled),
 .dark-theme .barra-monto,
@@ -479,9 +483,9 @@ input[type='number'] {
     color: $bordes !important;
 }
 
-.dark-theme .detalles:hover {
-    border-bottom: 1px solid $color-naranja !important;
-}
+// .dark-theme .detalles:hover {
+//     border-bottom: 1px solid $color-naranja !important;
+// }
 
 .dark-theme .campos:hover {
     border-bottom: 1px solid $iconos !important;
