@@ -57,7 +57,8 @@
             "extra": "Extra large (20)",
             "grande": "Large (16)",
             "mediano": "Medium (14)",
-            "peque": "Small (12)"
+            "peque": "Small (12)",
+            "noMostrar": "Do not show again."
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
