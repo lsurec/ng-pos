@@ -11,4 +11,6 @@ export interface DetallePrintInterface {
     tipo_Transaccion:        number;
     moneda:                  number;
     simbolo_Moneda:          string;
+    img_Producto:      any;
+    precio_Reposicion: any;
 }

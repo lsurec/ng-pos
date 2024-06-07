@@ -256,13 +256,13 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
 
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-      this.restartDateRefIni();
-      return;
-    }
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
+    //   this.restartDateRefIni();
+    //   return;
+    // }
 
     //Copiar valores
     this.copyDates();
@@ -278,15 +278,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //validaciones para la fehca fin ref
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-      this.restartDateRefFin();
-      return;
-    }
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
+    //   this.restartDateRefFin();
+    //   return;
+    // }
 
-    //Copiar valores
-    this.copyDates();
+    // //Copiar valores
+    // this.copyDates();
 
     this.facturaService.saveDocLocal()
 
@@ -298,44 +298,48 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //Validaciones para la fehca inicio
 
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-      this.restartDateIni();
-      return;
-    }
+    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
+    //   this.restartDateIni();
+    //   return;
+    // }
 
 
-    if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
-      this.restartDateIni();
-      return;
-    }
+    // if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
+    //   //TODO:Translate
+    //   this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
+    //   this.restartDateIni();
+    //   return;
+    // }
 
     //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
+    if (this.facturaService.valueParametro(44)) {
       //si hay productos agregados no se puede cambiar la fechha
+
+
       if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
+        // //TODO:Translate
 
-        let verificador: boolean = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('¿Cambiar fecha?'),
-            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.cancelar'),
-          }
-        );
+        // let verificador: boolean = await this._notificationService.openDialogActions(
+        //   {
+        //     title: this._translate.instant('¿Cambiar fecha?'),
+        //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+        //     verdadero: this._translate.instant('pos.botones.aceptar'),
+        //     falso: this._translate.instant('pos.botones.cancelar'),
+        //   }
+        // );
 
-        if (!verificador) {
-          this.restartDateIni();
-          return;
-        };
+        // if (!verificador) {
+        //   this.restartDateIni();
+        //   return;
+        // };
 
 
         //Calcular nuevos totales
-        if (this.facturaService.valueParametro(351)) {
+
+        if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
+
 
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
@@ -365,7 +369,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             if (calculoDias.length == 0) {
 
 
-              res.response = "No se están obteiiendo valores del procedimiento almacenado"
+              res.response = "No se están obteniendo valores del procedimiento almacenado"
 
               this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
 
@@ -384,342 +388,356 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.facturaService.calculateTotales();
+          this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
+
+
+
+        }
+        else {
+          this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
         }
       }
+
+
+      }
+
+      //Copiar valores
+      this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+      this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+
+      this.facturaService.saveDocLocal()
+
     }
-
-    //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
-
-    this.facturaService.saveDocLocal()
-
-  }
 
   async setDateFin() {
-    this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
+      this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
 
 
-    //vañidaciones para la fecha fin
-    if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
-      this.restartDateFin();
-      return;
-    }
+      //vañidaciones para la fecha fin
+      // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
+      //   //TODO:Translate
+      //   this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
+      //   this.restartDateFin();
+      //   return;
+      // }
 
-    if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
-      //TODO:Translate
-      this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
-      this.restartDateFin();
-      return;
-    }
+      // if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
+      //   //TODO:Translate
+      //   this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
+      //   this.restartDateFin();
+      //   return;
+      // }
 
-    //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(351)) {
-      //si hay productos agregados no se puede cambiar la fechha
-      if (this.facturaService.traInternas.length > 0) {
-        //TODO:Translate
+      //si se debe calcular el preciuo por dias
 
-        let verificador: boolean = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('¿Cambiar fecha?'),
-            description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-            verdadero: this._translate.instant('pos.botones.aceptar'),
-            falso: this._translate.instant('pos.botones.cancelar'),
-          }
-        );
+      //si se debe calcular el preciuo por dias
+      if (this.facturaService.valueParametro(44)) {
+        //si hay productos agregados no se puede cambiar la fechha
 
-        if (!verificador) {
-          this.restartDateFin();
-          return;
-        };
+        if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
 
+          if (this.facturaService.traInternas.length > 0) {
+            // //TODO:Translate
 
-        //Calcular nuevos totales
-        if (this.facturaService.valueParametro(351)) {
+            // let verificador: boolean = await this._notificationService.openDialogActions(
+            //   {
+            //     title: this._translate.instant('¿Cambiar fecha?'),
+            //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
+            //     verdadero: this._translate.instant('pos.botones.aceptar'),
+            //     falso: this._translate.instant('pos.botones.cancelar'),
+            //   }
+            // );
 
-          for (const tra of this.facturaService.traInternas) {
-            let count: number = 0;
+            // if (!verificador) {
+            //   this.restartDateIni();
+            //   return;
+            // };
 
+            //Calcular nuevos totales
 
-            this.facturaService.isLoading = true;
-
-            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-              this.token,
-              this.facturaService.fechaIni!,
-              this.facturaService.fechaFin,
-              tra.precioCantidad!.toString(),
-            );
-
-            this.facturaService.isLoading = false;
+            for (const tra of this.facturaService.traInternas) {
+              let count: number = 0;
 
 
-            if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+              this.facturaService.isLoading = true;
 
-              console.error(res);
+              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+                this.token,
+                this.facturaService.fechaIni!,
+                this.facturaService.fechaFin,
+                tra.precioCantidad!.toString(),
+              );
 
-              return;
+              this.facturaService.isLoading = false;
+
+              if (!res.status) {
+                this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+                console.error(res);
+
+                return;
+              }
+
+              let calculoDias: PrecioDiaInterface[] = res.response;
+
+              if (calculoDias.length == 0) {
+
+
+                res.response = "No se están obteniendo valores del procedimiento almacenado"
+
+                this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
+
+                console.error(res);
+
+                return;
+              }
+
+              this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
+
+              count++;
+
             }
 
-            let calculoDias: PrecioDiaInterface[] = res.response;
-
-            if (calculoDias.length == 0) {
-
-              res.response = "El procedimiento almacenado no esta devolviendo valores, verificar.";
-
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-
-              console.error(res);
-
-              return;
-            }
-
-
-            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
-
-
-            count++;
-
+            this.facturaService.calculateTotales();
+            this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
           }
 
-          this.facturaService.calculateTotales();
+          //TODO:Translate
+        } else {
+          this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
         }
-
 
       }
 
+
+      //Actuali<ar copaias 
+      //Copiar valores
+      this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
+      this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+
+
+      this.facturaService.saveDocLocal()
+
     }
 
 
-    //Actuali<ar copaias 
-    //Copiar valores
-    this.facturaService.copyFechaIni = new Date(this.facturaService.fechaIni!);
-    this.facturaService.copyFechaFin = new Date(this.facturaService.fechaFin!);
+    abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
+      timepicker.open();
+    }
 
 
-    this.facturaService.saveDocLocal()
+    changeCuentaRef() {
 
-  }
+      if (!this.globalConvertService.editDoc) return;
+      console.log("Solicitar permisos");
 
-
-  abrirTimePicker(timepicker: NgxMaterialTimepickerComponent) {
-    timepicker.open();
-  }
-
-
-  changeCuentaRef() {
-
-    if (!this.globalConvertService.editDoc) return;
-    console.log("Solicitar permisos");
-
-  }
+    }
 
   async changeSerie() {
 
-    //cargar datos que dependen de la serie 
-    let serie: string = this.facturaService.serie!.serie_Documento;
+      //cargar datos que dependen de la serie 
+      let serie: string = this.facturaService.serie!.serie_Documento;
 
-    this.facturaService.isLoading = true;
+      this.facturaService.isLoading = true;
 
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
-      this.user,
-      this.token,
-      this.documento,
-      serie,
-      this.empresa,
-    )
-
-
-    if (!resVendedor.status) {
-
-      this.facturaService.isLoading = false;
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resVendedor);
-
-      return;
-
-    }
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+        this.user,
+        this.token,
+        this.documento,
+        serie,
+        this.empresa,
+      )
 
 
-    this.facturaService.vendedores = resVendedor.response;
+      if (!resVendedor.status) {
 
-    //si solo hay un vendedor seleccionarlo por defecto
-    if (this.facturaService.vendedores.length == 1) {
-      this.facturaService.vendedor = this.facturaService.vendedores[0];
-      this.facturaService.saveDocLocal();
-
-    }
-
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
-      this.user,
-      this.token,
-      this.documento,
-      serie,
-      this.empresa,
-    );
-
-    if (!resTransaccion.status) {
-
-      this.facturaService.isLoading = false;
-
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resTransaccion);
-
-      return;
-
-    }
-
-    this.facturaService.tiposTransaccion = resTransaccion.response;
-
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
-      this.user,
-      this.token,
-      this.documento,
-      serie,
-      this.empresa,
-      this.estacion,
-    )
-
-    if (!resParametro.status) {
-
-      this.facturaService.isLoading = false;
-
-
-
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resParametro);
-
-      return;
-
-    }
-
-    this.facturaService.parametros = resParametro.response;
-
-    this.facturaService.montos = [];
-    this.facturaService.traInternas = [];
-
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
-      this.token,
-      this.empresa,
-      serie,
-      this.documento,
-    );
-
-
-    if (!resFormaPago.status) {
-
-      this.facturaService.isLoading = false;
-
-
-
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resFormaPago);
-
-      return;
-
-    }
-
-
-    this.facturaService.formasPago = resFormaPago.response;
-
-
-    if (this.facturaService.valueParametro(58)) {
-
-
-      this.facturaService.tipoReferencia = undefined;
-      this.facturaService.tiposReferencia = [];
-
-
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
-
-
-      //si algo salio mal
-      if (!resTipoRefencia.status) {
         this.facturaService.isLoading = false;
 
-        this.verError(resTipoRefencia);
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resVendedor);
 
         return;
 
       }
 
 
-      this.facturaService.tiposReferencia = resTipoRefencia.response;
+      this.facturaService.vendedores = resVendedor.response;
 
+      //si solo hay un vendedor seleccionarlo por defecto
+      if (this.facturaService.vendedores.length == 1) {
+        this.facturaService.vendedor = this.facturaService.vendedores[0];
+        this.facturaService.saveDocLocal();
 
-      if (this.facturaService.tiposReferencia.length == 1) {
-        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
       }
+
+      //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+        this.user,
+        this.token,
+        this.documento,
+        serie,
+        this.empresa,
+      );
+
+      if (!resTransaccion.status) {
+
+        this.facturaService.isLoading = false;
+
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resTransaccion);
+
+        return;
+
+      }
+
+      this.facturaService.tiposTransaccion = resTransaccion.response;
+
+      //Buscar parametros del documento
+      let resParametro: ResApiInterface = await this._parametroService.getParametro(
+        this.user,
+        this.token,
+        this.documento,
+        serie,
+        this.empresa,
+        this.estacion,
+      )
+
+      if (!resParametro.status) {
+
+        this.facturaService.isLoading = false;
+
+
+
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resParametro);
+
+        return;
+
+      }
+
+      this.facturaService.parametros = resParametro.response;
+
+      this.facturaService.montos = [];
+      this.facturaService.traInternas = [];
+
+      //Buscar formas de pago
+      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+        this.token,
+        this.empresa,
+        serie,
+        this.documento,
+      );
+
+
+      if (!resFormaPago.status) {
+
+        this.facturaService.isLoading = false;
+
+
+
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resFormaPago);
+
+        return;
+
+      }
+
+
+      this.facturaService.formasPago = resFormaPago.response;
+
+
+      if (this.facturaService.valueParametro(58)) {
+
+
+        this.facturaService.tipoReferencia = undefined;
+        this.facturaService.tiposReferencia = [];
+
+
+        let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+
+        //si algo salio mal
+        if (!resTipoRefencia.status) {
+          this.facturaService.isLoading = false;
+
+          this.verError(resTipoRefencia);
+
+          return;
+
+        }
+
+
+        this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+
+        if (this.facturaService.tiposReferencia.length == 1) {
+          this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[0];
+        }
+
+      }
+
+
+      this.facturaService.isLoading = false;
+
+
 
     }
 
+    // Función para manejar el cambio de estado del switch
+    setCF(): void {
+      this.switchState = !this.switchState;
 
-    this.facturaService.isLoading = false;
-
-
-
-  }
-
-  // Función para manejar el cambio de estado del switch
-  setCF(): void {
-    this.switchState = !this.switchState;
-
-    console.log(this.switchState);
+      console.log(this.switchState);
 
 
-    if (this.switchState) {
+      if(this.switchState) {
       this.facturaService.cuenta = {
         cuenta_Correntista: 1,
         cuenta_Cta: "1",

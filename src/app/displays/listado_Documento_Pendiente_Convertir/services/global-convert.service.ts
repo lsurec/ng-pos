@@ -14,6 +14,8 @@ import { DocPrintModel } from 'src/app/interfaces/doc-print.interface';
 })
 export class GlobalConvertService {
 
+    performanSearchOrigin:string = "";
+
     editDoc:boolean = false; //editar documento
     regresar: number = 0; //Desde donde se navegó
 

@@ -28,6 +28,8 @@ import { FormControl } from '@angular/forms';
 //Servicio para commpartir datos del modulo factura
 export class FacturaService {
 
+    idDocumentoRef: number = 0;
+
     //controlar las vistas de las pestañas
     tabDocummento: boolean = true; //contorlador para la pestaña documento
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
@@ -56,7 +58,7 @@ export class FacturaService {
 
     noMostrar: boolean = false;
 
-    nuevoDoc: boolean = false;
+    nuevoDoc: boolean = true;
 
     verDialogoFactura: number = 1;
 
@@ -151,6 +153,7 @@ export class FacturaService {
 
     stepMessage: string = "";
 
+
     constructor(
         //instancias de los servicios utilizados
         private _pagoComponentService: PagoComponentService,
@@ -165,7 +168,24 @@ export class FacturaService {
     }
 
 
+    setIdDocumentoRef() {
+        let dateConsecutivo: Date = new Date();
 
+        let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
+
+        // Combinar los dos números para formar uno de 14 dígitos
+        let strNum1: string = randomNumber1.toString();
+        let combinedStr: string = strNum1 +
+            dateConsecutivo.getDate() +
+            (dateConsecutivo.getMonth() + 1) +
+            dateConsecutivo.getFullYear() +
+            dateConsecutivo.getHours() +
+            dateConsecutivo.getMinutes() +
+            dateConsecutivo.getSeconds();
+
+        //ref id
+        this.idDocumentoRef = parseInt(combinedStr, 10);
+    }
 
     clearData() {
         //limpiar datos del modulo

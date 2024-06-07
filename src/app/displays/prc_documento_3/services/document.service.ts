@@ -107,6 +107,8 @@ export class DocumentService {
             this._getDetalles(user, token, doc).subscribe(
                 //si esta correcto
                 res => {
+                    console.log(res);
+
                     let response: ResponseInterface = <ResponseInterface>res.body;
 
                     let resApi: ResApiInterface = {
@@ -188,6 +190,9 @@ export class DocumentService {
             this._getEncabezados(user, token, doc).subscribe(
                 //si esta correcto
                 res => {
+
+                    
+
                     let response: ResponseInterface = <ResponseInterface>res.body;
 
                     let resApi: ResApiInterface = {

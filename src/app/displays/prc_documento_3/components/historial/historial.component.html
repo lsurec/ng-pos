@@ -29,7 +29,10 @@
                     <div class="detalle-documento" *ngFor="let documento of documentos"
                         (click)="verDetalle(); docSelect = documento">
                         <div class="info-documento">
-                            <p class="subtitulo">{{documento.item.consecutivo_Interno}} </p>
+                            <p class="subtitulo">Id Documento Ref:
+                                {{documento.ref_id}} </p>
+                            <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
+                                {{documento.item.consecutivo_Interno}} </p>
                             <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
                         </div>
                         <span class="spacer"></span>

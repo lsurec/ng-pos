@@ -174,6 +174,7 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this._retryService.createDoc$.subscribe(() => {
       this.sendDoc();
     });
@@ -193,12 +194,12 @@ export class FacturaComponent implements OnInit {
     this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
     this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
 
-    if (PreferencesService.nuevoDoc.length == 0) {
-      PreferencesService.nuevoDoc = "0";
-      this.facturaService.nuevoDoc = false;
-    } else if (PreferencesService.nuevoDoc == "1") {
-      this.facturaService.nuevoDoc = true;
-    }
+    // if (PreferencesService.nuevoDoc.length == 0) {
+    //   PreferencesService.nuevoDoc = "0";
+    //   this.facturaService.nuevoDoc = false;
+    // } else if (PreferencesService.nuevoDoc == "1") {
+    //   this.facturaService.nuevoDoc = true;
+    // }
 
     //mostrar alerta sino hay preferencia guardada
     if (PreferencesService.mostrarAlerta.length == 0 || PreferencesService.mostrarAlerta == "1") {
@@ -498,6 +499,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
     this.setDateNow();
+    this.facturaService.setIdDocumentoRef();
+
 
 
     //si hay solo una serie disponoble
@@ -603,6 +606,8 @@ export class FacturaComponent implements OnInit {
 
   //cargar datos necesarios
   async loadData() {
+    this.facturaService.setIdDocumentoRef();
+
 
     //limpiar datos del modulo
     this.facturaService.clearData();
@@ -1321,15 +1326,15 @@ export class FacturaComponent implements OnInit {
     }
   }
 
-  nuevoDocImprimir() {
-    //si es verdadero, la preferencia será 1;
-    if (this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "1";
-    } else if (!this.facturaService.nuevoDoc) {
-      PreferencesService.nuevoDoc = "0";
-    }
+  // nuevoDocImprimir() {
+  //   //si es verdadero, la preferencia será 1;
+  //   if (this.facturaService.nuevoDoc) {
+  //     PreferencesService.nuevoDoc = "1";
+  //   } else if (!this.facturaService.nuevoDoc) {
+  //     PreferencesService.nuevoDoc = "0";
+  //   }
 
-  }
+  // }
 
   //Confirmar documento
   printDoc() {
@@ -1380,22 +1385,21 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.valueParametro(58)) {
       if (!this.facturaService.tipoReferencia) {
 
+        //TODO:Translate
         this._notificationService.openSnackbar("Debe seelccionar un tipo de referencia.");
         return;
       }
     }
 
-    // //vaidar fecha de incio
-    // if (this.facturaService.valueParametro(381)) {
+    if (this.facturaService.valueParametro(44)) {
+      if (!this.validateDates()) {
 
-    //   if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!)) {
-    //     //TODO:Tranlate
-    //     this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-    //     return;
+        //TODO:Translate
+        this._notificationService.openSnackbar("Las fechas no son válidas. Por favor, revisa las restricciones");
 
-    //   }
-
-    // }
+        return;
+      }
+    }
 
     //validar fechas si existen
 
@@ -1405,6 +1409,28 @@ export class FacturaComponent implements OnInit {
   }
 
 
+
+  // Función para comparar fechas ignorando los segundos
+  compareDatesIgnoringSeconds(date1: Date, date2: Date): number {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    d1.setSeconds(0, 0);
+    d2.setSeconds(0, 0);
+    return d1.getTime() - d2.getTime();
+  }
+
+  // Función de validación
+  validateDates(): boolean {
+    const validInicioRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fechaRefFin!) <= 0;
+    const validFinRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!) >= 0;
+    const validInicio = this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaRefIni!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaFin!) <= 0;
+    const validFin = this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!) >= 0 &&
+      this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!) <= 0;
+
+    return validInicioRef && validFinRef && validInicio && validFin;
+  }
   //Confirmar documento
   async sendDoc() {
 
@@ -1533,6 +1559,9 @@ export class FacturaComponent implements OnInit {
 
   async printFormat() {
 
+    this.facturaService.setIdDocumentoRef();
+
+
     //TODO:Verificar tipo de documento, imprimir cotizacion alfa y omega
     // if (this.facturaService.tipoDocumento == 20) {
     //   //Generar datos apra impresion de cotizacion
@@ -1658,10 +1687,10 @@ export class FacturaComponent implements OnInit {
     }
 
     let fechas: Fechas = {
-      fechaInicio: this.facturaService.fechaIni!,
-      fechaInicioRef: this.facturaService.fechaFin!,
-      fechaFin: this.facturaService.fechaFin!,
-      fechaFinRef: this.facturaService.fechaRefFin!,
+      fechaInicio: encabezado.fecha_Ini,
+      fechaInicioRef: encabezado.ref_Fecha_Ini,
+      fechaFin: encabezado.fecha_Fin,
+      fechaFinRef: encabezado.ref_Fecha_Fin,
     }
 
     let cargo: number = 0;
@@ -1690,13 +1719,14 @@ export class FacturaComponent implements OnInit {
 
       items.push(
         {
-          cantidadDias: detail.cantidad, //TODO:Verificar dias
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.facturaService.tipoDocumento! == 20 ? this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          imagen64: detail.img_Producto,
+          precioRepocision: detail.precio_Reposicion ?? "00.00",
         }
       );
     });
@@ -1726,6 +1756,8 @@ export class FacturaComponent implements OnInit {
     });
 
     let vendedor: string = "";
+    let emailVendedor: string = encabezado.cuenta_Correntista_Ref_EMail ??= "";
+    ;
 
     if (this.facturaService.vendedores.length > 0) {
       vendedor = this.facturaService.vendedor!.nom_Cuenta_Correntista;
@@ -1750,14 +1782,18 @@ export class FacturaComponent implements OnInit {
     }
 
     let observaciones: ObservacionesRef = {
-      descripcion: this.facturaService.refDescripcion ?? "",
-      observacion: this.facturaService.refObservacion ?? "",
-      observacion2: this.facturaService.refContacto ?? "",
-      observacion3: this.facturaService.refDireccionEntrega ?? "",
+      descripcion: encabezado.ref_Descripcion ?? "",
+      observacion: encabezado.ref_Observacion ?? "",
+      observacion2: encabezado.ref_Observacion_2 ?? "",
+      observacion3: encabezado.ref_Observacion_3 ?? "",
     }
 
     this.docPrint = {
-      noDoc: this.consecutivoDoc.toString(),
+      image64Empresa: this.empresa.empresa_Img,
+      evento: encabezado.fDes_Tipo_Referencia ?? "",
+      cantidadDias: encabezado.cantidad_Dias_Fecha_Ini_Fin,
+      emailVendedor: emailVendedor,
+      noDoc: encabezado.iD_Documento_Ref ?? "",
       refObservacones: observaciones,
       empresa: empresa,
       documento: documento,
@@ -2262,22 +2298,10 @@ export class FacturaComponent implements OnInit {
 
     // Generar dos números aleatorios de 7 dígitos cada uno?
 
-    let dateConsecutivo: Date = new Date();
 
     let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
 
     // Combinar los dos números para formar uno de 14 dígitos
-    let strNum1: string = randomNumber1.toString();
-    let combinedStr: string = strNum1 +
-      dateConsecutivo.getDate() +
-      (dateConsecutivo.getMonth() + 1) +
-      dateConsecutivo.getFullYear() +
-      dateConsecutivo.getHours() +
-      dateConsecutivo.getMinutes() +
-      dateConsecutivo.getSeconds();
-
-    //ref id
-    let combinedNum: number = parseInt(combinedStr, 10);
 
     //Cargo abono  para el documento
     let pagos: CargoAbono[] = [];
@@ -2475,7 +2499,7 @@ export class FacturaComponent implements OnInit {
       Doc_CA_Monto: totalCA,
       Doc_ID_Certificador: 1, //TODO:Parametrizar
       Doc_Cuenta_Correntista_Ref: this.facturaService.vendedor?.cuenta_Correntista ?? null,
-      Doc_ID_Documento_Ref: combinedNum,
+      Doc_ID_Documento_Ref: this.facturaService.idDocumentoRef,
       Doc_FEL_numeroDocumento: null,
       Doc_FEL_Serie: null,
       Doc_FEL_UUID: null,
