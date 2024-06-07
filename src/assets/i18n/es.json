@@ -49,7 +49,15 @@
             "claro": "Tema Claro",
             "cambiar": "Más adelante también podrá cambiar el tema de la aplicación según su preferencia.",
             "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia.",
-            "ayuda": "AYUDA"
+            "ayuda": "AYUDA",
+            "fuente": "Tamaño de fuente.",
+            "fuenteT": "TAMAÑO DE LA FUENTE",
+            "digitos": "DIGITOS",
+            "decimales": "DECIMALES",
+            "extra": "Extra grande (20)",
+            "grande": "Grande (16)",
+            "mediano": "Mediano (14)",
+            "peque": "Pequeño (12)"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURACIÓN LOCAL",
@@ -186,7 +194,8 @@
             "confirmar": "Confirmar",
             "inicio": "Inicio",
             "listo": "Listo",
-            "guardarCambios": "Guardar cambios"
+            "guardarCambios": "Guardar cambios",
+            "modificar": "Modificar"
         },
         "error": {
             "informe": "Informe de error",

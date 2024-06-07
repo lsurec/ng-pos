@@ -49,7 +49,15 @@
             "claro": "Helles Thema",
             "cambiar": "Später können Sie das Anwendungsthema nach Ihren Wünschen ändern.",
             "idioma": "Später können Sie auch die Anwendungssprache nach Ihren Wünschen ändern.",
-            "ayuda": "Hilfe"
+            "ayuda": "Hilfe",
+            "fuente": "Schriftgröße.",
+            "fuenteT": "SCHRIFTGRÖSSE",
+            "digitos": "ZIFFERN",
+            "decimales": "DEZIMALSTELLEN",
+            "extra": "Extra groß (20)",
+            "grande": "Groß (16)",
+            "mediano": "Mittel (14)",
+            "peque": "Klein (12)"
         },
         "configuracionLocal": {
             "titulo": "LOKALE EINSTELLUNGEN",
@@ -186,7 +194,8 @@
             "confirmar": "Bestätigen",
             "inicio": "Startseite",
             "listo": "Fertig",
-            "guardarCambios": "Änderungen speichern"
+            "guardarCambios": "Änderungen speichern",
+            "modificar": "Ändern"
         },
         "error": {
             "informe": "Fehlerbericht",

@@ -49,7 +49,15 @@
             "claro": "Thème Clair",
             "cambiar": "Plus tard, vous pourrez également changer le thème de l'application selon vos préférences.",
             "idioma": "Plus tard, vous pourrez également changer la langue de l'application selon vos préférences.",
-            "ayuda": "Aide"
+            "ayuda": "Aide",
+            "fuente": "Taille de la police.",
+            "fuenteT": "TAILLE DE LA POLICE",
+            "digitos": "CHIFFRES",
+            "decimales": "DÉCIMALES",
+            "extra": "Très grande (20)",
+            "grande": "Grande (16)",
+            "mediano": "Moyenne (14)",
+            "peque": "Petite (12)"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURATION LOCALE",
@@ -186,7 +194,8 @@
             "confirmar": "Confirmer",
             "inicio": "Accueil",
             "listo": "Terminé",
-            "guardarCambios": "Enregistrer les modifications"
+            "guardarCambios": "Enregistrer les modifications",
+            "modificar": "Modifier"
         },
         "error": {
             "informe": "Rapport d'erreur",

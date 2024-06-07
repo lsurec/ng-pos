@@ -49,7 +49,15 @@
             "claro": "Light Mode",
             "cambiar": "You will be able to change the application theme according to your preference in the future.",
             "idioma": "You will be able to change the application language according to your preference in the future.",
-            "ayuda": "Help"
+            "ayuda": "Help",
+            "fuente": "Font size.",
+            "fuenteT": "FONT SIZE",
+            "digitos": "DIGITS",
+            "decimales": "DECIMALS",
+            "extra": "Extra large (20)",
+            "grande": "Large (16)",
+            "mediano": "Medium (14)",
+            "peque": "Small (12)"
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
@@ -186,7 +194,8 @@
             "confirmar": "Confirm",
             "inicio": "Home",
             "listo": "Done",
-            "guardarCambios": "Save changes"
+            "guardarCambios": "Save changes",
+            "modificar": "Modify"
         },
         "error": {
             "informe": "Error Report",

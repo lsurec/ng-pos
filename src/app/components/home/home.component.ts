@@ -337,8 +337,6 @@ export class HomeComponent implements OnInit {
     PreferencesService.lang = JSON.stringify(lang);
     this.customDatepickerI18n.setLanguage(languagesProvider[lang].lang);
 
-    //dialogo
-    //TODO: Translate
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
         title: this._translate.instant('crm.alertas.nuevoIdioma'),

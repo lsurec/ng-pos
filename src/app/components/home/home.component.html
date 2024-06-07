@@ -74,7 +74,7 @@
                     <p class="ajustesMenu" *ngIf="horaInicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
                     <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
                     <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="sizes">Tamaño de fuente.</p>
+                    <p class="ajustesMenu" *ngIf="sizes">{{'pos.preferencias.fuente' | translate}}</p>
 
                 </div>
                 <span class="spacer"></span>
@@ -103,7 +103,7 @@
                     <mat-icon class="iconos-detalles">format_size</mat-icon>
                     <span class="spacer"></span>
                     <div class="detalle">
-                        <p class="subtitulo">TAMAÑO DE LA FUENTE</p>
+                        <p class="subtitulo">{{'pos.preferencias.fuenteT' | translate}}</p>
                         <p class="descripcion">{{ fontsSizes[size].name }} </p>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     <mat-icon class="iconos-detalles">123</mat-icon>
                     <span class="spacer"></span>
                     <div class="detalle-digitos ">
-                        <p class="subtitulo">DIGITOS</p>
+                        <p class="subtitulo">{{'pos.preferencias.digitos' | translate}}</p>
                         <p class="descripcion">{{ dataUserService.integerDigits | currencyFormat}} </p>
                     </div>
                     <span class="spacer"></span>
@@ -145,7 +145,7 @@
                     <mat-icon class="iconos-detalles">123</mat-icon>
                     <span class="spacer"></span>
                     <div class="detalle-digitos ">
-                        <p class="subtitulo">DECIMALES</p>
+                        <p class="subtitulo">{{'pos.preferencias.decimales' | translate}}</p>
                         <p class="descripcion">{{ dataUserService.decimalPlaces | currencyFormat }} </p>
                     </div>
                     <span class="spacer"></span>
