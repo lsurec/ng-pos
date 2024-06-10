@@ -44,6 +44,7 @@ export class FacturaService {
     documentoName: string = ""; //Descripcion tipo de documento
     series: SerieInterface[] = [] //Series disponibles para un odcumento
     serie?: SerieInterface; //Serie seleccionada
+    serieCopy?: SerieInterface; //Serie seleccionada
     vendedores: VendedorInterface[] = []; //vendedores disponibles (cuenta conrrentista ref)
     vendedor?: VendedorInterface; //Vndedor seleccionado (cuenta correntista ref)
     tiposTransaccion: TipoTransaccionInterface[] = []; //Tipos de transaccion disponibles

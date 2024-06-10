@@ -248,6 +248,7 @@ export class FacturaComponent implements OnInit {
 
         if (element.serie_Documento == doc.serie!.serie_Documento) {
           this.facturaService.serie = element;
+          this.facturaService.serieCopy = element;
         }
       }
     }
@@ -476,7 +477,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.traInternas = doc.detalles; //asignar detalles
     this.facturaService.montos = doc.pagos; //asignar pagos
 
-    
+
     //calcular totales del documento y pagos
     this.facturaService.calculateTotales();
 
@@ -542,9 +543,11 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.series.length == 1) {
       //seleccionar la serie
       this.facturaService.serie = this.facturaService.series[0];
+      this.facturaService.serieCopy = this.facturaService.series[0];
     } else {
       //si hay mas de una no seleccionar ninguna
       this.facturaService.serie = undefined
+      this.facturaService.serieCopy = undefined;
     }
 
 
@@ -694,6 +697,7 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.series.length == 1) {
       //seleccionar serie
       this.facturaService.serie = this.facturaService.series[0];
+      this.facturaService.serieCopy = this.facturaService.series[0];
       let serie: string = this.facturaService.serie.serie_Documento;
 
       //buscar vendedores
