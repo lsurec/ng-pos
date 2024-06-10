@@ -236,6 +236,7 @@ export class HomeComponent implements OnInit {
       this.dataUserService.decimalPlaces = 2;
     }
 
+    this.start();
   }
 
   fontsSizes: FontSizeInterface[] = [
@@ -1026,6 +1027,35 @@ export class HomeComponent implements OnInit {
   //Cambio en decimales
   changeDecimales() {
     PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
+  }
+
+  intervalId: NodeJS.Timeout | null = null;
+  startTime: number = 0;
+  totalElapsedMinutes: number = 0;
+  minutosTrascurridos: number = 1;
+
+  start() {
+    this.startTime = Date.now();
+    this.intervalId = setInterval(() => {
+      const currentTime: number = Date.now();
+      const elapsedTime: number = currentTime - this.startTime;
+      const elapsedMinutes: number = Math.floor(elapsedTime / 60000);
+
+      if (elapsedMinutes >= this.minutosTrascurridos) {
+        this.totalElapsedMinutes += elapsedMinutes;
+
+        this._notificationsService.openSnackbar(`Han pasado ${this.totalElapsedMinutes} minutos`);
+        console.log(`Han pasado ${this.totalElapsedMinutes} minutos`);
+        this.startTime = currentTime; // Reinicia el inicio del tiempo
+      }
+    }, 1000); // Verifica cada segundo
+  }
+
+  stop() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
   }
 
 }
