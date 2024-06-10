@@ -18,8 +18,76 @@
             </mat-select>
         </div>
 
-        <p class="tEvento width80" *ngIf="facturaService.valueParametro(58)">{{ facturaService.getTextParam(58) ??
-            'pos.factura.evento' | translate }}</p>
+        <div class="dFlex width80">
+            <p class="subtitulo">{{facturaService.getTextParam(57) ?? 'Cuenta' | titlecase}}</p>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
+                <mat-icon>person_add</mat-icon>
+            </button>
+        </div>
+        <div class="buscar-cliente">
+            <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
+                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                <div class="input-container">
+                    <input class="barra-de-busqueda" type="search" name="search" #clienteInput
+                        [(ngModel)]="facturaService.searchClient" autocomplete="off"
+                        placeholder="{{'pos.inputs.buscar' | translate}}" (focus)="selectText()">
+                    <button mat-icon-button class="iconoLupa" type="submit">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="informacion-fondo">
+            <div class="d-flex">
+                <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
+                <span class="spacer"></span>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        (change)="setCF()">
+                </div>
+            </div>
+        </div>
+        <div class="dFlex width80" *ngIf="facturaService.cuenta">
+            <p class="titulo">{{facturaService.getTextParam(57) ?? 'Cuenta' | titlecase}}</p>
+            <span class="spacer"></span>
+            <button *ngIf="!switchState" mat-icon-button (click)="actualizar()"
+                [matTooltip]="'pos.factura.actualizar' | translate">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+        <div class="informacion-fondo" *ngIf="facturaService.cuenta">
+            <div class="dFlex">
+                <p>{{ 'pos.factura.nit' | translate }}</p>
+                <span class="spacer"></span>
+                <p>{{facturaService.cuenta.factura_NIT}}</p>
+            </div>
+            <div class="dFlex">
+                <p>{{ 'pos.factura.nombre' | translate }}</p>
+                <span class="spacer"></span>
+                <p>{{facturaService.cuenta.factura_Nombre}}</p>
+            </div>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <p>{{ 'pos.factura.direccion' | translate }}</p>
+                <span class="spacer"></span>
+                <p>{{facturaService.cuenta.factura_Direccion}}</p>
+            </div>
+
+            <div class="dFlex" *ngIf="facturaService.cuenta.grupo_Cuenta && facturaService.cuenta.des_Grupo_Cuenta">
+                <p>{{ 'pos.factura.tipoCli' | translate }}/p>
+                    <span class="spacer"></span>
+                <p> {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
+            </div>
+        </div>
+        <div class="width80" *ngIf="facturaService.cuenta">
+            <hr>
+        </div>
+
+        <p class="tEvento width80" *ngIf="facturaService.valueParametro(58)">
+            {{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}
+        </p>
 
         <div class="informacion-fondo" *ngIf="facturaService.valueParametro(58)">
             <p class="subtitulo">{{ 'pos.factura.tipoRef' | translate }}</p>
@@ -32,6 +100,10 @@
             <!-- 
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos bRef"
                 placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="tipoReferencia"></textarea> -->
+        </div>
+
+        <div class="width80" *ngIf="facturaService.valueParametro(381)">
+            <hr>
         </div>
 
         <!-- Fechas -->
@@ -173,75 +245,7 @@
 
         </div>
 
-        <div class="width80" *ngIf="facturaService.valueParametro(44)">
-            <hr>
-        </div>
-        <div class="dFlex width80">
-            <p class="subtitulo">{{facturaService.getTextParam(57) ?? 'Cuenta' | titlecase}}</p>
-            <span class="spacer"></span>
-            <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
-                <mat-icon>person_add</mat-icon>
-            </button>
-        </div>
-        <div class="buscar-cliente">
-            <form #searchForm="ngForm" (ngSubmit)="buscarCliente()">
-                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
-                <div class="input-container">
-                    <input class="barra-de-busqueda" type="search" name="search" #clienteInput
-                        [(ngModel)]="facturaService.searchClient" autocomplete="off"
-                        placeholder="{{'pos.inputs.buscar' | translate}}" (focus)="selectText()">
-                    <button mat-icon-button class="iconoLupa" type="submit">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </div>
-            </form>
-        </div>
 
-        <div class="informacion-fondo">
-            <div class="d-flex">
-                <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
-                <span class="spacer"></span>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
-                        (change)="setCF()">
-                </div>
-            </div>
-        </div>
-        <!-- ocultar espacio cuando se selecciona la cueenta -->
-        <div class="height20 width80" *ngIf="!facturaService.cuenta">
-        </div>
-        <div class="dFlex width80" *ngIf="facturaService.cuenta">
-            <p class="titulo">{{facturaService.getTextParam(57) ?? 'Cuenta' | titlecase}}</p>
-            <span class="spacer"></span>
-            <button *ngIf="!switchState" mat-icon-button (click)="actualizar()"
-                [matTooltip]="'pos.factura.actualizar' | translate">
-                <mat-icon>edit</mat-icon>
-            </button>
-        </div>
-        <div class="informacion-fondo" *ngIf="facturaService.cuenta">
-            <div class="dFlex">
-                <p>{{ 'pos.factura.nit' | translate }}</p>
-                <span class="spacer"></span>
-                <p>{{facturaService.cuenta.factura_NIT}}</p>
-            </div>
-            <div class="dFlex">
-                <p>{{ 'pos.factura.nombre' | translate }}</p>
-                <span class="spacer"></span>
-                <p>{{facturaService.cuenta.factura_Nombre}}</p>
-            </div>
-            <span class="spacer"></span>
-            <div class="dFlex">
-                <p>{{ 'pos.factura.direccion' | translate }}</p>
-                <span class="spacer"></span>
-                <p>{{facturaService.cuenta.factura_Direccion}}</p>
-            </div>
-
-            <div class="dFlex" *ngIf="facturaService.cuenta.grupo_Cuenta && facturaService.cuenta.des_Grupo_Cuenta">
-                <p>{{ 'pos.factura.tipoCli' | translate }}/p>
-                    <span class="spacer"></span>
-                <p> {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
-            </div>
-        </div>
 
     </div>
     <span class="spacer"></span>
