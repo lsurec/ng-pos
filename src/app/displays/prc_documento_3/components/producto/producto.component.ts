@@ -387,7 +387,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     //usar pa valida
 
 
-    if(this.productoService.bodega!.posee_Componente){
+    if(!this.productoService.bodega!.posee_Componente){
       this.isLoading = true;
 
 
