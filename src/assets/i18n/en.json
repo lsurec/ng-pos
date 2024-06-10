@@ -342,6 +342,8 @@
             "precioTotalCant": "Total price per quantity",
             "idRef": "Ref Document ID",
             "dialogoNuevo": "Hide confirmation dialog",
+            "recuperar": "Hide document recovery dialog",
+            "recuperarDoc": "The last worked document will load without confirmation",
             "serieInterna": "Internal series",
             "serie": "Series",
             "noAutorizacion": "Authorization No."

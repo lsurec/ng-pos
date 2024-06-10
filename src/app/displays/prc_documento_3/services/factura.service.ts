@@ -57,6 +57,7 @@ export class FacturaService {
     selectAllTra: boolean = false; //Seleccionar todas las transacciones
 
     noMostrar: boolean = false;
+    recuperarDoc: boolean = false;
 
     nuevoDoc: boolean = true;
 

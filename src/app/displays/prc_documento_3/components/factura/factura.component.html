@@ -104,12 +104,22 @@
                 </div> -->
                 <div class="detalles-usuario">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.noMostrar"
-                        (ngModelChange)="activarDialogo()">
+                        (ngModelChange)="activarDialogoNuevo()">
                     </mat-checkbox>
                     <span class="spacer"></span>
                     <div class="detalle">
                         <p class="subtitulo">{{'pos.factura.dialogoNuevo' | translate}}</p>
                         <p class="descripcion">{{'pos.botones.nuevoDoc' | translate}}</p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.recuperarDoc"
+                        (ngModelChange)="activarDialogoRecuperar()">
+                    </mat-checkbox>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.factura.recuperar' | translate}}</p>
+                        <p class="descripcion">{{'pos.factura.recuperarDoc' | translate}}</p>
                     </div>
                 </div>
 

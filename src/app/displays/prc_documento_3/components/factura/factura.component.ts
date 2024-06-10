@@ -209,6 +209,15 @@ export class FacturaComponent implements OnInit {
     } else if (PreferencesService.mostrarAlerta == "0") {
       this.facturaService.noMostrar = true;
     }
+
+    //mostrar alerta sino hay preferencia guardada
+    if (PreferencesService.recuperarDoc.length == 0 || PreferencesService.recuperarDoc == "1") {
+      //no marcar checkbox 
+      this.facturaService.recuperarDoc = false;
+      //si es 0 ocular y marcar el checkbox
+    } else if (PreferencesService.recuperarDoc == "0") {
+      this.facturaService.recuperarDoc = true;
+    }
   }
 
 
@@ -241,20 +250,20 @@ export class FacturaComponent implements OnInit {
     //str to object para documento estructura
     let doc: DocLocalInterface = JSON.parse(PreferencesService.documento);
 
-    //Dialogo para cargar documento guardado
-    let verificador = await this._notificationService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.docEncontrado'),
-        description: this._translate.instant('pos.alertas.recuperar'),
-      }
-    );
+    if (PreferencesService.recuperarDoc.length == 0 || PreferencesService.recuperarDoc == "1") {
+      //Dialogo para cargar documento guardado
+      let verificador = await this._notificationService.openDialogRecoverDoc(
+        {
+          title: this._translate.instant('pos.alertas.docEncontrado'),
+          description: this._translate.instant('pos.alertas.recuperar'),
+        }
+      );
 
-    if (!verificador) return;
+      if (!verificador) return;
 
+    }
 
     //Cargar documento
-
-
 
     //buscar serie guardada en las series disponobles
 
@@ -1318,11 +1327,19 @@ export class FacturaComponent implements OnInit {
     }
   }
 
-  activarDialogo() {
+  activarDialogoNuevo() {
     if (this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "0";
     } else if (!this.facturaService.noMostrar) {
       PreferencesService.mostrarAlerta = "1";
+    }
+  }
+
+  activarDialogoRecuperar() {
+    if (this.facturaService.recuperarDoc) {
+      PreferencesService.recuperarDoc = "0";
+    } else if (!this.facturaService.recuperarDoc) {
+      PreferencesService.recuperarDoc = "1";
     }
   }
 

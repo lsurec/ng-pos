@@ -14,6 +14,7 @@ import { ProductoInterface } from "../displays/prc_documento_3/interfaces/produc
 import { ProductoComponent } from "../displays/prc_documento_3/components/producto/producto.component";
 import { InformeProductosComponent } from "../displays/prc_documento_3/components/informe-productos/informe-productos.component";
 import { ConfirmarNuevoDocComponent } from "../components/confirmar-nuevo-doc/confirmar-nuevo-doc.component";
+import { RecuperarDocComponent } from "../components/recuperar-doc/recuperar-doc.component";
 
 @Injectable({
     providedIn: 'root'
@@ -78,6 +79,26 @@ export class NotificationsService {
     openDialogNewDoc(data: DialogActionInterface): Promise<boolean> {
         return new Promise((resolve, reject) => {
             const dialogRef = this._dialog.open(ConfirmarNuevoDocComponent, {
+                data: {
+                    title: data.title,
+                    description: data.description,
+                    verdadero: data.verdadero,
+                    falso: data.falso
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
+    openDialogRecoverDoc(data: DialogActionInterface): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            const dialogRef = this._dialog.open(RecuperarDocComponent, {
                 data: {
                     title: data.title,
                     description: data.description,

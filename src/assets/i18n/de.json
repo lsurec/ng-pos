@@ -342,6 +342,8 @@
             "precioTotalCant": "Gesamtpreis pro Menge",
             "idRef": "Ref-Dokument-ID",
             "dialogoNuevo": "Bestätigungsdialog ausblenden",
+            "recuperar": "Dialog zum Wiederherstellen des Dokuments ausblenden",
+            "recuperarDoc": "Das zuletzt bearbeitete Dokument wird ohne Bestätigung geladen",
             "serieInterna": "Interne Serie",
             "serie": "Serie",
             "noAutorizacion": "Autorisationsnummer"

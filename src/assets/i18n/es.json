@@ -342,6 +342,8 @@
             "precioTotalCant": "Precio total por cantidad",
             "idRef": "Id Documento Ref",
             "dialogoNuevo": "Ocultar dialogo de confirmación",
+            "recuperar": "Ocultar dialogo de recuperar documento",
+            "recuperarDoc": "Cargará el ultimo documento trabajado sin confirmar",
             "serieInterna": "Serie Interna",
             "serie": "Serie",
             "noAutorizacion": "No Autorización"

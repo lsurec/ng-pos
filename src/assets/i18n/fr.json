@@ -342,6 +342,8 @@
             "precioTotalCant": "Prix total par quantité",
             "idRef": "ID du document de référence",
             "dialogoNuevo": "Masquer la boîte de dialogue de confirmation",
+            "recuperar": "Masquer la boîte de dialogue de récupération du document",
+            "recuperarDoc": "Le dernier document travaillé sera chargé sans confirmation",
             "serieInterna": "Série interne",
             "serie": "Série",
             "noAutorizacion": "N° d'autorisation"

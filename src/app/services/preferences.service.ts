@@ -35,6 +35,7 @@ export class PreferencesService {
     private static readonly nuevoDocKey: string = 'nuevoDoc';
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
+    private static readonly recuperarDocKey: string = 'recuperarDoc';
 
 
 
@@ -306,6 +307,7 @@ export class PreferencesService {
         let value = sessionStorage.getItem(this.idFiltroProductoKey);
         return parseFloat(value!);
     }
+
     @Input()
     static set mostrarAlerta(value: string) {
         localStorage.setItem(this.mostrarKey, value);
@@ -348,6 +350,17 @@ export class PreferencesService {
 
     static get decimales(): string {
         let value = localStorage.getItem(this.decimalesKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set recuperarDoc(value: string) {
+        localStorage.setItem(this.recuperarDocKey, value);
+    }
+
+    static get recuperarDoc(): string {
+        let value = localStorage.getItem(this.recuperarDocKey);
         if (!value) return "";
         return value;
     }
