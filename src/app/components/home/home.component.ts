@@ -1032,7 +1032,7 @@ export class HomeComponent implements OnInit {
   intervalId: NodeJS.Timeout | null = null;
   startTime: number = 0;
   totalElapsedMinutes: number = 0;
-  minutosTrascurridos: number = 1;
+  minutosTrascurridos: number = 5;
 
   start() {
     this.startTime = Date.now();

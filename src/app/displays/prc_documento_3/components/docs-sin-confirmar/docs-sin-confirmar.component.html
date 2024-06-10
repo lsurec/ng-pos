@@ -45,6 +45,9 @@
                             <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }} </p>
                             <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
                         </div>
+                        <button mat-icon-button aria-label matTooltip="recuperar" (click)="loadData()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>
