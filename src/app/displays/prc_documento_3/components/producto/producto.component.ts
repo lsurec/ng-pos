@@ -385,8 +385,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     // /7verificar que haya existencvias para el producto
     //usar pa valida
-
-
     if(this.productoService.bodega!.posee_Componente){
       this.isLoading = true;
 

@@ -437,6 +437,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async changeSerie() {
 
+    //TODO:validar cambio de serie para cargar los datos correspondientes
+    //y si hay otros datos alertar al usuario 
+
     //cargar datos que dependen de la serie 
     let serie: string = this.facturaService.serie!.serie_Documento;
 
@@ -449,8 +452,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.documento,
       serie,
       this.empresa,
-    )
-
+    );
 
     if (!resVendedor.status) {
 
@@ -480,7 +482,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.facturaService.vendedores.length == 1) {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
       this.facturaService.saveDocLocal();
-
     }
 
     //Buscar tipos transaccion
@@ -495,7 +496,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resTransaccion.status) {
 
       this.facturaService.isLoading = false;
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
