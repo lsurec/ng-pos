@@ -524,11 +524,7 @@ export class DetalleComponent implements AfterViewInit {
 
       let resDialogProd = await this._notificationsService.openProducts(productos);
 
-      
-
       if (!resDialogProd) return;
-
-      console.log(resDialogProd);
 
       product = resDialogProd;
 
@@ -720,61 +716,47 @@ export class DetalleComponent implements AfterViewInit {
           this.productoService.precioText = this.productoService.precios![0].precioU.toString();
         }
       }
-
     }
 
     //finalizar proceso
     this.facturaService.isLoading = false;
 
     this.productoService.indexEdit = -1;
+    
+    if(this.productoService.bodegas.length >1 && this.productoService.precios.length > 1 && this.facturaService.valueParametro(351)){
 
+      let resDialogProd = await this._notificationsService.openDetalleporoduct(product);
 
-    //TODO:Validar si es necesarioi abrir el diaogo 
+      if (resDialogProd) {
+        //1 api /2 validaciones //para productos
+        if (resDialogProd.type == 1) {
 
-
-
-    let resDialogProd = await this._notificationsService.openDetalleporoduct(productos[0]);
-
-
-    if (resDialogProd) {
-
-
-      //1 api /2 validaciones //para productos
-
-      if (resDialogProd.type == 1) {
-
-
-        let verificador = await this._notificationsService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resDialogProd.error);
-
-        return;
-      }
-
-
-
-      if (resDialogProd.type == 2) {
-        this._notificationsService.openDialogValidations(resDialogProd.error);
-
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+  
+          if (!verificador) return;
+  
+          this.verError(resDialogProd.error);
+  
+          return;
+        }
+  
+        if (resDialogProd.type == 2) {
+          this._notificationsService.openDialogValidations(resDialogProd.error);
+        }
       }
     }
 
-    return;
-
+    //si no se abre el dialogo agregar ka transaccon directammente
 
     //finalzir proceso
     this.facturaService.isLoading = false;
-
-
   }
 
   //ver cargos y descuentos de una transccion
