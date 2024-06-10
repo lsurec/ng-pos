@@ -386,10 +386,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     // /7verificar que haya existencvias para el producto
     //usar pa valida
 
-
     if(!this.productoService.bodega!.posee_Componente){
       this.isLoading = true;
-
 
       let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
         this.user,
@@ -409,7 +407,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   
       );
   
-  
       if (!resDisponibiladProducto.status) {
         this.isLoading = false;
         let error: TypeErrorInterface = {
@@ -423,16 +420,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   
       this.isLoading = false;
   
-  
-  
       let mensajes: string[] = resDisponibiladProducto.response;
-  
   
       //si hay mensjaes hay inconvenientes
       if (mensajes.length > 0) {
+        
         this.isLoading = false;
-  
-  
+
         let validaciones: ValidateProductInterface[] = [
           {
             bodega: `${this.productoService.bodega.nombre} (${this.productoService.bodega!.bodega})`,

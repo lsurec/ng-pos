@@ -21,6 +21,7 @@ import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { DataUserService } from '../../services/data-user.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -84,6 +85,8 @@ export class DetalleComponent implements AfterViewInit {
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
     public dataUserService: DataUserService,
+    private _dataUserService: DataUserService,
+
   ) {
     //filtro producto
     facturaService.filtrosProductos = PreferencesService.filtroProducto;
@@ -512,8 +515,6 @@ export class DetalleComponent implements AfterViewInit {
 
     //si solo hay un producto seleccioanrlo por defecto
 
-    //TODO:Refactorizar: Que haya solo un proceso de carga de datos de busuqeda, actualmnete hay 2, cuando solo hay un prodicto y cuando hay varios
-
     let product: ProductoInterface;
 
     if (productos.length == 1) {
@@ -718,42 +719,113 @@ export class DetalleComponent implements AfterViewInit {
       }
     }
 
-    //finalizar proceso
-    this.facturaService.isLoading = false;
+    if (this.productoService.bodegas.length > 1 && this.productoService.precios.length > 1 && this.facturaService.valueParametro(351)) {
 
-    this.productoService.indexEdit = -1;
-    
-    if(this.productoService.bodegas.length >1 && this.productoService.precios.length > 1 && this.facturaService.valueParametro(351)){
+      this.productoService.indexEdit = -1;
 
       let resDialogProd = await this._notificationsService.openDetalleporoduct(product);
 
-      if (resDialogProd) {
-        //1 api /2 validaciones //para productos
-        if (resDialogProd.type == 1) {
+      if (!resDialogProd) return;
+      //1 api /2 validaciones //para productos
+      if (resDialogProd.type == 1) {
 
-          let verificador = await this._notificationsService.openDialogActions(
-            {
-              title: this._translate.instant('pos.alertas.salioMal'),
-              description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.informe'),
-              falso: this._translate.instant('pos.botones.aceptar'),
-            }
-          );
-  
-          if (!verificador) return;
-  
-          this.verError(resDialogProd.error);
-  
-          return;
-        }
-  
-        if (resDialogProd.type == 2) {
-          this._notificationsService.openDialogValidations(resDialogProd.error);
-        }
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resDialogProd.error);
+
+        return;
+      }
+
+      if (resDialogProd.type == 2) {
+        this._notificationsService.openDialogValidations(resDialogProd.error);
+        return;
       }
     }
 
     //si no se abre el dialogo agregar ka transaccon directammente
+
+    //TODO:Hacer validaciones y agreagr transaccion
+
+    if (!this.productoService.bodega!.posee_Componente) {
+      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+        this.user,
+        this.facturaService.serie!.serie_Documento,
+        this.facturaService.tipoDocumento!,
+        this.estacion,
+        this.empresa,
+        this.productoService.bodega!.bodega,
+        this.facturaService.resolveTipoTransaccion(product.tipo_Producto),
+        product.unidad_Medida,
+        product.producto,
+        UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+        8, //TODO:Parametrizar
+        this.productoService.precio!.moneda,
+        this.productoService.precio!.id,
+        this.token,
+
+      );
+
+
+      if (!resDisponibiladProducto.status) {
+
+        this.facturaService.isLoading = false;
+
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resDisponibiladProducto);
+
+        return;
+
+      };
+
+
+      let mensajes: string[] = resDisponibiladProducto.response;
+
+      if (mensajes.length > 0) {
+
+        this.facturaService.isLoading = false;
+
+        let validaciones: ValidateProductInterface[] = [
+          {
+            bodega: `${this.productoService.bodega!.nombre} (${this.productoService.bodega!.bodega})`,
+            mensajes: mensajes,
+            productoDesc: product.des_Producto,
+            serie: `${this.facturaService.serie!.descripcion} (${this.facturaService.serie!.serie_Documento})`,
+            sku: product.producto_Id,
+            tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
+          }
+        ]
+
+        this._notificationsService.openDialogValidations(validaciones);
+
+        return;
+
+      }
+
+    }
+
+    //validar si existen o no combos que validar
+
+
+
 
     //finalzir proceso
     this.facturaService.isLoading = false;
