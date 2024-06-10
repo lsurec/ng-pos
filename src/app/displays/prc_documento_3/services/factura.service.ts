@@ -245,65 +245,47 @@ export class FacturaService {
         //si el tipo docummento guraddao y el actual no coinciden no cargar documento guardado
         if (doc.documento != this.tipoDocumento) return false;
 
-
         //si el suario del documento guardado y el usuario de la sesion no coinciden
         if (doc.user.toLocaleLowerCase() != PreferencesService.user.toLocaleLowerCase()) return false;
-
 
         //si las empresas son distinitas no cargar el documento
         if (doc.empresa.empresa != PreferencesService.empresa.empresa) return false;
 
-
         //si las estaciones son distinitas no cargar el documento
         if (doc.estacion.estacion_Trabajo != doc.estacion.estacion_Trabajo) return false;
 
+        //si el documento guardado no tiene serie  no cargar el documento
+        if (!doc.serie) return false;
 
-        //validar serie solo si existe en el documento guardado
-        if (doc.serie) {
+        //si no hay series cargadas  no cargar el documento
+        if (this.series.length == 0) return false;
 
-
-
-            //evaluar series de la sesion si existen
-            if (this.series.length > 0) {
-                //si ya hay una serie seleccionada validar que sea la misma del documento
-                if (this.serie) {
-                    //si las series son distinitas no hacer nada
-                    if (this.serie.serie_Documento != doc.serie.serie_Documento) {
-                        return false;
-                    }
-
-
-                }
-
-                //Existe la serie?
-                let existSerie: boolean = false;
-
-                //si no hay serie seleccionada bucsar la serie guardada en las series disponibles
-                for (let i = 0; i < this.series.length; i++) {
-                    //serie de la iteracion
-                    const element = this.series[i];
-                    //si se encunetra la serie guardada se puede asignar al documento
-                    if (element.serie_Documento == doc.serie.serie_Documento) {
-                        //la bodega existe
-                        existSerie = true;
-                        break;
-                    }
-                }
-
-                //si la serie no existe no cargar el documento guardado
-                if (!existSerie) return false;
-
-            } else {
-                //si no hay series no cargar el documento guardado
-                return false;
-            }
-
-
-        } else {
-            return false;
+        //si existe la serie seleccionada por defecto
+        if (this.serie) {
+            //Si la serie seleccioanda no es la misma que la del documento guardado no cargar el documento
+            if (this.serie.serie_Documento != doc.serie.serie_Documento) return false;
         }
 
+        //existe la serie?
+        let existSerie: boolean = false;
+
+        //buscar entre las series dicponibles la serie del documento guardado
+        for (let i = 0; i < this.series.length; i++) {
+            const element = this.series[i];
+
+            //si existe la serie del docuemnto guardado entre las series disponibles
+            if(element.serie_Documento == doc.serie.serie_Documento){
+                existSerie = true;
+                break;
+            }
+        }
+
+        //si la serie del docuemnto no existe
+        if(!existSerie) return false;
+
+        //si ninguna validacion es falsa se puede recupera el documento guardado
         return true;
+
 
     }
 

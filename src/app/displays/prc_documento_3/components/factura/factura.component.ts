@@ -236,6 +236,10 @@ export class FacturaComponent implements OnInit {
 
   async loadDocumentLocal() {
 
+
+    //TODO:Solución
+
+
     //si no hay un documento guardado no hacer nada
 
     //str to object para documento estructura
