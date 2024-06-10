@@ -1059,6 +1059,7 @@ export class FacturaComponent implements OnInit {
           bodega: tra.detalle.bodega,
           existencia: 0,
           nombre: tra.detalle.bodega_Descripcion,
+          posee_Componente: false,
         }
 
       } else {
