@@ -57,7 +57,8 @@
             "extra": "Extra groß (20)",
             "grande": "Groß (16)",
             "mediano": "Mittel (14)",
-            "peque": "Klein (12)"
+            "peque": "Klein (12)",
+            "noMostrar": "Nicht mehr anzeigen."
         },
         "configuracionLocal": {
             "titulo": "LOKALE EINSTELLUNGEN",
