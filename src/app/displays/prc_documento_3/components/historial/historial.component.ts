@@ -44,6 +44,7 @@ export class HistorialComponent implements OnInit {
     private _tiposTransaccion: TipoTransaccionService,
     private _notificationsServie: NotificationsService,
     private _translate: TranslateService,
+    public facturaService: FacturaService,
   ) {
 
     //Suscripcion a eventos desde componente shijo
@@ -229,6 +230,8 @@ export class HistorialComponent implements OnInit {
 
   //ver detalle de un documento
   verDetalle() {
+
+    this.facturaService.regresarAHistorial = 1;
 
     this.detalleDocumento = true;
     this.historial = false;

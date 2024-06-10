@@ -173,4 +173,13 @@ export class EventService {
         this.verHistorialSinConfirmar.next(eventData);
     }
 
+    //Eventos para ver el historial de docuemntos recientes
+    private regresarDesdeHistorialSinConfirmar = new Subject<any>();
+
+    regresarDesdeHistorialSinConfirmar$ = this.regresarDesdeHistorialSinConfirmar.asObservable();
+
+    regresarDesdeHistorialSinConfirmarEvent(eventData: boolean) {
+        this.regresarDesdeHistorialSinConfirmar.next(eventData);
+    }
+
 }

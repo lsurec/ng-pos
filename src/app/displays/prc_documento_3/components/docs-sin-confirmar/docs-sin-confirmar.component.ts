@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DocumentoHistorialInterface, DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
 import { EventService } from 'src/app/services/event.service';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-docs-sin-confirmar',
@@ -59,6 +60,7 @@ export class DocsSinConfirmarComponent {
 
   constructor(
     private _eventService: EventService,
+    public facturaService: FacturaService,
   ) {
 
     //Evento para mostla lista de documentos
@@ -66,6 +68,10 @@ export class DocsSinConfirmarComponent {
       this.verHistorial();
     });
 
+    //Coulatr informe de error
+    this._eventService.verHistorialSinConfirmar$.subscribe((eventData) => {
+      this.verError = false;
+    });
 
   }
 
@@ -74,14 +80,14 @@ export class DocsSinConfirmarComponent {
   }
 
   verDetalle() {
-
+    this.facturaService.regresarAHistorial = 2;
     this.detalleDocumento = true;
     this.historial = false;
   }
 
   goBack() {
     // this._eventService.emitCustomEvent(true);
-    this._eventService.verHistorialSinConfirmarEvent(true);
+    this._eventService.regresarDesdeHistorialSinConfirmarEvent(true);
   }
 
   //ver la lista de documntos del hisytorial

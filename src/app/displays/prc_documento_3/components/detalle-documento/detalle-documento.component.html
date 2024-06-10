@@ -3,7 +3,7 @@
 <div *ngIf="!verError && !isLoading">
     <mat-toolbar-row class="head__sidenav">
         <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
-            (click)="goBack()">
+            (click)="goBack(facturaService.regresarAHistorial)">
             <mat-icon>arrow_back</mat-icon>
         </button>
         <span class="spacer"></span>

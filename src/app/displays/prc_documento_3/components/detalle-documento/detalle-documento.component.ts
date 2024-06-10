@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {  ProductoInterface } from '../../interfaces/producto.interface';
+import { ProductoInterface } from '../../interfaces/producto.interface';
 import { EventService } from 'src/app/services/event.service';
 import { DocumentoResumenInterface } from '../../interfaces/documento-resumen.interface';
 import { Documento } from '../../interfaces/doc-estructura.interface';
@@ -26,6 +26,7 @@ import { MontoIntreface } from '../../interfaces/monto.interface';
 import { BancoInterface } from '../../interfaces/banco.interface';
 import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 import { TipoReferenciaInterface } from '../../interfaces/tipo-referencia';
+import { FacturaService } from '../../services/factura.service';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -68,7 +69,7 @@ export class DetalleDocumentoComponent implements OnInit {
   banco?: BancoInterface;
   cuentaBanco?: CuentaBancoInterface;
 
-  tipoReferencia?:TipoReferenciaInterface;
+  tipoReferencia?: TipoReferenciaInterface;
 
   constructor(
     private _eventService: EventService,
@@ -80,6 +81,7 @@ export class DetalleDocumentoComponent implements OnInit {
     private _tipoTraService: TipoTransaccionService,
     private _productoService: ProductService,
     private _pagoService: PagoService,
+    public facturaService: FacturaService,
   ) {
 
     this._eventService.regresarResumenDocHistorial$.subscribe((eventData) => {
@@ -625,9 +627,20 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-  goBack() {
-    // this._eventService.emitCustomEvent(true);
-    this._eventService.verHistorialEvent(true);
+  goBack(tipo: number) {
+
+    // 1 = Documentos Recientes
+    if (tipo == 1) {
+      // this._eventService.emitCustomEvent(true);
+      this._eventService.verHistorialEvent(true);
+    }
+
+    // 2 = Documentos Sin Confirmar
+    if (tipo == 2) {
+      this._eventService.verHistorialSinConfirmarEvent(true);
+
+    }
+
   }
 
   mostrarError(res: ResApiInterface) {

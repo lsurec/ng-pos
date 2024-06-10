@@ -10,8 +10,11 @@
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                (click)="showError()">
+                (click)="loadData()">
                 <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button aria-label (click)="showError()">
+                <mat-icon>error</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- Titulo de la tarea -->

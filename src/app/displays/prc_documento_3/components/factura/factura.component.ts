@@ -171,8 +171,12 @@ export class FacturaComponent implements OnInit {
     });
 
     //Ver pantalla de informe de errores
-    this._eventService.verHistorialSinConfirmar$.subscribe((eventData) => {
+    this._eventService.regresarDesdeHistorialSinConfirmar$.subscribe((eventData) => {
       this.verDocumento();
+    });
+
+    this._eventService.verHistorialSinConfirmar$.subscribe((eventData) => {
+      this.verDocNoConfirmados();
     });
 
   }

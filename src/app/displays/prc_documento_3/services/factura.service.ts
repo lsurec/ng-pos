@@ -63,6 +63,10 @@ export class FacturaService {
 
     verDialogoFactura: number = 1;
 
+    //regresar desde Detalle documento resumen 
+    regresarAHistorial: number = 0;
+
+
     //totales del documento
     subtotal: number = 0;
     cargo: number = 0;
