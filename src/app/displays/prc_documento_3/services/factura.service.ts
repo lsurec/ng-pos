@@ -263,7 +263,11 @@ export class FacturaService {
         //si existe la serie seleccionada por defecto
         if (this.serie) {
             //Si la serie seleccioanda no es la misma que la del documento guardado no cargar el documento
-            if (this.serie.serie_Documento != doc.serie.serie_Documento) return false;
+            if (this.serie.serie_Documento != doc.serie.serie_Documento) {
+                return false
+            }else{
+                return true;
+            };
         }
 
         //existe la serie?

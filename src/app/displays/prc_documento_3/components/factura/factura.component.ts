@@ -236,53 +236,31 @@ export class FacturaComponent implements OnInit {
 
   async loadDocumentLocal() {
 
-
-    //TODO:Solución
-
-
-    //si no hay un documento guardado no hacer nada
+    this.facturaService.isLoading = true;
 
     //str to object para documento estructura
     let doc: DocLocalInterface = JSON.parse(PreferencesService.documento);
 
-    //Dialogo para cargar documento guardado
-    let verificador = await this._notificationService.openDialogActions(
-      {
-        title: this._translate.instant('pos.alertas.docEncontrado'),
-        description: this._translate.instant('pos.alertas.recuperar'),
+    if (!this.facturaService.serie) {
+      //Cargar serie del documento guardado
+      for (let i = 0; i < this.facturaService.series.length; i++) {
+        const element = this.facturaService.series[i];
+
+        if (element.serie_Documento == doc.serie!.serie_Documento) {
+          this.facturaService.serie = element;
+        }
       }
-    );
-
-    if (!verificador) return;
-
-
-    //Cargar documento
-
-
-
-    //buscar serie guardada en las series disponobles
-
-    for (let i = 0; i < this.facturaService.series.length; i++) {
-
-      const element = this.facturaService.series[i];
-
-      //Asignar serie guardada
-      if (element.serie_Documento == doc.serie!.serie_Documento) {
-        this.facturaService.serie = element;
-        break;
-      }
-
     }
 
 
-    this.facturaService.isLoading = true;
 
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+
+     //buscar vendedores
+     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
     )
 
@@ -307,9 +285,9 @@ export class FacturaComponent implements OnInit {
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
-      doc.empresa.empresa,
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
+      this.empresa.empresa,
     );
 
     //si algo salio mal
@@ -327,11 +305,13 @@ export class FacturaComponent implements OnInit {
     let resParametro: ResApiInterface = await this._parametroService.getParametro(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
-      doc.empresa.empresa,
-      doc.estacion.estacion_Trabajo,
-    );
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
+    )
+
+
 
     //si algo salio mal
     if (!resParametro.status) {
@@ -344,15 +324,12 @@ export class FacturaComponent implements OnInit {
     //Parammetros disponibles
     this.facturaService.parametros = resParametro.response;
 
-
-
-
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
       this.token,
-      doc.empresa.empresa,
-      doc.serie!.serie_Documento,
-      doc.documento,
+      this.empresa.empresa,
+      this.facturaService.serie!.serie_Documento,
+      this.tipoDocumento!,
     );
 
     //si algo salio mal
@@ -364,24 +341,28 @@ export class FacturaComponent implements OnInit {
       return;
 
     }
+    //cargar tipo referencia (evento)
+
+
 
     //Formas de pago disponobles
     this.facturaService.formasPago = resFormaPago.response;
 
 
-    //Buscar vendedor asigando en el documento guardado
+    //si hay vendedor cargarlo
     if (doc.vendedor) {
 
       for (let i = 0; i < this.facturaService.vendedores.length; i++) {
         const element = this.facturaService.vendedores[i];
 
         //Asignaer vendedor guardado
-        if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
+        if (element.cuenta_Correntista == doc.vendedor!.cuenta_Correntista) {
           this.facturaService.vendedor = element;
         }
       }
     }
 
+    //TODO:Solucion anterioror
 
     this.facturaService.cuenta = doc.cliente; //asignar cliente
     this.facturaService.traInternas = doc.detalles; //asignar detalles
@@ -793,27 +774,30 @@ export class FacturaComponent implements OnInit {
 
     //cargar documento guardado localmente
 
-
-
     if (!this.globalConvertService.editDoc) {
 
       this.facturaService.isLoading = false;
 
-
       let reloadDoc: boolean = await this.facturaService.loadDocSave();
-
-
 
       if (!reloadDoc) return;
 
-      this.loadDocumentLocal();
+      //Dialogo para cargar documento guardado
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.docEncontrado'),
+          description: this._translate.instant('pos.alertas.recuperar'),
+        }
+      );
 
+      if (!verificador) return;
+
+      this.loadDocumentLocal();
 
       return;
     }
 
     //Cargar datos del docuemnto origen
-
 
     //Verificar serie
 
