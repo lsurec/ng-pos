@@ -3,6 +3,7 @@
 <app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
 <app-historial *ngIf="!vistaFactura && vistaHistorial"></app-historial>
 <app-error *ngIf="!vistaFactura && vistaInforme" [regresar]="regresar"></app-error>
+<app-docs-sin-confirmar *ngIf="!vistaFactura && vistaDocSinConfirmar"></app-docs-sin-confirmar>
 
 <app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
 <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos>
@@ -74,6 +75,14 @@
                         <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
                         <p class="descripcion"> {{facturaService.serie.descripcion}}
                             ({{facturaService.serie.serie_Documento}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario cursor" (click)="verDocNoConfirmados()">
+                    <mat-icon class="iconos-detalles">restore_page</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">Consultar documentos sin confirmar</p>
+                        <p class="descripcion"> 2 </p>
                     </div>
                 </div>
                 <!--TODO:Solo es para desarrollo-->

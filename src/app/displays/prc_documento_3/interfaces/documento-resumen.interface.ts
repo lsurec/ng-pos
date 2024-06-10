@@ -10,3 +10,13 @@ export interface DocumentoResumenInterface {
     descuento: number,
     total: number
 }
+
+export interface DocumentoHistorialInterface {
+    idDocRef : String,
+    ConsecutivoInterno: number
+    fecha: Date,
+    subtotal: number,
+    cargo: number,
+    descuento: number,
+    total: number,
+}

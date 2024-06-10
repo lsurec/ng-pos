@@ -163,4 +163,14 @@ export class EventService {
     regresarAPasosEvent(eventData: boolean) {
         this.regresarAPasos.next(eventData);
     }
+
+    //Eventos para ver el historial de docuemntos recientes
+    private verHistorialSinConfirmar = new Subject<any>();
+
+    verHistorialSinConfirmar$ = this.verHistorialSinConfirmar.asObservable();
+
+    verHistorialSinConfirmarEvent(eventData: boolean) {
+        this.verHistorialSinConfirmar.next(eventData);
+    }
+
 }

@@ -91,6 +91,7 @@ export class FacturaComponent implements OnInit {
   vistaResumen: boolean = false;  //ver confirmacion del documento
   vistaHistorial: boolean = false;  //ver historial de docuemmntos recientes
   vistaInforme: boolean = false; //ver informe de errores
+  vistaDocSinConfirmar: boolean = false;  //ver confirmacion del documento
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //usuario de la sesion
@@ -167,6 +168,11 @@ export class FacturaComponent implements OnInit {
     //Ver pantalla de informe de errores
     this._eventService.regresarAPasos$.subscribe((eventData) => {
       this.verPasos();
+    });
+
+    //Ver pantalla de informe de errores
+    this._eventService.verHistorialSinConfirmar$.subscribe((eventData) => {
+      this.verDocumento();
     });
 
   }
@@ -1217,6 +1223,7 @@ export class FacturaComponent implements OnInit {
     this.vistaResumen = false;
     this.vistaHistorial = false;
     this.vistaInforme = false;
+    this.vistaDocSinConfirmar = false;
   }
 
   //ver pabtralla editar cuenta coprrenitsta
@@ -1227,6 +1234,7 @@ export class FacturaComponent implements OnInit {
     this.vistaResumen = false;
     this.vistaHistorial = false;
     this.vistaInforme = false;
+    this.vistaDocSinConfirmar = false;
   }
 
   //ver modulo de factura
@@ -1237,6 +1245,7 @@ export class FacturaComponent implements OnInit {
     this.vistaResumen = false;
     this.vistaHistorial = false;
     this.vistaInforme = false;
+    this.vistaDocSinConfirmar = false;
   }
 
   //ver histirial de documentos recienetes
@@ -1247,6 +1256,7 @@ export class FacturaComponent implements OnInit {
     this.actualizarCliente = false;
     this.nuevoCliente = false;
     this.vistaInforme = false;
+    this.vistaDocSinConfirmar = false;
   }
 
   //ver informe de erroes
@@ -1257,7 +1267,19 @@ export class FacturaComponent implements OnInit {
     this.vistaFactura = false;
     this.actualizarCliente = false;
     this.nuevoCliente = false;
+    this.vistaDocSinConfirmar = false;
   }
+
+  verDocNoConfirmados() {
+    this.vistaDocSinConfirmar = true;
+    this.vistaHistorial = false;
+    this.vistaResumen = false;
+    this.vistaFactura = false;
+    this.actualizarCliente = false;
+    this.nuevoCliente = false;
+    this.vistaInforme = false;
+  }
+
 
   //regresear a menu (pantalla de inicio)
   goBack(): void {

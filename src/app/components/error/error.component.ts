@@ -53,6 +53,8 @@ export class ErrorComponent implements OnInit {
 
   //regresar a la pantalla anterior
   goBack() {
+    console.log(this.regresar , "jej");
+    
 
     switch (this.regresar) {
       case 1:

@@ -88,6 +88,7 @@ import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/con
 import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe';
 import { TraducirComponent } from './components/traducir/traducir.component';
 import { RecuperarDocComponent } from './components/recuperar-doc/recuperar-doc.component';
+import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components/docs-sin-confirmar/docs-sin-confirmar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -147,6 +148,7 @@ import { RecuperarDocComponent } from './components/recuperar-doc/recuperar-doc.
     CurrencyFormatPipe,
     TraducirComponent,
     RecuperarDocComponent,
+    DocsSinConfirmarComponent,
   ],
   imports: [
     MatCardModule,

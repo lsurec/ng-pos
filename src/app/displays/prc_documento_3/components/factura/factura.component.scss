@@ -265,6 +265,10 @@ mat-sidenav {
     min-height   : 50px;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
 .borde-detalles {
     padding      : 5px 15px;
     border-bottom: 1px solid $color-bordes;
