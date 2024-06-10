@@ -25,8 +25,20 @@ export interface EncabezadoPrintInterface {
     feL_UUID?: any;
     feL_fechaCertificacion?: any;
     monto_Letras?: string;
-    preview:   number;
+    preview: number;
     impresora: any;
-    copias:    any;
-    formato:   any;
+    copias: any;
+    formato: any;
+    ref_Tipo_Referencia: any;
+    ref_Fecha_Ini: any;
+    ref_Fecha_Fin: any;
+    fecha_Ini: any;
+    fecha_Fin: any;
+    ref_Observacion_2: any;
+    ref_Descripcion: any;
+    ref_Observacion_3: any;
+    ref_Observacion: any;
+    fDes_Tipo_Referencia: any;
+    cuenta_Correntista_Ref_EMail: any;
+    cantidad_Dias_Fecha_Ini_Fin: any;
 }

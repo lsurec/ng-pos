@@ -69,28 +69,21 @@ export class ProductosEncontradosComponent {
 
     //si no feue posible controrar los factores de conversion mostrar error
     if (!resObjProduct.status) {
-
-      //TODO:Translate
-
-
-      this._notificationsService.openSnackbar("Algo salió mal.");
-
-      return;
-
-    }
-
-    let imagenesObj:ObjetoProductoInterface[] = resObjProduct.response;
-
-
-    if(imagenesObj.length == 0){
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.algoSalioMal'));
       return;
     }
-    
+
+    let imagenesObj: ObjetoProductoInterface[] = resObjProduct.response;
 
 
-    let imagenes:string [] = [];
+    if (imagenesObj.length == 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
+      return;
+    }
+
+
+
+    let imagenes: string[] = [];
 
 
     imagenesObj.forEach(element => {

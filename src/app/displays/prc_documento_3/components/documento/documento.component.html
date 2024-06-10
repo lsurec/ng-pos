@@ -3,6 +3,10 @@
 
     <div class="serie-vendedor">
 
+        <div class="informacion-fondo">
+            <p class="subtitulo">{{ 'pos.factura.idRef' | translate }}: {{facturaService.idDocumentoRef}} </p>
+        </div>
+
         <p class="tEvento width80">{{ 'pos.factura.series' | translate }}</p>
         <div class="informacion-fondo">
             <mat-select [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar"
@@ -216,26 +220,25 @@
         </div>
         <div class="informacion-fondo" *ngIf="facturaService.cuenta">
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.nit' | translate }}</p>
+                <p>{{ 'pos.factura.nit' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{facturaService.cuenta.factura_NIT}}</p>
             </div>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.nombre' | translate }}</p>
+                <p>{{ 'pos.factura.nombre' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{facturaService.cuenta.factura_Nombre}}</p>
             </div>
             <span class="spacer"></span>
             <div class="dFlex">
-                <p class="detalles">{{ 'pos.factura.direccion' | translate }}</p>
+                <p>{{ 'pos.factura.direccion' | translate }}</p>
                 <span class="spacer"></span>
                 <p>{{facturaService.cuenta.factura_Direccion}}</p>
             </div>
 
             <div class="dFlex" *ngIf="facturaService.cuenta.grupo_Cuenta && facturaService.cuenta.des_Grupo_Cuenta">
-                <!--TODO:Transalate-->
-                <p class="detalles">Tipo Cliente</p>
-                <span class="spacer"></span>
+                <p>{{ 'pos.factura.tipoCli' | translate }}/p>
+                    <span class="spacer"></span>
                 <p> {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
             </div>
         </div>

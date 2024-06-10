@@ -37,7 +37,7 @@ export class NuevoClienteComponent implements OnInit {
   token: string = PreferencesService.token; //token de la sesion
 
   //grupo cuenta disponible
-  gruposCuenta: GrupoCuentaInterface [] = [];
+  gruposCuenta: GrupoCuentaInterface[] = [];
 
   constructor(
     //instancias de los servicios necesarios
@@ -57,19 +57,19 @@ export class NuevoClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.loadData();
-    
+    this.loadData();
+
   }
 
-  async loadData(){
+  async loadData() {
     //Consumo tipo cuneta
 
     this.tipoCuenta = undefined;
 
     this.gruposCuenta = [];
 
-    this.isLoading   = true;
-    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user,this.token);
+    this.isLoading = true;
+    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user, this.token);
 
     this.isLoading = false;
 
@@ -99,7 +99,7 @@ export class NuevoClienteComponent implements OnInit {
     this.gruposCuenta = resGrupoCuenta.response;
 
 
-    
+
   }
 
   tipoCuenta?: GrupoCuentaInterface;
@@ -131,10 +131,9 @@ export class NuevoClienteComponent implements OnInit {
       return;
     }
 
-     //Validar Grupo Cuenta
-     if (!this.validarCorreo(this.correo)) {
-      //TODO:Translate
-      this._notificationsServie.openSnackbar("Seleccione un tipo de cuenta");
+    //Validar Grupo Cuenta
+    if (!this.validarCorreo(this.correo)) {
+      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.tipoCuenta'));
       return;
     }
 
@@ -143,12 +142,12 @@ export class NuevoClienteComponent implements OnInit {
       correo: this.correo,
       direccion: this.direccion,
       cuenta: 0,
-      cuentaCuenta:"",
+      cuentaCuenta: "",
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,
-      grupoCuenta:this.tipoCuenta!.grupo_Cuenta,
-      
+      grupoCuenta: this.tipoCuenta!.grupo_Cuenta,
+
     }
 
 

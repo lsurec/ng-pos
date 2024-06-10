@@ -86,22 +86,25 @@
             </div>
             <div class="">
                 <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
-                <p class="subtitulo" *ngIf="!facturaService.valueParametro(351)">{{productoService.precioU | currencyFormat}}</p>
+                <p class="subtitulo" *ngIf="!facturaService.valueParametro(351)">{{productoService.precioU |
+                    currencyFormat}}</p>
                 <input class="precio-unitario" type="text" name="search" [(ngModel)]="productoService.precioText"
                     autocomplete="off" *ngIf="facturaService.valueParametro(351)" (ngModelChange)="editPrice()">
             </div>
             <div class="dFlex">
                 <span class="spacer"></span>
-                <p class="subtitulo">{{ 'pos.factura.total' | translate }} {{productoService.total |  currencyFormat}}</p>
+                <p class="subtitulo">{{ 'pos.factura.total' | translate }} {{productoService.total | currencyFormat}}
+                </p>
             </div>
         </div>
     </div>
     <div class="dFlex">
         <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
         <span class="spacer"></span>
-        <button *ngIf="productoService.indexEdit == -1" mat-stroked-button (click)="enviar()">{{ 'pos.botones.agregar' |
-            translate }}</button>
-        <!--TODO: Tranlate-->
-        <button *ngIf="productoService.indexEdit != -1" mat-stroked-button (click)="enviar()">Modificar</button>
+        <button *ngIf="productoService.indexEdit == -1" mat-stroked-button (click)="enviar()">
+            {{ 'pos.botones.agregar' | translate }}</button>
+        <button *ngIf="productoService.indexEdit != -1" mat-stroked-button (click)="enviar()">
+            {{ 'pos.botones.modificar'| translate }}
+        </button>
     </div>
 </div>

@@ -185,6 +185,7 @@ export class HistorialComponent implements OnInit {
       //Agrgar transacion a una interfaz propia
       this.documentos.push(
         {
+          ref_id:estructura.Doc_ID_Documento_Ref!,
           item: doc,
           estructura: estructura,
           cargo: cargo,

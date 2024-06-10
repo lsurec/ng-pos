@@ -91,6 +91,7 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.docSelect!.tipo_Documento,
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaInicial!),
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
+      "",
     );
 
 
@@ -212,7 +213,6 @@ export class DetailsDestDocsComponent {
       //Agregar transaccion
       items.push(
         {
-          cantidadDias: 0,
           precioDia: "",
           sku: detail.producto_Id ?? "",
           descripcion: detail.des_Producto ?? "",
@@ -262,6 +262,8 @@ export class DetailsDestDocsComponent {
 
     //Ebojeto completo con los datos de impresion
     this.globalConvertSrevice.docPrint = {
+      image64Empresa:"",
+       emailVendedor:"",
       noDoc: encabezado.id_Documento ?? "0",
       empresa: empresa,
       documento: documento,

@@ -130,8 +130,8 @@
                         </div>
 
                         <div class="precios">
-                            <!--TODO:Translate-->
-                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Cantitad días:
+                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">{{ 'pos.factura.cantDias'
+                                | translate }}:
                                 {{transaccion.cantidadDias}}
                             </p>
                             <span class="spacer" *ngIf="facturaService.valueParametro(44)"></span>
@@ -139,18 +139,17 @@
                                 {{transaccion.precio?.precioU | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
-                            <!--TODO:Translate-->
-                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">Precio total por
-                                cantidad:
+                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">{{
+                                'pos.factura.precioTotalCant' | translate }}:
                                 {{transaccion.precioCantidad | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
-                            <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}: {{transaccion.total | currencyFormat }}
+                            <p class="info-producto">{{ 'pos.factura.precio_total' | translate }}:
+                                {{transaccion.total | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
-                            <p class="info-producto" *ngIf="transaccion.cargo != 0">{{ 'pos.factura.cargos' | translate
-                                }}
-                                {{transaccion.cargo | currencyFormat }}
+                            <p class="info-producto" *ngIf="transaccion.cargo != 0">
+                                {{ 'pos.factura.cargos' | translate}} {{transaccion.cargo | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
                             <p class="info-producto" *ngIf="transaccion.descuento != 0">{{ 'pos.factura.descuentos' |

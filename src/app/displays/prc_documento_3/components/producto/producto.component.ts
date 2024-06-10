@@ -386,73 +386,75 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     // /7verificar que haya existencvias para el producto
     //usar pa valida
 
-    this.isLoading = true;
+
+    if(!this.productoService.bodega!.posee_Componente){
+      this.isLoading = true;
 
 
-    let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
-      this.user,
-      this.facturaService.serie!.serie_Documento,
-      this.facturaService.tipoDocumento!,
-      this.estacion,
-      this.empresa,
-      this.productoService.bodega.bodega,
-      this.facturaService.resolveTipoTransaccion(this.producto.tipo_Producto),
-      this.producto.unidad_Medida,
-      this.producto.producto,
-      UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-      8, //TODO:Parametrizar
-      this.productoService.precio!.moneda,
-      this.productoService.precio!.id,
-      this.token,
-
-    );
-
-
-    if (!resDisponibiladProducto.status) {
-      //TODO:Translate
-      this.isLoading = false;
-
-
-      let error: TypeErrorInterface = {
-        error: resDisponibiladProducto,
-        type: 1,
-      }
-      this.dialogRef.close(error);
-
-      return;
-    }
-
-    this.isLoading = false;
-
-
-
-    let mensajes: string[] = resDisponibiladProducto.response;
-
-
-    //si hay mensjaes hay inconvenientes
-    if (mensajes.length > 0) {
-      this.isLoading = false;
-
-
-      let validaciones: ValidateProductInterface[] = [
-        {
-          bodega: `${this.productoService.bodega.nombre} (${this.productoService.bodega!.bodega})`,
-          mensajes: mensajes,
-          productoDesc: this.producto.des_Producto,
-          serie: `${this.facturaService.serie!.descripcion} (${this.facturaService.serie!.serie_Documento})`,
-          sku: this.producto.producto_Id,
-          tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
+      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+        this.user,
+        this.facturaService.serie!.serie_Documento,
+        this.facturaService.tipoDocumento!,
+        this.estacion,
+        this.empresa,
+        this.productoService.bodega.bodega,
+        this.facturaService.resolveTipoTransaccion(this.producto.tipo_Producto),
+        this.producto.unidad_Medida,
+        this.producto.producto,
+        UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+        8, //TODO:Parametrizar
+        this.productoService.precio!.moneda,
+        this.productoService.precio!.id,
+        this.token,
+  
+      );
+  
+  
+      if (!resDisponibiladProducto.status) {
+        this.isLoading = false;
+        let error: TypeErrorInterface = {
+          error: resDisponibiladProducto,
+          type: 1,
         }
-      ]
-
-      let error: TypeErrorInterface = {
-        error: validaciones,
-        type: 2,
+        this.dialogRef.close(error);
+  
+        return;
       }
-      this.dialogRef.close(error);
-
-      return;
+  
+      this.isLoading = false;
+  
+  
+  
+      let mensajes: string[] = resDisponibiladProducto.response;
+  
+  
+      //si hay mensjaes hay inconvenientes
+      if (mensajes.length > 0) {
+        this.isLoading = false;
+  
+  
+        let validaciones: ValidateProductInterface[] = [
+          {
+            bodega: `${this.productoService.bodega.nombre} (${this.productoService.bodega!.bodega})`,
+            mensajes: mensajes,
+            productoDesc: this.producto.des_Producto,
+            serie: `${this.facturaService.serie!.descripcion} (${this.facturaService.serie!.serie_Documento})`,
+            sku: this.producto.producto_Id,
+            tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
+          }
+        ]
+  
+        let error: TypeErrorInterface = {
+          error: validaciones,
+          type: 2,
+        }
+        this.dialogRef.close(error);
+  
+        return;
+      }
     }
+
+   
 
     //si todo ha salido bien, agregamos el producto al documento
     //Buscar la moneda, v
@@ -534,8 +536,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       } else {
         precioDias = this.productoService.total;
         cantidadDias = 1;
-
-        this._notificationsService.openSnackbar("No se calculó el precio por día. Verifica que las fechas sean validas.");
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));
       }
     }
 
@@ -592,15 +593,10 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.calculateTotales();
 
       //Transacion agregada
-      //TODO:Translate
-
-      this._notificationsService.openSnackbar("Transaccion modificada");
-
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.traModificada'));
     }
 
     this.isLoading = false;
-
-
 
     this.dialogRef.close([]);
 
@@ -623,10 +619,6 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     //si no feue posible controrar los factores de conversion mostrar error
     if (!resObjProduct.status) {
-
-      //TODO:Translate
-
-
       let error: TypeErrorInterface = {
         error: resObjProduct,
         type: 2,
@@ -641,12 +633,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     if (imagenesObj.length == 0) {
-      //TODO:Translate
-      this._notificationsService.openSnackbar("No hay imagenes asociadas a este producto.");
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
       return;
     }
-
-
 
     let imagenes: string[] = [];
 

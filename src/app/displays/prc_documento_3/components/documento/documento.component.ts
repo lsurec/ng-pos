@@ -256,14 +256,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.fechaRefIni = this.convertValidDate(this.facturaService.inputFechaRefIni!, this.facturaService.formControlHoraRefIni.value);
 
-    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefIni, this.facturaService.fecha!)) {
-
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(381)} debe ser mayor a la fecha y hora actual.`);
-    //   this.restartDateRefIni();
-    //   return;
-    // }
-
     //Copiar valores
     this.copyDates();
 
@@ -275,19 +267,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   setDateRefFin() {
 
     this.facturaService.fechaRefFin = this.convertValidDate(this.facturaService.inputFechaRefFin!, this.facturaService.formControlHoraRefFin.value);
-
-    //validaciones para la fehca fin ref
-
-    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaRefFin, this.facturaService.fechaRefIni!)) {
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`${this.facturaService.getTextParam(382)} debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-    //   this.restartDateRefFin();
-    //   return;
-    // }
-
-    // //Copiar valores
-    // this.copyDates();
-
     this.facturaService.saveDocLocal()
 
   }
@@ -296,48 +275,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   async setDateIni() {
     this.facturaService.fechaIni = this.convertValidDate(this.facturaService.inputFechaIni!, this.facturaService.formControlHoraIni.value);
 
-    //Validaciones para la fehca inicio
-
-    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaIni, this.facturaService.fechaRefIni!)) {
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`Fecha inicio debe ser mayor a ${this.facturaService.getTextParam(381)}.`);
-    //   this.restartDateIni();
-    //   return;
-    // }
-
-
-    // if (this.facturaService.fechaIni > this.facturaService.fechaFin!) {
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`Fecha inicio debe ser menor a fecha fin.`);
-    //   this.restartDateIni();
-    //   return;
-    // }
-
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(44)) {
       //si hay productos agregados no se puede cambiar la fechha
 
-      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
 
-        if (this.facturaService.traInternas.length > 0) {
-          // //TODO:Translate
+      if (this.facturaService.traInternas.length > 0) {
+        //Calcular nuevos totales
 
-          // let verificador: boolean = await this._notificationService.openDialogActions(
-          //   {
-          //     title: this._translate.instant('¿Cambiar fecha?'),
-          //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-          //     verdadero: this._translate.instant('pos.botones.aceptar'),
-          //     falso: this._translate.instant('pos.botones.cancelar'),
-          //   }
-          // );
+        if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
 
-          // if (!verificador) {
-          //   this.restartDateIni();
-          //   return;
-          // };
-
-
-          //Calcular nuevos totales
 
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
@@ -355,8 +302,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             this.facturaService.isLoading = false;
 
             if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-
+              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
               console.error(res);
 
               return;
@@ -365,12 +311,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             let calculoDias: PrecioDiaInterface[] = res.response;
 
             if (calculoDias.length == 0) {
-
-
               res.response = "No se están obteniendo valores del procedimiento almacenado"
-
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-
+              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
               console.error(res);
 
               return;
@@ -386,13 +328,13 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.facturaService.calculateTotales();
-          this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.recalcularFechas'));
         }
-
-        //TODO:Translate
-      } else {
-        this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
+        else {
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.fechasInvalidas'));
+        }
       }
+
 
     }
 
@@ -406,25 +348,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async setDateFin() {
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
-
-
-    //vañidaciones para la fecha fin
-    // if (UtilitiesService.minorDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`Fecha fin debe ser mayor a fecha inicio.`);
-    //   this.restartDateFin();
-    //   return;
-    // }
-
-    // if (this.facturaService.fechaFin > this.facturaService.fechaRefFin!) {
-    //   //TODO:Translate
-    //   this._notificationService.openSnackbar(`Fecha fin debe ser menor  a ${this.facturaService.getTextParam(382)}`);
-    //   this.restartDateFin();
-    //   return;
-    // }
-
     //si se debe calcular el preciuo por dias
-    
+
     //si se debe calcular el preciuo por dias
     if (this.facturaService.valueParametro(44)) {
       //si hay productos agregados no se puede cambiar la fechha
@@ -432,21 +357,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
 
         if (this.facturaService.traInternas.length > 0) {
-          // //TODO:Translate
-
-          // let verificador: boolean = await this._notificationService.openDialogActions(
-          //   {
-          //     title: this._translate.instant('¿Cambiar fecha?'),
-          //     description: this._translate.instant("El total del precio por día de las transacciones agregadas al documento volverá a calcularse en base a la nueva fecha ingresada."),
-          //     verdadero: this._translate.instant('pos.botones.aceptar'),
-          //     falso: this._translate.instant('pos.botones.cancelar'),
-          //   }
-          // );
-
-          // if (!verificador) {
-          //   this.restartDateIni();
-          //   return;
-          // };
 
           //Calcular nuevos totales
 
@@ -466,8 +376,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             this.facturaService.isLoading = false;
 
             if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-
+              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
               console.error(res);
 
               return;
@@ -476,12 +385,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             let calculoDias: PrecioDiaInterface[] = res.response;
 
             if (calculoDias.length == 0) {
-
-
               res.response = "No se están obteniendo valores del procedimiento almacenado"
-
-              this._notificationService.openSnackbar(this._translate.instant("No se pudo calcular el precio por días."));
-
+              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
               console.error(res);
 
               return;
@@ -497,12 +402,11 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.facturaService.calculateTotales();
-          this._notificationService.openSnackbar("Precios por día recalculados por modificación de fechas.");
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.recalcularFechas'));
         }
 
-        //TODO:Translate
       } else {
-        this._notificationService.openSnackbar("No se pudo calcular el precio por días. Fechas invalidas");
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.fechasInvalidas'));
       }
 
     }
@@ -527,16 +431,42 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   changeCuentaRef() {
 
     if (!this.globalConvertService.editDoc) return;
-    console.log("Solicitar permisos");
-
+    //TODO: Permisos
   }
 
   async changeSerie() {
 
+
+    if (this.facturaService.traInternas.length > 0) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          //TODO:Translate
+          title: "¿Estás seguro?",
+          description: "Estás a punto de cambiar de serie, las transacciones actuales se perderán.",
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: "Cancelar",
+        }
+      );
+
+      if (!verificador) {
+        this.facturaService.serie = this.facturaService.serieCopy;
+        return;
+      };
+
+    }
+
+    this.facturaService.serieCopy = this.facturaService.serie;
+
+    //y si hay otros datos alertar al usuario 
     //cargar datos que dependen de la serie 
     let serie: string = this.facturaService.serie!.serie_Documento;
 
     this.facturaService.isLoading = true;
+
+
+    this.facturaService.vendedores = [];
+    this.facturaService.vendedor = undefined;
 
     //buscar vendedores
     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -545,8 +475,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.documento,
       serie,
       this.empresa,
-    )
-
+    );
 
     if (!resVendedor.status) {
 
@@ -576,8 +505,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.facturaService.vendedores.length == 1) {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
       this.facturaService.saveDocLocal();
-
     }
+
+    this.facturaService.tiposTransaccion  = [];
 
     //Buscar tipos transaccion
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
@@ -591,7 +521,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resTransaccion.status) {
 
       this.facturaService.isLoading = false;
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -612,6 +541,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.tiposTransaccion = resTransaccion.response;
 
+    this.facturaService.parametros;
+
     //Buscar parametros del documento
     let resParametro: ResApiInterface = await this._parametroService.getParametro(
       this.user,
@@ -625,9 +556,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resParametro.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -651,6 +579,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.montos = [];
     this.facturaService.traInternas = [];
 
+
+    this.facturaService.formasPago = [];
+
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
       this.token,
@@ -663,9 +594,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resFormaPago.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -718,6 +646,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
+
+    this.facturaService.searchText = "";
 
     this.facturaService.isLoading = false;
 

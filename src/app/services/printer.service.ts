@@ -141,7 +141,7 @@ export class PrinterService {
                 err => {
 
                     console.error(err);
-                    
+
                     try {
                         let message = err.message;
 
@@ -1008,8 +1008,12 @@ export class PrinterService {
     }
 
     async getPDFCotizacionAlfaYOmega(doc: DocPrintModel) {
-        let logo_empresa = await this._generateBase64('/assets/Empresa.jpg');
-        let backgroundimg = await this._generateBase64('/assets/Image-not-found.png');
+        let logo_empresa = await this._generateBase64('assets/empresa.png');
+        let backgroundimg = await this._generateBase64('assets/image-not-found-icon.png');
+        // data:image/jpeg;base64,
+
+
+
 
         let date: Date = doc.cliente.fecha;
 
@@ -1024,15 +1028,11 @@ export class PrinterService {
             transacciones.push(
                 [
                     {
-                        text: '50.00',
+                        text: item.precioRepocision,
                         style: 'normalText'
                     },
                     {
                         text: item.cantidad,
-                        style: 'normalText'
-                    },
-                    {
-                        text: item.cantidadDias, //TODO:set precio dia
                         style: 'normalText'
                     },
                     {
@@ -1045,7 +1045,7 @@ export class PrinterService {
                     },
 
                     {
-                        image: backgroundimg,
+                        image: item.imagen64 ? `data:image/jpeg;base64,${item.imagen64}` : backgroundimg,
                         fit: [50, 50],
 
                     },
@@ -1104,43 +1104,43 @@ export class PrinterService {
                             body: [
                                 [
                                     {
-                                        image: logo_empresa,
+                                        image: doc.image64Empresa ? `data:image/jpeg;base64,${doc.image64Empresa}` : logo_empresa,
                                         width: 115,
                                         absolutePosition: { x: 20, y: 10 }
                                     },
                                     [
                                         {
-                                            text: 'AGROINVERSIONES DIVERSAS LA SELVA, S.A.',
+                                            text: doc.empresa.razonSocial,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: 'NIT: 7057806',
+                                            text: doc.empresa.nombre,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: 'ALFA Y OMEGA',
+                                            text: doc.empresa.direccion,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: '0 Avenida 5-35, Zona 9 Guatemala',
+                                            text: doc.empresa.nit,
                                             style: 'headerText'
                                         },
                                         {
-                                            text: '(502) 2505 1000',
+                                            text: doc.empresa.tel,
                                             style: 'headerText'
                                         },
-                                        {
-                                            text: 'ALFA Y OMEGA ANTIGUA',
-                                            style: 'headerText'
-                                        },
-                                        {
-                                            text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
-                                            style: 'headerText'
-                                        },
-                                        {
-                                            text: '(502) 7822 8375',
-                                            style: 'headerText'
-                                        },
+                                        // {
+                                        //     text: 'ALFA Y OMEGA ANTIGUA',
+                                        //     style: 'headerText'
+                                        // },
+                                        // {
+                                        //     text: '1a. Avenida Sur #21 Antigua Guatemala Sacatepequez',
+                                        //     style: 'headerText'
+                                        // },
+                                        // {
+                                        //     text: '(502) 7822 8375',
+                                        //     style: 'headerText'
+                                        // },
                                     ],
 
                                     [
@@ -1326,7 +1326,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: `${this.formatDate(doc.fechas!.fechaInicio)} -  ${this.formatDate(doc.fechas!.fechaFin)}`,
+                                            text: doc.fechas!.fechaInicio && doc.fechas!.fechaFin ? `${this.formatDate(doc.fechas!.fechaInicio)} -  ${this.formatDate(doc.fechas!.fechaFin)}` : "",
                                             style: 'normalText',
                                         }
                                     ]
@@ -1349,7 +1349,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: this.formatDate(doc.fechas!.fechaInicioRef),
+                                            text: doc.fechas!.fechaInicioRef ? this.formatDate(doc.fechas!.fechaInicioRef) : "",
                                             style: 'normalText',
                                         }
                                     ]
@@ -1372,7 +1372,7 @@ export class PrinterService {
                                             style: 'normalTextBold',
                                         },
                                         {
-                                            text: this.formatDate(doc.fechas!.fechaFinRef),
+                                            text: doc.fechas!.fechaFinRef ? this.formatDate(doc.fechas!.fechaFinRef) : "",
                                             style: 'normalText',
                                         }
                                     ]
@@ -1442,10 +1442,37 @@ export class PrinterService {
                         ]
                     }
                 },
+                // {
+                //     marginTop: 10,
+                //     text: [
+                //         {
+                //             text: "Evento: ",
+                //             style: 'normalTextBold',
+                //         },
+                //         {
+                //             text: `${doc.cantidadDias ?? 0}`,
+                //             style: 'normalText',
+                //         }
+                //     ]
+                // },
+                {
+                    marginTop: 10,
+                    marginBottom: 10,
+                    text: [
+                        {
+                            text: "Cantidad dias: ",
+                            style: 'normalTextBold',
+                        },
+                        {
+                            text: `${doc.cantidadDias ?? 0}`,
+                            style: 'normalText',
+                        }
+                    ]
+                },
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1457,10 +1484,7 @@ export class PrinterService {
                                     text: 'Cantidad',
                                     style: 'normalTextBold'
                                 },
-                                {
-                                    text: 'Cantidad Dias',
-                                    style: 'normalTextBold'
-                                },
+
                                 {
                                     text: 'Codigo',
                                     style: 'normalTextBold'
@@ -1495,7 +1519,7 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['12%', '10%', '10%', '10%', '23%', '15%', '10%', '10%',],
+                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
 
                         body: [
                             ...transacciones
@@ -1833,21 +1857,20 @@ export class PrinterService {
                     text: doc.documento.descripcion,
                     style: 'centerBold',
                 },
-                //TODO:Transalte
                 {
-                    text: `Serie Interna: ${doc.documento.serieInterna}`,
+                    text: `${this._translate.instant('pos.factura.serieInterna')}: ${doc.documento.serieInterna}`,
                     style: 'center',
                     margin: [0, 10, 0, 0],
                 },
                 {
-                    text: `No. Interno: ${doc.documento.noInterno}`,
+                    text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
                     style: 'center',
                 },
                 //TODO:Agregar datos de certificacion
                 {
                     margin: [0, 10, 0, 0],
 
-                    text: `Serie: ${doc.documento.serie}`,
+                    text: `${this._translate.instant('pos.factura.serie')}: ${doc.documento.serie}`,
                     style: 'centerBold',
                 },
                 {
@@ -1855,11 +1878,11 @@ export class PrinterService {
                     style: 'centerBold',
                 },
                 {
-                    text: `Fecha: ${doc.documento.fechaCert}`,
+                    text: `${this._translate.instant('pos.factura.fecha')} ${doc.documento.fechaCert}`,
                     style: 'centerBold',
                 },
                 {
-                    text: `No Autorizacion`,
+                    text: this._translate.instant('pos.factura.noAutorizacion'),
                     style: 'centerBold',
                 },
                 {

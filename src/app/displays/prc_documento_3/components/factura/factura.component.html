@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div> -->
-                <div class="detalles-usuario">
+                <!-- <div class="detalles-usuario">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.nuevoDoc"
                         (ngModelChange)="nuevoDocImprimir()">
                     </mat-checkbox>
@@ -101,15 +101,15 @@
                         <p class="subtitulo">Nuevo documento despues de Imprimir</p>
                         <p class="descripcion">Limpiará el fomulario del documento.</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="detalles-usuario">
                     <mat-checkbox class="example-margin" color="primary" [(ngModel)]="facturaService.noMostrar"
                         (ngModelChange)="activarDialogo()">
                     </mat-checkbox>
                     <span class="spacer"></span>
                     <div class="detalle">
-                        <p class="subtitulo">Ocultar dialogo de confirmación</p>
-                        <p class="descripcion">Nuevo Documento</p>
+                        <p class="subtitulo">{{'pos.factura.dialogoNuevo' | translate}}</p>
+                        <p class="descripcion">{{'pos.botones.nuevoDoc' | translate}}</p>
                     </div>
                 </div>
 
@@ -149,9 +149,8 @@
                 <mat-toolbar-row>
                     <div class="barras">
                         <span class="spacer"></span>
-                        <!--TODO:Tranlate-->
                         <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label
-                            matTooltip="Guardar cambios" (click)="sendDoc()">
+                            matTooltip="{{ 'pos.botones.guardarCambios' | translate }}" (click)="sendDoc()">
                             <mat-icon>save</mat-icon>
                         </button>
                         <ng-container *ngIf="!globalConvertService.editDoc">
@@ -193,9 +192,8 @@
 
                 <span class="spacer"></span>
 
-                <!--TODO:Tranlate-->
-                <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label matTooltip="Guardar cambios"
-                    (click)="sendDoc()">
+                <button *ngIf="globalConvertService.editDoc" mat-icon-button aria-label
+                    matTooltip="{{ 'pos.botones.guardarCambios' | translate }}" (click)="sendDoc()">
                     <mat-icon>save</mat-icon>
                 </button>
 
