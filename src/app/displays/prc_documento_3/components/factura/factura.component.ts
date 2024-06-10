@@ -255,8 +255,8 @@ export class FacturaComponent implements OnInit {
 
 
 
-     //buscar vendedores
-     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
       this.user,
       this.token,
       this.tipoDocumento!,
@@ -362,6 +362,94 @@ export class FacturaComponent implements OnInit {
       }
     }
 
+
+    if (this.facturaService.valueParametro(58)) {
+
+      this.facturaService.tipoReferencia = undefined;
+      this.facturaService.tiposReferencia = [];
+
+
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+      if (doc.tipoRef) {
+        for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
+          const element = this.facturaService.tiposReferencia[i];
+          if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
+            this.facturaService.tipoReferencia = element;;
+
+          }
+        }
+
+      }
+
+    }
+
+    //evaluar fechas y observaciones
+    if (this.facturaService.valueParametro(381)) {
+
+      this.facturaService.fechaRefIni = new Date(doc.refFechaEntrega!);
+      //set dates in inputs
+      this.facturaService.inputFechaRefIni = {
+        year: this.facturaService.fechaRefIni.getFullYear(),
+        day: this.facturaService.fechaRefIni.getDate(),
+        month: this.facturaService.fechaRefIni.getMonth() + 1,
+      }
+
+      this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
+    }
+
+    if (this.facturaService.valueParametro(382)) {
+      this.facturaService.fechaRefFin = new Date(doc.refFechaRecoger!);
+      this.facturaService.inputFechaRefFin = {
+        year: this.facturaService.fechaRefFin.getFullYear(),
+        day: this.facturaService.fechaRefFin.getDate(),
+        month: this.facturaService.fechaRefFin.getMonth() + 1,
+      }
+      this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+
+    }
+
+    if (this.facturaService.valueParametro(44)) {
+
+
+      //load dates 
+      this.facturaService.fechaIni = new Date(doc.refFechaInicio!);
+      this.facturaService.fechaFin = new Date(doc.refFechaFin!);
+
+
+
+      this.facturaService.inputFechaIni = {
+        year: this.facturaService.fechaIni.getFullYear(),
+        day: this.facturaService.fechaIni.getDate(),
+        month: this.facturaService.fechaIni.getMonth() + 1,
+      }
+
+      this.facturaService.inputFechaFinal = {
+        year: this.facturaService.fechaFin.getFullYear(),
+        day: this.facturaService.fechaFin.getDate(),
+        month: this.facturaService.fechaFin.getMonth() + 1,
+      }
+
+      //set time
+      this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+      this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+
+    }
+
     //TODO:Solucion anterioror
 
     this.facturaService.cuenta = doc.cliente; //asignar cliente
@@ -369,55 +457,6 @@ export class FacturaComponent implements OnInit {
     this.facturaService.montos = doc.pagos; //asignar pagos
 
 
-    if (doc.tipoRef) {
-      for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
-        const element = this.facturaService.tiposReferencia[i];
-        if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
-          this.facturaService.tipoReferencia = element;;
-
-        }
-      }
-
-    }
-
-
-    //load dates 
-    this.facturaService.fechaRefIni = new Date(doc.refFechaEntrega!);
-    this.facturaService.fechaRefFin = new Date(doc.refFechaRecoger!);
-    this.facturaService.fechaIni = new Date(doc.refFechaInicio!);
-    this.facturaService.fechaFin = new Date(doc.refFechaFin!);
-
-
-    //set dates in inputs
-    this.facturaService.inputFechaRefIni = {
-      year: this.facturaService.fechaRefIni.getFullYear(),
-      day: this.facturaService.fechaRefIni.getDate(),
-      month: this.facturaService.fechaRefIni.getMonth() + 1,
-    }
-
-    this.facturaService.inputFechaRefFin = {
-      year: this.facturaService.fechaRefFin.getFullYear(),
-      day: this.facturaService.fechaRefFin.getDate(),
-      month: this.facturaService.fechaRefFin.getMonth() + 1,
-    }
-
-    this.facturaService.inputFechaIni = {
-      year: this.facturaService.fechaIni.getFullYear(),
-      day: this.facturaService.fechaIni.getDate(),
-      month: this.facturaService.fechaIni.getMonth() + 1,
-    }
-
-    this.facturaService.inputFechaFinal = {
-      year: this.facturaService.fechaFin.getFullYear(),
-      day: this.facturaService.fechaFin.getDate(),
-      month: this.facturaService.fechaFin.getMonth() + 1,
-    }
-
-    //set time
-    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
-    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
 
 
     // set observaciones
