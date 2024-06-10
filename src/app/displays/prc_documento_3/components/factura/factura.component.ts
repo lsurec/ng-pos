@@ -450,22 +450,33 @@ export class FacturaComponent implements OnInit {
 
     }
 
-    //TODO:Solucion anterioror
 
+    if (this.facturaService.valueParametro(385)) {
+      this.facturaService.refContacto = doc.refContacto;
+
+    }
+
+    if (this.facturaService.valueParametro(383)) {
+
+      this.facturaService.refDescripcion = doc.refDescripcion;
+    }
+
+    if (this.facturaService.valueParametro(386)) {
+
+      this.facturaService.refDireccionEntrega = doc.refDireccionEntrega;
+    }
+
+    if (this.facturaService.valueParametro(384)) {
+
+      this.facturaService.refObservacion = doc.refObservacion;
+    }
+
+    
     this.facturaService.cuenta = doc.cliente; //asignar cliente
     this.facturaService.traInternas = doc.detalles; //asignar detalles
     this.facturaService.montos = doc.pagos; //asignar pagos
 
-
-
-
-    // set observaciones
-    this.facturaService.refContacto = doc.refContacto;
-    this.facturaService.refDescripcion = doc.refDescripcion;
-    this.facturaService.refDireccionEntrega = doc.refDireccionEntrega;
-    this.facturaService.refObservacion = doc.refObservacion;
-
-
+    
     //calcular totales del documento y pagos
     this.facturaService.calculateTotales();
 
