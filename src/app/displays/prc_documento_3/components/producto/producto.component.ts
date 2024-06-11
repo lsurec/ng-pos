@@ -465,6 +465,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
       //verificar que todas las transacciones tengan la mmisma moneda
       if (monedaDoc != monedaTra) {
+        this.isLoading = false;
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.monedaDistinta'));
         return;
       }
@@ -528,6 +529,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         precioDias = preciosDia[0].monto_Calculado;
         cantidadDias = preciosDia[0].catidad_Dia;
       } else {
+        this.isLoading = false;
+
         precioDias = this.productoService.total;
         cantidadDias = 1;
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));

@@ -731,6 +731,9 @@ export class DetalleComponent implements AfterViewInit {
       //1 api /2 validaciones //para productos
       if (resDialogProd.type == 1) {
 
+        this.facturaService.isLoading = false;
+
+
         let verificador = await this._notificationsService.openDialogActions(
           {
             title: this._translate.instant('pos.alertas.salioMal'),
@@ -748,9 +751,13 @@ export class DetalleComponent implements AfterViewInit {
       }
 
       if (resDialogProd.type == 2) {
+        this.facturaService.isLoading = false;
+
         this._notificationsService.openDialogValidations(resDialogProd.error);
         return;
       }
+
+      return;
     }
 
     //si no se abre el dialogo agregar ka transaccon directammente
