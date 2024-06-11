@@ -105,4 +105,25 @@ export class UtilitiesService {
         }
     }
 
+    static getFechaCompleta(date: Date): string {
+        // Crear una nueva instancia de Date a partir de horaSelected
+        let fecha: Date = new Date(date);
+
+        // Obtener los componentes de la fecha y hora
+        let dia: number = fecha.getDate();
+        let mes: number = fecha.getMonth() + 1; // Los meses en JavaScript son de 0 a 11
+        let anio: number = fecha.getFullYear();
+        let horas: number = fecha.getHours();
+        let minutos: number = fecha.getMinutes();
+
+        // Formatear día y mes para que siempre tengan dos dígitos
+        let diaStr: string = dia < 10 ? '0' + dia : dia.toString();
+        let mesStr: string = mes < 10 ? '0' + mes : mes.toString();
+        let minutosStr: string = minutos < 10 ? '0' + minutos : minutos.toString();
+
+        // Devolver la fecha y hora en el formato deseado
+        return `${diaStr}/${mesStr}/${anio} ${horas}:${minutosStr}`;
+    }
+
+
 }

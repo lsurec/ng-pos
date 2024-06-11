@@ -55,6 +55,7 @@ export class FacturaService {
     traInternas: TraInternaInterface[] = []; //Transacciones agregadas al documento
 
     selectAllTra: boolean = false; //Seleccionar todas las transacciones
+    selectAllDoc: boolean = false; //Seleccionar todas las transacciones
 
     noMostrar: boolean = false;
     recuperarDoc: boolean = false;

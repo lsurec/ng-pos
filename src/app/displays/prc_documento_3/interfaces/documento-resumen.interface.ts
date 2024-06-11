@@ -12,6 +12,7 @@ export interface DocumentoResumenInterface {
 }
 
 export interface DocumentoHistorialInterface {
+    isChecked: boolean;
     idDocRef : String,
     ConsecutivoInterno: number
     fecha: Date,
