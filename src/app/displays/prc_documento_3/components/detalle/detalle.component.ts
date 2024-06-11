@@ -22,6 +22,7 @@ import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interf
 import { DataUserService } from '../../services/data-user.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
+import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -719,7 +720,8 @@ export class DetalleComponent implements AfterViewInit {
       }
     }
 
-    if (this.productoService.bodegas.length > 1 && this.productoService.precios.length > 1 && this.facturaService.valueParametro(351)) {
+    if (this.productoService.bodegas.length > 1 || this.productoService.precios.length > 1 || this.facturaService.valueParametro(351)) {
+      this.facturaService.isLoading = false;
 
       this.productoService.indexEdit = -1;
 
@@ -812,20 +814,125 @@ export class DetalleComponent implements AfterViewInit {
             sku: product.producto_Id,
             tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
           }
-        ]
+        ];
 
         this._notificationsService.openDialogValidations(validaciones);
 
         return;
-
       }
-
     }
 
-    //validar si existen o no combos que validar
+    //calcular precio dia si se necesita
+
+    let precioDias: number = 0;
+    let cantidadDias: number = 0;
+
+
+    //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+    if (this.facturaService.valueParametro(44)) {
+
+
+      // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+
+
+      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+          this.token,
+          this.facturaService.fechaIni!,
+          this.facturaService.fechaFin!,
+          this.productoService.total.toString(),
+        );
 
 
 
+        if (!res.status) {
+
+          this.facturaService.isLoading = false;
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(res);
+
+          return;
+
+        };
+
+
+        let preciosDia: PrecioDiaInterface[] = res.response;
+
+
+
+        if (preciosDia.length == 0) {
+
+          this.facturaService.isLoading = false;
+
+          res.response = 'No fue posible obtner los valores calculados para el precio dia'
+
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(res);
+
+          return;
+
+        };
+
+        precioDias = preciosDia[0].monto_Calculado;
+        cantidadDias = preciosDia[0].catidad_Dia;
+
+      } else {
+
+        this.facturaService.isLoading = false;
+
+        precioDias = this.productoService.total;
+        cantidadDias = 1;
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));
+        return;
+      }
+    }
+
+
+    // /7agregar transaccion
+    this.facturaService.addTransaction(
+      {
+        consecutivo: 0,
+        estadoTra: 1,
+        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        isChecked: false,
+        bodega: this.productoService.bodega,
+        producto: product,
+        precio: this.productoService.precio!,
+        cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
+        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+        cargo: 0,
+        descuento: 0,
+        operaciones: [],
+      }
+    );
+
+    this.productoService.cantidad = "1";
+    //Transacion agregada
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 
     //finalzir proceso
     this.facturaService.isLoading = false;
