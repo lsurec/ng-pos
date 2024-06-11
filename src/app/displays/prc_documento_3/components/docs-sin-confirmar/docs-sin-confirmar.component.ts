@@ -26,7 +26,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC001",
       ConsecutivoInterno: 1,
-      fecha: new Date(2024, 5, 10, 13, 2, 0),
+      fecha: new Date(2024, 5, 10, 17, 2, 0),
       subtotal: 100.00,
       cargo: 10.00,
       descuento: 5.00,
@@ -36,7 +36,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC002",
       ConsecutivoInterno: 2,
-      fecha: new Date(2024, 5, 10, 13, 40, 0),
+      fecha: new Date(2024, 5, 10, 17, 40, 0),
       subtotal: 200.00,
       cargo: 15.00,
       descuento: 10.00,
@@ -46,7 +46,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC003",
       ConsecutivoInterno: 3,
-      fecha: new Date(2024, 5, 10, 16, 17, 0),
+      fecha: new Date(2024, 5, 10, 17, 17, 0),
       subtotal: 150.00,
       cargo: 12.00,
       descuento: 7.00,
@@ -56,7 +56,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC004",
       ConsecutivoInterno: 4,
-      fecha: new Date(2024, 5, 10, 16, 49, 0),
+      fecha: new Date(2024, 5, 10, 17, 49, 0),
       subtotal: 250.00,
       cargo: 20.00,
       descuento: 15.00,
@@ -66,7 +66,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC005",
       ConsecutivoInterno: 5,
-      fecha: new Date(2024, 5, 10, 16, 59, 0),
+      fecha: new Date(2024, 5, 10, 17, 59, 0),
       subtotal: 250.00,
       cargo: 20.00,
       descuento: 15.00,
@@ -290,7 +290,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     this.fechas(fechaRecibida);
 
     // Retornar el mensaje con el tiempo restante
-    return `El documento se eliminará en: ${horasRestantes} horas, ${minutosRestantes} minutos y ${segundosRestantes} segundos.`;
+    return `El documento se eliminará en: ${horasRestantes} horas, ${minutosRestantes} minutos.`;
   }
 
 }
