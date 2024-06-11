@@ -507,7 +507,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.facturaService.saveDocLocal();
     }
 
-    this.facturaService.tiposTransaccion  = [];
+    this.facturaService.tiposTransaccion = [];
 
     //Buscar tipos transaccion
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
@@ -835,6 +835,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Añade un pequeño retraso antes de seleccionar el texto
     setTimeout(() => {
       inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  mostrarBusquedaCuenta() {
+    this.facturaService.buscarcuenta = !this.facturaService.buscarcuenta;
+    this.facturaService.cuenta = undefined;
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      this.focusAndSelectText();
     }, 0);
   }
 

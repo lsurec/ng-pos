@@ -51,6 +51,7 @@ export class FacturaService {
     parametros: ParametroInterface[] = []; //parametros para el usuario disponobles
     formasPago: FormaPagoInterface[] = []; //formas de pago disponibles
     cuenta?: ClienteInterface; //cuenta seleccionada para el documento 
+    buscarcuenta: boolean = true; //mostrar u ocultar lupa de busqueda 
 
     montos: MontoIntreface[] = []; //Pagos agregados al documento
     traInternas: TraInternaInterface[] = []; //Transacciones agregadas al documento
@@ -266,7 +267,7 @@ export class FacturaService {
             //Si la serie seleccioanda no es la misma que la del documento guardado no cargar el documento
             if (this.serie.serie_Documento != doc.serie.serie_Documento) {
                 return false
-            }else{
+            } else {
                 return true;
             };
         }
@@ -279,14 +280,14 @@ export class FacturaService {
             const element = this.series[i];
 
             //si existe la serie del docuemnto guardado entre las series disponibles
-            if(element.serie_Documento == doc.serie.serie_Documento){
+            if (element.serie_Documento == doc.serie.serie_Documento) {
                 existSerie = true;
                 break;
             }
         }
 
         //si la serie del docuemnto no existe
-        if(!existSerie) return false;
+        if (!existSerie) return false;
 
         //si ninguna validacion es falsa se puede recupera el documento guardado
         return true;
