@@ -46,7 +46,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC003",
       ConsecutivoInterno: 3,
-      fecha: new Date(2024, 5, 10, 13, 45, 0),
+      fecha: new Date(2024, 5, 10, 16, 17, 0),
       subtotal: 150.00,
       cargo: 12.00,
       descuento: 7.00,
@@ -56,7 +56,7 @@ export class DocsSinConfirmarComponent implements OnInit {
     {
       idDocRef: "DOC004",
       ConsecutivoInterno: 4,
-      fecha: new Date(2024, 5, 10, 13, 59, 0),
+      fecha: new Date(2024, 5, 10, 16, 49, 0),
       subtotal: 250.00,
       cargo: 20.00,
       descuento: 15.00,
