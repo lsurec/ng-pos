@@ -386,10 +386,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     // /7verificar que haya existencvias para el producto
     //usar pa valida
 
-
-    if(!this.productoService.bodega!.posee_Componente){
+    if (!this.productoService.bodega!.posee_Componente) {
       this.isLoading = true;
-
 
       let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
         this.user,
@@ -406,10 +404,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         this.productoService.precio!.moneda,
         this.productoService.precio!.id,
         this.token,
-  
+
       );
-  
-  
+
       if (!resDisponibiladProducto.status) {
         this.isLoading = false;
         let error: TypeErrorInterface = {
@@ -417,22 +414,19 @@ export class ProductoComponent implements OnInit, AfterViewInit {
           type: 1,
         }
         this.dialogRef.close(error);
-  
+
         return;
       }
-  
+
       this.isLoading = false;
-  
-  
-  
+
       let mensajes: string[] = resDisponibiladProducto.response;
-  
-  
+
       //si hay mensjaes hay inconvenientes
       if (mensajes.length > 0) {
+
         this.isLoading = false;
-  
-  
+
         let validaciones: ValidateProductInterface[] = [
           {
             bodega: `${this.productoService.bodega.nombre} (${this.productoService.bodega!.bodega})`,
@@ -443,18 +437,18 @@ export class ProductoComponent implements OnInit, AfterViewInit {
             tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
           }
         ]
-  
+
         let error: TypeErrorInterface = {
           error: validaciones,
           type: 2,
         }
         this.dialogRef.close(error);
-  
+
         return;
       }
     }
 
-   
+
 
     //si todo ha salido bien, agregamos el producto al documento
     //Buscar la moneda, v
@@ -471,6 +465,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
       //verificar que todas las transacciones tengan la mmisma moneda
       if (monedaDoc != monedaTra) {
+        this.isLoading = false;
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.monedaDistinta'));
         return;
       }
@@ -534,6 +529,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         precioDias = preciosDia[0].monto_Calculado;
         cantidadDias = preciosDia[0].catidad_Dia;
       } else {
+        this.isLoading = false;
+
         precioDias = this.productoService.total;
         cantidadDias = 1;
         this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));
@@ -567,6 +564,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         }
       );
 
+      this.productoService.cantidad = "1";
       //Transacion agregada
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 

@@ -20,6 +20,9 @@ import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendien
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { DataUserService } from '../../services/data-user.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
+import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -83,6 +86,8 @@ export class DetalleComponent implements AfterViewInit {
     private _eventService: EventService,
     private _globalConvertService: GlobalConvertService,
     public dataUserService: DataUserService,
+    private _dataUserService: DataUserService,
+
   ) {
     //filtro producto
     facturaService.filtrosProductos = PreferencesService.filtroProducto;
@@ -130,6 +135,7 @@ export class DetalleComponent implements AfterViewInit {
           falso: this._translate.instant('pos.botones.aceptar'),
         }
       );
+
 
       if (!verificador) return;
 
@@ -337,10 +343,9 @@ export class DetalleComponent implements AfterViewInit {
 
     let resDialogProd = await this._notificationsService.openDetalleporoduct(productTra);
 
+    this.productoService.cantidad = "1";
 
     if (resDialogProd) {
-
-
       //1 api /2 validaciones //para productos
 
       if (resDialogProd.type == 1) {
@@ -376,10 +381,33 @@ export class DetalleComponent implements AfterViewInit {
 
   }
 
+
+  addTransaction() {
+
+  }
+
   //bsuqueda de productos
   async buscarProducto() {
 
     let productos: ProductoInterface[] = [];
+
+    //verificar que la cantidad sea numerica
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad) == null) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadNumerica'));
+      return;
+    }
+
+    //verificar que la cantidad sea mayor a 0
+    if (UtilitiesService.convertirTextoANumero(this.productoService.cantidad)! <= 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.cantidadMayor'));
+      return;
+    }
+
+    //Verificar que no hyaa formas de pago previamente asignadas al documento
+    if (this.facturaService.montos.length > 0) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.eliminarPagos'));
+      return;
+    }
 
 
     //validar que siempre hay nun texto para buscar
@@ -482,27 +510,226 @@ export class DetalleComponent implements AfterViewInit {
     this.productoService.precio = undefined;
     this.productoService.bodegas = [];
     this.productoService.bodega = undefined;
-    this.productoService.cantidad = "1";
+    // this.productoService.cantidad = "1";
     this.productoService.precioU = 0;
     this.productoService.precioText = "0";
 
     //si solo hay un producto seleccioanrlo por defecto
+
+    let product: ProductoInterface;
+
     if (productos.length == 1) {
 
-      let product = productos[0];
+      product = productos[0];
+    } else {
+      this.facturaService.isLoading = false;
 
-      //buscar bodegas del produxto
-      let resBodega = await this._productService.getBodegaProducto(
+      let resDialogProd = await this._notificationsService.openProducts(productos);
+
+      if (!resDialogProd) return;
+
+      product = resDialogProd;
+
+    }
+
+
+    this.facturaService.isLoading = true;
+
+    //buscar bodegas del produxto
+    let resBodega = await this._productService.getBodegaProducto(
+      this.user,
+      this.token,
+      this.empresa,
+      this.estacion,
+      product.producto,
+      product.unidad_Medida,
+    );
+
+    //si fallo la busquea¿da de bodegas
+    if (!resBodega.status) {
+
+      this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.verError(resBodega);
+
+      return;
+
+    }
+
+    //bodegas encontradas
+    this.productoService.bodegas = resBodega.response;
+
+
+    //validar que existan bodegas
+    if (this.productoService.bodegas.length == 0) {
+      this.facturaService.isLoading = false;
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
+      return;
+    }
+
+
+    //Si solo hay una bodega
+    if (this.productoService.bodegas.length == 1) {
+      this.productoService.bodega = this.productoService.bodegas[0];
+      let bodega: number = this.productoService.bodega.bodega;
+
+      //buscar precios
+      let resPrecio = await this._productService.getPrecios(
         this.user,
         this.token,
-        this.empresa,
-        this.estacion,
+        bodega,
         product.producto,
         product.unidad_Medida,
       );
 
-      //si fallo la busquea¿da de bodegas
-      if (!resBodega.status) {
+
+      //si no fiue pocible obtener los precios mmostrar error 
+      if (!resPrecio.status) {
+
+        //finalziuar proceso
+        this.facturaService.isLoading = false;
+
+
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resPrecio);
+
+        return;
+
+      }
+
+      //precios encontrados
+      let precios: PrecioInterface[] = resPrecio.response;
+
+      precios.forEach(element => {
+        this.productoService.precios.push(
+          {
+            id: element.tipo_Precio,
+            precioU: element.precio_Unidad,
+            descripcion: element.des_Tipo_Precio,
+            precio: true,
+            moneda: element.moneda,
+            orden: element.precio_Orden,
+          }
+        );
+      });
+
+      //si no hay precios buscar factor conversion
+      if (this.productoService.precios.length == 0) {
+        let resfactor = await this._productService.getFactorConversion(
+          this.user,
+          this.token,
+          bodega,
+          product.producto,
+          product.unidad_Medida,
+        );
+
+        //si no feue posible controrar los factores de conversion mostrar error
+        if (!resfactor.status) {
+
+          this.facturaService.isLoading = false;
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(resfactor);
+
+          return;
+
+        }
+
+        //factores de convrsion encontradposa
+        let factores: FactorConversionInterface[] = resfactor.response;
+
+        //nneyvo onbheoto precio interno
+        factores.forEach(element => {
+          this.productoService.precios.push(
+            {
+              id: element.tipo_Precio,
+              precioU: element.precio_Unidad,
+              descripcion: element.des_Tipo_Precio,
+              precio: false,
+              moneda: element.moneda,
+              orden: element.tipo_Precio_Orden,
+            }
+          );
+        });
+
+      }
+
+      //si solo ahy precio seleccoanrlo por defectp
+      if (this.productoService.precios.length == 1) {
+
+        let precioU: UnitarioInterface = this.productoService.precios[0];
+
+        this.productoService.precio = precioU;
+        this.productoService.total = precioU.precioU;
+        this.productoService.precioU = precioU.precioU;
+        this.productoService.precioText = precioU.precioU.toString();
+
+      } else if (this.productoService.precios.length > 1) {
+        //si ahy mas de un precio seleccionar uno por defecto segun campo orden
+        for (let i = 0; i < this.productoService.precios.length; i++) {
+          const element = this.productoService.precios[i];
+          if (element.orden) {
+            this.productoService.precio = element;
+            this.productoService.total = element.precioU;
+            this.productoService.precioU = element.precioU;
+            this.productoService.precioText = element.precioU.toString();
+
+          }
+          break;
+
+        }
+
+        if (!this.productoService.precio) {
+          this.productoService.precio = this.productoService.precios![0];
+          this.productoService.total = this.productoService.precios![0].precioU;
+          this.productoService.precioU = this.productoService.precios![0].precioU;
+          this.productoService.precioText = this.productoService.precios![0].precioU.toString();
+        }
+      }
+    }
+
+    if (this.productoService.bodegas.length > 1 || this.productoService.precios.length > 1 || this.facturaService.valueParametro(351)) {
+      this.facturaService.isLoading = false;
+
+      this.productoService.indexEdit = -1;
+
+      let resDialogProd = await this._notificationsService.openDetalleporoduct(product);
+
+      if (!resDialogProd) return;
+      //1 api /2 validaciones //para productos
+      if (resDialogProd.type == 1) {
 
         this.facturaService.isLoading = false;
 
@@ -518,262 +745,204 @@ export class DetalleComponent implements AfterViewInit {
 
         if (!verificador) return;
 
-        this.verError(resBodega);
+        this.verError(resDialogProd.error);
 
         return;
-
       }
 
-      //bodegas encontradas
-      this.productoService.bodegas = resBodega.response;
-
-
-      //validar que existan bodegas
-      if (this.productoService.bodegas.length == 0) {
+      if (resDialogProd.type == 2) {
         this.facturaService.isLoading = false;
-        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinBodegas'));
+
+        this._notificationsService.openDialogValidations(resDialogProd.error);
         return;
-      }
-
-
-      //Si solo hay una bodega
-      if (this.productoService.bodegas.length == 1) {
-        this.productoService.bodega = this.productoService.bodegas[0];
-        let bodega: number = this.productoService.bodega.bodega;
-
-        //buscar precios
-        let resPrecio = await this._productService.getPrecios(
-          this.user,
-          this.token,
-          bodega,
-          product.producto,
-          product.unidad_Medida,
-        );
-
-
-        //si no fiue pocible obtener los precios mmostrar error 
-        if (!resPrecio.status) {
-
-          //finalziuar proceso
-          this.facturaService.isLoading = false;
-
-
-          let verificador = await this._notificationsService.openDialogActions(
-            {
-              title: this._translate.instant('pos.alertas.salioMal'),
-              description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.informe'),
-              falso: this._translate.instant('pos.botones.aceptar'),
-            }
-          );
-
-          if (!verificador) return;
-
-          this.verError(resPrecio);
-
-          return;
-
-        }
-
-        //precios encontrados
-        let precios: PrecioInterface[] = resPrecio.response;
-
-        precios.forEach(element => {
-          this.productoService.precios.push(
-            {
-              id: element.tipo_Precio,
-              precioU: element.precio_Unidad,
-              descripcion: element.des_Tipo_Precio,
-              precio: true,
-              moneda: element.moneda,
-              orden: element.precio_Orden,
-            }
-          );
-        });
-
-        //si no hay precios buscar factor conversion
-        if (this.productoService.precios.length == 0) {
-          let resfactor = await this._productService.getFactorConversion(
-            this.user,
-            this.token,
-            bodega,
-            product.producto,
-            product.unidad_Medida,
-          );
-
-          //si no feue posible controrar los factores de conversion mostrar error
-          if (!resfactor.status) {
-
-            this.facturaService.isLoading = false;
-
-            let verificador = await this._notificationsService.openDialogActions(
-              {
-                title: this._translate.instant('pos.alertas.salioMal'),
-                description: this._translate.instant('pos.alertas.error'),
-                verdadero: this._translate.instant('pos.botones.informe'),
-                falso: this._translate.instant('pos.botones.aceptar'),
-              }
-            );
-
-            if (!verificador) return;
-
-            this.verError(resfactor);
-
-            return;
-
-          }
-
-          //factores de convrsion encontradposa
-          let factores: FactorConversionInterface[] = resfactor.response;
-
-          //nneyvo onbheoto precio interno
-          factores.forEach(element => {
-            this.productoService.precios.push(
-              {
-                id: element.tipo_Precio,
-                precioU: element.precio_Unidad,
-                descripcion: element.des_Tipo_Precio,
-                precio: false,
-                moneda: element.moneda,
-                orden: element.tipo_Precio_Orden,
-              }
-            );
-          });
-
-        }
-
-        //si solo ahy precio seleccoanrlo por defectp
-        if (this.productoService.precios.length == 1) {
-
-          let precioU: UnitarioInterface = this.productoService.precios[0];
-
-          this.productoService.precio = precioU;
-          this.productoService.total = precioU.precioU;
-          this.productoService.precioU = precioU.precioU;
-          this.productoService.precioText = precioU.precioU.toString();
-
-        } else if (this.productoService.precios.length > 1) {
-          //si ahy mas de un precio seleccionar uno por defecto segun campo orden
-          for (let i = 0; i < this.productoService.precios.length; i++) {
-            const element = this.productoService.precios[i];
-            if (element.orden) {
-              this.productoService.precio = element;
-              this.productoService.total = element.precioU;
-              this.productoService.precioU = element.precioU;
-              this.productoService.precioText = element.precioU.toString();
-
-            }
-            break;
-
-          }
-
-          if (!this.productoService.precio) {
-            this.productoService.precio = this.productoService.precios![0];
-            this.productoService.total = this.productoService.precios![0].precioU;
-            this.productoService.precioU = this.productoService.precios![0].precioU;
-            this.productoService.precioText = this.productoService.precios![0].precioU.toString();
-          }
-        }
-
-      }
-
-      //finalizar proceso
-      this.facturaService.isLoading = false;
-
-      this.productoService.indexEdit = -1;
-
-      let resDialogProd = await this._notificationsService.openDetalleporoduct(productos[0]);
-
-
-      if (resDialogProd) {
-
-
-        //1 api /2 validaciones //para productos
-
-        if (resDialogProd.type == 1) {
-
-
-          let verificador = await this._notificationsService.openDialogActions(
-            {
-              title: this._translate.instant('pos.alertas.salioMal'),
-              description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.informe'),
-              falso: this._translate.instant('pos.botones.aceptar'),
-            }
-          );
-
-          if (!verificador) return;
-
-          this.verError(resDialogProd.error);
-
-          return;
-        }
-
-
-
-        if (resDialogProd.type == 2) {
-          this._notificationsService.openDialogValidations(resDialogProd.error);
-
-        }
       }
 
       return;
-
     }
+
+    //si no se abre el dialogo agregar ka transaccon directammente
+
+    //TODO:Hacer validaciones y agreagr transaccion
+
+    if (!this.productoService.bodega!.posee_Componente) {
+      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+        this.user,
+        this.facturaService.serie!.serie_Documento,
+        this.facturaService.tipoDocumento!,
+        this.estacion,
+        this.empresa,
+        this.productoService.bodega!.bodega,
+        this.facturaService.resolveTipoTransaccion(product.tipo_Producto),
+        product.unidad_Medida,
+        product.producto,
+        UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+        8, //TODO:Parametrizar
+        this.productoService.precio!.moneda,
+        this.productoService.precio!.id,
+        this.token,
+
+      );
+
+
+      if (!resDisponibiladProducto.status) {
+
+        this.facturaService.isLoading = false;
+
+        let verificador = await this._notificationsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resDisponibiladProducto);
+
+        return;
+
+      };
+
+
+      let mensajes: string[] = resDisponibiladProducto.response;
+
+      if (mensajes.length > 0) {
+
+        this.facturaService.isLoading = false;
+
+        let validaciones: ValidateProductInterface[] = [
+          {
+            bodega: `${this.productoService.bodega!.nombre} (${this.productoService.bodega!.bodega})`,
+            mensajes: mensajes,
+            productoDesc: product.des_Producto,
+            serie: `${this.facturaService.serie!.descripcion} (${this.facturaService.serie!.serie_Documento})`,
+            sku: product.producto_Id,
+            tipoDoc: `${this._dataUserService.nameDisplay} (${this.facturaService.tipoDocumento!})`,
+          }
+        ];
+
+        this._notificationsService.openDialogValidations(validaciones);
+
+        return;
+      }
+    }
+
+    //calcular precio dia si se necesita
+
+    let precioDias: number = 0;
+    let cantidadDias: number = 0;
+
+
+    //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+    if (this.facturaService.valueParametro(44)) {
+
+
+      // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
+
+
+      if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+          this.token,
+          this.facturaService.fechaIni!,
+          this.facturaService.fechaFin!,
+          this.productoService.total.toString(),
+        );
+
+
+
+        if (!res.status) {
+
+          this.facturaService.isLoading = false;
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(res);
+
+          return;
+
+        };
+
+
+        let preciosDia: PrecioDiaInterface[] = res.response;
+
+
+
+        if (preciosDia.length == 0) {
+
+          this.facturaService.isLoading = false;
+
+          res.response = 'No fue posible obtner los valores calculados para el precio dia'
+
+
+          let verificador = await this._notificationsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.verError(res);
+
+          return;
+
+        };
+
+        precioDias = preciosDia[0].monto_Calculado;
+        cantidadDias = preciosDia[0].catidad_Dia;
+
+      } else {
+
+        this.facturaService.isLoading = false;
+
+        precioDias = this.productoService.total;
+        cantidadDias = 1;
+        this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.precioDiasNoCalculado'));
+        return;
+      }
+    }
+
+
+    // /7agregar transaccion
+    this.facturaService.addTransaction(
+      {
+        consecutivo: 0,
+        estadoTra: 1,
+        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        isChecked: false,
+        bodega: this.productoService.bodega,
+        producto: product,
+        precio: this.productoService.precio!,
+        cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
+        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
+        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+        cargo: 0,
+        descuento: 0,
+        operaciones: [],
+      }
+    );
+
+    this.productoService.cantidad = "1";
+    //Transacion agregada
+    this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionAgregada'));
 
     //finalzir proceso
     this.facturaService.isLoading = false;
-
-
-    //abriri dialogo de prosuctospara seleccioanr uno
-    let productosDialog = this._dialog.open(ProductosEncontradosComponent, { data: productos })
-
-    productosDialog.afterClosed().subscribe(async result => {
-      if (result) {
-        //abrir gialofo de producto
-        this.productoService.indexEdit = -1;
-
-        let resDialogProd = await this._notificationsService.openDetalleporoduct(result);
-
-
-        if (resDialogProd) {
-
-
-          //1 api /2 validaciones //para productos
-
-          if (resDialogProd.type == 1) {
-
-
-            let verificador = await this._notificationsService.openDialogActions(
-              {
-                title: this._translate.instant('pos.alertas.salioMal'),
-                description: this._translate.instant('pos.alertas.error'),
-                verdadero: this._translate.instant('pos.botones.informe'),
-                falso: this._translate.instant('pos.botones.aceptar'),
-              }
-            );
-
-            if (!verificador) return;
-
-            this.verError(resDialogProd.error);
-
-            return;
-          }
-
-
-
-          if (resDialogProd.type == 2) {
-            this._notificationsService.openDialogValidations(resDialogProd.error);
-
-          }
-        }
-
-        // let producto: ProductoInterface = result[0];
-        // this.producto = producto;
-      }
-    })
-
-
   }
 
   //ver cargos y descuentos de una transccion
