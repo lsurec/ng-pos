@@ -642,6 +642,12 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     });
 
 
+    //Usando la funcion que corrige las imagenes
+    // imagenesObj.forEach(element => {
+    //   imagenes.push(this.convertirUrlGoogleDrive(element.url_Img));
+    // });
+
+
     let imagenesProducto: ImagenProductoInterface = {
       producto: producto,
       imagenesUrl: imagenes,
@@ -671,6 +677,20 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       //Agregar transaccion
       this.enviar();
     }
+  }
+
+  convertirUrlGoogleDrive(url: string): string {
+    // Extraer el identificador único del archivo desde la URL
+    const regex = /\/d\/([^/]+)\//;
+    const match = url.match(regex);
+    if (!match) {
+      throw new Error("URL de Google Drive no válida");
+    }
+    const identificador = match[1];
+
+    // Crear la URL visible en HTML
+    const urlVisible = `https://drive.google.com/uc?id=${identificador}`;
+    return urlVisible;
   }
 
 }

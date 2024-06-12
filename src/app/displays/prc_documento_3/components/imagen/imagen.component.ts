@@ -19,7 +19,7 @@ export class ImagenComponent {
   ) {
 
     this.imagenes = imagenesProducto.imagenesUrl;
-  this.producto = imagenesProducto.producto;
+    this.producto = imagenesProducto.producto;
   }
 
   //cerrar dialogo
