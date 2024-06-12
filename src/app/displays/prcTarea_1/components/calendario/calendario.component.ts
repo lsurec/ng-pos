@@ -1061,8 +1061,8 @@ export class CalendarioComponent implements OnInit {
         let mesAnteriorActual: number = this.month - 1;
 
         if (mes == mesAnteriorActual && indice >= this.obtenerIndiceDiaAnterior(mesAnteriorActual, anio)) {
-
-          return true;
+          //TODO: volver a revisar
+          return false;
         }
         // Mes menor al actual
         return false;
