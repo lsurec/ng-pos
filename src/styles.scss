@@ -280,6 +280,7 @@ input[type='number'] {
 .dark-theme .form-control,
 .dark-theme .fechas,
 .dark-theme .descripcion-tarea,
+.dark-theme .observacion-tarea,
 .dark-theme .titulo-tarea,
 .dark-theme .minutos,
 .dark-theme .referenciaObtenida,
@@ -442,7 +443,8 @@ input[type='number'] {
     color: $color-verde !important;
 }
 
-.dark-theme .descuento {
+.dark-theme .descuento,
+.dark-theme .obligatorio {
     color: $color-rojo !important;
 }
 
