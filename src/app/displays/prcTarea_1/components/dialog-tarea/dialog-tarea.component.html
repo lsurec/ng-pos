@@ -1,6 +1,6 @@
-<app-progress *ngIf="isLoading && !detalles" class="progress"></app-progress>
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
 <!-- Dialogo de los detalles de las tareas -->
-<mat-toolbar-row class="head__sidenav" *ngIf="detalles && !isLoading">
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
     <div class="botones">
         <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="loadData()">
             <mat-icon>refresh</mat-icon>
@@ -38,14 +38,25 @@
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.estado' | translate}}</p>
                 <!-- Descripcion de la tarea -->
-                <p class="campo-tarea">{{data.tarea.des_Tarea}}</p>
-                <p class="padRight"></p>
-                <p class="circulo" [ngStyle]="{ 'background': data.tarea.backColor }"></p>
+                <!-- <p class="campo-tarea">{{data.tarea.des_Tarea}}</p> -->
+                <mat-select name="estado" class="tipo-tarea" placeholder="{{ 'crm.crear.estadoTarea' | translate }}"
+                    [(ngModel)]="estadoTarea">
+                    <mat-option *ngFor="let estado of estadosTarea" [value]="estado" (click)="nuevoEstadoTarea()">
+                        {{estado.descripcion}}
+                    </mat-option>
+                </mat-select>
             </div>
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.prioridad' | translate}}</p>
                 <!-- Descripcion de la tarea -->
-                <p class="campo-tarea">{{data.tarea.nom_Nivel_Prioridad}}</p>
+                <mat-select name="prioridad" class="tipo-tarea" placeholder="{{ 'crm.crear.estadoTarea' | translate }}"
+                    [(ngModel)]="prioridadTarea">
+                    <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad"
+                        (click)="nuevoNivelPrioridad()">
+                        {{prioridad.nombre}}
+                    </mat-option>
+                </mat-select>
+                <!-- <p class="campo-tarea">{{data.tarea.nom_Nivel_Prioridad}}</p> -->
             </div>
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.responsable' | translate}}</p>
@@ -138,5 +149,5 @@
         </div>
     </div>
 </div>
-<mat-toolbar-row class="head_bottom_sidenav">
-</mat-toolbar-row>
+<!-- <mat-toolbar-row class="head_bottom_sidenav">
+</mat-toolbar-row> -->

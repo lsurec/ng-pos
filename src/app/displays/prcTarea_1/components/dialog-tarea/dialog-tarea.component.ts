@@ -12,6 +12,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { ComentarInterface, ComentarioInterface } from 'src/app/interfaces/comentario.interface';
 import { LoginInterface } from 'src/app/interfaces/login.interface';
 import { ObjetoInterface } from 'src/app/displays/shrTarea_3/interfaces/objetos-comentario.interface';
+import { EstadoService } from 'src/app/displays/shrTarea_3/services/estado.service';
+import { NivelPrioridadService } from 'src/app/displays/shrTarea_3/services/prioridad.service';
+import { EstadoInterface } from 'src/app/displays/shrTarea_3/interfaces/estado-tarea.interface';
+import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
+import { ActualizarEstadoInterface, ActualizarNivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/actualizar-tarea.interface';
+import { ActualizarTareaService } from 'src/app/services/actualizar-tarea.service';
 
 @Component({
   selector: 'app-dialog-tarea',
@@ -23,7 +29,10 @@ import { ObjetoInterface } from 'src/app/displays/shrTarea_3/interfaces/objetos-
     CargarArchivosService,
     CrearTareasComentariosService,
     TareaCalendarioService,
-    TareaService
+    TareaService,
+    EstadoService,
+    NivelPrioridadService,
+    ActualizarTareaService
   ]
 })
 export class DialogTareaComponent {
@@ -37,6 +46,12 @@ export class DialogTareaComponent {
   isLoading: boolean = false;
   detalles: boolean = true;
 
+  estadosTarea: EstadoInterface[] = [];
+  estadoTarea: EstadoInterface | null = null; //estado de la tarea
+
+  prioridadesTarea: NivelPrioridadInterface[] = [];
+  prioridadTarea: NivelPrioridadInterface | null = null;
+
   constructor(
     //Declaracion de variables privadas
     @Inject(MAT_DIALOG_DATA) public data: DetalleInterfaceCalendario,
@@ -47,16 +62,36 @@ export class DialogTareaComponent {
     private _tareaService: TareaService,
     private _translate: TranslateService,
     private _calendarioService: TareaCalendarioService,
+    private _estadoService: EstadoService,
+    private _prioridad: NivelPrioridadService,
+    private _actualizarTareaService: ActualizarTareaService,
+
+
   ) {
     //Nombre del usuario que inicio sesion.
     this.usuarioTarea = PreferencesService.user.toUpperCase();
     //comentarios de la tarea
     this.comentarios = data.comentarios
+
+    this.getEstado();
+    this.getNivelPrioridad();
   };
 
   async loadData() {
+
+    this.comentarioDesc = '';
+    this.selectedFiles = [];
     this.isLoading = true;
-    this.detalles = false;
+
+    await this.getEstado();
+    await this.getNivelPrioridad();
+    await this.getComentarios();
+
+    this.isLoading = false;
+  }
+
+  async getComentarios() {
+    this.isLoading = true;
     //Consumo de api
     let resComentarios: ResApiInterface = await this._tareaService.getComentarios(this.data.tarea.tarea)
 
@@ -71,6 +106,9 @@ export class DialogTareaComponent {
 
     //Si se ejecuto bien, obtener la respuesta de apiComentarios
     let comentarios: ComentarioInterface[] = resComentarios.response
+
+    //limpiar la lista para que no se vuelvan a repetir los comentarios
+    this.comentarios = [];
 
     for (const comentario of comentarios) {
       let resFiles: ResApiInterface = await this._tareaService.getComentariosObjeto(comentario.tarea_Comentario, comentario.tarea)
@@ -92,10 +130,8 @@ export class DialogTareaComponent {
       this.comentarios.push(itemComentario);
 
     }
-    this.comentarioDesc = '';
-    this.selectedFiles = [];
+
     this.isLoading = false;
-    this.detalles = true;
   }
 
   //cerrar dialogo
@@ -114,7 +150,7 @@ export class DialogTareaComponent {
       this.selectedFiles = newFiles; // Asignar la nueva copia al array original
     }
   }
-  
+
   validarComentario(): void {
     if (this.comentarioDesc.length === 0) {
       this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
@@ -205,10 +241,10 @@ export class DialogTareaComponent {
       return;
     }
 
-    //mostrar el ID del comentario creado correctamente
-    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
     this.comentarioDesc = '';
     this.selectedFiles = [];
+    //mostrar el ID del comentario creado correctamente
+    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
     this.detalles = true;
 
   };
@@ -219,6 +255,160 @@ export class DialogTareaComponent {
     if (objeto == null)
       return this._translate.instant('crm.alertas.noAsignado');
     return objeto;
+  }
+
+
+  async getEstado(): Promise<void> {
+    this.isLoading = true;
+    //Consumo de api
+    let resEstados: ResApiInterface = await this._estadoService.getEstado();
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resEstados.status) {
+      this.isLoading = false;
+
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
+      console.error(resEstados.response);
+      console.error(resEstados.storeProcedure);
+      return;
+    };
+    //Guardar Estados de la tarea
+    this.estadosTarea = resEstados.response;
+
+    for (let index = 0; index < this.estadosTarea.length; index++) {
+      const element = this.estadosTarea[index];
+      if (element.estado == this.data.tarea.estado) {
+        this.estadoTarea = element;
+        break;
+      }
+    }
+    this.isLoading = false;
+
+  };
+
+  async nuevoEstadoTarea() {
+    let actualizacion: ActualizarEstadoInterface =
+    {
+      tarea: this.data.tarea.tarea,
+      userName: this.usuarioTarea,
+      estado: this.estadoTarea!.estado
+    }
+    this.isLoading = true;
+    let resNuevoEstado: ResApiInterface = await this._actualizarTareaService.postNuevoEstado(actualizacion);
+
+    this.isLoading = false;
+    if (!resNuevoEstado.status) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
+      console.error(resNuevoEstado.response);
+      console.error(resNuevoEstado.storeProcedure);
+      return;
+    };
+
+    //crear el objeto del comentario
+    let comentarioEstado: ComentarInterface =
+    {
+      tarea: this.data.tarea.tarea,
+      userName: this.usuarioTarea,
+      comentario: `Cambio de estado ( ${this.estadoTarea!.descripcion} ) realizado por usuario ${actualizacion.userName.toLowerCase()}`,
+    }
+
+
+    let comentario: ComentarioInterface = {
+      tarea_Comentario: 0,
+      tarea: comentarioEstado.tarea,
+      comentario: comentarioEstado.comentario,
+      fecha_Hora: new Date(),
+      userName: comentarioEstado.userName,
+      nameUser: comentarioEstado.userName
+    }
+
+    let comentarioDetalle: ComentariosDetalle = {
+      comentario: comentario,
+      files: [],
+    }
+
+    this.comentarios.push(comentarioDetalle);
+
+    this.data.tarea.estado = this.estadoTarea!.estado;
+
+    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoActualizado'));
+
+  }
+
+  //Obtener los niveles de prioridad asignables a la tarea
+  async getNivelPrioridad(): Promise<void> {
+    this.isLoading = true;
+    //Consumo de api
+    let resApi = await this._prioridad.getNivelPrioridad();
+    //Si el servico se ejecuta mal mostar mensaje
+    if (!resApi.status) {
+      this.isLoading = false;
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
+      console.error(resApi.response);
+      return;
+    };
+    //Guardar Niveles de prioridad de la tarea
+    this.prioridadesTarea = resApi.response;
+
+    for (let index = 0; index < this.prioridadesTarea.length; index++) {
+      const element = this.prioridadesTarea[index];
+      if (element.nombre == this.data.tarea.nom_Nivel_Prioridad) {
+        this.prioridadTarea = element;
+        break;
+      }
+    }
+    this.isLoading = false;
+  };
+
+  async nuevoNivelPrioridad() {
+    let actualizacion: ActualizarNivelPrioridadInterface =
+    {
+      tarea: this.data.tarea.tarea,
+      userName: this.usuarioTarea,
+      prioridad: this.prioridadTarea!.nivel_Prioridad
+    }
+
+    this.isLoading = true;
+    let resNuevaPrioridadrioridad: ResApiInterface = await this._actualizarTareaService.postNuevoNivelPrioridad(actualizacion);
+
+    this.isLoading = false;
+    if (!resNuevaPrioridadrioridad.status) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
+      console.error(resNuevaPrioridadrioridad.response);
+      console.error(resNuevaPrioridadrioridad.storeProcedure);
+      return;
+    };
+
+    //crear el objeto del comentario
+    let comentarioPrioridad: ComentarInterface =
+    {
+      tarea: this.data.tarea.tarea,
+      userName: this.usuarioTarea,
+      comentario: `Cambio de Nivel de Prioridad ( ${this.prioridadTarea!.descripcion} ) realizado por usuario ${actualizacion.userName.toLowerCase()}`,
+    }
+
+
+    let comentario: ComentarioInterface = {
+      tarea_Comentario: 0,
+      tarea: comentarioPrioridad.tarea,
+      comentario: comentarioPrioridad.comentario,
+      fecha_Hora: new Date(),
+      userName: comentarioPrioridad.userName,
+      nameUser: comentarioPrioridad.userName
+    }
+
+    let comentarioDetalle: ComentariosDetalle = {
+      comentario: comentario,
+      files: [],
+    }
+
+    this.comentarios.push(comentarioDetalle);
+
+
+    this.data.tarea.nivel_Prioridad = this.prioridadTarea!.nivel_Prioridad;
+    this.data.tarea.nom_Nivel_Prioridad = this.prioridadTarea!.nombre;
+
+
+    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.prioridadActualizada'));
   }
 
 }
