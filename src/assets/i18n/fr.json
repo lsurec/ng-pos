@@ -391,13 +391,17 @@
             "version": "Version de Compilation"
         },
         "tarea": {
-            "tarea": "Tâche :",
-            "referencia": "Référence :",
-            "creador": "Créateur :",
-            "responsable": "Responsable :",
-            "idReferencia": "ID Référence :",
-            "descripcion": "Description :",
-            "fechaIni": "Début :"
+            "tarea": "Tâche: ",
+            "referencia": "Référence ",
+            "creador": "Créateur: ",
+            "responsable": "Responsable: ",
+            "idReferencia": "ID Référence: ",
+            "descripcion": "Description: ",
+            "fechaIni": "Début: ",
+            "tipo": "Type:",
+            "estado": "État:",
+            "prioridad": "Priorité:",
+            "previa": "Aperçu"
         },
         "login": {
             "correo": "Utilisateur",
@@ -515,7 +519,8 @@
             "estadoReferencia": "État :",
             "descripcionRef": "Description :",
             "referencia": "Référence",
-            "buscarIdReferencia": "SÉLECTIONNER ID RÉFÉRENCE"
+            "buscarIdReferencia": "SÉLECTIONNER ID RÉFÉRENCE",
+            "adjuntos": "Pièces jointes"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURATION LOCALE",

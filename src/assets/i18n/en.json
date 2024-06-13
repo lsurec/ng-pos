@@ -397,7 +397,11 @@
             "responsable": "Responsible:",
             "idReferencia": "Reference ID:",
             "descripcion": "Description:",
-            "fechaIni": "Start:"
+            "fechaIni": "Start:",
+            "tipo": "Type:",
+            "estado": "Status:",
+            "prioridad": "Priority:",
+            "previa": "Preview"
         },
         "login": {
             "correo": "User",
@@ -515,7 +519,8 @@
             "estadoReferencia": "Status:",
             "descripcionRef": "Description:",
             "referencia": "Reference",
-            "buscarIdReferencia": "SELECT REFERENCE ID"
+            "buscarIdReferencia": "SELECT REFERENCE ID",
+            "adjuntos": "Attachments"
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",

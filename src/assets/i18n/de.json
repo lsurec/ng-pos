@@ -397,7 +397,11 @@
             "responsable": "Verantwortlicher:",
             "idReferencia": "Referenz-ID:",
             "descripcion": "Beschreibung:",
-            "fechaIni": "Start:"
+            "fechaIni": "Start:",
+            "tipo": "Typ:",
+            "estado": "Status:",
+            "prioridad": "Priorität:",
+            "previa": "Vorschau"
         },
         "login": {
             "correo": "Benutzer",
@@ -515,7 +519,8 @@
             "estadoReferencia": "Status:",
             "descripcionRef": "Beschreibung:",
             "referencia": "Referenz",
-            "buscarIdReferencia": "REFERENZ-ID AUSWÄHLEN"
+            "buscarIdReferencia": "REFERENZ-ID AUSWÄHLEN",
+            "adjuntos": "Anhänge"
         },
         "configuracionLocal": {
             "titulo": "LOKALE KONFIGURATION",

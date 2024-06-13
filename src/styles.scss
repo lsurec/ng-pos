@@ -489,6 +489,11 @@ input[type='number'] {
     border-bottom: 1px solid $iconos !important;
 }
 
+.dark-theme .seleccionar:hover,
+.dark-theme .seleccionar-invitados:hover {
+    background-color: $seleccionado !important;
+}
+
 //Borde blanco para totales
 .dark-theme .total-barra {
     border-top: 1px solid $color-blanco !important;

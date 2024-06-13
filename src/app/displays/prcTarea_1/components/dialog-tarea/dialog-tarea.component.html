@@ -31,22 +31,24 @@
                 <p class="campo-tarea">{{data.tarea.descripcion_Tarea}}</p>
             </div>
             <div class="barra-titulo">
-                <p class="campo-detalle">Tipo:</p>
+                <p class="campo-detalle">{{ 'crm.tarea.tipo' | translate}}</p>
                 <!-- Descripcion de la tarea -->
                 <p class="campo-tarea">{{data.tarea.des_Tipo_Tarea}}</p>
             </div>
             <div class="barra-titulo">
-                <p class="campo-detalle">Estado:</p>
+                <p class="campo-detalle">{{ 'crm.tarea.estado' | translate}}</p>
                 <!-- Descripcion de la tarea -->
                 <p class="campo-tarea">{{data.tarea.des_Tarea}}</p>
+                <p class="padRight"></p>
+                <p class="circulo" [ngStyle]="{ 'background': data.tarea.backColor }"></p>
             </div>
             <div class="barra-titulo">
-                <p class="campo-detalle">Prioridad:</p>
+                <p class="campo-detalle">{{ 'crm.tarea.prioridad' | translate}}</p>
                 <!-- Descripcion de la tarea -->
                 <p class="campo-tarea">{{data.tarea.nom_Nivel_Prioridad}}</p>
             </div>
             <div class="barra-titulo">
-                <p class="campo-detalle">Responsable:</p>
+                <p class="campo-detalle">{{ 'crm.tarea.responsable' | translate}}</p>
                 <!-- Descripcion de la tarea -->
                 <p class="campo-tarea">{{resolveObject(data.tarea.usuario_Responsable)}}</p>
             </div>
@@ -96,8 +98,22 @@
                         <div class="comentario_desc">
                             <textarea name="notas" id="descripcion" cols="30" rows="2"
                                 placeholder="{{'crm.crear.comentario' | translate}}" [(ngModel)]="comentarioDesc"
-                                class="escribir-comentario"></textarea>
-                            <div class="subir-archivos">
+                                class="escribir-comentario">
+                            </textarea>
+                            <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
+                                <p class="">{{'crm.crear.adjuntos' | translate}}
+                                    ({{selectedFiles.length}})
+                                </p>
+                                <div *ngFor="let file of selectedFiles; let iFile = index" class="d-flex">
+                                    <p class="nombre-archivos"> - {{ file.name }}</p>
+                                    <span class="spacer"></span>
+                                    <mat-icon class="eliminar" (click)="removeFile(iFile)"
+                                        matTooltip="{{'crm.crear.eliminar' | translate}}">
+                                        close
+                                    </mat-icon>
+                                </div>
+                            </div>
+                            <div class="archivos-comentar">
                                 <div class="input-group">
                                     <div class="input-group">
                                         <input type="file" class="form-control" id="inputGroupFile04"
@@ -109,19 +125,11 @@
                                         <mat-icon>attach_file</mat-icon>{{'crm.crear.archivos' | translate}}
                                     </button>
                                 </div>
-                                <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
-                                    <div *ngFor="let file of selectedFiles; let i = index" class="d-flex">
-                                        <p class="nombre-archivos"> - {{ file.name }}</p>
-                                        <!-- <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
-                                            matTooltip="{{'crm.crear.eliminar' | translate}}">close</mat-icon>
-                                        <span class="spacer"></span> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="archivos-comentar">
                                 <span class="spacer"></span>
                                 <button mat-button class="subir-comentarios" (click)="validarComentario()">
-                                    <mat-icon>post_add</mat-icon>{{ 'crm.crear.comentar' | translate}}</button>
+                                    <mat-icon>post_add</mat-icon>
+                                    {{ 'crm.crear.comentar' | translate}}
+                                </button>
                             </div>
                         </div>
                     </div>

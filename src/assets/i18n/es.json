@@ -397,7 +397,11 @@
             "responsable": "Responsable:",
             "idReferencia": "ID Referencia:",
             "descripcion": "Descripción:",
-            "fechaIni": "Inicio:"
+            "fechaIni": "Inicio:",
+            "tipo": "Tipo:",
+            "estado": "Estado:",
+            "prioridad": "Prioridad:",
+            "previa": "Vista Previa"
         },
         "login": {
             "correo": "Usuario",
@@ -515,7 +519,8 @@
             "estadoReferencia": "Estado:",
             "descripcionRef": "Descripción:",
             "referencia": "Referencia",
-            "buscarIdReferencia": "SELECCIONAR ID REFERENCIA"
+            "buscarIdReferencia": "SELECCIONAR ID REFERENCIA",
+            "adjuntos": "Archivos adjuntos"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURACION LOCAL",

@@ -257,7 +257,6 @@ p {
 }
 
 .lista-archivos {
-    margin-left   : 15px;
     padding       : 5px;
     padding-bottom: 0px;
 }
@@ -362,4 +361,15 @@ p {
 .subir-comentarios {
     font-size: 12px;
     height   : 30px;
+}
+
+.circulo {
+    width        : 15px; //diámetro total 
+    height       : 15px; //diámetro total
+    border-radius: 50%;
+    border       : 1px solid $color-negro;
+}
+
+.padRight {
+    padding-right: 5px;
 }
