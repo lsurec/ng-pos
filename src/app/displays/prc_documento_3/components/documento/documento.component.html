@@ -38,10 +38,7 @@
                         </button>
                     </div>
                 </form>
-            </div>
-
-            <div class="buscar-cliente">
-                <div class="d-flex">
+                <div class="cf">
                     <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
                     <span class="spacer"></span>
                     <div class="form-check form-switch">
@@ -50,6 +47,17 @@
                     </div>
                 </div>
             </div>
+
+            <!-- <div class="buscar-cliente">
+                <div class="d-flex">
+                    <p class="subtitulo">{{ 'pos.factura.cf' | translate }} </p>
+                    <span class="spacer"></span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                            (change)="setCF()">
+                    </div>
+                </div>
+            </div> -->
         </div>
 
         <div class="dFlex width80" *ngIf="facturaService.cuenta">

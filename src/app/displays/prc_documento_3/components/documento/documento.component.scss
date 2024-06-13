@@ -7,6 +7,7 @@ $color-azul           : #134895; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 $detalles             : rgb(0 0 0 / 3%);
+$sombra               : rgba(0, 0, 0, 0.1);
 
 .documento {
     padding   : 10px 25px;
@@ -55,6 +56,7 @@ hr {
     width           : 80%;
     margin-bottom   : 10px;
     background-color: $detalles;
+    box-shadow      : 0px 1px 0px 1px $sombra;
 }
 
 
@@ -70,6 +72,7 @@ hr {
     padding         : 10px;
     width           : 100%;
     background-color: $detalles;
+    box-shadow      : 0px 1px 0px 1px $sombra;
 }
 
 .detalles-fondo {
@@ -77,6 +80,7 @@ hr {
     width           : 80%;
     background-color: $detalles;
     margin-bottom   : 10px;
+    box-shadow      : 0px 1px 0px 1px $sombra;
 }
 
 .detalles-fondo-v {
@@ -93,6 +97,12 @@ hr {
 .dFlex {
     display    : flex;
     align-items: center;
+}
+
+.cf {
+    display    : flex;
+    align-items: center;
+    padding-top: 10px;
 }
 
 .titulo {

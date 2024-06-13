@@ -825,7 +825,10 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.focusAndSelectText();
+
+    if (!this.facturaService.cuenta) {
+      this.focusAndSelectText();
+    }
   }
 
   focusAndSelectText() {

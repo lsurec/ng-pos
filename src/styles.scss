@@ -606,3 +606,11 @@ input[type='number'] {
 .dark-theme .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
     color: $texto-notificacion !important;
 }
+
+.dark-theme .detalles-fondo,
+.dark-theme .buscar-cliente,
+.dark-theme .informacion-fondo,
+.dark-theme .cantidad-producto,
+.dark-theme .cantidad-fondo {
+    box-shadow: 0px 1px 0px 1px rgb(242 242 242 / 29%) !important;
+}
