@@ -174,7 +174,7 @@ mat-form-field {
     background-color: transparent;
 }
 
-.descripcion-tarea:hover {
+.observacion-tarea:hover {
     border: 1px solid $color-bordes;
 }
 
@@ -523,7 +523,7 @@ mat-icon {
     width : 45%;
 }
 
-.descripcion-tarea {
+.observacion-tarea {
     color           : $color-azul;
     width           : calc(100% - 10px);
     border-style    : none;
@@ -683,7 +683,7 @@ mat-icon {
         margin-top : 5px !important;
     }
 
-    .descripcion-tarea {
+    .observacion-tarea {
         width: 100% !important;
     }
 

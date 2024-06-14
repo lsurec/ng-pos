@@ -280,6 +280,7 @@ input[type='number'] {
 .dark-theme .form-control,
 .dark-theme .fechas,
 .dark-theme .descripcion-tarea,
+.dark-theme .observacion-tarea,
 .dark-theme .titulo-tarea,
 .dark-theme .minutos,
 .dark-theme .referenciaObtenida,
@@ -442,7 +443,8 @@ input[type='number'] {
     color: $color-verde !important;
 }
 
-.dark-theme .descuento {
+.dark-theme .descuento,
+.dark-theme .obligatorio {
     color: $color-rojo !important;
 }
 
@@ -489,6 +491,11 @@ input[type='number'] {
 
 .dark-theme .campos:hover {
     border-bottom: 1px solid $iconos !important;
+}
+
+.dark-theme .seleccionar:hover,
+.dark-theme .seleccionar-invitados:hover {
+    background-color: $seleccionado !important;
 }
 
 //Borde blanco para totales
@@ -602,4 +609,12 @@ input[type='number'] {
 
 .dark-theme .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
     color: $texto-notificacion !important;
+}
+
+.dark-theme .detalles-fondo,
+.dark-theme .buscar-cliente,
+.dark-theme .informacion-fondo,
+.dark-theme .cantidad-producto,
+.dark-theme .cantidad-fondo {
+    box-shadow: 0px 1px 0px 1px rgb(242 242 242 / 29%) !important;
 }

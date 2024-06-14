@@ -255,49 +255,32 @@ export class FacturaComponent implements OnInit {
 
   async loadDocumentLocal() {
 
-    //si no hay un documento guardado no hacer nada
+    this.facturaService.isLoading = true;
 
     //str to object para documento estructura
     let doc: DocLocalInterface = JSON.parse(PreferencesService.documento);
 
-    if (PreferencesService.recuperarDoc.length == 0 || PreferencesService.recuperarDoc == "1") {
-      //Dialogo para cargar documento guardado
-      let verificador = await this._notificationService.openDialogRecoverDoc(
-        {
-          title: this._translate.instant('pos.alertas.docEncontrado'),
-          description: this._translate.instant('pos.alertas.recuperar'),
+    if (!this.facturaService.serie) {
+      //Cargar serie del documento guardado
+      for (let i = 0; i < this.facturaService.series.length; i++) {
+        const element = this.facturaService.series[i];
+
+        if (element.serie_Documento == doc.serie!.serie_Documento) {
+          this.facturaService.serie = element;
+          this.facturaService.serieCopy = element;
         }
-      );
-
-      if (!verificador) return;
-
-    }
-
-    //Cargar documento
-
-    //buscar serie guardada en las series disponobles
-
-    for (let i = 0; i < this.facturaService.series.length; i++) {
-
-      const element = this.facturaService.series[i];
-
-      //Asignar serie guardada
-      if (element.serie_Documento == doc.serie!.serie_Documento) {
-        this.facturaService.serie = element;
-        break;
       }
-
     }
 
 
-    this.facturaService.isLoading = true;
+
 
     //buscar vendedores
     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
     )
 
@@ -322,9 +305,9 @@ export class FacturaComponent implements OnInit {
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
-      doc.empresa.empresa,
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
+      this.empresa.empresa,
     );
 
     //si algo salio mal
@@ -342,11 +325,13 @@ export class FacturaComponent implements OnInit {
     let resParametro: ResApiInterface = await this._parametroService.getParametro(
       this.user,
       this.token,
-      doc.documento,
-      doc.serie!.serie_Documento,
-      doc.empresa.empresa,
-      doc.estacion.estacion_Trabajo,
-    );
+      this.tipoDocumento!,
+      this.facturaService.serie!.serie_Documento,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
+    )
+
+
 
     //si algo salio mal
     if (!resParametro.status) {
@@ -359,15 +344,12 @@ export class FacturaComponent implements OnInit {
     //Parammetros disponibles
     this.facturaService.parametros = resParametro.response;
 
-
-
-
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
       this.token,
-      doc.empresa.empresa,
-      doc.serie!.serie_Documento,
-      doc.documento,
+      this.empresa.empresa,
+      this.facturaService.serie!.serie_Documento,
+      this.tipoDocumento!,
     );
 
     //si algo salio mal
@@ -379,86 +361,140 @@ export class FacturaComponent implements OnInit {
       return;
 
     }
+    //cargar tipo referencia (evento)
+
+
 
     //Formas de pago disponobles
     this.facturaService.formasPago = resFormaPago.response;
 
 
-    //Buscar vendedor asigando en el documento guardado
+    //si hay vendedor cargarlo
     if (doc.vendedor) {
 
       for (let i = 0; i < this.facturaService.vendedores.length; i++) {
         const element = this.facturaService.vendedores[i];
 
         //Asignaer vendedor guardado
-        if (element.cuenta_Correntista == doc.vendedor?.cuenta_Correntista) {
+        if (element.cuenta_Correntista == doc.vendedor!.cuenta_Correntista) {
           this.facturaService.vendedor = element;
         }
       }
     }
 
 
-    this.facturaService.cuenta = doc.cliente; //asignar cliente
-    this.facturaService.traInternas = doc.detalles; //asignar detalles
-    this.facturaService.montos = doc.pagos; //asignar pagos
+    if (this.facturaService.valueParametro(58)) {
+
+      this.facturaService.tipoReferencia = undefined;
+      this.facturaService.tiposReferencia = [];
 
 
-    if (doc.tipoRef) {
-      for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
-        const element = this.facturaService.tiposReferencia[i];
-        if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
-          this.facturaService.tipoReferencia = element;;
+      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
 
+
+      //si algo salio mal
+      if (!resTipoRefencia.status) {
+        this.facturaService.isLoading = false;
+
+        this.verError(resTipoRefencia);
+
+        return;
+
+      }
+
+
+      this.facturaService.tiposReferencia = resTipoRefencia.response;
+
+      if (doc.tipoRef) {
+        for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
+          const element = this.facturaService.tiposReferencia[i];
+          if (element.tipo_Referencia == doc.tipoRef.tipo_Referencia) {
+            this.facturaService.tipoReferencia = element;;
+
+          }
         }
+
       }
 
     }
 
+    //evaluar fechas y observaciones
+    if (this.facturaService.valueParametro(381)) {
 
-    //load dates 
-    this.facturaService.fechaRefIni = new Date(doc.refFechaEntrega!);
-    this.facturaService.fechaRefFin = new Date(doc.refFechaRecoger!);
-    this.facturaService.fechaIni = new Date(doc.refFechaInicio!);
-    this.facturaService.fechaFin = new Date(doc.refFechaFin!);
+      this.facturaService.fechaRefIni = new Date(doc.refFechaEntrega!);
+      //set dates in inputs
+      this.facturaService.inputFechaRefIni = {
+        year: this.facturaService.fechaRefIni.getFullYear(),
+        day: this.facturaService.fechaRefIni.getDate(),
+        month: this.facturaService.fechaRefIni.getMonth() + 1,
+      }
 
-
-    //set dates in inputs
-    this.facturaService.inputFechaRefIni = {
-      year: this.facturaService.fechaRefIni.getFullYear(),
-      day: this.facturaService.fechaRefIni.getDate(),
-      month: this.facturaService.fechaRefIni.getMonth() + 1,
+      this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
     }
 
-    this.facturaService.inputFechaRefFin = {
-      year: this.facturaService.fechaRefFin.getFullYear(),
-      day: this.facturaService.fechaRefFin.getDate(),
-      month: this.facturaService.fechaRefFin.getMonth() + 1,
+    if (this.facturaService.valueParametro(382)) {
+      this.facturaService.fechaRefFin = new Date(doc.refFechaRecoger!);
+      this.facturaService.inputFechaRefFin = {
+        year: this.facturaService.fechaRefFin.getFullYear(),
+        day: this.facturaService.fechaRefFin.getDate(),
+        month: this.facturaService.fechaRefFin.getMonth() + 1,
+      }
+      this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
+
     }
 
-    this.facturaService.inputFechaIni = {
-      year: this.facturaService.fechaIni.getFullYear(),
-      day: this.facturaService.fechaIni.getDate(),
-      month: this.facturaService.fechaIni.getMonth() + 1,
+    if (this.facturaService.valueParametro(44)) {
+
+
+      //load dates 
+      this.facturaService.fechaIni = new Date(doc.refFechaInicio!);
+      this.facturaService.fechaFin = new Date(doc.refFechaFin!);
+
+
+
+      this.facturaService.inputFechaIni = {
+        year: this.facturaService.fechaIni.getFullYear(),
+        day: this.facturaService.fechaIni.getDate(),
+        month: this.facturaService.fechaIni.getMonth() + 1,
+      }
+
+      this.facturaService.inputFechaFinal = {
+        year: this.facturaService.fechaFin.getFullYear(),
+        day: this.facturaService.fechaFin.getDate(),
+        month: this.facturaService.fechaFin.getMonth() + 1,
+      }
+
+      //set time
+      this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
+      this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+
     }
 
-    this.facturaService.inputFechaFinal = {
-      year: this.facturaService.fechaFin.getFullYear(),
-      day: this.facturaService.fechaFin.getDate(),
-      month: this.facturaService.fechaFin.getMonth() + 1,
+
+    if (this.facturaService.valueParametro(385)) {
+      this.facturaService.refContacto = doc.refContacto;
+
     }
 
-    //set time
-    this.facturaService.formControlHoraRefIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefIni));
-    this.facturaService.formControlHoraRefFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaRefFin));
-    this.facturaService.formControlHoraIni.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaIni));
-    this.facturaService.formControlHoraFin.setValue(UtilitiesService.getHoraInput(this.facturaService.fechaFin));
+    if (this.facturaService.valueParametro(383)) {
 
+      this.facturaService.refDescripcion = doc.refDescripcion;
+    }
 
-    // set observaciones
-    this.facturaService.refContacto = doc.refContacto;
-    this.facturaService.refDescripcion = doc.refDescripcion;
-    this.facturaService.refDireccionEntrega = doc.refDireccionEntrega;
-    this.facturaService.refObservacion = doc.refObservacion;
+    if (this.facturaService.valueParametro(386)) {
+
+      this.facturaService.refDireccionEntrega = doc.refDireccionEntrega;
+    }
+
+    if (this.facturaService.valueParametro(384)) {
+
+      this.facturaService.refObservacion = doc.refObservacion;
+    }
+
+    
+    this.facturaService.cuenta = doc.cliente; //asignar cliente
+    this.facturaService.traInternas = doc.detalles; //asignar detalles
+    this.facturaService.montos = doc.pagos; //asignar pagos
 
 
     //calcular totales del documento y pagos
@@ -526,9 +562,11 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.series.length == 1) {
       //seleccionar la serie
       this.facturaService.serie = this.facturaService.series[0];
+      this.facturaService.serieCopy = this.facturaService.series[0];
     } else {
       //si hay mas de una no seleccionar ninguna
       this.facturaService.serie = undefined
+      this.facturaService.serieCopy = undefined;
     }
 
 
@@ -678,6 +716,7 @@ export class FacturaComponent implements OnInit {
     if (this.facturaService.series.length == 1) {
       //seleccionar serie
       this.facturaService.serie = this.facturaService.series[0];
+      this.facturaService.serieCopy = this.facturaService.series[0];
       let serie: string = this.facturaService.serie.serie_Documento;
 
       //buscar vendedores
@@ -808,27 +847,30 @@ export class FacturaComponent implements OnInit {
 
     //cargar documento guardado localmente
 
-
-
     if (!this.globalConvertService.editDoc) {
 
       this.facturaService.isLoading = false;
 
-
       let reloadDoc: boolean = await this.facturaService.loadDocSave();
-
-
 
       if (!reloadDoc) return;
 
-      this.loadDocumentLocal();
+      //Dialogo para cargar documento guardado
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.docEncontrado'),
+          description: this._translate.instant('pos.alertas.recuperar'),
+        }
+      );
 
+      if (!verificador) return;
+
+      this.loadDocumentLocal();
 
       return;
     }
 
     //Cargar datos del docuemnto origen
-
 
     //Verificar serie
 

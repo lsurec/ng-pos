@@ -95,11 +95,13 @@ export class LoginComponent {
     if (this.saveMyData) {
       PreferencesService.tokenStorage = resLogin.message;
       PreferencesService.userStorage = resLogin.user;
+      // PreferencesService.userStorage = "ASISTENTEG";
       PreferencesService.conStorageStr = this._encryptService.encrypt(resLogin.con)
     }
 
     PreferencesService.token = resLogin.message;
     PreferencesService.user = resLogin.user;
+    // PreferencesService.user = "ASISTENTEG";
     PreferencesService.conStr = this._encryptService.encrypt(resLogin.con)
 
 

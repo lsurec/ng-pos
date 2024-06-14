@@ -431,16 +431,42 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   changeCuentaRef() {
 
     if (!this.globalConvertService.editDoc) return;
-    console.log("Solicitar permisos");
-
+    //TODO: Permisos
   }
 
   async changeSerie() {
 
+
+    if (this.facturaService.traInternas.length > 0) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          //TODO:Translate
+          title: "¿Estás seguro?",
+          description: "Estás a punto de cambiar de serie, las transacciones actuales se perderán.",
+          verdadero: this._translate.instant('pos.botones.aceptar'),
+          falso: "Cancelar",
+        }
+      );
+
+      if (!verificador) {
+        this.facturaService.serie = this.facturaService.serieCopy;
+        return;
+      };
+
+    }
+
+    this.facturaService.serieCopy = this.facturaService.serie;
+
+    //y si hay otros datos alertar al usuario 
     //cargar datos que dependen de la serie 
     let serie: string = this.facturaService.serie!.serie_Documento;
 
     this.facturaService.isLoading = true;
+
+
+    this.facturaService.vendedores = [];
+    this.facturaService.vendedor = undefined;
 
     //buscar vendedores
     let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -449,8 +475,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.documento,
       serie,
       this.empresa,
-    )
-
+    );
 
     if (!resVendedor.status) {
 
@@ -480,8 +505,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.facturaService.vendedores.length == 1) {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
       this.facturaService.saveDocLocal();
-
     }
+
+    this.facturaService.tiposTransaccion = [];
 
     //Buscar tipos transaccion
     let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
@@ -495,7 +521,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resTransaccion.status) {
 
       this.facturaService.isLoading = false;
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -516,6 +541,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.tiposTransaccion = resTransaccion.response;
 
+    this.facturaService.parametros;
+
     //Buscar parametros del documento
     let resParametro: ResApiInterface = await this._parametroService.getParametro(
       this.user,
@@ -529,9 +556,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resParametro.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -555,6 +579,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.montos = [];
     this.facturaService.traInternas = [];
 
+
+    this.facturaService.formasPago = [];
+
     //Buscar formas de pago
     let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
       this.token,
@@ -567,9 +594,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!resFormaPago.status) {
 
       this.facturaService.isLoading = false;
-
-
-
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -622,6 +646,8 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
+
+    this.facturaService.searchText = "";
 
     this.facturaService.isLoading = false;
 
@@ -799,7 +825,10 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.focusAndSelectText();
+
+    if (!this.facturaService.cuenta) {
+      this.focusAndSelectText();
+    }
   }
 
   focusAndSelectText() {
@@ -809,6 +838,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Añade un pequeño retraso antes de seleccionar el texto
     setTimeout(() => {
       inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  mostrarBusquedaCuenta() {
+    this.facturaService.buscarcuenta = !this.facturaService.buscarcuenta;
+    this.facturaService.cuenta = undefined;
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      this.focusAndSelectText();
     }, 0);
   }
 

@@ -25,6 +25,7 @@ import { TareaService } from 'src/app/displays/shrTarea_3/services/tarea.service
 import { ComentarioInterface } from 'src/app/interfaces/comentario.interface';
 import { DialogTareaComponent } from '../dialog-tarea/dialog-tarea.component';
 import { CrearTareaComponent } from 'src/app/components/crear-tarea/crear-tarea.component';
+import { components } from 'src/app/providers/componentes.provider';
 
 @Component({
   selector: 'app-calendario',
@@ -274,7 +275,12 @@ export class CalendarioComponent implements OnInit {
   //regresar a la pantalla anterior
   backPage(): void {
     this.tareasGlobalService.vistaDia = false;
-    this._eventService.emitCustomEvent(false)
+    // this._eventService.emitCustomEvent(false)
+    components.forEach(element => {
+      element.visible = false;
+    });
+
+    this._eventService.emitCustomEvent(false);
   }
 
   //traducir idioma de DATEPIKER al idioma seleccionado
@@ -1061,8 +1067,8 @@ export class CalendarioComponent implements OnInit {
         let mesAnteriorActual: number = this.month - 1;
 
         if (mes == mesAnteriorActual && indice >= this.obtenerIndiceDiaAnterior(mesAnteriorActual, anio)) {
-
-          return true;
+          //TODO: volver a revisar
+          return false;
         }
         // Mes menor al actual
         return false;

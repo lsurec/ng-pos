@@ -257,7 +257,6 @@ p {
 }
 
 .lista-archivos {
-    margin-left   : 15px;
     padding       : 5px;
     padding-bottom: 0px;
 }
@@ -362,4 +361,43 @@ p {
 .subir-comentarios {
     font-size: 12px;
     height   : 30px;
+}
+
+.circulo {
+    width        : 15px; //diámetro total 
+    height       : 15px; //diámetro total
+    border-radius: 50%;
+    border       : 1px solid $color-negro;
+}
+
+.padRight {
+    padding-right: 5px;
+}
+
+//LADO IZQUIERDO
+.contenido-izquierdo {
+    //corregir ancho del contenedor
+    min-height      : 35px;
+    align-items     : center;
+    // margin-bottom: 5px;
+    width           : 200px;
+    padding-left    : 5px;
+    padding-right   : 5px;
+}
+
+.tipo-tarea {
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    min-height      : 30px;
+    padding         : 2px 10px;
+    font-size       : 12px;
+    width           : 200px;
+    margin          : 5px 0px;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $color-azul;
+    font-size : 13px;
 }

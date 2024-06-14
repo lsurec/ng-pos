@@ -15,6 +15,7 @@ import { ProductoComponent } from "../displays/prc_documento_3/components/produc
 import { InformeProductosComponent } from "../displays/prc_documento_3/components/informe-productos/informe-productos.component";
 import { ConfirmarNuevoDocComponent } from "../components/confirmar-nuevo-doc/confirmar-nuevo-doc.component";
 import { RecuperarDocComponent } from "../components/recuperar-doc/recuperar-doc.component";
+import { ProductosEncontradosComponent } from "../displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component";
 
 @Injectable({
     providedIn: 'root'
@@ -148,6 +149,20 @@ export class NotificationsService {
                 } else {
                     resolve(result);
                 }
+            });
+        });
+    }
+
+
+
+
+    openProducts(productos: ProductoInterface[]): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(ProductosEncontradosComponent, { data: productos })
+
+            dialogRef.afterClosed().subscribe(result => {
+                resolve(result);
             });
         });
     }

@@ -321,18 +321,18 @@ mat-sidenav {
 }
 
 .dia-nombre {
-    padding      : 5px;
-    height       : 35px;
-    text-align   : center;
-    place-items  : center;
-    border-right : 1px solid $color-bordes;
-    border-bottom: none;
-    margin       : 0px;
-    font-weight  : 550;
-    font-size    : 14px;
-    cursor       : context-menu;
-    max-width    : 166px;
-    min-width    : 125px
+    padding         : 5px;
+    height          : 35px;
+    text-align      : center;
+    place-items     : center;
+    border-right    : 1px solid $color-bordes;
+    border-bottom   : none;
+    margin          : 0px;
+    font-weight     : 550;
+    font-size       : 14px;
+    cursor          : context-menu;
+    // max-width    : 166px;
+    // min-width    : 125px
 }
 
 .mes-tareas {
@@ -341,13 +341,14 @@ mat-sidenav {
 }
 
 .dia-tarea-mes {
-    border-bottom : 1px solid $color-bordes;
-    border-right  : 1px solid $color-bordes;
-    border-top    : none;
-    min-height    : calc(100px);
-    padding-bottom: 3px;
-    max-width     : 166px;
-    min-width     : 125px;
+    border-bottom    : 1px solid $color-bordes;
+    border-right     : 1px solid $color-bordes;
+    border-top       : none;
+    min-height       : calc(100px);
+    padding-bottom   : 3px;
+    min-width        : 100px;
+    // max-width     : 166px;
+    // min-width     : 125px;
 }
 
 .dia-tarea-semana {
@@ -905,7 +906,6 @@ p {
     padding      : 0px 3px;
     border       : 1px solid $borde-tarea;
     cursor       : pointer;
-    width        : calc(100% - 10px);
 }
 
 .descripcion-tarea {
@@ -920,8 +920,8 @@ p {
 }
 
 .verTareas {
-    min-width  : 125px;
-    max-width  : 160px !important;
+    // min-width  : 125px;
+    // max-width  : 160px !important;
     padding-top: 5px;
 }
 
