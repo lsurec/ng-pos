@@ -36,6 +36,7 @@ export class PreferencesService {
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
     private static readonly recuperarDocKey: string = 'recuperarDoc';
+    private static readonly documentskey: string = 'documents';
 
 
 
@@ -361,6 +362,19 @@ export class PreferencesService {
 
     static get recuperarDoc(): string {
         let value = localStorage.getItem(this.recuperarDocKey);
+        if (!value) return "";
+        return value;
+    }
+
+    //documento local guardado
+    @Input()
+    static set documentos(value: string) {
+        localStorage.setItem(this.documentskey, value.toString());
+    }
+
+    static get documentos(): string {
+        let value = localStorage.getItem(this.documentskey);
+
         if (!value) return "";
         return value;
     }

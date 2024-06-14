@@ -7,9 +7,10 @@ import { TraInternaInterface } from "./tra-interna.interface";
 import { MontoIntreface } from "./monto.interface";
 import { TipoReferenciaInterface } from "./tipo-referencia";
 
-export interface DocLocalInterface{
-    user:string,
-    tipoRef?:TipoReferenciaInterface,
+export interface DocLocalInterface {
+    idDocRef: number,
+    user: string,
+    tipoRef?: TipoReferenciaInterface,
     refFechaEntrega?: string,
     refFechaRecoger?: string,
     refFechaInicio?: string,
@@ -18,12 +19,12 @@ export interface DocLocalInterface{
     refDescripcion?: string,
     refDireccionEntrega?: string,
     refObservacion?: string,
-    empresa:EmpresaInterface,
-    estacion:EstacionInterface,
-    cliente?:ClienteInterface,
-    vendedor?:VendedorInterface,
-    serie?:SerieInterface,
-    documento:number,
-    detalles:TraInternaInterface[],
-    pagos:MontoIntreface[],
+    empresa: EmpresaInterface,
+    estacion: EstacionInterface,
+    cliente?: ClienteInterface,
+    vendedor?: VendedorInterface,
+    serie?: SerieInterface,
+    documento: number,
+    detalles: TraInternaInterface[],
+    pagos: MontoIntreface[],
 }

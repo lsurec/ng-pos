@@ -310,6 +310,7 @@ export class FacturaService {
 
         //objeto con todos los datos de un documento
         let doc: DocLocalInterface = {
+            idDocRef: this.idDocumentoRef,
             user: PreferencesService.user, //usuario de la sesion
             tipoRef: this.valueParametro(58) ? this.tipoReferencia : undefined,
             refFechaEntrega: this.valueParametro(381) ? this.fechaRefIni!.toISOString() : undefined,
@@ -333,6 +334,8 @@ export class FacturaService {
         //guardar documento en preferencias
         PreferencesService.documento = JSON.stringify(doc);
     }
+
+    // idRefDocs: string[] = [];
 
     //Buscar tipo transaccion
     resolveTipoTransaccion(tipo: number): number {

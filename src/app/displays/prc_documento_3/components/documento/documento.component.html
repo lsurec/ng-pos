@@ -99,7 +99,7 @@
         <div class="width80" *ngIf="facturaService.cuenta">
             <hr>
         </div>
-
+        <br *ngIf="!facturaService.cuenta">
         <p class="tEvento width80" *ngIf="facturaService.valueParametro(58)">
             {{ facturaService.getTextParam(58) ?? 'pos.factura.evento' | translate }}
         </p>
