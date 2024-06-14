@@ -436,6 +436,8 @@ export class FacturaService {
 
         //Agregar transaccion
         this.traInternas.push(transaccion);
+        
+        this.searchProduct = "";
 
         //calcluar totales
         this.calculateTotales();
