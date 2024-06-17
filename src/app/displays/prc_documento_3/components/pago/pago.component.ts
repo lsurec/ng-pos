@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
 import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
     PagoService,
   ]
 })
-export class PagoComponent {
+export class PagoComponent implements OnInit {
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
@@ -78,8 +78,46 @@ export class PagoComponent {
     this.pagoComponentService.forms = false; //oculatar formularios
   }
 
+  ngOnInit() {
+    this.facturaService.formasPago = this.facturaService.formasPago.map((pago, index) => ({
+      ...pago,
+      select: index === 0
+    }));
+  }
+
+
+  pagoSelect: number = 0;
+
+  //Navegar en la formas de pago
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const key = event.key.toLowerCase();
+    this.pagoSelect = this.facturaService.formasPago.findIndex(pago => pago.select);
+    if (key === 'arrowdown') {
+      event.preventDefault();
+      const nextIndex = (this.pagoSelect + 1) % this.facturaService.formasPago.length;
+      this.facturaService.formasPago[this.pagoSelect].select = false;
+      this.facturaService.formasPago[nextIndex].select = true;
+    } else if (key === 'arrowup') {
+      event.preventDefault();
+      const prevIndex = (this.pagoSelect - 1 + this.facturaService.formasPago.length) % this.facturaService.formasPago.length;
+      this.facturaService.formasPago[this.pagoSelect].select = false;
+      this.facturaService.formasPago[prevIndex].select = true;
+    }
+
+    if (key === "enter") {
+      this.viewForms(this.facturaService.formasPago[this.pagoSelect]);
+    }
+  }
+
+
   //ver fommulario para la forma de pago
   async viewForms(payment: FormaPagoInterface) {
+
+    // Reset select property for all items
+    this.facturaService.formasPago.forEach(p => p.select = false);
+    // Set select property of clicked item to true
+    payment.select = true;
 
     //seleccionar forma de poago
     this.pagoComponentService.pago = payment;
@@ -360,7 +398,7 @@ export class PagoComponent {
 
     //calcular totales
     this.facturaService.calculateTotalesPago();
-      
+
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.montosEliminados'));
   }
 }
