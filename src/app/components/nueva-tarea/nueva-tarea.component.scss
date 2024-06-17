@@ -229,9 +229,8 @@ textarea::placeholder {
 }
 
 .error-message {
-    color     : $color-rojo;
-    font-size : 12px;
-    margin-top: 5px;
+    color    : $color-rojo;
+    font-size: 12px;
 }
 
 
@@ -256,7 +255,7 @@ textarea::placeholder {
 
 .abrir-dialogos {
     display    : flex;
-    align-items: center;
+    align-items: baseline;
     margin     : 5px 0px 10px;
 }
 
@@ -381,4 +380,8 @@ textarea::placeholder {
     border-bottom-right-radius: 5px;
     border-top-left-radius    : 0px;
     border-bottom-left-radius : 0px;
+}
+
+.respuesta-dialogo {
+    margin-top: 5px;
 }

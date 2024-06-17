@@ -66,6 +66,10 @@
 
                 <span class="spacer"></span>
 
+                <button mat-button (click)="validar()">
+                    Guardar
+                </button>
+
                 <button mat-button class="subir-comentarios" (click)="limpiarCrear()">
                     <mat-icon>post_add</mat-icon>{{ 'crm.crear.nuevo' | translate }}
                 </button>
@@ -108,17 +112,30 @@
                     </div>
 
                     <div class="abrir-dialogos">
-                        <div class="dFlex">
-                            <div class="buscar-usu-ref-id">
-                                <span class="spacer"></span>
-                                <mat-icon class="icono-tareas">person_add</mat-icon>
-                                <div class="texto-botones">
-                                    {{ 'crm.crear.responsable' | translate }}
+
+                        <div class="seleccion">
+                            <!-- Boton -->
+                            <div class="dFlex">
+                                <div class="buscar-usu-ref-id">
+                                    <span class="spacer"></span>
+                                    <mat-icon class="icono-tareas">person_add</mat-icon>
+                                    <div class="texto-botones">
+                                        {{ 'crm.crear.responsable' | translate }}
+                                    </div>
+                                    <span class="spacer"></span>
                                 </div>
                                 <span class="spacer"></span>
+                                <p class="obligatorio25">*</p>
                             </div>
-                            <span class="spacer"></span>
-                            <p class="obligatorio25">*</p>
+                            <!-- Informacion -->
+
+                            <div class="respuesta-dialogo">
+                                <p>Responsable</p>
+                                <p>Usuario</p>
+                                <p>Desa029</p>
+                                <p>Correo Electronico:</p>
+                                <p>correo@demosftonline.com.gt</p>
+                            </div>
                         </div>
 
                         <span class="spacer"></span>
@@ -147,16 +164,7 @@
                             <p class="obligatorio25">*</p>
                         </div>
                     </div>
-
-                    <button mat-button (click)="validar()">
-                        Guardar
-                    </button>
                 </div>
-
-                <button mat-icon-button (click)="validar()">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-
             </div>
             <!-- Mostrar logos -->
             <app-barra-logo-demosoft></app-barra-logo-demosoft>

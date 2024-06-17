@@ -190,6 +190,15 @@ export class NuevaTareaComponent implements OnInit {
       this.formulario.markAllAsTouched();
       return;
     }
+
+    // Asigna los valores del formulario a las variables
+    this.titulo = this.formulario.get('titulo')?.value;
+    this.descripcion = this.formulario.get('descripcion')?.value || '';
+
+    // Muestra los valores en la consola
+    console.log('Titulo:', this.titulo);
+    console.log('Descripción:', this.descripcion);
+
     // Procesa los datos del formulario
     console.log(this.formulario.value);
   }
