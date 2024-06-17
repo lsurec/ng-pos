@@ -19,4 +19,5 @@ export interface EmpresaInterface {
     moneda_Simbolo: string;
     moneda_ISO_Code: string;
     empresa_Img: any;
+    absolutePathPicture: any;
 }
