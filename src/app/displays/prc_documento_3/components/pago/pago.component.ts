@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
 import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
@@ -19,6 +19,9 @@ import { TranslateService } from '@ngx-translate/core';
   ]
 })
 export class PagoComponent implements OnInit {
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('montoInput') montoInput?: ElementRef;
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
@@ -76,6 +79,11 @@ export class PagoComponent implements OnInit {
     this.pagoComponentService.banco = undefined; //banco seleccionado vacio
     this.pagoComponentService.cuentaSelect = undefined; //ceunta bancaria seleccionad avacia
     this.pagoComponentService.forms = false; //oculatar formularios
+
+    this.facturaService.formasPago = this.facturaService.formasPago.map((pago, index) => ({
+      ...pago,
+      select: index === 0
+    }));
   }
 
   ngOnInit() {
@@ -200,6 +208,10 @@ export class PagoComponent implements OnInit {
 
     //ver formulario para la forma de pago
     this.pagoComponentService.forms = true;
+
+    setTimeout(() => {
+      this.focusAndSelectText();
+    }, 0);
 
   }
 
@@ -400,6 +412,29 @@ export class PagoComponent implements OnInit {
     this.facturaService.calculateTotalesPago();
 
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.montosEliminados'));
+  }
+
+  selectText() {
+    if (this.pagoComponentService.monto && this.pagoComponentService.forms) {
+      this.focusAndSelectText();
+    }
+  }
+
+
+  ngAfterViewInit() {
+    if (this.pagoComponentService.monto && this.pagoComponentService.forms) {
+      this.focusAndSelectText();
+    }
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.montoInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
   }
 }
 

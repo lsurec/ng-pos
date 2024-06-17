@@ -27,7 +27,8 @@
 
             <!--Monto-->
             <p class="subtitulo">{{ 'pos.factura.monto' | translate }}</p>
-            <input class="total" type="text" name="search" [(ngModel)]="pagoComponentService.monto" autocomplete="off">
+            <input #montoInput class="total" type="text" name="search" [(ngModel)]="pagoComponentService.monto"
+                autocomplete="off" (focus)="selectText()">
 
             <!--Autorizacion-->
             <div *ngIf="pagoComponentService.pago!.autorizacion">
