@@ -224,14 +224,14 @@
                         <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
                             [checked]="facturaService.tabDocummento">
                         <div class="pestana" for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}"
-                            (click)=" showDocumento()">
+                            (click)="facturaService. showDocumento()">
                             {{'pos.factura.documento' | translate }}
                         </div>
 
                         <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
                             [checked]=" facturaService.tabDetalle">
                         <div class="pestana" for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
-                            (click)=" showDetalle()">{{
+                            (click)="facturaService. showDetalle()">{{
                             'pos.factura.detalle' | translate }}
                         </div>
 
@@ -240,7 +240,7 @@
                             *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
 
                         <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
-                            (click)=" showPago()" *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
+                            (click)="facturaService. showPago()" *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
                             {{
                             'pos.factura.pago' | translate }}
 
