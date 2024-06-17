@@ -197,6 +197,12 @@ p {
     padding-left: 3px;
 }
 
+.obligatorio25 {
+    color       : $color-rojo;
+    font-weight : bold;
+    font-size   : 25px !important;
+    padding-left: 3px;
+}
 
 
 .titulo-tarea {
@@ -257,7 +263,7 @@ textarea::placeholder {
 .buscar-usu-ref-id {
     min-width       : 300px;
     background-color: $color-azul;
-    padding         : 5px 10px;
+    padding         : 7px 10px;
     align-items     : center;
     display         : flex;
     cursor          : pointer;
@@ -275,4 +281,104 @@ textarea::placeholder {
 .icono-tareas {
     color       : $color-blanco;
     margin-right: 10px;
+}
+
+.fechas-hora {
+    display: flex;
+}
+
+@media screen and (max-width: 280px) {
+
+    .detalles-tarea {
+        margin: 20px 5px !important;
+    }
+
+    .datos-tarea,
+    .fechas-hora,
+    .reloj-calendario {
+        display: block !important;
+    }
+
+    .fecha-hora {
+        display    : block !important;
+        padding-top: 5px;
+    }
+
+    .hora-calendario {
+        margin-left: 0px !important;
+        margin-top : 5px !important;
+    }
+
+    .observacion-tarea {
+        width: 100% !important;
+    }
+
+    .llenar-formulario {
+        align-items: normal !important;
+    }
+
+    .crear-tarea {
+        padding: 10px 15px !important;
+    }
+
+}
+
+.reloj-calendario {
+    display: flex;
+}
+
+.fecha-calendario {
+    height: 35px;
+    width : 45%;
+}
+
+.form-control {
+    background-color: transparent !important;
+    height          : 35px;
+    font-size       : 14px;
+    border          : 1px solid $color-bordes;
+    color           : $color-azul;
+}
+
+.ver-calendario {
+    border     : 1px solid $color-bordes;
+    align-items: center;
+    height     : 35px;
+}
+
+.horas {
+    width      : 45%;
+    display    : flex;
+    align-items: center;
+}
+
+.hora-calendario {
+    width                    : 100%;
+    height                   : 35px;
+    border                   : 1px solid $color-bordes;
+    display                  : flex;
+    align-items              : center;
+    border-top-left-radius   : 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.hora {
+    cursor          : pointer;
+    border-style    : none;
+    width           : 100%;
+    font-size       : 13px;
+    // padding: 6px 12px;
+    outline         : none;
+    color           : $color-azul;
+    background-color: transparent;
+    text-align      : center;
+}
+
+.ver-hora {
+    height                    : 35px;
+    border                    : 1px solid $color-bordes;
+    border-top-right-radius   : 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius    : 0px;
+    border-bottom-left-radius : 0px;
 }
