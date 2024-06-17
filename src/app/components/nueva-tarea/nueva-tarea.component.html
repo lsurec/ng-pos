@@ -1,0 +1,167 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<div *ngIf="!isLoading">
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+
+        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="head__sidenav">
+                <button mat-icon-button (click)="close('toggle button')"
+                    [matTooltip]="'pos.botones.cerrar' | translate">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <p>Titulo del la pestaña</p>
+                <span class="spacer"></span>
+            </mat-toolbar>
+            <!-- Contenido del sidenav -->
+            <div class="contenido-sidenav">
+                <p>Aqui va el contenido de la pestaña</p>
+            </div>
+
+            <!-- Barra de abajo para regresar y salir -->
+            <mat-toolbar class="barra-regresar">
+                <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                    <mat-icon>settings</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </mat-toolbar>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <!-- Barras para titulos y boton de cerrar sidenav -->
+            <!-- Aqui van los botones para abrir la pestañan del sidenav -->
+            <mat-toolbar class="toolbarPhone">
+                <!-- Pantalla pequeña -->
+                <mat-toolbar-row>
+                    <button (click)="backPage()" mat-icon-button
+                        matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+
+                    <button mat-icon-button matTooltip="actualizar" (click)="loadData()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+
+                    <span class="spacer"></span>
+
+                    <button mat-button class="subir-comentarios" (click)="limpiarCrear()">
+                        <mat-icon>post_add</mat-icon>{{ 'crm.crear.nuevo' | translate }}
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+
+            <!-- Pantalla completa -->
+            <mat-toolbar class="toolbarlarge">
+
+                <button (click)="backPage()" mat-icon-button class="btn"
+                    matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <button mat-icon-button class="flecha-regresar" matTooltip="actualizar" (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+
+                <span class="spacer"></span>
+
+                <button mat-button class="subir-comentarios" (click)="limpiarCrear()">
+                    <mat-icon>post_add</mat-icon>{{ 'crm.crear.nuevo' | translate }}
+                </button>
+
+            </mat-toolbar>
+            <!-- Contenido del componente -->
+            <div class="container_main">
+
+                <div class="formulario" [formGroup]="formulario">
+                    <div class="campos">
+                        <div class="dFlex">
+                            <p class="titulo-campo">{{ 'crm.crear.titulo' | translate }}</p>
+                            <p class="obligatorio">*</p>
+                        </div>
+                        <input type="text" formControlName="titulo"
+                            placeholder="{{ 'crm.crear.tituloTarea' | translate }}..." class="titulo-tarea"
+                            (ngModelChange)="onInputChange('titulo')"
+                            [ngClass]="{'error': formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid}"
+                            autocomplete="off">
+                        <div *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid"
+                            class="error-message">
+                            Campo requerido
+                        </div>
+                    </div>
+
+
+                    <div class="campos">
+                        <div class="dFlex">
+                            <p class="titulo-campo">{{ 'crm.crear.observacion' | translate }}</p>
+                            <p class="obligatorio">*</p>
+                        </div>
+                        <textarea formControlName="descripcion" id="descripcion" cols="30" rows="3"
+                            class="observacion-tarea" (ngModelChange)="onInputChange('descripcion')"
+                            placeholder="{{ 'crm.crear.descripcion' | translate }}"
+                            [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
+                        <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
+                            class="error-message">
+                            Campo requerido
+                        </div>
+                    </div>
+
+                    <div class="abrir-dialogos">
+                        <div class="dFlex">
+                            <div class="buscar-usu-ref-id">
+                                <span class="spacer"></span>
+                                <mat-icon class="icono-tareas">person_add</mat-icon>
+                                <div class="texto-botones">
+                                    {{ 'crm.crear.responsable' | translate }}
+                                </div>
+                                <span class="spacer"></span>
+                            </div>
+                            <span class="spacer"></span>
+                            <p class="obligatorio25">*</p>
+                        </div>
+
+                        <span class="spacer"></span>
+
+                        <div class="buscar-usu-ref-id">
+                            <span class="spacer"></span>
+                            <mat-icon class="icono-tareas">person_add</mat-icon>
+                            <div class="texto-botones">
+                                {{ 'crm.crear.invitado' | translate }}
+                            </div>
+                            <span class="spacer"></span>
+                        </div>
+
+                        <span class="spacer"></span>
+
+                        <div class="dFlex">
+                            <div class="buscar-usu-ref-id">
+                                <span class="spacer"></span>
+                                <mat-icon class="icono-tareas">search</mat-icon>
+                                <div class="texto-botones">
+                                    {{ 'crm.crear.referenciaId' | translate }}
+                                </div>
+                                <span class="spacer"></span>
+                            </div>
+                            <span class="spacer"></span>
+                            <p class="obligatorio25">*</p>
+                        </div>
+                    </div>
+
+                    <button mat-button (click)="validar()">
+                        Guardar
+                    </button>
+                </div>
+
+                <button mat-icon-button (click)="validar()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+
+            </div>
+            <!-- Mostrar logos -->
+            <app-barra-logo-demosoft></app-barra-logo-demosoft>
+
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>

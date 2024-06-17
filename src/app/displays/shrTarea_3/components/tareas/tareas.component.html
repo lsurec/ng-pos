@@ -1,6 +1,6 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<app-crear-tarea *ngIf="crearTarea" (desdeTareas)="backPageTareas($event)"
-    (nuevaTarea)="addItem($event)"></app-crear-tarea>
+<app-nueva-tarea *ngIf="crearTarea" (desdeTareas)="backPageTareas($event)"
+    (nuevaTarea)="addItem($event)"></app-nueva-tarea>
 
 
 <div *ngIf="!isLoading && mostrarTareas" class="container_page">
