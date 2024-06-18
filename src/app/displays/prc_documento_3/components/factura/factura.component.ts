@@ -513,6 +513,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
+    
     this.setDateNow();
     this.facturaService.setIdDocumentoRef();
 

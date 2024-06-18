@@ -305,14 +305,14 @@
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservacion"
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.observacion"
                 (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
         <div class="detalles-fondo">
             <p class="textosBold14">Observaciones</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservaciones"
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.observacion"
                 (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 
