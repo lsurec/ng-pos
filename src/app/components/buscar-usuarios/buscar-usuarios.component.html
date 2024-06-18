@@ -1,57 +1,57 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<!-- Dialogo de los detalles de las tareas -->
-<div mat-dialog-content class="dialog" *ngIf="busqueda && !isLoading">
-    <div class="contenedor">
-        <div class="d-flex">
-            <span class="spacer"></span>
-            <!-- Titulo -->
-            <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 1">Seleccionar Responsable</p>
-            <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2">Seleccionar Invitados</p>
-
-            <span class="spacer"></span>
-            <!-- Cerrar dialogo -->
-            <span class="close" (click)="closeDialog()">&times;</span>
-        </div>
-        <hr>
-        <form #ngForm="ngForm" (ngSubmit)="buscarUsuarios()">
-            <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
-
-            <div class="dFlex">
-                <div class="busqueda">
-                    <input type="search" name="usuario" class="inputSearch" [(ngModel)]="searchUser"
-                        placeholder="{{'crm.crear.busqueda' | translate}}" autocomplete="off">
-                </div>
-                <button type="submit" mat-icon-button class="flecha-regresar">
-                    <mat-icon>search</mat-icon>
-                </button>
-            </div>
-        </form>
-
-        <div class="titulos" *ngIf="usuarios.length > 0 ">
-            <p class="nombre">{{ 'crm.crear.usuario' | translate }}</p>
-        </div>
-        <div class="detalleUsuario"
-            [ngClass]="{'display-block': tareasGlobalService.buscarUsuarios === 1, 'display-flex': tareasGlobalService.buscarUsuarios === 2}"
-            *ngFor="let usuario of usuarios">
-            <mat-checkbox [(ngModel)]="usuario.select" color="primary"
-                *ngIf="tareasGlobalService.buscarUsuarios === 2"></mat-checkbox>
-            <span class="spacer"></span>
-            <!-- <div class="seleccionar" [mat-dialog-close]="[usuario]"
-                [ngClass]="{'seleccionar': tareasGlobalService.buscarUsuarios === 1, 'seleccionar-invitados': tareasGlobalService.buscarUsuarios === 2}">
-                <p class="nombre">{{usuario.name}}</p>
-                <span class="spacer"></span>
-                <p class="email">{{usuario.email}}</p>
-            </div> -->
-
-            <div class="seleccionar" *ngIf="tareasGlobalService.buscarUsuarios == 1" [mat-dialog-close]="[usuario]">
-                <p class="nombre">{{usuario.name}}</p>
-                <span class="spacer"></span>
-                <p class="email">{{usuario.email}}</p>
-            </div>
-        </div>
+<div class="fondo" *ngIf="!isLoading">
+    <div class="barra-fija">
+        <span class="spacer"></span>
+        <!-- Titulo -->
+        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 1">Seleccionar Responsable</p>
+        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2">Seleccionar Invitados</p>
+        <span class="spacer"></span>
+        <!-- Cerrar dialogo -->
+        <span class="close" (click)="closeDialog()">&times;</span>
     </div>
-    <div mat-dialog-actions class="botones">
-        <button mat-button (click)="closeDialog()" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
-        <button mat-button (click)="enviar()">{{'crm.crear.guardar' | translate}}</button>
+    <div mat-dialog-content class="dialog" *ngIf="!isLoading">
+        <div class="contenedor">
+            <form #ngForm="ngForm" (ngSubmit)="buscarUsuarios()">
+                <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
+                <div class="buscar-icono">
+                    <input #usuarioInput type="search" name="usuario" class="inputSearch" [(ngModel)]="searchUser"
+                        placeholder="{{'crm.crear.busqueda' | translate}}" autocomplete="off"
+                        (focus)="focusAndSelectText()">
+                    <button type="submit" mat-icon-button class="flecha-regresar">
+                        <mat-icon class="icono-lupa">search</mat-icon>
+                    </button>
+                </div>
+            </form>
+            <div class="encontrados">
+                <div class="detalleUsuario"
+                    [ngClass]="{'display-block': tareasGlobalService.buscarUsuarios === 1, 'display-flex': tareasGlobalService.buscarUsuarios === 2}"
+                    *ngFor="let usuario of usuarios">
+                    <mat-checkbox [(ngModel)]="usuario.select" color="primary"
+                        *ngIf="tareasGlobalService.buscarUsuarios === 2"></mat-checkbox>
+                    <span class="spacer"></span>
+                    <!-- <div class="seleccionar" [mat-dialog-close]="[usuario]"
+            [ngClass]="{'seleccionar': tareasGlobalService.buscarUsuarios === 1, 'seleccionar-invitados': tareasGlobalService.buscarUsuarios === 2}">
+            <p class="nombre">{{usuario.name}}</p>
+            <span class="spacer"></span>
+            <p class="email">{{usuario.email}}</p>
+        </div> -->
+
+                    <div class="seleccionar" *ngIf="tareasGlobalService.buscarUsuarios == 1"
+                        [mat-dialog-close]="[usuario]">
+                        <p class="nombre">{{usuario.name}}</p>
+                        <div class="dFlex">
+                            <p class="titulos" *ngIf="usuario.email"> Correo electronico: </p>
+                            <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div mat-dialog-actions class="barra-abajo-fija" *ngIf="habilitarBotones">
+            <button mat-button (click)="closeDialog()">{{'crm.crear.cancelar' | translate}}</button>
+            <button mat-button *ngIf="tareasGlobalService.buscarUsuarios == 2" (click)="enviar()">
+                {{'crm.crear.guardar' | translate}}
+            </button>
+        </div>
     </div>
 </div>

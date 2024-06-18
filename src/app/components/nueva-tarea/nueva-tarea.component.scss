@@ -253,6 +253,10 @@ textarea::placeholder {
     font-weight: 500 !important;
 }
 
+.sub-titulo {
+    font-weight: 500 !important;
+}
+
 .abrir-dialogos {
     display    : flex;
     align-items: baseline;
@@ -383,5 +387,8 @@ textarea::placeholder {
 }
 
 .respuesta-dialogo {
-    margin-top: 5px;
+    margin-top      : 5px;
+    min-width       : 300px;
+    padding         : 5px;
+    background-color: $sombra;
 }

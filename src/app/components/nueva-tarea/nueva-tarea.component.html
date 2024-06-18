@@ -115,7 +115,7 @@
 
                         <div class="seleccion">
                             <!-- Boton -->
-                            <div class="dFlex">
+                            <div class="dFlex" *ngIf="!responsable">
                                 <div class="buscar-usu-ref-id" (click)="agregarResponsable()">
                                     <span class="spacer"></span>
                                     <mat-icon class="icono-tareas">person_add</mat-icon>
@@ -128,21 +128,22 @@
                                 <p class="obligatorio25">*</p>
                             </div>
                             <!-- Informacion -->
-                            <div class="respuesta-dialogo">
+                            <div class="respuesta-dialogo" *ngIf="responsable">
                                 <div class="dFlex">
                                     <p class="titulo-campo">RESPONSABLE</p>
                                     <span class="spacer"></span>
 
-                                    <button type="submit" mat-icon-button class="flecha-regresar">
+                                    <button type="submit" mat-icon-button matTooltip="Volver a buscar."
+                                        (click)="volverABuscar(1)">
                                         <mat-icon>search</mat-icon>
                                     </button>
                                 </div>
                             </div>
-                            <div class="respuesta-dialogo">
-                                <p>Usuario</p>
-                                <p>{{responsable?.userName}}</p>
-                                <p>Correo Electronico:</p>
-                                <p>{{responsable?.email}}</p>
+                            <div class="respuesta-dialogo" *ngIf="responsable">
+                                <p class="sub-titulo">Usuario</p>
+                                <p>{{responsable.userName}}</p>
+                                <p class="sub-titulo">Correo Electronico:</p>
+                                <p>{{responsable.email}}</p>
                             </div>
                         </div>
 

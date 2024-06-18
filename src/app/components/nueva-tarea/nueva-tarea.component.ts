@@ -1222,6 +1222,19 @@ export class NuevaTareaComponent implements OnInit {
     });
   };
 
+  volverABuscar(opcion: number) {
+
+    if (opcion == 1) {
+      this.responsable = undefined;
+      this.agregarResponsable();
+    }
+
+    if (opcion == 2) {
+      this.invitadosTarea = [];
+    }
+
+  }
+
   //abrir dialgo y selecionar invitados
   agregarInvitado(): void {
     let usuario = this._dialog.open(UsuariosDialogComponent, { data: this.seleccionarInvitados })

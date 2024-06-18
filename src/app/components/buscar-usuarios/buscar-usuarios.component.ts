@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { BuscarUsuariosInterface } from 'src/app/displays/shrTarea_3/interfaces/usuario.interface';
@@ -15,17 +15,20 @@ import { UsuarioService } from 'src/app/services/usuario.service';
     UsuarioService,
   ]
 })
-export class BuscarUsuariosComponent {
+export class BuscarUsuariosComponent implements OnInit {
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('usuarioInput') usuarioInput?: ElementRef;
 
   searchUser: string = ''; //variable que relizara la busqueda
   usuarios: BuscarUsuariosInterface[] = []; //usuarios encontrados de la busqueda
   invitados: BuscarUsuariosInterface[] = []; //invitados
   busqueda: boolean = true; // pantalla de busqueda
   isLoading: boolean = false; //pantalla de carga
-
+  habilitarBotones: boolean = false;
+  timer: any; //temporizador
 
   usuariosSeleccionados: BuscarUsuariosInterface[] = [];
-  // usuariosResInv: BuscarUsuariosInterface[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<BuscarUsuariosComponent>,
@@ -34,6 +37,11 @@ export class BuscarUsuariosComponent {
     private _translate: TranslateService,
     public tareasGlobalService: GlobalTareasService,
   ) {
+
+  }
+
+  ngOnInit(): void {
+    this.deshabilitarBotonesTemp();
   }
 
   //cerrar dialogo
@@ -69,6 +77,26 @@ export class BuscarUsuariosComponent {
     //Si se ejecuto bien, obtener la respuesta de Api Buscar usuarios
     this.usuarios = resUsuario.response;
     this.isLoading = false;
+  }
+
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.usuarioInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  deshabilitarBotonesTemp() {
+    this.timer = setTimeout(() => {
+      this.habilitarBotones = true;
+    }, 250);
   }
 
 }
