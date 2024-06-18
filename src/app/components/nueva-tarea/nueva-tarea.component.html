@@ -128,13 +128,21 @@
                                 <p class="obligatorio25">*</p>
                             </div>
                             <!-- Informacion -->
-
                             <div class="respuesta-dialogo">
-                                <p>Responsable</p>
+                                <div class="dFlex">
+                                    <p class="titulo-campo">RESPONSABLE</p>
+                                    <span class="spacer"></span>
+
+                                    <button type="submit" mat-icon-button class="flecha-regresar">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="respuesta-dialogo">
                                 <p>Usuario</p>
-                                <p>Desa029</p>
+                                <p>{{responsable?.userName}}</p>
                                 <p>Correo Electronico:</p>
-                                <p>correo@demosftonline.com.gt</p>
+                                <p>{{responsable?.email}}</p>
                             </div>
                         </div>
 

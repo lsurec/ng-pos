@@ -16,23 +16,24 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   ]
 })
 export class BuscarUsuariosComponent {
-  usuariosSeleccionados: BuscarUsuariosInterface[] = []; // Lista para almacenar los usuarios seleccionados
-  usuarios: BuscarUsuariosInterface[] = [];
-  usuariosResInv: BuscarUsuariosInterface[] = [];
+
   searchUser: string = ''; //variable que relizara la busqueda
-  isLoading: boolean = false; //pantalla de carga
+  usuarios: BuscarUsuariosInterface[] = []; //usuarios encontrados de la busqueda
+  invitados: BuscarUsuariosInterface[] = []; //invitados
   busqueda: boolean = true; // pantalla de busqueda
+  isLoading: boolean = false; //pantalla de carga
+
+
+  usuariosSeleccionados: BuscarUsuariosInterface[] = [];
+  // usuariosResInv: BuscarUsuariosInterface[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<BuscarUsuariosComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: BuscarUsuariosInterface[],
-    @Inject(MAT_DIALOG_DATA) public buscar: number, // Puedes cambiar 
     private _usuarioService: UsuarioService,
-    private _widgetsService: NotificationsService,
+    private widgetsService: NotificationsService,
     private _translate: TranslateService,
     public tareasGlobalService: GlobalTareasService,
   ) {
-    this.usuarios = data;
   }
 
   //cerrar dialogo
@@ -41,20 +42,16 @@ export class BuscarUsuariosComponent {
   }
 
   enviar() {
-    this.usuariosSeleccionados = this.usuariosResInv.filter(usuario => usuario.select)
+    this.usuariosSeleccionados = this.usuarios.filter(usuario => usuario.select)
     this.dialogRef.close(this.usuariosSeleccionados);
   }
 
-  timer: any; //temporizador
-
-  onInputChange() {
-    clearTimeout(this.timer); // Cancelar el temporizador existente
-    this.timer = setTimeout(() => {
-      this.buscarUsuarios(); // Función de filtrado que consume el servicio
-    }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
-  }
-
   async buscarUsuarios(): Promise<void> {
+
+    if (this.searchUser.length == 0) {
+      this.widgetsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
+      return;
+    }
 
     //Consumo de api
     this.isLoading = true;
@@ -63,14 +60,14 @@ export class BuscarUsuariosComponent {
     //Si el servico se ejecuta mal mostrar menaje
     if (!resUsuario.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.usuarios'));
+      this.widgetsService.openSnackbar(this._translate.instant('crm.alertas.usuarios'));
       console.error(resUsuario.response);
       console.error(resUsuario.storeProcedure);
-      this.usuariosResInv = [];
+      this.usuarios = [];
       return
     }
     //Si se ejecuto bien, obtener la respuesta de Api Buscar usuarios
-    this.usuariosResInv = resUsuario.response;
+    this.usuarios = resUsuario.response;
     this.isLoading = false;
   }
 

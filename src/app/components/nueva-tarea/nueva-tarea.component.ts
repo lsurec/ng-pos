@@ -1207,7 +1207,7 @@ export class NuevaTareaComponent implements OnInit {
   };
 
 
-  responsable: BuscarUsuariosInterface[] = [];
+  responsable?: BuscarUsuariosInterface;
 
   //abrir dialgo y selecionar responsables
   agregarResponsable(): void {
@@ -1217,7 +1217,7 @@ export class NuevaTareaComponent implements OnInit {
     let usuario = this._dialog.open(BuscarUsuariosComponent)
     usuario.afterClosed().subscribe(result => {
       if (result) {
-        this.responsable = result;
+        this.responsable = result[0];
       };
     });
   };
