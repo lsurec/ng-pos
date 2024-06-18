@@ -388,7 +388,16 @@ textarea::placeholder {
 
 .respuesta-dialogo {
     margin-top      : 5px;
-    min-width       : 300px;
+    width           : 300px;
     padding         : 5px;
     background-color: $sombra;
+}
+
+.usuarios {
+    margin-top: 5px;
+}
+
+.eliminar:hover {
+    cursor: pointer;
+    color : #ff0000;
 }

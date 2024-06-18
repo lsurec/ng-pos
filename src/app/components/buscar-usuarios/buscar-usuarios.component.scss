@@ -4,6 +4,7 @@ $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000;
 $placeholder          : rgba(0, 0, 0, 0.30);
+$rojo-info            : #cc4141;
 
 input::placeholder,
 textarea::placeholder {
@@ -277,4 +278,17 @@ p {
 
 .encontrados {
     margin-top: 10px;
+}
+
+.info {
+    font-size  : 12px !important;
+    color      : $rojo-info;
+    display    : flex;
+    align-items: center;
+    padding-top: 10px;
+    text-align : right;
+}
+
+.marginRihgt {
+    margin-right: 5px;
 }

@@ -1235,15 +1235,45 @@ export class NuevaTareaComponent implements OnInit {
 
   }
 
-  //abrir dialgo y selecionar invitados
   agregarInvitado(): void {
-    let usuario = this._dialog.open(UsuariosDialogComponent, { data: this.seleccionarInvitados })
+    this.tareasGlobalService.buscarUsuarios = 2;
+
+    let usuario = this._dialog.open(BuscarUsuariosComponent, { data: this.usuariosInvitados });
     usuario.afterClosed().subscribe(result => {
       if (result) {
-        this.usuariosInvitados = result;
-      };
+        console.log(result);
+
+        let nuevosSeleccionados: BuscarUsuariosInterface[] = result;
+
+        // Filtrar usuarios para eliminar los duplicados
+        let nuevosInvitados = nuevosSeleccionados.filter(nuevoUsuario => {
+          return !this.usuariosInvitados.some(invitado => invitado.userName === nuevoUsuario.userName);
+        });
+
+        // Agregar los nuevos usuarios a la lista existente
+        this.usuariosInvitados = [...this.usuariosInvitados, ...nuevosInvitados];
+      }
     });
-  };
+  }
+
+
+  // //abrir dialgo y selecionar invitados
+  // agregarInvitado(): void {
+
+  //   this.tareasGlobalService.buscarUsuarios = 2;
+
+  //   let usuario = this._dialog.open(BuscarUsuariosComponent, { data: this.usuariosInvitados })
+  //   usuario.afterClosed().subscribe(result => {
+  //     if (result) {
+
+  //       console.log(result);
+
+  //       let seleccionados: BuscarUsuariosInterface[] = result;
+
+  //       this.usuariosInvitados = seleccionados;
+  //     };
+  //   });
+  // };
 
   //abrir dialogo y seleecionar referencia
   buscarReferencia(): void {

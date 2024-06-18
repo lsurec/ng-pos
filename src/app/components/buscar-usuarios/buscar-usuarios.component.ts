@@ -36,8 +36,10 @@ export class BuscarUsuariosComponent implements OnInit {
     private widgetsService: NotificationsService,
     private _translate: TranslateService,
     public tareasGlobalService: GlobalTareasService,
+    @Inject(MAT_DIALOG_DATA) public data: BuscarUsuariosInterface[],
   ) {
-
+    //asignar los usuarios que ya han sido selecciondos 
+    this.invitados = data;
   }
 
   ngOnInit(): void {
@@ -50,9 +52,31 @@ export class BuscarUsuariosComponent implements OnInit {
   }
 
   enviar() {
-    this.usuariosSeleccionados = this.usuarios.filter(usuario => usuario.select)
+    // Asumiendo que 'this.invitados' y 'this.usuarios' son listas de objetos usuario,
+    // y cada usuario tiene una propiedad única como 'id'.
+    let usuariosDuplicados: BuscarUsuariosInterface[] = [];
+    this.usuariosSeleccionados = this.usuarios.filter(usuario => {
+      if (usuario.select) {
+        // Verificar si el usuario ya está en la lista de invitados
+        if (this.invitados.some(invitado => invitado.userName === usuario.userName)) {
+          // Si el usuario ya está invitado, agregar a la lista de duplicados
+          usuariosDuplicados.push(usuario);
+          return false; // No incluir en la lista de seleccionados
+        }
+        return true; // Incluir en la lista de seleccionados
+      }
+      return false;
+    });
+
+    // Si hay usuarios duplicados, mostrar la notificación
+    if (usuariosDuplicados.length > 0) {
+      this.widgetsService.openSnackbar("Uno o más usuarios duplicados no se agregaron.");
+    }
+
+    // Cerrar el diálogo con los usuarios seleccionados
     this.dialogRef.close(this.usuariosSeleccionados);
   }
+
 
   async buscarUsuarios(): Promise<void> {
 
