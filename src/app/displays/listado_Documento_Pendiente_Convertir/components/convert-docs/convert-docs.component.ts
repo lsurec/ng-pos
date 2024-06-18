@@ -148,7 +148,7 @@ export class ConvertDocsComponent {
     //Validar que las transaccones por autorizar esten disponibles
     for (const tra of traCheks) {
 
-      let resProduct = await this._productService.getProductId(
+      let resProduct = await this._productService.getProduct(
         this.token,
         tra.detalle.id,
       );
