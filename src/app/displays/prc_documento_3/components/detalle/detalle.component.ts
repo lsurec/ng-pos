@@ -387,7 +387,7 @@ export class DetalleComponent implements AfterViewInit {
   }
 
   //bsuqueda de productos
-  async buscarProducto() {
+  async performanSearch() {
 
     let productos: ProductoInterface[] = [];
 
@@ -798,6 +798,20 @@ export class DetalleComponent implements AfterViewInit {
       }
     }
 
+
+      //Calcular totral de la transaccion
+    //SI no hau precio seleccionado no calcular
+    if (!this.productoService.precio) {
+      this.productoService.total = 0;
+      return;
+    }
+
+    //convertir cantidad de texto a numerica
+    let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
+
+    //Calcular el total (cantidad * precio seleccionado)
+    this.productoService.total = cantidad! * this.productoService.precio.precioU;
+
     //calcular precio dia si se necesita
 
     let precioDias: number = 0;
@@ -884,6 +898,7 @@ export class DetalleComponent implements AfterViewInit {
         return;
       }
     }
+
 
 
     // /7agregar transaccion
