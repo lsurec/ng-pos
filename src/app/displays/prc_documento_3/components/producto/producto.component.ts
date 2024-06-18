@@ -62,6 +62,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit(): void {
+    this.calculateTotal();
     this.deshabilitarImagenTemp();
   }
 
