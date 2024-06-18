@@ -88,6 +88,7 @@ import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/con
 import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe';
 import { TraducirComponent } from './components/traducir/traducir.component';
 import { NuevaTareaComponent } from './components/nueva-tarea/nueva-tarea.component';
+import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -147,6 +148,7 @@ import { NuevaTareaComponent } from './components/nueva-tarea/nueva-tarea.compon
     CurrencyFormatPipe,
     TraducirComponent,
     NuevaTareaComponent,
+    BuscarUsuariosComponent,
   ],
   imports: [
     MatCardModule,

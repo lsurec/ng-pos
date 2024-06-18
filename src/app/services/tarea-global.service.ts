@@ -39,4 +39,7 @@ export class GlobalTareasService {
     horaFinal!: string;
 
     tareaDetalles?: TareaInterface;
+
+    buscarUsuarios: number = 0;
+
 }

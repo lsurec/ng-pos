@@ -34,6 +34,7 @@ import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuariosDialogComponent } from '../usuarios-dialog/usuarios-dialog.component';
 import { BuscarIdReferenciaComponent } from '../buscar-id-referencia/buscar-id-referencia.component';
+import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.component';
 
 @Component({
   selector: 'app-nueva-tarea',
@@ -1205,12 +1206,18 @@ export class NuevaTareaComponent implements OnInit {
     this.usuariosInvitados.splice(index, 1);
   };
 
+
+  responsable: BuscarUsuariosInterface[] = [];
+
   //abrir dialgo y selecionar responsables
   agregarResponsable(): void {
-    let usuario = this._dialog.open(UsuariosDialogComponent, { data: this.seleccionarResponsable })
+
+    this.tareasGlobalService.buscarUsuarios = 1;
+
+    let usuario = this._dialog.open(BuscarUsuariosComponent)
     usuario.afterClosed().subscribe(result => {
       if (result) {
-        this.usuariosResponsables = result;
+        this.responsable = result;
       };
     });
   };
