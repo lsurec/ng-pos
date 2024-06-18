@@ -989,7 +989,7 @@ export class FacturaComponent implements OnInit {
 
     //TODO:Cargar productos
     for (const tra of this.globalConvertService.detailsOrigin) {
-      let resProduct = await this._productService.getProductId(
+      let resProduct = await this._productService.getProduct(
         token,
         tra.detalle.id,
       );
