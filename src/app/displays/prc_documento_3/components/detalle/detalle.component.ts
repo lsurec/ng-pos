@@ -431,13 +431,15 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    let resProductId: ResApiInterface = await this._productService.getProductId(
+
+
+    let resproductoDesc = await this._productService.getProduct(
       this.token,
       this.facturaService.searchText,
     );
 
 
-    if (!resProductId.status) {
+    if (!resproductoDesc.status) {
 
       this.facturaService.isLoading = false;
 
@@ -452,48 +454,15 @@ export class DetalleComponent implements AfterViewInit {
 
       if (!verificador) return;
 
-      this.verError(resProductId);
+      this.verError(resproductoDesc);
 
       return;
 
     };
 
 
-    productos = resProductId.response;
+    productos = resproductoDesc.response;
 
-    if (productos.length == 0) {
-
-      let resproductoDesc = await this._productService.getProductDesc(
-        this.token,
-        this.facturaService.searchText,
-      );
-
-
-      if (!resproductoDesc.status) {
-
-        this.facturaService.isLoading = false;
-
-        let verificador = await this._notificationsService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resproductoDesc);
-
-        return;
-
-      };
-
-
-      productos = resproductoDesc.response;
-
-    }
 
 
     //si no hay coincie¿dencias mostrar alerta

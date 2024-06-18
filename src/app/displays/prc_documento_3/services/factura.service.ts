@@ -170,6 +170,29 @@ export class FacturaService {
     }
 
 
+    
+  //mostrar pestaña doccumento
+  showDocumento() {
+    this.tabDocummento = true;
+    this.tabDetalle = false;
+    this.tabPago = false;
+  }
+
+  //mostrar pestaña detalle
+  showDetalle() {
+    this.tabDocummento = false;
+    this.tabDetalle = true;
+    this.tabPago = false;
+  }
+
+  //mostrar pestaña pagos
+  showPago() {
+    this.tabDocummento = false;
+    this.tabDetalle = false;
+    this.tabPago = true;
+  }
+
+
     setIdDocumentoRef() {
         let dateConsecutivo: Date = new Date();
 
@@ -437,8 +460,8 @@ export class FacturaService {
         //Agregar transaccion
         this.traInternas.push(transaccion);
         
-        this.searchProduct = "";
-
+        this.searchText = "";
+        
         //calcluar totales
         this.calculateTotales();
     }

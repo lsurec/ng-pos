@@ -81,6 +81,18 @@ p {
     color           : $color-blanco;
 }
 
+.pago-seleccionado {
+    height          : 35px;
+    display         : flex;
+    align-items     : center;
+    width           : 100%;
+    margin          : 5px 0px;
+    padding         : 0px 10px;
+    cursor          : pointer;
+    background-color: $color-gris-s;
+    color           : $color-blanco;
+}
+
 .bancos {
     height          : 35px;
     display         : flex;

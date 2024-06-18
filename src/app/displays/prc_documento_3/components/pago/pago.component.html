@@ -6,10 +6,12 @@
 
             <p class="titulo">{{ 'pos.factura.agregar_pago' | translate }} </p>
 
-            <div class="tipos-pago" *ngFor="let pago of facturaService.formasPago" (click)="viewForms(pago)">
-                <p class="subtitulo"> {{pago.descripcion}} </p>
-                <span class="spacer"></span>
-                <mat-icon>arrow_right</mat-icon>
+            <div *ngFor="let pago of facturaService.formasPago" (click)="viewForms(pago)">
+                <div [ngClass]="{'tipos-pago': !pago.select,'pago-seleccionado': pago.select}">
+                    <p class="subtitulo"> {{pago.descripcion}} </p>
+                    <span class="spacer"></span>
+                    <mat-icon>arrow_right</mat-icon>
+                </div>
             </div>
         </div>
 
@@ -25,7 +27,8 @@
 
             <!--Monto-->
             <p class="subtitulo">{{ 'pos.factura.monto' | translate }}</p>
-            <input class="total" type="text" name="search" [(ngModel)]="pagoComponentService.monto" autocomplete="off">
+            <input #montoInput class="total" type="text" name="search" [(ngModel)]="pagoComponentService.monto"
+                autocomplete="off" (focus)="selectText()">
 
             <!--Autorizacion-->
             <div *ngIf="pagoComponentService.pago!.autorizacion">

@@ -213,27 +213,6 @@ export class FacturaComponent implements OnInit {
 
 
 
-  //mostrar pestaña doccumento
-  showDocumento() {
-    this.facturaService.tabDocummento = true;
-    this.facturaService.tabDetalle = false;
-    this.facturaService.tabPago = false;
-  }
-
-  //mostrar pestaña detalle
-  showDetalle() {
-    this.facturaService.tabDocummento = false;
-    this.facturaService.tabDetalle = true;
-    this.facturaService.tabPago = false;
-  }
-
-  //mostrar pestaña pagos
-  showPago() {
-    this.facturaService.tabDocummento = false;
-    this.facturaService.tabDetalle = false;
-    this.facturaService.tabPago = true;
-  }
-
   async loadDocumentLocal() {
 
     this.facturaService.isLoading = true;
@@ -572,7 +551,7 @@ export class FacturaComponent implements OnInit {
     }
 
     //Mostrar tab documento (primer pestaña)
-    this.showDocumento();
+    this.facturaService. showDocumento();
 
     //limpiar documento local 
     PreferencesService.documento = "";
@@ -654,7 +633,7 @@ export class FacturaComponent implements OnInit {
 
 
     //Seleccionar primera pestaña (petssña documento)
-    this.showDocumento();
+    this.facturaService .showDocumento();
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
@@ -1010,7 +989,7 @@ export class FacturaComponent implements OnInit {
 
     //TODO:Cargar productos
     for (const tra of this.globalConvertService.detailsOrigin) {
-      let resProduct = await this._productService.getProductId(
+      let resProduct = await this._productService.getProduct(
         token,
         tra.detalle.id,
       );
