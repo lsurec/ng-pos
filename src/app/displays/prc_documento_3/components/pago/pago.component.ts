@@ -113,7 +113,7 @@ export class PagoComponent implements OnInit {
       this.facturaService.formasPago[prevIndex].select = true;
     }
 
-    if (key === "enter") {
+    if (key === "enter" && !this.pagoComponentService.forms) {
       this.viewForms(this.facturaService.formasPago[this.pagoSelect]);
     }
   }
@@ -408,6 +408,11 @@ export class PagoComponent implements OnInit {
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
     this.facturaService.montos = this.facturaService.montos.filter((monto) => !monto.checked);
 
+    this.facturaService.montos.forEach(monto => {
+      monto.checked = false;
+    });
+
+    this.selectAllMontos = false;
     //calcular totales
     this.facturaService.calculateTotalesPago();
 
