@@ -411,22 +411,26 @@ textarea::placeholder {
 }
 
 .abrir-dialogos {
-    min-height    : 30px;
-    padding-bottom: 10px;
-    display       : flex;
-    align-items   : baseline;
+    min-height : 30px;
+    display    : flex;
+    align-items: baseline;
 }
 
 //LADO IZQUIERDO
-.contenido-izquierdo,
+.contenido-izquierdo {
+    min-height   : 35px;
+    align-items  : center;
+    width        : 100%;
+    padding-left : 5px;
+    padding-right: 5px;
+}
+
 .seleccion {
-    //corregir ancho del contenedor
-    min-height      : 35px;
-    align-items     : center;
-    // margin-bottom: 5px;
-    width           : 100%;
-    padding-left    : 5px;
-    padding-right   : 5px;
+    min-height   : 35px;
+    align-items  : center;
+    width        : 100%;
+    padding-left : 5px;
+    padding-right: 5px;
 }
 
 .tipo-tarea {
@@ -452,7 +456,7 @@ mdc-menu-surface {
 .bloque-menus {
     border    : solid 1px $borde-toolbar;
     box-shadow: 0px 1px 0px 1px $sombra;
-    margin    : 5px 0px 10px;
+    margin    : 10px 0px 15px;
     padding   : 10px;
 }
 
@@ -466,4 +470,8 @@ mdc-menu-surface {
 
 .marginRihgt {
     margin-right: 5px;
+}
+
+.email {
+    word-wrap: break-word;
 }

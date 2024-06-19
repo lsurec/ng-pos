@@ -55,8 +55,8 @@
                             <span class="spacer"></span>
                             <div [mat-dialog-close]="[usuario]">
                                 <p class="nombre">{{usuario.name}}</p>
-                                <span class="spacer"></span>
-                                <p class="email">{{usuario.email}}</p>
+                                <p class="titulos" *ngIf="usuario.email"> Correo electronico: </p>
+                                <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                             </div>
                         </div>
                     </div>

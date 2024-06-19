@@ -151,90 +151,91 @@
                         </div>
                     </div>
 
-                    <div class="abrir-dialogos">
-                        <div class="seleccion">
-                            <div class="dFlex">
-                                <div class="buscar-usu-ref-id" (click)="agregarResponsable()">
+                    <div class="bloque-menus">
+                        <div class="abrir-dialogos">
+                            <div class="seleccion">
+                                <div class="dFlex">
+                                    <div class="buscar-usu-ref-id" (click)="agregarResponsable()">
+                                        <span class="spacer"></span>
+                                        <div class="texto-botones">
+                                            {{ 'crm.crear.responsable' | translate }}
+                                        </div>
+                                        <span class="spacer"></span>
+                                    </div>
+                                    <p class="obligatorio25">*</p>
+                                </div>
+                                <div class="usuarios" *ngIf="responsable">
+                                    <p class="titulo-campo">RESPONSABLE</p>
+                                    <div class="respuesta-dialogo">
+                                        <div class="dFlex">
+                                            <p>{{responsable.name}}</p>
+                                            <span class="spacer"></span>
+                                            <mat-icon (click)="responsable = undefined" class="eliminar"
+                                                matTooltip="eliminar responsable">
+                                                close
+                                            </mat-icon>
+                                        </div>
+                                        <p>{{responsable.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="spacer"></span>
+
+                            <div class="seleccion">
+                                <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
                                     <span class="spacer"></span>
                                     <div class="texto-botones">
-                                        {{ 'crm.crear.responsable' | translate }}
+                                        {{ 'crm.crear.invitado' | translate }}
                                     </div>
                                     <span class="spacer"></span>
                                 </div>
-                                <p class="obligatorio25">*</p>
+                                <div class="usuarios" *ngIf="usuariosInvitados.length > 0">
+                                    <p class="titulo-campo">Invitados</p>
+                                    <div class="respuesta-dialogo"
+                                        *ngFor="let invitado of usuariosInvitados; let index = index">
+                                        <div class="dFlex">
+                                            <p>{{invitado.name}}</p>
+                                            <span class="spacer"></span>
+                                            <mat-icon (click)="eliminarInvitado(index)" class="eliminar"
+                                                matTooltip="eliminar invitado">
+                                                close
+                                            </mat-icon>
+                                        </div>
+                                        <p class="email">{{invitado.email}}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="usuarios">
-                                <p class="titulo-campo" *ngIf="responsable">RESPONSABLE</p>
-                                <div class="respuesta-dialogo" *ngIf="responsable">
-                                    <div class="dFlex">
-                                        <p>{{responsable.name}}</p>
+                            <span class="spacer"></span>
+                            <div class="seleccion">
+                                <div class="dFlex">
+                                    <div class="buscar-usu-ref-id" (click)="buscarReferencia()">
                                         <span class="spacer"></span>
-                                        <mat-icon (click)="responsable = undefined" class="eliminar"
-                                            matTooltip="eliminar responsable">
-                                            close
-                                        </mat-icon>
-                                    </div>
-                                    <p>{{responsable.email}}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <span class="spacer"></span>
-
-                        <div class="seleccion">
-                            <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
-                                <span class="spacer"></span>
-                                <div class="texto-botones">
-                                    {{ 'crm.crear.invitado' | translate }}
-                                </div>
-                                <span class="spacer"></span>
-                            </div>
-                            <div class="usuarios" *ngIf="usuariosInvitados.length > 0">
-                                <p class="titulo-campo">Invitados</p>
-                                <div class="respuesta-dialogo"
-                                    *ngFor="let invitado of usuariosInvitados; let index = index">
-                                    <div class="dFlex">
-                                        <p>{{invitado.name}}</p>
+                                        <div class="texto-botones">
+                                            {{ 'crm.crear.referenciaId' | translate }}
+                                        </div>
                                         <span class="spacer"></span>
-                                        <mat-icon (click)="eliminarInvitado(index)" class="eliminar"
-                                            matTooltip="eliminar invitado">
-                                            close
-                                        </mat-icon>
                                     </div>
-                                    <p>{{invitado.email}}</p>
+                                    <p class="obligatorio25">*</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        <span class="spacer"></span>
-
-                        <div class="seleccion">
-                            <div class="dFlex">
-                                <div class="buscar-usu-ref-id" (click)="buscarReferencia()">
-                                    <span class="spacer"></span>
-                                    <div class="texto-botones">
-                                        {{ 'crm.crear.referenciaId' | translate }}
+                                <div class="usuarios" *ngIf="idReferencia">
+                                    <p class="titulo-campo">ID Referencia</p>
+                                    <div class="respuesta-dialogo">
+                                        <div class="dFlex">
+                                            <p>{{idReferencia.descripcion}}</p>
+                                            <span class="spacer"></span>
+                                            <mat-icon (click)="idReferencia = undefined" class="eliminar"
+                                                matTooltip="eliminar Id referencia">
+                                                close
+                                            </mat-icon>
+                                        </div>
+                                        <p class="negrita">{{idReferencia.referencia_Id}}</p>
                                     </div>
-                                    <span class="spacer"></span>
-                                </div>
-                                <p class="obligatorio25">*</p>
-                            </div>
-                            <div class="usuarios">
-                                <p class="titulo-campo" *ngIf="idReferencia">ID Referencia</p>
-                                <div class="respuesta-dialogo" *ngIf="idReferencia">
-                                    <div class="dFlex">
-                                        <p>{{idReferencia.descripcion}}</p>
-                                        <span class="spacer"></span>
-                                        <mat-icon (click)="idReferencia = undefined" class="eliminar"
-                                            matTooltip="eliminar Id referencia">
-                                            close
-                                        </mat-icon>
-                                    </div>
-                                    <p class="negrita">{{idReferencia.referencia_Id}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
