@@ -75,9 +75,7 @@
                 </button>
 
             </mat-toolbar>
-            <!-- Contenido del componente -->
             <div class="container_main">
-
                 <div class="formulario" [formGroup]="formulario">
                     <div class="campos">
                         <div class="dFlex">
@@ -86,7 +84,6 @@
                         </div>
                         <input type="text" formControlName="titulo"
                             placeholder="{{ 'crm.crear.tituloTarea' | translate }}..." class="titulo-tarea"
-                            (ngModelChange)="onInputChange('titulo')"
                             [ngClass]="{'error': formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid}"
                             autocomplete="off">
                         <div *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid"
@@ -95,15 +92,13 @@
                         </div>
                     </div>
 
-
                     <div class="campos">
                         <div class="dFlex">
                             <p class="titulo-campo">{{ 'crm.crear.observacion' | translate }}</p>
                             <p class="obligatorio">*</p>
                         </div>
                         <textarea formControlName="descripcion" id="descripcion" cols="30" rows="3"
-                            class="observacion-tarea" (ngModelChange)="onInputChange('descripcion')"
-                            placeholder="{{ 'crm.crear.descripcion' | translate }}"
+                            class="observacion-tarea" placeholder="{{ 'crm.crear.descripcion' | translate }}"
                             [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
                         <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
                             class="error-message">
@@ -111,23 +106,63 @@
                         </div>
                     </div>
 
-                    <div class="abrir-dialogos">
+                    <div class="bloque-menus">
+                        <div class="info">
+                            <mat-icon class="marginRihgt">info</mat-icon>
+                            Selecciona la información para tu tarea o puedes continuar con la seleccion por defecto.
+                        </div>
+                        <div class="datos-tarea">
+                            <div class="contenido-izquierdo">
+                                <div class="d-flex">
+                                    <p class="titulo-campo">{{ 'crm.crear.tipo' | translate }}</p>
+                                    <p class="obligatorio">*</p>
+                                </div>
+                                <mat-select formControlName="tipo" class="tipo-tarea"
+                                    placeholder="{{ 'crm.crear.tipoTarea' | translate }}">
+                                    <mat-option *ngFor="let tipo of tiposTarea" [value]="tipo">
+                                        {{tipo.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="contenido-izquierdo">
+                                <div class="d-flex">
+                                    <p class="titulo-campo">{{ 'crm.crear.estado' | translate }}</p>
+                                    <p class="obligatorio">*</p>
+                                </div>
+                                <mat-select formControlName="estado" class="tipo-tarea"
+                                    placeholder="{{ 'crm.crear.estadoTarea' | translate }}">
+                                    <mat-option *ngFor="let estado of estadosTarea" [value]="estado">
+                                        {{estado.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="contenido-izquierdo">
+                                <div class="d-flex">
+                                    <p class="titulo-campo">{{ 'crm.crear.prioridad' | translate }}</p>
+                                    <p class="obligatorio">*</p>
+                                </div>
+                                <mat-select formControlName="prioridad" class="tipo-tarea"
+                                    placeholder="{{ 'crm.crear.prioridadTarea' | translate }}">
+                                    <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad">
+                                        {{prioridad.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="abrir-dialogos">
                         <div class="seleccion">
-                            <!-- Boton -->
                             <div class="dFlex">
                                 <div class="buscar-usu-ref-id" (click)="agregarResponsable()">
                                     <span class="spacer"></span>
-                                    <!-- <mat-icon class="icono-tareas">person_add</mat-icon> -->
                                     <div class="texto-botones">
                                         {{ 'crm.crear.responsable' | translate }}
                                     </div>
                                     <span class="spacer"></span>
                                 </div>
-                                <span class="spacer"></span>
                                 <p class="obligatorio25">*</p>
                             </div>
-                            <!-- Informacion -->
                             <div class="usuarios">
                                 <p class="titulo-campo" *ngIf="responsable">RESPONSABLE</p>
                                 <div class="respuesta-dialogo" *ngIf="responsable">
@@ -149,7 +184,6 @@
                         <div class="seleccion">
                             <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
                                 <span class="spacer"></span>
-                                <!-- <mat-icon class="icono-tareas">person_add</mat-icon> -->
                                 <div class="texto-botones">
                                     {{ 'crm.crear.invitado' | translate }}
                                 </div>
@@ -183,10 +217,8 @@
                                     </div>
                                     <span class="spacer"></span>
                                 </div>
-                                <span class="spacer"></span>
                                 <p class="obligatorio25">*</p>
                             </div>
-                            <!-- Informacion -->
                             <div class="usuarios">
                                 <p class="titulo-campo" *ngIf="idReferencia">ID Referencia</p>
                                 <div class="respuesta-dialogo" *ngIf="idReferencia">
@@ -205,6 +237,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Mostrar logos -->
             <app-barra-logo-demosoft></app-barra-logo-demosoft>
 

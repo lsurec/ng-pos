@@ -54,6 +54,7 @@ import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.comp
 })
 export class NuevaTareaComponent implements OnInit {
   formulario: FormGroup;
+  newForm?: FormGroup;
   //campos de la tarea
   titulo: string = "";
 
@@ -144,9 +145,29 @@ export class NuevaTareaComponent implements OnInit {
     private customDatepickerI18n: CustomDatepickerI18n
 
   ) {
+
+    this.loadData();
     this.formulario = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: ['', Validators.required]
+      titulo: [
+        '',
+        Validators.required
+      ],
+      descripcion: [
+        '',
+        Validators.required
+      ],
+      tipo: [
+        this.tipoTarea,
+        Validators.required
+      ],
+      estado: [
+        this.estadoTarea,
+        Validators.required
+      ],
+      prioridad: [
+        this.prioridadTarea,
+        Validators.required
+      ]
     });
 
 
@@ -169,7 +190,7 @@ export class NuevaTareaComponent implements OnInit {
       this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     };
     //Funcion que carga datos
-    this.loadData();
+    // this.loadData();
     this.seleccionarResponsable = 1;
     this.seleccionarInvitados = 2;
 
@@ -630,6 +651,29 @@ export class NuevaTareaComponent implements OnInit {
       }
     }
 
+    this.formulario = this.fb.group({
+      titulo: [
+        '',
+        Validators.required
+      ],
+      descripcion: [
+        '',
+        Validators.required
+      ],
+      tipo: [
+        this.tipoTarea,
+        Validators.required
+      ],
+      estado: [
+        this.estadoTarea,
+        Validators.required
+      ],
+      prioridad: [
+        this.prioridadTarea,
+        Validators.required
+      ]
+    });
+
     this.isLoading = false; //Cargando en false
   };
 
@@ -849,7 +893,30 @@ export class NuevaTareaComponent implements OnInit {
 
   //limpiar formulario de tareas
   limpiarCrear(): void {
-    this.tituloTarea = '';
+
+    this.newForm = this.fb.group({
+      titulo: [
+        '',
+        Validators.required
+      ],
+      descripcion: [
+        '',
+        Validators.required
+      ],
+      tipo: [
+        this.tipoTarea,
+        Validators.required
+      ],
+      estado: [
+        this.estadoTarea,
+        Validators.required
+      ],
+      prioridad: [
+        this.prioridadTarea,
+        Validators.required
+      ]
+    });
+
     this.formulario.reset();
 
 
@@ -891,6 +958,8 @@ export class NuevaTareaComponent implements OnInit {
     this.idReferencia = undefined;
     this.usuariosInvitados = [];
     this.usuariosResponsables = [];
+
+    this.formulario = this.newForm;
 
   };
 
