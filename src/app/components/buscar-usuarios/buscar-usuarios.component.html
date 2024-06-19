@@ -47,8 +47,7 @@
                     </div>
                 </div>
                 <div *ngIf="tareasGlobalService.buscarUsuarios == 2">
-                    <div class="detalleUsuario" [ngClass]="{'display-flex': tareasGlobalService.buscarUsuarios == 2}"
-                        *ngFor="let usuario of usuarios">
+                    <div class="detalleInvitado" *ngFor="let usuario of usuarios">
                         <mat-checkbox [(ngModel)]="usuario.select" color="primary"></mat-checkbox>
                         <span class="spacer"></span>
                         <div *ngIf="tareasGlobalService.buscarUsuarios == 2" class="seleccionar-invitados">

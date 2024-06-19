@@ -155,7 +155,8 @@
                         <div class="abrir-dialogos">
                             <div class="seleccion">
                                 <div class="dFlex">
-                                    <div class="buscar-usu-ref-id" (click)="agregarResponsable()">
+                                    <div class="buscar-usu-ref-id" (click)="agregarResponsable()"
+                                        [ngClass]="{'fondoerror': requerido && responsable == undefined}">
                                         <span class="spacer"></span>
                                         <div class="texto-botones">
                                             {{ 'crm.crear.responsable' | translate }}
@@ -163,6 +164,9 @@
                                         <span class="spacer"></span>
                                     </div>
                                     <p class="obligatorio25">*</p>
+                                </div>
+                                <div *ngIf="requerido && !responsable" class="error-message">
+                                    Campo requerido
                                 </div>
                                 <div class="usuarios" *ngIf="responsable">
                                     <p class="titulo-campo">RESPONSABLE</p>
@@ -209,7 +213,8 @@
                             <span class="spacer"></span>
                             <div class="seleccion">
                                 <div class="dFlex">
-                                    <div class="buscar-usu-ref-id" (click)="buscarReferencia()">
+                                    <div class="buscar-usu-ref-id" (click)="buscarReferencia()"
+                                        [ngClass]="{'fondoerror': requerido && idReferencia == undefined}">
                                         <span class="spacer"></span>
                                         <div class="texto-botones">
                                             {{ 'crm.crear.referenciaId' | translate }}
@@ -217,6 +222,9 @@
                                         <span class="spacer"></span>
                                     </div>
                                     <p class="obligatorio25">*</p>
+                                </div>
+                                <div *ngIf="requerido && !idReferencia" class="error-message">
+                                    Campo requerido
                                 </div>
                                 <div class="usuarios" *ngIf="idReferencia">
                                     <p class="titulo-campo">ID Referencia</p>

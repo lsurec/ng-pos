@@ -10,6 +10,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000;
 $placeholder          : rgba(0, 0, 0, 0.30);
 $rojo-info            : #cc4141;
+$sombra               : rgba(0, 0, 0, 0.1);
 
 input::placeholder,
 textarea::placeholder {
@@ -119,8 +120,7 @@ p {
     min-height      : 30px;
     padding         : 5px 10px;
     margin          : 5px 0px;
-    background-color: #d7d7d7;
-
+    background-color: $sombra;
 }
 
 .seleccionar:hover {

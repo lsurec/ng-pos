@@ -167,6 +167,14 @@ export class NuevaTareaComponent implements OnInit {
       prioridad: [
         this.prioridadTarea,
         Validators.required
+      ],
+      responsable: [
+        this.responsable,
+        Validators.required
+      ],
+      idReferencia: [
+        this.idReferencia,
+        Validators.required
       ]
     });
 
@@ -208,21 +216,99 @@ export class NuevaTareaComponent implements OnInit {
 
 
   validar(): void {
-    if (this.formulario.invalid) {
-      this.formulario.markAllAsTouched();
-      return;
-    }
 
     // Asigna los valores del formulario a las variables
     this.titulo = this.formulario.get('titulo')?.value;
-    this.descripcion = this.formulario.get('descripcion')?.value || '';
+    this.descripcion = this.formulario.get('descripcion')?.value;
+    this.responsable = this.formulario.get('responsable')?.value;
+    this.idReferencia = this.formulario.get('idReferencia')?.value;
+
+    if (this.formulario.invalid) {
+      this.formulario.markAllAsTouched();
+
+      if (this.responsable == undefined || this.idReferencia == undefined) {
+        this.requerido = true;
+      }
+
+      if (!this.titulo) {
+        this._widgetsService.openSnackbar("Añade un titulo.");
+        return;
+      }
+
+      if (!this.descripcion) {
+        this._widgetsService.openSnackbar("Añade una observación.");
+        return;
+      }
+
+      if (!this.responsable) {
+        this._widgetsService.openSnackbar("Añade un responsable.");
+        this.requerido = true;
+        return;
+      }
+
+      if (!this.idReferencia) {
+        this._widgetsService.openSnackbar("Añade un Id de Referencia.");
+        this.requerido = true;
+        return;
+      }
+
+      return;
+    }
 
     // Muestra los valores en la consola
     console.log('Titulo:', this.titulo);
     console.log('Descripción:', this.descripcion);
+    console.log('Responsable:', this.responsable);
+    console.log('ID de Referencia:', this.idReferencia);
 
     // Procesa los datos del formulario
     console.log(this.formulario.value);
+
+    // // Asigna los valores del formulario a las variables
+    // this.titulo = this.formulario.get('titulo')?.value;
+    // this.descripcion = this.formulario.get('descripcion')?.value;
+    // this.responsable = this.formulario.get('responsable')?.value;
+    // this.idReferencia = this.formulario.get('idReferencia')?.value;
+
+
+    // if (this.formulario.invalid) {
+    //   this.formulario.markAllAsTouched();
+
+    //   if (this.responsable == undefined || this.idReferencia == undefined) {
+    //     this.requerido = true;
+    //   }
+
+    //   if (!this.titulo) {
+    //     this._widgetsService.openSnackbar("Añade un titulo.");
+    //     return;
+    //   }
+
+    //   if (!this.descripcion) {
+    //     this._widgetsService.openSnackbar("Añade una observación.");
+    //     return;
+    //   }
+
+    //   if (this.responsable == undefined) {
+    //     this._widgetsService.openSnackbar("Añade un responsable.");
+    //     this.requerido = true;
+    //     return;
+    //   }
+
+    //   if (this.idReferencia == undefined) {
+    //     this._widgetsService.openSnackbar("Añade un Id de Referencia.");
+    //     this.requerido = true;
+    //     return;
+    //   }
+
+    //   return;
+    // }
+
+    // // Muestra los valores en la consola
+    // console.log('Titulo:', this.titulo);
+    // console.log('Descripción:', this.descripcion);
+
+    // // Procesa los datos del formulario
+    // console.log(this.formulario.value);
   }
 
   onInputChange(controlName: string): void {
@@ -671,6 +757,14 @@ export class NuevaTareaComponent implements OnInit {
       prioridad: [
         this.prioridadTarea,
         Validators.required
+      ],
+      responsable: [
+        this.responsable,
+        Validators.required
+      ],
+      idReferencia: [
+        this.idReferencia,
+        Validators.required
       ]
     });
 
@@ -918,7 +1012,7 @@ export class NuevaTareaComponent implements OnInit {
     });
 
     this.formulario.reset();
-
+    this.requerido = false;
 
     for (let index = 0; index < this.estadosTarea.length; index++) {
       const element = this.estadosTarea[index];
@@ -1278,18 +1372,38 @@ export class NuevaTareaComponent implements OnInit {
 
   responsable?: BuscarUsuariosInterface;
 
-  //abrir dialgo y selecionar responsables
-  agregarResponsable(): void {
+  // //abrir dialgo y selecionar responsables
+  // agregarResponsable(): void {
 
+  //   this.tareasGlobalService.buscarUsuarios = 1;
+
+  //   let usuario = this._dialog.open(BuscarUsuariosComponent)
+  //   usuario.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.responsable = result[0];
+
+
+  //     } else {
+  //       this.requerido = true;
+  //     }
+  //   });
+  // };
+
+  agregarResponsable(): void {
     this.tareasGlobalService.buscarUsuarios = 1;
 
-    let usuario = this._dialog.open(BuscarUsuariosComponent)
+    let usuario = this._dialog.open(BuscarUsuariosComponent);
     usuario.afterClosed().subscribe(result => {
       if (result) {
         this.responsable = result[0];
-      };
+        this.formulario.get('responsable')?.setValue(this.responsable);
+      } else {
+        this.requerido = true;
+        this.formulario.get('responsable')?.setErrors({ required: true });
+        console.log("error");
+      }
     });
-  };
+  }
 
   volverABuscar(opcion: number) {
 
@@ -1332,7 +1446,12 @@ export class NuevaTareaComponent implements OnInit {
     referencia.afterClosed().subscribe(result => {
       if (result) {
         this.idReferencia = result[0];
-      };
+        this.formulario.get('idReferencia')?.setValue(this.idReferencia);
+      } else {
+        this.requerido = true;
+        this.formulario.get('idReferencia')?.setErrors({ required: true });
+        console.log("error");
+      }
     });
   };
 

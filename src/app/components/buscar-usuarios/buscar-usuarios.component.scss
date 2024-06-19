@@ -5,6 +5,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000;
 $placeholder          : rgba(0, 0, 0, 0.30);
 $rojo-info            : #cc4141;
+$sombra               : rgba(0, 0, 0, 0.1);
 
 input::placeholder,
 textarea::placeholder {
@@ -114,6 +115,18 @@ hr {
     border-bottom: 1px solid $color-bordes;
 }
 
+.detalleInvitado {
+    display         : flex;
+    text-align      : left !important;
+    font-size       : 14px;
+    width           : 100%;
+    align-items     : center;
+    border-bottom   : 1px solid $color-bordes;
+    display         : flex;
+    background-color: $sombra;
+    margin          : 10px 0px;
+}
+
 .titulos {
     font-weight  : 550 !important;
     padding-right: 5px;
@@ -133,10 +146,12 @@ p {
 }
 
 .seleccionar {
-    width     : 100%;
-    cursor    : pointer;
-    min-height: 30px;
-    padding   : 5px 10px;
+    width           : 100%;
+    cursor          : pointer;
+    min-height      : 30px;
+    padding         : 5px 10px;
+    background-color: $sombra;
+    margin          : 5px 0px;
 }
 
 .seleccionar-invitados {
@@ -147,7 +162,7 @@ p {
 }
 
 .seleccionar:hover,
-.seleccionar-invitados:hover {
+.detalleInvitado:hover {
     background-color: #ebebeb;
 }
 
