@@ -1,29 +1,45 @@
+// N U E V O S  E S T I L O S
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 $background-scrollbar : #134895; //barra azul
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$background-scrollbar : #134895; //barra azul
+$color-bordes         : #CED4DA; //bordes del calendario
+$color-azul           : #134895; //bordes y texto azul
+$color-negro          : #000;
+$placeholder          : rgba(0, 0, 0, 0.30);
+$rojo-info            : #cc4141;
+
+input::placeholder,
+textarea::placeholder {
+    color: $placeholder !important;
+}
 
 .progress {
     padding         : 0px;
-    padding-right   : 0px;
     width           : 680px;
     height          : 430px;
     background-color: $background-oficial;
 }
 
 .dialog {
-    padding         : 10px 0px 10px 20px;
+    padding         : 0px;
     width           : 700px;
     height          : 430px;
     background-color: $background-oficial;
     overflow        : hidden;
 }
 
+.spacer {
+    flex: 1 1 auto;
+}
+
 .contenedor {
-    overflow-y   : auto;
-    overflow-x   : hidden;
-    height       : calc(100% - 52px);
-    padding-right: 20px;
+    padding   : 10px 20px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100% - 50px);
 }
 
 .contenedor::-webkit-scrollbar {
@@ -69,111 +85,89 @@ hr {
     opacity   : .25;
 }
 
-.verDetalle {
-    font-weight   : 500;
-    text-align    : center;
-    margin-bottom : 0px;
-    padding       : 10px;
-    padding-bottom: 0;
+.fondo {
+    background-color: $background-oficial;
 }
 
-.busqueda {
-    // display    : flex;
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
+.nombre {
+    min-width: 40%;
+    font-size: 12px;
 }
 
-.buscar {
-    min-width   : 80px;
-    font-size   : 12px;
-    padding-left: 5px;
-}
-
-.inputSearch {
-    width           : 100%;
-    border-style    : none;
-    border          : 1px solid $color-bordes;
-    background-color: transparent;
-    min-height      : 35px;
-    padding         : 2px 5px;
-    font-size       : 12px;
-    outline         : none;
-    margin          : 0px;
-    color           : $color-azul;
-}
-
-.estado {
-    text-align  : justify;
-    padding-left: 15px;
-}
-
-.referencia {
-    width: 80px;
-}
-
-.tipo-referencia {
-    text-align: justify;
-    width     : calc(100% - 100px);
-    padding   : 0px 10px;
-}
-
-.detalle-idReferencia {
-    display    : flex;
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    align-items: center;
-}
-
-.titulos {
+.detalleCoincidencias {
     display      : flex;
     text-align   : left !important;
     font-size    : 14px;
     width        : 100%;
-    font-weight  : 450;
+    align-items  : center;
     border-bottom: 1px solid $color-bordes;
-    padding-right: 15px;
-    padding-top  : 10px;
+}
+
+.titulos {
+    font-weight  : 550 !important;
+    padding-right: 5px;
 }
 
 p {
     margin: 0px;
+    color : $color-negro;
 }
 
 .seleccionar {
-    display      : flex;
-    width        : 100%;
-    cursor       : pointer;
-    align-items  : center;
-    min-height   : 30px;
-    border-bottom: 1px solid $color-bordes;
-    padding      : 5px 15px;
+    width           : 100%;
+    cursor          : pointer;
+    min-height      : 30px;
+    padding         : 5px 10px;
+    margin          : 5px 0px;
+    background-color: #d7d7d7;
+
 }
 
 .seleccionar:hover {
     background-color: #ebebeb;
 }
 
-.botones {
-    padding: 0px;
-    display: flex;
-    width  : 100%;
-    height : 40px;
+.inputSearch {
+    width           : 100%;
+    border-style    : none;
+    background-color: transparent;
+    outline         : none;
+    color           : $color-azul;
 }
 
-.example-radio-group {
-    display       : flex;
-    flex-direction: column;
-    margin        : 15px 0;
-    align-items   : flex-start;
-}
+@media screen and (max-width: 280px) {
+    .close {
+        font-size  : 22px !important;
+        align-items: center !important;
+        height     : 30px !important;
+    }
 
-.opciones {
-    margin : 5px;
-    display: flex;
+    hr {
+        margin: 0.3rem 0;
+    }
+
+    .progress {
+        padding: 0px !important;
+        width  : 200px !important;
+    }
+
+    .dialog {
+        padding: 10px 20px;
+        width  : 200px !important;
+    }
+
+    .seleccionar {
+        height     : auto !important;
+        padding    : 3px 0px !important;
+        align-items: center !important;
+        width      : 130px !important;
+    }
+
+    .contenedor {
+        padding-left: 5px !important;
+        width       : 190px !important;
+    }
+
 }
 
 @media screen and (max-width: 767px) {
@@ -182,4 +176,54 @@ p {
     .progress {
         width: 400px !important;
     }
+
+    .seleccionar {
+        min-height: 30px !important;
+        display   : block !important;
+    }
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.buscar-icono {
+    display      : flex;
+    align-items  : center;
+    border-bottom: solid 1px $color-azul;
+}
+
+.icono-lupa {
+    color: $color-azul;
+}
+
+.barra-fija {
+    display      : flex;
+    align-items  : center;
+    height       : 55px;
+    border-bottom: solid 1px $color-bordes;
+}
+
+.barra-abajo-fija {
+    display    : flex;
+    align-items: center;
+    height     : 50px;
+}
+
+.encontrados {
+    margin-top: 10px;
+}
+
+.info {
+    font-size  : 12px !important;
+    color      : $rojo-info;
+    display    : flex;
+    align-items: center;
+    padding-top: 10px;
+    text-align : right;
+}
+
+.marginRihgt {
+    margin-right: 5px;
 }

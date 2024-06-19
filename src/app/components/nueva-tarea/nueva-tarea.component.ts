@@ -96,7 +96,7 @@ export class NuevaTareaComponent implements OnInit {
   searchUser: string = ''; //buscar usuario
   tituloTarea: string = ''; //titulo de la tarea
   descripcion: string = ''; //descripcion de la tarea (observacion)
-  idReferencia: IDReferenciaInterface | null = null; //referencia que ha sido seleccionada
+  idReferencia?: IDReferenciaInterface; //referencia que ha sido seleccionada
   tipoTarea: TipoTareaInterface | null = null; //tipo de la tarea
   estadoTarea: EstadoInterface | null = null; //estado de la tarea
   prioridadTarea: NivelPrioridadInterface | null = null;
@@ -888,7 +888,7 @@ export class NuevaTareaComponent implements OnInit {
     this.duracion = 10;
     this.descripcion = '';
     this.selectedFiles = [];
-    this.idReferencia = null;
+    this.idReferencia = undefined;
     this.usuariosInvitados = [];
     this.usuariosResponsables = [];
 
@@ -1257,30 +1257,11 @@ export class NuevaTareaComponent implements OnInit {
   }
 
 
-  // //abrir dialgo y selecionar invitados
-  // agregarInvitado(): void {
-
-  //   this.tareasGlobalService.buscarUsuarios = 2;
-
-  //   let usuario = this._dialog.open(BuscarUsuariosComponent, { data: this.usuariosInvitados })
-  //   usuario.afterClosed().subscribe(result => {
-  //     if (result) {
-
-  //       console.log(result);
-
-  //       let seleccionados: BuscarUsuariosInterface[] = result;
-
-  //       this.usuariosInvitados = seleccionados;
-  //     };
-  //   });
-  // };
-
   //abrir dialogo y seleecionar referencia
   buscarReferencia(): void {
     let referencia = this._dialog.open(BuscarIdReferenciaComponent)
     referencia.afterClosed().subscribe(result => {
       if (result) {
-
         this.idReferencia = result[0];
       };
     });

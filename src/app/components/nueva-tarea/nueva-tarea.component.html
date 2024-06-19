@@ -146,7 +146,7 @@
 
                         <span class="spacer"></span>
 
-                        <div class="seleccionar">
+                        <div class="seleccion">
                             <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
                                 <span class="spacer"></span>
                                 <!-- <mat-icon class="icono-tareas">person_add</mat-icon> -->
@@ -174,17 +174,33 @@
 
                         <span class="spacer"></span>
 
-                        <div class="dFlex">
-                            <div class="buscar-usu-ref-id">
-                                <span class="spacer"></span>
-                                <!-- <mat-icon class="icono-tareas">search</mat-icon> -->
-                                <div class="texto-botones">
-                                    {{ 'crm.crear.referenciaId' | translate }}
+                        <div class="seleccion">
+                            <div class="dFlex">
+                                <div class="buscar-usu-ref-id" (click)="buscarReferencia()">
+                                    <span class="spacer"></span>
+                                    <div class="texto-botones">
+                                        {{ 'crm.crear.referenciaId' | translate }}
+                                    </div>
+                                    <span class="spacer"></span>
                                 </div>
                                 <span class="spacer"></span>
+                                <p class="obligatorio25">*</p>
                             </div>
-                            <span class="spacer"></span>
-                            <p class="obligatorio25">*</p>
+                            <!-- Informacion -->
+                            <div class="usuarios">
+                                <p class="titulo-campo" *ngIf="idReferencia">ID Referencia</p>
+                                <div class="respuesta-dialogo" *ngIf="idReferencia">
+                                    <div class="dFlex">
+                                        <p>{{idReferencia.descripcion}}</p>
+                                        <span class="spacer"></span>
+                                        <mat-icon (click)="idReferencia = undefined" class="eliminar"
+                                            matTooltip="eliminar Id referencia">
+                                            close
+                                        </mat-icon>
+                                    </div>
+                                    <p class="negrita">{{idReferencia.referencia_Id}}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

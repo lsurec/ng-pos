@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { IDReferenciaInterface } from 'src/app/displays/shrTarea_3/interfaces/id-referencia.interface';
@@ -12,26 +12,31 @@ import { NotificationsService } from 'src/app/services/notifications.service';
   styleUrls: ['./buscar-id-referencia.component.scss'],
   providers: [
     IdReferenciaService,
-    NotificationsService
   ]
 })
-export class BuscarIdReferenciaComponent {
+export class BuscarIdReferenciaComponent implements OnInit {
+  //para seleciconar el valor del texto del input
+  @ViewChild('inputSearch') inputSearch?: ElementRef;
+  enableButtons: boolean = false;
+
   referencias: IDReferenciaInterface[] = [];
-  referenciaSeleccionada!: IDReferenciaInterface;
 
   searchIdReferencia: string = '';
-  searchUser: string = ''; //variable que relizara la busqueda
   isLoading: boolean = false; //pantalla de carga
-  busqueda: boolean = true; // pantalla de busqueda
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dialogRef: MatDialogRef<BuscarIdReferenciaComponent>,
     private _referenciasService: IdReferenciaService,
-    private _widgetsService: NotificationsService,
-    private _translate: TranslateService,
+    private widgetsService: NotificationsService,
+    private translate: TranslateService,
   ) {
 
+  }
+
+
+  ngOnInit(): void {
+    this.deshabilitarBotonesTemp();
   }
 
   //cerrar dialogo
@@ -41,15 +46,12 @@ export class BuscarIdReferenciaComponent {
 
   timer: any; //temporizador
 
-  onInputChange() {
-    clearTimeout(this.timer); // Cancelar el temporizador existente
-    this.timer = setTimeout(() => {
-      this.buscarIdReferencia(); // Función de filtrado que consume el servicio
-    }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
-  }
-
   async buscarIdReferencia(): Promise<void> {
 
+    if (this.searchIdReferencia.length == 0) {
+      this.widgetsService.openSnackbar(this.translate.instant('pos.alertas.ingreseCaracter'));
+      return;
+    }
     //Consumo de api
     this.isLoading = true;
     let resIdReferencia: ResApiInterface = await this._referenciasService.getIdReferencia(this.searchIdReferencia)
@@ -57,7 +59,7 @@ export class BuscarIdReferenciaComponent {
     //Si el servico se ejecuta mal mostrar menaje
     if (!resIdReferencia.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.idReferencia'));
+      this.widgetsService.openSnackbar(this.translate.instant('crm.alertas.idReferencia'));
       console.error(resIdReferencia.response);
       console.error(resIdReferencia.storeProcedure);
       this.referencias = [];
@@ -66,8 +68,24 @@ export class BuscarIdReferenciaComponent {
     //Si se ejecuto bien, obtener la respuesta de Api Buscar usuarios
     this.referencias = resIdReferencia.response;
     if (this.referencias.length == 0) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.idReferencia'));
+      this.widgetsService.openSnackbar(this.translate.instant('crm.alertas.idReferencia'));
     }
     this.isLoading = false;
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.inputSearch!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  deshabilitarBotonesTemp() {
+    this.timer = setTimeout(() => {
+      this.enableButtons = true;
+    }, 250);
   }
 }

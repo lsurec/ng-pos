@@ -1,39 +1,53 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<!-- Dialogo de los detalles de las tareas -->
-<div mat-dialog-content class="dialog" *ngIf="busqueda && !isLoading">
-    <div class="contenedor">
-        <div class="d-flex">
-            <span class="spacer"></span>
-            <!-- Titulo -->
-            <p class="verDetalle">{{'crm.crear.buscarIdReferencia' | translate}}</p>
-            <span class="spacer"></span>
-            <!-- Cerrar dialogo -->
-            <span class="close" [mat-dialog-close]="">&times;</span>
-        </div>
-        <div class="busqueda">
-            <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
-            <input type="search" class="inputSearch" [(ngModel)]="searchIdReferencia"
-                placeholder="{{'crm.crear.busqueda' | translate}}" (ngModelChange)="onInputChange()">
-        </div>
-        <div class="titulos" *ngIf="referencias.length > 0">
-            <p class="referencia">{{'crm.crear.referencia' | translate}}</p>
-            <span class="spacer"></span>
-            <p class="tipo-referencia">{{'crm.crear.descripcionRef' | translate}}</p>
-            <span class="spacer"></span>
-            <p class="estado">{{'crm.crear.estadoReferencia' | translate}}</p>
-        </div>
-        <div class="detalle-idReferencia" *ngFor="let referencia of referencias">
-            <span class="spacer"></span>
-            <div class="seleccionar" [mat-dialog-close]="[referencia]">
-                <p class="referencia" [matTooltip]="referencia.descripcion">{{referencia.referencia_Id}}</p>
-                <span class="spacer"></span>
-                <p class="tipo-referencia">{{referencia.descripcion}}</p>
-                <span class="spacer"></span>
-                <p class="estado">{{referencia.fDes_Estado_Objeto}}</p>
+<div class="fondo" *ngIf="!isLoading">
+    <div class="barra-fija">
+        <span class="spacer"></span>
+        <!-- Titulo -->
+        <p class="titulos">{{'crm.crear.buscarIdReferencia' | translate}}</p>
+        <span class="spacer"></span>
+        <!-- Cerrar dialogo -->
+        <span class="close" (click)="closeDialog()">&times;</span>
+    </div>
+    <!-- Dialogo de los detalles de las tareas -->
+    <div mat-dialog-content class="dialog">
+        <div class="contenedor">
+            <form #ngForm="ngForm" (ngSubmit)="buscarIdReferencia()">
+                <p class="titulos">{{'crm.crear.buscar' | translate}}</p>
+                <div class="buscar-icono">
+                    <input #inputSearch type="search" name="usuario" class="inputSearch"
+                        [(ngModel)]="searchIdReferencia" placeholder="{{'crm.crear.busqueda' | translate}}"
+                        autocomplete="off" (focus)="focusAndSelectText()">
+                    <button type="submit" mat-icon-button class="flecha-regresar">
+                        <mat-icon class="icono-lupa">search</mat-icon>
+                    </button>
+                </div>
+            </form>
+
+            <div class="info">
+                <mat-icon class="marginRihgt">info</mat-icon>
+                Presiona sobre el Id de Referencia que quieras agregar.
+            </div>
+            <hr>
+            <div class="detalleCoincidencias" *ngFor="let referencia of referencias">
+                <div class="seleccionar" [mat-dialog-close]="[referencia]">
+                    <p class="nombre">{{referencia.descripcion}}</p>
+                    <div class="dFlex">
+                        <p class="titulos">Estado: </p>
+                        <p class="nombre">{{referencia.fDes_Estado_Objeto}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="titulos">Referencia: </p>
+                        <p class="nombre">{{referencia.referencia}}</p>
+                    </div>
+                    <div class="dFlex">
+                        <p class="titulos">ID Referencia: </p>
+                        <p class="nombre">{{referencia.referencia_Id}}</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div mat-dialog-actions class="botones">
-        <button mat-button [mat-dialog-close]="" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
+        <div mat-dialog-actions class="barra-abajo-fija" *ngIf="enableButtons">
+            <button mat-button (click)="closeDialog()">{{'crm.crear.cancelar' | translate}}</button>
+        </div>
     </div>
 </div>

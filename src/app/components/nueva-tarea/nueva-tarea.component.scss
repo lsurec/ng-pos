@@ -270,6 +270,7 @@ textarea::placeholder {
     align-items     : center;
     display         : flex;
     cursor          : pointer;
+    border-radius   : 25px;
 }
 
 
@@ -400,4 +401,8 @@ textarea::placeholder {
 .eliminar:hover {
     cursor: pointer;
     color : #ff0000;
+}
+
+.negrita {
+    font-weight: 550 !important;
 }
