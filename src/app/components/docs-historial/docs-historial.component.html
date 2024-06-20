@@ -1,0 +1,53 @@
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <app-detalle-documento *ngIf="!isLoading && !historial && detalleDocumento"
+        [estructura]="docSelect"></app-detalle-documento>
+    <div *ngIf="!isLoading && historial">
+        <mat-toolbar-row class="head__sidenav">
+            <button mat-icon-button aria-label matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}"
+                (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                (click)="loadData()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <!-- Titulo de la tarea -->
+            <p class="titulo">{{ 'pos.factura.docRecientes' | translate }}</p>
+            <span class="spacer"></span>
+
+        </mat-toolbar-row>
+        <div class="container-main">
+            <div class="container">
+                <div class="detalles-registros">
+                    <div class="registros">
+                        <span class="spacer"></span>
+                        <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})</p>
+                    </div>
+                    <div class="detalle-documento" *ngFor="let documento of documentos"
+                        (click)="verDetalle(); docSelect = documento">
+                        <div class="info-documento">
+                            <p class="subtitulo">Id Documento Ref:
+                                {{documento.ref_id}} </p>
+                            <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
+                                {{documento.item.consecutivo_Interno}} </p>
+                            <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="totales">
+                            <p class="saldo">{{documento.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                            <p class="cargo">(+) {{documento.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                            <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }} </p>
+                            <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mostrar logos -->
+        <!-- <app-barra-logos></app-barra-logos> -->
+        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+    </div>
+</div>

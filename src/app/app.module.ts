@@ -87,6 +87,7 @@ import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service'
 import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/confirmar-nuevo-doc.component';
 import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe';
 import { TraducirComponent } from './components/traducir/traducir.component';
+import { DocsHistorialComponent } from './components/docs-historial/docs-historial.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -145,6 +146,7 @@ import { TraducirComponent } from './components/traducir/traducir.component';
     ConfirmarNuevoDocComponent,
     CurrencyFormatPipe,
     TraducirComponent,
+    DocsHistorialComponent,
   ],
   imports: [
     MatCardModule,

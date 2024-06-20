@@ -1,7 +1,8 @@
 <app-nuevo-cliente *ngIf="!vistaFactura && nuevoCliente"></app-nuevo-cliente>
 <app-editar-cliente *ngIf="!vistaFactura && actualizarCliente" [cuenta]="cuenta"></app-editar-cliente>
 <app-resumen-documento *ngIf="!vistaFactura && vistaResumen"></app-resumen-documento>
-<app-historial *ngIf="!vistaFactura && vistaHistorial"></app-historial>
+<!-- <app-historial *ngIf="!vistaFactura && vistaHistorial"></app-historial> -->
+<app-docs-historial *ngIf="!vistaFactura && vistaHistorial"></app-docs-historial>
 <app-error *ngIf="!vistaFactura && vistaInforme" [regresar]="regresar"></app-error>
 
 <app-progress *ngIf="facturaService.isLoading" class="progress"></app-progress>
@@ -240,7 +241,8 @@
                             *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
 
                         <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
-                            (click)="facturaService. showPago()" *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
+                            (click)="facturaService. showPago()"
+                            *ngIf="facturaService.serie && facturaService.formasPago.length > 0">
                             {{
                             'pos.factura.pago' | translate }}
 

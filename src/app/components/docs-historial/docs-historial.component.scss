@@ -1,0 +1,142 @@
+$color-naranja        : #df9722;
+$color-negro          : #000000;
+$color-blanco         : #fff;
+$color-gris           : #c1bfbf;
+$color-azul           : #134895;
+$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
+$color-azul           : #134895; // fondo, bordes y texto azul
+$background-oficial   : #FEF5E7; //fondo Demosoft
+$background-scrollbar : #134895; //barra azul
+$color-verde          : #25a704;
+$color-rojo           : #ce1414;
+
+.container-main::-webkit-scrollbar {
+    width: 7px;
+}
+
+.container-main::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.container-main::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.container-main {
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    padding   : 0px;
+    overflow-y: auto;
+}
+
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $background-oficial;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $background-oficial;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $color-bordes;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.registros {
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 10px;
+}
+
+.titulo {
+    font-size  : 14px;
+    text-align : center;
+    font-weight: 500;
+}
+
+.subtitulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+.detalles-registros {
+    padding: 10px 0px;
+}
+
+.detalle-documento {
+    display   : flex;
+    padding   : 5px 0px;
+    border-top: 1px solid $color-bordes;
+}
+
+.detalle-documento:hover {
+    cursor          : pointer;
+    background-color: $color-bordes;
+}
+
+.info-documento {
+    width  : 60%;
+    padding: 5px 10px;
+}
+
+.totales {
+    padding   : 5px 10px;
+    text-align: right;
+
+}
+
+.fecha-hora {
+    font-size: 13px;
+    color    : $color-negro;
+}
+
+.saldo {
+    font-size  : 13px;
+    color      : $color-azul;
+    font-weight: 500;
+}
+
+.cargo {
+    font-size  : 13px;
+    color      : $color-verde;
+    font-weight: 500;
+}
+
+.descuento {
+    font-size  : 13px;
+    color      : $color-rojo;
+    font-weight: 500;
+}
+
+.total {
+    border-top : 1px solid $color-negro;
+    font-size  : 13px;
+    font-weight: bold;
+}
