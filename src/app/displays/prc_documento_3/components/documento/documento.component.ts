@@ -12,13 +12,12 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
-import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
 import { ReferenciaService } from '../../services/referencia.service';
-import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 
