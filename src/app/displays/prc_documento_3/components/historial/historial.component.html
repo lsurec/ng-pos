@@ -50,10 +50,11 @@
 
                         <div class="registros">
                             <span class="spacer"></span>
-                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})
+                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }}
+                                ({{documentosRecientes.length}})
                             </p>
                         </div>
-                        <div class="detalle-documento" *ngFor="let documento of documentos"
+                        <div class="detalle-documento" *ngFor="let documento of documentosRecientes"
                             (click)="verDetalle(); docSelect = documento">
                             <div class="info-documento">
                                 <p class="subtitulo">Id Documento Ref:
@@ -108,16 +109,19 @@
 
                         <div class="registros">
                             <span class="spacer"></span>
-                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})
+                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }}
+                                ({{documentosPendientes.length}})
                             </p>
                         </div>
-                        <div class="detalle-documento" *ngFor="let documento of documentos"
+                        <div class="detalle-documento" *ngFor="let documento of documentosPendientes"
                             (click)="verDetalle(); docSelect = documento">
                             <div class="info-documento">
                                 <p class="subtitulo">Id Documento Ref:
                                     {{documento.ref_id}} </p>
                                 <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
                                     {{documento.item.consecutivo_Interno}} </p>
+                                <p class="subtitulo">{{ 'pos.documento.usuario' | translate }}
+                                    {{documento.item.userName}} </p>
                                 <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
                             </div>
                             <span class="spacer"></span>

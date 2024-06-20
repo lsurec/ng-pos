@@ -24,8 +24,8 @@ export class DocumentService {
             {
                 "Authorization": "bearer " + token,
                 "user": user,
-                "filtro": filter,
-                "allDocs": filter ? "false": "true",
+                "filtro": filter ? filter : "empty",
+                "allDocs": filter ? "false" : "true",
             }
         )
 
@@ -108,8 +108,8 @@ export class DocumentService {
             {
                 "Authorization": "bearer " + token,
                 "user": user,
-                "userFilter": userFilter,
-                "filtro": filter,
+                "userFilter": userFilter ? userFilter : "empty",
+                "filtro": filter ? filter : "empty",
                 "allDocs": filter ? "false" : "true",
                 "allUser": userFilter ? "false" : "true",
             }
