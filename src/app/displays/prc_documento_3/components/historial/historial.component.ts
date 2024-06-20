@@ -9,7 +9,6 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
-import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -18,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./historial.component.scss'],
   providers: [
     DocumentService,
-    TipoTransaccionService,
   ]
 })
 export class HistorialComponent implements OnInit {
@@ -46,7 +44,6 @@ export class HistorialComponent implements OnInit {
     //instancias de los servicios necearios
     private _eventService: EventService,
     private _documentService: DocumentService,
-    private _tiposTransaccion: TipoTransaccionService,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     public facturaService: FacturaService,
@@ -169,47 +166,6 @@ export class HistorialComponent implements OnInit {
 
       if (estructura.Doc_Tipo_Documento == this.facturaService.tipoDocumento) {
 
-        //Buscar lostipos de transaccion de un documento recuperado
-        let resTra = await this._tiposTransaccion.getTipoTransaccion(
-          this.user,
-          this.token,
-          estructura.Doc_Tipo_Documento,
-          estructura.Doc_Serie_Documento,
-          estructura.Doc_Empresa,
-        );
-
-        //Si algo salio mal
-        if (!resTra.status) {
-
-          this.isLoading = false;
-
-
-          let verificador = await this._notificationsService.openDialogActions(
-            {
-              title: this._translate.instant('pos.alertas.salioMal'),
-              description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.informe'),
-              falso: this._translate.instant('pos.botones.aceptar'),
-            }
-          );
-
-          if (!verificador) return [];
-
-          this.mostrarError(resTra);
-
-          return [];
-
-        }
-
-        //tipos de transaccion del documento
-        let tiposTra: TipoTransaccionInterface[] = resTra.response;
-
-        //id tipo transaccion cargo
-        let tipoCargo: number = this.resolveTipoTransaccion(4, tiposTra);
-
-        //id tipo transaccion descuento
-        let tipoDescuento: number = this.resolveTipoTransaccion(3, tiposTra);
-
         //Totales
         let cargo: number = 0;
         let descuento: number = 0;
@@ -220,18 +176,17 @@ export class HistorialComponent implements OnInit {
         //recorrer las transacciones del documento
         estructura.Doc_Transaccion.forEach(tra => {
           //Si no es ni cargo ni desceunto sumar total transaccones
-          if (tra.Tra_Tipo_Transaccion != tipoCargo &&
-            tra.Tra_Tipo_Transaccion != tipoDescuento) {
+          if (tra.Tra_Cantidad != 0) {
             subtotal += tra.Tra_Monto;
           }
 
           //sii es cargo sumar cargo
-          if (tra.Tra_Tipo_Transaccion == tipoCargo) {
+          if (tra.Tra_Cantidad == 0 && tra.Tra_Monto > 0) {
             cargo += tra.Tra_Monto;
           }
 
           //si es descuento sumar descuento
-          if (tra.Tra_Tipo_Transaccion == tipoDescuento) {
+          if (tra.Tra_Cantidad == 0 && tra.Tra_Monto < 0) {
             descuento += tra.Tra_Monto;
           }
         });
@@ -339,12 +294,6 @@ export class HistorialComponent implements OnInit {
   searchUserDoc: string = PreferencesService.user;
 
   async buscarDoc() {
-    //Validar que el componente 
-    if (!this.searchDoc) {
-      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
-      return;
-    }
-
     //Vaciar lista de documentos si existen anteriores
     this.documentosRecientes = [];
     this.documentosPendientes = [];
@@ -398,8 +347,8 @@ export class HistorialComponent implements OnInit {
       let resDocPending: ResApiInterface = await this._documentService.getStructureDosPendigs(
         this.user,
         this.token,
+        this.searchUserDoc,
         this.searchDoc,
-        this.searchUserDoc
       )
 
       //si algo salio mal
