@@ -85,21 +85,37 @@ export class BuscarUsuariosComponent implements OnInit {
       return;
     }
 
-    //Consumo de api
+    // Consumo de API
     this.isLoading = true;
-    let resUsuario: ResApiInterface = await this._usuarioService.getUsuariosFiltro(this.searchUser)
+    let resUsuario: ResApiInterface = await this._usuarioService.getUsuariosFiltro(this.searchUser);
 
-    //Si el servico se ejecuta mal mostrar menaje
+    // Si el servicio se ejecuta mal, mostrar mensaje
     if (!resUsuario.status) {
       this.isLoading = false;
       this.widgetsService.openSnackbar(this._translate.instant('crm.alertas.usuarios'));
       console.error(resUsuario.response);
       console.error(resUsuario.storeProcedure);
       this.usuarios = [];
-      return
+      return;
     }
-    //Si se ejecuto bien, obtener la respuesta de Api Buscar usuarios
+
+    // Si se ejecutó bien, obtener la respuesta de la API Buscar usuarios
     this.usuarios = resUsuario.response;
+
+    if (this.tareasGlobalService.buscarUsuarios == 2) {
+      // Validar si hay invitados
+      if (this.invitados.length > 0) {
+        // Recorrer la lista de usuarios y marcar los seleccionados
+        this.usuarios.forEach(usuario => {
+          this.invitados.forEach(invitado => {
+            if (usuario.email === invitado.email || usuario.userName === invitado.userName || usuario.name === invitado.name) {
+              usuario.select = true;
+            }
+          });
+        });
+      }
+    }
+
     this.isLoading = false;
   }
 

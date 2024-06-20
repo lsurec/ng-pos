@@ -1440,7 +1440,7 @@ export class NuevaTareaComponent implements OnInit {
         let nuevosSeleccionados: BuscarUsuariosInterface[] = result;
 
         // Filtrar usuarios para eliminar los duplicados
-        let nuevosInvitados = nuevosSeleccionados.filter(nuevoUsuario => {
+        let nuevosInvitados: BuscarUsuariosInterface[] = nuevosSeleccionados.filter(nuevoUsuario => {
           return !this.usuariosInvitados.some(invitado => invitado.userName === nuevoUsuario.userName);
         });
 
