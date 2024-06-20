@@ -4,31 +4,19 @@ $color-blanco         : #fff;
 $color-gris           : #c1bfbf;
 $color-azul           : #134895;
 $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 $color-verde          : #25a704;
 $color-rojo           : #ce1414;
-
-.container-main::-webkit-scrollbar {
-    width: 7px;
-}
-
-.container-main::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
-
-.container-main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px $background-oficial;
-}
+$color-pestanas       : #555;
+$bordes               : #c1bfbf;
+$color-gris-s         : #777; //sombra y texto gris
 
 .container-main {
-    height    : calc(100vh - 128px) !important;
-    width     : 100%;
-    padding   : 0px;
-    overflow-y: auto;
+    height  : calc(100vh - 128px) !important;
+    width   : 100%;
+    padding : 0px;
+    overflow: hidden;
 }
 
 .progress {
@@ -86,10 +74,6 @@ hr {
     font-weight: 500;
 }
 
-.detalles-registros {
-    padding: 10px 0px;
-}
-
 .detalle-documento {
     display   : flex;
     padding   : 5px 0px;
@@ -139,4 +123,225 @@ hr {
     border-top : 1px solid $color-negro;
     font-size  : 13px;
     font-weight: bold;
+}
+
+.listas-documentos::-webkit-scrollbar {
+    width: 7px;
+}
+
+.listas-documentos::-webkit-scrollbar-track {
+    background: $background-oficial;
+}
+
+.listas-documentos::-webkit-scrollbar-thumb {
+    background-color: $background-scrollbar;
+    border-radius   : 20px;
+    border          : 3px $background-oficial;
+}
+
+.listas-documentos {
+    height    : calc(100vh - 190px) !important;
+    width     : 100%;
+    padding   : 0px 25px;
+    overflow-y: auto;
+}
+
+.mat-mdc-radio-button .mat-mdc-radio-button {
+    margin-left: 16px;
+}
+
+.form-switch .form-check-input {
+    border-color: #bdb76b;
+    height      : 20px;
+}
+
+//Inicial en grande
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0px !important;
+}
+
+mat-sidenav {
+    width           : 365px;
+    background-color: $background-oficial;
+
+}
+
+@media screen and (max-width: 365px) {
+    mat-sidenav {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-sidenav {
+        width: 100%;
+    }
+
+    .contenedorModulo {
+        width: 100% !important;
+    }
+
+}
+
+/*Toolbar*/
+.toolbarPhone {
+    display: none;
+}
+
+.toolbarPhone,
+.toolbar-large {
+    background-color: $background-oficial;
+    border-bottom   : 1px solid rgba(0, 0, 0, .12);
+    padding         : 0px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .toolbar-large {
+        display         : none !important;
+        background-color: $background-oficial;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+        width  : 100% !important;
+    }
+}
+
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width : 100%;
+    height: 100%;
+}
+
+$color1     : #0f3851;
+$color2     : #154d67;
+$color3     : #1a7084;
+$color4     : #2398a0;
+$color5     : #2bc9bf;
+$color-azul : #134895;
+
+
+.elevation_bar {
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+
+.nav_bar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 1000;
+    height          : 56px !important;
+    background-color: $color3;
+    color           : #fff;
+    font-size       : 14px;
+}
+
+// body {
+//     font : 14px/1 'Open Sans', sans-serif;
+//     color: #555;
+// }
+
+
+main {
+    width : 100%;
+    height: 100%;
+}
+
+.contenido-seleccionado {
+    display   : none;
+    border-top: 1px solid $color-bordes;
+}
+
+.titulo-pestana {
+    display: none;
+
+}
+
+.pestana {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 15px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $color-pestanas;
+    border     : 2px solid transparent;
+}
+
+.pestana::before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+.pestana[for*='1']:before {
+    content: '\f1da';
+}
+
+.pestana[for*='2']:before {
+    content: '\f017';
+}
+
+.pestana[for*='3']:before {
+    content: '\f0d6';
+}
+
+.pestana[for*='4']:before {
+    content: '\f01c';
+}
+
+.pestana:hover {
+    color : #888;
+    cursor: pointer;
+}
+
+.titulo-pestana:checked+.pestana {
+    color        : $color-azul;
+    border       : 1px solid $color-bordes;
+    border-top   : 3px solid orange;
+    border-bottom: 0px;
+}
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .pestana {
+        font-size: 0;
+    }
+
+    .pestana:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .pestana {
+        padding: 15px;
+    }
+}
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
 }

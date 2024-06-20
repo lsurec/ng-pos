@@ -29,6 +29,9 @@ export class HistorialComponent implements OnInit {
   readonly regresar: number = 5; //id de la pantlla
   verError: boolean = false; // Ver pamtalla informe de errores
 
+  recientes: boolean = true;
+  pendientes: boolean = false;
+
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token;   //token de la sesion
   empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
@@ -185,7 +188,7 @@ export class HistorialComponent implements OnInit {
       //Agrgar transacion a una interfaz propia
       this.documentos.push(
         {
-          ref_id:estructura.Doc_ID_Documento_Ref!,
+          ref_id: estructura.Doc_ID_Documento_Ref!,
           item: doc,
           estructura: estructura,
           cargo: cargo,
@@ -260,5 +263,15 @@ export class HistorialComponent implements OnInit {
 
     //mmostrar pantalla de informe de error
     this.verError = true;
+  }
+
+  verRecientes() {
+    this.recientes = true;
+    this.pendientes = false;
+  }
+
+  verPendientes() {
+    this.recientes = false;
+    this.pendientes = true;
   }
 }
