@@ -29,7 +29,7 @@ import { FormControl } from '@angular/forms';
 export class FacturaService {
 
     idDocumentoRef: number = 0;
-
+    tipoHistorial: number = 1;
     //controlar las vistas de las pestañas
     tabDocummento: boolean = true; //contorlador para la pestaña documento
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
@@ -169,27 +169,27 @@ export class FacturaService {
     }
 
 
-    
-  //mostrar pestaña doccumento
-  showDocumento() {
-    this.tabDocummento = true;
-    this.tabDetalle = false;
-    this.tabPago = false;
-  }
 
-  //mostrar pestaña detalle
-  showDetalle() {
-    this.tabDocummento = false;
-    this.tabDetalle = true;
-    this.tabPago = false;
-  }
+    //mostrar pestaña doccumento
+    showDocumento() {
+        this.tabDocummento = true;
+        this.tabDetalle = false;
+        this.tabPago = false;
+    }
 
-  //mostrar pestaña pagos
-  showPago() {
-    this.tabDocummento = false;
-    this.tabDetalle = false;
-    this.tabPago = true;
-  }
+    //mostrar pestaña detalle
+    showDetalle() {
+        this.tabDocummento = false;
+        this.tabDetalle = true;
+        this.tabPago = false;
+    }
+
+    //mostrar pestaña pagos
+    showPago() {
+        this.tabDocummento = false;
+        this.tabDetalle = false;
+        this.tabPago = true;
+    }
 
 
     setIdDocumentoRef() {
@@ -458,9 +458,9 @@ export class FacturaService {
 
         //Agregar transaccion
         this.traInternas.push(transaccion);
-        
+
         this.searchText = "";
-        
+
         //calcluar totales
         this.calculateTotales();
     }

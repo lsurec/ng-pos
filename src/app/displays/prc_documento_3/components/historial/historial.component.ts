@@ -45,8 +45,9 @@ export class HistorialComponent implements OnInit {
     private _eventService: EventService,
     private _documentService: DocumentService,
     private _tiposTransaccion: TipoTransaccionService,
-    private _notificationsServie: NotificationsService,
+    private _notificationsService: NotificationsService,
     private _translate: TranslateService,
+    public facturaService: FacturaService,
   ) {
 
     //Suscripcion a eventos desde componente shijo
@@ -88,7 +89,7 @@ export class HistorialComponent implements OnInit {
 
       this.isLoading = false;
 
-      let verificador = await this._notificationsServie.openDialogActions(
+      let verificador = await this._notificationsService.openDialogActions(
         {
           title: this._translate.instant('pos.alertas.salioMal'),
           description: this._translate.instant('pos.alertas.error'),
@@ -129,7 +130,7 @@ export class HistorialComponent implements OnInit {
         this.isLoading = false;
 
 
-        let verificador = await this._notificationsServie.openDialogActions(
+        let verificador = await this._notificationsService.openDialogActions(
           {
             title: this._translate.instant('pos.alertas.salioMal'),
             description: this._translate.instant('pos.alertas.error'),
@@ -268,10 +269,26 @@ export class HistorialComponent implements OnInit {
   verRecientes() {
     this.recientes = true;
     this.pendientes = false;
+    this.facturaService.tipoHistorial = 1;
   }
 
   verPendientes() {
     this.recientes = false;
     this.pendientes = true;
+    this.facturaService.tipoHistorial = 2;
   }
+
+
+  searchDoc: string = "";
+  searchUserDoc: string = PreferencesService.user;
+
+  buscarDoc() {
+    //Validar que el componente 
+    if (!this.searchDoc) {
+      this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
+      return;
+    }
+  }
+
+
 }

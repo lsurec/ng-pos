@@ -33,6 +33,21 @@
 
                 <section id="content1" class="content1 contenido-seleccionado" *ngIf="recientes">
                     <div class="listas-documentos">
+
+
+                        <div class="buscar-documentos">
+                            <form #searchForm="ngForm" (ngSubmit)="buscarDoc()">
+                                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                                <div class="input-container">
+                                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchDoc"
+                                        autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
+                                    <button mat-icon-button class="iconoLupa" type="submit">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="registros">
                             <span class="spacer"></span>
                             <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})
@@ -45,6 +60,8 @@
                                     {{documento.ref_id}} </p>
                                 <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
                                     {{documento.item.consecutivo_Interno}} </p>
+                                <p class="subtitulo">{{ 'pos.documento.usuario' | translate }}
+                                    {{documento.item.userName}} </p>
                                 <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
                             </div>
                             <span class="spacer"></span>
@@ -61,6 +78,34 @@
 
                 <section id="content2" class="content2 contenido-seleccionado" *ngIf="pendientes">
                     <div class="listas-documentos">
+
+
+                        <div class="dFlex">
+                            <div class="buscar-documentos">
+                                <form #searchForm="ngForm" (ngSubmit)="buscarDoc()">
+                                    <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                                    <div class="input-container">
+                                        <input class="barra-de-busqueda" type="search" name="search"
+                                            [(ngModel)]="searchDoc" autocomplete="off"
+                                            placeholder="{{'pos.inputs.buscar' | translate}}">
+                                        <button mat-icon-button class="iconoLupa" type="submit">
+                                            <mat-icon>search</mat-icon>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <span class="spacer"></span>
+                            <div class="usuario-busqueda">
+                                <p class="subtitulo">Filtrar por usuario</p>
+                                <div class="input-container">
+                                    <input class="barra-de-busqueda" type="search" name="search"
+                                        [(ngModel)]="searchUserDoc" autocomplete="off" placeholder="Escribe el usuario">
+                                </div>
+                            </div>
+
+                        </div>
+
+
                         <div class="registros">
                             <span class="spacer"></span>
                             <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})
