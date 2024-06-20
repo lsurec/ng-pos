@@ -107,10 +107,6 @@
                     </div>
 
                     <div class="bloque-menus">
-                        <div class="info">
-                            <mat-icon class="marginRihgt">info</mat-icon>
-                            Selecciona la información para tu tarea o puedes continuar con la seleccion por defecto.
-                        </div>
                         <div class="datos-tarea">
                             <div class="contenido-izquierdo">
                                 <div class="d-flex">
@@ -174,7 +170,7 @@
                                         <div class="dFlex">
                                             <p>{{responsable.name}}</p>
                                             <span class="spacer"></span>
-                                            <mat-icon (click)="responsable = undefined" class="eliminar"
+                                            <mat-icon (click)="eliminarResponsable()" class="eliminar"
                                                 matTooltip="eliminar responsable">
                                                 close
                                             </mat-icon>
@@ -232,7 +228,7 @@
                                         <div class="dFlex">
                                             <p>{{idReferencia.descripcion}}</p>
                                             <span class="spacer"></span>
-                                            <mat-icon (click)="idReferencia = undefined" class="eliminar"
+                                            <mat-icon (click)="eliminarIdReferencia()" class="eliminar"
                                                 matTooltip="eliminar Id referencia">
                                                 close
                                             </mat-icon>

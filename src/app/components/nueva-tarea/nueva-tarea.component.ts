@@ -1359,11 +1359,6 @@ export class NuevaTareaComponent implements OnInit {
     this.selectedFiles.splice(index, 1);
   };
 
-  //elimina usuarios responsables seleccionados
-  eliminarResponsable(index: number): void {
-    this.usuariosResponsables.splice(index, 1);
-  };
-
   //elimina usuarios invitados seleccionados
   eliminarInvitado(index: number): void {
     this.usuariosInvitados.splice(index, 1);
@@ -1403,6 +1398,22 @@ export class NuevaTareaComponent implements OnInit {
         console.log("error");
       }
     });
+  }
+
+  eliminarResponsable(): void {
+    this.responsable = undefined;
+    this.formulario.get('responsable')?.reset();
+
+    this.requerido = true;
+    this.formulario.get('responsable')?.setErrors({ required: true });
+  }
+
+  eliminarIdReferencia(): void {
+    this.idReferencia = undefined;
+    this.formulario.get('idReferencia')?.reset();
+
+    this.requerido = true;
+    this.formulario.get('idReferencia')?.setErrors({ required: true });
   }
 
   volverABuscar(opcion: number) {
