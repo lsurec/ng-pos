@@ -4,6 +4,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { PostDocumentInterface } from '../interfaces/post-document.interface';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class DocumentService {
