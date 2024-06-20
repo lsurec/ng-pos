@@ -28,6 +28,9 @@ export class DocsHistorialComponent implements OnInit {
   readonly regresar: number = 5; //id de la pantlla
   verError: boolean = false; // Ver pamtalla informe de errores
 
+  recientes: boolean = true;
+  pendientes: boolean = false;
+
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token;   //token de la sesion
   empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion
@@ -261,4 +264,13 @@ export class DocsHistorialComponent implements OnInit {
     this.verError = true;
   }
 
+  verRecientes() {
+    this.recientes = true;
+    this.pendientes = false;
+  }
+
+  verPendientes() {
+    this.recientes = false;
+    this.pendientes = true;
+  }
 }
