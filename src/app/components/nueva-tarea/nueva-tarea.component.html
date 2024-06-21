@@ -324,13 +324,16 @@
                             <p class="titulo-campo">{{ 'crm.crear.estimado' | translate }}</p>
                             <div class="dFlex">
                                 <input type="text" class="minutos" maxlength="2" [(ngModel)]="duracion"
-                                    (keypress)="validarNumeros($event)">
+                                    (keypress)="validarNumeros($event)" [ngClass]="{'error': requerido && !duracion}">
                                 <mat-select name="recordar" class="seleccionar-tiempo"
                                     placeholder="{{ 'crm.crear.tiempo' | translate }}" [(ngModel)]="tiempoEstimado">
                                     <mat-option *ngFor="let tiempo of periodicidad" [value]="tiempo">
                                         {{tiempo.descripcion}}
                                     </mat-option>
                                 </mat-select>
+                            </div>
+                            <div *ngIf="requerido && !duracion" class="error-message">
+                                Campo requerido
                             </div>
                         </div>
                     </div>

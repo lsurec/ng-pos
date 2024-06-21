@@ -228,7 +228,8 @@ textarea::placeholder {
 }
 
 .titulo-tarea.error,
-.observacion-tarea.error {
+.observacion-tarea.error,
+.minutos.error {
     border          : 1.5px solid $color-rojo;
     background-color: $requerido;
 }

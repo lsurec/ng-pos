@@ -175,7 +175,15 @@ export class NuevaTareaComponent implements OnInit {
       idReferencia: [
         this.idReferencia,
         Validators.required
-      ]
+      ],
+      duracion: [
+        this.duracion = 10,
+        Validators.required
+      ],
+      tiempo: [
+        this.tiempoEstimado,
+        Validators.required
+      ],
     });
 
 
@@ -226,7 +234,7 @@ export class NuevaTareaComponent implements OnInit {
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
 
-      if (this.responsable == undefined || this.idReferencia == undefined) {
+      if (this.responsable == undefined || this.idReferencia == undefined || this.duracion == undefined) {
         this.requerido = true;
       }
 
@@ -237,6 +245,11 @@ export class NuevaTareaComponent implements OnInit {
 
       if (!this.descripcion) {
         this._widgetsService.openSnackbar("Añade una observación.");
+        return;
+      }
+
+      if (!this.duracion) {
+        this._widgetsService.openSnackbar("Añade una tiempo estimado.");
         return;
       }
 
@@ -766,7 +779,15 @@ export class NuevaTareaComponent implements OnInit {
       idReferencia: [
         this.idReferencia,
         Validators.required
-      ]
+      ],
+      duracion: [
+        this.duracion = 10,
+        Validators.required
+      ],
+      tiempo: [
+        this.tiempoEstimado,
+        Validators.required
+      ],
     });
 
     this.isLoading = false; //Cargando en false
@@ -1009,7 +1030,23 @@ export class NuevaTareaComponent implements OnInit {
       prioridad: [
         this.prioridadTarea,
         Validators.required
-      ]
+      ],
+      responsable: [
+        this.responsable,
+        Validators.required
+      ],
+      idReferencia: [
+        this.idReferencia,
+        Validators.required
+      ],
+      duracion: [
+        this.duracion = 10,
+        Validators.required
+      ],
+      tiempo: [
+        this.tiempoEstimado,
+        Validators.required
+      ],
     });
 
     this.formulario.reset();
