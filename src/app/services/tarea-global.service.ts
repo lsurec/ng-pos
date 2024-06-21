@@ -10,7 +10,7 @@ export class GlobalTareasService {
     fechaInicialFormat?: string;
     fechaFinalFormat?: string;
 
-    idPantalla: number = 0;
+    idPantalla: number = 1;
 
     idActualizar: number = 0;
     idUsuarios: number = 0;

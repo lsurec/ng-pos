@@ -46,31 +46,20 @@
 
                     <span class="spacer"></span>
 
-                    <span class="spacer"></span>
+                    <button mat-icon-button matTooltip="Guardar" (click)="validar()">
+                        <mat-icon>save</mat-icon>
+                    </button>
 
-                    <div class="funciones">
-                        <span class="spacer"></span>
-                        <button mat-stroked-button class="marginRihgt" (click)="validar()" matTooltip="Guardar">
-                            <mat-icon>save_outline</mat-icon>
-                            Guardar
-                        </button>
-                        <button mat-stroked-button class="marginRihgt" (click)="limpiarCrear()"
-                            matTooltip="Nueva Tarea">
-                            <mat-icon>note_add_outline</mat-icon>
-                            Nueva Tarea
-                        </button>
+                    <button mat-icon-button matTooltip="Nueva Tarea" (click)="limpiarCrear()">
+                        <mat-icon>note_add_outline</mat-icon>
+                    </button>
+                    <input type="file" class="form-control" id="inputGroupFile04"
+                        aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
+                        (change)="onFilesSelected($event)" style="display: none;" #fileInput>
 
-                        <!-- Para abrir el explorador de archivos -->
-
-                        <input type="file" class="form-control" id="inputGroupFile04"
-                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
-                            (change)="onFilesSelected($event)" style="display: none;" #fileInput>
-                        <button mat-stroked-button class="marginRihgt" matTooltip="Subir Archivos"
-                            (click)="fileInput.click()">
-                            <mat-icon>attach_file</mat-icon>
-                            Subir Archivos
-                        </button>
-                    </div>
+                    <button mat-icon-button matTooltip="Subir Archivos" (click)="fileInput.click()">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
                 </mat-toolbar-row>
             </mat-toolbar>
 
@@ -262,7 +251,7 @@
                         <!-- Seleccionar fechas y horas del calendario -->
                         <div class="fechas-hora" *ngIf="tareasGlobalService.idPantalla == 2">
                             <div class="fecha-hora">
-                                <p class="campo-tarea">{{ 'crm.crear.fechaIni' | translate }}</p>
+                                <p class="titulo-campo">{{ 'crm.crear.fechaIni' | translate }}</p>
                                 <div class="reloj-calendario">
                                     <form class="fecha-calendario ">
                                         <div class="input-group">
@@ -296,7 +285,7 @@
                             </div>
                             <span class="spacer"></span>
                             <div class="fecha-hora">
-                                <p class="campo-tarea">{{ 'crm.crear.fechaFin' | translate }}</p>
+                                <p class="titulo-campo">{{ 'crm.crear.fechaFin' | translate }}</p>
                                 <div class="reloj-calendario">
                                     <form class="fecha-calendario">
                                         <div class="input-group">
@@ -330,8 +319,21 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="fecha-hora">
+                            <p class="titulo-campo">{{ 'crm.crear.estimado' | translate }}</p>
+                            <div class="dFlex">
+                                <input type="text" class="minutos" maxlength="2" [(ngModel)]="duracion"
+                                    (keypress)="validarNumeros($event)">
+                                <mat-select name="recordar" class="seleccionar-tiempo"
+                                    placeholder="{{ 'crm.crear.tiempo' | translate }}" [(ngModel)]="tiempoEstimado">
+                                    <mat-option *ngFor="let tiempo of periodicidad" [value]="tiempo">
+                                        {{tiempo.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="bloque-menus">
                         <div class="abrir-dialogos">
                             <div class="seleccion">
@@ -421,6 +423,18 @@
                                         <p class="negrita">{{idReferencia.referencia_Id}}</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bloque-menus" *ngIf="selectedFiles.length > 0">
+                        <div class="archivos">
+                            <p class="titulo-campo">Archivos Seleccionados ({{selectedFiles.length}}) </p>
+                            <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
+                                <p class="nombre-archivos"> - {{ file.name }}</p>
+                                <span class="spacer"></span>
+                                <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
+                                    matTooltip="eliminar archivo">close</mat-icon>
                             </div>
                         </div>
                     </div>

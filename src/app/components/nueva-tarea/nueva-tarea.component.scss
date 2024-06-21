@@ -136,6 +136,10 @@ mat-sidenav {
     .acordeon_oculto {
         display: block !important;
     }
+
+    .fechas-hora {
+        display: block !important;
+    }
 }
 
 .head__sidenav {
@@ -291,26 +295,20 @@ textarea::placeholder {
     display: flex;
 }
 
-@media screen and (max-width: 280px) {
+@media screen and (max-width: 580px) {
 
     .detalles-tarea {
         margin: 20px 5px !important;
     }
 
     .datos-tarea,
-    .fechas-hora,
-    .reloj-calendario {
+    .fechas-hora {
         display: block !important;
     }
 
     .fecha-hora {
         display    : block !important;
         padding-top: 5px;
-    }
-
-    .hora-calendario {
-        margin-left: 0px !important;
-        margin-top : 5px !important;
     }
 
     .observacion-tarea {
@@ -323,6 +321,14 @@ textarea::placeholder {
 
     .crear-tarea {
         padding: 10px 15px !important;
+    }
+
+    .abrir-dialogos {
+        display: block !important;
+    }
+
+    .seleccion {
+        margin-bottom: 10px;
     }
 
 }
@@ -393,6 +399,15 @@ textarea::placeholder {
     background-color: $sombra;
 }
 
+.archivos-adjuntos {
+    width           : 50%;
+    margin-top      : 5px;
+    padding         : 5px;
+    background-color: $sombra;
+    display         : flex;
+    align-items     : center;
+}
+
 .usuarios {
     margin-top: 5px;
 }
@@ -429,11 +444,10 @@ textarea::placeholder {
 }
 
 .seleccion {
-    min-height   : 35px;
-    align-items  : center;
-    width        : 100%;
-    padding-left : 5px;
-    padding-right: 5px;
+    min-height : 35px;
+    align-items: center;
+    width      : 100%;
+    padding    : 0px 5px;
 }
 
 .tipo-tarea {
@@ -485,6 +499,38 @@ mdc-menu-surface {
     align-items: center;
 }
 
-.fecha-hora {
-    padding: 0px 10px;
+.fecha-hora,
+.archivos {
+    padding: 5px 10px 0px;
+}
+
+.minutos {
+    width           : 40px;
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    height          : 30px;
+    padding         : 2px 5px;
+    font-size       : 12px;
+    outline         : none;
+    text-align      : center;
+    color           : $color-azul;
+    margin-right    : 10px;
+}
+
+.seleccionar-tiempo {
+    min-width       : 120px;
+    max-width       : 150px;
+    border-style    : none;
+    border          : 1px solid $color-bordes;
+    background-color: transparent;
+    min-height      : 30px;
+    padding         : 2px 10px;
+    font-size       : 12px;
+    outline         : none;
+}
+
+.nombre-archivos {
+    font-size  : 12px;
+    font-weight: 450;
 }

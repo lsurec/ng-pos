@@ -1356,9 +1356,13 @@ export class NuevaTareaComponent implements OnInit {
   };
 
   //eliminar los archivos que se han seleccionados
-  eliminarArchivo(index: number): void {
-    this.selectedFiles.splice(index, 1);
-  };
+  eliminarArchivo(index: number) {
+    if (index >= 0 && index < this.selectedFiles.length) {
+      const newFiles = [...this.selectedFiles]; // Hacer una copia del array
+      newFiles.splice(index, 1);
+      this.selectedFiles = newFiles; // Asignar la nueva copia al array original
+    }
+  }
 
   //elimina usuarios invitados seleccionados
   eliminarInvitado(index: number): void {
