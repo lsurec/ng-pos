@@ -680,6 +680,7 @@ export class NuevaTareaComponent implements OnInit {
 
   //Cargar datos
   async loadData(): Promise<void> {
+    this.requerido = false;
 
     this.fechaTarea = new Date(this.tareasGlobalService.fechaIniCalendario!);
     // this.fechaActual();

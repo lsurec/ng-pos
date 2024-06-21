@@ -457,10 +457,11 @@ mdc-menu-surface {
 }
 
 .bloque-menus {
-    border    : solid 1px $borde-toolbar;
-    box-shadow: 0px 1px 0px 1px $sombra;
-    margin    : 10px 0px 15px;
-    padding   : 10px;
+    border       : solid 1px $borde-toolbar;
+    box-shadow   : 0px 1px 0px 1px $sombra;
+    margin       : 10px 0px 15px;
+    padding      : 10px;
+    border-radius: 10px;
 }
 
 .info {
@@ -477,4 +478,13 @@ mdc-menu-surface {
 
 .email {
     word-wrap: break-word;
+}
+
+.funciones {
+    display    : flex;
+    align-items: center;
+}
+
+.fecha-hora {
+    padding: 0px 10px;
 }

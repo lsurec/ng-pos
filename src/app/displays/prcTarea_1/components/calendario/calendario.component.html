@@ -1,7 +1,10 @@
 <!-- Pantalla de carga  -->
 <app-progress *ngIf="isLoading && !crearTarea" class="progress"></app-progress>
-<app-crear-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
-    (nuevaTareaCalendario)="addTarea($event)" [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-crear-tarea>
+<!-- <app-crear-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
+    (nuevaTareaCalendario)="addTarea($event)" [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-crear-tarea> -->
+
+<app-nueva-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
+    (nuevaTareaCalendario)="addTarea($event)" [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-nueva-tarea>
 
 <!-- inicio de sidenav -->
 <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
