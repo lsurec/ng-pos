@@ -8,8 +8,9 @@ $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra rosada
 $background-botones   : #134895; //resaltar botones azul
-$background-transparent: transparent; //fondo transparennte, 
-
+$sombra               : rgba(0, 0, 0, 0.1);
+$placeholder          : rgba(0, 0, 0, 0.20);
+$requerido            : rgba(0, 0, 0, 0.05);
 
 .spacer {
     flex: 1 1 auto;
@@ -202,7 +203,12 @@ $background-transparent: transparent; //fondo transparennte,
     background-color: $background-oficial;
     border-radius   : 5px;
     font-size       : 17px;
+    box-shadow      : 0px 1px 0px 1px $sombra;
 }
+
+// .tarea:hover {
+//     background-color: $placeholder;
+// }
 
 /* justificar texto */
 .justificar {

@@ -55,9 +55,6 @@ import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.comp
 export class NuevaTareaComponent implements OnInit {
   formulario: FormGroup;
   newForm?: FormGroup;
-  //campos de la tarea
-  titulo: string = "";
-
 
   isTituloEmpty: boolean = false;
   requerido: boolean = false;
@@ -88,14 +85,13 @@ export class NuevaTareaComponent implements OnInit {
   estadosTarea: EstadoInterface[] = [];
   tiposTarea: TipoTareaInterface[] = [];
   prioridadesTarea: NivelPrioridadInterface[] = [];
-  usuariosResponsables: BuscarUsuariosInterface[] = []; // Lista para almacenar los usuarios seleccionados
   usuariosInvitados: BuscarUsuariosInterface[] = [];
   seleccionarInvitados!: number;
   seleccionarResponsable!: number;
 
   //guardar informacion de la tarea
   searchUser: string = ''; //buscar usuario
-  tituloTarea: string = ''; //titulo de la tarea
+  titulo: string = ''; //titulo de la tarea
   descripcion: string = ''; //descripcion de la tarea (observacion)
   idReferencia?: IDReferenciaInterface; //referencia que ha sido seleccionada
   tipoTarea: TipoTareaInterface | null = null; //tipo de la tarea
@@ -223,7 +219,11 @@ export class NuevaTareaComponent implements OnInit {
   }
 
 
-  validar(): void {
+  async validar(): Promise<void> {
+
+    //sino se selecciona una fecha u hora en los inputs, se asignará la que se está visualizando 
+    this.tareasGlobalService.fechaIni = this.convertValidDate(this.tareasGlobalService.inputFechaInicial!, this.tareasGlobalService.horaInicial);
+    this.tareasGlobalService.fechaFin = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaFinal);
 
     // Asigna los valores del formulario a las variables
     this.titulo = this.formulario.get('titulo')?.value;
@@ -268,60 +268,8 @@ export class NuevaTareaComponent implements OnInit {
       return;
     }
 
-    // Muestra los valores en la consola
-    console.log('Titulo:', this.titulo);
-    console.log('Descripción:', this.descripcion);
-    console.log('Responsable:', this.responsable);
-    console.log('ID de Referencia:', this.idReferencia);
+    await this.guardar()
 
-    // Procesa los datos del formulario
-    console.log(this.formulario.value);
-
-    // // Asigna los valores del formulario a las variables
-    // this.titulo = this.formulario.get('titulo')?.value;
-    // this.descripcion = this.formulario.get('descripcion')?.value;
-    // this.responsable = this.formulario.get('responsable')?.value;
-    // this.idReferencia = this.formulario.get('idReferencia')?.value;
-
-
-    // if (this.formulario.invalid) {
-    //   this.formulario.markAllAsTouched();
-
-    //   if (this.responsable == undefined || this.idReferencia == undefined) {
-    //     this.requerido = true;
-    //   }
-
-    //   if (!this.titulo) {
-    //     this._widgetsService.openSnackbar("Añade un titulo.");
-    //     return;
-    //   }
-
-    //   if (!this.descripcion) {
-    //     this._widgetsService.openSnackbar("Añade una observación.");
-    //     return;
-    //   }
-
-    //   if (this.responsable == undefined) {
-    //     this._widgetsService.openSnackbar("Añade un responsable.");
-    //     this.requerido = true;
-    //     return;
-    //   }
-
-    //   if (this.idReferencia == undefined) {
-    //     this._widgetsService.openSnackbar("Añade un Id de Referencia.");
-    //     this.requerido = true;
-    //     return;
-    //   }
-
-    //   return;
-    // }
-
-    // // Muestra los valores en la consola
-    // console.log('Titulo:', this.titulo);
-    // console.log('Descripción:', this.descripcion);
-
-    // // Procesa los datos del formulario
-    // console.log(this.formulario.value);
   }
 
   onInputChange(controlName: string): void {
@@ -335,20 +283,6 @@ export class NuevaTareaComponent implements OnInit {
       }
     }
   }
-  // onInputChange(controlName: string): void {
-  //   const control = this.formulario.get(controlName);
-  //   if (control) {
-  //     if (control.invalid && (control.value || control.touched)) {
-  //       control.markAsDirty();
-  //     } else {
-  //       control.markAsPristine();
-  //     }
-  //     if (control.value.length === 0) {
-  //       control.setErrors({ 'required': true });
-  //     }
-  //   }
-  // }
-
 
   validarInput(contenidoInput: string): boolean {
 
@@ -1089,7 +1023,7 @@ export class NuevaTareaComponent implements OnInit {
     this.selectedFiles = [];
     this.idReferencia = undefined;
     this.usuariosInvitados = [];
-    this.usuariosResponsables = [];
+    this.responsable = undefined;
 
     this.formulario = this.newForm;
 
@@ -1105,7 +1039,7 @@ export class NuevaTareaComponent implements OnInit {
     // console.log(this.formatDate(this.tareasGlobalService.inputFechaFinal!), this.getHoraInput(this.tareasGlobalService.fechaFin));
     // return
 
-    if (this.tituloTarea.length === 0 || this.tipoTarea === null || this.estadoTarea === null || this.prioridadTarea === null || this.idReferencia === null || this.descripcion.length === 0 || this.usuariosResponsables.length == 0) {
+    if (this.titulo.length == 0 || this.tipoTarea === null || this.estadoTarea === null || this.prioridadTarea === null || this.idReferencia === null || this.descripcion.length === 0 || this.responsable == undefined) {
       this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
 
     } else {
@@ -1178,7 +1112,7 @@ export class NuevaTareaComponent implements OnInit {
     //NUEVA TAREA PRUEBA
     let tareaPrueba: CrearTareaInterface = {
       tarea: 0,
-      descripcion: this.tituloTarea,
+      descripcion: this.titulo,
       fecha_Ini: fechaIni,
       fecha_Fin: fechaFin,
       referencia: this.idReferencia!.referencia,
@@ -1263,7 +1197,7 @@ export class NuevaTareaComponent implements OnInit {
         iD_Tarea: nuevasTareas[0].tarea,
         usuario_Creador: this.usuarioTarea,
         usuario_Responsable: null,
-        descripcion: this.tituloTarea,
+        descripcion: this.titulo,
         fecha_Inicial: this.tareasGlobalService.fechaIni!,
         fecha_Final: this.tareasGlobalService.fechaFin!,
         referencia: this.idReferencia!.referencia,
@@ -1299,7 +1233,7 @@ export class NuevaTareaComponent implements OnInit {
       let tareaCalendario: TareaCalendarioInterface = {
         r_UserName: this.usuarioTarea,
         tarea: nuevasTareas[0].tarea,
-        descripcion: this.tituloTarea,
+        descripcion: this.titulo,
         fecha_Ini: fechaIni,
         fecha_Fin: fechaFin,
         referencia: 0,
@@ -1315,7 +1249,7 @@ export class NuevaTareaComponent implements OnInit {
         weekNumber: this.getWeekNumber(fechaIni),
         cantidad_Contacto: 0,
         nombre_Contacto: '',
-        descripcion_Tarea: this.tituloTarea,
+        descripcion_Tarea: this.titulo,
         texto: this.descripcion,
         backColor: "#000",
         estado: this.estadoTarea!.estado,
@@ -1333,7 +1267,7 @@ export class NuevaTareaComponent implements OnInit {
 
     let usuarioResponsable: EnviarResponsableInterface = {
       tarea: nuevasTareas[0].tarea,
-      user_Res_Invi: this.usuariosResponsables[0].userName,
+      user_Res_Invi: this.responsable!.userName,
       user: this.usuarioTarea,
     }
     //consumo de api usuario respnsable
