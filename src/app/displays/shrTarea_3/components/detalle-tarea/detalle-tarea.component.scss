@@ -222,9 +222,16 @@ p {
 }
 
 .tituloTarea {
-    padding    : 10px 10px;
     font-weight: bold;
-    text-align : center;
+    text-align : justify;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
 }
 
 /* color de fondo de toda la pantalla */

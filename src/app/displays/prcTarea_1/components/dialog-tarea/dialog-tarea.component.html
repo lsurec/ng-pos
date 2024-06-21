@@ -74,7 +74,7 @@
                     <div class="comentario">
                         <p>{{comentario.comentario.nameUser}}</p>
                         <span class="spacer"></span>
-                        <p>{{comentario.comentario.fecha_Hora | date: 'dd/MM/yyyy'}}</p>
+                        <p>{{comentario.comentario.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}}</p>
                     </div>
                     <!-- decripcion de comentario -->
                     <div class="comentario_desc">
@@ -104,7 +104,7 @@
                         <div class="comentario">
                             <p>{{usuarioTarea}}</p>
                             <span class="spacer"></span>
-                            <p>{{fechaHoy | date: 'dd/MM/yyyy'}}</p>
+                            <p>{{fechaHoy | date: 'dd/MM/yyyy HH:mm'}}</p>
                         </div>
                         <div class="comentario_desc">
                             <textarea name="notas" id="descripcion" cols="30" rows="2"

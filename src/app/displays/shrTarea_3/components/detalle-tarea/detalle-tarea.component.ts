@@ -50,7 +50,7 @@ export class DetalleTareaComponent {
 
   //abirir y cerrar el mat expander
   desplegarDetalles: boolean = false;
-  fechaHoy: string = '';
+  fechaHoy: Date = new Date();
   nuevoComentario!: ComentarioInterface;
   descripcionComentario: string = '';
   selectedFiles: File[] = [];
@@ -101,13 +101,7 @@ export class DetalleTareaComponent {
       this.activeLang = languagesProvider[getIndexLang];
     }
 
-    //fecha del dia de hoy
-    let date = new Date(); //nueva fecha
-    let day = date.getDate(); //dia
-    let month = date.getMonth() + 1; //mes (+1 para que sea del 1 al 12)
-    let year = date.getFullYear(); //año
-    //retorna la fecha en la 00/00/0000
-    this.fechaHoy = `${day}/${month}/${year}`
+    this.fechaHoy = new Date();
 
     //nombre del usuario logueado.
   }
@@ -120,6 +114,7 @@ export class DetalleTareaComponent {
   }
 
   async loadData() {
+    this.fechaHoy = new Date();
     // this.tareaEncontrada.tarea = task;
     this.isLoading = true;
     let resComentarios: ResApiInterface = await this._tareaService.getComentarios(this.tareaDetalle!.iD_Tarea);

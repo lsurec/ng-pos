@@ -49,10 +49,6 @@
             <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="loadData()">
                 <mat-icon>refresh</mat-icon>
             </button>
-            <span class="spacer"></span>
-            <!-- Titulo de la tarea -->
-            <p class="tituloTarea">{{resolveObject(tareaDetalle!.descripcion)}}</p>
-            <span class="spacer"></span>
         </mat-toolbar-row>
         <!-- Mostrar logos -->
         <!-- <app-barra-logos></app-barra-logos> -->
@@ -220,6 +216,8 @@
                     <!-- fin de acrodeon de detalles oculto -->
                     <!-- contenedor de la observacion -->
                     <div class="observacion">
+                        <p class="tituloTarea">{{resolveObject(tareaDetalle!.descripcion)}}</p>
+                        <hr>
                         <p class="observaciones">{{ 'crm.detalles.observacion' | translate }}</p>
                         <p class="observaciones_desc">{{resolveObject(tareaDetalle!.tarea_Observacion_1)}}</p>
                     </div>
@@ -238,7 +236,7 @@
                                 <div class="comentario">
                                     <p>{{item.comentario.nameUser}}</p>
                                     <span class="spacer"></span>
-                                    <p>{{item.comentario.fecha_Hora | date: 'dd/MM/yyyy'}}</p>
+                                    <p>{{item.comentario.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}</p>
                                 </div>
                                 <!-- decripcion de comentario -->
                                 <div class="comentario_desc">
@@ -273,7 +271,7 @@
                                     <div class="comentario">
                                         <p>{{usuarioTarea}} </p>
                                         <span class="spacer"></span>
-                                        <p> {{fechaHoy }} </p>
+                                        <p> {{fechaHoy | date: 'dd/MM/yyyy hh:mm a'}} </p>
                                     </div>
                                     <div class="comentario_desc">
                                         <textarea name="notas" id="descripcion" cols="30" rows="2"
@@ -360,7 +358,7 @@
                                 <p>
                                     <!-- {{dateFormat(tareaDetalle!.tarea_Fecha_Fin)}} -->
                                     {{ tareaDetalle!.tarea_Fecha_Fin | date: 'dd/MM/yyyy hh:mm a' }}
-                                    <!-- {{tareaDetalle!.fecha_Final | date: 'dd/MM/yyyy HH:mm'}} -->
+                                    <!-- {{tareaDetalle!.fecha_Final | date: 'dd/MM/yyyy hh:mm a'}} -->
                                 </p>
                             </div>
                         </div>
