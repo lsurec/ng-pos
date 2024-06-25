@@ -548,6 +548,7 @@
             "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia."
         },
         "alertas": {
+            "requerido": "Campo requerido.",
             "deFecha": "de",
             "salioMal": "Algo salió mal, intente de nuevo",
             "ok": "Aceptar",

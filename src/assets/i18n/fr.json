@@ -548,6 +548,7 @@
             "idioma": "Vous pourrez également changer la langue de l'application plus tard selon votre préférence."
         },
         "alertas": {
+            "requerido": "Champ requis.",
             "deFecha": "de",
             "salioMal": "Quelque chose a mal tourné, réessayez",
             "ok": "Accepter",

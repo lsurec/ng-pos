@@ -114,7 +114,7 @@
                             autocomplete="off">
                         <div *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid"
                             class="error-message">
-                            Campo requerido
+                            {{ 'crm.alertas.requerido' | translate }}
                         </div>
                     </div>
 
@@ -128,7 +128,7 @@
                             [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
                         <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
                             class="error-message">
-                            Campo requerido
+                            {{ 'crm.alertas.requerido' | translate }}
                         </div>
                     </div>
 
@@ -333,7 +333,7 @@
                                 </mat-select>
                             </div>
                             <div *ngIf="requerido && !duracion" class="error-message">
-                                Campo requerido
+                                {{ 'crm.alertas.requerido' | translate }}
                             </div>
                         </div>
                     </div>
@@ -352,7 +352,7 @@
                                     <p class="obligatorio25">*</p>
                                 </div>
                                 <div *ngIf="requerido && !responsable" class="error-message">
-                                    Campo requerido
+                                    {{ 'crm.alertas.requerido' | translate }}
                                 </div>
                                 <div class="usuarios" *ngIf="responsable">
                                     <p class="titulo-campo">RESPONSABLE</p>
@@ -410,7 +410,7 @@
                                     <p class="obligatorio25">*</p>
                                 </div>
                                 <div *ngIf="requerido && !idReferencia" class="error-message">
-                                    Campo requerido
+                                    {{ 'crm.alertas.requerido' | translate }}
                                 </div>
                                 <div class="usuarios" *ngIf="idReferencia">
                                     <p class="titulo-campo">ID Referencia</p>

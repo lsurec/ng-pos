@@ -548,6 +548,7 @@
             "idioma": "You can also change the application language later according to your preference."
         },
         "alertas": {
+            "requerido": "Required field.",
             "deFecha": "from",
             "salioMal": "Something went wrong, please try again",
             "ok": "Accept",
