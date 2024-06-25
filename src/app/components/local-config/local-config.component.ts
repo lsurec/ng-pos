@@ -140,6 +140,8 @@ export class LocalConfigComponent implements OnInit {
       PreferencesService.imgEmpresa = this.empresas[0].empresa_Img;
     }
 
+    this.requerido = false;
+
   }
 
   requerido: boolean = false;
