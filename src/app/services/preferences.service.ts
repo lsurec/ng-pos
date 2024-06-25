@@ -45,7 +45,9 @@ export class PreferencesService {
     static closeSession() {
         localStorage.removeItem(PreferencesService.tokenStorageKey);
         sessionStorage.removeItem(PreferencesService.tokenKey);
-
+        //Limpiar la imagen de la empresa
+        localStorage.removeItem(PreferencesService.imgEmpresaKey);
+        sessionStorage.removeItem(PreferencesService.imgEmpresaKey);
     }
 
     //lenguaje de la aplicacion

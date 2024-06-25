@@ -161,6 +161,7 @@ export class SplashComponent implements OnInit {
     if (empresas.length == 1 && estaciones.length == 1) {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
+      PreferencesService.imgEmpresa = empresas[0].empresa_Img;
 
       //Cargar tipo cambio
       let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
