@@ -1,10 +1,14 @@
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris           : #777; //sombra y texto gris
 $color-azul           : #134895; // fondo, bordes y texto azul
+$color-blanco         : #fff; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra azul
 $bordes               : rgba(0, 0, 0, 0.12);
 $color-naranja        : #df9722;
+$color-rojo           : #cc4141;
+$requerido            : rgba(0, 0, 0, 0.05);
+
 
 .head__sidenav {
     width           : 100%;
@@ -97,7 +101,8 @@ p {
 .contenido {
     // height     : calc(100% - 128px);
     align-items: center !important;
-    overflow   : auto;
+    overflow-x : hidden;
+    overflow-y : auto;
     width      : 100%;
     height     : calc(100vh - 128px);
 }
@@ -156,11 +161,26 @@ p {
     border-top: none !important;
 }
 
+.guardar-boton {
+    display    : flex;
+    align-items: center;
+}
+
 .boton-guardar {
-    position        : fixed;
-    bottom          : 80px;
-    right           : 20px;
-    background-color: $color-azul;
+    background-color: $color-azul !important;
+    color           : $color-blanco !important;
+    width           : 200px;
+}
+
+.seleccionar-localidad.error,
+.seleccionar-empresa.error {
+    border          : 1.5px solid $color-rojo;
+    background-color: $requerido;
+}
+
+.error-message {
+    color    : $color-rojo;
+    font-size: 12px;
 }
 
 .boton-cerrar {

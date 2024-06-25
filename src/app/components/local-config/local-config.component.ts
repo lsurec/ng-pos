@@ -142,12 +142,15 @@ export class LocalConfigComponent implements OnInit {
 
   }
 
+  requerido: boolean = false;
+
   //Guardar la configuracion seleccionada
   async saveSettings(): Promise<void> {
 
     //Validar que se seleccione empresa y estacion
     if (!this.empresaSelect || !this.estacionSelect) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.debeSeleccionar'));
+      this.requerido = true;
       return;
     };
 
