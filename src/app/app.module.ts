@@ -24,7 +24,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BarraLogosComponent } from './components/barra-logos/barra-logos.component';
-import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -103,7 +102,6 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
     LogosComponent,
     ProgressComponent,
     BarraLogosComponent,
-    BarraLogoDemosoftComponent,
     LocalConfigComponent,
     LangComponent,
     ThemeComponent,
