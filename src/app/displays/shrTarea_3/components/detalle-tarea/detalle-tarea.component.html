@@ -241,16 +241,10 @@
                                 <div class="comentario_desc">
                                     <p>{{item.comentario.comentario}}</p>
                                     <div class="" *ngIf="comentarios[index].files.length >0">
-                                        <div class="" *ngFor="let file of comentarios[index].files">
-                                            <button mat-button class="d-flex">
-                                                <mat-icon class="ico_link"> description </mat-icon>
-                                                <a [href]="file.objeto_URL" target="_blank">
-                                                    <!-- <a href="https://material.angular.io/components/categories" target="_blank"> -->
-                                                    <!-- arvhivos del comentario -->
-                                                    <p class="nombre-archivos">{{file.objeto_Nombre}}</p>
-                                                </a>
-                                                <!-- fin archios del comentario -->
-                                            </button>
+                                        <div class="adjuntos" *ngFor="let file of comentarios[index].files">
+                                            <a [href]="file.objeto_URL" target="_blank">
+                                                {{file.objeto_Nombre}}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
