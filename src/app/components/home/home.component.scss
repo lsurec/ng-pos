@@ -583,7 +583,10 @@ h2 {
     border-bottom: 1px solid $color-bordes;
     display      : flex;
     align-items  : center;
-    cursor       : pointer;
+}
+
+.cursor {
+    cursor: pointer;
 }
 
 // .detalles-usuario:hover {

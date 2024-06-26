@@ -1,1 +1,58 @@
-<p>registro-de-errores works!</p>
+<mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+
+    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+        <mat-toolbar class="head__sidenav">
+            <button mat-icon-button (click)="close('toggle button')" [matTooltip]="'pos.botones.cerrar' | translate">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <!-- Contenido del sidenav -->
+        <div class="contenido-sidenav">
+            <p>hola</p>
+        </div>
+
+        <!-- Barra de abajo para regresar y salir -->
+        <mat-toolbar class="barra-regresar">
+            <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                <mat-icon>settings</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+        <!-- Barras para titulos y boton de cerrar sidenav -->
+        <mat-toolbar class="toolbarPhone">
+            <mat-toolbar-row>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="sidenavend.open()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-toolbar class="toolbarlarge">
+
+            <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <p class="titulo">Historial de Errores</p>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="sidenavend.open()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <!-- Contenido del componente -->
+        <div class="container_main">
+        </div>
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -157,6 +157,10 @@ export class HomeComponent implements OnInit {
       this.hideHome = false;
     });
 
+    this._eventService.verHome$.subscribe((eventData) => {
+      this.verHistorialErrores = false;
+    });
+
     //Funcion que carga datos
     this.loadDataMenu();
 
@@ -1026,6 +1030,13 @@ export class HomeComponent implements OnInit {
   //Cambio en decimales
   changeDecimales() {
     PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
+  }
+
+  verHistorialErrores: boolean = false;
+
+
+  verErrores() {
+    this.verHistorialErrores = true;
   }
 
 }
