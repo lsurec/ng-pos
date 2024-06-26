@@ -41,7 +41,7 @@
                 <mat-toolbar class="toolbarlarge">
 
                     <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
-                        <mat-icon>home</mat-icon>
+                        <mat-icon>arrow_back</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
                         (click)="loadData()">
@@ -49,14 +49,47 @@
                     </button>
                     <span class="spacer"></span>
                     <p class="titulo">Historial de Errores</p>
+
                     <span class="spacer"></span>
-                    <button mat-icon-button (click)="sidenavend.open()">
-                        <mat-icon>menu</mat-icon>
+
+                    <button mat-icon-button matTooltip="Ver error"
+                        (click)="pantallaError()">
+                        <mat-icon>error</mat-icon>
                     </button>
+                    <!-- <button mat-icon-button (click)="sidenavend.open()">
+                        <mat-icon>menu</mat-icon>
+                    </button> -->
                 </mat-toolbar>
 
                 <!-- Contenido del componente -->
                 <div class="container_main">
+                    <p class="coincidencias">
+                        {{'crm.home.registros' | translate}} ({{errors.length}})
+                    </p>
+                    <div class="tarjeta-error">
+                        <div class="list-group espacioLista" *ngFor="let error of errors">
+                            <hr>
+                            <div class="dFlex">
+                                <p class="negrita">Error No. {{error.error}} </p>
+                                <span class="spacer"></span>
+                                <p class="negrita">
+                                    Fecha y hora: {{error.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}
+                                </p>
+                            </div>
+                            <a class="elemento list-group-item list-group-item-action flex-column align-items-start">
+                                <!-- <div class="dFlex">
+                                        <p class="negrita">Error No. {{error.error}} </p>
+                                        <span class="spacer"></span>
+                                        <p class="negrita">
+                                            Fecha y hora: {{error.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}
+                                        </p>
+                                    </div> -->
+                                <p class=""> Usuario {{error.usuario}} </p>
+                                <p class="titulo-error">{{error.descripcion}}</p>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
 
             </mat-sidenav-content>

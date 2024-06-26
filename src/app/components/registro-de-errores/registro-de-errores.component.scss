@@ -9,6 +9,7 @@ $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : #134895; //barra rosada
 $background-botones   : #134895; //resaltar botones azul
+$sombra               : rgba(0, 0, 0, 0.1);
 $background-transparent: transparent; //fondo transparennte,
 
 /*SideNav*/
@@ -90,15 +91,16 @@ mat-sidenav {
 /*Contendo derecho*/
 
 .container_main::-webkit-scrollbar {
-    width: 7px;
+    width           : 7px;
+    background-color: $background-oficial;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background: #f3c5d3;
+    background-color: $background-oficial;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: #FD306E;
+    background-color: $background-scrollbar;
     border-radius   : 20px;
     border          : 3px #f3c5d3;
 }
@@ -111,11 +113,12 @@ mat-sidenav {
 }
 
 .container_main {
-    width   : 100%;
-    height  : calc(100% - 64px);
-    float   : left;
-    overflow: auto;
-    padding : 20px 0px;
+    width     : 100%;
+    height    : calc(100% - 64px);
+    float     : left;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding   : 10px 0px 20px;
 }
 
 
@@ -167,4 +170,57 @@ p {
     font-size  : 14px;
     text-align : center;
     font-weight: 500;
+}
+
+.tarjeta-error {
+    margin: 0px 35px 0px 40px;
+}
+
+.espacioLista {
+    width : 100%;
+    cursor: pointer;
+    margin: 5px 0px 10px;
+}
+
+.elemento {
+    // background-color: $background-oficial;
+    background-color: #e4ddd2;
+    border-radius   : 5px;
+    font-size       : 17px;
+    box-shadow      : 0px 1px 0px 1px $sombra;
+}
+
+.coincidencias {
+    font-weight  : 600;
+    text-align   : right;
+    padding-right: 20px;
+}
+
+.justificar {
+    text-align: justify;
+}
+
+.negrita {
+    font-weight: 600;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.titulo-error {
+    text-align   : justify;
+    font-weight  : 600;
+    white-space  : nowrap; // Evita que el texto se divida en varias líneas
+    overflow     : hidden; // Oculta el contenido que desborda el contenedor
+    text-overflow: ellipsis; // Muestra los puntos suspensivos al final del contenido que no cabe en una línea
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
 }

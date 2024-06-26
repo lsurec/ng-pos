@@ -31,10 +31,10 @@ export class RegistroDeErroresComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.laodData();
+    this.loadData();
   }
 
-  async laodData() {
+  async loadData() {
 
     this.isLoading = true;
 
@@ -42,13 +42,15 @@ export class RegistroDeErroresComponent implements OnInit {
     let resApi: ResApiInterface = await this._errorService.getError(this.token);
 
 
-    if(!resApi.status){
+    if (!resApi.status) {
       TODO://ir a error
       return;
     }
 
     this.errors = [];
     this.errors = resApi.response;
+
+    console.log(this.errors[0]);
 
 
     this.isLoading = false;
@@ -76,7 +78,7 @@ export class RegistroDeErroresComponent implements OnInit {
 
 
 
-  loadData() {
+  pantallaError() {
 
   }
 
