@@ -91,6 +91,7 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
 import { DocsHistorialComponent } from './components/docs-historial/docs-historial.component';
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
+import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -152,6 +153,7 @@ import { RegistroDeErroresComponent } from './components/registro-de-errores/reg
     BuscarUsuariosComponent,
     DocsHistorialComponent,
     RegistroDeErroresComponent,
+    DetalleErrorComponent,
   ],
   imports: [
     MatCardModule,
