@@ -13,6 +13,15 @@ $background-transparent: transparent; //fondo transparennte,
 
 /*SideNav*/
 
+
+//Pantalla de carga
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $background-oficial;
+}
+
 .icon_close_head {
     cursor: pointer;
 }
