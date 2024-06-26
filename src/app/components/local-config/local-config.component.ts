@@ -80,6 +80,9 @@ export class LocalConfigComponent implements OnInit {
     let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;
 
+    this.empresaSelect = undefined;
+    this.estacionSelect = undefined;
+
     //cargar pantalla
     this.isLoading = true;
     //Consumo de servicios
