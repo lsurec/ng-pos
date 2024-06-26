@@ -163,4 +163,13 @@ export class EventService {
     regresarAPasosEvent(eventData: boolean) {
         this.regresarAPasos.next(eventData);
     }
+
+    //ver home
+    private verHome = new Subject<any>();
+
+    verHome$ = this.verHome.asObservable();
+
+    verHomeEvent(eventData: boolean) {
+        this.verHome.next(eventData);
+    }
 }

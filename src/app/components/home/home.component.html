@@ -1,178 +1,181 @@
-<app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
-<app-printer-configuration *ngIf="impresora && hideHome" [volver]="volver"
-    [pantalla]="idPantalla"></app-printer-configuration>
-<div *ngIf="!showError">
-    <div *ngFor="let component of components">
-        <ng-container *ngIf="component.visible">
-            <ng-container *ngComponentOutlet="component.componente">
+<app-registro-de-errores *ngIf="verHistorialErrores"></app-registro-de-errores>
+
+<div *ngIf="!verHistorialErrores">
+    <app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
+    <app-printer-configuration *ngIf="impresora && hideHome" [volver]="volver"
+        [pantalla]="idPantalla"></app-printer-configuration>
+    <div *ngIf="!showError">
+        <div *ngFor="let component of components">
+            <ng-container *ngIf="component.visible">
+                <ng-container *ngComponentOutlet="component.componente">
+                </ng-container>
             </ng-container>
-        </ng-container>
-    </div>
+        </div>
 
-    <!-- Patalla de carga -->
-    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+        <!-- Patalla de carga -->
+        <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
 
-    <mat-sidenav-container *ngIf="!isLoading && !hideHome" class="sidenav_container"
-        (backdropClick)="close('backdrop')">
-        <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-            <mat-toolbar class="head__sidenav ">
-                <span class="spacer"></span>
-                <h6>{{ routeMenu[routeMenu.length -1].name }}</h6>
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="close('toggle button')">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- Opciones e vistas -->
+        <mat-sidenav-container *ngIf="!isLoading && !hideHome" class="sidenav_container"
+            (backdropClick)="close('backdrop')">
+            <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+                <mat-toolbar class="head__sidenav ">
+                    <span class="spacer"></span>
+                    <h6>{{ routeMenu[routeMenu.length -1].name }}</h6>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="close('toggle button')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- Opciones e vistas -->
 
-            <mat-toolbar class="toolbarNavScreenShort">
+                <mat-toolbar class="toolbarNavScreenShort">
 
-                <div *ngFor="let route of routeMenu; let index = index">
-                    <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
-                        (click)="changeRouteActive(index)">
-                        <p>{{route.name}}</p>
-                        <p *ngIf="routeMenu.length -1 !=  index"> / </p>
+                    <div *ngFor="let route of routeMenu; let index = index">
+                        <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
+                            (click)="changeRouteActive(index)">
+                            <p>{{route.name}}</p>
+                            <p *ngIf="routeMenu.length -1 !=  index"> / </p>
+                        </div>
                     </div>
-                </div>
-            </mat-toolbar>
-            <!-- Inicia menu de modulos para pantallas pequeñas -->
-            <div class="containerMenuSshort">
-                <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
-                    (mouseleave)="hover=false; indiceSeleccionado = -1">
-                    <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
+                </mat-toolbar>
+                <!-- Inicia menu de modulos para pantallas pequeñas -->
+                <div class="containerMenuSshort">
+                    <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
+                        (mouseleave)="hover=false; indiceSeleccionado = -1">
+                        <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
                         background: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorSelected : 'transparent',
                         'border-left': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? '6px solid' : '',
                         'border-color': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? itemMenu.colorMargenSelect : '' 
                     }" (click)="viewContent(itemMenu)" (mouseover)="hover=true; indiceSeleccionado = i">
-                        <p>{{itemMenu.name}}</p>
-                        <!-- <p>ESTO ES UN TEXTO DE PRUEBA PARA MEDIR LA ADAPTACION DE TEXTO PARA EL MENU DE DMOSOFT</p> -->
-                        <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
+                            <p>{{itemMenu.name}}</p>
+                            <!-- <p>ESTO ES UN TEXTO DE PRUEBA PARA MEDIR LA ADAPTACION DE TEXTO PARA EL MENU DE DMOSOFT</p> -->
+                            <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="vistas row">
+                <!-- <div class="vistas row">
                 <button [ngClass]="{ 'seleccionado' : vistaActiva === 1 }" (click)="vistaSeleccionada(1)" class="vista">{{
                     'pos.home.vistaTarea' | translate }}</button>
                 <button [ngClass]="{ 'seleccionado' : vistaActiva === 2 }" (click)="vistaSeleccionada(2); calendario(true)"
                     class="vista">{{ 'pos.home.vistaCalendario' | translate }}</button>
             </div> -->
-        </mat-sidenav>
-        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
-            <mat-toolbar class="head__sidenav">
-                <button mat-icon-button (click)="close('toggle button')"
-                    [matTooltip]="'pos.botones.cerrar' | translate">
-                    <mat-icon>close</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <!-- <span class="spacer" *ngIf="ajustes"></span> -->
-                <!-- nombre de las barras de ajustes -->
-                <div class="nombresAjustes">
-                    <p class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</p>
-                    <p class="ajustesMenu" *ngIf="horaInicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
-                    <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="sizes">{{'pos.preferencias.fuente' | translate}}</p>
+            </mat-sidenav>
+            <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+                <mat-toolbar class="head__sidenav">
+                    <button mat-icon-button (click)="close('toggle button')"
+                        [matTooltip]="'pos.botones.cerrar' | translate">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <!-- <span class="spacer" *ngIf="ajustes"></span> -->
+                    <!-- nombre de las barras de ajustes -->
+                    <div class="nombresAjustes">
+                        <p class="ajustesMenu" *ngIf="ajustes">{{ 'pos.ajustes.ajustesT' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="idiomas">{{ 'pos.ajustes.idiomaT' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="temas">{{'pos.preferencias.tema' | translate}}</p>
+                        <p class="ajustesMenu" *ngIf="horaInicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
+                        <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="sizes">{{'pos.preferencias.fuente' | translate}}</p>
 
-                </div>
-                <span class="spacer"></span>
-                <span class="spacer" *ngIf="ajustes"></span>
-            </mat-toolbar>
+                    </div>
+                    <span class="spacer"></span>
+                    <span class="spacer" *ngIf="ajustes"></span>
+                </mat-toolbar>
 
-            <div class="ajustes" *ngIf="ajustes">
-                <!-- Impresoras -->
-                <!-- <div class="configuraciones" (click)="verConfiguracion()">
+                <div class="ajustes" *ngIf="ajustes">
+                    <!-- Impresoras -->
+                    <!-- <div class="configuraciones" (click)="verConfiguracion()">
                     <mat-icon class="iconos-detalles">print</mat-icon>
                     <span class="spacer"></span>
                     <div class="detalle">
                         <p class="subtitulo">{{'pos.home.impresoras' | translate}}</p>
                     </div>
                 </div> -->
-                <!-- Vista Seleccionar Lenguajes -->
-                <div class="configuraciones" (click)="verLenguajes()">
-                    <mat-icon class="iconos-detalles">language</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
-                        <p class="descripcion">{{getNameByLanguageRegion(activeLang)}}</p>
-                    </div>
-                </div>
-                <div class="configuraciones" (click)="verSizes()">
-                    <mat-icon class="iconos-detalles">format_size</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.preferencias.fuenteT' | translate}}</p>
-                        <p class="descripcion">{{ fontsSizes[size].name }} </p>
-                    </div>
-                </div>
-                <!-- <p class="separador"></p> -->
-                <div class="configuraciones" (click)="verTema()">
-                    <mat-icon class="iconos-detalles" *ngIf="tema == 0">light_mode</mat-icon>
-                    <mat-icon class="iconos-detalles" *ngIf="tema == 1">dark_mode</mat-icon>
-
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.preferencias.tema' | translate}}</p>
-                        <p class="descripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
-                        <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
-                    </div>
-                </div>
-                <!-- Digitos -->
-                <div class="configuraciones-digitos">
-                    <mat-icon class="iconos-detalles">123</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle-digitos ">
-                        <p class="subtitulo">{{'pos.preferencias.digitos' | translate}}</p>
-                        <p class="descripcion">{{ dataUserService.integerDigits | currencyFormat}} </p>
-                    </div>
-                    <span class="spacer"></span>
-                    <div class="dFlex">
-                        <div class="restar" (click)="menos(2)">
-                            <mat-icon class="sumar-restar">remove</mat-icon>
-                        </div>
-                        <div class="width40">
-                            <p class="cantidad"> {{dataUserService.integerDigits }} </p>
-                        </div>
-                        <div class="sumar" (click)="mas(2)">
-                            <mat-icon class="sumar-restar">add</mat-icon>
-                        </div>
-                    </div>
-                </div>
-                <!-- Decimal -->
-                <div class="configuraciones-digitos">
-                    <mat-icon class="iconos-detalles">123</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle-digitos ">
-                        <p class="subtitulo">{{'pos.preferencias.decimales' | translate}}</p>
-                        <p class="descripcion">{{ dataUserService.decimalPlaces | currencyFormat }} </p>
-                    </div>
-                    <span class="spacer"></span>
-                    <div class="dFlex">
-                        <div class="restar" (click)="menos(1)">
-                            <mat-icon class="sumar-restar">remove</mat-icon>
-                        </div>
-                        <div class="width40">
-                            <p class="cantidad"> {{ dataUserService.decimalPlaces }} </p>
-                        </div>
-                        <div class="sumar" (click)="mas(1)">
-                            <mat-icon class="sumar-restar">add</mat-icon>
-                        </div>
-                    </div>
-                </div>
-                <div class="configuraciones">
-                    <mat-icon class="iconos-detalles">info</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle d-flex">
-                        <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                    <!-- Vista Seleccionar Lenguajes -->
+                    <div class="configuraciones" (click)="verLenguajes()">
+                        <mat-icon class="iconos-detalles">language</mat-icon>
                         <span class="spacer"></span>
-                        <mat-icon>navigate_next</mat-icon>
+                        <div class="detalle">
+                            <p class="subtitulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
+                            <p class="descripcion">{{getNameByLanguageRegion(activeLang)}}</p>
+                        </div>
                     </div>
-                </div>
+                    <div class="configuraciones" (click)="verSizes()">
+                        <mat-icon class="iconos-detalles">format_size</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.preferencias.fuenteT' | translate}}</p>
+                            <p class="descripcion">{{ fontsSizes[size].name }} </p>
+                        </div>
+                    </div>
+                    <!-- <p class="separador"></p> -->
+                    <div class="configuraciones" (click)="verTema()">
+                        <mat-icon class="iconos-detalles" *ngIf="tema == 0">light_mode</mat-icon>
+                        <mat-icon class="iconos-detalles" *ngIf="tema == 1">dark_mode</mat-icon>
 
-                <!--TODO:Eliminar en produccion-->
-                <!-- <div class="configuraciones">
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.preferencias.tema' | translate}}</p>
+                            <p class="descripcion" *ngIf="tema == 0"> {{'pos.preferencias.claro' | translate}} </p>
+                            <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
+                        </div>
+                    </div>
+                    <!-- Digitos -->
+                    <div class="configuraciones-digitos">
+                        <mat-icon class="iconos-detalles">123</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle-digitos ">
+                            <p class="subtitulo">{{'pos.preferencias.digitos' | translate}}</p>
+                            <p class="descripcion">{{ dataUserService.integerDigits | currencyFormat}} </p>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="dFlex">
+                            <div class="restar" (click)="menos(2)">
+                                <mat-icon class="sumar-restar">remove</mat-icon>
+                            </div>
+                            <div class="width40">
+                                <p class="cantidad"> {{dataUserService.integerDigits }} </p>
+                            </div>
+                            <div class="sumar" (click)="mas(2)">
+                                <mat-icon class="sumar-restar">add</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decimal -->
+                    <div class="configuraciones-digitos">
+                        <mat-icon class="iconos-detalles">123</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle-digitos ">
+                            <p class="subtitulo">{{'pos.preferencias.decimales' | translate}}</p>
+                            <p class="descripcion">{{ dataUserService.decimalPlaces | currencyFormat }} </p>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="dFlex">
+                            <div class="restar" (click)="menos(1)">
+                                <mat-icon class="sumar-restar">remove</mat-icon>
+                            </div>
+                            <div class="width40">
+                                <p class="cantidad"> {{ dataUserService.decimalPlaces }} </p>
+                            </div>
+                            <div class="sumar" (click)="mas(1)">
+                                <mat-icon class="sumar-restar">add</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="configuraciones">
+                        <mat-icon class="iconos-detalles">info</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle d-flex">
+                            <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                            <span class="spacer"></span>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+
+                    <!--TODO:Eliminar en produccion-->
+                    <!-- <div class="configuraciones">
                     <mat-icon class="iconos-detalles">dvr</mat-icon>
                     <span class="spacer"></span>
                     <div class="detalle">
@@ -187,253 +190,267 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
+                </div>
 
-            <!-- Seleccionar primer dia semana -->
-            <div class="lenguajes" *ngIf="setDias">
-                <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
-                    (ngModelChange)="cambiarPrimerDia()">
-                    <mat-radio-button class="example-radio-button separador"
-                        *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
-                        {{capitalizarTexto(dia)}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
+                <!-- Seleccionar primer dia semana -->
+                <div class="lenguajes" *ngIf="setDias">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
+                        (ngModelChange)="cambiarPrimerDia()">
+                        <mat-radio-button class="example-radio-button separador"
+                            *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
+                            {{capitalizarTexto(dia)}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
 
-            <!-- Lenguajes de la aplicacion -->
-            <div class="lenguajes" *ngIf="idiomas">
-                <mat-radio-group class="example-radio-group" [(ngModel)]="idioma">
-                    <mat-radio-button class="example-radio-button separador"
-                        *ngFor="let item of languages ; let i = index" [value]="i" color="primary"
-                        (click)="changeLang(i)">
-                        {{getNameByLanguageRegion(item)}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
+                <!-- Lenguajes de la aplicacion -->
+                <div class="lenguajes" *ngIf="idiomas">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="idioma">
+                        <mat-radio-button class="example-radio-button separador"
+                            *ngFor="let item of languages ; let i = index" [value]="i" color="primary"
+                            (click)="changeLang(i)">
+                            {{getNameByLanguageRegion(item)}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
 
-            <!-- Seleccionar inicio de labores -->
-            <div class="horarioLaboral" *ngIf="horaInicio">
-                <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores" (ngModelChange)="horaFinal()">
-                    <mat-radio-button class="example-radio-button separador"
-                        *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
-                        {{hora.hora12}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-
-            <div class="horarioLaboral" *ngIf="horaFin">
-                <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
-                    <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
-                        <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores" [value]="i"
-                            color="primary">
+                <!-- Seleccionar inicio de labores -->
+                <div class="horarioLaboral" *ngIf="horaInicio">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores"
+                        (ngModelChange)="horaFinal()">
+                        <mat-radio-button class="example-radio-button separador"
+                            *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
                             {{hora.hora12}}
                         </mat-radio-button>
-                    </div>
-                </mat-radio-group>
-            </div>
-            <!-- Seleccionar tamaño de fuente -->
-            <div class="lenguajes" *ngIf="sizes">
-                <mat-radio-group class="example-radio-group" [(ngModel)]="size">
-                    <mat-radio-button class="example-radio-button separador"
-                        *ngFor="let size of fontsSizes ; let i = index" [value]="i" color="primary"
-                        (click)="cambiarFuente(i)">
-                        {{size.name}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <!-- Seleccionar tema -->
-            <div class="lenguajes" *ngIf="temas">
-                <div class="temaOscuro">
-                    <mat-icon class="ico-tema">dark_mode</mat-icon>
-                    <div class="desc-tema">
-                        <p class="titulo-tema">{{'pos.home.modo' | translate}}</p>
-                        <p class="descripcion-tema">{{'pos.home.descripcionTema' | translate}}</p>
-                    </div>
+                    </mat-radio-group>
                 </div>
-                <p class="separador"></p>
 
-                <mat-radio-group class="example-radio-group" [(ngModel)]="temaOscuro" (ngModelChange)="toggleTheme()">
-                    <mat-radio-button class="example-radio-button separador" color="primary" [value]="true">
-                        {{'pos.home.activo' | translate}}</mat-radio-button>
-                    <mat-radio-button class="example-radio-button separador" color="primary" [value]="false">
-                        {{'pos.home.inactivo' | translate}}</mat-radio-button>
-                </mat-radio-group>
-            </div>
-            <!-- Mostrar detalles del usuario -->
+                <div class="horarioLaboral" *ngIf="horaFin">
+                    <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
+                        <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
+                            <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores"
+                                [value]="i" color="primary">
+                                {{hora.hora12}}
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                </div>
+                <!-- Seleccionar tamaño de fuente -->
+                <div class="lenguajes" *ngIf="sizes">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="size">
+                        <mat-radio-button class="example-radio-button separador"
+                            *ngFor="let size of fontsSizes ; let i = index" [value]="i" color="primary"
+                            (click)="cambiarFuente(i)">
+                            {{size.name}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <!-- Seleccionar tema -->
+                <div class="lenguajes" *ngIf="temas">
+                    <div class="temaOscuro">
+                        <mat-icon class="ico-tema">dark_mode</mat-icon>
+                        <div class="desc-tema">
+                            <p class="titulo-tema">{{'pos.home.modo' | translate}}</p>
+                            <p class="descripcion-tema">{{'pos.home.descripcionTema' | translate}}</p>
+                        </div>
+                    </div>
+                    <p class="separador"></p>
 
-            <div class="detallesUsuario" *ngIf="detallesUsuario">
-                <div class="textEncabezado">
-                    <!-- <img src="https://img.freepik.com/fotos-premium/hombre-barbudo-seguro-si-mismo-mirando-camara-expresion-seria-hombre-negocios-determinado-sonreir-vistiendo-traje-estilo-oficial-disparo-estudio-interior-aislado-sobre-fondo-gris_416530-26522.jpg"
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="temaOscuro"
+                        (ngModelChange)="toggleTheme()">
+                        <mat-radio-button class="example-radio-button separador" color="primary" [value]="true">
+                            {{'pos.home.activo' | translate}}</mat-radio-button>
+                        <mat-radio-button class="example-radio-button separador" color="primary" [value]="false">
+                            {{'pos.home.inactivo' | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <!-- Mostrar detalles del usuario -->
+
+                <div class="detallesUsuario" *ngIf="detallesUsuario">
+                    <div class="textEncabezado">
+                        <!-- <img src="https://img.freepik.com/fotos-premium/hombre-barbudo-seguro-si-mismo-mirando-camara-expresion-seria-hombre-negocios-determinado-sonreir-vistiendo-traje-estilo-oficial-disparo-estudio-interior-aislado-sobre-fondo-gris_416530-26522.jpg"
                         class="circular-image" alt=""> -->
 
-                    <div class="circular-usuario">
-                        <p class="inicial-usuario-h">{{user[0]}}</p>
+                        <div class="circular-usuario">
+                            <p class="inicial-usuario-h">{{user[0]}}</p>
+                        </div>
                     </div>
-                </div>
-                <p class="userName">{{user.toUpperCase()}}</p>
+                    <p class="userName">{{user.toUpperCase()}}</p>
 
-                <div class="detalles-usuario"></div>
-                <div class="detalles-usuario">
-                    <mat-icon class="iconos-detalles">business</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
-                        <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}}) </p>
+                    <div class="detalles-usuario"></div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">business</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
+                            <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}}) </p>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">business</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
+                            <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}}) </p>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
+                            <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario cursor" (click)="verErrores()">
+                        <mat-icon class="iconos-detalles">report</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">Ver Errores</p>
+                            <p class="descripcion">Historial de errores.</p>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">cloud</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.home.origen' | translate}}</p>
+                            <p class="descripcion"> {{url}}</p>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">info</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'pos.home.versionActual' | translate}}</p>
+                            <p class="descripcion">1.0.0</p>
+                        </div>
                     </div>
                 </div>
-                <div class="detalles-usuario">
-                    <mat-icon class="iconos-detalles">business</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
-                        <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}}) </p>
-                    </div>
-                </div>
-                <div class="detalles-usuario">
-                    <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
-                        <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
-                    </div>
-                </div>
-                <div class="detalles-usuario">
-                    <mat-icon class="iconos-detalles">cloud</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.origen' | translate}}</p>
-                        <p class="descripcion"> {{url}}</p>
-                    </div>
-                </div>
-                <div class="detalles-usuario">
-                    <mat-icon class="iconos-detalles">info</mat-icon>
-                    <span class="spacer"></span>
-                    <div class="detalle">
-                        <p class="subtitulo">{{'pos.home.versionActual' | translate}}</p>
-                        <p class="descripcion">1.0.0</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- botones detalle usuario, ajustes y salir -->
-            <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
-                <!-- Ver informacion del usuario -->
-                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
-                    <mat-icon>settings</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <!-- Salir o cerrar sesion -->
-                <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
-                    <mat-icon>logout</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- boton regresar a detalle usuario -->
-            <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-                <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- botones regresar a ajustes -->
-            <mat-toolbar class="backColorNavBar" *ngIf="idiomas">
-                <button mat-icon-button (click)="verAjustes()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- Regresa tamaño fuente -->
-            <mat-toolbar class="backColorNavBar" *ngIf="sizes">
-                <button mat-icon-button (click)="verAjustes()">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!-- Regresar tema -->
-            <mat-toolbar class="backColorNavBar" *ngIf="temas">
-                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-
-            <!-- Regresar primer dia -->
-            <mat-toolbar class="backColorNavBar" *ngIf="setDias">
-                <button mat-icon-button (click)="verAjustes()" [matTooltip]="'crm.ajustes.regresar' | translate">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-            </mat-toolbar>
-
-            <!-- botones regresar continuar a ajustes -->
-            <mat-toolbar class="backColorNavBar" *ngIf="horaInicio">
-                <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
-                <span class="spacer"></span>
-                <button mat-button *ngIf="btnRegresar" (click)="horaFinal()"> {{'crm.ajustes.continuar' | translate}}
-                </button>
-            </mat-toolbar>
-            <!-- botones regresar, cancelar a ajustes -->
-            <mat-toolbar class="backColorNavBar" *ngIf="horaFin">
-                <button mat-button (click)="verContinuar()"> {{'crm.ajustes.regresar' | translate}} </button>
-                <span class="spacer"></span>
-                <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
-            </mat-toolbar>
-        </mat-sidenav>
-
-        <mat-sidenav-content>
-            <mat-toolbar class="toolbarPhone">
-                <mat-toolbar-row>
-                    <button mat-icon-button (click)="sidenav.open()">
-                        <mat-icon>apps</mat-icon>
+                <!-- botones detalle usuario, ajustes y salir -->
+                <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
+                    <!-- Ver informacion del usuario -->
+                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
+                        <mat-icon>settings</mat-icon>
                     </button>
                     <span class="spacer"></span>
-                    <p>{{ routeMenu[routeMenu.length -1].name }}</p>
+                    <!-- Salir o cerrar sesion -->
+                    <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- boton regresar a detalle usuario -->
+                <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
+                    <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- botones regresar a ajustes -->
+                <mat-toolbar class="backColorNavBar" *ngIf="idiomas">
+                    <button mat-icon-button (click)="verAjustes()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- Regresa tamaño fuente -->
+                <mat-toolbar class="backColorNavBar" *ngIf="sizes">
+                    <button mat-icon-button (click)="verAjustes()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- Regresar tema -->
+                <mat-toolbar class="backColorNavBar" *ngIf="temas">
+                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+
+                <!-- Regresar primer dia -->
+                <mat-toolbar class="backColorNavBar" *ngIf="setDias">
+                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'crm.ajustes.regresar' | translate">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+
+                <!-- botones regresar continuar a ajustes -->
+                <mat-toolbar class="backColorNavBar" *ngIf="horaInicio">
+                    <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
+                    <span class="spacer"></span>
+                    <button mat-button *ngIf="btnRegresar" (click)="horaFinal()"> {{'crm.ajustes.continuar' |
+                        translate}}
+                    </button>
+                </mat-toolbar>
+                <!-- botones regresar, cancelar a ajustes -->
+                <mat-toolbar class="backColorNavBar" *ngIf="horaFin">
+                    <button mat-button (click)="verContinuar()"> {{'crm.ajustes.regresar' | translate}} </button>
+                    <span class="spacer"></span>
+                    <button mat-button (click)="verAjustes()"> {{'crm.ajustes.cancelar' | translate}} </button>
+                </mat-toolbar>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <mat-toolbar class="toolbarPhone">
+                    <mat-toolbar-row>
+                        <button mat-icon-button (click)="sidenav.open()">
+                            <mat-icon>apps</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <p>{{ routeMenu[routeMenu.length -1].name }}</p>
+                        <span class="spacer"></span>
+                        <button mat-icon-button (click)="sidenavend.open()">
+                            <mat-icon>menu</mat-icon>
+                        </button>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <mat-toolbar class="toolbarlarge">
+                    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                        (click)="loadDataMenu()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+
+
+                    <p> {{routeMenu[routeMenu.length -1].name}} </p>
                     <span class="spacer"></span>
                     <button mat-icon-button (click)="sidenavend.open()">
                         <mat-icon>menu</mat-icon>
                     </button>
-                </mat-toolbar-row>
-            </mat-toolbar>
-            <mat-toolbar class="toolbarlarge">
-                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                    (click)="loadDataMenu()">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-
-
-                <p> {{routeMenu[routeMenu.length -1].name}} </p>
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="sidenavend.open()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-            </mat-toolbar>
-            <!--Container-->
-            <div class="container_page">
-                <!-- Inicio Contenedor de rutas navegadas -->
-                <mat-toolbar class="toolbarNavegacion">
-                    <div *ngFor="let route of routeMenu; let index = index">
-                        <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
-                            (click)="changeRouteActive(index)">
-                            <p class="">{{route.name}}</p>
-                            <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
-                            <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
-                        </div>
-                    </div>
                 </mat-toolbar>
-                <div class="container_start">
-                    <!-- NUEVO :) -->
-                    <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
-                        (mouseleave)="hover=false; indiceSeleccionado = -1">
-                        <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
+                <!--Container-->
+                <div class="container_page">
+                    <!-- Inicio Contenedor de rutas navegadas -->
+                    <mat-toolbar class="toolbarNavegacion">
+                        <div *ngFor="let route of routeMenu; let index = index">
+                            <div class="rutasMenuPeque"
+                                [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
+                                (click)="changeRouteActive(index)">
+                                <p class="">{{route.name}}</p>
+                                <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
+                                <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
+                            </div>
+                        </div>
+                    </mat-toolbar>
+                    <div class="container_start">
+                        <!-- NUEVO :) -->
+                        <div class="itemMenuSelect" *ngFor="let itemMenu of menuActive, let i = index"
+                            (mouseleave)="hover=false; indiceSeleccionado = -1">
+                            <div class="contenedorModulo" [ngStyle]="{color: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorFontSelect : itemMenu.colorFontNotSelect, 
                             background: (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id)? itemMenu.colorSelected : 'transparent',
                             'border-left': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? '6px solid' : '',
                             'border-color': (hover && indiceSeleccionado == i) || (clickedItem == itemMenu.id) ? itemMenu.colorMargenSelect : '' 
                         }" (click)="viewContent(itemMenu)" (mouseover)="hover=true; indiceSeleccionado = i">
-                            <p>{{itemMenu.name}}</p>
-                            <mat-icon class="mat-iconmenu" *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
+                                <p>{{itemMenu.name}}</p>
+                                <mat-icon class="mat-iconmenu"
+                                    *ngIf="itemMenu.children.length != 0">arrow_right</mat-icon>
+                            </div>
                         </div>
                     </div>
+                    <!-- Buscador de tareas y tareas encontradas -->
+                    <div class="container_main">
+                    </div>
+                    <!-- Mostrar logos -->
+                    <app-barra-logos></app-barra-logos>
                 </div>
-                <!-- Buscador de tareas y tareas encontradas -->
-                <div class="container_main">
-                </div>
-                <!-- Mostrar logos -->
-                <app-barra-logos></app-barra-logos>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
 </div>
