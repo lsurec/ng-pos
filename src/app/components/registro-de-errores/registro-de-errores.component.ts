@@ -4,6 +4,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
+import { ErrorLogInterface } from 'src/app/interfaces/error-log.interface';
 
 @Component({
   selector: 'app-registro-de-errores',
@@ -17,6 +18,7 @@ export class RegistroDeErroresComponent implements OnInit {
 
   isLoading: boolean = false;
   token: string = PreferencesService.token;
+  errors: ErrorLogInterface[] = [];
 
 
   constructor(
@@ -33,13 +35,20 @@ export class RegistroDeErroresComponent implements OnInit {
   }
 
   async laodData() {
+
     this.isLoading = true;
 
 
     let resApi: ResApiInterface = await this._errorService.getError(this.token);
 
-    console.log(resApi);
 
+    if(!resApi.status){
+      TODO://ir a error
+      return;
+    }
+
+    this.errors = [];
+    this.errors = resApi.response;
 
 
     this.isLoading = false;
