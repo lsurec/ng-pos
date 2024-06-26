@@ -90,6 +90,7 @@ import { NuevaTareaComponent } from './components/nueva-tarea/nueva-tarea.compon
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 import { DocsHistorialComponent } from './components/docs-historial/docs-historial.component';
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
+import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -150,6 +151,7 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
     NuevaTareaComponent,
     BuscarUsuariosComponent,
     DocsHistorialComponent,
+    RegistroDeErroresComponent,
   ],
   imports: [
     MatCardModule,
