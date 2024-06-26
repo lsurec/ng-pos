@@ -214,8 +214,8 @@ hr {
 
 .titulo-error {
     text-align   : justify;
-    font-weight  : 600;
-    white-space  : nowrap; // Evita que el texto se divida en varias líneas
+    // font-weight  : 600;
+    // white-space  : nowrap; // Evita que el texto se divida en varias líneas
     overflow     : hidden; // Oculta el contenido que desborda el contenedor
     text-overflow: ellipsis; // Muestra los puntos suspensivos al final del contenido que no cabe en una línea
 }
