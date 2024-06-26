@@ -1,7 +1,8 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
 
 <div *ngIf="!isLoading">
-    <div>
+    <app-error *ngIf="verError" [regresar]="regresar"></app-error>
+    <div *ngIf="!verError">
         <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
 
             <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
@@ -32,10 +33,19 @@
                 <!-- Barras para titulos y boton de cerrar sidenav -->
                 <mat-toolbar class="toolbarPhone">
                     <mat-toolbar-row>
-                        <span class="spacer"></span>
-                        <button mat-icon-button (click)="sidenavend.open()">
-                            <mat-icon>menu</mat-icon>
+                        <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                            <mat-icon>arrow_back</mat-icon>
                         </button>
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                            (click)="loadData()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <p class="titulo">Historial de Errores</p>
+                        <span class="spacer"></span>
+                        <!-- <button mat-icon-button (click)="sidenavend.open()">
+                            <mat-icon>menu</mat-icon>
+                        </button> -->
                     </mat-toolbar-row>
                 </mat-toolbar>
                 <mat-toolbar class="toolbarlarge">
@@ -52,10 +62,6 @@
 
                     <span class="spacer"></span>
 
-                    <button mat-icon-button matTooltip="Ver error"
-                        (click)="pantallaError()">
-                        <mat-icon>error</mat-icon>
-                    </button>
                     <!-- <button mat-icon-button (click)="sidenavend.open()">
                         <mat-icon>menu</mat-icon>
                     </button> -->

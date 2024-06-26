@@ -5,6 +5,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { EventService } from 'src/app/services/event.service';
 import { ErrorLogInterface } from 'src/app/interfaces/error-log.interface';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-registro-de-errores',
@@ -17,15 +19,21 @@ import { ErrorLogInterface } from 'src/app/interfaces/error-log.interface';
 export class RegistroDeErroresComponent implements OnInit {
 
   isLoading: boolean = false;
+  verError: boolean = false;
   token: string = PreferencesService.token;
   errors: ErrorLogInterface[] = [];
-
+  readonly regresar: number = 16; //id de la pantlla
 
   constructor(
     private _errorService: ErrorService,
     private _eventService: EventService,
-
+    private _notificationsService: NotificationsService,
+    private _translate: TranslateService,
   ) {
+
+    this._eventService.verErrores$.subscribe((eventData) => {
+      this.verError = false;
+    });
 
   }
 
@@ -43,25 +51,30 @@ export class RegistroDeErroresComponent implements OnInit {
 
 
     if (!resApi.status) {
-      TODO://ir a error
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resApi);
+      
       return;
     }
 
     this.errors = [];
     this.errors = resApi.response;
 
-    console.log(this.errors[0]);
-
-
     this.isLoading = false;
   }
-
-
-
-
-
-  //abirir y cerrar el mat expander
-  desplegarCarDes: boolean = false;
 
   //Abrir/Cerrar SideNav
   // @ViewChild('sidenav')
@@ -76,10 +89,30 @@ export class RegistroDeErroresComponent implements OnInit {
     this.sidenavend.close();
   }
 
-
-
   pantallaError() {
+    this.verError = true;
+  }
 
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardra error
+    PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
+    this.verError = true;
   }
 
   //regresear a menu (pantalla de inicio)

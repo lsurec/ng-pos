@@ -117,10 +117,14 @@ export class ErrorComponent implements OnInit {
         //TODO: no se aplicó
         this._eventService.regresarErrorProductoEvent(true);
         break;
-        case 15:
-          //desde error de pasos
-          this._eventService.regresarAPasosEvent(true);
-          break;
+      case 15:
+        //desde error de pasos
+        this._eventService.regresarAPasosEvent(true);
+        break;
+      case 16:
+        //desde a registro de eerores
+        this._eventService.verErroresEvent(true);
+        break;
       default:
         this._location.back();
 

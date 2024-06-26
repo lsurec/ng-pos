@@ -172,4 +172,13 @@ export class EventService {
     verHomeEvent(eventData: boolean) {
         this.verHome.next(eventData);
     }
+
+    //ver errores
+    private verErrores = new Subject<any>();
+
+    verErrores$ = this.verErrores.asObservable();
+
+    verErroresEvent(eventData: boolean) {
+        this.verErrores.next(eventData);
+    }
 }
