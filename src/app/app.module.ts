@@ -11,7 +11,7 @@ import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbDatepickerI18n, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
@@ -88,6 +88,8 @@ import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe'
 import { TraducirComponent } from './components/traducir/traducir.component';
 import { NuevaTareaComponent } from './components/nueva-tarea/nueva-tarea.component';
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
+import { DocsHistorialComponent } from './components/docs-historial/docs-historial.component';
+import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -147,6 +149,7 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
     TraducirComponent,
     NuevaTareaComponent,
     BuscarUsuariosComponent,
+    DocsHistorialComponent,
   ],
   imports: [
     MatCardModule,
@@ -191,8 +194,13 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
   providers: [
     {
       provide: NgbDatepickerI18n,
-      useClass: CustomDatepickerI18n
-    }
+      useClass: CustomDatepickerI18n,
+    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ErrorInterceptor,
+    //   multi: true,
+    // }
     // DataUserService,
   ],
   bootstrap: [AppComponent]

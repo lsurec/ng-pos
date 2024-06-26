@@ -14,8 +14,179 @@ export class DocumentService {
     }
 
 
-     //funcion que va a realizar el consumo privado para obtener las empresas
-     private _getPagos(user: string, token: string, doc:number) {
+    private _getStructureDocProcessed(
+        user: string,
+        token: string,
+        filter: string,
+    ) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "user": user,
+                "filtro": filter ? filter : "empty",
+                "allDocs": filter ? "false" : "true",
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Documento/structure/processed`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getStructureDocProcessed(
+        user: string,
+        token: string,
+        filter: string,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getStructureDocProcessed(
+                user,
+                token,
+                filter,
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            );
+        });
+    }
+
+    private _getStructureDosPendigs(
+        user: string,
+        token: string,
+        userFilter: string,
+        filter: string,
+    ) {
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "user": user,
+                "userFilter": userFilter ? userFilter : "empty",
+                "filtro": filter ? filter : "empty",
+                "allDocs": filter ? "false" : "true",
+                "allUser": userFilter ? "false" : "true",
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Documento/structure/pendings`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getStructureDosPendigs(
+        user: string,
+        token: string,
+        userFilter: string,
+        filter: string,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getStructureDosPendigs(
+                user,
+                token,
+                userFilter,
+                filter,
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            );
+        });
+    }
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getPagos(user: string, token: string, doc: number) {
 
         let headers = new HttpHeaders(
             {
@@ -30,9 +201,9 @@ export class DocumentService {
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getPagos(user: string, token: string, doc:number): Promise<ResApiInterface> {
+    getPagos(user: string, token: string, doc: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getPagos(user, token,doc).subscribe(
+            this._getPagos(user, token, doc).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res.body;
@@ -191,7 +362,7 @@ export class DocumentService {
                 //si esta correcto
                 res => {
 
-                    
+
 
                     let response: ResponseInterface = <ResponseInterface>res.body;
 
@@ -412,11 +583,11 @@ export class DocumentService {
     }
 
 
-     //funcion que va a realizar el consumo privado para crear un nuevo documento
-     private _updateDocument(
+    //funcion que va a realizar el consumo privado para crear un nuevo documento
+    private _updateDocument(
         token: string,
         document: PostDocumentInterface,
-        consecutivo:number,
+        consecutivo: number,
     ) {
 
         let paramsStr = JSON.stringify(document); //JSON to String
@@ -439,10 +610,10 @@ export class DocumentService {
     updateDocument(
         token: string,
         document: PostDocumentInterface,
-        consecutivo:number,
+        consecutivo: number,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._updateDocument(token, document,consecutivo).subscribe(
+            this._updateDocument(token, document, consecutivo).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res.body;

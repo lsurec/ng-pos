@@ -58,9 +58,9 @@ hr {
 }
 
 .registros {
-    display    : flex;
-    align-items: center;
-    padding    : 10px 0px;
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 10px;
 }
 
 .titulo {
@@ -142,7 +142,7 @@ hr {
 .listas-documentos {
     height    : calc(100vh - 190px) !important;
     width     : 100%;
-    padding   : 10px 25px 0px;
+    padding   : 0px 25px;
     overflow-y: auto;
 }
 
@@ -344,48 +344,4 @@ main {
     display    : flex;
     align-items: center;
     width      : 100%;
-}
-
-//Estilo para el contenedor del icono y el campo de entrada
-.input-container {
-    position     : relative;
-    display      : flex;
-    align-items  : center;
-    width        : 100%;
-    border-bottom: 1px solid $color-bordes;
-    margin-bottom: 5px;
-}
-
-.input-container:hover {
-    border-bottom: 1px solid $color-azul;
-}
-
-//Estilo para el icono
-.iconoLupa {
-    color: $color-azul;
-}
-
-// estilos para los inputs 
-.barra-de-busqueda {
-    height       : 45px;
-    width        : 100%;
-    background   : none;
-    font-size    : 14px;
-    padding-left : 10px;
-    outline      : none;
-    border-style : none;
-    color        : $color-azul;
-    border-radius: 10px;
-}
-
-.buscar-documentos {
-    padding         : 10px;
-    background-color: $color-bordes;
-    width           : 45%;
-}
-
-.usuario-busqueda {
-    padding         : 10px;
-    background-color: $color-bordes;
-    width           : 45%;
 }
