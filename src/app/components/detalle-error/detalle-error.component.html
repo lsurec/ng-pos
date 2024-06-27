@@ -3,7 +3,7 @@
     <div class="barra-fija">
         <span class="spacer"></span>
         <!-- Titulo -->
-        <p class="titulos">Error: </p>
+        <p class="titulos">Error: {{error?.error}} </p>
         <span class="spacer"></span>
         <!-- Cerrar dialogo -->
         <span class="close" (click)="closeDialog()">&times;</span>
@@ -11,27 +11,26 @@
     <!-- Dialogo de los detalles de las tareas -->
     <div mat-dialog-content class="dialog">
         <div class="contenedor">
-            <hr>
-            <!-- <div class="detalleCoincidencias" *ngFor="let referencia of referencias">
-                <div class="seleccionar" [mat-dialog-close]="[referencia]">
-                    <p class="nombre">{{referencia.descripcion}}</p>
-                    <div class="dFlex">
-                        <p class="titulos">Estado: </p>
-                        <p class="nombre">{{referencia.fDes_Estado_Objeto}}</p>
-                    </div>
-                    <div class="dFlex">
-                        <p class="titulos">Referencia: </p>
-                        <p class="nombre">{{referencia.referencia}}</p>
-                    </div>
-                    <div class="dFlex">
-                        <p class="titulos">ID Referencia: </p>
-                        <p class="nombre">{{referencia.referencia_Id}}</p>
-                    </div>
+            <div class="detalleCoincidencias">
+                <div class="dFlex">
+                    <p class="titulos">Fecha: </p>
+                    <p>{{error?.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}</p>
+                    <span class="spacer"></span>
+                    <p class="titulos">Usuario: </p>
+                    <p>{{error?.usuario}}</p>
                 </div>
-            </div> -->
+            </div>
+            <hr>
+            <div class="detalleCoincidencias">
+                <p class="titulos">Descripción:</p>
+                <p>{{error?.descripcion}}</p>
+            </div>
         </div>
-        <!-- <div mat-dialog-actions class="barra-abajo-fija" *ngIf="enableButtons">
-            <button mat-button (click)="closeDialog()">{{'crm.crear.cancelar' | translate}}</button>
-        </div> -->
+        <div mat-dialog-actions class="barra-abajo-fija">
+            <span class="spacer"></span>
+            <button mat-button (click)="closeDialog()">
+                {{'pos.botones.cerrar' | translate}}
+            </button>
+        </div>
     </div>
 </div>

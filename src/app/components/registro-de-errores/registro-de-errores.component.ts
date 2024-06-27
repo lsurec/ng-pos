@@ -7,6 +7,8 @@ import { EventService } from 'src/app/services/event.service';
 import { ErrorLogInterface } from 'src/app/interfaces/error-log.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DetalleErrorComponent } from '../detalle-error/detalle-error.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-registro-de-errores',
@@ -29,6 +31,7 @@ export class RegistroDeErroresComponent implements OnInit {
     private _eventService: EventService,
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
+    private _dialog: MatDialog,
   ) {
 
     this._eventService.verErrores$.subscribe((eventData) => {
@@ -66,7 +69,7 @@ export class RegistroDeErroresComponent implements OnInit {
       if (!verificador) return;
 
       this.mostrarError(resApi);
-      
+
       return;
     }
 
@@ -120,6 +123,12 @@ export class RegistroDeErroresComponent implements OnInit {
     this._eventService.verHomeEvent(false);
   }
 
+  detalles(error: ErrorLogInterface) {
+    //abre el dialogo
+    this._dialog.open(DetalleErrorComponent, {
+      data: error,
+    });
+  }
 
 
 }

@@ -73,7 +73,7 @@
                         {{'crm.home.registros' | translate}} ({{errors.length}})
                     </p>
                     <div class="tarjeta-error">
-                        <div class="list-group espacioLista" *ngFor="let error of errors">
+                        <div class="list-group espacioLista" *ngFor="let error of errors" (click)="detalles(error)">
                             <hr>
                             <div class="dFlex">
                                 <p class="negrita">Error No. {{error.error}} </p>
@@ -83,23 +83,15 @@
                                 </p>
                             </div>
                             <a class="elemento list-group-item list-group-item-action flex-column align-items-start">
-                                <!-- <div class="dFlex">
-                                        <p class="negrita">Error No. {{error.error}} </p>
-                                        <span class="spacer"></span>
-                                        <p class="negrita">
-                                            Fecha y hora: {{error.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}
-                                        </p>
-                                    </div> -->
-                                <p class=""> Usuario {{error.usuario}} </p>
-                                <p class="titulo-error">{{error.descripcion}}</p>
+                                <div class="" matTooltip="Click, para ver los detalles.">
+                                    <p class="negrita"> Usuario: {{error.usuario}} </p>
+                                    <p class="titulo-error">{{error.descripcion}}</p>
+                                </div>
                             </a>
                         </div>
-
                     </div>
                 </div>
-
             </mat-sidenav-content>
-
         </mat-sidenav-container>
     </div>
 </div>

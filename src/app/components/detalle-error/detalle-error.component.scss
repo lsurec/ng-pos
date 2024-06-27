@@ -3,19 +3,7 @@ $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
 $background-scrollbar : #134895; //barra azul
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-azul           : #134895; //bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
 $color-negro          : #000;
-$placeholder          : rgba(0, 0, 0, 0.30);
-$rojo-info            : #cc4141;
-$sombra               : rgba(0, 0, 0, 0.1);
-
-input::placeholder,
-textarea::placeholder {
-    color: $placeholder !important;
-}
 
 .progress {
     padding         : 0px;
@@ -90,22 +78,14 @@ hr {
     background-color: $background-oficial;
 }
 
-.nombre {
-    min-width: 40%;
-    font-size: 12px;
-}
-
 .detalleCoincidencias {
-    display      : flex;
-    text-align   : left !important;
-    font-size    : 14px;
-    width        : 100%;
-    align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    text-align: left !important;
+    font-size : 14px;
+    width     : 100%;
 }
 
 .titulos {
-    font-weight  : 550 !important;
+    font-weight  : 450 !important;
     padding-right: 5px;
 }
 
@@ -114,26 +94,6 @@ p {
     color : $color-negro;
 }
 
-.seleccionar {
-    width           : 100%;
-    cursor          : pointer;
-    min-height      : 30px;
-    padding         : 5px 10px;
-    margin          : 5px 0px;
-    background-color: $sombra;
-}
-
-.seleccionar:hover {
-    background-color: #ebebeb;
-}
-
-.inputSearch {
-    width           : 100%;
-    border-style    : none;
-    background-color: transparent;
-    outline         : none;
-    color           : $color-azul;
-}
 
 @media screen and (max-width: 280px) {
     .close {
@@ -156,13 +116,6 @@ p {
         width  : 200px !important;
     }
 
-    .seleccionar {
-        height     : auto !important;
-        padding    : 3px 0px !important;
-        align-items: center !important;
-        width      : 130px !important;
-    }
-
     .contenedor {
         padding-left: 5px !important;
         width       : 190px !important;
@@ -177,25 +130,11 @@ p {
         width: 400px !important;
     }
 
-    .seleccionar {
-        min-height: 30px !important;
-        display   : block !important;
-    }
 }
 
 .dFlex {
     display    : flex;
     align-items: center;
-}
-
-.buscar-icono {
-    display      : flex;
-    align-items  : center;
-    border-bottom: solid 1px $color-azul;
-}
-
-.icono-lupa {
-    color: $color-azul;
 }
 
 .barra-fija {
@@ -209,21 +148,4 @@ p {
     display    : flex;
     align-items: center;
     height     : 50px;
-}
-
-.encontrados {
-    margin-top: 10px;
-}
-
-.info {
-    font-size  : 12px !important;
-    color      : $rojo-info;
-    display    : flex;
-    align-items: center;
-    padding-top: 10px;
-    text-align : right;
-}
-
-.marginRihgt {
-    margin-right: 5px;
 }

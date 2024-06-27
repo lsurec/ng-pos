@@ -178,7 +178,6 @@ p {
 
 .espacioLista {
     width : 100%;
-    cursor: pointer;
     margin: 5px 0px 10px;
 }
 
@@ -188,6 +187,12 @@ p {
     border-radius   : 5px;
     font-size       : 17px;
     box-shadow      : 0px 1px 0px 1px $sombra;
+}
+
+
+.elemento:hover {
+    background-color: #ebebeb;
+    cursor          : pointer;
 }
 
 .coincidencias {
@@ -214,8 +219,7 @@ hr {
 
 .titulo-error {
     text-align   : justify;
-    // font-weight  : 600;
-    // white-space  : nowrap; // Evita que el texto se divida en varias líneas
+    white-space  : nowrap; // Evita que el texto se divida en varias líneas
     overflow     : hidden; // Oculta el contenido que desborda el contenedor
     text-overflow: ellipsis; // Muestra los puntos suspensivos al final del contenido que no cabe en una línea
 }
