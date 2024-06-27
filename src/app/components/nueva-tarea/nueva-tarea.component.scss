@@ -506,29 +506,24 @@ mdc-menu-surface {
 }
 
 .minutos {
-    width           : 40px;
-    border-style    : none;
-    border          : 1px solid $color-bordes;
-    background-color: transparent;
-    height          : 30px;
-    padding         : 2px 5px;
-    font-size       : 12px;
-    outline         : none;
-    text-align      : center;
-    color           : $color-azul;
-    margin-right    : 10px;
+    width       : 40px;
+    border      : 1px solid $color-bordes;
+    height      : 30px;
+    text-align  : center;
+    color       : $color-azul;
+    margin-right: 10px;
+    display     : flex;
+    align-items : center;
 }
 
 .seleccionar-tiempo {
-    min-width       : 120px;
-    max-width       : 150px;
-    border-style    : none;
-    border          : 1px solid $color-bordes;
-    background-color: transparent;
-    min-height      : 30px;
-    padding         : 2px 10px;
-    font-size       : 12px;
-    outline         : none;
+    width       : 150px;
+    border      : 1px solid $color-bordes;
+    height      : 30px;
+    color       : $color-azul;
+    display     : flex;
+    align-items : center;
+    padding-left: 10px;
 }
 
 .nombre-archivos {
