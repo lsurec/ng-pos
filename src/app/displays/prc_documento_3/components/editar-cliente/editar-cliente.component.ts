@@ -24,11 +24,11 @@ export class EditarClienteComponent implements OnInit {
   readonly regresar: number = 2; //id de la pantalla
 
   //datos de la cuenta que se va a editar
-  nombre?: string;
-  direccion?: string;
-  nit?: string;
-  telefono?: string;
-  correo?: string;
+  nombre : string = "";
+  direccion : string = "";
+  nit : string = "";
+  telefono : string = "";
+  correo : string = "";
 
   isLoading: boolean = false; //pantalla de carga0
   verError: boolean = false; //informe de errores
@@ -69,9 +69,9 @@ export class EditarClienteComponent implements OnInit {
 
 
     //datos de la cuenta que se va a actualizar
-    this.nombre = this.cuenta?.factura_Nombre;
-    this.direccion = this.cuenta?.factura_Direccion;
-    this.nit = this.cuenta?.factura_NIT;
+    this.nombre = this.cuenta?.factura_Nombre ?? "";
+    this.direccion = this.cuenta?.factura_Direccion ?? "";
+    this.nit = this.cuenta?.factura_NIT ?? "";
     this.telefono = this.cuenta?.telefono;
     this.correo = this.cuenta?.eMail;
 
@@ -191,22 +191,18 @@ export class EditarClienteComponent implements OnInit {
   async guardar() {
 
     //validar formulario
-    if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
+    if (!this.nombre ||!this.nit ) {
 
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
 
-    //Validar correo
-    if (!this.validarCorreo(this.correo)) {
-      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
-      return;
-    }
-
-    //Validar Grupo Cuenta
-    if (!this.validarCorreo(this.correo)) {
-      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.tipoCuenta'));
-      return;
+    if (this.correo) {
+      //Validar correo
+      if (!this.validarCorreo(this.correo)) {
+        this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
+        return;
+      }
     }
 
     //objeto cuenta
@@ -218,7 +214,7 @@ export class EditarClienteComponent implements OnInit {
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,
-      grupoCuenta: this.tipoCuenta!.grupo_Cuenta,
+      grupoCuenta: this.tipoCuenta?.grupo_Cuenta ?? 0,
 
     }
 
