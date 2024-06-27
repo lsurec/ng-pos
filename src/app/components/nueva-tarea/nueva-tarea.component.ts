@@ -54,7 +54,6 @@ import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.comp
 })
 export class NuevaTareaComponent implements OnInit {
   formulario!: FormGroup;
-  newForm?: FormGroup;
 
   isTituloEmpty: boolean = false;
   requerido: boolean = false;
@@ -181,6 +180,12 @@ export class NuevaTareaComponent implements OnInit {
   }
 
 
+  // Método para verificar si 'descripcion' tiene un valor
+  tieneDescripcion(): boolean {
+    const descripcionValue: string = this.formulario.get('descripcion')?.value;
+    return descripcionValue !== null && descripcionValue !== undefined && descripcionValue.trim() !== '';
+  }
+
   async validar(): Promise<void> {
 
     //sino se selecciona una fecha u hora en los inputs, se asignará la que se está visualizando 
@@ -206,7 +211,8 @@ export class NuevaTareaComponent implements OnInit {
       }
 
       if (!this.descripcion) {
-        this._widgetsService.openSnackbar("Añade una observación.");
+        this.formulario.get('descripcion')?.setValue(this.titulo);
+        // this._widgetsService.openSnackbar("Añade una observación.");
         return;
       }
 
