@@ -5,6 +5,7 @@ import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { DataInfileInterface } from '../interfaces/data.infile.interface';
 import { ParamUpdateXMLInterface } from '../interfaces/param-update-xml.interface';
+import { InfileNitParamInterface } from '../interfaces/Infile-nit-param.interface';
 
 @Injectable()
 export class FelService {
@@ -13,6 +14,81 @@ export class FelService {
     //inicializar http
     constructor(private _http: HttpClient) {
     }
+
+
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getNit(
+       nit:InfileNitParamInterface,
+    ) {
+
+        let headers = new HttpHeaders({ "Content-Type": "application/json" })
+
+        let paramsStr = JSON.stringify(nit); //JSON to String
+        //consumo de api
+        return this._http.post(`${this._urlBase}login`, paramsStr, { headers: headers, observe: 'response' });
+    }
+
+    //funcion asyncrona con promesa  para obtener las empresas
+    getNIt(
+        nit:InfileNitParamInterface,
+
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._getNit(
+                nit
+            ).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res.body;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            );
+        });
+    }
+
 
 
     
