@@ -10,7 +10,7 @@ import { DetalleInterface } from 'src/app/displays/shrTarea_3/interfaces/detalle
 import { EstadoInterface } from 'src/app/displays/shrTarea_3/interfaces/estado-tarea.interface';
 import { IDReferenciaInterface } from 'src/app/displays/shrTarea_3/interfaces/id-referencia.interface';
 import { EnviarInvitadoInterface } from 'src/app/displays/shrTarea_3/interfaces/invitado.interface';
-import { TiemposInterface } from 'src/app/displays/shrTarea_3/interfaces/periodicidad.interface';
+import { TiempoEstimadoInterface, TiemposInterface } from 'src/app/displays/shrTarea_3/interfaces/periodicidad.interface';
 import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
 import { EnviarResponsableInterface } from 'src/app/displays/shrTarea_3/interfaces/responsable.interface';
 import { TareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tarea-user.interface';
@@ -98,7 +98,7 @@ export class NuevaTareaComponent implements OnInit {
   estadoTarea: EstadoInterface | null = null; //estado de la tarea
   prioridadTarea: NivelPrioridadInterface | null = null;
   selectedFiles: File[] = []; //guardar nombre de los archivos seleccionados
-  tiempoEstimado: TiemposInterface | null = null; //tiempo estimado para asignarselo a una tarea
+  tiempoEstimado: TiemposInterface | undefined; //tiempo estimado para asignarselo a una tarea
   notificacion: TiemposInterface | null = null; //periodicidad para notificaciones
   periodicidad: TiemposInterface[] = [];
   duracion: number = 10;
@@ -314,7 +314,7 @@ export class NuevaTareaComponent implements OnInit {
   }
 
 
-  fechaActual() {
+  async fechaActual() {
 
     let dateNow: Date = new Date;
     this.tareasGlobalService.fecha = dateNow;
@@ -341,6 +341,9 @@ export class NuevaTareaComponent implements OnInit {
 
     this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+
+    // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
+    // console.log(this.tiempoCalculado);
   }
 
   fechaCalendario() {
@@ -414,7 +417,7 @@ export class NuevaTareaComponent implements OnInit {
 
 
 
-  validateStartDate() {
+  async validateStartDate() {
 
     //asiganr fecha inicial
     this.tareasGlobalService.fechaIni = this.convertValidDate(this.tareasGlobalService.inputFechaInicial!, this.tareasGlobalService.horaInicial);
@@ -461,6 +464,9 @@ export class NuevaTareaComponent implements OnInit {
 
     //para establecer la hora final minima. 
     this.tareasGlobalService.horaFinMinima = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaInicial);
+
+    // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin!);
+    // console.log(this.tiempoCalculado);
   }
 
   validateStartDateCalendar() {
@@ -543,7 +549,7 @@ export class NuevaTareaComponent implements OnInit {
   }
 
 
-  validateEndDate() {
+  async validateEndDate() {
 
     //asiganr fecha inicial
     this.tareasGlobalService.fechaFin = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaFinal);
@@ -571,6 +577,8 @@ export class NuevaTareaComponent implements OnInit {
 
     }
 
+    // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin);
+    // console.log(this.tiempoCalculado);
   }
 
   // Formato fecha
@@ -1528,6 +1536,121 @@ export class NuevaTareaComponent implements OnInit {
 
     if (this.tareasGlobalService.idPantalla == 2) {
       this.validateEndDateCalendar();
+    }
+  }
+
+  calcularDiferenciaFechas(fechaInicio: Date, fechaFin: Date): { cantidad: number, periodicidad: string } {
+    const msEnUnMinuto = 1000 * 60;
+    const msEnUnaHora = msEnUnMinuto * 60;
+    const msEnUnDia = msEnUnaHora * 24;
+    const msEnUnaSemana = msEnUnDia * 7;
+    const msEnUnMes = msEnUnDia * 30; // Aproximado
+
+    const diferenciaMs = fechaFin.getTime() - fechaInicio.getTime();
+
+    if (diferenciaMs < msEnUnaHora) {
+      return { cantidad: Math.floor(diferenciaMs / msEnUnMinuto), periodicidad: 'minutos' };
+    } else if (diferenciaMs < msEnUnDia) {
+      return { cantidad: Math.floor(diferenciaMs / msEnUnaHora), periodicidad: 'horas' };
+    } else if (diferenciaMs < msEnUnaSemana) {
+      return { cantidad: Math.floor(diferenciaMs / msEnUnDia), periodicidad: 'días' };
+    } else if (diferenciaMs < msEnUnMes) {
+      return { cantidad: Math.floor(diferenciaMs / msEnUnaSemana), periodicidad: 'semanas' };
+    } else {
+      return { cantidad: Math.floor(diferenciaMs / msEnUnMes), periodicidad: 'meses' };
+    }
+  }
+
+  tiempoCalculado?: TiempoEstimadoInterface;
+
+  async tiempoEstimadoCalc(fechaInicio: Date, fechaFin: Date): Promise<TiempoEstimadoInterface> {
+    const msEnUnMinuto = 1000 * 60;
+    const msEnUnaHora = msEnUnMinuto * 60;
+    const msEnUnDia = msEnUnaHora * 24;
+    const msEnUnaSemana = msEnUnDia * 7;
+    const msEnUnMes = msEnUnDia * 30; // Aproximado
+
+    const diferenciaMs = fechaFin.getTime() - fechaInicio.getTime();
+
+    await this.getPeriodicidad();
+
+    if (diferenciaMs < msEnUnaHora) {
+
+      //Seleccionar minutos
+      for (let index = 0; index < this.periodicidad.length; index++) {
+        const element = this.periodicidad[index];
+        if (element.descripcion.toLowerCase() == "minutos") {
+          this.tiempoEstimado = element;
+        }
+        break;
+      }
+
+      //retornar el tiempo de periodicidad en minutos
+      return {
+        duracion: Math.floor(diferenciaMs / msEnUnMinuto),
+        descripcion: this.tiempoEstimado!
+      };
+
+    } else if (diferenciaMs < msEnUnDia) {
+
+      //Marcar horas
+      for (let index = 0; index < this.periodicidad.length; index++) {
+        const element = this.periodicidad[index];
+        if (element.descripcion.toLowerCase() == "horas") {
+          this.tiempoEstimado = element;
+        }
+        break;
+      }
+
+      return {
+        duracion: Math.floor(diferenciaMs / msEnUnaHora),
+        descripcion: this.tiempoEstimado!
+      };
+
+    } else if (diferenciaMs < msEnUnaSemana) {
+
+      //Marcar días
+      for (let index = 0; index < this.periodicidad.length; index++) {
+        const element = this.periodicidad[index];
+        if (element.descripcion.toLowerCase() == "dias") {
+          this.tiempoEstimado = element;
+        }
+        break;
+      }
+
+      return {
+        duracion: Math.floor(diferenciaMs / msEnUnDia),
+        descripcion: this.tiempoEstimado!
+      };
+    } else if (diferenciaMs < msEnUnMes) {
+
+      //Marcar semanas
+      for (let index = 0; index < this.periodicidad.length; index++) {
+        const element = this.periodicidad[index];
+        if (element.descripcion.toLowerCase() == "semanas") {
+          this.tiempoEstimado = element;
+        }
+        break;
+      }
+
+      return {
+        duracion: Math.floor(diferenciaMs / msEnUnaSemana),
+        descripcion: this.tiempoEstimado!
+      };
+    } else {
+
+      //Marcar Mes
+      for (let index = 0; index < this.periodicidad.length; index++) {
+        const element = this.periodicidad[index];
+        if (element.descripcion.toLowerCase() == "mes") {
+          this.tiempoEstimado = element;
+        }
+        break;
+      }
+      return {
+        duracion: Math.floor(diferenciaMs / msEnUnMes),
+        descripcion: this.tiempoEstimado!
+      };
     }
   }
 
