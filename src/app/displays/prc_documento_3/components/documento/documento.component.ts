@@ -24,6 +24,7 @@ import { FelService } from '../../services/fel.service';
 import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { InfileNitParamInterface } from '../../interfaces/Infile-nit-param.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
+import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 
 @Component({
   selector: 'app-documento',
@@ -763,13 +764,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let cuentas: ClienteInterface[] = resCuenta.response;
 
-
     //si no hay coicidencias Buscar nit en 
     if (cuentas.length == 0) {
 
+      if (!this.facturaService.valueParametro(349)) {
+        this.facturaService.isLoading = false;
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
 
-      // this.facturaService.isLoading = false;
-
+        return;
+      }
 
       let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
 
@@ -833,7 +836,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       let resInfileNit: ResApiInterface = await this._felService.getNIt(paramNit);
-      
+
       if (!resInfileNit.status) {
 
         this.facturaService.isLoading = false;
@@ -856,48 +859,160 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-      let dataNit:DataNitInterface = resInfileNit.response;
+      let dataNit: DataNitInterface = resInfileNit.response;
 
 
-      if(!dataNit.nombre){
+      if (!dataNit.nombre) {
 
-    this.facturaService.isLoading = false;
+        this.facturaService.isLoading = false;
 
-    
+
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
         this.facturaService.searchClient = "";
-  
+
         return;
       }
 
 
-      let nombres:string [] = dataNit.nombre.split(",,");
+      let nombres: string[] = dataNit.nombre.split(",,");
 
-      dataNit.nombre =  nombres.reverse().map(item => {
+      dataNit.nombre = nombres.reverse().map(item => {
         return item.split(',').join(' ');
       }).join(' ');
-    
-
-
 
       //Crear cuenta correntista
-      
+      //nueva cuneta
+      let cuenta: CuentaCorrentistaInterface = {
+        correo: "",
+        direccion: "",
+        cuenta: 0,
+        cuentaCuenta: "",
+        nit: this.facturaService.searchClient,
+        nombre: dataNit.nombre,
+        telefono: "",
+        grupoCuenta: 0,
 
-    this.facturaService.isLoading = false;
+      }
 
+
+
+      //Usar servicio para actualizar cuenta
+      let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+        this.user,
+        this.token,
+        this.empresa,
+        cuenta,
+      );
+
+
+      //Si el servicio falló
+      if (!resCuenta.status) {
+
+        this.facturaService.isLoading = false;
+
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(resCuenta);
+
+        return;
+
+      }
+
+      ////////////////
+
+      //buscar informacin de la cuenta  creada
+      let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+        this.user,
+        this.token,
+        this.empresa,
+        cuenta.nit,
+      );
+
+      // si falló la buqueda de la cuenta creada
+      if (!infoCuenta.response) {
+        this.facturaService.isLoading = false;
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
+
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.verError(infoCuenta);
+
+        return;
+      }
+
+      //coincidencias con la cuenta creada
+      let cuentas: ClienteInterface[] = infoCuenta.response;
+
+      //si no se encontró ninguna cuenta
+      if (cuentas.length == 0) {
+        this.facturaService.isLoading = false;
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
+        return;
+      }
+
+      // si solo se encontró una coincidencia
+      if (cuentas.length == 1) {
+        this.facturaService.isLoading = false;
+
+        //seleccionar cuenta
+        this.facturaService.cuenta = cuentas[0];
+        this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+
+        return;
+
+      }
+
+      //Si hay mas de una coincidencia
+      cuentas.forEach(element => {
+        //Busar la primera cuenta que tenga el mismo nit
+        if (element.factura_NIT == cuenta.nit) {
+          //seleccionar cuenta
+          this.facturaService.cuenta = element;
+          this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
+
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+
+
+          this.facturaService.isLoading = false;
+
+          return;
+        }
+      });
+
+      this.facturaService.isLoading = false;
 
       return;
-
-
-
-      
     }
 
 
     //si solo hay uno seleccioanrlo
     if (cuentas.length == 1) {
 
-    this.facturaService.isLoading = false;
+      this.facturaService.isLoading = false;
 
 
       this.facturaService.cuenta = cuentas[0];
