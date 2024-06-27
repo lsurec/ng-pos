@@ -53,7 +53,7 @@ import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.comp
   ]
 })
 export class NuevaTareaComponent implements OnInit {
-  formulario: FormGroup;
+  formulario!: FormGroup;
   newForm?: FormGroup;
 
   isTituloEmpty: boolean = false;
@@ -88,6 +88,8 @@ export class NuevaTareaComponent implements OnInit {
   usuariosInvitados: BuscarUsuariosInterface[] = [];
   seleccionarInvitados!: number;
   seleccionarResponsable!: number;
+
+  estadosSelect: boolean = true;
 
   //guardar informacion de la tarea
   searchUser: string = ''; //buscar usuario
@@ -143,46 +145,6 @@ export class NuevaTareaComponent implements OnInit {
   ) {
 
     this.loadData();
-    this.formulario = this.fb.group({
-      titulo: [
-        '',
-        Validators.required
-      ],
-      descripcion: [
-        '',
-        Validators.required
-      ],
-      tipo: [
-        this.tipoTarea,
-        Validators.required
-      ],
-      estado: [
-        this.estadoTarea,
-        Validators.required
-      ],
-      prioridad: [
-        this.prioridadTarea,
-        Validators.required
-      ],
-      responsable: [
-        this.responsable,
-        Validators.required
-      ],
-      idReferencia: [
-        this.idReferencia,
-        Validators.required
-      ],
-      duracion: [
-        this.duracion = 10,
-        Validators.required
-      ],
-      tiempo: [
-        this.tiempoEstimado,
-        Validators.required
-      ],
-    });
-
-
     this.usuarioTarea = PreferencesService.user.toUpperCase();
     // Inicializar selectedDate con la fecha de hoy
     this.nuevaFechaInicial = this._calendar.getToday();
@@ -202,7 +164,6 @@ export class NuevaTareaComponent implements OnInit {
       this.customDatepickerI18n.setLanguage(this.activeLang.lang);
     };
     //Funcion que carga datos
-    // this.loadData();
     this.seleccionarResponsable = 1;
     this.seleccionarInvitados = 2;
 
@@ -210,6 +171,7 @@ export class NuevaTareaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cargarFormulario();
     if (this.tareasGlobalService.inputFechaInicial) {
       this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.inputFechaInicial);
     }
@@ -342,6 +304,10 @@ export class NuevaTareaComponent implements OnInit {
     this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
 
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin)];
+
+
     // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
     // console.log(this.tiempoCalculado);
   }
@@ -378,6 +344,10 @@ export class NuevaTareaComponent implements OnInit {
 
     this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin)];
+
   }
 
 
@@ -413,6 +383,9 @@ export class NuevaTareaComponent implements OnInit {
 
     this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
     this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin)];
   }
 
 
@@ -465,8 +438,9 @@ export class NuevaTareaComponent implements OnInit {
     //para establecer la hora final minima. 
     this.tareasGlobalService.horaFinMinima = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaInicial);
 
-    // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin!);
-    // console.log(this.tiempoCalculado);
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin!);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin!)];
+
   }
 
   validateStartDateCalendar() {
@@ -525,6 +499,10 @@ export class NuevaTareaComponent implements OnInit {
       //la fecha final minima será la seleccionada al inicio 
       this.tareasGlobalService.calendarioHoraFinMinima = new Date(this.tareasGlobalService.fechaIni!);
     }
+
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin)];
+
   }
 
   compareDate(fechaInicio: Date, fechaFin: Date) {
@@ -577,8 +555,56 @@ export class NuevaTareaComponent implements OnInit {
 
     }
 
-    // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin);
-    // console.log(this.tiempoCalculado);
+    this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin);
+    this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni!, this.tareasGlobalService.fechaFin)];
+  }
+
+
+  cargarFormulario() {
+    this.formulario = this.fb.group({
+      titulo: [
+        '',
+        Validators.required
+      ],
+      descripcion: [
+        '',
+        Validators.required
+      ],
+      tipo: [
+        this.tipoTarea,
+        Validators.required
+      ],
+      estado: [
+        {
+          value: this.estadoTarea,
+          disabled: true
+        },
+        Validators.required
+      ],
+      prioridad: [
+        this.prioridadTarea,
+        Validators.required
+      ],
+      responsable: [
+        this.responsable,
+        Validators.required
+      ],
+      idReferencia: [
+        this.idReferencia,
+        Validators.required
+      ],
+      duracion: [
+        this.duracion = 10,
+        Validators.required
+      ],
+      tiempo: [
+        this.tiempoEstimado,
+        Validators.required
+      ],
+    });
+
+    this.requerido = false;
+
   }
 
   // Formato fecha
@@ -635,20 +661,6 @@ export class NuevaTareaComponent implements OnInit {
 
   //Cargar datos
   async loadData(): Promise<void> {
-    this.requerido = false;
-
-    this.fechaTarea = new Date(this.tareasGlobalService.fechaIniCalendario!);
-    // this.fechaActual();
-    if (this.tareasGlobalService.idPantalla == 1) {
-      this.fechaActual();
-    } else if (this.tareasGlobalService.idPantalla == 2) {
-      this.fechaCalendario();
-    }
-
-    if (this.tareasGlobalService.idPantalla == 2 && this.tareasGlobalService.vistaDia) {
-      this.fechaDiaCalendario();
-    }
-
     this.isLoading = true; //Cargando en true
 
     //estados tarea
@@ -693,44 +705,19 @@ export class NuevaTareaComponent implements OnInit {
       }
     }
 
-    this.formulario = this.fb.group({
-      titulo: [
-        '',
-        Validators.required
-      ],
-      descripcion: [
-        '',
-        Validators.required
-      ],
-      tipo: [
-        this.tipoTarea,
-        Validators.required
-      ],
-      estado: [
-        this.estadoTarea,
-        Validators.required
-      ],
-      prioridad: [
-        this.prioridadTarea,
-        Validators.required
-      ],
-      responsable: [
-        this.responsable,
-        Validators.required
-      ],
-      idReferencia: [
-        this.idReferencia,
-        Validators.required
-      ],
-      duracion: [
-        this.duracion = 10,
-        Validators.required
-      ],
-      tiempo: [
-        this.tiempoEstimado,
-        Validators.required
-      ],
-    });
+    this.fechaTarea = new Date(this.tareasGlobalService.fechaIniCalendario!);
+    // this.fechaActual();
+    if (this.tareasGlobalService.idPantalla == 1) {
+      this.fechaActual();
+    } else if (this.tareasGlobalService.idPantalla == 2) {
+      this.fechaCalendario();
+    }
+
+    if (this.tareasGlobalService.idPantalla == 2 && this.tareasGlobalService.vistaDia) {
+      this.fechaDiaCalendario();
+    }
+
+    this.cargarFormulario();
 
     this.isLoading = false; //Cargando en false
   };
@@ -952,45 +939,6 @@ export class NuevaTareaComponent implements OnInit {
   //limpiar formulario de tareas
   limpiarCrear(): void {
 
-    this.newForm = this.fb.group({
-      titulo: [
-        '',
-        Validators.required
-      ],
-      descripcion: [
-        '',
-        Validators.required
-      ],
-      tipo: [
-        this.tipoTarea,
-        Validators.required
-      ],
-      estado: [
-        this.estadoTarea,
-        Validators.required
-      ],
-      prioridad: [
-        this.prioridadTarea,
-        Validators.required
-      ],
-      responsable: [
-        this.responsable,
-        Validators.required
-      ],
-      idReferencia: [
-        this.idReferencia,
-        Validators.required
-      ],
-      duracion: [
-        this.duracion = 10,
-        Validators.required
-      ],
-      tiempo: [
-        this.tiempoEstimado,
-        Validators.required
-      ],
-    });
-
     this.formulario.reset();
     this.requerido = false;
 
@@ -1026,14 +974,25 @@ export class NuevaTareaComponent implements OnInit {
       }
     }
 
-    this.duracion = 10;
+    this.fechaTarea = new Date(this.tareasGlobalService.fechaIniCalendario!);
+    // this.fechaActual();
+    if (this.tareasGlobalService.idPantalla == 1) {
+      this.fechaActual();
+    } else if (this.tareasGlobalService.idPantalla == 2) {
+      this.fechaCalendario();
+    }
+
+    if (this.tareasGlobalService.idPantalla == 2 && this.tareasGlobalService.vistaDia) {
+      this.fechaDiaCalendario();
+    }
+
     this.descripcion = '';
     this.selectedFiles = [];
     this.idReferencia = undefined;
     this.usuariosInvitados = [];
     this.responsable = undefined;
 
-    this.formulario = this.newForm;
+    this.cargarFormulario();
 
   };
 
@@ -1539,118 +1498,53 @@ export class NuevaTareaComponent implements OnInit {
     }
   }
 
-  calcularDiferenciaFechas(fechaInicio: Date, fechaFin: Date): { cantidad: number, periodicidad: string } {
-    const msEnUnMinuto = 1000 * 60;
-    const msEnUnaHora = msEnUnMinuto * 60;
-    const msEnUnDia = msEnUnaHora * 24;
-    const msEnUnaSemana = msEnUnDia * 7;
-    const msEnUnMes = msEnUnDia * 30; // Aproximado
+  tiempoTipo(fechaIni: Date, fechaFin: Date): number {
+    let diffInMillis: number = fechaFin.getTime() - fechaIni.getTime();
+    let diffInSeconds: number = diffInMillis / 1000;
+    let diffInMinutes: number = diffInSeconds / 60;
+    let diffInHours: number = diffInMinutes / 60;
+    let diffInDays: number = diffInHours / 24;
+    let diffInWeeks: number = diffInDays / 7;
+    let diffInMonths: number = fechaFin.getMonth() - fechaIni.getMonth() + (12 * (fechaFin.getFullYear() - fechaIni.getFullYear()));
+    let diffInYears: number = fechaFin.getFullYear() - fechaIni.getFullYear();
 
-    const diferenciaMs = fechaFin.getTime() - fechaInicio.getTime();
-
-    if (diferenciaMs < msEnUnaHora) {
-      return { cantidad: Math.floor(diferenciaMs / msEnUnMinuto), periodicidad: 'minutos' };
-    } else if (diferenciaMs < msEnUnDia) {
-      return { cantidad: Math.floor(diferenciaMs / msEnUnaHora), periodicidad: 'horas' };
-    } else if (diferenciaMs < msEnUnaSemana) {
-      return { cantidad: Math.floor(diferenciaMs / msEnUnDia), periodicidad: 'días' };
-    } else if (diferenciaMs < msEnUnMes) {
-      return { cantidad: Math.floor(diferenciaMs / msEnUnaSemana), periodicidad: 'semanas' };
+    if (diffInMinutes < 60) {
+      return 0; // diferencia en minutos
+    } else if (diffInHours < 24) {
+      return 1; // diferencia en horas
+    } else if (diffInDays < 7) {
+      return 2; // diferencia en días
+    } else if (diffInWeeks < 4) {
+      return 3; // diferencia en semanas
+    } else if (diffInMonths < 12) {
+      return 4; // diferencia en meses
     } else {
-      return { cantidad: Math.floor(diferenciaMs / msEnUnMes), periodicidad: 'meses' };
+      return 5; // diferencia en años
     }
   }
 
-  tiempoCalculado?: TiempoEstimadoInterface;
+  tiempoNum(fechaIni: Date, fechaFin: Date): number {
+    let diffInMillis: number = fechaFin.getTime() - fechaIni.getTime();
+    let diffInSeconds: number = diffInMillis / 1000;
+    let diffInMinutes: number = diffInSeconds / 60;
+    let diffInHours: number = diffInMinutes / 60;
+    let diffInDays: number = diffInHours / 24;
+    let diffInWeeks: number = diffInDays / 7;
+    let diffInMonths: number = fechaFin.getMonth() - fechaIni.getMonth() + (12 * (fechaFin.getFullYear() - fechaIni.getFullYear()));
+    let diffInYears: number = fechaFin.getFullYear() - fechaIni.getFullYear();
 
-  async tiempoEstimadoCalc(fechaInicio: Date, fechaFin: Date): Promise<TiempoEstimadoInterface> {
-    const msEnUnMinuto = 1000 * 60;
-    const msEnUnaHora = msEnUnMinuto * 60;
-    const msEnUnDia = msEnUnaHora * 24;
-    const msEnUnaSemana = msEnUnDia * 7;
-    const msEnUnMes = msEnUnDia * 30; // Aproximado
-
-    const diferenciaMs = fechaFin.getTime() - fechaInicio.getTime();
-
-    await this.getPeriodicidad();
-
-    if (diferenciaMs < msEnUnaHora) {
-
-      //Seleccionar minutos
-      for (let index = 0; index < this.periodicidad.length; index++) {
-        const element = this.periodicidad[index];
-        if (element.descripcion.toLowerCase() == "minutos") {
-          this.tiempoEstimado = element;
-        }
-        break;
-      }
-
-      //retornar el tiempo de periodicidad en minutos
-      return {
-        duracion: Math.floor(diferenciaMs / msEnUnMinuto),
-        descripcion: this.tiempoEstimado!
-      };
-
-    } else if (diferenciaMs < msEnUnDia) {
-
-      //Marcar horas
-      for (let index = 0; index < this.periodicidad.length; index++) {
-        const element = this.periodicidad[index];
-        if (element.descripcion.toLowerCase() == "horas") {
-          this.tiempoEstimado = element;
-        }
-        break;
-      }
-
-      return {
-        duracion: Math.floor(diferenciaMs / msEnUnaHora),
-        descripcion: this.tiempoEstimado!
-      };
-
-    } else if (diferenciaMs < msEnUnaSemana) {
-
-      //Marcar días
-      for (let index = 0; index < this.periodicidad.length; index++) {
-        const element = this.periodicidad[index];
-        if (element.descripcion.toLowerCase() == "dias") {
-          this.tiempoEstimado = element;
-        }
-        break;
-      }
-
-      return {
-        duracion: Math.floor(diferenciaMs / msEnUnDia),
-        descripcion: this.tiempoEstimado!
-      };
-    } else if (diferenciaMs < msEnUnMes) {
-
-      //Marcar semanas
-      for (let index = 0; index < this.periodicidad.length; index++) {
-        const element = this.periodicidad[index];
-        if (element.descripcion.toLowerCase() == "semanas") {
-          this.tiempoEstimado = element;
-        }
-        break;
-      }
-
-      return {
-        duracion: Math.floor(diferenciaMs / msEnUnaSemana),
-        descripcion: this.tiempoEstimado!
-      };
+    if (diffInMinutes < 60) {
+      return Math.floor(diffInMinutes); // diferencia en minutos
+    } else if (diffInHours < 24) {
+      return Math.floor(diffInHours); // diferencia en horas
+    } else if (diffInDays < 7) {
+      return Math.floor(diffInDays); // diferencia en días
+    } else if (diffInWeeks < 4) {
+      return Math.floor(diffInWeeks); // diferencia en semanas
+    } else if (diffInMonths < 12) {
+      return diffInMonths; // diferencia en meses
     } else {
-
-      //Marcar Mes
-      for (let index = 0; index < this.periodicidad.length; index++) {
-        const element = this.periodicidad[index];
-        if (element.descripcion.toLowerCase() == "mes") {
-          this.tiempoEstimado = element;
-        }
-        break;
-      }
-      return {
-        duracion: Math.floor(diferenciaMs / msEnUnMes),
-        descripcion: this.tiempoEstimado!
-      };
+      return diffInYears; // diferencia en años
     }
   }
 
