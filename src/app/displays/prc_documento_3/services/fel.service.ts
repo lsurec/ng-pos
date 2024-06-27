@@ -25,7 +25,7 @@ export class FelService {
 
         let paramsStr = JSON.stringify(nit); //JSON to String
         //consumo de api
-        return this._http.post(`${this._urlBase}login`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.post(`https://consultareceptores.feel.com.gt/rest/action`, paramsStr, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
@@ -43,7 +43,7 @@ export class FelService {
 
                     let resApi: ResApiInterface = {
                         status: true,
-                        response: response.data,
+                        response: res.body,
                         storeProcedure: response.storeProcedure
                     }
                     resolve(resApi);
