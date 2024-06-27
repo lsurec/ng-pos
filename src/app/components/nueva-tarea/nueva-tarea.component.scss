@@ -535,3 +535,12 @@ mdc-menu-surface {
     font-size  : 12px;
     font-weight: 450;
 }
+
+.circulo-error {
+    width           : 15px;
+    height          : 15px;
+    border          : 1px solid $color-rojo;
+    background-color: $color-rojo;
+    border-radius   : 50%;
+    margin-left     : 10px;
+}
