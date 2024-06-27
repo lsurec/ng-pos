@@ -154,12 +154,9 @@
                                     <p class="titulo-campo">{{ 'crm.crear.estado' | translate }}</p>
                                     <p class="obligatorio">*</p>
                                 </div>
-                                <mat-select formControlName="estado" class="tipo-tarea"
-                                    placeholder="{{ 'crm.crear.estadoTarea' | translate }}">
-                                    <mat-option *ngFor="let estado of estadosTarea" [value]="estado">
-                                        {{estado.descripcion}}
-                                    </mat-option>
-                                </mat-select>
+                                <div class="tipo-tarea">
+                                    {{estadoTarea!.descripcion}}
+                                </div>
                             </div>
                             <div class="contenido-izquierdo">
                                 <div class="d-flex">

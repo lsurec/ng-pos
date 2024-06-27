@@ -452,12 +452,13 @@ textarea::placeholder {
 }
 
 .tipo-tarea {
-    border-style    : none;
-    border          : 1px solid $color-bordes;
-    background-color: transparent;
-    min-height      : 30px;
-    padding         : 2px 10px;
-    font-size       : 12px;
+    border     : 1px solid $color-bordes;
+    min-height : 30px;
+    padding    : 0px 10px;
+    font-size  : 13px;
+    color      : $color-azul;
+    display    : flex;
+    align-items: center;
 }
 
 .mat-mdc-option {
