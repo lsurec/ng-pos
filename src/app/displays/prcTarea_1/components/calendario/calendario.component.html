@@ -27,22 +27,23 @@
             <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
                 <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
             <mat-menu #menu="matMenu">
-                <div class="opciones-menu">
-                    <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
-                    <div class="menuVistas">
-                        <button class="opcion-vista" (click)="seeMonth()">{{ 'crm.calendario.mes' |
-                            translate}}</button>
-                        <br>
-                        <button class="opcion-vista" (click)="seeWeek()">{{ 'crm.calendario.semana' |
-                            translate}}</button>
-                        <br>
-                        <button class="opcion-vista" (click)="seeDay()">{{ 'crm.calendario.dia' |
-                            translate}}</button>
-                        <br *ngIf="verDia">
-                        <button class="opcion-vista" (click)="hora8()" *ngIf="verDia">{{ 'crm.calendario.horaLaboral' |
-                            translate}}</button>
-                        <br>
-                    </div>
+                <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
+                <div class="menuVistas">
+                    <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
+                        {{ 'crm.calendario.mes' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
+                        {{ 'crm.calendario.semana' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" (click)="seeDay()">
+                        {{ 'crm.calendario.dia' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
+                        {{ 'crm.calendario.horaLaboral' | translate}}
+                    </button>
                 </div>
             </mat-menu>
         </mat-toolbar>
@@ -59,14 +60,16 @@
         <mat-toolbar class="toolbarPhone">
             <mat-toolbar-row class="mat-toolbar-row">
                 <!-- Regresar a la pantalla anterior -->
-                <button (click)="backPage()" mat-icon-button aria-label class="btn"
-                    [matTooltip]="'regresar al menu principal'"> <mat-icon>arrow_back</mat-icon>
+                <button (click)="backPage()" mat-icon-button [matTooltip]="'regresar'">
+                    <mat-icon>arrow_back</mat-icon>
                 </button>
-                <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="refresh()">
+                <button mat-icon-button matTooltip="actualizar" (click)="refresh()">
                     <mat-icon>refresh</mat-icon>
                 </button>
                 <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
-                <button mat-stroked-button (click)="hoy()">{{ 'crm.calendario.hoy' | translate }}</button>
+                <button mat-stroked-button class="boton-azul" (click)="hoy()">
+                    {{ 'crm.calendario.hoy' | translate }}
+                </button>
                 <span class="spacer"></span>
                 <button mat-icon-button (click)="sidenavend.open()">
                     <mat-icon>calendar_month</mat-icon>
@@ -76,15 +79,16 @@
         <span class="spacer"></span>
         <mat-toolbar class="toolbarlarge">
             <!-- Regresar a la pantalla anterior -->
-            <button (click)="backPage()" mat-icon-button aria-label
-                matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+            <button (click)="backPage()" mat-icon-button matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <button mat-icon-button aria-label class="flecha-regresar" matTooltip="actualizar" (click)="refresh()">
+            <button mat-icon-button class="flecha-regresar" matTooltip="actualizar" (click)="refresh()">
                 <mat-icon>refresh</mat-icon>
             </button>
             <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
-            <button mat-stroked-button (click)="hoy()">{{ 'crm.calendario.hoy' | translate }}</button>
+            <button mat-stroked-button class="boton-azul" (click)="hoy()">
+                {{ 'crm.calendario.hoy' | translate }}
+            </button>
 
             <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
             <div class="cambiar-mes d-flex" *ngIf="verMes">
@@ -95,8 +99,9 @@
                 <button mat-icon-button (click)="nextMonth()">
                     <mat-icon>chevron_right </mat-icon>
                 </button>
-                <p class="mes-nombre nombre">{{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes'
-                    |translate }} {{yearSelect}} </p>
+                <p class="mes-nombre nombre">
+                    {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' |translate }} {{yearSelect}}
+                </p>
                 <span class="spacer"></span>
             </div>
             <!-- mostrar fecha de semana, cambiar a la semana siguiente y semana anterior -->
@@ -121,8 +126,8 @@
                     <mat-icon>chevron_right </mat-icon>
                 </button>
                 <p class="dia-nombre-pc nombre">
-                    {{daySelect}} {{ 'crm.calendario.delMes' | translate }} {{obtenerNombreMes(monthSelectView)}} {{
-                    'crm.calendario.delMes' | translate }} {{yearSelect}}
+                    {{daySelect}} {{ 'crm.calendario.delMes' | translate }} {{obtenerNombreMes(monthSelectView)}}
+                    {{ 'crm.calendario.delMes' | translate }} {{yearSelect}}
                 </p>
             </div>
             <span class="spacer"></span>
@@ -131,23 +136,23 @@
             <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
                 <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
             <mat-menu #menu="matMenu">
-                <div class="opciones-menu">
-                    <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
-                    <div class="menuVistas">
-                        <button mat-button class="opcion-vista" (click)="seeMonth()">{{ 'crm.calendario.mes' |
-                            translate}}</button>
-                        <br>
-                        <button mat-button class="opcion-vista" (click)="seeWeek()">{{ 'crm.calendario.semana' |
-                            translate}}</button>
-                        <br>
-                        <button mat-button class="opcion-vista" (click)="seeDay()">{{ 'crm.calendario.dia' |
-                            translate}}</button>
-                        <br *ngIf="verDia">
-                        <button mat-button class="opcion-vista" (click)="hora8()" *ngIf="verDia">{{
-                            'crm.calendario.horaLaboral' | translate}}
-                        </button>
-                        <br>
-                    </div>
+                <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
+                <div class="menuVistas">
+                    <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
+                        {{ 'crm.calendario.mes' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
+                        {{ 'crm.calendario.semana' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" (click)="seeDay()">
+                        {{ 'crm.calendario.dia' | translate}}
+                    </button>
+
+                    <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
+                        {{ 'crm.calendario.horaLaboral' | translate}}
+                    </button>
                 </div>
             </mat-menu>
         </mat-toolbar>

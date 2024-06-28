@@ -92,6 +92,14 @@ body {
 
 }
 
+.center-snackbar {
+    position : fixed !important;
+    left     : 50% !important;
+    top      : 85% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index  : 1000 !important;
+}
+
 input[type='number'] {
     appearance        : textfield;
     -moz-appearance   : textfield;

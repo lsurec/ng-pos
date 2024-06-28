@@ -4,7 +4,7 @@ $color-gris             : darkgray; //numeros que no son del mes
 $color-bordes           : #323f8550; //bordes del calendario
 $background-oficial     : #FEF5E7; //fondo Demosoft
 $background-scrollbar   : #134895; //barra rosada
-$background-hoy         : #134895; //resaltar dia de hoy azul
+$color-azul             : #134895; //resaltar dia de hoy azul
 $background-tareas      : #DF9722; //resaltar tareas naranja
 $background-tareas-rojo : #e61212d5; //resaltar tareas rojo
 $borde-tarea            : rgba(0, 0, 0, 0.12);
@@ -135,7 +135,7 @@ mat-sidenav {
 
 .mat-toolbar-row {
     padding      : 0px !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid $borde-tarea;
 }
 
 .toolbarPhone {
@@ -257,7 +257,7 @@ mat-sidenav {
     height       : 55px !important;
     background   : $background-oficial;
     padding      : 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid $borde-tarea;
 }
 
 /*Fin Contendo derecho*/
@@ -387,7 +387,7 @@ mat-sidenav {
 }
 
 .hoy-semana {
-    background  : $background-hoy;
+    background  : $color-azul;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -400,7 +400,7 @@ mat-sidenav {
 }
 
 .hoy {
-    background  : $background-hoy;
+    background  : $color-azul;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -790,45 +790,24 @@ p {
     width        : 100px;
 }
 
-.verVistas {
-    width: 100px;
-}
-
-.seleccionarVista {
-    width           : 100%;
-    padding         : 3px 5px;
-    background-color: transparent;
-    border-style    : none;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    text-align      : justify;
-    font-size       : 14px;
-}
-
 .lista-menu {
-    margin : 10px;
-    padding: 0px 10px;
-}
-
-.opciones-menu {
-    height: calc(100%);
+    margin          : 10px;
+    padding         : 0px 10px;
+    background-color: $color-azul !important;
+    color           : $color-blanco !important;
 }
 
 .menuVistas {
-    background-color: $background-oficial;
-    padding         : 5px 1px;
-    margin          : -8px 0px;
-    text-align      : center;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    margin: -8px 0px;
 }
 
 .opcion-vista {
-    text-align      : justify;
-    width           : 100px;
-    height          : 40px;
-    font-size       : 14px;
     border-bottom   : 1px solid rgba(0, 0, 0, 0.12) !important;
-    border-style    : none;
     background-color: $background-oficial;
+}
+
+.opcion-vista:hover {
+    background-color: $borde-tarea;
 }
 
 .nueva {
@@ -850,7 +829,7 @@ p {
 
 .nuevo-hoy {
     color           : $color-blanco;
-    background-color: $background-hoy;
+    background-color: $color-azul;
     width           : 20%;
 }
 
@@ -878,7 +857,7 @@ p {
 .dia-hoy-crear {
     display         : flex;
     width           : 100%;
-    background-color: $background-hoy;
+    background-color: $color-azul;
 }
 
 .dia-crear:hover {
@@ -1016,4 +995,9 @@ p {
     margin        : 0px 0;
     align-items   : flex-start;
     width         : 100%;
+}
+
+.boton-azul {
+    background-color: $color-azul !important;
+    color           : $color-blanco !important;
 }
