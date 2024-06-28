@@ -133,6 +133,12 @@ export class TareasComponent {
 
   //buscar tareas por creiteriod e busqueda
   async buscarTarea(): Promise<void> {
+
+    if (this.searchText.length == 0) {
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
+      return;
+    }
+
     this.crearTarea = false;
     if (this.selectedOption == 1) {
       this.isLoading = true;
