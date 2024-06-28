@@ -79,12 +79,13 @@
 
                 <div class="funciones">
                     <span class="spacer"></span>
-                    <button mat-stroked-button class="marginRihgt" (click)="validar()" matTooltip="Guardar">
-                        <mat-icon>save_outline</mat-icon>
-                        Guardar
+                    <button mat-raised-button class="boton-azul" (click)="validar()">
+                        <mat-icon>save</mat-icon>
+                        {{'pos.botones.guardar' | translate}}
                     </button>
-                    <button mat-stroked-button class="marginRihgt" (click)="limpiarCrear()" matTooltip="Nueva Tarea">
-                        <mat-icon>note_add_outline</mat-icon>
+
+                    <button mat-raised-button class="boton-azul" (click)="limpiarCrear()">
+                        <mat-icon>save_outline</mat-icon>
                         Nueva Tarea
                     </button>
 
@@ -93,7 +94,7 @@
                     <input type="file" class="form-control" id="inputGroupFile04"
                         aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
                         (change)="onFilesSelected($event)" style="display: none;" #fileInput>
-                    <button mat-stroked-button class="marginRihgt" matTooltip="Subir Archivos"
+                    <button mat-raised-button class="boton-azul" matTooltip="Subir Archivos"
                         (click)="fileInput.click()">
                         <mat-icon>attach_file</mat-icon>
                         Subir Archivos
