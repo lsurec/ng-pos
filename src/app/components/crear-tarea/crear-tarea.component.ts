@@ -943,7 +943,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
       //ID del comentario 
       let idComenario: number = resPrimerComentario.response.res;
 
-      let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, nuevasTareas[0].tarea, idComenario);
+      let resFiles: ResApiInterface = await this._files.adjuntarArchivos(this.selectedFiles, nuevasTareas[0].tarea, idComenario);
 
       //Si el servico se ejecuta mal mostar mensaje
       this.isLoading = false;

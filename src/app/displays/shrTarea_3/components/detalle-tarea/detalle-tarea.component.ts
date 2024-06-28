@@ -26,6 +26,7 @@ import { ActualizarTareaComponent } from 'src/app/components/actualizar-tarea/ac
 import { NivelPrioridadInterface } from '../../interfaces/prioridad-tarea.interface';
 import { ActualizarUsuariosComponent } from 'src/app/components/actualizar-usuarios/actualizar-usuarios.component';
 import { EliminarUsuarioInterface } from '../../interfaces/eliminar-usuario.interface';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 
 @Component({
   selector: 'app-detalle-tarea',
@@ -75,6 +76,7 @@ export class DetalleTareaComponent {
   sidenavend!: MatSidenav;
 
   usuarioTarea = PreferencesService.user;
+  empresa: EmpresaInterface = PreferencesService.empresa;
 
   constructor(
     //declaracion de variables privadas
@@ -352,8 +354,15 @@ export class DetalleTareaComponent {
       return;
     }
 
+    let urlFiles: string = this.empresa.absolutePathPicture;
+
     //Consumo de api files
-    let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, this.tareaDetalle!.iD_Tarea, comentarioDetalle.comentario.tarea_Comentario);
+    let resFiles: ResApiInterface = await this._files.postFilesComment(
+      this.selectedFiles,
+      this.tareaDetalle!.iD_Tarea,
+      comentarioDetalle.comentario.tarea_Comentario,
+      urlFiles
+    );
 
     //Si el servico se ejecuta mal mostar mensaje
     this.isLoading = false;

@@ -18,6 +18,7 @@ import { EstadoInterface } from 'src/app/displays/shrTarea_3/interfaces/estado-t
 import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
 import { ActualizarEstadoInterface, ActualizarNivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/actualizar-tarea.interface';
 import { ActualizarTareaService } from 'src/app/services/actualizar-tarea.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 
 @Component({
   selector: 'app-dialog-tarea',
@@ -51,6 +52,9 @@ export class DialogTareaComponent {
 
   prioridadesTarea: NivelPrioridadInterface[] = [];
   prioridadTarea: NivelPrioridadInterface | null = null;
+
+  empresa: EmpresaInterface = PreferencesService.empresa;
+
 
   constructor(
     //Declaracion de variables privadas
@@ -229,8 +233,16 @@ export class DialogTareaComponent {
       return;
     }
 
+    let urlFiles: string = this.empresa.absolutePathPicture;
+
+
     //Consumo de api files
-    let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, this.data.tarea.tarea, comentarioDetalle.comentario.tarea_Comentario);
+    let resFiles: ResApiInterface = await this._files.postFilesComment(
+      this.selectedFiles,
+      this.data.tarea.tarea,
+      comentarioDetalle.comentario.tarea_Comentario,
+      urlFiles
+    );
 
     //Si el servico se ejecuta mal mostar mensaje
     this.isLoading = false;

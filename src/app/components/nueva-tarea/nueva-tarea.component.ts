@@ -35,6 +35,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { UsuariosDialogComponent } from '../usuarios-dialog/usuarios-dialog.component';
 import { BuscarIdReferenciaComponent } from '../buscar-id-referencia/buscar-id-referencia.component';
 import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.component';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 
 @Component({
   selector: 'app-nueva-tarea',
@@ -122,7 +123,7 @@ export class NuevaTareaComponent implements OnInit {
 
   usuarioTarea = PreferencesService.user;
   token = PreferencesService.token;
-
+  empresa: EmpresaInterface = PreferencesService.empresa;
 
   constructor(
     private fb: FormBuilder,
@@ -1120,48 +1121,6 @@ export class NuevaTareaComponent implements OnInit {
     //Guardar Tarea
     let nuevasTareas: CrearTareaInterface[] = resNuevaTarea.response;
 
-    // //P R I M E R - C O M E N T A R I O 
-    //consumir api solo si hay archivos
-    if (this.selectedFiles.length > 0) {
-
-      //crear el objeto del comentario
-      let comentario: ComentarInterface = {
-        tarea: nuevasTareas[0].tarea,
-        userName: this.usuarioTarea,
-        comentario: this.descripcion,
-      }
-
-      let resPrimerComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentario);
-
-      //Si el servico se ejecuta mal mostar mensaje
-      if (!resPrimerComentario.status) {
-        //ocultar carga
-        this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-        console.error(resPrimerComentario.response);
-        console.error(resPrimerComentario.storeProcedure);
-        return
-      }
-
-      //asignar la respuesra del comentario a la interface. 
-      //ID del comentario 
-      let idComenario: number = resPrimerComentario.response.res;
-
-      let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, nuevasTareas[0].tarea, idComenario);
-
-      //Si el servico se ejecuta mal mostar mensaje
-      this.isLoading = false;
-      if (!resFiles.status) {
-        this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
-        console.error(resFiles.response);
-        console.error(resFiles.storeProcedure);
-        return;
-      };
-    };
-
-    // // F I N - C O M E N T A R I O
-
     if (this.tareasGlobalService.idPantalla === 1) {
       //Nueva Tarea Tareas
       let tareaCreada: TareaInterface =
@@ -1281,6 +1240,54 @@ export class NuevaTareaComponent implements OnInit {
         this.invitadosTarea.push(resInvitado.response);
       };
     };
+
+    // //P R I M E R - C O M E N T A R I O 
+    //consumir api solo si hay archivos
+    if (this.selectedFiles.length > 0) {
+
+      //crear el objeto del comentario
+      let comentario: ComentarInterface = {
+        tarea: nuevasTareas[0].tarea,
+        userName: this.usuarioTarea,
+        comentario: this.descripcion,
+      }
+
+      let resPrimerComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentario);
+
+      //Si el servico se ejecuta mal mostar mensaje
+      if (!resPrimerComentario.status) {
+        //ocultar carga
+        this.isLoading = false;
+        this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
+        console.error(resPrimerComentario.response);
+        console.error(resPrimerComentario.storeProcedure);
+        return
+      }
+
+      //asignar la respuesra del comentario a la interface. 
+      //ID del comentario 
+      let idComenario: number = resPrimerComentario.response.res;
+      let urlFiles: string = this.empresa.absolutePathPicture;
+
+      let resFiles: ResApiInterface = await this._files.postFilesComment(
+        this.selectedFiles,
+        nuevasTareas[0].tarea,
+        idComenario,
+        urlFiles
+      );
+
+      //Si el servico se ejecuta mal mostar mensaje
+      this.isLoading = false;
+      if (!resFiles.status) {
+        this.isLoading = false;
+        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
+        console.error(resFiles.response);
+        console.error(resFiles.storeProcedure);
+        return;
+      };
+    };
+
+    // // F I N - C O M E N T A R I O
 
     this.isLoading = false;
 

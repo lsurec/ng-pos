@@ -65,7 +65,7 @@ export class CargarArchivosService {
         })
     }
 
-    private _postFilesComment(files: File[], tarea: number, tareaComentario: number) {
+    private _adjuntarArchivos(files: File[], tarea: number, tareaComentario: number) {
         const formData = new FormData();
         for (const file of files) {
             formData.append('files', file);
@@ -83,9 +83,9 @@ export class CargarArchivosService {
         return this._http.post(`${this._urlBase}Tareas/objetos/comentario`, formData, { headers: headers });
     }
 
-    postFilesComment(files: File[], tarea: number, tareaComentario: number): Promise<ResApiInterface> {
+    adjuntarArchivos(files: File[], tarea: number, tareaComentario: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._postFilesComment(files, tarea, tareaComentario).subscribe(
+            this._adjuntarArchivos(files, tarea, tareaComentario).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
@@ -113,9 +113,8 @@ export class CargarArchivosService {
     }
 
 
-    //Nuevo servicio
-    //TODO: utilizar cuando las Apis estén actualizadas
-    private _postFilesCommentN(files: File[], tarea: number, tareaComentario: number, urlCarpeta: string) {
+    //Nuevo servicio para adjuntar archivos a los comentarios
+    private _postFilesComment(files: File[], tarea: number, tareaComentario: number, urlCarpeta: string) {
         const formData = new FormData();
         for (const file of files) {
             formData.append('files', file);
@@ -131,12 +130,12 @@ export class CargarArchivosService {
             }
         )
         //consumo de api
-        return this._http.post(`${this._urlBase}Tareas/objetos/comentario`, formData, { headers: headers });
+        return this._http.post(`${this._urlBase}FilesComment`, formData, { headers: headers });
     }
 
-    postFilesCommentN(files: File[], tarea: number, tareaComentario: number, urlCarpeta: string): Promise<ResApiInterface> {
+    postFilesComment(files: File[], tarea: number, tareaComentario: number, urlCarpeta: string): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._postFilesCommentN(files, tarea, tareaComentario, urlCarpeta).subscribe(
+            this._postFilesComment(files, tarea, tareaComentario, urlCarpeta).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
