@@ -161,15 +161,9 @@ p {
     border-top: none !important;
 }
 
-.guardar-boton {
-    display    : flex;
-    align-items: center;
-}
-
-.boton-guardar {
+.boton-azul {
     background-color: $color-azul !important;
     color           : $color-blanco !important;
-    width           : 200px;
 }
 
 .seleccionar-localidad.error,

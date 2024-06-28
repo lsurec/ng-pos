@@ -275,3 +275,8 @@ p {
     align-items: center;
     padding-top: 3px;
 }
+
+.boton-azul {
+    background-color: $color-azul !important;
+    color           : $color-blanco !important;
+}
