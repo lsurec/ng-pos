@@ -676,7 +676,7 @@ h2 {
 .paleta-color {
     padding              : 5px 10px;
     display              : grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap                  : 10px;
     /* Espacio entre los elementos, ajusta según tu necesidad */
 }
@@ -691,4 +691,18 @@ h2 {
     width        : 45px;
     height       : 45px;
     border-radius: 50%;
+    cursor       : pointer;
+    border       : solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.circulo-seleccionado {
+    border: solid 2px $color-negro;
+}
+
+.contenido-color {
+    padding: 10px 15px;
+}
+
+.marBott {
+    margin-bottom: 5px;
 }

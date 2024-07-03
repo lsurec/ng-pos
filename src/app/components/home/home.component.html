@@ -124,14 +124,14 @@
                         </div>
                     </div>
                     <!-- Colores -->
-                    <!-- <div class="configuraciones" (click)="verColor()">
+                    <div class="configuraciones" (click)="verColor()">
                         <mat-icon class="iconos-detalles">palette</mat-icon>
                         <span class="spacer"></span>
                         <div class="detalle">
                             <p class="subtitulo">Paleta de colores</p>
                             <p class="descripcion">Cambia los colores de tu preferencia.</p>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- Digitos -->
                     <div class="configuraciones-digitos">
@@ -281,20 +281,31 @@
                         <mat-icon class="ico-tema">palette</mat-icon>
                         <div class="desc-tema">
                             <p class="titulo-tema">Paleta de Colores</p>
-                            <p class="descripcion-tema">Eliga el color de los botones.</p>
+                            <p class="marBott">Eliga el color de los botones.</p>
+                            <button mat-raised-button
+                                [ngStyle]="{
+                            'background-color': colorSeleccionado?.valor ?? null,
+                            'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
+                                {{colorSeleccionado?.nombre ?? "Selecciona un color."}}
+                            </button>
                         </div>
                     </div>
                     <p class="separador"></p>
 
-                    <div class="paleta-color">
-
-                        <div class="opcion-color" *ngFor="let color of colores">
-                            <span class="spacer"></span>
-                            <p class="circulo" [ngStyle]="{'background-color': color.valor}"></p>
-                            <span class="spacer"></span>
+                    <div class="contenido-color">
+                        <div class="paleta-color">
+                            <div class="opcion-color" *ngFor="let color of colores, let index = index"
+                                (click)="seleccionarColor(color, index)">
+                                <span class="spacer"></span>
+                                <p class="circulo"
+                                    [ngClass]="{'circulo-seleccionado': colorSeleccionado?.id === color.id}"
+                                    [ngStyle]="{'background-color': color.valor}">
+                                </p>
+                                <span class="spacer"></span>
+                            </div>
                         </div>
-
                     </div>
+
 
                 </div>
                 <!-- Mostrar detalles del usuario -->

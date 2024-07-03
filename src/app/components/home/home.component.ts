@@ -89,60 +89,6 @@ export class HomeComponent implements OnInit {
   tema!: number;
   color: boolean = false;
 
-  colores: ColorInterface[] = [
-    {
-      id: 1,
-      valor: "#FF0000",
-      nombre: "Rojo"
-    },
-    {
-      id: 2,
-      valor: "#FFFF00",
-      nombre: "Amarillo"
-    },
-    {
-      id: 3,
-      valor: "#0000FF",
-      nombre: "Azul"
-    },
-    {
-      id: 4,
-      valor: "#008000",
-      nombre: "Verde"
-    },
-    {
-      id: 5,
-      valor: "#FFA500",
-      nombre: "Naranja"
-    },
-    {
-      id: 6,
-      valor: "#800080",
-      nombre: "Morado"
-    },
-    {
-      id: 7,
-      valor: "#FFC0CB",
-      nombre: "Rosa"
-    },
-    {
-      id: 8,
-      valor: "#00FFFF",
-      nombre: "Celeste"
-    },
-    {
-      id: 9,
-      valor: "#6F4E37",
-      nombre: "Café"
-    },
-    {
-      id: 10,
-      valor: "#000000",
-      nombre: "Negro"
-    },
-  ];
-
-
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
   idioma: number = indexDefaultLang;
@@ -296,6 +242,20 @@ export class HomeComponent implements OnInit {
       this.dataUserService.decimalPlaces = 2;
     }
 
+
+    if (!PreferencesService.colorButton) {
+      this.colorSeleccionado = {
+        id: 2,
+        nombre: "Primario",
+        valor: "#134895"
+      };
+
+    } else {
+      let indexColor: number = +PreferencesService.colorButton;
+      this.colorSeleccionado = this.colores[indexColor];
+    }
+
+
   }
 
   fontsSizes: FontSizeInterface[] = [
@@ -322,8 +282,72 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-
   sizeSelect?: FontSizeInterface;
+
+  colorSeleccionado: ColorInterface | null = null;
+
+  colores: ColorInterface[] = [
+    {
+      id: 1,
+      nombre: "Principal",
+      valor: "#FEF5E7"
+    },
+    {
+      id: 2,
+      nombre: "Primario",
+      valor: "#134895"
+    },
+    {
+      id: 3,
+      valor: "#FF0000",
+      nombre: "Rojo"
+    },
+    {
+      id: 4,
+      valor: "#FFFF00",
+      nombre: "Amarillo"
+    },
+    {
+      id: 5,
+      valor: "#0000FF",
+      nombre: "Azul"
+    },
+    {
+      id: 6,
+      valor: "#008000",
+      nombre: "Verde"
+    },
+    {
+      id: 7,
+      valor: "#FFA500",
+      nombre: "Naranja"
+    },
+    {
+      id: 8,
+      valor: "#800080",
+      nombre: "Morado"
+    },
+    {
+      id: 9,
+      valor: "#FFC0CB",
+      nombre: "Rosa"
+    },
+    {
+      id: 10,
+      valor: "#00FFFF",
+      nombre: "Celeste"
+    },
+    {
+      id: 11,
+      valor: "#6F4E37",
+      nombre: "Café"
+    },
+    {
+      id: 12,
+      valor: "#000000",
+      nombre: "Negro"
+    },
+  ];
 
   async cambiarFuente(index: number) {
 
@@ -353,6 +377,29 @@ export class HomeComponent implements OnInit {
     window.location.reload();
 
   }
+
+  seleccionarColor(color: ColorInterface, index : number): void {
+    this.colorSeleccionado = color;
+    //Guardar la preferencia
+    PreferencesService.colorButton = index.toString();
+  }
+
+  isColorDark(color: string): boolean {
+    // Remove the hash if present
+    const hex = color.replace('#', '');
+
+    // Convert hex to RGB
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate the brightness (using a common formula)
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // Return true if the color is dark, otherwise false
+    return brightness < 128;
+  }
+
 
   ngOnInit(): void {
 
