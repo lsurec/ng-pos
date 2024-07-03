@@ -243,7 +243,7 @@ export class HomeComponent implements OnInit {
     }
 
 
-    if (!PreferencesService.colorButton) {
+    if (!PreferencesService.colorApp) {
       this.colorSeleccionado = {
         id: 2,
         nombre: "Primario",
@@ -251,10 +251,20 @@ export class HomeComponent implements OnInit {
       };
 
     } else {
-      let indexColor: number = +PreferencesService.colorButton;
+      let indexColor: number = +PreferencesService.colorApp;
       this.colorSeleccionado = this.colores[indexColor];
     }
 
+    if (!PreferencesService.fondoApp) {
+      this.fondoSeleccionado = {
+        id: 1,
+        nombre: "Principal",
+        valor: "#FEF5E7"
+      }
+    } else {
+      let indexColor: number = +PreferencesService.fondoApp;
+      this.fondoSeleccionado = this.colores[indexColor];
+    }
 
   }
 
@@ -285,6 +295,7 @@ export class HomeComponent implements OnInit {
   sizeSelect?: FontSizeInterface;
 
   colorSeleccionado: ColorInterface | null = null;
+  fondoSeleccionado: ColorInterface | null = null;
 
   colores: ColorInterface[] = [
     {
@@ -378,10 +389,16 @@ export class HomeComponent implements OnInit {
 
   }
 
-  seleccionarColor(color: ColorInterface, index : number): void {
+  seleccionarColor(color: ColorInterface, index: number): void {
     this.colorSeleccionado = color;
     //Guardar la preferencia
-    PreferencesService.colorButton = index.toString();
+    PreferencesService.colorApp = index.toString();
+  }
+
+  seleccionarFondo(color: ColorInterface, index: number): void {
+    this.fondoSeleccionado = color;
+    //Guardar la preferencia
+    PreferencesService.fondoApp = index.toString();
   }
 
   isColorDark(color: string): boolean {
@@ -400,6 +417,7 @@ export class HomeComponent implements OnInit {
     return brightness < 128;
   }
 
+  panelOpenState: boolean = false;
 
   ngOnInit(): void {
 

@@ -276,36 +276,66 @@
                     </mat-radio-group>
                 </div>
 
-                <div class="lenguajes" *ngIf="color">
-                    <div class="temaOscuro">
-                        <mat-icon class="ico-tema">palette</mat-icon>
-                        <div class="desc-tema">
-                            <p class="titulo-tema">Paleta de Colores</p>
-                            <p class="marBott">Eliga el color de los botones.</p>
-                            <button mat-raised-button
-                                [ngStyle]="{
-                            'background-color': colorSeleccionado?.valor ?? null,
-                            'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
-                                {{colorSeleccionado?.nombre ?? "Selecciona un color."}}
-                            </button>
-                        </div>
-                    </div>
-                    <p class="separador"></p>
-
-                    <div class="contenido-color">
-                        <div class="paleta-color">
-                            <div class="opcion-color" *ngFor="let color of colores, let index = index"
-                                (click)="seleccionarColor(color, index)">
-                                <span class="spacer"></span>
-                                <p class="circulo"
-                                    [ngClass]="{'circulo-seleccionado': colorSeleccionado?.id === color.id}"
-                                    [ngStyle]="{'background-color': color.valor}">
-                                </p>
-                                <span class="spacer"></span>
+                <div class="horarioLaboral" *ngIf="color">
+                    <mat-accordion class="opciones-colores">
+                        <span class="spacer"></span>
+                        <mat-expansion-panel class="acordeon" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="titulo-acordeon">
+                                    <p>Color</p>
+                                    <span class="spacer"></span>
+                                    <button mat-raised-button
+                                        [ngStyle]="{
+                                    'background-color': colorSeleccionado?.valor ?? null,
+                                    'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
+                                        {{colorSeleccionado?.nombre ?? "Selecciona un color."}}
+                                    </button>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="paleta-color">
+                                <div class="opcion-color" *ngFor="let color of colores, let index = index"
+                                    (click)="seleccionarColor(color, index)">
+                                    <span class="spacer"></span>
+                                    <p class="circulo"
+                                        [ngClass]="{'circulo-seleccionado': colorSeleccionado?.id === color.id}"
+                                        [ngStyle]="{'background-color': color.valor}">
+                                    </p>
+                                    <span class="spacer"></span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </mat-expansion-panel>
+                        <span class="spacer"></span>
+                    </mat-accordion>
 
+                    <mat-accordion class="opciones-colores">
+                        <span class="spacer"></span>
+                        <mat-expansion-panel class="acordeon" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="titulo-acordeon">
+                                    <p>Fondo</p>
+                                    <span class="spacer"></span>
+                                    <button mat-raised-button
+                                        [ngStyle]="{
+                                    'background-color': fondoSeleccionado?.valor ?? null,
+                                    'color': fondoSeleccionado ? (isColorDark(fondoSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
+                                        {{fondoSeleccionado?.nombre ?? "Selecciona un color."}}
+                                    </button>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="paleta-color">
+                                <div class="opcion-color" *ngFor="let color of colores, let index = index"
+                                    (click)="seleccionarFondo(color, index)">
+                                    <span class="spacer"></span>
+                                    <p class="circulo"
+                                        [ngClass]="{'circulo-seleccionado': fondoSeleccionado?.id === color.id}"
+                                        [ngStyle]="{'background-color': color.valor}">
+                                    </p>
+                                    <span class="spacer"></span>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                        <span class="spacer"></span>
+                    </mat-accordion>
 
                 </div>
                 <!-- Mostrar detalles del usuario -->

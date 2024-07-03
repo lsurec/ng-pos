@@ -36,7 +36,8 @@ export class PreferencesService {
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
     private static readonly imgEmpresaKey: string = 'imgEmpresa';
-    private static readonly colorButtonKey: string = 'colorButton';
+    private static readonly colorAppKey: string = 'colorButton';
+    private static readonly fondoAppKey: string = 'fondoApp';
 
 
 
@@ -370,12 +371,23 @@ export class PreferencesService {
     }
 
     @Input()
-    static set colorButton(value: string) {
-        localStorage.setItem(this.colorButtonKey, value);
+    static set colorApp(value: string) {
+        localStorage.setItem(this.colorAppKey, value);
     }
 
-    static get colorButton(): string {
-        let value = localStorage.getItem(this.colorButtonKey);
+    static get colorApp(): string {
+        let value = localStorage.getItem(this.colorAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set fondoApp(value: string) {
+        localStorage.setItem(this.fondoAppKey, value);
+    }
+
+    static get fondoApp(): string {
+        let value = localStorage.getItem(this.fondoAppKey);
         if (!value) return "";
         return value;
     }
