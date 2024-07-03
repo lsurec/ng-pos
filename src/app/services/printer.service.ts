@@ -1866,6 +1866,11 @@ export class PrinterService {
                     text: `${this._translate.instant('pos.factura.no_interno')} ${doc.documento.noInterno}`,
                     style: 'center',
                 },
+                {
+                    //TODO:Translate
+                    text: `Cons. Interno: ${doc.documento.consecutivo}`,
+                    style: 'center',
+                },
                 //TODO:Agregar datos de certificacion
                 {
                     margin: [0, 10, 0, 0],

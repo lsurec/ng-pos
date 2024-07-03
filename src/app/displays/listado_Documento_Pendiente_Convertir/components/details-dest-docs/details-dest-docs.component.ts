@@ -163,6 +163,7 @@ export class DetailsDestDocsComponent {
 
     //datos del documento
     let documento: DocumentoData = {
+      consecutivo: 0,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: this._translate.instant('pos.factura.documento_generico'),
       fechaCert: "",

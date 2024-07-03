@@ -1185,6 +1185,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     let documento: DocumentoData = {
+      consecutivo: this.consecutivoDoc,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
       fechaCert: isFel ? `${fechaCert} ${horaCert}` : "",
