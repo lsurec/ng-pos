@@ -78,6 +78,7 @@
                         <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
                         <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                         <p class="ajustesMenu" *ngIf="sizes">{{'pos.preferencias.fuente' | translate}}</p>
+                        <p class="ajustesMenu" *ngIf="color">Preferencia de Colores</p>
 
                     </div>
                     <span class="spacer"></span>
@@ -122,6 +123,16 @@
                             <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
                         </div>
                     </div>
+                    <!-- Colores -->
+                    <!-- <div class="configuraciones" (click)="verColor()">
+                        <mat-icon class="iconos-detalles">palette</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">Paleta de colores</p>
+                            <p class="descripcion">Cambia los colores de tu preferencia.</p>
+                        </div>
+                    </div> -->
+
                     <!-- Digitos -->
                     <div class="configuraciones-digitos">
                         <mat-icon class="iconos-detalles">123</mat-icon>
@@ -264,6 +275,28 @@
                             {{'pos.home.inactivo' | translate}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
+
+                <div class="lenguajes" *ngIf="color">
+                    <div class="temaOscuro">
+                        <mat-icon class="ico-tema">palette</mat-icon>
+                        <div class="desc-tema">
+                            <p class="titulo-tema">Paleta de Colores</p>
+                            <p class="descripcion-tema">Eliga el color de los botones.</p>
+                        </div>
+                    </div>
+                    <p class="separador"></p>
+
+                    <div class="paleta-color">
+
+                        <div class="opcion-color" *ngFor="let color of colores">
+                            <span class="spacer"></span>
+                            <p class="circulo" [ngStyle]="{'background-color': color.valor}"></p>
+                            <span class="spacer"></span>
+                        </div>
+
+                    </div>
+
+                </div>
                 <!-- Mostrar detalles del usuario -->
 
                 <div class="detallesUsuario" *ngIf="detallesUsuario">
@@ -360,6 +393,13 @@
                 </mat-toolbar>
                 <!-- Regresar tema -->
                 <mat-toolbar class="backColorNavBar" *ngIf="temas">
+                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+
+                <!-- Regresar colores -->
+                <mat-toolbar class="backColorNavBar" *ngIf="color">
                     <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
                         <mat-icon>arrow_back</mat-icon>
                     </button>

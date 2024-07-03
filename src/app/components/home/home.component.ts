@@ -36,6 +36,7 @@ import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.se
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { CurrencyPipe } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
+import { ColorInterface } from 'src/app/interfaces/filtro.interface';
 
 
 @Component({
@@ -86,6 +87,61 @@ export class HomeComponent implements OnInit {
   sizes: boolean = false;
   btnRegresar: boolean = false;
   tema!: number;
+  color: boolean = false;
+
+  colores: ColorInterface[] = [
+    {
+      id: 1,
+      valor: "#FF0000",
+      nombre: "Rojo"
+    },
+    {
+      id: 2,
+      valor: "#FFFF00",
+      nombre: "Amarillo"
+    },
+    {
+      id: 3,
+      valor: "#0000FF",
+      nombre: "Azul"
+    },
+    {
+      id: 4,
+      valor: "#008000",
+      nombre: "Verde"
+    },
+    {
+      id: 5,
+      valor: "#FFA500",
+      nombre: "Naranja"
+    },
+    {
+      id: 6,
+      valor: "#800080",
+      nombre: "Morado"
+    },
+    {
+      id: 7,
+      valor: "#FFC0CB",
+      nombre: "Rosa"
+    },
+    {
+      id: 8,
+      valor: "#00FFFF",
+      nombre: "Celeste"
+    },
+    {
+      id: 9,
+      valor: "#6F4E37",
+      nombre: "Café"
+    },
+    {
+      id: 10,
+      valor: "#000000",
+      nombre: "Negro"
+    },
+  ];
+
 
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
@@ -839,6 +895,7 @@ export class HomeComponent implements OnInit {
     this.horasLaborales = false;
     this.horaInicio = false;
     this.horaFin = false;
+    this.color = false;
   };
 
   verTema(): void {
@@ -847,14 +904,24 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
 
     this.idiomas = false;
+    this.color = false;
   }
+
+  verColor(): void {
+    this.color = true;
+    this.temas = false;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+    this.idiomas = false;
+  }
+
 
   //Mostrar pantalla de "MENU" y mantener ocultas todas las demas
   verMenu(): void {
     this.ajustes = true;
     this.detallesUsuario = false;
-
     this.idiomas = false;
+    this.color = false;
   };
 
   //Mostrar pantalla de "DETALLES DE USUARIO" y mantener ocultas todas las demas
@@ -866,6 +933,7 @@ export class HomeComponent implements OnInit {
     this.setDias = false;
     this.horaInicio = false;
     this.horaFin = false;
+    this.color = false;
   };
 
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas
@@ -873,28 +941,15 @@ export class HomeComponent implements OnInit {
     this.idiomas = true;
     this.ajustes = false;
     this.detallesUsuario = false;
+    this.color = false;
   };
-
-  verDecimales(): void {
-    this.sizes = false;
-    this.idiomas = false;
-    this.ajustes = false;
-    this.detallesUsuario = false;
-  };
-
-  verDigitos(): void {
-    this.sizes = false;
-    this.idiomas = false;
-    this.ajustes = false;
-    this.detallesUsuario = false;
-  };
-
 
   verSizes(): void {
     this.sizes = true;
     this.idiomas = false;
     this.ajustes = false;
     this.detallesUsuario = false;
+    this.color = false;
   };
 
 

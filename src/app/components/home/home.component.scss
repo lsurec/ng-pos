@@ -672,3 +672,23 @@ h2 {
     display    : flex;
     align-items: center;
 }
+
+.paleta-color {
+    padding              : 5px 10px;
+    display              : grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap                  : 10px;
+    /* Espacio entre los elementos, ajusta según tu necesidad */
+}
+
+.opcion-color {
+    display    : flex;
+    align-items: center;
+    margin     : 10px 0px;
+}
+
+.circulo {
+    width        : 45px;
+    height       : 45px;
+    border-radius: 50%;
+}
