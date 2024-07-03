@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
@@ -34,7 +34,7 @@ import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/prov
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 import { ColorInterface } from 'src/app/interfaces/filtro.interface';
 
@@ -147,7 +147,9 @@ export class HomeComponent implements OnInit {
     private _globalConvertService: GlobalConvertService,
     private _receptionService: ReceptionService,
     private _http: HttpClient,
-    private customDatepickerI18n: CustomDatepickerI18n
+    private customDatepickerI18n: CustomDatepickerI18n,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -255,14 +257,14 @@ export class HomeComponent implements OnInit {
       this.colorSeleccionado = this.colores[indexColor];
     }
 
-    if (!PreferencesService.fondoApp) {
+    if (!PreferencesService.indexFondoApp) {
       this.fondoSeleccionado = {
         id: 1,
         nombre: "Principal",
         valor: "#FEF5E7"
       }
     } else {
-      let indexColor: number = +PreferencesService.fondoApp;
+      let indexColor: number = +PreferencesService.indexFondoApp;
       this.fondoSeleccionado = this.colores[indexColor];
     }
 
@@ -396,9 +398,12 @@ export class HomeComponent implements OnInit {
   }
 
   seleccionarFondo(color: ColorInterface, index: number): void {
+    console.log('Color seleccionado:', color);
     this.fondoSeleccionado = color;
+    PreferencesService.indexFondoApp = index.toString();
     //Guardar la preferencia
-    PreferencesService.fondoApp = index.toString();
+    PreferencesService.fondoApp = this.colores[index].valor;
+
   }
 
   isColorDark(color: string): boolean {

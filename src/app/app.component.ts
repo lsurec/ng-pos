@@ -48,11 +48,25 @@ export class AppComponent implements OnInit {
     } else {
       _themeService.globalFontSize = getFontSize;
     }
+
+    //color de fondo
+    let getColorFondo: string = PreferencesService.fondoApp;
+
+    if (!getColorFondo) {
+      _themeService.color = "#FEF5E7";
+    } else {
+      _themeService.color = getColorFondo;
+    }
+
+    console.log(PreferencesService.fondoApp);
+    
   }
 
   ngOnInit(): void {
     // Obtener el valor de globalFontSize del servicio y establecerlo como una variable CSS
     document.documentElement.style.setProperty('--global-font-size', this._themeService.globalFontSize);
+    document.documentElement.style.setProperty('--global-color-fondo', this._themeService.color);
+
   }
 
 }

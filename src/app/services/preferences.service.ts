@@ -38,6 +38,7 @@ export class PreferencesService {
     private static readonly imgEmpresaKey: string = 'imgEmpresa';
     private static readonly colorAppKey: string = 'colorButton';
     private static readonly fondoAppKey: string = 'fondoApp';
+    private static readonly indexFondoAppKey: string = 'indexFondoApp';
 
 
 
@@ -388,6 +389,17 @@ export class PreferencesService {
 
     static get fondoApp(): string {
         let value = localStorage.getItem(this.fondoAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set indexFondoApp(value: string) {
+        localStorage.setItem(this.indexFondoAppKey, value);
+    }
+
+    static get indexFondoApp(): string {
+        let value = localStorage.getItem(this.indexFondoAppKey);
         if (!value) return "";
         return value;
     }
