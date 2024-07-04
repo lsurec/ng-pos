@@ -6,11 +6,11 @@ $color-gris-s         : #777; //sombra y texto gris
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
+$background-scrollbar : var(--global-color); //barra rosada
 $sombra               : rgba(0, 0, 0, 0.1);
 $placeholder          : rgba(0, 0, 0, 0.20);
 $requerido            : rgba(0, 0, 0, 0.05);
+$color-personalizado  : var(--global-color);
 
 .spacer {
     flex: 1 1 auto;
@@ -108,7 +108,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     left       : 1.5%;
     /* Ajusta la posición horizontalmente según sea necesario */
     transform  : translateY(-50%);
-    color      : $color-azul;
+    color      : $color-personalizado;
     align-items: center;
 }
 
@@ -123,7 +123,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     outline      : none;
     border-style : none;
     border       : 0.5px solid #c1bfbf;
-    color        : $color-azul;
+    color        : $color-personalizado;
     border-radius: 20px;
 }
 
@@ -131,11 +131,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     font-size    : 12px;
     text-align   : right;
     padding-right: 20px;
-}
-
-.coincidencias:hover {
-    cursor: pointer;
-    color : $color-azul;
+    cursor       : pointer;
 }
 
 .tipo-busqueda {
@@ -163,7 +159,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     bottom          : 75px;
     right           : 40px;
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $color-personalizado;
 }
 
 
@@ -175,7 +171,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     right           : 40px;
     /* Ajusta la posición según tus preferencias */
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     /* Ajusta el color según tus preferencias */
 }
 
@@ -259,9 +255,9 @@ p {
 }
 
 .selected {
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     color           : #fff;
-    border          : 1px solid $color-azul;
+    border          : 1px solid $color-personalizado;
 }
 
 .descripcion {
@@ -277,6 +273,6 @@ p {
 }
 
 .boton-azul {
-    background-color: $color-azul !important;
+    background-color: $color-personalizado !important;
     color           : $color-blanco !important;
 }

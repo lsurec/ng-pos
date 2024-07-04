@@ -1,9 +1,9 @@
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris           : #777; //sombra y texto gris
-$color-azul           : #134895; // fondo, bordes y texto azul
+$color-azul           : var(--global-color); // fondo, bordes y texto azul
 $color-blanco         : #fff; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar : var(--global-color); //barra azul
 $bordes               : rgba(0, 0, 0, 0.12);
 $color-naranja        : #df9722;
 $color-rojo           : #cc4141;

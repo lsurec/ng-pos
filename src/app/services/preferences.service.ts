@@ -39,6 +39,7 @@ export class PreferencesService {
     private static readonly colorAppKey: string = 'colorButton';
     private static readonly fondoAppKey: string = 'fondoApp';
     private static readonly indexFondoAppKey: string = 'indexFondoApp';
+    private static readonly indexColorAppKey: string = 'indexColor';
 
 
 
@@ -400,6 +401,17 @@ export class PreferencesService {
 
     static get indexFondoApp(): string {
         let value = localStorage.getItem(this.indexFondoAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set indexColorApp(value: string) {
+        localStorage.setItem(this.indexColorAppKey, value);
+    }
+
+    static get indexColorApp(): string {
+        let value = localStorage.getItem(this.indexColorAppKey);
         if (!value) return "";
         return value;
     }

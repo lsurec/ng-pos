@@ -253,7 +253,7 @@ export class HomeComponent implements OnInit {
       };
 
     } else {
-      let indexColor: number = +PreferencesService.colorApp;
+      let indexColor: number = +PreferencesService.indexColorApp;
       this.colorSeleccionado = this.colores[indexColor];
     }
 
@@ -394,7 +394,9 @@ export class HomeComponent implements OnInit {
   seleccionarColor(color: ColorInterface, index: number): void {
     this.colorSeleccionado = color;
     //Guardar la preferencia
-    PreferencesService.colorApp = index.toString();
+    PreferencesService.colorApp = this.colores[index].valor;
+    PreferencesService.indexColorApp = index.toString();
+
   }
 
   seleccionarFondo(color: ColorInterface, index: number): void {

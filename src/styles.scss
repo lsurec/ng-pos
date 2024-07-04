@@ -19,8 +19,10 @@ $negro                   : #000;
 $tareas                  : #939292;
 $notificaciones          : #182420;
 $texto-notificacion      : #ff4081;
-$texto-notificacion      :#ff4081;
+$texto-notificacion      : #ff4081;
 $azul-menu               : #134895;
+$color-personalizado     : var(--global-color);
+
 
 html,
 body {
@@ -91,7 +93,8 @@ body {
         font-weight: 500 !important;
     }
 
-    .container_main, .tarea {
+    .container_main,
+    .tarea {
         background-color: var(--global-color-fondo) !important;
     }
 
@@ -116,6 +119,53 @@ input[type='number'] {
         margin            : 0;
     }
 }
+
+/* Personalizar el color del radio button */
+input[type="radio"] {
+    &:checked {
+        background-color: $color-personalizado !important;
+        /* Color de fondo cuando está seleccionado */
+    }
+
+    &:checked::before {
+        border-color: $color-personalizado !important;
+        /* Color del borde cuando está seleccionado */
+    }
+
+    &:before {
+        border-color: $color-personalizado !important;
+        /* Color del borde cuando no está seleccionado */
+    }
+}
+
+/* Personalizar el color del círculo interior del radio button */
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
+    background-color: $color-personalizado !important;
+    border-color    : $color-personalizado !important;
+}
+
+/* Personalizar el color del borde exterior del radio button cuando está seleccionado */
+/* Personalizar el color del borde exterior del radio button cuando está seleccionado */
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
+    border-color: $color-personalizado !important;
+    border-color: $color-personalizado !important;
+}
+
+/* Personalizar el color del borde exterior del radio button cuando no está seleccionado */
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__outer-circle {
+    border-color: $color-personalizado !important;
+}
+
+/* Personalizar el color del borde exterior del radio button cuando está seleccionado (antes del pseudo-elemento) */
+.mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
+    border-color: $color-personalizado !important;
+}
+
+/* Personalizar la sombra del radio button cuando no está seleccionado */
+.mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background {
+    box-shadow: none !important;
+}
+
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

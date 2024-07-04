@@ -1,10 +1,10 @@
-$color-naranja      : #df9722;
-$color-negro        : #000000;
-$color-blanco       : #fff;
-$color-gris         : #c1bfbf;
-$color-azul         : #134895;
-$background-oficial : #FEF5E7; //fondo Demosoft
-
+$color-naranja       : #df9722;
+$color-negro         : #000000;
+$color-blanco        : #fff;
+$color-gris          : #c1bfbf;
+$color-azul          : var(--global-color);
+$background-oficial  : #FEF5E7; //fondo Demosoft
+$color-personalizado : var(--global-color);
 
 .container_main {
     width     : 100% !important;
