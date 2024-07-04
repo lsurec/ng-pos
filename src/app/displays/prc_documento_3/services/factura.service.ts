@@ -457,7 +457,7 @@ export class FacturaService {
         transaccion.isChecked = this.selectAllTra;
 
         //Agregar transaccion
-        this.traInternas.push(transaccion);
+        this.traInternas.unshift(transaccion);
 
         this.searchText = "";
 
