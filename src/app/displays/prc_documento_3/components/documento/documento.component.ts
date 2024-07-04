@@ -754,12 +754,12 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     //si no hay coicidencias Buscar nit en 
     if (cuentas.length == 0) {
 
-      // if (!this.facturaService.valueParametro(349)) {
-      //   this.facturaService.isLoading = false;
-      //   this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
+      if (!this.facturaService.valueParametro(349)) {
+        this.facturaService.isLoading = false;
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
 
-      //   return;
-      // }
+        return;
+      }
 
       let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
 

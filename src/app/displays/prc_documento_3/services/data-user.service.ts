@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class DataUserService {
 
 
-  static version:string = "1.0.0";
+  version:string = "1.0.0";
 
   //Nombre del display al que se está navegando
   nameDisplay: string = "";
