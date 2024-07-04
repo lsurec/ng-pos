@@ -140,7 +140,6 @@ export class LocalConfigComponent implements OnInit {
     //Si solo hay una estacion de trabajo disponible seleccionarla por defecto
     if (this.empresas.length == 1) {
       this.empresaSelect = this.empresas[0];
-      PreferencesService.imgEmpresa = this.empresas[0].empresa_Img;
     }
 
     this.requerido = false;
@@ -162,8 +161,6 @@ export class LocalConfigComponent implements OnInit {
     //Guardar empresa y estacion seleccionada en el Storage y navegar a Home
     PreferencesService.empresa = this.empresaSelect;
     PreferencesService.estacion = this.estacionSelect;
-    PreferencesService.imgEmpresa = this.empresaSelect.empresa_Img;
-
 
     let user: string = PreferencesService.user;
     let token: string = PreferencesService.token;

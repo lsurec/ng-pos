@@ -17,6 +17,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +49,8 @@ export class LoginComponent {
     private _widgetsService: NotificationsService,
     private _tipoCambioService: TipoCambioService,
     private _localSettingsService: LocalSettingsService,
+    public dataUserService: DataUserService,
+
   ) {
   }
 
@@ -150,7 +153,6 @@ export class LoginComponent {
     if (empresas.length == 1 && estaciones.length == 1) {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
-      PreferencesService.imgEmpresa = PreferencesService.empresa.empresa_Img;   
 
       //Cargar tipo cambio
       let resTipoCammbio = await this._tipoCambioService.getTipoCambio(

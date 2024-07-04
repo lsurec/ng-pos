@@ -47,15 +47,18 @@
 
                 <div class="dFlex" *ngIf="urlStorage">
                     <span class="spacer"></span>
-                    <button mat-stroked-button type="button" (click)="goBack()">{{'pos.botones.cancelar' |
-                        translate}}</button>
+                    <button mat-stroked-button type="button" (click)="goBack()">
+                        {{'pos.botones.cancelar' | translate}}</button>
                     <span class="spacer"></span>
-                    <button mat-stroked-button type="submit">{{'pos.botones.cambiar' |
-                        translate}}</button>
+                    <button mat-stroked-button type="submit">
+                        {{'pos.botones.cambiar' | translate}}</button>
                     <span class="spacer"></span>
                 </div>
             </form>
-
+            <div class="version">
+                <p class="num-version">{{'pos.home.versionActual' | translate}}: </p>
+                <p class="num-version">{{dataUserService.version}}</p>
+            </div>
         </div>
     </div>
     <!-- Mostrar logos -->

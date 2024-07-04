@@ -1,7 +1,7 @@
 <!-- Logo empresa y Logo Demosoft -->
 <mat-toolbar-row class="head__sidenav__bottom">
     <div class="logos">
-        <img *ngIf="verLogo && codigoImg != undefined" class=" img_empresas" [src]="empresaImg" alt="Logo">
+        <img *ngIf="empresaImg.length >21" class=" img_empresas" [src]="empresaImg" alt="Logo">
         <span class="spacer"></span>
         <p class="desa">© 2024 Desarrollo Moderno de Software S.A.</p>
         <span class="spacer"></span>

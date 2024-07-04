@@ -106,3 +106,17 @@ p {
     }
 
 }
+
+.version {
+    display    : flex;
+    align-items: center;
+    position   : absolute;
+    bottom     : 70px;
+    right      : 15px;
+    cursor     : auto;
+}
+
+.num-version {
+    color       : #777;
+    padding-left: 5px;
+}

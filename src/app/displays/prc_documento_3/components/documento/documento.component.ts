@@ -22,7 +22,6 @@ import { Subscription } from 'rxjs';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { FelService } from '../../services/fel.service';
 import { CredencialInterface } from '../../interfaces/credencial.interface';
-import { InfileNitParamInterface } from '../../interfaces/Infile-nit-param.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 
@@ -744,19 +743,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.facturaService.isLoading = false;
 
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resCuenta);
+      this.showError(resCuenta);
 
       return;
 
@@ -780,19 +767,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.facturaService.isLoading = false;
 
-
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resCredenciales);
+        this.showError(resCredenciales);
 
         return;
 
@@ -826,59 +801,28 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       let cleanedString = this.facturaService.searchClient.replace(/[\s\-]/g, '');
 
 
+      let resRecpetor: ResApiInterface = await this._felService.getReceptor(
+        this.token,
+        llaveApi,
+        usuarioApi,
+        cleanedString,
+      );
 
-      let paramNit: InfileNitParamInterface = {
-        emisor_clave: llaveApi,
-        emisor_codigo: usuarioApi,
-        nit_consulta: cleanedString,
 
-      };
-
-
-      let resInfileNit: ResApiInterface = await this._felService.getNIt(paramNit);
-
-      if (!resInfileNit.status) {
-
+      if (!resRecpetor.status) {
         this.facturaService.isLoading = false;
 
-
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resInfileNit);
-
+        this.showError(resRecpetor);
         return;
-
       }
 
-      let dataNit: DataNitInterface = resInfileNit.response;
 
-
-      if (!dataNit.nombre) {
-
+      if (!resRecpetor.response) {
         this.facturaService.isLoading = false;
-
-
         this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
-        this.facturaService.searchClient = "";
-
         return;
       }
 
-
-      let nombres: string[] = dataNit.nombre.split(",,");
-
-      dataNit.nombre = nombres.reverse().map(item => {
-        return item.split(',').join(' ');
-      }).join(' ');
 
       //Crear cuenta correntista
       //nueva cuneta
@@ -888,13 +832,11 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         cuenta: 0,
         cuentaCuenta: "",
         nit: this.facturaService.searchClient,
-        nombre: dataNit.nombre,
+        nombre: resRecpetor.response,
         telefono: "",
         grupoCuenta: 0,
 
       }
-
-
 
       //Usar servicio para actualizar cuenta
       let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
@@ -910,19 +852,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.facturaService.isLoading = false;
 
-
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resCuenta);
+        this.showError(resCuenta);
 
         return;
 
@@ -941,23 +871,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       // si falló la buqueda de la cuenta creada
       if (!infoCuenta.response) {
         this.facturaService.isLoading = false;
-
-        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
-
-
-        let verificador = await this._notificationService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(infoCuenta);
-
+        this.showError(infoCuenta);
         return;
       }
 
@@ -1097,6 +1011,25 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.focusAndSelectText();
     }, 0);
+  }
+
+  async showError(err: ResApiInterface) {
+
+    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
+
+
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.verError(err);
   }
 
 }

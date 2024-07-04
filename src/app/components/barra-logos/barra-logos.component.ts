@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PreferencesService } from 'src/app/services/preferences.service';
 
 @Component({
@@ -6,24 +6,18 @@ import { PreferencesService } from 'src/app/services/preferences.service';
   templateUrl: './barra-logos.component.html',
   styleUrls: ['./barra-logos.component.scss']
 })
-export class BarraLogosComponent {
+export class BarraLogosComponent implements OnInit {
 
-  verLogo: boolean = false;
-  empresaImg?: string;
-
-  codigoImg?: string;
-
+  empresaImg: string = "";
 
   constructor() {
-
-    if (PreferencesService.imgEmpresa) {
-
-      PreferencesService.imgEmpresa = PreferencesService.empresa.empresa_Img;
-      this.codigoImg = PreferencesService.empresa.empresa_Img;
-      this.empresaImg = "data:image/png;base64," + PreferencesService.imgEmpresa;
-      this.verLogo = true;
-    }
-
   }
+
+  ngOnInit(): void {
+    if (PreferencesService.empresa.empresa_Img) {
+      this.empresaImg = "data:image/png;base64," + PreferencesService.empresa.empresa_Img;
+    }
+  }
+
 
 }
