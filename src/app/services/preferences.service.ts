@@ -35,7 +35,6 @@ export class PreferencesService {
     private static readonly nuevoDocKey: string = 'nuevoDoc';
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
-    private static readonly imgEmpresaKey: string = 'imgEmpresa';
     private static readonly colorAppKey: string = 'colorButton';
     private static readonly fondoAppKey: string = 'fondoApp';
     private static readonly indexFondoAppKey: string = 'indexFondoApp';
@@ -352,19 +351,6 @@ export class PreferencesService {
 
     static get decimales(): string {
         let value = localStorage.getItem(this.decimalesKey);
-        if (!value) return "";
-        return value;
-    }
-
-    //Imagen de la empresa
-
-    @Input()
-    static set imgEmpresa(value: string) {
-        localStorage.setItem(this.imgEmpresaKey, value);
-    }
-
-    static get imgEmpresa(): string {
-        let value = localStorage.getItem(this.imgEmpresaKey);
         if (!value) return "";
         return value;
     }
