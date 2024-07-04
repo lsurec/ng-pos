@@ -5,7 +5,6 @@ import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { DataInfileInterface } from '../interfaces/data.infile.interface';
 import { ParamUpdateXMLInterface } from '../interfaces/param-update-xml.interface';
-import { InfileNitParamInterface } from '../interfaces/Infile-nit-param.interface';
 
 @Injectable()
 export class FelService {
@@ -15,27 +14,40 @@ export class FelService {
     constructor(private _http: HttpClient) {
     }
 
-
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getNit(
-       nit:InfileNitParamInterface,
+    private _getReceptor(
+        token: string,
+        llave:string,
+        prefijo:string,
+        recpetor:string,
     ) {
 
-        let headers = new HttpHeaders({ "Content-Type": "application/json" })
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "llave": llave,
+                "prefijo": prefijo,
+                "receptor": recpetor,
+            }
+        )
 
-        let paramsStr = JSON.stringify(nit); //JSON to String
         //consumo de api
-        return this._http.post(`https://consultareceptores.feel.com.gt/rest/action`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Fel/consulta/receptor`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa  para obtener las empresas
-    getNIt(
-        nit:InfileNitParamInterface,
-
+    getReceptor(
+        token: string,
+        llave:string,
+        prefijo:string,
+        recpetor:string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getNit(
-                nit
+            this._getReceptor(
+               token,
+               llave,
+               prefijo,
+               recpetor,
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -43,7 +55,7 @@ export class FelService {
 
                     let resApi: ResApiInterface = {
                         status: true,
-                        response: res.body,
+                        response: response.data,
                         storeProcedure: response.storeProcedure
                     }
                     resolve(resApi);
@@ -89,17 +101,15 @@ export class FelService {
         });
     }
 
-
-
-    
+   
     //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
     private _postXmlUpdate(
-        token:string,
+        token: string,
         credenciales: ParamUpdateXMLInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(credenciales); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json", "Authorization": "bearer " + token, })
-        
+
         //consumo de api
         return this._http.post(`${this._urlBase}Fel/doc/xml`, paramsStr, { headers: headers, observe: 'response' });
 
@@ -107,7 +117,7 @@ export class FelService {
 
     //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
     postXmlUpdate(
-        token:string,
+        token: string,
         credenciales: ParamUpdateXMLInterface): Promise<ResApiInterface> {
         //consumo primer servicio
         return new Promise((resolve, reject) => {
@@ -167,14 +177,14 @@ export class FelService {
 
     //funcion que va a realizar consumo privado para validar lascredenciales dl usuario y obtner un token de acceso
     private _posInfile(
-        api:string,
-        data:DataInfileInterface,     
-        token:string,   
-        ) {
+        api: string,
+        data: DataInfileInterface,
+        token: string,
+    ) {
         //configurar headers
         let paramsStr = JSON.stringify(data); //JSON to String
-        let headers = new HttpHeaders({ "Content-Type": "application/json",  "Authorization": "bearer " + token, })
-        
+        let headers = new HttpHeaders({ "Content-Type": "application/json", "Authorization": "bearer " + token, })
+
         //consumo de api
         return this._http.post(`${this._urlBase}Fel/infile/${api}`, paramsStr, { headers: headers, observe: 'response' });
 
@@ -182,9 +192,9 @@ export class FelService {
 
     //funcion asyncrona con promise para validar lascredenciales dl usuario y obtner un token de acceso
     postInfile(
-        api:string,
-        data:DataInfileInterface,  
-        token:string, 
+        api: string,
+        data: DataInfileInterface,
+        token: string,
     ): Promise<ResApiInterface> {
         //consumo primer servicio
         return new Promise((resolve, reject) => {
@@ -412,8 +422,8 @@ export class FelService {
     }
 
 
-     //funcion que va a realizar el consumo privado para obtener las empresas
-     private _getDocXmlCert(
+    //funcion que va a realizar el consumo privado para obtener las empresas
+    private _getDocXmlCert(
         user: string,
         token: string,
         consecutivo: number,
