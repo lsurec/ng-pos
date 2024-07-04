@@ -10,6 +10,8 @@ export class DataUserService {
   nameDisplay: string = "";
 
   urlImage="";
+
+  
   simboloMoneda: string = " ";
   decimalPlaces: number = 2;
   integerDigits: number = 2;

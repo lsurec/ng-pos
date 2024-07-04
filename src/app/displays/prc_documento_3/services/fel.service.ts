@@ -27,7 +27,7 @@ export class FelService {
                 "Authorization": "bearer " + token,
                 "llave": llave,
                 "prefijo": prefijo,
-                "recpetor": recpetor,
+                "receptor": recpetor,
             }
         )
 
