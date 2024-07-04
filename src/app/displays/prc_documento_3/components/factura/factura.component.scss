@@ -4,13 +4,14 @@ $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
 $color-azul           : #134895; // fondo, bordes y texto azul
 $color-pestanas       : #555;
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar : var(--global-color); //barra azul
 $bordes               : #c1bfbf;
 $idioma-seleccionado  : #5d6d6c;
 $color-negro          : #000; //texto negro
 $color-azul           : #134895; //bordes y texto azul
 $color-blanco         : #fff; //resaltar texto blanco
 $color-gris-s         : #777; //sombra y texto gris
+$color-personalizado  : var(--global-color);
 
 
 .container-main {
@@ -113,7 +114,7 @@ p {
 }
 
 .circulo-inicial {
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     width           : 33px;
     height          : 33px;
     border-radius   : 50%;
@@ -140,7 +141,7 @@ p {
 }
 
 .circular-inicial-grande {
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     margin          : 10px 0px;
     width           : 100px;
     height          : 100px;

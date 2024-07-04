@@ -4,7 +4,7 @@ $color-azul           : #134895; //bordes y texto azul
 $color-gris           : #968989cb; // bordes de comentarios
 $color-2-gris         : #857373c9; //texto, bordes
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :var(--global-color); //barra azul
 $background-detalles  : #dad2d286; //fondo detalles 
 $background-flecha    : #3b3939cb; //fondo triangulo
 $background-transparent: transparent; //fondo transparennte, 
@@ -118,6 +118,7 @@ hr {
 
 p {
     margin: 0px;
+    color : #000;
 }
 
 @media screen and (max-width: 767px) {

@@ -8,7 +8,7 @@ $color-gris-s         : #777; //sombra y texto gris
 $color-blanco         : #fff; //texto blanco
 $color-gris           : #efefef;
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 
 .contenido {
     display   : flex;

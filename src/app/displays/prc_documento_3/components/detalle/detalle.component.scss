@@ -11,7 +11,7 @@ $color-gris         : #efefef;
 $detalles           : rgb(0 0 0 / 3%);
 $background-transparent: transparent; //fondo transparennte,
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 $sombra               : rgba(0, 0, 0, 0.1);
 
 

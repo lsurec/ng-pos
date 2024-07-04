@@ -167,6 +167,23 @@ input[type="radio"] {
 }
 
 
+.mat-calendar-body-selected {
+    background-color: transparent;
+}
+
+.mat-calendar-body-cell.mat-calendar-body-active::before {
+    content         : "";
+    display         : block;
+    width           : 20px;
+    height          : 20px;
+    background-color: $color-personalizado !important;
+    border-radius   : 50%; // Crea un círculo
+    position        : absolute;
+    top             : 50%;
+    left            : 50%;
+    transform       : translate(-50%, -50%);
+}
+
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 

@@ -5,7 +5,7 @@ $color-gris           : #c1bfbf;
 $color-azul           : #134895;
 $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 $color-verde          : #25a704;
 $color-rojo           : #ce1414;
 $color-pestanas       : #555;

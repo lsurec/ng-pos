@@ -9,7 +9,7 @@ $border-color         : rgba(0, 0, 0, .09);
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
+$background-scrollbar :  var(--global-color); //barra rosada
 $background-botones   : #134895; //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
 

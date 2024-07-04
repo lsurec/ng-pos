@@ -364,6 +364,16 @@ export class HomeComponent implements OnInit {
 
   async cambiarFuente(index: number) {
 
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('crm.alertas.fuete'),
+        description: this._translate.instant('crm.alertas.cambioFuente'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
     this.sizeSelect = this.fontsSizes[index];
 
     this.themeService.globalFontSize = this.sizeSelect.value;
@@ -374,18 +384,6 @@ export class HomeComponent implements OnInit {
 
     PreferencesService.idFontSizeStorage = `${index}`;
 
-    console.log(this.sizeSelect);
-
-
-    let verificador: boolean = await this._notificationsService.openDialogActions(
-      {
-        title: this._translate.instant('crm.alertas.fuete'),
-        description: this._translate.instant('crm.alertas.cambioFuente'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-      }
-    );
-
-    if (!verificador) return;
     // Usando window.location.reload()
     window.location.reload();
 
@@ -597,9 +595,9 @@ export class HomeComponent implements OnInit {
           display: display,
           // Colores configurables para la seleccion de menu.
           colorBackground: display.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
-          colorSelected: display.colorSelected ?? "#134895", // Color al para objeto seleccionado.
+          colorSelected: display.colorSelected ?? PreferencesService.colorApp ?? "#134895", // Color al para objeto seleccionado.
           colorFontNotSelect: display.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada).
-          colorFontSelect: display.colorFontSelect ?? "#FFFFFF", //Color para fuente al ser seleccionada.
+          colorFontSelect: display.colorFontSelect ?? (this.isColorDark(PreferencesService.colorApp) ? '#FFF' : '#000'), //Color para fuente al ser seleccionada.
           colorMargenSelect: display.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
         };
 
@@ -621,9 +619,9 @@ export class HomeComponent implements OnInit {
           route: "",
           children: this.ordenarNodos(padres, hijos),
           colorBackground: item.application.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
-          colorSelected: item.application.colorSelected ?? "#134895", // Color al para objeto seleccionado.
+          colorSelected: item.application.colorSelected ?? PreferencesService.colorApp ?? "#134895", // Color al para objeto seleccionado.
           colorFontNotSelect: item.application.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada).
-          colorFontSelect: item.application.colorFontSelect ?? "#FFFFFF", //Color para fuente al ser seleccionada.
+          colorFontSelect: item.application.colorFontSelect ?? (this.isColorDark(PreferencesService.colorApp) ? '#FFF' : '#000'), //Color para fuente al ser seleccionada.
           colorMargenSelect: item.application.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
           idChild: null,
           idFather: null,

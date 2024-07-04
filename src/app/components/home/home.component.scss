@@ -7,10 +7,11 @@ $color-naranja        : #df9722;
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
+$background-scrollbar : var(--global-color); //barra rosada
 $background-botones   : #134895; //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
-$color-bordes : rgba(0, 0, 0, 0.12); //bordes menu
+$color-bordes        : rgba(0, 0, 0, 0.12); //bordes menu
+$color-personalizado : var(--global-color);
 
 //Pantalla de carga centrada
 .progress {
@@ -103,35 +104,27 @@ mat-sidenav {
 /*Fin Toolbar*/
 
 /*Contendo derecho*/
-
-.container_main::-webkit-scrollbar {
+.container_main::-webkit-scrollbar,
+.horarioLaboral::-webkit-scrollbar,
+.detallesUsuario::-webkit-scrollbar,
+.toolbarNavScreenShort::-webkit-scrollbar {
     width           : 7px;
     background-color: $background-oficial;
 }
 
-.container_main::-webkit-scrollbar-track {
+.container_main::-webkit-scrollbar-track,
+.horarioLaboral::-webkit-scrollbar-track,
+.detallesUsuario::-webkit-scrollbar-track,
+.toolbarNavScreenShort::-webkit-scrollbar-track {
     background-color: $background-oficial;
 }
 
-.container_main::-webkit-scrollbar-thumb {
+.container_main::-webkit-scrollbar-thumb,
+.horarioLaboral::-webkit-scrollbar-thumb,
+.detallesUsuario::-webkit-scrollbar-thumb,
+.toolbarNavScreenShort::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
-}
-
-.horarioLaboral::-webkit-scrollbar {
-    width           : 7px;
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-track {
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .toolbarNavScreenShort::-webkit-scrollbar {
@@ -140,22 +133,12 @@ mat-sidenav {
     height          : 5px;
 }
 
-.toolbarNavScreenShort::-webkit-scrollbar-track {
-    background-color: $background-oficial;
-}
-
-.toolbarNavScreenShort::-webkit-scrollbar-thumb {
-    background-color: $background-transparent;
-    border-radius   : 20px;
-    border          : 3px #f3c5d3;
-}
 
 .container_page {
-    height             : calc(100% - 128px);
-    width              : 100vw;
-    // margin-top      : 65px;
-    position           : fixed;
-    background-color   : $background-oficial;
+    height          : calc(100% - 128px);
+    width           : 100vw;
+    position        : fixed;
+    background-color: $background-oficial;
 }
 
 /* Contenedor del menu modulos */
@@ -185,7 +168,7 @@ mat-sidenav {
 
 .container_start::-webkit-scrollbar-thumb {
     border-radius   : 4px;
-    background-color: #134895;
+    background-color: $color-personalizado;
     height          : 10%;
 }
 
@@ -308,14 +291,6 @@ label {
     margin-right: 50px;
 }
 
-.seleccionado,
-.vista:hover,
-.vistaAjustes:hover {
-    background-color: $background-botones;
-    color           : $color-blanco !important;
-    border-left     : 5px solid #DF9722 !important;
-}
-
 // detalles de usuario
 .backColorNavBar {
     background: #FEF5E7;
@@ -364,9 +339,9 @@ label {
 }
 
 .detallesUsuario {
-    background-color   : $background-oficial;
-    height             : calc(100% - 89px);
-    // display         : none;
+    background-color: $background-oficial;
+    height          : calc(100% - 89px);
+    overflow-y      : auto;
 }
 
 .primerDia {
@@ -398,7 +373,7 @@ label {
 }
 
 .circular-usuario {
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     margin-top      : 10px;
     width           : 100px;
     height          : 100px;
@@ -631,7 +606,7 @@ h2 {
     outline     : none;
     border-style: none;
     border      : 0.5px solid $color-bordes;
-    color       : $color-azul;
+    color       : $color-personalizado;
     width       : 40px;
     display     : flex;
     align-items : center;

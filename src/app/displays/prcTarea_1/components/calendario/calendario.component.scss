@@ -3,12 +3,14 @@ $color-blanco           : #ffff; //resaltar texto blanco
 $color-gris             : darkgray; //numeros que no son del mes
 $color-bordes           : #323f8550; //bordes del calendario
 $background-oficial     : #FEF5E7; //fondo Demosoft
-$background-scrollbar   : #134895; //barra rosada
+$background-scrollbar   : var(--global-color); //barra rosada
 $color-azul             : #134895; //resaltar dia de hoy azul
 $background-tareas      : #DF9722; //resaltar tareas naranja
 $background-tareas-rojo : #e61212d5; //resaltar tareas rojo
 $borde-tarea            : rgba(0, 0, 0, 0.12);
 $color-gris-s           : #777; //sombra y texto gris
+$color-personalizado    : var(--global-color);
+
 
 .progress {
     height          : 100vh;
@@ -197,18 +199,22 @@ mat-sidenav {
 
 /*Contendo derecho*/
 
-.container_main::-webkit-scrollbar {
-    width: 7px;
+.container_main::-webkit-scrollbar,
+.horarioLaboral::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $background-oficial;
 }
 
-.container_main::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
 
+.horarioLaboral::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-track,
+.container_main::-webkit-scrollbar-track {
+    background: $background-oficial;
 }
 
 .container_page {
@@ -387,7 +393,7 @@ mat-sidenav {
 }
 
 .hoy-semana {
-    background  : $color-azul;
+    background  : $color-personalizado;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -400,7 +406,7 @@ mat-sidenav {
 }
 
 .hoy {
-    background  : $color-azul;
+    background  : $color-personalizado;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -793,7 +799,7 @@ p {
 .lista-menu {
     margin          : 10px;
     padding         : 0px 10px;
-    background-color: $color-azul !important;
+    background-color: $color-personalizado !important;
     color           : $color-blanco !important;
 }
 
@@ -829,7 +835,7 @@ p {
 
 .nuevo-hoy {
     color           : $color-blanco;
-    background-color: $color-azul;
+    background-color: $color-personalizado;
     width           : 20%;
 }
 
@@ -857,7 +863,7 @@ p {
 .dia-hoy-crear {
     display         : flex;
     width           : 100%;
-    background-color: $color-azul;
+    background-color: $color-personalizado;
 }
 
 .dia-crear:hover {
@@ -932,21 +938,6 @@ p {
     word-wrap: break-word;
 }
 
-.horarioLaboral::-webkit-scrollbar {
-    width           : 7px;
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-track {
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px #f3c5d3;
-}
-
 .ajustes,
 .horarioLaboral {
     background-color: $background-oficial;
@@ -998,6 +989,6 @@ p {
 }
 
 .boton-azul {
-    background-color: $color-azul !important;
+    background-color: $color-personalizado !important;
     color           : $color-blanco !important;
 }

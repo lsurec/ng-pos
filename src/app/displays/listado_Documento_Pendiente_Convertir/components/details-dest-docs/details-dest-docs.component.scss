@@ -7,7 +7,7 @@ $seleccionado         : rgba(0, 0, 0, 0.12);
 $color-bordes         : #c1bfbf; //bordes menu
 $color-gris-2         : #777; //sombra y texto gris
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 
 
 .progress {

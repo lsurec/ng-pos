@@ -162,7 +162,7 @@ export class ActualizarTareaComponent {
 
     for (let index = 0; index < this.prioridadesTarea.length; index++) {
       const element = this.prioridadesTarea[index];
-      if (element.nombre == this.tarea.tarea.nom_Nivel_Prioridad) {
+      if (element.nivel_Prioridad == this.tarea.tarea.nivel_Prioridad) {
         this.prioridadTarea = element;
         break;
       }

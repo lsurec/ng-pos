@@ -6,7 +6,7 @@ $color-azul           : #134895;
 $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
 $color-azul           : #134895; // fondo, bordes y texto azul
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 
 .container-main::-webkit-scrollbar {
     width           : 7px;

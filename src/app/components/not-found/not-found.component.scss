@@ -7,7 +7,7 @@ $color-gris-s         : #777; //sombra y texto gris
 $color-blanco         : #fff; //texto blanco
 $color-gris           : #efefef;
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$background-scrollbar :  var(--global-color); //barra azul
 $font-family_1        : 'Kanit',
 sans-serif; ///fuentes
 $color-bordes : rgba(0, 0, 0, 0.12); //bordes menu

@@ -7,7 +7,7 @@ $font-serif           : sans-serif; //fuente del texto
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
+$background-scrollbar :  var(--global-color); //barra rosada
 $background-botones   : #134895; //resaltar botones azul
 $sombra               : rgba(0, 0, 0, 0.1);
 $background-transparent: transparent; //fondo transparennte,

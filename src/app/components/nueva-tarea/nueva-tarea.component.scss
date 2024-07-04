@@ -6,8 +6,7 @@ $color-gris-s         : #777; //sombra y texto gris
 $borde-toolbar        : rgba(0, 0, 0, 0.12);
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
+$background-scrollbar : var(--global-color); //barra rosada
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-rojo           : #cc4141;
 $placeholder          : rgba(0, 0, 0, 0.30);
@@ -15,6 +14,7 @@ $sombra               : rgba(0, 0, 0, 0.1);
 $requerido            : rgba(0, 0, 0, 0.05);
 $hover-boton          : #507fc4;
 $rojo-info            : #cc4141;
+$color-personalizado  : var(--global-color);
 
 //Pantalla de carga
 .progress {
@@ -101,7 +101,7 @@ mat-sidenav {
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $color-azul;
+    background-color: $background-scrollbar;
     border-radius   : 20px;
     border          : 3px $background-oficial;
 }
@@ -267,7 +267,7 @@ textarea::placeholder {
 }
 
 .buscar-usu-ref-id {
-    background-color: $color-azul;
+    background-color: $background-scrollbar;
     padding         : 7px 10px;
     align-items     : center;
     display         : flex;
@@ -542,7 +542,7 @@ mdc-menu-surface {
 }
 
 .boton-azul {
-    background-color: $color-azul !important;
+    background-color: $color-personalizado !important;
     color           : $color-blanco !important;
     margin-right    : 5px;
 
