@@ -150,7 +150,6 @@ export class LoginComponent {
     if (empresas.length == 1 && estaciones.length == 1) {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
-      PreferencesService.imgEmpresa = PreferencesService.empresa.empresa_Img;   
 
       //Cargar tipo cambio
       let resTipoCammbio = await this._tipoCambioService.getTipoCambio(

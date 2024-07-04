@@ -35,7 +35,6 @@ export class PreferencesService {
     private static readonly nuevoDocKey: string = 'nuevoDoc';
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
-    private static readonly imgEmpresaKey: string = 'imgEmpresa';
 
 
 
@@ -45,9 +44,6 @@ export class PreferencesService {
     static closeSession() {
         localStorage.removeItem(PreferencesService.tokenStorageKey);
         sessionStorage.removeItem(PreferencesService.tokenKey);
-        //Limpiar la imagen de la empresa
-        localStorage.removeItem(PreferencesService.imgEmpresaKey);
-        sessionStorage.removeItem(PreferencesService.imgEmpresaKey);
     }
 
     //lenguaje de la aplicacion
@@ -355,16 +351,4 @@ export class PreferencesService {
         return value;
     }
 
-    //Imagen de la empresa
-
-    @Input()
-    static set imgEmpresa(value: string) {
-        localStorage.setItem(this.imgEmpresaKey, value);
-    }
-
-    static get imgEmpresa(): string {
-        let value = localStorage.getItem(this.imgEmpresaKey);
-        if (!value) return "";
-        return value;
-    }
 }
