@@ -1,17 +1,14 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$color-naranja        : #df9722;
-$font-serif           : sans-serif; //fuente del texto
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra rosada
-$background-botones   : #134895; //resaltar botones azul
-$background-transparent: transparent; //fondo transparennte,
-$color-bordes        : rgba(0, 0, 0, 0.12); //bordes menu
-$color-personalizado : var(--global-color);
+$negro       : var(--negro); //texto negro
+$preferencia : var(--global-color);
+$blanco      : var(--blanco); //resaltar texto blanco
+$gris        : var(--gris);
+$fondo       : var(--fondo-claro); //fondo Demosoft
+$scroll      : var(--global-color); //barra rosada
+$bordes      :var(--bordes-claro); //bordes menu
+$navegacion  : var(--navegacion-claro);
+$ruta        : #969696;
+$separador   : #c4c4c4;
+$transparent : transparent; //fondo transparennte,
 
 //Pantalla de carga centrada
 .progress {
@@ -19,7 +16,7 @@ $color-personalizado : var(--global-color);
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*SideNav*/
@@ -28,7 +25,7 @@ $color-personalizado : var(--global-color);
 }
 
 .head_carr_end {
-    color      : $color-negro;
+    color      : $negro;
     font-weight: 300;
 }
 
@@ -38,7 +35,7 @@ $color-personalizado : var(--global-color);
 
 mat-sidenav {
     width           : 365px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 
 }
 
@@ -67,7 +64,7 @@ mat-sidenav {
     bottom          : 0;
     left            : 0;
     right           : 0;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Fin SideNav*/
@@ -76,7 +73,7 @@ mat-sidenav {
 
 .icon_toolbar {
     font-size       : 22px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .toolbarPhone {
@@ -86,14 +83,14 @@ mat-sidenav {
 .toolbarPhone,
 .toolbarlarge {
     // position        : fixed !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
 }
 
 @media screen and (max-width: 767px) {
     .toolbarlarge {
         display         : none !important;
-        background-color: $background-oficial;
+        background-color: $fondo;
     }
 
     .toolbarPhone {
@@ -109,27 +106,27 @@ mat-sidenav {
 .detallesUsuario::-webkit-scrollbar,
 .toolbarNavScreenShort::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track,
 .horarioLaboral::-webkit-scrollbar-track,
 .detallesUsuario::-webkit-scrollbar-track,
 .toolbarNavScreenShort::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb,
 .horarioLaboral::-webkit-scrollbar-thumb,
 .detallesUsuario::-webkit-scrollbar-thumb,
 .toolbarNavScreenShort::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
 }
 
 .toolbarNavScreenShort::-webkit-scrollbar {
     width           : 5px;
-    background-color: $background-transparent;
+    background-color: $transparent;
     height          : 5px;
 }
 
@@ -138,7 +135,7 @@ mat-sidenav {
     height          : calc(100% - 128px);
     width           : 100vw;
     position        : fixed;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /* Contenedor del menu modulos */
@@ -157,18 +154,18 @@ mat-sidenav {
 .container_start::-webkit-scrollbar {
     width           : 6px;
     height          : 0px;
-    background-color: #F5F5F5;
+    background-color: $fondo;
 }
 
 .container_start::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 3px #ececece6;
+    -webkit-box-shadow: inset 0 0 3px $separador;
     border-radius     : 10px;
     background-color  : transparent;
 }
 
 .container_start::-webkit-scrollbar-thumb {
     border-radius   : 4px;
-    background-color: $color-personalizado;
+    background-color: $preferencia;
     height          : 10%;
 }
 
@@ -196,14 +193,14 @@ mat-sidenav {
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px;
     border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .head__sidenav_horaFinal {
     height          : 88px !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Fin Contendo derecho*/
@@ -223,7 +220,7 @@ label {
     width           : 100%;
     height          : 35px;
     border          : none;
-    background-color: $background-transparent;
+    background-color: $transparent;
     text-align      : justify;
     padding-left    : 15px;
     font-size       : 14px;
@@ -233,7 +230,7 @@ label {
 .vistaAjustes {
     width           : 100%;
     border          : none;
-    background-color: $background-transparent;
+    background-color: $transparent;
     text-align      : justify;
     padding         : 5px 0px;
     font-size       : 14px;
@@ -244,7 +241,7 @@ label {
 
 .configuraciones {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     cursor       : pointer;
@@ -253,7 +250,7 @@ label {
 
 .configuraciones-digitos {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     min-height   : 55px;
@@ -263,7 +260,7 @@ label {
 
     width           : 100%;
     border          : none;
-    background-color: $background-transparent;
+    background-color: $transparent;
     text-align      : justify;
     padding         : 5px 0px;
     font-size       : 14px;
@@ -293,18 +290,10 @@ label {
 
 // detalles de usuario
 .backColorNavBar {
-    background: #FEF5E7;
-    color     : #000000;
+    background: $fondo;
+    color     : $negro;
     height    : 40px !important;
     padding   : 0px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.horasNavBar {
-    background: #FEF5E7;
-    color     : #000000;
-    height    : 40px !important;
-    position  : absolute;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
@@ -318,7 +307,7 @@ label {
 .ajustes,
 .lenguajes,
 .horarioLaboral {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 89px) !important;
     padding         : 0px;
     overflow-y      : auto;
@@ -339,13 +328,13 @@ label {
 }
 
 .detallesUsuario {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 89px);
     overflow-y      : auto;
 }
 
 .primerDia {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 89px);
 }
 
@@ -373,7 +362,7 @@ label {
 }
 
 .circular-usuario {
-    background-color: $color-personalizado;
+    background-color: $preferencia;
     margin-top      : 10px;
     width           : 100px;
     height          : 100px;
@@ -388,7 +377,7 @@ p {
 .inicial-usuario-h {
     padding   : 25%;
     text-align: center;
-    color     : $color-blanco;
+    color     : $blanco;
     font-size : 35px;
 }
 
@@ -453,7 +442,7 @@ h2 {
 
 .separador {
     margin-top   : 0px;
-    border-bottom: 0.8px solid #c4c4c4 !important;
+    border-bottom: 0.8px solid $separador !important;
     margin-bottom: 0px;
     width        : 100%;
 }
@@ -470,7 +459,7 @@ h2 {
 .example-radio-button {
     margin      : 5px 0px;
     padding-left: 15px;
-    color       : $color-azul;
+    color       : $preferencia;
 }
 
 .radio-button {
@@ -494,7 +483,7 @@ h2 {
     width          : 100%;
     align-items    : center !important;
     justify-content: space-between;
-    border-bottom  : 0.8px solid #c4c4c4;
+    border-bottom  : 0.8px solid $separador;
     font-size      : 14px;
     min-height     : 40px;
     display        : flex;
@@ -509,26 +498,25 @@ h2 {
 
 /* Estilo de contenedor de navegacion de rutas */
 .toolbarNavegacion {
-    background-color   : #f0f0f0;
-    // padding-top     : 70px;
-    color              : #969696;
-    cursor             : pointer;
-    height             : 40px;
-    padding-left       : 10px;
+    background-color: $navegacion;
+    color           : $ruta;
+    cursor          : pointer;
+    height          : 40px;
+    padding-left    : 10px;
 
 }
 
 .itemRouteActive:hover {
-    color : $color-azul;
+    color : $preferencia;
     cursor: pointer;
 }
 
 .itemRouteActive {
-    color: $color-azul;
+    color: $preferencia;
 }
 
 .toolbarNavScreenShort {
-    background-color: #f0f0f0;
+    background-color: $navegacion;
     height          : auto;
     padding-left    : 5px;
     overflow-x      : auto;
@@ -548,14 +536,14 @@ h2 {
 
 .rutasMenuPeque:hover {
     cursor: pointer;
-    color : $color-azul !important;
+    color : $preferencia !important;
 }
 
 //Detalles del usuario
 
 .detalles-usuario {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
 }
@@ -564,14 +552,8 @@ h2 {
     cursor: pointer;
 }
 
-// .detalles-usuario:hover {
-//     background-color: $color-azul;
-//     border-left     : 5px solid $color-naranja;
-//     color           : $color-blanco;
-// }
-
 .iconos-detalles {
-    color: $color-gris-s;
+    color: $gris;
 }
 
 .detalle {
@@ -587,7 +569,7 @@ h2 {
 }
 
 .descripcion {
-    color    : $color-gris-s;
+    color    : $gris;
     font-size: 14px;
     word-wrap: break-word;
 }
@@ -605,8 +587,8 @@ h2 {
     font-size   : 14px;
     outline     : none;
     border-style: none;
-    border      : 0.5px solid $color-bordes;
-    color       : $color-personalizado;
+    border      : 0.5px solid $bordes;
+    color       : $preferencia;
     width       : 40px;
     display     : flex;
     align-items : center;
@@ -634,9 +616,9 @@ h2 {
     padding      : 0px 3px;
     outline      : none;
     border-style : none;
-    border-top   : 0.5px solid $color-bordes;
-    border-bottom: 0.5px solid $color-bordes;
-    color        : $color-azul;
+    border-top   : 0.5px solid $bordes;
+    border-bottom: 0.5px solid $bordes;
+    color        : $preferencia;
     width        : 100%;
     text-align   : center;
     padding-top  : 8px;
@@ -671,7 +653,7 @@ h2 {
 }
 
 .circulo-seleccionado {
-    border: solid 2px $color-negro;
+    border: solid 2px $negro;
 }
 
 .contenido-color {
@@ -689,12 +671,12 @@ h2 {
 .acordeon {
     width           : 85%;
     margin          : 10px;
-    background-color: $background-transparent;
+    background-color: $transparent;
 }
 
 .mat-expansion-panel-body {
     padding         : 0 !important;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     margin          : 0px -20px;
     border-radius   : 0px !important;
 }
