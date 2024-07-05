@@ -9,7 +9,7 @@ $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : var(--global-color); //barra rosada
 $color-bordes         : #CED4DA; //bordes del calendario
 $color-rojo           : #cc4141;
-$placeholder          : rgba(0, 0, 0, 0.30);
+$placeholder          : rgba(0, 0, 0, 0.502);
 $sombra               : rgba(0, 0, 0, 0.1);
 $requerido            : rgba(0, 0, 0, 0.05);
 $hover-boton          : #507fc4;
@@ -224,7 +224,7 @@ p {
 
 input::placeholder,
 textarea::placeholder {
-    color: $placeholder !important;
+    color: $placeholder;
 }
 
 .titulo-tarea.error,
@@ -252,10 +252,6 @@ textarea::placeholder {
     font-size       : 12px;
     border-bottom   : 1px solid $color-azul;
     padding         : 3px;
-}
-
-.campos {
-    padding: 10px 0px 0px;
 }
 
 .titulo-campo {

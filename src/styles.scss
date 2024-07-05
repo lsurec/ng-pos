@@ -8,7 +8,7 @@ $radio-buttons           : #ffffff;
 $borde-no-seleccionado   : #635f5f;
 $color-naranja           : #df9722;
 $seleccionado            : #635f5f;
-$placeholder             : #e3ebfcb7;
+$placeholder             : #eef0f3e0;
 $scrollbars              : $borde-no-seleccionado;
 $color-azul              : #2764bd;
 $color-verde             : #44ff14;
@@ -19,10 +19,12 @@ $negro                   : #000;
 $tareas                  : #939292;
 $notificaciones          : #182420;
 $texto-notificacion      : #ff4081;
-$texto-notificacion      : #ff4081;
 $azul-menu               : #134895;
 $color-personalizado     : var(--global-color);
-
+$azul-menu               : #134895;
+$rojo-error              : #cc4141;
+$sombra-campos           : #8b8b8b;
+$fondo-campos            : #3d3c3c;
 
 html,
 body {
@@ -374,7 +376,9 @@ input[type="radio"] {
 .dark-theme h2,
 .dark-theme p,
 .dark-theme .hora,
-.dark-theme .cantidad-detalle {
+.dark-theme .cantidad-detalle,
+.dark-theme .tipo-tarea,
+.dark-theme .seleccionar-tiempo {
     color: $color-blanco !important;
 }
 
@@ -396,8 +400,15 @@ input[type="radio"] {
 .dark-theme .toolbar-row,
 .dark-theme .borde-detalles,
 .dark-theme .cantidad-detalle,
-.dark-theme .configuraciones-digitos {
+.dark-theme .configuraciones-digitos,
+.dark-theme .observacion-tarea,
+.dark-theme .titulo-tarea {
     border-bottom: 1px solid $bordes !important;
+}
+
+.dark-theme .error.observacion-tarea,
+.dark-theme .error.titulo-tarea {
+    border-bottom: 2px solid $rojo-error !important;
 }
 
 .dark-theme .dia-nombre,
@@ -524,7 +535,8 @@ input[type="radio"] {
 }
 
 .dark-theme .descuento,
-.dark-theme .obligatorio {
+.dark-theme .obligatorio,
+.dark-theme .obligatorio25 {
     color: $color-rojo !important;
 }
 
@@ -693,4 +705,8 @@ input[type="radio"] {
 .dark-theme .cantidad-producto,
 .dark-theme .cantidad-fondo {
     box-shadow: 0px 1px 0px 1px rgb(242 242 242 / 29%) !important;
+}
+
+.dark-theme .bloque-menus {
+    background-color: #252323 !important;
 }
