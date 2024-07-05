@@ -704,10 +704,17 @@ input[type="radio"] {
 
 //Nuevos estilos con variables globales 
 
+.dark-theme .login-right input[type="text"],
+.dark-theme .login-right input[type="password"],
 .dark-theme .informacion-tema,
 .dark-theme .mat-mdc-outlined-button,
 .dark-theme .url-apis {
     border: 1px solid var(--bordes-oscuro) !important;
+}
+
+.dark-theme .login-right input[type="text"]:hover,
+.dark-theme .login-right input[type="password"]:hover {
+    border: 1px solid var(--pestana-oscuro) !important;
 }
 
 .dark-theme .head__sidenav__bottom {
