@@ -37,7 +37,7 @@
                         <p class="obligatorio">*</p>
                     </div>
                     <mat-select name="prioridad" class="tipo-tarea"
-                        placeholder="{{ 'crm.crear.estadoTarea' | translate }}" [(ngModel)]="prioridadTarea">
+                        placeholder="{{ 'crm.crear.prioridadTarea' | translate }}" [(ngModel)]="prioridadTarea">
                         <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad"
                             (click)="nuevoNivelPrioridad()">
                             {{prioridad.nombre}}
