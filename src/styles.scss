@@ -304,8 +304,7 @@ input[type="radio"] {
     font-weight: normal !important;
 }
 
-.dark-theme .tarea,
-.dark-theme .mat-mdc-outlined-button {
+.dark-theme .tarea {
     background-color: #333 !important;
     color           : #ffffff !important;
     border          : 1px solid #CED4DA !important;
@@ -452,8 +451,7 @@ input[type="radio"] {
 .dark-theme .productos-pagos,
 .dark-theme .documento,
 .dark-theme .pago,
-.dark-theme .seleccionar-opcion,
-.dark-theme .head__sidenav__bottom {
+.dark-theme .seleccionar-opcion {
     border-top: 1px solid $bordes !important;
 }
 
@@ -557,7 +555,7 @@ input[type="radio"] {
 }
 
 //BORDES DE BOTONES
-.dark-theme button:not(:disabled),
+// .dark-theme button:not(:disabled),
 .dark-theme .barra-monto,
 .dark-theme .total,
 .dark-theme .centro,
@@ -702,4 +700,22 @@ input[type="radio"] {
 
 .dark-theme .bloque-menus {
     background-color: #252323 !important;
+}
+
+//Nuevos estilos con variables globales 
+
+.dark-theme .informacion-tema {
+    border: 1px solid var(--bordes-oscuro) !important;
+}
+
+.dark-theme .mat-mdc-outlined-button {
+    border: 1px solid var(--bordes-oscuro) !important;
+}
+
+.dark-theme .head__sidenav__bottom {
+    border-top: 1px solid var(--bordes-oscuro) !important;
+}
+
+.dark-theme .mat-mdc-outlined-button:not(:disabled) {
+    color: var(--texto-boton) !important;
 }
