@@ -11,7 +11,7 @@ $color-gris         : #efefef;
 $detalles           : rgb(0 0 0 / 3%);
 $background-transparent: transparent; //fondo transparennte,
 $background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar :  var(--global-color); //barra azul
+$background-scrollbar : var(--global-color); //barra azul
 $sombra               : rgba(0, 0, 0, 0.1);
 
 
@@ -83,6 +83,7 @@ p {
     margin-bottom   : 10px;
     background-color: $detalles;
     box-shadow      : 0px 1px 0px 1px $sombra;
+    border-radius   : 10px;
 }
 
 .cantidad-fondo {
@@ -91,6 +92,7 @@ p {
     margin-bottom   : 10px;
     background-color: $detalles;
     box-shadow      : 0px 1px 0px 1px $sombra;
+    border-radius   : 10px;
 }
 
 
@@ -100,6 +102,7 @@ p {
     margin-bottom   : 10px;
     background-color: $detalles;
     box-shadow      : 0px 1px 0px 1px $sombra;
+    border-radius   : 10px;
 }
 
 .eliminar {
@@ -309,6 +312,7 @@ p {
     width           : 250px;
     background-color: $detalles;
     margin-right    : 6px;
+    border-radius   : 10px;
 }
 
 .textos {

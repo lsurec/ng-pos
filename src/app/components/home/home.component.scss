@@ -470,7 +470,7 @@ h2 {
 .example-radio-button {
     margin      : 5px 0px;
     padding-left: 15px;
-    color       : #134895;
+    color       : $color-azul;
 }
 
 .radio-button {
@@ -519,12 +519,12 @@ h2 {
 }
 
 .itemRouteActive:hover {
-    color : #134895;
+    color : $color-azul;
     cursor: pointer;
 }
 
 .itemRouteActive {
-    color: #134895;
+    color: $color-azul;
 }
 
 .toolbarNavScreenShort {

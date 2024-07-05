@@ -1,7 +1,6 @@
 $color-naranja        : #df9722;
 $color-gris           : #c1bfbf;
 $color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
 $color-pestanas       : #555;
 $background-oficial   : #FEF5E7; //fondo Demosoft
 $background-scrollbar : var(--global-color); //barra azul
@@ -310,12 +309,11 @@ body {
     height: 100%;
 }
 
-$color1     : #0f3851;
-$color2     : #154d67;
-$color3     : #1a7084;
-$color4     : #2398a0;
-$color5     : #2bc9bf;
-$color-azul : #134895;
+$color1 : #0f3851;
+$color2 : #154d67;
+$color3 : #1a7084;
+$color4 : #2398a0;
+$color5 : #2bc9bf;
 
 
 .elevation_bar {

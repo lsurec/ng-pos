@@ -19,9 +19,8 @@ $negro                   : #000;
 $tareas                  : #939292;
 $notificaciones          : #182420;
 $texto-notificacion      : #ff4081;
-$azul-menu               : #134895;
+$azul-menu               : var(--global-color);
 $color-personalizado     : var(--global-color);
-$azul-menu               : #134895;
 $rojo-error              : #cc4141;
 $sombra-campos           : #8b8b8b;
 $fondo-campos            : #3d3c3c;
@@ -80,7 +79,9 @@ body {
         font-size: 18px !important;
     }
 
-    .mat-mdc-select-value-text {
+    .mat-mdc-select-value-text,
+    .mdc-list-item--selected .mdc-list-item__primary-text,
+    .mdc-list-item__primary-text {
         color: $azul-menu !important;
     }
 

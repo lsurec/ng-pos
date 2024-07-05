@@ -9,8 +9,8 @@ $border-color         : rgba(0, 0, 0, .09);
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
 $background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar :  var(--global-color); //barra rosada
-$background-botones   : #134895; //resaltar botones azul
+$background-scrollbar : var(--global-color); //barra rosada
+$background-botones   : var(--global-color); //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
 
 .progress {
@@ -193,7 +193,7 @@ mat-form-field {
     cursor          : pointer;
     border-right    : 0.5px solid $color-bordes;
     border-top      : 0.5px solid $color-bordes;
-    background-color: #134895;
+    background-color: $color-azul;
     color           : $color-blanco;
 }
 
@@ -216,7 +216,7 @@ mat-form-field {
 }
 
 .opcion-info:hover {
-    background-color: #134895;
+    background-color: $color-azul;
     color           : $color-blanco;
 }
 
@@ -402,7 +402,7 @@ mat-icon {
 }
 
 .izquierda {
-    background-color: #134895;
+    background-color: $color-azul;
     min-height      : 500px;
     width           : 50%;
 }
