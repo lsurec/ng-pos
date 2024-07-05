@@ -1,25 +1,28 @@
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : #fff;
-$color-gris           : #c1bfbf;
-$color-bordes         : #c1bfbf; //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra azul
-$bordes               : #c1bfbf;
-$idioma-seleccionado  : #5d6d6c;
-
+$blanco       : var(--blanco);
+$bordes       : var(--bordes-claro); //bordes menu
+$fondo        : var(--fondo-claro); //fondo Demosoft
+$scroll       : var(--global-color); //barra azul
+$seleccionado : var(--seleccionado2);
 
 .container-main {
-    height : calc(100vh - 64px) !important;
-    padding: 20px 0px;
+    height    : calc(100vh - 64px) !important;
+    padding   : 20px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.head__sidenav {
-    height          : 64px !important;
-    padding         : 0px 10px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    background-color: $background-oficial;
+.container-main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
+}
+
+.container-main::-webkit-scrollbar-track {
+    background-color: $fondo;
+}
+
+.container-main::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
 }
 
 .informacion-tema {
@@ -27,14 +30,9 @@ $idioma-seleccionado  : #5d6d6c;
     cursor: pointer;
 }
 
-//oscuro
-// .informacion-tema:hover{
-//     background-color: #324140;
-// }
-
 .informacion-tema:hover {
-    background-color: #5d6d6c;
-    color           : #fff;
+    background-color: $seleccionado;
+    color           : $blanco;
 }
 
 
@@ -57,7 +55,7 @@ $idioma-seleccionado  : #5d6d6c;
 
 .titulo {
     text-align : center;
-    font-size  : 19px;
+    font-size  : 19px !important;
     font-weight: 500;
 }
 
@@ -67,14 +65,14 @@ $idioma-seleccionado  : #5d6d6c;
 }
 
 .titulos-menu {
-    display    : flex;
-    padding-top: 30px;
-    width      : 100%;
+    display: flex;
+    padding: 30px;
+    width  : 100%;
 }
 
 .tema-seleccionado {
-    background-color: $idioma-seleccionado;
-    color           : $color-blanco;
+    background-color: $seleccionado;
+    color           : $blanco;
 }
 
 @media screen and (max-width: 450px) {
@@ -101,13 +99,6 @@ p {
     height: 100%;
 }
 
-.contenido {
-    align-items: center !important;
-    width      : 100%;
-    height     : calc(100% - 150px);
-    display    : flex;
-}
-
 .temas-disponibles {
     width      : 80%;
     align-items: center;
@@ -131,69 +122,18 @@ p {
     width  : 100%;
 }
 
-.seleccionar-empresa,
-.seleccionar-localidad {
+.seleccionar-tema {
     width        : 100%;
     text-align   : center !important;
-    border       : 1px solid $color-bordes;
-    border-bottom: 1px solid $color-bordes;
+    border       : 1px solid $bordes;
+    border-bottom: 1px solid $bordes;
     border-top   : none;
 }
 
-.linea {
-    box-shadow: 0px -3px 10px 1.5px rgba(0, 0, 0, 0.2);
-    width     : 100%;
-}
-
-.localidades,
-.empresas {
-    min-height: auto;
-    max-height: 230px;
-    overflow  : auto;
-    overflow-x: hidden;
-    padding   : 0px;
-}
-
-.b-b {
-    border-top: none !important;
-}
-
-.boton-guardar {
-    position        : fixed;
-    z-index         : 1000;
-    bottom          : 75px;
-    right           : 60px;
-    font-size       : 20px;
-    background-color: $color-azul;
-}
-
-.boton-cerrar {
-    position           : fixed;
-    right              : 10px;
-    font-size          : 20px;
-    // background-color: $color-azul;
-    // background-color: transparent;
-    // color: #000;
-}
-
-.flecha-regresar {
-    position : fixed;
-    left     : 10px;
-    font-size: 20px;
-}
-
-.identificadores {
-    font-size  : 15px;
-    font-weight: 500;
-    display    : flex;
-    margin     : 2px 0px;
-    width      : 100%;
-}
-
-.seleccionado {
+.t-seleccionado {
     padding-left: 10px;
     text-align  : left;
-    border-top  : 1px solid $color-bordes;
+    border-top  : 1px solid $bordes;
     width       : 100% !important;
     align-items : center;
     font-size   : 12px;
@@ -236,7 +176,7 @@ p {
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .realizar-cambio {
@@ -244,48 +184,28 @@ p {
     font-weight: 450;
 }
 
-
-.titulo-flecha {
-    display         : flex;
-    border-bottom   : 1px solid rgba(0, 0, 0, .12) !important;
-    align-items     : center;
-    // position     : fixed;
-    height          : 75px;
-}
-
-.head__sidenav {
-    height       : 64px !important;
-    padding      : 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.img_empresas {
-    height: 200px;
+.img-tema {
+    height: 180px;
     margin: 20px;
 }
 
 @media screen and (max-width: 930px) {
-    .img_empresas {
+    .img-tema {
         height: 140px !important;
         margin: 10px;
     }
 }
 
-@media screen and (max-width: 265px) {
-    .img_empresas {
-        height: 50px;
-        margin: 10px;
-    }
-}
 
 @media screen and (max-width: 767px) {
-    .img_empresas {
-        height: 100px !important;
+    .img-tema {
+        height: 150px !important;
         margin: 10px;
     }
 
     .titulos-menu {
         display: block !important;
+        padding: 10px !important;
     }
 
     .detalles-themas,

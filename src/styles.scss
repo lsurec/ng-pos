@@ -704,10 +704,7 @@ input[type="radio"] {
 
 //Nuevos estilos con variables globales 
 
-.dark-theme .informacion-tema {
-    border: 1px solid var(--bordes-oscuro) !important;
-}
-
+.dark-theme .informacion-tema,
 .dark-theme .mat-mdc-outlined-button {
     border: 1px solid var(--bordes-oscuro) !important;
 }
@@ -718,4 +715,8 @@ input[type="radio"] {
 
 .dark-theme .mat-mdc-outlined-button:not(:disabled) {
     color: var(--texto-boton) !important;
+}
+
+.dark-theme .t-seleccionado {
+    border-bottom: 1px solid var(--bordes-oscuro) !important;
 }
