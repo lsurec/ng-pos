@@ -448,12 +448,12 @@ input[type="radio"] {
 
 //BORDE ARRIBA
 .dark-theme .backColorNavBar,
-.dark-theme .logos,
 .dark-theme .detalle-documento,
 .dark-theme .productos-pagos,
 .dark-theme .documento,
 .dark-theme .pago,
-.dark-theme .seleccionar-opcion {
+.dark-theme .seleccionar-opcion,
+.dark-theme .head__sidenav__bottom {
     border-top: 1px solid $bordes !important;
 }
 
@@ -572,14 +572,6 @@ input[type="radio"] {
 
 .dark-theme .pestana {
     color: $bordes !important;
-}
-
-.dark-theme .detalles:hover {
-    border-bottom: 1px solid $color-naranja !important;
-}
-
-.dark-theme .campos:hover {
-    border-bottom: 1px solid $iconos !important;
 }
 
 .dark-theme .seleccionar:hover,
