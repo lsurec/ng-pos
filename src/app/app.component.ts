@@ -80,6 +80,8 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--seleccionado2', "#5d6d6c");
     document.documentElement.style.setProperty('--blanco', "#fff");
     document.documentElement.style.setProperty('--texto-boton', "#cdc7c7");
+    document.documentElement.style.setProperty('--gris', "#777");
+
 
 
     //Nuevos estilos para tema claro
