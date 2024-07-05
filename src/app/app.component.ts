@@ -70,11 +70,16 @@ export class AppComponent implements OnInit {
 
   }
 
+  //1px solid #c1bfbf
+
   ngOnInit(): void {
     // Obtener el valor de globalFontSize del servicio y establecerlo como una variable CSS
     document.documentElement.style.setProperty('--global-font-size', this._themeService.globalFontSize);
     document.documentElement.style.setProperty('--global-color-fondo', this._themeService.fondo);
     document.documentElement.style.setProperty('--global-color', this._themeService.color);
+    document.documentElement.style.setProperty('--seleccionado2', "#5d6d6c");
+    document.documentElement.style.setProperty('--blanco', "#fff");
+
 
     //Nuevos estilos para tema claro
     document.documentElement.style.setProperty('--primario-oscuro', this.oscuro.primario);
@@ -124,6 +129,7 @@ export class AppComponent implements OnInit {
     pestana: "#134895",
     iconos: "#777",
     botonIcono: "#fffff",
+    seleccionado2: "#5d6d6c"
   }
 
 
@@ -141,7 +147,8 @@ export class AppComponent implements OnInit {
     sombra: "0px 1px 0px 1px rgba(164, 164, 164, 0.29)",
     pestana: "#df9722",
     iconos: "#c4c4c4",
-    botonIcono: "#c4c4c4"
+    botonIcono: "#c4c4c4",
+    seleccionado2: "#5d6d6c"
   };
 
 

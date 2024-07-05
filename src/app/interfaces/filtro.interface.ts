@@ -24,4 +24,5 @@ export interface ColoresInterface {
     pestana: string;
     iconos: string;
     botonIcono: string;
+    seleccionado2: string;
 }
