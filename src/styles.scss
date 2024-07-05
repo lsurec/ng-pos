@@ -277,7 +277,9 @@ input[type="radio"] {
 .dark-theme .container,
 .dark-theme .acciones,
 .dark-theme .menuVistas,
-.dark-theme .opcion-vista {
+.dark-theme .opcion-vista,
+.dark-theme .observacion, 
+.dark-theme .barra-fija {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
 }

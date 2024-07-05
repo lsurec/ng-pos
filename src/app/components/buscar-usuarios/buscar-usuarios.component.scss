@@ -1,16 +1,16 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar :  var(--global-color); //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000;
-$placeholder          : rgba(0, 0, 0, 0.30);
-$rojo-info            : #cc4141;
-$sombra               : rgba(0, 0, 0, 0.1);
+$background-oficial : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$scrollbar          : var(--global-color); //barra azul
+$color-bordes       : #CED4DA; //bordes del calendario
+$preferencia        : var(--global-color); //bordes y texto azul
+$color-negro        : #000;
+$placeholder        : rgba(0, 0, 0, 0.30);
+$rojo-info          : #cc4141;
+$sombra             : rgba(0, 0, 0, 0.1);
 
-input::placeholder,
-textarea::placeholder {
-    color: $placeholder !important;
-}
+// input::placeholder,
+// textarea::placeholder {
+//     color: $placeholder !important;
+// }
 
 .progress {
     padding         : 0px;
@@ -47,7 +47,7 @@ textarea::placeholder {
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scrollbar;
     border-radius   : 20px;
     border          : 3px $background-oficial;
 }
@@ -182,7 +182,7 @@ p {
     border-style    : none;
     background-color: transparent;
     outline         : none;
-    color           : $color-azul;
+    color           : $preferencia;
 }
 
 @media screen and (max-width: 280px) {
@@ -271,11 +271,11 @@ p {
 .buscar-icono {
     display      : flex;
     align-items  : center;
-    border-bottom: solid 1px $color-azul;
+    border-bottom: solid 1px $preferencia;
 }
 
 .icono-lupa {
-    color: $color-azul;
+    color: $preferencia;
 }
 
 .barra-fija {
