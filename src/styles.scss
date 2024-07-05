@@ -704,6 +704,8 @@ input[type="radio"] {
 
 //Nuevos estilos con variables globales 
 
+.dark-theme .seleccionar-empresa,
+.dark-theme .seleccionar-localidad,
 .dark-theme .login-right input[type="text"],
 .dark-theme .login-right input[type="password"],
 .dark-theme .informacion-tema,
@@ -717,7 +719,8 @@ input[type="radio"] {
     border: 1px solid var(--pestana-oscuro) !important;
 }
 
-.dark-theme .head__sidenav__bottom {
+.dark-theme .head__sidenav__bottom,
+.dark-theme .seleccionado {
     border-top: 1px solid var(--bordes-oscuro) !important;
 }
 
@@ -738,3 +741,7 @@ input[type="radio"] {
     background-color: var(--global-color) !important;
     color           : var(--blanco) !important;
 }
+
+// .dark-theme .opciones:hover {
+//     color: var(--global-color) !important;
+// }

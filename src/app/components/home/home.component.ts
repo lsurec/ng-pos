@@ -389,11 +389,25 @@ export class HomeComponent implements OnInit {
 
   }
 
-  seleccionarColor(color: ColorInterface, index: number): void {
+  async seleccionarColor(color: ColorInterface, index: number): Promise<void> {
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: "Color seleccionado",
+        description: "Haz seleccionado un nuevo color. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
     this.colorSeleccionado = color;
     //Guardar la preferencia
     PreferencesService.colorApp = this.colores[index].valor;
     PreferencesService.indexColorApp = index.toString();
+
+    // Usando window.location.reload()
+    window.location.reload();
 
   }
 
