@@ -81,7 +81,10 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--blanco', "#fff");
     document.documentElement.style.setProperty('--texto-boton', "#cdc7c7");
     document.documentElement.style.setProperty('--gris', "#777");
-    document.documentElement.style.setProperty('--negro', "##000000");
+    document.documentElement.style.setProperty('--negro', "#000000");
+    document.documentElement.style.setProperty('--requerido', "rgba(0, 0, 0, 0.05)");
+    document.documentElement.style.setProperty('--error', "#cc4141");
+    document.documentElement.style.setProperty('--mas-contenido', "0px -3px 10px 1.5px rgba(0, 0, 0, 0.2)");
 
 
 
