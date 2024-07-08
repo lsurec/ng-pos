@@ -56,7 +56,6 @@ import { DetalleDocumentoComponent } from './displays/prc_documento_3/components
 import { CargoDescuentoComponent } from './displays/prc_documento_3/components/cargo-descuento/cargo-descuento.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SelectedConfigurationComponent } from './components/selected-configuration/selected-configuration.component';
-import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
 import { TypesDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/types-docs/types-docs.component';
 import { OriginDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/origin-docs/origin-docs.component';
 import { DestinationDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/destination-docs/destination-docs.component';
@@ -126,7 +125,6 @@ import { DetalleErrorComponent } from './components/detalle-error/detalle-error.
     CargoDescuentoComponent,
     SidenavComponent,
     SelectedConfigurationComponent,
-    PrinterConfigurationComponent,
     TypesDocsComponent,
     OriginDocsComponent,
     DestinationDocsComponent,
