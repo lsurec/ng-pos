@@ -1,27 +1,21 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra rosada
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-rojo           : #cc4141;
-$placeholder          : rgba(0, 0, 0, 0.502);
-$sombra               : rgba(0, 0, 0, 0.1);
-$requerido            : rgba(0, 0, 0, 0.05);
-$hover-boton          : #507fc4;
-$rojo-info            : #cc4141;
-$color-personalizado  : var(--global-color);
+$negro         : var(--negro); //texto negro
+$personalizado : var(--global-color); //bordes y texto azul
+$blanco        : var(--blanco); //resaltar texto blanco
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra rosada
+$bordes        : var(--bordes-claro); //bordes del calendario
+$rojo          : var(--error);
+$placeholder   : var(--placeholder-claro);
+$sombra        : var(--sombra-claro);
+$requerido     : var(--requerido);
+$hover-boton   : var(--gris);
 
 //Pantalla de carga
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 //SideNav
@@ -48,7 +42,7 @@ mat-sidenav {
     bottom          : 0;
     left            : 0;
     right           : 0;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 //Fin SideNav
@@ -57,7 +51,7 @@ mat-sidenav {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 //Toolbar
@@ -73,8 +67,8 @@ mat-sidenav {
 .toolbarPhone,
 .toolbarlarge {
     // position        : fixed !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
     padding         : 0px 10px;
 }
 
@@ -97,13 +91,13 @@ mat-sidenav {
 }
 
 .container_main::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_page {
@@ -144,8 +138,8 @@ mat-sidenav {
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
     display         : flex;
     align-items     : center;
     padding         : 0px;
@@ -162,7 +156,7 @@ p {
 }
 
 .contenido-sidenav {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 89px) !important;
     padding         : 0px;
     overflow-x      : hidden;
@@ -171,11 +165,11 @@ p {
 
 //barra de abajo
 .barra-regresar {
-    background: $background-oficial;
-    color     : $color-negro;
+    background: $fondo;
+    color     : $negro;
     height    : 40px !important;
     padding   : 0px;
-    border-top: 1px solid $borde-toolbar;
+    border-top: 1px solid $bordes;
 }
 
 
@@ -196,14 +190,14 @@ p {
 
 
 .obligatorio {
-    color       : $color-rojo;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 12px;
     padding-left: 3px;
 }
 
 .obligatorio25 {
-    color       : $color-rojo;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 25px !important;
     padding-left: 3px;
@@ -214,10 +208,10 @@ p {
     min-height      : 30px;
     width           : 100%;
     border-style    : none;
-    border-bottom   : 1px solid $color-azul;
+    border-bottom   : 1px solid $personalizado;
     font-size       : 15px;
     outline         : none;
-    color           : $color-azul;
+    color           : $personalizado;
     background-color: transparent;
     padding         : 10px;
 }
@@ -230,27 +224,27 @@ textarea::placeholder {
 .titulo-tarea.error,
 .observacion-tarea.error,
 .minutos.error {
-    border          : 1.5px solid $color-rojo;
+    border          : 1.5px solid $rojo;
     background-color: $requerido;
 }
 
 .error-message {
-    color    : $color-rojo;
+    color    : $rojo;
     font-size: 12px;
 }
 
 .fondoerror {
-    background-color: $rojo-info !important;
+    background-color: $rojo !important;
 }
 
 .observacion-tarea {
-    color           : $color-azul;
+    color           : $personalizado;
     width           : 100%;
     border-style    : none;
     background-color: transparent;
     outline         : none;
     font-size       : 12px;
-    border-bottom   : 1px solid $color-azul;
+    border-bottom   : 1px solid $personalizado;
     padding         : 3px;
 }
 
@@ -263,7 +257,7 @@ textarea::placeholder {
 }
 
 .buscar-usu-ref-id {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     padding         : 7px 10px;
     align-items     : center;
     display         : flex;
@@ -279,12 +273,12 @@ textarea::placeholder {
 }
 
 .texto-botones {
-    color    : $color-blanco;
+    color    : $blanco;
     font-size: 12px;
 }
 
 .icono-tareas {
-    color       : $color-blanco;
+    color       : $blanco;
     margin-right: 10px;
 }
 
@@ -343,12 +337,12 @@ textarea::placeholder {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    border          : 1px solid $bordes;
+    color           : $personalizado;
 }
 
 .ver-calendario {
-    border     : 1px solid $color-bordes;
+    border     : 1px solid $bordes;
     align-items: center;
     height     : 35px;
 }
@@ -362,7 +356,7 @@ textarea::placeholder {
 .hora-calendario {
     width                    : 100%;
     height                   : 35px;
-    border                   : 1px solid $color-bordes;
+    border                   : 1px solid $bordes;
     display                  : flex;
     align-items              : center;
     border-top-left-radius   : 5px;
@@ -376,14 +370,14 @@ textarea::placeholder {
     font-size       : 13px;
     // padding: 6px 12px;
     outline         : none;
-    color           : $color-azul;
+    color           : $personalizado;
     background-color: transparent;
     text-align      : center;
 }
 
 .ver-hora {
     height                    : 35px;
-    border                    : 1px solid $color-bordes;
+    border                    : 1px solid $bordes;
     border-top-right-radius   : 5px;
     border-bottom-right-radius: 5px;
     border-top-left-radius    : 0px;
@@ -448,18 +442,18 @@ textarea::placeholder {
 }
 
 .tipo-tarea {
-    border     : 1px solid $color-bordes;
+    border     : 1px solid $bordes;
     min-height : 30px;
     padding    : 0px 10px;
     font-size  : 13px;
-    color      : $color-azul;
+    color      : $personalizado;
     display    : flex;
     align-items: center;
 }
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -469,7 +463,7 @@ mdc-menu-surface {
 }
 
 .bloque-menus {
-    border       : solid 1px $borde-toolbar;
+    border       : solid 1px $bordes;
     box-shadow   : 0px 1px 0px 1px $sombra;
     margin       : 10px 0px 15px;
     padding      : 10px;
@@ -478,7 +472,7 @@ mdc-menu-surface {
 
 .info {
     font-size     : 12px !important;
-    color         : $rojo-info;
+    color         : $rojo;
     display       : flex;
     align-items   : center;
     padding-bottom: 10px;
@@ -504,10 +498,10 @@ mdc-menu-surface {
 
 .minutos {
     width       : 40px;
-    border      : 1px solid $color-bordes;
+    border      : 1px solid $bordes;
     height      : 30px;
     text-align  : center;
-    color       : $color-azul;
+    color       : $personalizado;
     margin-right: 10px;
     display     : flex;
     align-items : center;
@@ -515,9 +509,9 @@ mdc-menu-surface {
 
 .seleccionar-tiempo {
     width       : 150px;
-    border      : 1px solid $color-bordes;
+    border      : 1px solid $bordes;
     height      : 30px;
-    color       : $color-azul;
+    color       : $personalizado;
     display     : flex;
     align-items : center;
     padding-left: 10px;
@@ -531,15 +525,15 @@ mdc-menu-surface {
 .circulo-error {
     width           : 15px;
     height          : 15px;
-    border          : 1px solid $color-rojo;
-    background-color: $color-rojo;
+    border          : 1px solid $rojo;
+    background-color: $rojo;
     border-radius   : 50%;
     margin-left     : 10px;
 }
 
 .boton-azul {
-    background-color: $color-personalizado !important;
-    color           : $color-blanco !important;
+    background-color: $personalizado !important;
+    color           : $blanco !important;
     margin-right    : 5px;
 
 }

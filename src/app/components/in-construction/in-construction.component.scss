@@ -1,13 +1,8 @@
-$color-transparent  : transparent; //fondo transparente
-$color-naranja      : #ff6f68; //texto, fondo y bordes
-$color-rosadito     : #ffa34f;
-$color-azul         : #134895;
-$background-naranja : #DF9722; //resaltar naranja
-$color-gris-s       : #777; //sombra y texto gris
-$color-blanco       : #fff; //texto blanco
-$color-gris         : #efefef;
-$color-bordes       : rgba(0, 0, 0, 0.12); //bordes menu
-$background-oficial : #FEF5E7; //fondo Demosoft
+$personalizado : var(--glocal-color);
+$gris          : var(--gris); //sombra y texto gris
+$bordes        : var(--bordes-claro); //bordes menu
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$blanco        : var(--blanco);
 
 .container-main {
     height  : calc(100% - 128px);
@@ -20,9 +15,9 @@ $background-oficial : #FEF5E7; //fondo Demosoft
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -87,7 +82,7 @@ body {
     font-size              : 186px;
     font-weight            : 200;
     margin                 : 0px;
-    background             : $color-gris-s;
+    background             : $gris;
     color                  : transparent;
     -webkit-background-clip: text;
     background-clip        : text;
@@ -114,10 +109,10 @@ body {
 
 .notfound a {
     font-family    : 'Kanit', sans-serif;
-    color          : $color-azul;
+    color          : $personalizado;
     font-weight    : 200;
     text-decoration: none;
-    border-bottom  : 1px dashed $color-azul;
+    border-bottom  : 1px dashed $personalizado;
     border-radius  : 2px;
 }
 
@@ -127,8 +122,8 @@ body {
     line-height       : 40px;
     width             : 40px;
     font-size         : 14px;
-    color             : $color-azul;
-    border            : 1px solid #efefef;
+    color             : $personalizado;
+    border            : 1px solid $bordes;
     border-radius     : 50%;
     margin            : 3px;
     -webkit-transition: 0.2s all;
@@ -136,9 +131,9 @@ body {
 }
 
 .notfound-social>a:hover {
-    color           : #fff;
-    background-color: $color-azul;
-    border-color    : $color-azul;
+    color           : $blanco;
+    background-color: $personalizado;
+    border-color    : $personalizado;
 }
 
 @media only screen and (max-width: 480px) {
@@ -162,7 +157,7 @@ p {
 
 .regresar {
     cursor: pointer;
-    color : $color-azul !important;
+    color : $personalizado !important;
 }
 
 .flecha-regresar {

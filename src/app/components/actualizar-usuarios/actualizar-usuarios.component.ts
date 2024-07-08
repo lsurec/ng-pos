@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { DetalleInterface } from 'src/app/displays/shrTarea_3/interfaces/detalle-tarea.interface';
@@ -22,7 +22,11 @@ import { UsuarioService } from 'src/app/services/usuario.service';
     UsuarioService,
   ]
 })
-export class ActualizarUsuariosComponent {
+export class ActualizarUsuariosComponent implements AfterViewInit{
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('usuarioInput') usuarioInput?: ElementRef;
+  habilitarBotones: boolean = false;
 
   usuariosSeleccionados: BuscarUsuariosInterface[] = []; // Lista para almacenar los usuarios seleccionados
   usuariosResInv: BuscarUsuariosInterface[] = [];
@@ -88,12 +92,12 @@ export class ActualizarUsuariosComponent {
 
   timer: any; //temporizador
 
-  onInputChange() {
-    clearTimeout(this.timer); // Cancelar el temporizador existente
-    this.timer = setTimeout(() => {
-      this.buscarUsuarios(); // Función de filtrado que consume el servicio
-    }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
-  }
+  // onInputChange() {
+  //   clearTimeout(this.timer); // Cancelar el temporizador existente
+  //   this.timer = setTimeout(() => {
+  //     this.buscarUsuarios(); // Función de filtrado que consume el servicio
+  //   }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
+  // }
 
   async buscarUsuarios(): Promise<void> {
 
@@ -205,6 +209,25 @@ export class ActualizarUsuariosComponent {
     this.dialogRef.close([responsableSeleccionado, usuario.name]);
   }
 
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.usuarioInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  deshabilitarBotonesTemp() {
+    this.timer = setTimeout(() => {
+      this.habilitarBotones = true;
+    }, 250);
+  }
 
 
 }

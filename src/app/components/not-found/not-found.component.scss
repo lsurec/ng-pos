@@ -1,16 +1,6 @@
-$color-transparent    : transparent; //fondo transparente
-$color-naranja        : #ff6f68; //texto, fondo y bordes
-$color-rosadito       : #ffa34f;
-$color-azul           : #134895;
-$background-naranja   : #DF9722; //resaltar naranja
-$color-gris-s         : #777; //sombra y texto gris
-$color-blanco         : #fff; //texto blanco
-$color-gris           : #efefef;
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar :  var(--global-color); //barra azul
-$font-family_1        : 'Kanit',
-sans-serif; ///fuentes
-$color-bordes : rgba(0, 0, 0, 0.12); //bordes menu
+$gris   : var(--gris); //sombra y texto gris
+$fondo  : var(--fondo-claro); //fondo Demosoft
+$bordes : var(--bordes-claro); //bordes menu
 
 .container-main {
     height : calc(100vh - 128px) !important;
@@ -61,7 +51,7 @@ body {
     font-size              : 186px;
     font-weight            : 200;
     margin                 : 0px;
-    background             : $color-gris-s;
+    background             : $gris;
     color                  : transparent;
     -webkit-background-clip: text;
     background-clip        : text;
@@ -139,7 +129,7 @@ p {
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }

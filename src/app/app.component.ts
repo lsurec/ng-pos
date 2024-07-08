@@ -85,6 +85,9 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--requerido', "rgba(0, 0, 0, 0.05)");
     document.documentElement.style.setProperty('--error', "#cc4141");
     document.documentElement.style.setProperty('--mas-contenido', "0px -3px 10px 1.5px rgba(0, 0, 0, 0.2)");
+    document.documentElement.style.setProperty('--hover', "#ebebeb");
+    document.documentElement.style.setProperty('--pestana', "#555");
+
 
 
 
@@ -104,6 +107,7 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--pestana-oscuro', this.oscuro.pestana);
     document.documentElement.style.setProperty('--iconos-oscuro', this.oscuro.iconos);
     document.documentElement.style.setProperty('--boton-ico-oscuro', this.oscuro.botonIcono);
+    document.documentElement.style.setProperty('--placeholder-oscuro', this.oscuro.placeholder);
 
     //Tema Claro
     document.documentElement.style.setProperty('--primario-claro', this.claro.primario);
@@ -120,6 +124,8 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--pestana-claro', this.claro.pestana);
     document.documentElement.style.setProperty('--iconos-claro', this.claro.iconos);
     document.documentElement.style.setProperty('--boton-ico-claro', this.claro.botonIcono);
+    document.documentElement.style.setProperty('--placeholder-claro', this.claro.placeholder);
+
   }
 
   claro: ColoresInterface = {
@@ -137,7 +143,8 @@ export class AppComponent implements OnInit {
     pestana: "#134895",
     iconos: "#777",
     botonIcono: "#fffff",
-    seleccionado2: "#5d6d6c"
+    seleccionado2: "#5d6d6c",
+    placeholder: "rgba(0, 0, 0, 0.502)"
   }
 
 
@@ -148,7 +155,7 @@ export class AppComponent implements OnInit {
     seleccionado: "#5f5f5f",
     descuento: "#ff3a3a",
     cargo: "#44ff14",
-    saldo: "#4d91f5",
+    saldo: "#8fbcfe",
     scroll: "#635f5f",
     bordes: "#8a8484",
     navegacion: "#252323",
@@ -156,7 +163,8 @@ export class AppComponent implements OnInit {
     pestana: "#df9722",
     iconos: "#c4c4c4",
     botonIcono: "#c4c4c4",
-    seleccionado2: "#5d6d6c"
+    seleccionado2: "#5d6d6c",
+    placeholder: "#eef0f3e0"
   };
 
 

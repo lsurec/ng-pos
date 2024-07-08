@@ -9,7 +9,7 @@ $borde-no-seleccionado   : #635f5f;
 $color-naranja           : #df9722;
 $seleccionado            : #635f5f;
 $placeholder             : #eef0f3e0;
-$scrollbars              : $borde-no-seleccionado;
+$scrollbars              : var(--global-color);
 $color-azul              : #2764bd;
 $color-verde             : #44ff14;
 $color-rojo              : #f93c3c;
@@ -239,7 +239,6 @@ input[type="radio"] {
 .dark-theme .contenido-sidenav,
 .dark-theme #notfound,
 .dark-theme .seleccionar,
-.dark-theme .mdc-menu-surface.mat-mdc-select-panel,
 .dark-theme .container-main,
 .dark-theme .dialog,
 .dark-theme .informacion,
@@ -533,10 +532,6 @@ input[type="radio"] {
     border: none !important;
 }
 
-.dark-theme .form-control {
-    border: 1px solid $bordes !important;
-}
-
 //cargo-decuento-saldo
 
 .dark-theme .saldo {
@@ -577,7 +572,6 @@ input[type="radio"] {
 .dark-theme .restar,
 .dark-theme .sumar,
 .dark-theme .cantidad,
-.dark-theme .hora-calendario,
 .dark-theme .bf {
     border-color: $bordes !important;
 }
@@ -616,8 +610,30 @@ input[type="radio"] {
 
 }
 
+.mdc-menu-surface.mat-mdc-select-panel {
+    overflow-y: auto;
+}
+
+.mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar {
+    width           : 7px;
+    background-color: var(--fondo-claro);
+}
+
+.mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-track {
+    background-color: var(--fondo-claro);
+}
+
+.mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb {
+    background-color: var(--global-color);
+    border-radius   : 20px;
+}
+
+
+
 //scrolls 
 
+.dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar,
+.dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-track,
 .dark-theme .documento::-webkit-scrollbar,
 .dark-theme .documento::-webkit-scrollbar-track,
 .dark-theme .container-main::-webkit-scrollbar,
@@ -668,7 +684,7 @@ input[type="radio"] {
 
 
 //Color barra scroll
-
+.dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb,
 .dark-theme .documento::-webkit-scrollbar-thumb,
 .dark-theme .localidades::-webkit-scrollbar-thumb,
 .dark-theme .empresas::-webkit-scrollbar-thumb,
@@ -682,8 +698,6 @@ input[type="radio"] {
 .dark-theme .lista-bancos::-webkit-scrollbar-thumb,
 .dark-theme .contenido::-webkit-scrollbar-thumb,
 .dark-theme .pagos-gregados::-webkit-scrollbar-thumb,
-.dark-theme .button_up_content,
-.dark-theme .button_down_content,
 .dark-theme .container_main::-webkit-scrollbar-thumb,
 .dark-theme .comentarios::-webkit-scrollbar-thumb,
 .dark-theme .detalle::-webkit-scrollbar-thumb,
@@ -718,6 +732,14 @@ input[type="radio"] {
 
 //Nuevos estilos con variables globales 
 
+.dark-theme .barra_paso,
+.dark-theme .minutos,
+.dark-theme .seleccionar-tiempo,
+.dark-theme .hora-calendario,
+.dark-theme .form-control,
+.dark-theme .ver-calendario,
+.dark-theme .ver-hora,
+.dark-theme .tipo-tarea,
 .dark-theme .seleccionar-empresa,
 .dark-theme .seleccionar-localidad,
 .dark-theme .login-right input[type="text"],
@@ -743,6 +765,7 @@ input[type="radio"] {
     color: var(--texto-boton) !important;
 }
 
+.dark-theme .filtros,
 .dark-theme .t-seleccionado,
 .dark-theme .buscar-icono {
     border-bottom: 1px solid var(--bordes-oscuro) !important;
@@ -752,11 +775,42 @@ input[type="radio"] {
     color: $color-blanco !important;
 }
 
+.dark-theme .button_up_content,
+.dark-theme .button_down_content {
+    background-color: var(--global-color) !important;
+}
+
 .mat-mdc-raised-button {
     background-color: var(--global-color) !important;
     color           : var(--blanco) !important;
 }
 
-// .dark-theme .opciones:hover {
-//     color: var(--global-color) !important;
-// }
+.mdc-linear-progress__bar-inner {
+    border-color: var(--global-color) !important;
+}
+
+.dark-theme .mat-mdc-progress-bar {
+    background-color: var(--gris) !important;
+}
+
+.mat-mdc-progress-bar {
+    background-color: var(--bordes-claro) !important;
+}
+
+
+.dark-theme .ordenar {
+    padding-left : 10px !important;
+    background   : var(--bloques-oscuro) !important;
+    border-radius: 10px !important;
+    box-shadow   : var(--sombra-oscuro) !important;
+}
+
+.dark-theme .documentos-origen {
+    background   : var(--bloques-oscuro) !important;
+    border-radius: 10px !important;
+    box-shadow   : var(--sombra-oscuro) !important;
+}
+
+.dark-theme .mat-mdc-select {
+    background: transparent !important;
+}
