@@ -278,7 +278,7 @@ input[type="radio"] {
 .dark-theme .acciones,
 .dark-theme .menuVistas,
 .dark-theme .opcion-vista,
-.dark-theme .observacion, 
+.dark-theme .observacion,
 .dark-theme .barra-fija {
     background-color: $fondo-oscuro !important;
     color           : $color-blanco !important;
@@ -396,7 +396,7 @@ input[type="radio"] {
 .dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,
 .dark-theme .input-container,
-.dark-theme .seleccionar,
+// .dark-theme .seleccionar,
 .dark-theme .head__sidenav,
 .dark-theme .toolbarlargeTitle,
 .dark-theme .toolbar-row,
@@ -411,6 +411,18 @@ input[type="radio"] {
 .dark-theme .error.observacion-tarea,
 .dark-theme .error.titulo-tarea {
     border-bottom: 2px solid $rojo-error !important;
+}
+
+.dark-theme .error.seleccionar-localidad,
+.dark-theme .error.seleccionar-empresa,
+.dark-theme .error.observacion-tarea,
+.dark-theme .error.titulo-tarea {
+    border: 2px solid $rojo-error !important;
+}
+
+.dark-theme .info,
+.dark-theme .error-message {
+    color: $color-rojo !important;
 }
 
 .dark-theme .dia-nombre,
@@ -731,7 +743,8 @@ input[type="radio"] {
     color: var(--texto-boton) !important;
 }
 
-.dark-theme .t-seleccionado {
+.dark-theme .t-seleccionado,
+.dark-theme .buscar-icono {
     border-bottom: 1px solid var(--bordes-oscuro) !important;
 }
 

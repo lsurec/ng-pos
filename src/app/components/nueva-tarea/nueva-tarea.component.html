@@ -113,12 +113,10 @@
                             placeholder="{{ 'crm.crear.tituloTarea' | translate }}..." class="titulo-tarea"
                             [ngClass]="{'error': formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid}"
                             autocomplete="off">
-                        <div class="dFlex"
+                        <div class="error-message"
                             *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid">
                             <!-- <p class="circulo-error"></p> -->
-                            <p class="error-message">
-                                {{ 'crm.alertas.requerido' | translate }}
-                            </p>
+                            {{ 'crm.alertas.requerido' | translate }}
                         </div>
                     </div>
                     <div class="bloque-menus">

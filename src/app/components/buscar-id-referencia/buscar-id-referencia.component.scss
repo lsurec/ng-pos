@@ -11,11 +11,6 @@ $placeholder          : rgba(0, 0, 0, 0.30);
 $rojo-info            : #cc4141;
 $sombra               : rgba(0, 0, 0, 0.1);
 
-input::placeholder,
-textarea::placeholder {
-    color: $placeholder !important;
-}
-
 .progress {
     padding         : 0px;
     width           : 680px;
