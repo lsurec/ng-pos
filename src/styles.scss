@@ -814,3 +814,15 @@ input[type="radio"] {
 .dark-theme .mat-mdc-select {
     background: transparent !important;
 }
+
+.dark-theme .elemento {
+    background-color: var(--bloques-oscuro) !important;
+    border          : none !important;
+    box-shadow      : var(--sombra-oscuro) !important;
+}
+
+
+//hover seleccionado
+.dark-theme .elemento:hover {
+    background-color: var(--seleccionado2) !important;
+}

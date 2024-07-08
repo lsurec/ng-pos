@@ -1,19 +1,14 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$color-bordes         : #c1bfbf; //bordes menu
-$color-gris-2         : #777; //sombra y texto gris
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar :  var(--global-color); //barra azul
+$bordes : var(--bordes-claro);
+$fondo  : var(--fondo-claro); //fondo Demosoft
+$scroll : var(--global-color); //barra azul
+$negro  : var(--negro);
 
 
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Toolbar*/
@@ -33,8 +28,8 @@ $background-scrollbar :  var(--global-color); //barra azul
 
 .toolbarPhoneTitle,
 .toolbarlargeTitle {
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 @media screen and (max-width: 767px) {
@@ -54,17 +49,17 @@ $background-scrollbar :  var(--global-color); //barra azul
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_page {
@@ -97,8 +92,8 @@ $background-scrollbar :  var(--global-color); //barra azul
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -113,11 +108,11 @@ p {
 
 //barra de abajo
 .barra-regresar {
-    background: #FEF5E7;
-    color     : #000000;
+    background: $fondo;
+    color     : $negro;
     height    : 64px !important;
     padding   : 0px;
-    border-top: 1px solid $borde-toolbar;
+    border-top: 1px solid $bordes;
 }
 
 .titulo {
@@ -140,7 +135,7 @@ p {
     display    : flex;
     align-items: center;
     padding    : 10px;
-    border     : solid 1px $color-bordes;
+    border     : solid 1px $bordes;
     margin     : 10px 0px;
 }
 

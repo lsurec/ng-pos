@@ -1,21 +1,25 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar :  var(--global-color); //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$fondo                : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$background-scrollbar : var(--global-color); //barra azul
+$bordes               : var(--bordes-claro); //bordes del calendario
+$personalizado        : var(--global-color); //bordes y texto azul
+$negro                : var(--negro);
+$gris                 : var(--gris);
+$hover                : var(--hover);
+
 
 .progress {
     padding         : 0px;
     padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 10px 0px 10px 20px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
@@ -35,13 +39,13 @@ $color-azul           : #134895; //bordes y texto azul
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
     background-color: $background-scrollbar;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -50,7 +54,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -60,7 +64,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -106,7 +110,7 @@ hr {
     font-size    : 14px;
     width        : 100%;
     align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .titulos {
@@ -116,7 +120,7 @@ hr {
     width        : 100%;
     font-weight  : 450;
     padding-top  : 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .busqueda {
@@ -149,11 +153,7 @@ p {
 
 .seleccionar:hover,
 .seleccionar-invitados:hover {
-    background-color: #ebebeb;
-}
-
-.detalle:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .botones {
@@ -166,13 +166,13 @@ p {
 .inputSearch {
     width           : 100%;
     border-style    : none;
-    border          : 1px solid $color-bordes;
+    border          : 1px solid $bordes;
     background-color: transparent;
     min-height      : 35px;
     padding         : 2px 5px;
     font-size       : 12px;
     outline         : none;
-    color           : $color-azul;
+    color           : $personalizado;
 }
 
 @media screen and (max-width: 280px) {

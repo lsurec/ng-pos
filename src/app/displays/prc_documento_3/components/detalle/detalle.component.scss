@@ -1,19 +1,11 @@
-$color-transparent  : transparent; //fondo transparente
-$color-naranja      : #ff6f68; //texto, fondo y bordes
-$color-rosadito     : #ffa34f;
-$color-azul         : #134895;
-$color-negro        : #000;
-$color-bordes       : rgba(0, 0, 0, 0.12); //bordes menu
-$background-naranja : #DF9722; //resaltar naranja
-$color-gris-s       : #777; //sombra y texto gris
-$color-blanco       : #fff; //texto blanco
-$color-gris         : #efefef;
-$detalles           : rgb(0 0 0 / 3%);
-$background-transparent: transparent; //fondo transparennte,
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : var(--global-color); //barra azul
-$sombra               : rgba(0, 0, 0, 0.1);
-
+$personalizo : var(--global-color);
+$negro       : var(--negro);
+$bordes      : var(--bordes-claro); //bordes menu
+$blanco      : var(--blanco); //texto blanco
+$bloques     : var(--bloques-claro);
+$fondo       : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll      : var(--global-color); //barra azul
+$sombra      : var(--sombra-claro);
 
 .detalle-container {
     height    : calc(100vh - 290px);
@@ -60,13 +52,13 @@ $sombra               : rgba(0, 0, 0, 0.1);
 }
 
 .detalle-container::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .detalle-container::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -81,7 +73,7 @@ p {
 .informacion-fondo {
     padding         : 10px;
     margin-bottom   : 10px;
-    background-color: $detalles;
+    background-color: $bloques;
     box-shadow      : 0px 1px 0px 1px $sombra;
     border-radius   : 10px;
 }
@@ -90,7 +82,7 @@ p {
     padding         : 10px;
     width           : 100px;
     margin-bottom   : 10px;
-    background-color: $detalles;
+    background-color: $bloques;
     box-shadow      : 0px 1px 0px 1px $sombra;
     border-radius   : 10px;
 }
@@ -100,7 +92,7 @@ p {
     width           : calc(100% - 120px);
     padding         : 10px;
     margin-bottom   : 10px;
-    background-color: $detalles;
+    background-color: $bloques;
     box-shadow      : 0px 1px 0px 1px $sombra;
     border-radius   : 10px;
 }
@@ -125,7 +117,7 @@ p {
 }
 
 .total-barra {
-    border-top: 1px solid $color-negro;
+    border-top: 1px solid $negro;
 }
 
 .titulo {
@@ -136,13 +128,13 @@ p {
 
 .titulos:hover {
     cursor       : pointer;
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizo;
     font-weight  : 500;
 }
 
 .seleccionar {
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
 }
 
@@ -153,7 +145,7 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizo;
     font-size : 13px;
 }
 
@@ -181,20 +173,20 @@ p {
     display      : flex;
     align-items  : center;
     width        : 100%;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .input-container:hover {
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizo;
 }
 
 //Estilo para el icono
 .iconoLupa {
-    color: $color-azul;
+    color: $personalizo;
 }
 
 .iconoCargo {
-    color           : $color-blanco;
+    color           : $blanco;
     background-color: #25a704;
     margin-right    : 5px;
     width           : 30px;
@@ -202,7 +194,7 @@ p {
 }
 
 .iconoDescuento {
-    color           : $color-blanco;
+    color           : $blanco;
     background-color: #ce1414;
     width           : 30px;
     height          : 30px;
@@ -221,7 +213,7 @@ p {
     padding-left : 10px;
     outline      : none;
     border-style : none;
-    color        : $color-azul;
+    color        : $personalizo;
     border-radius: 10px;
 }
 
@@ -249,9 +241,9 @@ p {
 }
 
 .selected {
-    background-color: $color-azul;
-    color           : #fff;
-    border          : 1px solid $color-azul;
+    background-color: $personalizo;
+    color           : $blanco;
+    border          : 1px solid $personalizo;
 }
 
 .detalles-cliente {
@@ -260,14 +252,10 @@ p {
     font-weight: 500;
 }
 
-.encontrado {
-    border-bottom: 1px solid $color-gris;
-}
-
 .producto-seleccionado {
     min-height      : 45px;
     width           : 100%;
-    background-color: $color-bordes;
+    background-color: $bordes;
     padding         : 5px 10px;
     margin          : 5px 0px;
 }
@@ -297,9 +285,9 @@ p {
     padding-left : 10px;
     outline      : none;
     border-style : none;
-    color        : $color-azul;
+    color        : $personalizo;
     border-radius: 10px;
-    border       : 1px solid $color-azul;
+    border       : 1px solid $personalizo;
     margin       : 10px 10px 0px 0px;
 }
 
@@ -310,7 +298,7 @@ p {
 .pagar {
     padding         : 10px;
     width           : 250px;
-    background-color: $detalles;
+    background-color: $bloques;
     margin-right    : 6px;
     border-radius   : 10px;
 }
@@ -318,7 +306,7 @@ p {
 .textos {
     font-size  : 15px;
     font-weight: bold;
-    color      : $color-negro;
+    color      : $negro;
 }
 
 
@@ -371,12 +359,12 @@ mat-accordion {
 }
 
 .acordeon {
-    background-color: $background-transparent;
+    background-color: transparent;
 }
 
 .mat-expansion-panel-body {
     padding         : 0 !important;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     margin          : 0px -20px;
     border-radius   : 0px !important;
 }
@@ -396,8 +384,8 @@ mat-accordion {
     padding      : 0px 3px;
     outline      : none;
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
-    color        : $color-azul;
+    border-bottom: 1px solid $bordes;
+    color        : $personalizo;
     width        : 100%;
     text-align   : center;
 }
