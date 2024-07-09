@@ -595,20 +595,19 @@ input[type="radio"] {
 //radio buttons
 
 .dark-theme .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
-    border-color: $radio-buttons !important;
+    border-color: var(--bordes-oscuro) !important;
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: $radio-buttons !important;
+    border-color: var(--global-color) !important;
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
-    border-color: $radio-buttons !important;
+    border-color: var(--global-color) !important;
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: $radio-buttons !important;
-
+    border-color: var(--global-color) !important;
 }
 
 .mdc-menu-surface.mat-mdc-select-panel {
