@@ -581,8 +581,9 @@ input[type="radio"] {
 }
 
 .dark-theme .seleccionar:hover,
-.dark-theme .seleccionar-invitados:hover {
-    background-color: var(--hover) !important;
+// .dark-theme .detalleUsuario:hover,
+.dark-theme .detalleInvitado:hover {
+    background-color: var(--seleccionado2) !important;
 }
 
 //Borde blanco para totales
@@ -840,7 +841,16 @@ input[type="radio"] {
     background-color: var(--seleccionado2) !important;
 }
 
+
+.dark-theme .seleccionar,
+.dark-theme .detalleInvitado,
 .dark-theme .respuesta-dialogo {
     background: var(--bloques-oscuro) !important;
 
+}
+
+//ChecksBos
+.mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+    background-color: var(--global-color) !important;
+    border-color    : var(--global-color) !important;
 }
