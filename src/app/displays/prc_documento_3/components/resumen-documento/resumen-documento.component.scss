@@ -1,10 +1,5 @@
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : var(--blanco);
-$color-gris           : #c1bfbf;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$personalizado           : #134895; // fondo, bordes y texto azul
-$fondo   : var(--fondo-claro); //fondo Demosoft
+$bordes : var(--bordes-claro); //bordes menu
+$fondo  : var(--fondo-claro); //fondo Demosoft
 $scroll : var(--global-color); //barra azul
 
 .container-main::-webkit-scrollbar {
@@ -42,7 +37,7 @@ $scroll : var(--global-color); //barra azul
     align-items     : center;
     background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -95,7 +90,7 @@ hr {
 .subtitulo-borde {
     font-size    : 14px;
     font-weight  : 500;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
 }
 
 .textos {
@@ -110,20 +105,20 @@ hr {
 .descripcion-pago,
 .descripcion-producto {
     padding      : 0px 10px 5px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $bordes;
     border-radius: 5px;
     margin-top   : 5px;
 }
 
 .descripcion-total {
     padding      : 0px 10px 5px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $bordes;
     border-radius: 5px;
 }
 
 .observacion {
     padding      : 5px 10px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $bordes;
     border-radius: 5px;
     background   : transparent;
     width        : 100%;
