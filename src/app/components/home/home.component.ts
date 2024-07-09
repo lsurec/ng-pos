@@ -440,6 +440,17 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //color de fondo
+    let getColor: string = PreferencesService.colorApp;
+
+    if (!getColor) {
+      this.themeService.color = "#134895";
+      PreferencesService.colorApp = this.themeService.color;
+    } else {
+      this.themeService.color = getColor;
+      PreferencesService.colorApp = this.themeService.color;
+    }
+
     // asiganr moneda 
     this.dataUserService.simboloMoneda = this.empresa.moneda_Simbolo;
 

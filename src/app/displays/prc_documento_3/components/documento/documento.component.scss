@@ -1,12 +1,10 @@
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : #fff;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra azul
-$detalles             : rgb(0 0 0 / 3%);
-$sombra               : rgba(0, 0, 0, 0.1);
+$blanco        : var(--blanco);
+$bordes        : var(--bordes-claro); //bordes menu
+$personalizado : var(--global-color); // fondo, bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
 
 .documento {
     padding   : 10px 25px;
@@ -20,13 +18,13 @@ $sombra               : rgba(0, 0, 0, 0.1);
 }
 
 .documento::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .documento::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .serie-vendedor,
@@ -54,8 +52,8 @@ hr {
     padding         : 10px;
     width           : 80%;
     margin-bottom   : 10px;
-    background-color: $detalles;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    background-color: $bloques;
+    box-shadow      : $sombra;
     border-radius   : 10px;
 }
 
@@ -71,24 +69,24 @@ hr {
 .buscar-cliente {
     padding         : 10px;
     width           : 100%;
-    background-color: $detalles;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    background-color: $bloques;
+    box-shadow      : $sombra;
     border-radius   : 10px;
 }
 
 .detalles-fondo {
     padding         : 10px 5px 0px;
     width           : 80%;
-    background-color: $detalles;
+    background-color: $bloques;
     margin-bottom   : 10px;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    box-shadow      : $sombra;
     border-radius   : 10px;
 }
 
 .detalles-fondo-v {
     padding         : 10px 5px;
     width           : 80%;
-    background-color: $detalles;
+    background-color: $bloques;
     margin-bottom   : 10px;
 }
 
@@ -115,13 +113,13 @@ hr {
 
 .titulos:hover {
     cursor       : pointer;
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizado;
     font-weight  : 500;
 }
 
 .seleccionar {
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
 }
 
@@ -138,7 +136,7 @@ hr {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -160,16 +158,16 @@ hr {
     display      : flex;
     align-items  : center;
     width        : 100%;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .input-container:hover {
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizado;
 }
 
 //Estilo para el icono
 .iconoLupa {
-    color: $color-azul;
+    color: $personalizado;
 }
 
 // estilos para los inputs 
@@ -181,7 +179,7 @@ hr {
     padding-left : 10px;
     outline      : none;
     border-style : none;
-    color        : $color-azul;
+    color        : $personalizado;
     border-radius: 10px;
 }
 
@@ -208,15 +206,15 @@ hr {
     padding      : 5px 8px;
     margin       : 4px;
     cursor       : pointer;
-    border       : 1px solid #ccc;
+    border       : 1px solid $bordes;
     border-radius: 20px;
     font-size    : 12px;
 }
 
 .selected {
-    background-color: $color-azul;
-    color           : #fff;
-    border          : 1px solid $color-azul;
+    background-color: $personalizado;
+    color           : $blanco;
+    border          : 1px solid $personalizado;
 }
 
 .detalles-cliente {
@@ -275,19 +273,19 @@ hr {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    border          : 1px solid $bordes;
+    color           : $personalizado;
 }
 
 .ver-calendario {
-    border     : 1px solid $color-bordes;
+    border     : 1px solid $bordes;
     align-items: center;
     height     : 35px;
 }
 
 .ver-hora {
     height                    : 35px;
-    border                    : 1px solid $color-bordes;
+    border                    : 1px solid $bordes;
     border-top-right-radius   : 5px;
     border-bottom-right-radius: 5px;
     border-top-left-radius    : 0px;
@@ -313,7 +311,7 @@ hr {
 .hora-calendario {
     width                    : 100%;
     height                   : 35px;
-    border                   : 1px solid $color-bordes;
+    border                   : 1px solid $bordes;
     display                  : flex;
     align-items              : center;
     border-top-left-radius   : 5px;
@@ -333,7 +331,7 @@ hr {
     font-size       : 13px;
     // padding: 6px 12px;
     outline         : none;
-    color           : $color-azul;
+    color           : $personalizado;
     background-color: transparent;
     text-align      : center;
 }
@@ -348,7 +346,7 @@ hr {
 }
 
 .campos {
-    color           : $color-azul;
+    color           : $personalizado;
     width           : 100%;
     border-style    : none;
     background-color: transparent;
@@ -358,7 +356,7 @@ hr {
 }
 
 .campos:hover {
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 hr {

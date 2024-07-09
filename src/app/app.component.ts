@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private _themeService: ThemeService,
+    private themeService: ThemeService,
 
   ) {
     //Buscar y obtener el leguaje guardado en el servicio  
@@ -37,35 +37,35 @@ export class AppComponent implements OnInit {
 
     //buscar y asignar tema
     if (PreferencesService.theme == '1') {
-      this._themeService.isDarkTheme = true;
-      this._themeService.updateTheme();
+      this.themeService.isDarkTheme = true;
+      this.themeService.updateTheme();
     }
 
     //tamaño de fuente
     let getFontSize: string = PreferencesService.fontSizeStorage;
 
     if (!getFontSize) {
-      _themeService.globalFontSize = "14px";
+      themeService.globalFontSize = "14px";
     } else {
-      _themeService.globalFontSize = getFontSize;
+      themeService.globalFontSize = getFontSize;
     }
 
     //color de fondo
     let getColorFondo: string = PreferencesService.fondoApp;
 
     if (!getColorFondo) {
-      _themeService.fondo = "#FEF5E7";
+      themeService.fondo = "#FEF5E7";
     } else {
-      _themeService.fondo = getColorFondo;
+      themeService.fondo = getColorFondo;
     }
 
     //color de fondo
     let getColor: string = PreferencesService.colorApp;
 
     if (!getColor) {
-      _themeService.color = "#134895";
+      themeService.color = "#134895";
     } else {
-      _themeService.color = getColor;
+      themeService.color = getColor;
     }
 
   }
@@ -73,10 +73,27 @@ export class AppComponent implements OnInit {
   //1px solid #c1bfbf
 
   ngOnInit(): void {
+
+    //color de fondo
+    let getColor: string = PreferencesService.colorApp;
+
+    if (!getColor) {
+      this.themeService.color = "#134895";
+      PreferencesService.colorApp = this.themeService.color;
+
+    } else {
+      this.themeService.color = getColor;
+      PreferencesService.colorApp = this.themeService.color;
+
+    }
+
+    console.log(PreferencesService.colorApp);
+
+
     // Obtener el valor de globalFontSize del servicio y establecerlo como una variable CSS
-    document.documentElement.style.setProperty('--global-font-size', this._themeService.globalFontSize);
-    document.documentElement.style.setProperty('--global-color-fondo', this._themeService.fondo);
-    document.documentElement.style.setProperty('--global-color', this._themeService.color);
+    document.documentElement.style.setProperty('--global-font-size', this.themeService.globalFontSize);
+    document.documentElement.style.setProperty('--global-color-fondo', this.themeService.fondo);
+    document.documentElement.style.setProperty('--global-color', this.themeService.color);
     document.documentElement.style.setProperty('--seleccionado2', "#5d6d6c");
     document.documentElement.style.setProperty('--blanco', "#fff");
     document.documentElement.style.setProperty('--texto-boton', "#cdc7c7");

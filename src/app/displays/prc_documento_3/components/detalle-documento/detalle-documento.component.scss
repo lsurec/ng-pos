@@ -1,24 +1,20 @@
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : #fff;
-$color-gris           : #c1bfbf;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-azul           : #134895; // fondo, bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar :  var(--global-color); //barra azul
+$negro  : var(--negro);
+$bordes : var(--bordes-claro); //bordes menu
+$fondo  : var(--fondo-claro); //fondo Demosoft
+$scroll : var(--global-color); //barra azul
 
 .container-main::-webkit-scrollbar {
     width: 7px;
 }
 
 .container-main::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container-main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container-main {
@@ -32,7 +28,7 @@ $background-scrollbar :  var(--global-color); //barra azul
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -40,9 +36,9 @@ $background-scrollbar :  var(--global-color); //barra azul
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -75,7 +71,7 @@ hr {
 .pago {
     display   : flex;
     padding   : 10px 0px;
-    border-top: 1px solid $color-bordes;
+    border-top: 1px solid $bordes;
 }
 
 .tipo-serie-documento {
@@ -108,7 +104,7 @@ hr {
 .subtitulo-borde {
     font-size    : 14px;
     font-weight  : 500;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
 }
 
 .textos {
@@ -124,7 +120,7 @@ hr {
 .tipo-serie {
     width        : 48%;
     padding      : 10px 0px 5px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .descripciones {
@@ -135,7 +131,7 @@ hr {
 .descripcion-pago,
 .descripcion-producto {
     padding      : 0px 10px 5px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $bordes;
     border-radius: 5px;
     margin-top   : 5px;
 }
@@ -151,7 +147,7 @@ hr {
 }
 
 .total-barra {
-    border-top: 1px solid $color-negro;
+    border-top: 1px solid $negro;
 }
 
 

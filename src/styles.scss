@@ -582,7 +582,7 @@ input[type="radio"] {
 
 .dark-theme .seleccionar:hover,
 .dark-theme .seleccionar-invitados:hover {
-    background-color: $seleccionado !important;
+    background-color: var(--hover) !important;
 }
 
 //Borde blanco para totales
@@ -615,7 +615,7 @@ input[type="radio"] {
 }
 
 .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar {
-    width           : 7px;
+    width           : 12px;
     background-color: var(--fondo-claro);
 }
 
@@ -626,6 +626,19 @@ input[type="radio"] {
 .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb {
     background-color: var(--global-color);
     border-radius   : 20px;
+}
+
+.dark-theme .mat-mdc-option.mat-mdc-option-active,
+.dark-theme .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+    background: var(--bloques-oscuro) !important;
+}
+
+.dark-theme .mat-mdc-option:hover {
+    background: var(--bloques-oscuro) !important;
+}
+
+.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+    color: var(--error);
 }
 
 
@@ -825,4 +838,9 @@ input[type="radio"] {
 //hover seleccionado
 .dark-theme .elemento:hover {
     background-color: var(--seleccionado2) !important;
+}
+
+.dark-theme .respuesta-dialogo {
+    background: var(--bloques-oscuro) !important;
+
 }

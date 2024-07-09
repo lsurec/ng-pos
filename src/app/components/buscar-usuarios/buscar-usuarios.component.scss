@@ -6,6 +6,7 @@ $color-negro        : #000;
 $placeholder        : rgba(0, 0, 0, 0.30);
 $rojo-info          : #cc4141;
 $sombra             : rgba(0, 0, 0, 0.1);
+$hover              : ver(--hover);
 
 // input::placeholder,
 // textarea::placeholder {
@@ -163,11 +164,11 @@ p {
 
 .seleccionar:hover,
 .detalleInvitado:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .detalle:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .botones {
