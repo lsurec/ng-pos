@@ -8,8 +8,8 @@ $color-naranja        : #DF9722; //resaltar tareas naranja
 $border-color         : rgba(0, 0, 0, .09);
 $font-serif           : sans-serif; //fuente del texto
 $background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra rosada
+$fondo   : var(--fondo-claro); //fondo Demosoft
+$scroll : var(--global-color); //barra rosada
 $background-botones   : var(--global-color); //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
 
@@ -18,7 +18,7 @@ $background-transparent: transparent; //fondo transparennte,
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -29,15 +29,15 @@ $background-transparent: transparent; //fondo transparennte,
 
 .llenar-formulario::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .llenar-formulario::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .llenar-formulario::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
     border          : 3px #f3c5d3;
 }

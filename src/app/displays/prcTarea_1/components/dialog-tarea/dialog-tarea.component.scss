@@ -1,10 +1,10 @@
 $color-negro          : #000; //texto
 $color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$personalizado           : #134895; //bordes y texto azul
 $color-gris           : #968989cb; // bordes de comentarios
 $color-2-gris         : #857373c9; //texto, bordes
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar :var(--global-color); //barra azul
+$fondo   : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll :var(--global-color); //barra azul
 $background-detalles  : #dad2d286; //fondo detalles 
 $background-flecha    : #3b3939cb; //fondo triangulo
 $background-transparent: transparent; //fondo transparennte, 
@@ -14,7 +14,7 @@ $background-transparent: transparent; //fondo transparennte,
     width           : 750px;
     height          : 430px;
     overflow-y      : auto;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
@@ -23,7 +23,7 @@ $background-transparent: transparent; //fondo transparennte,
     height          : 430px;
     padding-bottom  : 30px;
     overflow-y      : auto;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow-x      : hidden;
 }
 
@@ -31,14 +31,14 @@ $background-transparent: transparent; //fondo transparennte,
     height          : 64px !important;
     padding         : 0px 10px;
     border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head_bottom_sidenav {
     height          : 20px !important;
     padding         : 0px 10px;
     border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .botones {
@@ -86,13 +86,13 @@ hr {
 }
 
 .dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .verDetalle {
@@ -254,7 +254,7 @@ p {
     height          : 35px;
     font-size       : 14px;
     border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    color           : $personalizado;
 }
 
 .lista-archivos {
@@ -399,6 +399,6 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }

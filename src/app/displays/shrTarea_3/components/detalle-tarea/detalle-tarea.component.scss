@@ -1,10 +1,10 @@
 $color-negro          : #000; //texto
 $color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$personalizado           : #134895; //bordes y texto azul
 $color-gris           : #968989cb; // bordes de comentarios
 $color-2-gris         : #857373c9; //texto, bordes
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : var(--global-color); //barra azul
+$fondo   : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll : var(--global-color); //barra azul
 $background-detalles  : #dad2d286; //fondo detalles
 $background-flecha    : #3b3939cb; //fondo triangulo
 $background-transparent: transparent; //fondo transparennte,
@@ -13,7 +13,7 @@ $color-personalizado : var(--global-color);
 
 .head__sidenav {
     height          : 64px !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
     border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
 }
@@ -33,7 +33,7 @@ $color-personalizado : var(--global-color);
 
 mat-sidenav {
     width     : 365px;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 @media screen and (max-width: 280px) {
@@ -52,7 +52,7 @@ mat-sidenav {
     height          : 100%;
     padding-bottom  : 30px;
     overflow-y      : auto;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .sidenav_container {
@@ -63,7 +63,7 @@ mat-sidenav {
     bottom        : 0;
     left          : 0;
     right         : 0;
-    background    : $background-oficial;
+    background    : $fondo;
 }
 
 /*Fin SideNav*/
@@ -72,13 +72,13 @@ mat-sidenav {
 
 .toolbarPhone {
     display   : none;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .toolbarPhone,
 .toolbarlarge {
     position  : fixed !important;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .acordeon_oculto {
@@ -107,21 +107,21 @@ mat-sidenav {
     height    : calc(100% - 128px);
     width     : 100vw;
     position  : fixed;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_start {
     height    : 100%;
     float     : left;
     overflow  : auto;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_main {
     width     : 100%;
     height    : 100%;
     float     : left;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 
@@ -159,7 +159,7 @@ mat-sidenav {
     width         : 250PX;
     float         : left;
     overflow      : auto;
-    background    : $background-oficial;
+    background    : $fondo;
     border-left   : 1px solid rgba(0, 0, 0, .12);
     padding-bottom: 10px;
 }
@@ -169,9 +169,9 @@ mat-sidenav {
 .container_main::-webkit-scrollbar-thumb,
 .comentarios::-webkit-scrollbar-thumb,
 .detalle-tarea::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_main::-webkit-scrollbar,
@@ -183,7 +183,7 @@ mat-sidenav {
 .container_main::-webkit-scrollbar-track,
 .comentarios::-webkit-scrollbar-track,
 .detalle-tarea::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 /*Fin Contenido detalles*/
@@ -224,7 +224,7 @@ hr {
 
 .mat-expansion-panel-body {
     padding         : 0 !important;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     margin          : 0px -20px;
     border-radius   : 0px !important;
 }
@@ -405,7 +405,7 @@ mat-accordion {
 .detalles_acordeon_oculto {
     margin          : 10px 15px;
     width           : 90%;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     padding         : 0px;
 }
 
@@ -521,7 +521,7 @@ mat-accordion {
     height          : 35px;
     font-size       : 14px;
     border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    color           : $personalizado;
 }
 
 .detalle-titulos {

@@ -1,8 +1,8 @@
-$background-oficial : #FEF5E7; //fondo Demosoft
+$fondo : var(--fondo-claro); //fondo Demosoft
 
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }

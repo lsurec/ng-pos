@@ -1,4 +1,4 @@
-$background-oficial : #FEF5E7; //fondo Demosoft, bordes scroollbar
+$fondo : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
 $scrollbar          : var(--global-color); //barra azul
 $color-bordes       : #CED4DA; //bordes del calendario
 $preferencia        : var(--global-color); //bordes y texto azul
@@ -17,14 +17,14 @@ $hover              : ver(--hover);
     padding         : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 0px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
@@ -44,13 +44,13 @@ $hover              : ver(--hover);
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
     background-color: $scrollbar;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -89,7 +89,7 @@ hr {
 
 
 .fondo {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .nombre {

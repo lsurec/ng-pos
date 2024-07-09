@@ -1,14 +1,13 @@
-$color-transparent    : transparent; //fondo transparente
-$color-rosadito       : #ff6f68; //texto, fondo y bordes
-$color-naranja        : #ffa34f;
-$color-azul           : #134895;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$background-naranja   : #DF9722; //resaltar naranja
-$color-gris-s         : #777; //sombra y texto gris
-$color-blanco         : #fff; //texto blanco
-$color-gris           : #efefef;
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : var(--global-color); //barra azul
+$personalizado : var(--global-color);
+$naranja       : var(--pestana-oscuro); //resaltar naranja
+$gris          : var(--gris); //sombra y texto gris
+$negro         : var(--negro); //sombra y texto negro
+$color-blanco  : var(--blanco); //texto blanco
+$bordes        : var(--bordes-claro);
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$total-azul    : var(--primario-color); //barra azul
+
 
 .contenido {
     display   : flex;
@@ -61,7 +60,7 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -69,7 +68,7 @@ p {
     height          : 35px;
     display         : flex;
     align-items     : center;
-    background-color: $color-bordes;
+    background-color: $bordes;
     width           : 100%;
     margin          : 5px 0px;
     padding         : 0px 10px;
@@ -78,7 +77,7 @@ p {
 
 .tipos-pago:hover {
     cursor          : pointer;
-    background-color: $color-gris-s;
+    background-color: $gris;
     color           : $color-blanco;
 }
 
@@ -90,7 +89,7 @@ p {
     margin          : 5px 0px;
     padding         : 0px 10px;
     cursor          : pointer;
-    background-color: $color-gris-s;
+    background-color: $gris;
     color           : $color-blanco;
     border-radius   : 10px;
 }
@@ -99,7 +98,7 @@ p {
     height          : 35px;
     display         : flex;
     align-items     : center;
-    background-color: $color-bordes;
+    background-color: $bordes;
     width           : 100%;
     margin          : 5px 0px;
     padding         : 0px 10px;
@@ -108,7 +107,7 @@ p {
 
 .bancos:hover {
     cursor          : pointer;
-    background-color: $color-gris;
+    background-color: $bordes;
     color           : $color-blanco;
 }
 
@@ -116,7 +115,7 @@ p {
     min-height      : 35px;
     display         : flex;
     align-items     : center;
-    background-color: $color-bordes;
+    background-color: $bordes;
     width           : 100%;
     margin          : 5px 0px;
     padding         : 5px 10px;
@@ -127,7 +126,7 @@ p {
     height          : 35px;
     display         : flex;
     align-items     : center;
-    background-color: $color-azul;
+    background-color: $personalizado;
     width           : 100%;
     margin          : 5px 0px 10px;
     padding         : 0px 10px;
@@ -135,7 +134,7 @@ p {
 }
 
 .agregar-pago:hover {
-    background-color: $background-naranja;
+    background-color: $naranja;
     cursor          : pointer;
 }
 
@@ -156,7 +155,7 @@ p {
 .textos {
     font-size  : 15px;
     font-weight: bold;
-    color      : #000;
+    color      : $negro;
 }
 
 .total {
@@ -166,8 +165,8 @@ p {
     padding      : 0px 10px;
     outline      : none;
     border-style : none;
-    border       : 1px solid $color-bordes;
-    color        : $color-azul;
+    border       : 1px solid $bordes;
+    color        : $total-azul;
     text-align   : justify;
     width        : 100%;
     margin-bottom: 5px;
@@ -204,15 +203,15 @@ p {
 .lista-bancos::-webkit-scrollbar-track,
 .contenido::-webkit-scrollbar-track,
 .pagos-gregados::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .lista-bancos::-webkit-scrollbar-thumb,
 .contenido::-webkit-scrollbar-thumb,
 .pagos-gregados::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .pagos-gregados {
@@ -225,7 +224,7 @@ p {
 .pagos {
     min-height         : 40px;
     width              : 400px;
-    background-color   : $color-bordes;
+    background-color   : $bordes;
     // display         : flex;
     // align-items     : center;
     padding-left       : 5px;

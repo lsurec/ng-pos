@@ -1,16 +1,11 @@
-$color-naranja        : #df9722;
-$color-gris           : #c1bfbf;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$color-pestanas       : #555;
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : var(--global-color); //barra azul
-$bordes               : #c1bfbf;
-$idioma-seleccionado  : #5d6d6c;
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris-s         : #777; //sombra y texto gris
-$color-personalizado  : var(--global-color);
+$pestanas      : var(--pestana);
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$negro         : var(--negro); //texto negro
+$personalizado : var(--global-color); //bordes y texto azul
+$color-blanco  : var(--blanco); //resaltar texto blanco
+$gris          : var(--gris); //sombra y texto gris
 
 
 .container-main {
@@ -24,7 +19,7 @@ $color-personalizado  : var(--global-color);
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -32,9 +27,9 @@ $color-personalizado  : var(--global-color);
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -48,7 +43,7 @@ p {
 //BORRAR
 
 .borde-bottom {
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizado;
     font-weight  : 500;
 }
 
@@ -63,12 +58,12 @@ p {
 }
 
 .descripcion {
-    color    : $color-gris-s;
+    color    : $gris;
     font-size: 14px;
 }
 
 .iconos-detalles {
-    color: $color-gris-s;
+    color: $gris;
 }
 
 .userName {
@@ -79,13 +74,13 @@ p {
 
 .seleccionar {
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
 }
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -113,7 +108,7 @@ p {
 }
 
 .circulo-inicial {
-    background-color: $color-personalizado;
+    background-color: $personalizado;
     width           : 33px;
     height          : 33px;
     border-radius   : 50%;
@@ -140,7 +135,7 @@ p {
 }
 
 .circular-inicial-grande {
-    background-color: $color-personalizado;
+    background-color: $personalizado;
     margin          : 10px 0px;
     width           : 100px;
     height          : 100px;
@@ -165,13 +160,13 @@ p {
 }
 
 .head_carr_end {
-    color      : $color-negro;
+    color      : $negro;
     font-weight: 300;
 }
 
 mat-sidenav {
     width           : 365px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 
 }
 
@@ -200,7 +195,7 @@ mat-sidenav {
     bottom          : 0;
     left            : 0;
     right           : 0;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Fin SideNav*/
@@ -209,7 +204,7 @@ mat-sidenav {
 
 .icon_toolbar {
     font-size       : 22px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .toolbarPhone {
@@ -219,14 +214,14 @@ mat-sidenav {
 .toolbarPhone,
 .toolbar-large {
     // position        : fixed !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
     padding         : 0px;
 }
 
 //barra de abajo
 .barra-regresar {
-    background: #FEF5E7;
+    background: var(--fondo-claro);
     color     : #000000;
     height    : 40px !important;
     padding   : 0px;
@@ -235,14 +230,14 @@ mat-sidenav {
 
 .barra-cerrar-titulo {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $color-bordes;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 @media screen and (max-width: 767px) {
     .toolbar-large {
         display         : none !important;
-        background-color: $background-oficial;
+        background-color: $fondo;
     }
 
     .toolbarPhone {
@@ -252,7 +247,7 @@ mat-sidenav {
 }
 
 .contenido-sidenav {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 44px) !important;
     padding-bottom  : 10px;
     overflow        : auto;
@@ -260,7 +255,7 @@ mat-sidenav {
 
 .detalles-usuario {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     min-height   : 50px;
@@ -268,21 +263,21 @@ mat-sidenav {
 
 .borde-detalles {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
 }
 
 .cambioFiltro {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     cursor       : pointer;
 }
 
 .cambioFiltro:hover {
-    background-color: $color-bordes;
+    background-color: $bordes;
 }
 
 .detalle {
@@ -329,7 +324,7 @@ $color5 : #2bc9bf;
     z-index         : 1000;
     height          : 56px !important;
     background-color: $color3;
-    color           : #fff;
+    color           : var(--blanco);
     font-size       : 14px;
 }
 
@@ -346,12 +341,12 @@ main {
 
 // section {
 //     display   : none;
-//     border-top: 1px solid $color-bordes;
+//     border-top: 1px solid $bordes;
 // }
 
 .contenido-seleccionado {
     display   : none;
-    border-top: 1px solid $color-bordes;
+    border-top: 1px solid $bordes;
 }
 
 // input {
@@ -369,7 +364,7 @@ main {
 //     padding    : 15px 25px;
 //     font-weight: 500;
 //     text-align : center;
-//     color      : $color-pestanas;
+//     color      : $pestanas;
 //     border     : 2px solid transparent;
 // }
 
@@ -379,7 +374,7 @@ main {
     padding    : 15px 25px;
     font-weight: 500;
     text-align : center;
-    color      : $color-pestanas;
+    color      : $pestanas;
     border     : 2px solid transparent;
 }
 
@@ -446,15 +441,15 @@ label[for*='6']:before {
 }
 
 // input:checked+label {
-//     color        : $color-azul;
-//     border       : 1px solid $color-bordes;
+//     color        : $personalizado;
+//     border       : 1px solid $bordes;
 //     border-top   : 3px solid orange;
 //     border-bottom: 0px;
 // }
 
 .titulo-pestana:checked+.pestana {
-    color        : $color-azul;
-    border       : 1px solid $color-bordes;
+    color        : $personalizado;
+    border       : 1px solid $bordes;
     border-top   : 3px solid orange;
     border-bottom: 0px;
 }
@@ -517,15 +512,15 @@ label[for*='6']:before {
 
 .contenido-sidenav::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .contenido-sidenav::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .contenido-sidenav::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
     border          : 3px #f3c5d3;
 }

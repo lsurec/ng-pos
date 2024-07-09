@@ -1,8 +1,8 @@
 $color-negro            : #000; //texto negro
-$color-blanco           : #ffff; //resaltar texto blanco
+$color-blanco           : var(--blanco)f; //resaltar texto blanco
 $color-gris             : darkgray; //numeros que no son del mes
 $color-bordes           : #323f8550; //bordes del calendario
-$background-oficial     : #FEF5E7; //fondo Demosoft
+$background-oficial     : var(--fondo-claro); //fondo Demosoft
 $background-scrollbar   : var(--global-color); //barra rosada
 $color-azul             : #134895; //resaltar dia de hoy azul
 $background-tareas      : #DF9722; //resaltar tareas naranja

@@ -28,7 +28,7 @@ $fondo-campos            : #3d3c3c;
 html,
 body {
     height             : 100%;
-    // background-color: #FEF5E7 !important;
+    // background-color: var(--fondo-claro) !important;
     background-color   : var(--global-color-fondo) !important;
     font-family        : 'Playfair Display', serif;
 
