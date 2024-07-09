@@ -1,16 +1,10 @@
-$color-negro          : #000; //texto negro
-$personalizado           : #134895; //bordes y texto azul
-$color-blanco         : var(--blanco); //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$font-serif           : sans-serif; //fuente del texto
-$background-options   : var(--blanco); //fondo blanco
-$fondo   : var(--fondo-claro); //fondo Demosoft
-$scroll : var(--global-color); //barra rosada
-$sombra               : rgba(0, 0, 0, 0.1);
-$placeholder          : rgba(0, 0, 0, 0.20);
-$requerido            : rgba(0, 0, 0, 0.05);
-$color-personalizado  : var(--global-color);
+$color-blanco  : var(--blanco); //resaltar texto blanco
+$gris          : var(--gris); //texto gris
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra rosada
+$sombra        : var(--sombra-claro);
+$personalizado : var(--global-color);
+$bordes        : var(--bordes-claro); //texto gris
 
 .spacer {
     flex: 1 1 auto;
@@ -22,7 +16,7 @@ $color-personalizado  : var(--global-color);
     height          : 64px !important;
     background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom   : 1px solid $bordes;
 }
 
 .container_main::-webkit-scrollbar {
@@ -37,7 +31,6 @@ $color-personalizado  : var(--global-color);
 .container_main::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .container_page {
@@ -108,7 +101,7 @@ $color-personalizado  : var(--global-color);
     left       : 1.5%;
     /* Ajusta la posición horizontalmente según sea necesario */
     transform  : translateY(-50%);
-    color      : $color-personalizado;
+    color      : $personalizado;
     align-items: center;
 }
 
@@ -119,11 +112,10 @@ $color-personalizado  : var(--global-color);
     background   : none;
     font-size    : 14px;
     padding-left : 50px;
-    font-family  : $font-serif;
     outline      : none;
     border-style : none;
-    border       : 0.5px solid #c1bfbf;
-    color        : $color-personalizado;
+    border       : 0.5px solid $bordes;
+    color        : $personalizado;
     border-radius: 20px;
 }
 
@@ -159,7 +151,7 @@ $color-personalizado  : var(--global-color);
     bottom          : 75px;
     right           : 40px;
     font-size       : 20px;
-    background-color: $color-personalizado;
+    background-color: $personalizado;
 }
 
 
@@ -171,7 +163,7 @@ $color-personalizado  : var(--global-color);
     right           : 40px;
     /* Ajusta la posición según tus preferencias */
     font-size       : 20px;
-    background-color: $color-personalizado;
+    background-color: $personalizado;
     /* Ajusta el color según tus preferencias */
 }
 
@@ -199,12 +191,8 @@ $color-personalizado  : var(--global-color);
     background-color: $fondo;
     border-radius   : 5px;
     font-size       : 17px;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    box-shadow      : $sombra;
 }
-
-// .tarea:hover {
-//     background-color: $placeholder;
-// }
 
 /* justificar texto */
 .justificar {
@@ -229,7 +217,7 @@ $color-personalizado  : var(--global-color);
 .circulo-estado {
     width        : 15px;
     height       : 15px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $gris;
     border-radius: 50%;
     margin-left  : 10px;
 }
@@ -249,15 +237,15 @@ p {
     padding      : 5px 8px;
     margin       : 4px;
     cursor       : pointer;
-    border       : 1px solid #ccc;
+    border       : 1px solid $gris;
     border-radius: 20px;
     font-size    : 12px;
 }
 
 .selected {
-    background-color: $color-personalizado;
+    background-color: $personalizado;
     color           : var(--blanco);
-    border          : 1px solid $color-personalizado;
+    border          : 1px solid $personalizado;
 }
 
 .descripcion {
@@ -270,9 +258,4 @@ p {
     display    : flex;
     align-items: center;
     padding-top: 3px;
-}
-
-.boton-azul {
-    background-color: $color-personalizado !important;
-    color           : $color-blanco !important;
 }

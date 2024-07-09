@@ -3,7 +3,8 @@ $scroll        : var(--global-color); //barra azul
 $bordes        : var(--bordes-claro); //bordes del calendario
 $personalizado : var(--global-color); //bordes y texto azul
 $negro         : var(--negro); //bordes y texto azul
-
+$gris          : var(--gris);
+$rojo          : var(--error);
 
 .progress {
     padding         : 0px;
@@ -55,7 +56,7 @@ $negro         : var(--negro); //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -108,7 +109,7 @@ p {
 }
 
 .obligatorio {
-    color       : #ff0000;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 12px;
     padding-left: 3px;
@@ -128,11 +129,8 @@ p {
 }
 
 .verDetalle {
-    font-weight   : 500;
-    text-align    : center;
-    margin-bottom : 0px;
-    padding       : 10px;
-    padding-bottom: 0;
+    font-weight: 500;
+    text-align : center;
 }
 
 .titulos {
@@ -148,7 +146,7 @@ p {
 
 .adver {
     font-size  : 12px;
-    color      : #7c7676;
+    color      : $gris;
     font-weight: 550;
 }
 

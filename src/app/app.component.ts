@@ -148,7 +148,7 @@ export class AppComponent implements OnInit {
   claro: ColoresInterface = {
     primario: "#134895",
     fondo: "#FEF5E7",
-    bloques: "rgba(0, 0, 0, 0.12)",
+    bloques: "rgba(0, 0, 0, 0.1)",
     seleccionado: "#777",
     descuento: "#ce1414",
     cargo: "#25a704",

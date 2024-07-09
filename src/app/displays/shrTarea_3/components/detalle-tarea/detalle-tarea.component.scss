@@ -1,30 +1,19 @@
-$color-negro          : #000; //texto
-$color-bordes         : #CED4DA; //bordes del calendario
-$personalizado           : #134895; //bordes y texto azul
-$color-gris           : #968989cb; // bordes de comentarios
-$color-2-gris         : #857373c9; //texto, bordes
-$fondo   : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
-$scroll : var(--global-color); //barra azul
-$background-detalles  : #dad2d286; //fondo detalles
-$background-flecha    : #3b3939cb; //fondo triangulo
-$background-transparent: transparent; //fondo transparennte,
-$color-personalizado : var(--global-color);
+$bordes        : var(--bordes-claro); //bordes
+$personalizado : var(--global-color); //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bloques       : var(--bloques-claro); //fondo detalles
+$flecha        : var(--gris); //fondo triangulo
+$gris          : var(--gris); //fondo 
+$rojo          : var(--error); //fondo 
+
 /*SideNav*/
 
 .head__sidenav {
     height          : 64px !important;
     background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.icon_close_head {
-    cursor: pointer;
-}
-
-.head_carr_end {
-    color      : $color-negro;
-    font-weight: 300;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -160,7 +149,7 @@ mat-sidenav {
     float         : left;
     overflow      : auto;
     background    : $fondo;
-    border-left   : 1px solid rgba(0, 0, 0, .12);
+    border-left   : 1px solid $bordes;
     padding-bottom: 10px;
 }
 
@@ -196,7 +185,7 @@ p {
 
 .titulo-flecha {
     display      : flex;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid $bordes;
     align-items  : center;
 }
 
@@ -219,7 +208,7 @@ hr {
 
 /* color de fondo de toda la pantalla */
 .color_fondo {
-    background-color: $background-transparent;
+    background-color: transparent;
 }
 
 .mat-expansion-panel-body {
@@ -234,13 +223,13 @@ hr {
 /* Observacion Estilos */
 
 .observacion {
-    margin          : 15px;
-    word-wrap       : break-word;
+    margin   : 15px;
+    word-wrap: break-word;
 }
 
 .observaciones {
     height          : 35px;
-    background-color: $background-transparent;
+    background-color: transparent;
     font-weight     : bold;
     padding         : 5px;
 }
@@ -273,9 +262,9 @@ hr {
 .flecha-comentario {
     width        : 0;
     height       : 0;
-    border-top   : 7px solid $background-transparent;
-    border-right : 14px solid $background-flecha;
-    border-bottom: 7px solid $background-transparent;
+    border-top   : 7px solid transparent;
+    border-right : 14px solid $flecha;
+    border-bottom: 7px solid transparent;
     margin-top   : 10px;
     margin-left  : 4.5px;
     margin-right : -20px;
@@ -290,7 +279,7 @@ hr {
 .comentario {
     display      : flex;
     height       : 30px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $bordes;
     border-bottom: none;
     font-weight  : bold;
     font-size    : 13px;
@@ -302,7 +291,7 @@ hr {
     text-align                : justify;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius : 20px;
-    border                    : $color-gris 1px solid;
+    border                    : $bordes 1px solid;
 }
 
 .ico_link {
@@ -314,7 +303,7 @@ hr {
 .linea {
     margin-bottom: -15px;
     height       : 30px;
-    border-left  : $color-gris 2px solid;
+    border-left  : $bordes 2px solid;
     margin-left  : 20px
 }
 
@@ -326,14 +315,14 @@ hr {
 }
 
 .detalle-derecho {
-    background-color: $background-detalles;
+    background-color: $bloques;
     padding         : 8px;
     font-size       : 14px;
     align-items     : center;
 }
 
 .detalle-actualizar {
-    background-color   : $background-detalles;
+    background-color   : $bloques;
     padding            : 8px;
     font-size          : 14px;
     // display         : flex;
@@ -378,11 +367,11 @@ hr {
 .editar-eliminar {
     width        : 100%;
     display      : flex;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
 }
 
 // .editar-eliminar:hover {
-//     background-color: $color-bordes
+//     background-color: $bordes
 // }
 
 .eliminar {
@@ -391,7 +380,7 @@ hr {
 
 .eliminar:hover {
     cursor: pointer;
-    color : #ff0000;
+    color : $rojo;
 }
 
 /* fin detalles lado derecho */
@@ -412,7 +401,7 @@ mat-accordion {
 .elementos-detalle {
     display      : flex;
     min-height   : 50px;
-    border       : 1px solid $color-2-gris;
+    border       : 1.5px solid $bordes;
     border-radius: 20px;
     margin       : 10px;
     font-size    : 14px;
@@ -422,7 +411,7 @@ mat-accordion {
 .editar-detalle {
     min-height   : 50px;
     display      : flex;
-    border       : 1px solid $color-2-gris;
+    border       : 1.5px solid $bordes;
     border-radius: 20px;
     margin       : 10px;
     font-size    : 14px;
@@ -459,7 +448,7 @@ mat-accordion {
 
 .responsables {
     word-wrap    : break-word;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
     padding      : 3px 0px;
 }
@@ -520,7 +509,7 @@ mat-accordion {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
+    border          : 1px solid $bordes;
     color           : $personalizado;
 }
 

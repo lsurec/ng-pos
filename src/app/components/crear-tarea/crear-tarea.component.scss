@@ -1,16 +1,16 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-naranja        : #DF9722; //resaltar tareas naranja
-$border-color         : rgba(0, 0, 0, .09);
-$font-serif           : sans-serif; //fuente del texto
-$background-options   : #fff; //fondo blanco
-$fondo   : var(--fondo-claro); //fondo Demosoft
-$scroll : var(--global-color); //barra rosada
-$background-botones   : var(--global-color); //resaltar botones azul
+$color-negro        : #000; //texto negro
+$color-azul         : #134895; //bordes y texto azul
+$color-blanco       : #fff; //resaltar texto blanco
+$color-gris         : #666666; //texto gris
+$color-gris-s       : #777; //sombra y texto gris
+$color-bordes       : #CED4DA; //bordes del calendario
+$color-naranja      : #DF9722; //resaltar tareas naranja
+$border-color       : rgba(0, 0, 0, .09);
+$font-serif         : sans-serif; //fuente del texto
+$background-options : #fff; //fondo blanco
+$fondo              : var(--fondo-claro); //fondo Demosoft
+$scroll             : var(--global-color); //barra rosada
+$background-botones : var(--global-color); //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
 
 .progress {
@@ -39,7 +39,6 @@ $background-transparent: transparent; //fondo transparennte,
 .llenar-formulario::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .container-page {

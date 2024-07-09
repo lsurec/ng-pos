@@ -1,11 +1,14 @@
-$personalizo : var(--global-color);
-$negro       : var(--negro);
-$bordes      : var(--bordes-claro); //bordes menu
-$blanco      : var(--blanco); //texto blanco
-$bloques     : var(--bloques-claro);
-$fondo       : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
-$scroll      : var(--global-color); //barra azul
-$sombra      : var(--sombra-claro);
+$personalizo    : var(--global-color);
+$negro          : var(--negro);
+$bordes         : var(--bordes-claro); //bordes menu
+$blanco         : var(--blanco); //texto blanco
+$bloques        : var(--bloques-claro);
+$fondo          : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll         : var(--global-color); //barra azul
+$sombra         : var(--sombra-claro);
+$cargo-verde    : var(--cargo-claro);
+$descuento-rojo : var(--descuento-claro);
+
 
 .detalle-container {
     height    : calc(100vh - 290px);
@@ -149,12 +152,6 @@ p {
     font-size : 13px;
 }
 
-.form-switch .form-check-input {
-    border-color: #bdb76b;
-    height      : 20px;
-}
-
-
 //buscador y filtos
 .inputSearch {
     text-align: center !important;
@@ -187,7 +184,7 @@ p {
 
 .iconoCargo {
     color           : $blanco;
-    background-color: #25a704;
+    background-color: $cargo-verde;
     margin-right    : 5px;
     width           : 30px;
     height          : 30px;
@@ -195,7 +192,7 @@ p {
 
 .iconoDescuento {
     color           : $blanco;
-    background-color: #ce1414;
+    background-color: $descuento-rojo;
     width           : 30px;
     height          : 30px;
 }

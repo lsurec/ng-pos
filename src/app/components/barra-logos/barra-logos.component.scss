@@ -1,11 +1,12 @@
-$color-gris : #777; //sombra y texto gris
+$gris   : var(--gris); //texto gris
+$bordes : var(--bordes-claro); //bordes
 
 //sidenav bottom y logos
 
 .head__sidenav__bottom {
     height     : 64px !important;
     padding    : 0px 20px;
-    border-top : 1px solid rgba(0, 0, 0, 0.12);
+    border-top : 1px solid $bordes;
     display    : flex;
     align-items: center;
     position   : fixed;
@@ -21,7 +22,7 @@ p {
     font-size  : 12px;
     margin     : 0px 10px;
     font-weight: 400;
-    color      : $color-gris;
+    color      : $gris;
 }
 
 .logos {

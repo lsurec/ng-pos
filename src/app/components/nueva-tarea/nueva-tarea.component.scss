@@ -405,7 +405,7 @@ textarea::placeholder {
 
 .eliminar:hover {
     cursor: pointer;
-    color : #ff0000;
+    color : $rojo;
 }
 
 .negrita {
@@ -455,11 +455,6 @@ textarea::placeholder {
     min-height: 30px;
     color     : $personalizado;
     font-size : 13px;
-}
-
-mdc-menu-surface {
-    overflow-y      : auto;
-    background-color: #507fc4;
 }
 
 .bloque-menus {

@@ -151,7 +151,7 @@ hr {
 }
 
 .form-switch .form-check-input {
-    border-color: #bdb76b;
+    border-color: $bordes;
     height      : 20px;
 }
 
@@ -226,11 +226,7 @@ body {
     height: 100%;
 }
 
-$color1 : #0f3851;
-$color2 : #154d67;
 $color3 : #1a7084;
-$color4 : #2398a0;
-$color5 : #2bc9bf;
 
 
 .elevation_bar {
@@ -249,12 +245,6 @@ $color5 : #2bc9bf;
     color           : var(--blanco);
     font-size       : 14px;
 }
-
-// body {
-//     font : 14px/1 'Open Sans', sans-serif;
-//     color: #555;
-// }
-
 
 main {
     width : 100%;
@@ -304,7 +294,7 @@ main {
 }
 
 .pestana:hover {
-    color : #888;
+    color : $pestanas;
     cursor: pointer;
 }
 

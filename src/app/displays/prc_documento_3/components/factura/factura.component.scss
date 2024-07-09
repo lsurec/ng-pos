@@ -103,7 +103,7 @@ p {
 }
 
 .form-switch .form-check-input {
-    border-color: #bdb76b;
+    border-color: $bordes;
     height      : 20px;
 }
 
@@ -215,17 +215,17 @@ mat-sidenav {
 .toolbar-large {
     // position        : fixed !important;
     background-color: $fondo;
-    border-bottom   : 1px solid rgba(0, 0, 0, .12);
+    border-bottom   : 1px solid $bordes;
     padding         : 0px;
 }
 
 //barra de abajo
 .barra-regresar {
     background: var(--fondo-claro);
-    color     : #000000;
+    color     : $negro;
     height    : 40px !important;
     padding   : 0px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid $bordes;
 }
 
 .barra-cerrar-titulo {
@@ -304,11 +304,7 @@ body {
     height: 100%;
 }
 
-$color1 : #0f3851;
-$color2 : #154d67;
 $color3 : #1a7084;
-$color4 : #2398a0;
-$color5 : #2bc9bf;
 
 
 .elevation_bar {
@@ -327,12 +323,6 @@ $color5 : #2bc9bf;
     color           : var(--blanco);
     font-size       : 14px;
 }
-
-body {
-    font : 14px/1 'Open Sans', sans-serif;
-    color: #555;
-}
-
 
 main {
     width : 100%;
@@ -431,12 +421,12 @@ label[for*='6']:before {
 }
 
 // label:hover {
-//     color : #888;
+//     color : var(--pestanas);
 //     cursor: pointer;
 // }
 
 .pestana:hover {
-    color : #888;
+    color : $pestanas;
     cursor: pointer;
 }
 
@@ -522,7 +512,6 @@ label[for*='6']:before {
 .contenido-sidenav::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .separador {
