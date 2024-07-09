@@ -128,7 +128,7 @@ p {
     margin-left: 5px;
 }
 
-.single-bottom label:hover {
+.single-bottom:hover {
     color: $naranja;
 
 }
@@ -175,4 +175,9 @@ p {
 .num-version {
     color       : $version;
     padding-left: 5px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
 }

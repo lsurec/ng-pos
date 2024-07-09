@@ -181,10 +181,6 @@ export class LoginComponent {
     this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
   };
-  //Permanencia de la sesión
-  rememberMe(): void {
-    this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
-  };
 
   cambiarUrl(): void {
     this._router.navigate([RouteNamesService.API]);
