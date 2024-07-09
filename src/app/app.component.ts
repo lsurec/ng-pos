@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--mas-contenido', "0px -3px 10px 1.5px rgba(0, 0, 0, 0.2)");
     document.documentElement.style.setProperty('--hover', "#ebebeb");
     document.documentElement.style.setProperty('--pestana', "#555");
-
+    document.documentElement.style.setProperty('--dias', "#a9a9a9");
 
 
 
