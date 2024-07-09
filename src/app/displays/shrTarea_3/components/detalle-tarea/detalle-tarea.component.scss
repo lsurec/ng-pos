@@ -2,7 +2,7 @@ $bordes        : var(--bordes-claro); //bordes
 $personalizado : var(--global-color); //bordes y texto azul
 $fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
 $scroll        : var(--global-color); //barra azul
-$bloques       : var(--bloques-claro); //fondo detalles
+$bloques       : var(--bordes-claro); //fondo detalles
 $flecha        : var(--gris); //fondo triangulo
 $gris          : var(--gris); //fondo 
 $rojo          : var(--error); //fondo 
@@ -279,7 +279,7 @@ hr {
 .comentario {
     display      : flex;
     height       : 30px;
-    border       : 1px solid $bordes;
+    border       : 1.5px solid $bordes;
     border-bottom: none;
     font-weight  : bold;
     font-size    : 13px;
@@ -291,7 +291,7 @@ hr {
     text-align                : justify;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius : 20px;
-    border                    : $bordes 1px solid;
+    border                    : $bordes 1.5px solid;
 }
 
 .ico_link {

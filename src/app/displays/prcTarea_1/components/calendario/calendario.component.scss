@@ -871,6 +871,7 @@ p {
     width        : 8px; //diámetro total 
     height       : 8px; //diámetro total
     border-radius: 50%;
+    border       : 1px solid $gris;
 }
 
 //mostrar tareas en semana 

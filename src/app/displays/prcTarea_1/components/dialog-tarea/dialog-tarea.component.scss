@@ -206,7 +206,7 @@ p {
 .comentario {
     display      : flex;
     height       : 30px;
-    border       : 1px solid $bordes;
+    border       : 1.5px solid $bordes;
     border-bottom: none;
     font-weight  : bold;
     font-size    : 12px;
@@ -219,7 +219,7 @@ p {
     text-align                : justify;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius : 20px;
-    border                    : $bordes 1px solid;
+    border                    : $bordes 1.5px solid;
     font-size                 : 14px;
 }
 
