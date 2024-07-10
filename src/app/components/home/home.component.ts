@@ -1,10 +1,9 @@
-import { Component, Inject, OnInit, Renderer2, RendererStyleFlags2, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
-import { DigitosInterface, FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
+import { FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
@@ -25,19 +24,14 @@ import { PrinterService } from 'src/app/services/printer.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
-import { TypesDocConvertInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/types-doc-convert.interface';
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import * as pdfMake from 'pdfmake/build/pdfmake';
 import { HttpClient } from '@angular/common/http';
 import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.interface';
 import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
 import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 import { ColorInterface } from 'src/app/interfaces/filtro.interface';
-
 
 @Component({
   selector: 'app-home',
@@ -257,17 +251,6 @@ export class HomeComponent implements OnInit {
       this.colorSeleccionado = this.colores[indexColor];
     }
 
-    if (!PreferencesService.indexFondoApp) {
-      this.fondoSeleccionado = {
-        id: 1,
-        nombre: "Principal",
-        valor: "#FEF5E7"
-      }
-    } else {
-      let indexColor: number = +PreferencesService.indexFondoApp;
-      this.fondoSeleccionado = this.colores[indexColor];
-    }
-
   }
 
   fontsSizes: FontSizeInterface[] = [
@@ -297,66 +280,35 @@ export class HomeComponent implements OnInit {
   sizeSelect?: FontSizeInterface;
 
   colorSeleccionado: ColorInterface | null = null;
-  fondoSeleccionado: ColorInterface | null = null;
 
   colores: ColorInterface[] = [
     {
       id: 1,
-      nombre: "Principal",
-      valor: "#FEF5E7"
-    },
-    {
-      id: 2,
       nombre: "Primario",
       valor: "#134895"
     },
     {
-      id: 3,
-      valor: "#FF0000",
+      id: 2,
+      valor: "#9b2a35",
       nombre: "Rojo"
     },
     {
-      id: 4,
-      valor: "#FFFF00",
-      nombre: "Amarillo"
-    },
-    {
-      id: 5,
-      valor: "#0000FF",
-      nombre: "Azul"
-    },
-    {
-      id: 6,
+      id: 3,
       valor: "#008000",
       nombre: "Verde"
     },
     {
-      id: 7,
-      valor: "#FFA500",
-      nombre: "Naranja"
-    },
-    {
-      id: 8,
+      id: 4,
       valor: "#800080",
       nombre: "Morado"
     },
     {
-      id: 9,
-      valor: "#FFC0CB",
-      nombre: "Rosa"
-    },
-    {
-      id: 10,
-      valor: "#00FFFF",
-      nombre: "Celeste"
-    },
-    {
-      id: 11,
+      id: 5,
       valor: "#6F4E37",
       nombre: "Café"
     },
     {
-      id: 12,
+      id: 6,
       valor: "#000000",
       nombre: "Negro"
     },
@@ -408,15 +360,6 @@ export class HomeComponent implements OnInit {
 
     // Usando window.location.reload()
     window.location.reload();
-
-  }
-
-  seleccionarFondo(color: ColorInterface, index: number): void {
-    console.log('Color seleccionado:', color);
-    this.fondoSeleccionado = color;
-    PreferencesService.indexFondoApp = index.toString();
-    //Guardar la preferencia
-    PreferencesService.fondoApp = this.colores[index].valor;
 
   }
 
