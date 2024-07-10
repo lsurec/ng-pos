@@ -142,7 +142,7 @@ p {
     color : $negro;
 }
 
-.seleccionar {
+.seleccionarResponsable {
     width           : 100%;
     cursor          : pointer;
     min-height      : 30px;
@@ -158,7 +158,7 @@ p {
     padding   : 5px 0px;
 }
 
-.seleccionar:hover,
+.seleccionarResponsable:hover,
 .detalleInvitado:hover {
     background-color: $hover;
 }
@@ -209,7 +209,7 @@ p {
         width  : 200px !important;
     }
 
-    .seleccionar {
+    .seleccionarResponsable {
         height     : auto !important;
         padding    : 3px 0px !important;
         align-items: center !important;
@@ -254,7 +254,7 @@ p {
         width: 400px !important;
     }
 
-    .seleccionar {
+    .seleccionarResponsable {
         min-height: 30px !important;
         display   : block !important;
     }

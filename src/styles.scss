@@ -198,6 +198,7 @@ input[type="radio"] {
     color           : $color-blanco; // Texto claro en fondo oscuro
 }
 
+.dark-theme .toolbarPhone,
 .dark-theme .toolbarNavScreenShort,
 .dark-theme .toolbarNavegacion {
     background-color   : $navegacion !important;
@@ -598,7 +599,7 @@ input[type="radio"] {
     border-color: var(--bordes-oscuro) !important;
 }
 
-.dark-theme .ruta:hover{
+.dark-theme .ruta:hover {
     color: $personalizado !important;
 }
 
@@ -612,20 +613,19 @@ input[type="radio"] {
     color: $bordes !important;
 }
 
+.dark-theme .detalleResponsable:hover,
 .dark-theme .tipos-pago:hover,
-.dark-theme .seleccionar:hover,
+.dark-theme .seleccionarResponsable:hover,
 .dark-theme .detalleInvitado:hover {
     background-color: var(--seleccionado2) !important;
 }
 
-//Borde blanco para totales
-// .dark-theme .total-barra {
-//     border-top: 1px solid $color-blanco !important;
-// }
-
+.dark-theme .seleccionar-responsable,
+.dark-theme .seleccionar-responsable:hover {
+    background-color: transparent !important;
+}
 
 //radio buttons
-
 .dark-theme .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
     border-color: var(--bordes-oscuro) !important;
 }
@@ -895,10 +895,12 @@ input[type="radio"] {
     background-color: var(--seleccionado2) !important;
 }
 
+.dark-theme .detalleResponsable,
 .dark-theme .usuario-busqueda,
 .dark-theme .buscar-documentos,
 .dark-theme .producto-seleccionado,
 .dark-theme .seleccionar,
+.dark-theme .seleccionarResponsable,
 .dark-theme .detalleInvitado,
 .dark-theme .respuesta-dialogo {
     background: $bloques !important;

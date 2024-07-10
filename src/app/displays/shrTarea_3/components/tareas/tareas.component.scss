@@ -69,19 +69,11 @@ $bordes        : var(--bordes-claro); //texto gris
         width     : 100%;
         /* padding: 20px; */
     }
-}
 
-@media screen and (max-width: 280px) {
-
-    .container_main {
-        padding: 0px !important;
-    }
-
-    .fuente {
-        font-size: 14px !important;
+    .descripcion-tarjeta {
+        display: block !important;
     }
 }
-
 
 .inputSearch {
     text-align: center !important;
@@ -250,13 +242,19 @@ p {
 }
 
 .descripcion {
-    font-size   : 14px;
-    text-align  : justify;
-    padding-left: 10px;
+    font-size    : 14px;
+    text-align   : justify;
+    padding-left : 10px;
+    overflow-wrap: break-word;
 }
 
 .dFlex {
     display    : flex;
     align-items: center;
     padding-top: 3px;
+}
+
+.descripcion-tarjeta {
+    display    : flex;
+    align-items: center;
 }

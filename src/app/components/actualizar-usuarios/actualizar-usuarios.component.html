@@ -55,7 +55,7 @@
             <div class="detalleInvitado" *ngFor="let usuario of usuariosResInv">
                 <mat-checkbox [(ngModel)]="usuario.select" color="primary"></mat-checkbox>
                 <span class="spacer"></span>
-                <div class="seleccionar" (click)="usuario.select = true; agregarInvitados()">
+                <div class="seleccionar-usuario" (click)="usuario.select = true; agregarInvitados()">
                     <p class="nombre">{{usuario.name}}</p>
                     <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                 </div>

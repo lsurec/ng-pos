@@ -6,6 +6,7 @@ $rojo          : var(--error);
 $gris          : var(--gris);
 $bloque        : var(--bloques-claro);
 $hover         : var(--hover);
+$negro         : var(--negro);
 
 .progress {
     padding         : 0px;
@@ -109,6 +110,8 @@ hr {
     width        : 100%;
     align-items  : center;
     border-bottom: 1px solid $bordes;
+    margin       : 10px 0px;
+    background   : $bordes;
 }
 
 .titulos {
@@ -131,9 +134,10 @@ hr {
 
 p {
     margin: 0px;
+    color : $negro;
 }
 
-.seleccionar {
+.seleccionar-usuario {
     width      : calc(100% - 50px);
     cursor     : pointer;
     align-items: center;
@@ -145,11 +149,11 @@ p {
     width           : 100%;
     cursor          : pointer;
     padding         : 5px 0px;
-    background-color: $bloque;
+    background-color: $bordes;
     margin          : 5px 0px;
 }
 
-.seleccionar:hover,
+.detalleInvitado:hover,
 .seleccionar-responsable:hover {
     background-color: $hover;
 }
@@ -228,10 +232,12 @@ p {
 }
 
 .detalleResponsable {
-    display      : flex;
-    text-align   : left !important;
-    font-size    : 14px;
-    width        : 100%;
-    align-items  : center;
-    border-bottom: 1px solid $bordes;
+    display            : flex;
+    text-align         : left !important;
+    font-size          : 14px;
+    width              : 100%;
+    align-items        : center;
+    border-bottom      : 1px solid $bordes;
+    margin             : 10px 0px;
+    // background-color: $bloque;
 }
