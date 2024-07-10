@@ -48,7 +48,8 @@
                 </div>
             </div>
 
-            <div class="cliente-vendedor">
+            <div class="cliente-vendedor"
+                *ngIf="estructura.estructura.Doc_Ref_Tipo_Referencia || estructura.estructura.Doc_Ref_Descripcion">
                 <!--TODO:Buscar descripcion-->
                 <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Tipo_Referencia">
                     <p class="subtitulo-borde ">{{ 'pos.factura.tipoRef' | translate }}</p>
@@ -66,7 +67,9 @@
                 </div>
             </div>
 
-            <div class="cliente-vendedor">
+            <div class="cliente-vendedor"
+                *ngIf="estructura.estructura.Doc_Ref_Observacion_2 || estructura.estructura.Doc_Ref_Observacion_3">
+
                 <div class="informacion" *ngIf="estructura.estructura.Doc_Ref_Observacion_2">
                     <p class="subtitulo-borde">
                         {{ 'pos.factura.contacto' | translate }}</p>
@@ -93,7 +96,8 @@
                 </div>
             </div>
 
-            <div class="cliente-vendedor">
+            <div class="cliente-vendedor"
+                *ngIf="estructura.estructura.Doc_Ref_Fecha_Ini || estructura.estructura.Doc_Fecha_Ini || estructura.estructura.Doc_Ref_Fecha_Fin || estructura.estructura.Doc_Fecha_Fin">
                 <div class="fechas">
                     <div class="fechaER" *ngIf="estructura.estructura.Doc_Ref_Fecha_Ini">
                         <p class="subtitulo-borde">

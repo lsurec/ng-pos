@@ -801,7 +801,7 @@ p {
 }
 
 .opcion-vista {
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-bottom   : 1px solid $bordes;
     background-color: $fondo;
 }
 
@@ -942,7 +942,7 @@ p {
 
 .separador {
     margin-top   : 0px;
-    border-bottom: 0.8px solid $bordes !important;
+    border-bottom: 0.8px solid $bordes;
     margin-bottom: 0px;
     width        : 100%;
 }

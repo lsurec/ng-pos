@@ -306,6 +306,7 @@ input[type="radio"] {
     box-shadow      : var(--sombra-oscuro) !important;
 }
 
+.dark-theme .opcion-vista:hover,
 .dark-theme .tarea:hover {
     background-color: var(--bloques-oscuro) !important;
 }
@@ -394,11 +395,11 @@ input[type="radio"] {
 // .dark-theme .configuraciones-digitos,
 // .dark-theme .toolbar-large,
 // .dark-theme .input-container,
-.dark-theme .head__sidenav_config,
-.dark-theme .barra-cerrar-titulo,
+// .dark-theme .barra-cerrar-titulo,
 // .dark-theme .seleccionar,
+// .dark-theme .toolbarlargeTitle,
+.dark-theme .head__sidenav_config,
 .dark-theme .head__sidenav,
-.dark-theme .toolbarlargeTitle,
 .dark-theme .toolbar-row,
 .dark-theme .borde-detalles,
 .dark-theme .cantidad-detalle,
@@ -428,8 +429,8 @@ input[type="radio"] {
 .dark-theme .dia-tarea-mes,
 .dark-theme .dia-tarea-semana,
 .dark-theme .nombre-horario-tarea {
-    border-bottom: 1px solid $bordes !important;
-    border-right : 1px solid $bordes !important;
+    border-bottom: 1px solid var(--bordes-oscuro) !important;
+    border-right : 1px solid var(--bordes-oscuro) !important;
 }
 
 .dark-theme .responsables,
@@ -449,7 +450,7 @@ input[type="radio"] {
 
 // Borde derecho
 .dark-theme .detalles-hora {
-    border-right: 1px solid #FFF3E0 !important;
+    border-right: 1px solid var(--bordes-oscuro) !important;
 }
 
 // Borde izquierdo 
@@ -460,20 +461,22 @@ input[type="radio"] {
 // Borde de abajo
 .dark-theme .alto-cuadro-tarea,
 .dark-theme .mat-calendar-table-header-divider {
-    border-bottom: 1px solid #c4c4c4 !important;
+    border-bottom: 1px solid var(--bordes-oscuro) !important;
 }
 
 //BORDE ARRIBA
 // .dark-theme .backColorNavBar,
 // .dark-theme .documento,
-.dark-theme .detalle-documento,
+// .dark-theme .pago,
 .dark-theme .productos-pagos,
-.dark-theme .pago,
 .dark-theme .seleccionar-opcion {
     border-top: 1px solid $bordes !important;
 }
 
 //BORDER TOP 
+.dark-theme .total-barra,
+.dark-theme .pago,
+.dark-theme .detalle-documento,
 .dark-theme .backColorNavBar {
     border-top: 1px solid var(--bordes-oscuro) !important;
 }
@@ -578,6 +581,9 @@ input[type="radio"] {
 // .dark-theme button:not(:disabled),
 // .dark-theme .comentario,
 // .dark-theme .comentario_desc,
+
+.dark-theme .cotizacion,
+.dark-theme .lista-cargos-descuentos,
 .dark-theme .precio-unitario,
 .dark-theme .tarea,
 .dark-theme .barra-de-busqueda,
@@ -609,9 +615,9 @@ input[type="radio"] {
 }
 
 //Borde blanco para totales
-.dark-theme .total-barra {
-    border-top: 1px solid $color-blanco !important;
-}
+// .dark-theme .total-barra {
+//     border-top: 1px solid $color-blanco !important;
+// }
 
 
 //radio buttons
@@ -667,7 +673,8 @@ input[type="radio"] {
 
 //scrolls 
 
-
+.dark-theme .listas-documentos::-webkit-scrollbar,
+.dark-theme .listas-documentos::-webkit-scrollbar-track,
 .dark-theme .detallesUsuario::-webkit-scrollbar,
 .dark-theme .detallesUsuario::-webkit-scrollbar-track,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar,
@@ -722,6 +729,7 @@ input[type="radio"] {
 
 
 //Color barra scroll
+.dark-theme .listas-documentos::-webkit-scrollbar-thumb,
 .dark-theme .detallesUsuario::-webkit-scrollbar-thumb,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb,
 .dark-theme .documento::-webkit-scrollbar-thumb,
@@ -806,7 +814,10 @@ input[type="radio"] {
     color: var(--texto-boton) !important;
 }
 
-
+.dark-theme .toolbarlargeTitle,
+.dark-theme .lista-documentos,
+.dark-theme .barra-cerrar-titulo,
+.dark-theme .subtitulo-borde,
 .dark-theme .bodegas,
 .dark-theme .nombre-producto,
 .dark-theme .separador,
@@ -880,6 +891,8 @@ input[type="radio"] {
     background-color: var(--seleccionado2) !important;
 }
 
+.dark-theme .usuario-busqueda,
+.dark-theme .buscar-documentos,
 .dark-theme .producto-seleccionado,
 .dark-theme .seleccionar,
 .dark-theme .detalleInvitado,
@@ -892,4 +905,9 @@ input[type="radio"] {
 .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
     background-color: var(--global-color) !important;
     border-color    : var(--global-color) !important;
+}
+
+.dark-theme .pagar-detalle {
+    border: solid 0.5px var(--bordes-oscuro);
+
 }

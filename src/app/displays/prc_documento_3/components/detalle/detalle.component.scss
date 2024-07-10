@@ -11,14 +11,14 @@ $descuento-rojo : var(--descuento-claro);
 
 
 .detalle-container {
-    height    : calc(100vh - 290px);
+    height    : calc(100vh - 300px);
     overflow-y: auto;
 }
 
 .documento {
     display   : flex;
     overflow-x: hidden;
-    padding   : 10px 0px;
+    padding   : 10px 0px 0px;
 }
 
 .documento-sin-borde {
@@ -288,7 +288,7 @@ p {
     padding: 10px 0px;
 }
 
-.pagar {
+.pagar-detalle {
     padding         : 10px;
     width           : 250px;
     background-color: $bloques;
