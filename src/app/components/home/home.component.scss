@@ -111,8 +111,7 @@ mat-sidenav {
 
 .container_main::-webkit-scrollbar-track,
 .horarioLaboral::-webkit-scrollbar-track,
-.detallesUsuario::-webkit-scrollbar-track,
-.toolbarNavScreenShort::-webkit-scrollbar-track {
+.detallesUsuario::-webkit-scrollbar-track {
     background-color: $fondo;
 }
 
@@ -508,6 +507,7 @@ h2 {
 
 }
 
+.routeInactive:hover,
 .itemRouteActive:hover {
     color : $preferencia;
     cursor: pointer;
@@ -515,6 +515,10 @@ h2 {
 
 .itemRouteActive {
     color: $preferencia;
+}
+
+.routeInactive {
+    color: $ruta !important;
 }
 
 .toolbarNavScreenShort {

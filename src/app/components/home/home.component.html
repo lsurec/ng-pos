@@ -32,7 +32,9 @@
                     <div *ngFor="let route of routeMenu; let index = index">
                         <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
                             (click)="changeRouteActive(index)">
-                            <p>{{route.name}}</p>
+                            <p class="ruta"
+                                [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : 'routeInactive' ">
+                                {{route.name}}</p>
                             <p *ngIf="routeMenu.length -1 !=  index"> / </p>
                         </div>
                     </div>
@@ -498,8 +500,11 @@
                             <div class="rutasMenuPeque"
                                 [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
                                 (click)="changeRouteActive(index)">
-                                <p class="">{{route.name}}</p>
-                                <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
+                                <p class="ruta"
+                                    [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : 'routeInactive' ">
+                                    {{route.name}}
+                                </p>
+                                <p class="" *ngIf="routeMenu.length -1 !=  index"> / </p>
                                 <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
                             </div>
                         </div>

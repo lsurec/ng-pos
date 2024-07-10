@@ -1,29 +1,28 @@
-$color-blanco            : #ffffff;
-$bordes                  : #c4c4c4;
-// $fondo-oscuro      : #121212;
-$fondo-oscuro            : #302f2f;
-$iconos                  : #c4c4c4;
-$radio-buttons           : #ffffff;
-// $borde-no-seleccionado: #797272;
-$borde-no-seleccionado   : #635f5f;
-$color-naranja           : #df9722;
-$seleccionado            : #635f5f;
-$placeholder             : #eef0f3e0;
-$scrollbars              : var(--global-color);
-$color-azul              : #2764bd;
-$color-verde             : #44ff14;
-$color-rojo              : #f93c3c;
-$producto                : rgba(0, 0, 0, 0.12);
-$navegacion              : #252323;
-$negro                   : #000;
-$tareas                  : #939292;
-$notificaciones          : #182420;
-$texto-notificacion      : #ff4081;
-$azul-menu               : var(--global-color);
-$color-personalizado     : var(--global-color);
-$rojo-error              : #cc4141;
-$sombra-campos           : #8b8b8b;
-$fondo-campos            : #3d3c3c;
+$color-blanco          : #ffffff;
+$bordes                : #c4c4c4;
+$fondo-oscuro          : #302f2f;
+$iconos                : #c4c4c4;
+$radio-buttons         : #ffffff;
+$borde-no-seleccionado : #635f5f;
+$naranja               : var(--pestana-oscuro);
+$seleccionado          : #635f5f;
+$placeholder           : #eef0f3e0;
+$scroll                : var(--global-color);
+$color-azul            : #2764bd;
+$color-verde           : #44ff14;
+$color-rojo            : #f93c3c;
+$producto              : rgba(0, 0, 0, 0.12);
+$navegacion            : var(--navegacion-oscuro);
+$negro                 : #000;
+$notificaciones        : #182420;
+$texto-notificacion    : #ff4081;
+$personalizado         : var(--global-color);
+$rojo-error            : #cc4141;
+$sombra-campos         : #8b8b8b;
+$fondo-campos          : #3d3c3c;
+
+$personalizado :var(--global-color);
+$bloques       : var(--bloques-oscuro);
 
 html,
 body {
@@ -82,7 +81,7 @@ body {
     .mat-mdc-select-value-text,
     .mdc-list-item--selected .mdc-list-item__primary-text,
     .mdc-list-item__primary-text {
-        color: $azul-menu !important;
+        color: $personalizado !important;
     }
 
     .descripcion-tarea {
@@ -126,42 +125,42 @@ input[type='number'] {
 /* Personalizar el color del radio button */
 input[type="radio"] {
     &:checked {
-        background-color: $color-personalizado !important;
+        background-color: $personalizado !important;
         /* Color de fondo cuando está seleccionado */
     }
 
     &:checked::before {
-        border-color: $color-personalizado !important;
+        border-color: $personalizado !important;
         /* Color del borde cuando está seleccionado */
     }
 
     &:before {
-        border-color: $color-personalizado !important;
+        border-color: $personalizado !important;
         /* Color del borde cuando no está seleccionado */
     }
 }
 
 /* Personalizar el color del círculo interior del radio button */
 .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
-    background-color: $color-personalizado !important;
-    border-color    : $color-personalizado !important;
+    background-color: $personalizado !important;
+    border-color    : $personalizado !important;
 }
 
 /* Personalizar el color del borde exterior del radio button cuando está seleccionado */
 /* Personalizar el color del borde exterior del radio button cuando está seleccionado */
 .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: $color-personalizado !important;
-    border-color: $color-personalizado !important;
+    border-color: $personalizado !important;
+    border-color: $personalizado !important;
 }
 
 /* Personalizar el color del borde exterior del radio button cuando no está seleccionado */
 .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: $color-personalizado !important;
+    border-color: $personalizado !important;
 }
 
 /* Personalizar el color del borde exterior del radio button cuando está seleccionado (antes del pseudo-elemento) */
 .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__background::before {
-    border-color: $color-personalizado !important;
+    border-color: $personalizado !important;
 }
 
 /* Personalizar la sombra del radio button cuando no está seleccionado */
@@ -179,7 +178,7 @@ input[type="radio"] {
     display         : block;
     width           : 20px;
     height          : 20px;
-    background-color: $color-personalizado !important;
+    background-color: $personalizado !important;
     border-radius   : 50%; // Crea un círculo
     position        : absolute;
     top             : 50%;
@@ -199,11 +198,10 @@ input[type="radio"] {
     color           : $color-blanco; // Texto claro en fondo oscuro
 }
 
-// .dark-theme .toolbarNavegacion,
 .dark-theme .toolbarNavScreenShort,
 .dark-theme .toolbarNavegacion {
-    background-color: $navegacion !important;
-    color           : $color-blanco !important;
+    background-color   : $navegacion !important;
+    // color           : $color-blanco !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -308,7 +306,7 @@ input[type="radio"] {
 
 .dark-theme .opcion-vista:hover,
 .dark-theme .tarea:hover {
-    background-color: var(--bloques-oscuro) !important;
+    background-color: $bloques !important;
 }
 
 //FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
@@ -445,7 +443,7 @@ input[type="radio"] {
 
 .dark-theme .mostrar-tareas,
 .dark-theme .tareas-dia-hora {
-    border: 0.5px solid $tareas !important;
+    border: 0.5px solid var(--bordes-oscuro) !important;
 }
 
 // Borde derecho
@@ -573,7 +571,7 @@ input[type="radio"] {
 }
 
 .dark-theme .pestana:hover {
-    color : $color-naranja !important;
+    color : $naranja !important;
     cursor: pointer;
 }
 
@@ -582,6 +580,8 @@ input[type="radio"] {
 // .dark-theme .comentario,
 // .dark-theme .comentario_desc,
 
+.dark-theme .descripcion-error,
+.dark-theme .descripcion-error-doble,
 .dark-theme .cotizacion,
 .dark-theme .lista-cargos-descuentos,
 .dark-theme .precio-unitario,
@@ -596,6 +596,10 @@ input[type="radio"] {
 .dark-theme .cantidad,
 .dark-theme .bf {
     border-color: var(--bordes-oscuro) !important;
+}
+
+.dark-theme .ruta:hover{
+    color: $personalizado !important;
 }
 
 .dark-theme .comentario,
@@ -627,15 +631,15 @@ input[type="radio"] {
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: var(--global-color) !important;
+    border-color: $personalizado !important;
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle {
-    border-color: var(--global-color) !important;
+    border-color: $personalizado !important;
 }
 
 .dark-theme .mat-mdc-radio-button .mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle {
-    border-color: var(--global-color) !important;
+    border-color: $personalizado !important;
 }
 
 .mdc-menu-surface.mat-mdc-select-panel {
@@ -652,17 +656,17 @@ input[type="radio"] {
 }
 
 .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb {
-    background-color: var(--global-color);
+    background-color: $personalizado;
     border-radius   : 20px;
 }
 
 .dark-theme .mat-mdc-option.mat-mdc-option-active,
 .dark-theme .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
-    background: var(--bloques-oscuro) !important;
+    background: $bloques !important;
 }
 
 .dark-theme .mat-mdc-option:hover {
-    background: var(--bloques-oscuro) !important;
+    background: $bloques !important;
 }
 
 .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
@@ -754,7 +758,7 @@ input[type="radio"] {
 .dark-theme .llenar-formulario::-webkit-scrollbar-thumb,
 .dark-theme .detalle-tarea::-webkit-scrollbar-thumb,
 .dark-theme .contenido-sidenav::-webkit-scrollbar-thumb {
-    background-color: $scrollbars !important;
+    background-color: $scroll !important;
 }
 
 .dark-theme .mat-mdc-snack-bar-container .mdc-snackbar__surface {
@@ -799,7 +803,7 @@ input[type="radio"] {
 
 .dark-theme .login-right input[type="text"]:hover,
 .dark-theme .login-right input[type="password"]:hover {
-    border: 1px solid var(--pestana-oscuro) !important;
+    border: 1px solid $naranja !important;
 }
 
 .dark-theme .documento,
@@ -840,16 +844,16 @@ input[type="radio"] {
 
 .dark-theme .button_up_content,
 .dark-theme .button_down_content {
-    background-color: var(--global-color) !important;
+    background-color: $personalizado !important;
 }
 
 .mat-mdc-raised-button {
-    background-color: var(--global-color) !important;
+    background-color: $personalizado !important;
     color           : var(--blanco) !important;
 }
 
 .mdc-linear-progress__bar-inner {
-    border-color: var(--global-color) !important;
+    border-color: $personalizado !important;
 }
 
 .dark-theme .mat-mdc-progress-bar {
@@ -863,13 +867,13 @@ input[type="radio"] {
 
 .dark-theme .ordenar {
     padding-left : 10px !important;
-    background   : var(--bloques-oscuro) !important;
+    background   : $bloques !important;
     border-radius: 10px !important;
     box-shadow   : var(--sombra-oscuro) !important;
 }
 
 .dark-theme .documentos-origen {
-    background   : var(--bloques-oscuro) !important;
+    background   : $bloques !important;
     border-radius: 10px !important;
     box-shadow   : var(--sombra-oscuro) !important;
 }
@@ -879,7 +883,7 @@ input[type="radio"] {
 }
 
 .dark-theme .elemento {
-    background-color: var(--bloques-oscuro) !important;
+    background-color: $bloques !important;
     border          : none !important;
     box-shadow      : var(--sombra-oscuro) !important;
 }
@@ -897,14 +901,14 @@ input[type="radio"] {
 .dark-theme .seleccionar,
 .dark-theme .detalleInvitado,
 .dark-theme .respuesta-dialogo {
-    background: var(--bloques-oscuro) !important;
+    background: $bloques !important;
 
 }
 
 //ChecksBos
 .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
-    background-color: var(--global-color) !important;
-    border-color    : var(--global-color) !important;
+    background-color: $personalizado !important;
+    border-color    : $personalizado !important;
 }
 
 .dark-theme .pagar-detalle {
