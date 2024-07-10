@@ -258,3 +258,7 @@ p {
     display    : flex;
     align-items: center;
 }
+
+.tarea:hover {
+    background: $bordes;
+}
