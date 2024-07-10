@@ -106,6 +106,7 @@ p {
     border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
+    margin       : 10px 0px;
 }
 
 .seleccionar {
@@ -114,7 +115,7 @@ p {
     min-height      : 30px;
     // border-bottom: 1px solid $bordes;
     font-weight     : 400;
-    padding         : 5px 0px;
+    padding         : 5px 10px;
 }
 
 .seleccionar:hover {

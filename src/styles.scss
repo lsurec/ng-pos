@@ -206,10 +206,6 @@ input[type="radio"] {
     color           : $color-blanco !important;
 }
 
-.dark-theme .producto-seleccionado {
-    background-color: $producto !important;
-}
-
 @media screen and (max-width: 767px) {
 
     .dark-theme .mes-dias,
@@ -253,7 +249,6 @@ input[type="radio"] {
 .dark-theme .elementos-detalle,
 .dark-theme .editar-detalle,
 .dark-theme .mat-expansion-panel-body,
-.dark-theme .detalles,
 .dark-theme .color_fondo,
 .dark-theme mat-expansion-panel-header-0,
 .dark-theme .progress,
@@ -306,9 +301,13 @@ input[type="radio"] {
 }
 
 .dark-theme .tarea {
-    background-color: #333 !important;
+    background-color: var(--bordes-claro) !important;
     color           : #ffffff !important;
-    border          : 1px solid #CED4DA !important;
+    box-shadow      : var(--sombra-oscuro) !important;
+}
+
+.dark-theme .tarea:hover {
+    background-color: var(--bloques-oscuro) !important;
 }
 
 //FONDOS EN COLOR GRIS Y TEXTOS EN COLOR BLANCO
@@ -337,6 +336,7 @@ input[type="radio"] {
 .dark-theme .barra-de-busqueda,
 .dark-theme .mat-mdc-select-arrow svg,
 .dark-theme .detalles,
+.dark-theme .campos-detalles,
 .dark-theme .barra-monto,
 .dark-theme .sumar,
 .dark-theme .cantidad,
@@ -385,23 +385,23 @@ input[type="radio"] {
 
 //BORDE IZQUIERDO
 .dark-theme .container_start {
-    border-right: 1px solid $bordes !important;
+    border-right: 1px solid var(--bordes-oscuro) !important;
 }
 
 //BORDE ABAJO
-.dark-theme .toolbar-large,
+// .dark-theme .detalles-usuario,
+// .dark-theme .configuraciones,
+// .dark-theme .configuraciones-digitos,
+// .dark-theme .toolbar-large,
+// .dark-theme .input-container,
 .dark-theme .head__sidenav_config,
-.dark-theme .detalles-usuario,
-.dark-theme .configuraciones,
 .dark-theme .barra-cerrar-titulo,
-.dark-theme .input-container,
 // .dark-theme .seleccionar,
 .dark-theme .head__sidenav,
 .dark-theme .toolbarlargeTitle,
 .dark-theme .toolbar-row,
 .dark-theme .borde-detalles,
 .dark-theme .cantidad-detalle,
-.dark-theme .configuraciones-digitos,
 .dark-theme .observacion-tarea,
 .dark-theme .titulo-tarea {
     border-bottom: 1px solid $bordes !important;
@@ -432,9 +432,14 @@ input[type="radio"] {
     border-right : 1px solid $bordes !important;
 }
 
+.dark-theme .responsables,
+.dark-theme .editar-eliminar,
+.dark-theme .campos-detalles,
+.dark-theme .input-container,
+.dark-theme .toolbar-large,
 .dark-theme mat-toolbar,
 .dark-theme .head__sidenav {
-    border-bottom: 1px solid $bordes !important;
+    border-bottom: 1px solid var(--bordes-oscuro) !important;
 }
 
 .dark-theme .mostrar-tareas,
@@ -449,7 +454,7 @@ input[type="radio"] {
 
 // Borde izquierdo 
 .dark-theme .detalle-tarea {
-    border-left: 1px solid #ffffff !important;
+    border-left: 1px solid var(--bordes-oscuro) !important;
 }
 
 // Borde de abajo
@@ -459,14 +464,20 @@ input[type="radio"] {
 }
 
 //BORDE ARRIBA
-.dark-theme .backColorNavBar,
+// .dark-theme .backColorNavBar,
+// .dark-theme .documento,
 .dark-theme .detalle-documento,
 .dark-theme .productos-pagos,
-.dark-theme .documento,
 .dark-theme .pago,
 .dark-theme .seleccionar-opcion {
     border-top: 1px solid $bordes !important;
 }
+
+//BORDER TOP 
+.dark-theme .backColorNavBar {
+    border-top: 1px solid var(--bordes-oscuro) !important;
+}
+
 
 .dark-theme .itemRouteActive,
 .dark-theme .contenedorModulo,
@@ -565,6 +576,11 @@ input[type="radio"] {
 
 //BORDES DE BOTONES
 // .dark-theme button:not(:disabled),
+// .dark-theme .comentario,
+// .dark-theme .comentario_desc,
+.dark-theme .precio-unitario,
+.dark-theme .tarea,
+.dark-theme .barra-de-busqueda,
 .dark-theme .barra-monto,
 .dark-theme .total,
 .dark-theme .centro,
@@ -573,15 +589,21 @@ input[type="radio"] {
 .dark-theme .sumar,
 .dark-theme .cantidad,
 .dark-theme .bf {
-    border-color: $bordes !important;
+    border-color: var(--bordes-oscuro) !important;
+}
+
+.dark-theme .comentario,
+.dark-theme .comentario_desc {
+    border: solid 1px var(--bordes-oscuro) !important;
+
 }
 
 .dark-theme .pestana {
     color: $bordes !important;
 }
 
+.dark-theme .tipos-pago:hover,
 .dark-theme .seleccionar:hover,
-// .dark-theme .detalleUsuario:hover,
 .dark-theme .detalleInvitado:hover {
     background-color: var(--seleccionado2) !important;
 }
@@ -645,6 +667,9 @@ input[type="radio"] {
 
 //scrolls 
 
+
+.dark-theme .detallesUsuario::-webkit-scrollbar,
+.dark-theme .detallesUsuario::-webkit-scrollbar-track,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-track,
 .dark-theme .documento::-webkit-scrollbar,
@@ -697,6 +722,7 @@ input[type="radio"] {
 
 
 //Color barra scroll
+.dark-theme .detallesUsuario::-webkit-scrollbar-thumb,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb,
 .dark-theme .documento::-webkit-scrollbar-thumb,
 .dark-theme .localidades::-webkit-scrollbar-thumb,
@@ -768,6 +794,8 @@ input[type="radio"] {
     border: 1px solid var(--pestana-oscuro) !important;
 }
 
+.dark-theme .documento,
+.dark-theme .contenido-seleccionado,
 .dark-theme .head__sidenav__bottom,
 .dark-theme .seleccionado {
     border-top: 1px solid var(--bordes-oscuro) !important;
@@ -778,10 +806,21 @@ input[type="radio"] {
     color: var(--texto-boton) !important;
 }
 
+
+.dark-theme .bodegas,
+.dark-theme .nombre-producto,
+.dark-theme .separador,
+.dark-theme .configuraciones-digitos,
+.dark-theme .configuraciones,
+.dark-theme .detalles-usuario,
 .dark-theme .filtros,
 .dark-theme .t-seleccionado,
 .dark-theme .buscar-icono {
     border-bottom: 1px solid var(--bordes-oscuro) !important;
+}
+
+.dark-theme .contenedorModulo {
+    border-bottom: 0.8px solid var(--bordes-oscuro) !important;
 }
 
 .dark-theme button.iniciar {
@@ -836,11 +875,12 @@ input[type="radio"] {
 
 
 //hover seleccionado
+.dark-theme .pago-seleccionado,
 .dark-theme .elemento:hover {
     background-color: var(--seleccionado2) !important;
 }
 
-
+.dark-theme .producto-seleccionado,
 .dark-theme .seleccionar,
 .dark-theme .detalleInvitado,
 .dark-theme .respuesta-dialogo {

@@ -332,6 +332,7 @@ label {
     background-color: $fondo;
     height          : calc(100% - 89px);
     overflow-y      : auto;
+    padding-bottom  : 10px;
 }
 
 .primerDia {
@@ -443,7 +444,7 @@ h2 {
 
 .separador {
     margin-top   : 0px;
-    border-bottom: 0.8px solid $separador !important;
+    border-bottom: 0.8px solid $separador;
     margin-bottom: 0px;
     width        : 100%;
 }
@@ -547,6 +548,7 @@ h2 {
     border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
+    min-height   : 50px;
 }
 
 .cursor {

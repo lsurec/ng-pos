@@ -280,7 +280,7 @@ hr {
     display      : flex;
     height       : 30px;
     border       : 1.5px solid $bordes;
-    border-bottom: none;
+    border-bottom: none !important;
     font-weight  : bold;
     font-size    : 13px;
     padding      : 5px;
