@@ -572,6 +572,7 @@
             "comentarioCreado": "Kommentar erfolgreich erstellt.",
             "tareaCreadaExito": "Aufgabe erfolgreich erstellt. Aufgaben-ID: ",
             "archivosNoCargados": "Aufgabe erstellt, aber Dateien wurden nicht gespeichert.",
+            "archivosComentario": "Kommentar erstellt, aber die Dateien wurden nicht gespeichert.",
             "usuarios": "Benutzer nicht gefunden, bitte versuchen Sie es erneut.",
             "debeSeleccionar": "Um fortzufahren, wählen Sie ein Unternehmen und eine Arbeitsstation aus.",
             "noSeleccionado": "Nicht ausgewählt.",

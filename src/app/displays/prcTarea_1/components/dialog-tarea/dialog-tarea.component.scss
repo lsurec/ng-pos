@@ -6,6 +6,7 @@ $scroll        : var(--global-color); //barra azul
 $flecha        : var(--gris); //fondo triangulo
 $rojo          : var(--error); //texto
 $gris          : var(--gris); //texto
+$bloques       : var(--bordes-claro);
 
 .progress {
     padding         : 0px;
@@ -398,4 +399,17 @@ p {
     min-height: 30px;
     color     : $personalizado;
     font-size : 13px;
+}
+
+.adjuntos {
+    padding: 5px;
+}
+
+.archivos-adjuntos {
+    width           : 80%;
+    margin-top      : 5px;
+    padding         : 5px;
+    background-color: $bloques;
+    display         : flex;
+    align-items     : center;
 }

@@ -572,6 +572,7 @@
             "comentarioCreado": "Commentaire créé avec succès.",
             "tareaCreadaExito": "Tâche créée avec succès. ID Tâche :",
             "archivosNoCargados": "Tâche créée, mais les fichiers n'ont pas été enregistrés.",
+            "archivosComentario": "Commentaire créé, mais les fichiers n'ont pas été enregistrés.",
             "usuarios": "Utilisateur non trouvé, essayez de rechercher à nouveau.",
             "debeSeleccionar": "Pour continuer, sélectionnez une entreprise et un poste de travail.",
             "noSeleccionado": "Non sélectionné.",

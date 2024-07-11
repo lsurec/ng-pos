@@ -488,9 +488,7 @@ mat-accordion {
 }
 
 .lista-archivos {
-    margin-left   : 15px;
-    padding       : 5px;
-    padding-bottom: 0px;
+    padding: 5px;
 }
 
 .nombre-archivos {
@@ -527,4 +525,13 @@ mat-accordion {
 .icono-titulo {
     padding-top: 10px;
     margin     : 0px 10px;
+}
+
+.archivos-adjuntos {
+    width           : 80%;
+    margin-top      : 5px;
+    padding         : 5px;
+    background-color: $bloques;
+    display         : flex;
+    align-items     : center;
 }

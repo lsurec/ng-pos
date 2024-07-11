@@ -272,16 +272,14 @@
                                             [(ngModel)]="descripcionComentario" class="escribir-comentario">
                                         </textarea>
                                         <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
-                                            <p class="">{{'crm.crear.adjuntos' | translate}}
-                                                ({{selectedFiles.length}})
-                                            </p>
-                                            <div *ngFor="let file of selectedFiles; let iFile = index" class="d-flex">
+                                            <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p>
+
+                                            <div *ngFor="let file of selectedFiles; let i = index"
+                                                class="archivos-adjuntos">
                                                 <p class="nombre-archivos"> - {{ file.name }}</p>
                                                 <span class="spacer"></span>
-                                                <mat-icon class="eliminar" (click)="removeFile(iFile)"
-                                                    matTooltip="{{'crm.crear.eliminar' | translate}}">
-                                                    close
-                                                </mat-icon>
+                                                <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
+                                                    matTooltip="eliminar archivo">close</mat-icon>
                                             </div>
                                         </div>
                                         <div class="archivos-comentar">
@@ -298,7 +296,7 @@
                                                 </button>
                                             </div>
                                             <span class="spacer"></span>
-                                            <button mat-button class="subir-comentarios" (click)="validarComentario()">
+                                            <button mat-button class="subir-comentarios" (click)="comentar()">
                                                 <mat-icon>post_add</mat-icon>
                                                 {{ 'crm.crear.comentar' | translate}}
                                             </button>
