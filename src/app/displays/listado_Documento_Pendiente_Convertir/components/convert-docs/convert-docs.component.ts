@@ -202,6 +202,8 @@ export class ConvertDocsComponent {
         tra.detalle.bodega,
         prod.producto,
         prod.unidad_Medida,
+        0,
+        "0",
       );
 
 

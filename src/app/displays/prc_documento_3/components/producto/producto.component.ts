@@ -156,6 +156,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       bodega,
       this.producto.producto,
       this.producto.unidad_Medida,
+      this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+      this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
 
     //si algo salió mal
