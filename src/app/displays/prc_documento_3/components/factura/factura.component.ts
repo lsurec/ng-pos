@@ -74,9 +74,6 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 })
 export class FacturaComponent implements OnInit {
 
-
-
-
   consecutivoDoc: number = -1;
   docPrint?: DocPrintModel;
   dataFel?: DataFelInterface;
@@ -1516,7 +1513,6 @@ export class FacturaComponent implements OnInit {
         this.facturaService.pasos[1].visible = false;
         this.facturaService.pasos[1].status = 3;
 
-
         this.facturaService.viewErrorFel = true;
         this.facturaService.viewError = true;
         this.facturaService.viewMessage = true;
@@ -1528,24 +1524,18 @@ export class FacturaComponent implements OnInit {
         return;
       }
 
-
       //si todo está correcto
       this.facturaService.pasosCompletos++;
       this.facturaService.pasos[1].status = 2;
       this.facturaService.pasos[1].visible = false;
 
-
       this.facturaService.viewSucces = true;
       this.facturaService.viewMessage = true;
-
 
       this.facturaService.isStepLoading = false;
 
       // this.facturaService.stepMessage = "Documento creado y furmado correctamente.";
-
-
       this.printFormat();
-
 
     } else {
       //Enviar documento a tbl_documento estructura
