@@ -585,6 +585,8 @@ export class ProductService {
         bodega: number,
         producto: number,
         um: number,
+        correntista:number,
+        cuentaCta: string,
     ) {
 
         let headers = new HttpHeaders(
@@ -594,6 +596,8 @@ export class ProductService {
                 "producto": producto,
                 'um': um,
                 'user': user,
+                'correntista': correntista,
+                'cuentaCta': cuentaCta,
             }
         )
 
@@ -608,6 +612,8 @@ export class ProductService {
         bodega: number,
         producto: number,
         um: number,
+        correntista:number,
+        cuentaCta: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPrecios(
@@ -616,6 +622,8 @@ export class ProductService {
                 bodega,
                 producto,
                 um,
+                correntista,
+                cuentaCta,
             ).subscribe(
                 //si esta correcto
                 res => {

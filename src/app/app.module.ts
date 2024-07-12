@@ -91,6 +91,7 @@ import { DocsHistorialComponent } from './components/docs-historial/docs-histori
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
+import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,6 +129,7 @@ import { DetalleErrorComponent } from './components/detalle-error/detalle-error.
     TypesDocsComponent,
     OriginDocsComponent,
     DestinationDocsComponent,
+    PrinterConfigurationComponent,
     ConvertDocsComponent,
     DetailsDestDocsComponent,
     HomeConvertComponent,

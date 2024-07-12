@@ -1096,6 +1096,8 @@ export class FacturaComponent implements OnInit {
         bodega.bodega,
         prod.producto,
         prod.unidad_Medida,
+        this.facturaService.cuenta.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta.cuenta_Cta ?? "0",
       );
 
 

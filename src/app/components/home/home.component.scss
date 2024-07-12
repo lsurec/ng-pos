@@ -555,6 +555,13 @@ h2 {
     min-height   : 50px;
 }
 
+.detalles-borde {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+}
+
 .cursor {
     cursor: pointer;
 }
