@@ -113,6 +113,19 @@ export class BuscarUsuariosComponent implements OnInit {
           });
         });
       }
+
+      //validar si hay invitados en la lista temporal
+
+      if (this.listaTemporal.length > 0) {
+        // Recorrer la lista de usuarios y marcar los seleccionados
+        this.usuarios.forEach(usuario => {
+          this.listaTemporal.forEach(invitado => {
+            if (usuario.email === invitado.email || usuario.userName === invitado.userName || usuario.name === invitado.name) {
+              usuario.select = true;
+            }
+          });
+        });
+      }
     }
 
     this.isLoading = false;
