@@ -56,6 +56,9 @@ export class ActualizarUsuariosComponent implements AfterViewInit{
 
   ) {
     this.tarea = tareaActualizar;
+
+    console.log("usuarios invitados actuales", this.tarea.invitados);
+    
     //Buscar el idioma guardado en le servicio
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {

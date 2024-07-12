@@ -28,7 +28,7 @@ export class BuscarUsuariosComponent implements OnInit {
   habilitarBotones: boolean = false;
   timer: any; //temporizador
 
-  usuariosSeleccionados: BuscarUsuariosInterface[] = [];
+  listaTemporal: BuscarUsuariosInterface[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<BuscarUsuariosComponent>,
@@ -55,26 +55,25 @@ export class BuscarUsuariosComponent implements OnInit {
     // Asumiendo que 'this.invitados' y 'this.usuarios' son listas de objetos usuario,
     // y cada usuario tiene una propiedad única como 'id'.
     let usuariosDuplicados: BuscarUsuariosInterface[] = [];
-    this.usuariosSeleccionados = this.usuarios.filter(usuario => {
-      if (usuario.select) {
-        // Verificar si el usuario ya está en la lista de invitados
-        if (this.invitados.some(invitado => invitado.userName === usuario.userName)) {
-          // Si el usuario ya está invitado, agregar a la lista de duplicados
-          usuariosDuplicados.push(usuario);
-          return false; // No incluir en la lista de seleccionados
-        }
-        return true; // Incluir en la lista de seleccionados
-      }
-      return false;
-    });
 
+    this.listaTemporal.forEach(usuario => {
+      usuario.select = true; // Aseguramos que select esté en true
+      // Verificar si el usuario ya está en la lista de invitados
+      if (this.invitados.some(invitado => invitado.userName === usuario.userName)) {
+        // Si el usuario ya está invitado, agregar a la lista de duplicados
+        usuariosDuplicados.push(usuario);
+      } else {
+        // Agregar a la lista de invitados si no está duplicado
+        this.invitados.push(usuario);
+      }
+    });
     // Si hay usuarios duplicados, mostrar la notificación
     if (usuariosDuplicados.length > 0) {
       this.widgetsService.openSnackbar("Uno o más usuarios duplicados no se agregaron.");
     }
 
     // Cerrar el diálogo con los usuarios seleccionados
-    this.dialogRef.close(this.usuariosSeleccionados);
+    this.dialogRef.close(this.listaTemporal);
   }
 
 
@@ -138,5 +137,23 @@ export class BuscarUsuariosComponent implements OnInit {
       this.habilitarBotones = true;
     }, 250);
   }
+
+  seleccionar(usuario: BuscarUsuariosInterface) {
+    if (usuario.select) {
+      // Verificar si ya está en la listaTemporal
+      const index = this.listaTemporal.findIndex(u => u.userName.toLowerCase() == usuario.userName.toLowerCase());
+      if (index === -1) {
+        // Si no está, lo agregamos
+        this.listaTemporal.push(usuario);
+      }
+    } else {
+      // Si se desmarca, lo eliminamos de la listaTemporal
+      const index = this.listaTemporal.findIndex(u => u.userName.toLowerCase() == usuario.userName.toLowerCase());
+      if (index !== -1) {
+        this.listaTemporal.splice(index, 1);
+      }
+    }
+  }
+
 
 }

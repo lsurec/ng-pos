@@ -180,6 +180,9 @@ export class DetalleTareaComponent {
 
     this.responsables = resResponsables.response;
 
+
+    console.log(this.responsables);
+    
   }
 
   async refreshs() {
