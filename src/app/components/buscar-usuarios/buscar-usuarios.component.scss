@@ -1,29 +1,26 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000;
-$placeholder          : rgba(0, 0, 0, 0.30);
-$rojo-info            : #cc4141;
-$sombra               : rgba(0, 0, 0, 0.1);
+$fondo       : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scrollbar   : var(--global-color); //barra azul
+$bordes      : var(--bordes-claro); //bordes
+$preferencia : var(--global-color); //bordes y texto azul
+$negro       : var(--negro);
+$bloques     : var(--bordes-claro);
+$hover       : var(--hover);
+$gris        : var(--gris);
+$rojo        : var(--error);
 
-input::placeholder,
-textarea::placeholder {
-    color: $placeholder !important;
-}
 
 .progress {
     padding         : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 0px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
@@ -43,13 +40,13 @@ textarea::placeholder {
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scrollbar;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -58,7 +55,7 @@ textarea::placeholder {
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -68,7 +65,7 @@ textarea::placeholder {
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -88,7 +85,7 @@ hr {
 
 
 .fondo {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .nombre {
@@ -112,7 +109,7 @@ hr {
     font-size    : 14px;
     width        : 100%;
     align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .detalleInvitado {
@@ -121,9 +118,9 @@ hr {
     font-size       : 14px;
     width           : 100%;
     align-items     : center;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
     display         : flex;
-    background-color: $sombra;
+    background-color: $bloques;
     margin          : 10px 0px;
 }
 
@@ -142,15 +139,15 @@ hr {
 
 p {
     margin: 0px;
-    color : $color-negro;
+    color : $negro;
 }
 
-.seleccionar {
+.seleccionarResponsable {
     width           : 100%;
     cursor          : pointer;
     min-height      : 30px;
     padding         : 5px 10px;
-    background-color: $sombra;
+    background-color: $bloques;
     margin          : 5px 0px;
 }
 
@@ -161,13 +158,13 @@ p {
     padding   : 5px 0px;
 }
 
-.seleccionar:hover,
+.seleccionarResponsable:hover,
 .detalleInvitado:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .detalle:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .botones {
@@ -182,7 +179,7 @@ p {
     border-style    : none;
     background-color: transparent;
     outline         : none;
-    color           : $color-azul;
+    color           : $preferencia;
 }
 
 @media screen and (max-width: 280px) {
@@ -212,7 +209,7 @@ p {
         width  : 200px !important;
     }
 
-    .seleccionar {
+    .seleccionarResponsable {
         height     : auto !important;
         padding    : 3px 0px !important;
         align-items: center !important;
@@ -257,7 +254,7 @@ p {
         width: 400px !important;
     }
 
-    .seleccionar {
+    .seleccionarResponsable {
         min-height: 30px !important;
         display   : block !important;
     }
@@ -271,18 +268,18 @@ p {
 .buscar-icono {
     display      : flex;
     align-items  : center;
-    border-bottom: solid 1px $color-azul;
+    border-bottom: solid 1px $preferencia;
 }
 
-.icono-lupa {
-    color: $color-azul;
+.iconoLupa {
+    color: $preferencia;
 }
 
 .barra-fija {
     display      : flex;
     align-items  : center;
     height       : 55px;
-    border-bottom: solid 1px $color-bordes;
+    border-bottom: solid 1px $bordes;
 }
 
 .barra-abajo-fija {
@@ -297,7 +294,7 @@ p {
 
 .info {
     font-size  : 12px !important;
-    color      : $rojo-info;
+    color      : $rojo;
     display    : flex;
     align-items: center;
     padding-top: 10px;

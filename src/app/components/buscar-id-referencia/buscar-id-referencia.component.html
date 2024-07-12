@@ -18,7 +18,7 @@
                         [(ngModel)]="searchIdReferencia" placeholder="{{'crm.crear.busqueda' | translate}}"
                         autocomplete="off" (focus)="focusAndSelectText()">
                     <button type="submit" mat-icon-button class="flecha-regresar">
-                        <mat-icon class="icono-lupa">search</mat-icon>
+                        <mat-icon class="iconoLupa">search</mat-icon>
                     </button>
                 </div>
             </form>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div mat-dialog-actions class="barra-abajo-fija" *ngIf="enableButtons">
-            <button mat-button (click)="closeDialog()">{{'crm.crear.cancelar' | translate}}</button>
+            <button mat-button [mat-dialog-close]>{{'crm.crear.cancelar' | translate}}</button>
         </div>
     </div>
 </div>

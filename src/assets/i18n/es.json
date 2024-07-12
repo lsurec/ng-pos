@@ -572,6 +572,7 @@
             "comentarioCreado": "Comentario creado correctamente.",
             "tareaCreadaExito": "Tarea creada correctamente. ID Tarea: ",
             "archivosNoCargados": "Tarea creada, pero no se guardaron los archivos.",
+            "archivosComentario": "Comentario creado, pero no se guardaron los archivos.",
             "usuarios": "Usuario no encontrado, intente realizar una búsqueda nuevamente.",
             "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo.",
             "noSeleccionado": "No seleccionada.",

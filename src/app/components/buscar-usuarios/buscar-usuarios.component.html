@@ -36,7 +36,7 @@
                 <div *ngIf=" tareasGlobalService.buscarUsuarios == 1">
                     <div class="detalleUsuario" [ngClass]="{'display-block': tareasGlobalService.buscarUsuarios == 1}"
                         *ngFor="let usuario of usuarios">
-                        <div class="seleccionar" *ngIf="tareasGlobalService.buscarUsuarios == 1"
+                        <div class="seleccionarResponsable" *ngIf="tareasGlobalService.buscarUsuarios == 1"
                             [mat-dialog-close]="[usuario]">
                             <p class="nombre">{{usuario.name}}</p>
                             <div class="dFlex">

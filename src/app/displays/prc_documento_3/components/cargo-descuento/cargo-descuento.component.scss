@@ -1,17 +1,17 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000; //bordes y texto azul
-$color-verde          : #25a704;
-$color-rojo           : #ce1414;
+$fondo          : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll         : var(--global-color); //barra azul
+$bordes         : var(--bordes-claro); //bordes del calendario
+$negro          : var(--negro); //bordes y texto azul
+$cargo-verde    : var(--cargo-claro);
+$descuento-rojo : var(--descuento-claro);
+$gris           : var(--gris);
 
 .progress {
     padding         : 0px;
     padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
@@ -19,7 +19,7 @@ $color-rojo           : #ce1414;
     padding-right   : 0px;
     width           : 700px;
     height          : 350px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -27,9 +27,9 @@ $color-rojo           : #ce1414;
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .contenedor {
@@ -43,13 +43,13 @@ $color-rojo           : #ce1414;
 }
 
 .dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -57,8 +57,9 @@ $color-rojo           : #ce1414;
 }
 
 .close {
-    width      : 40px;
-    color      : #aaa;
+    width: 40px;
+    color: $gris;
+
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -68,7 +69,7 @@ $color-rojo           : #ce1414;
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -83,7 +84,7 @@ hr {
 
 p {
     margin     : 0px;
-    color      : $color-negro;
+    color      : $negro;
     font-weight: 400;
 }
 
@@ -98,26 +99,6 @@ p {
 .campo-obligatorio {
     font-size  : 14px;
     font-weight: 450;
-}
-
-.obligatorio {
-    color       : #ff0000;
-    font-weight : bold;
-    font-size   : 12px;
-    padding-left: 3px;
-}
-
-.seleccionar {
-    width        : 100%;
-    cursor       : pointer;
-    min-height   : 30px;
-    border-bottom: 1px solid $color-bordes;
-    font-weight  : 400;
-    padding      : 5px 0px;
-}
-
-.seleccionar:hover {
-    background-color: #ebebeb;
 }
 
 .dFlex {
@@ -153,7 +134,7 @@ p {
 }
 
 .lista-cargos-descuentos {
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     padding      : 5px 0px;
@@ -166,12 +147,12 @@ p {
 
 .cargo {
     font-size: 14px;
-    color    : $color-verde;
+    color    : $cargo-verde;
 }
 
 .descuento {
     font-size: 14px;
-    color    : $color-rojo;
+    color    : $descuento-rojo;
 }
 
 @media screen and (max-width: 767px) {

@@ -56,10 +56,12 @@ export class CargoDescuentoComponent {
     this.facturaService.calculateTotales();
 
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.transaccionesEliminadas'));
+
+    this.transacciones = false;
   }
 
   seleccionar() {
-    this.facturaService.traInternas.forEach(element => {
+    this.facturaService.traInternas[this.index].operaciones.forEach(element => {
       element.isChecked = this.transacciones;
     });
 

@@ -1,7 +1,12 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$rojo          : var(--error);
+$gris          : var(--gris);
+$bloque        : var(--bloques-claro);
+$hover         : var(--hover);
+$negro         : var(--negro);
 
 .progress {
     padding         : 0px;
@@ -9,7 +14,7 @@ $color-azul           : #134895; //bordes y texto azul
     padding-right   : 0px;
     width           : 400px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
@@ -17,7 +22,8 @@ $color-azul           : #134895; //bordes y texto azul
     padding-right   : 0px;
     width           : 400px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
+    overflow        : hidden;
 }
 
 .contenedor {
@@ -32,13 +38,13 @@ $color-azul           : #134895; //bordes y texto azul
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -47,7 +53,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -103,7 +109,9 @@ hr {
     font-size    : 14px;
     width        : 100%;
     align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
+    margin       : 10px 0px;
+    background   : $bordes;
 }
 
 .titulos {
@@ -113,7 +121,7 @@ hr {
     width        : 100%;
     font-weight  : 450;
     padding-top  : 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .busqueda {
@@ -126,9 +134,10 @@ hr {
 
 p {
     margin: 0px;
+    color : $negro;
 }
 
-.seleccionar {
+.seleccionar-usuario {
     width      : calc(100% - 50px);
     cursor     : pointer;
     align-items: center;
@@ -137,20 +146,16 @@ p {
 }
 
 .seleccionar-responsable {
-    width      : 100%;
-    cursor     : pointer;
-    align-items: center;
-    min-height : 50px;
-    padding    : 5px 0px;
+    width           : 100%;
+    cursor          : pointer;
+    padding         : 5px 0px;
+    background-color: $bordes;
+    margin          : 0px 0px 5px;
 }
 
-.seleccionar:hover,
+.detalleInvitado:hover,
 .seleccionar-responsable:hover {
-    background-color: #ebebeb;
-}
-
-.detalle:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .botones {
@@ -174,7 +179,7 @@ p {
 
 .tipo-tarea {
     border-style       : none;
-    border             : 1px solid $color-bordes;
+    border             : 1px solid $bordes;
     // width           : 400px;
     background-color   : transparent;
     min-height         : 30px;
@@ -190,7 +195,7 @@ p {
 }
 
 .obligatorio {
-    color       : #ff0000;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 12px;
     padding-left: 3px;
@@ -198,7 +203,7 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -209,13 +214,15 @@ p {
 .inputSearch {
     width           : 100%;
     border-style    : none;
-    border          : 1px solid $color-bordes;
     background-color: transparent;
-    min-height      : 35px;
-    padding         : 2px 5px;
-    font-size       : 12px;
     outline         : none;
-    color           : $color-azul;
+    color           : $personalizado;
+}
+
+.buscar-icono {
+    display      : flex;
+    align-items  : center;
+    border-bottom: solid 1px $personalizado;
 }
 
 .responsable {
@@ -225,10 +232,12 @@ p {
 }
 
 .detalleResponsable {
-    display      : flex;
-    text-align   : left !important;
-    font-size    : 14px;
-    width        : 100%;
-    align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    display            : flex;
+    text-align         : left !important;
+    font-size          : 14px;
+    width              : 100%;
+    align-items        : center;
+    border-bottom      : 1px solid $bordes;
+    margin             : 10px 0px;
+    // background-color: $bloque;
 }

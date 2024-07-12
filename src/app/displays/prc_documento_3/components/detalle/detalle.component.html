@@ -3,17 +3,17 @@
         <div class="buscar-producto">
             <div class="d-flex">
                 <div class="cantidad-fondo">
-                   <form  #cantidadForm="ngForm" (ngSubmit)="performanSearch()">
-                    <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
-                    <input #cantidadInput class="cantidad-detalle" type="text" name="search"
-                        [(ngModel)]="productoService.cantidad" autocomplete="off" (focus)="selectText()">
-                   </form>
+                    <form #cantidadForm="ngForm" (ngSubmit)="performanSearch()">
+                        <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
+                        <input #cantidadInput class="cantidad-detalle" type="text" name="search"
+                            [(ngModel)]="productoService.cantidad" autocomplete="off" (focus)="selectText()">
+                    </form>
                 </div>
                 <span class="spacer"></span>
                 <div class="cantidad-producto">
 
                     <form #searchForm="ngForm" (ngSubmit)="performanSearch()">
-                      
+
                         <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
                         <div class="input-container">
                             <input class="barra-de-busqueda" type="search" name="search"
@@ -175,7 +175,7 @@
 <div class="total-pagar">
     <span class="spacer"></span>
     <!-- Agregar Pago -->
-    <div class="pagar">
+    <div class="pagar-detalle">
         <div class="dFlex">
             <p class="textos">{{ 'pos.factura.subtotal' | translate }}</p>
             <span class="spacer"></span>

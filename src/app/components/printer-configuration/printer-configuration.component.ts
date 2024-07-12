@@ -34,7 +34,7 @@ export class PrinterConfigurationComponent implements OnInit {
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
 
-
+  //formatos
   formatos: ImpresoraFormatoInterface[] = [
     {
       id: 1,
@@ -265,7 +265,7 @@ export class PrinterConfigurationComponent implements OnInit {
 
     //     pdfMake.createPdf(docDefinition).print();
     //   }
-      
+
 
     //   return;
 

@@ -2,8 +2,6 @@
 
 <div *ngIf="!verHistorialErrores">
     <app-no-connected *ngIf="showError" [component]="name" [error]="error"></app-no-connected>
-    <app-printer-configuration *ngIf="impresora && hideHome" [volver]="volver"
-        [pantalla]="idPantalla"></app-printer-configuration>
     <div *ngIf="!showError">
         <div *ngFor="let component of components">
             <ng-container *ngIf="component.visible">
@@ -34,7 +32,9 @@
                     <div *ngFor="let route of routeMenu; let index = index">
                         <div class="rutasMenuPeque" [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
                             (click)="changeRouteActive(index)">
-                            <p>{{route.name}}</p>
+                            <p class="ruta"
+                                [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : 'routeInactive' ">
+                                {{route.name}}</p>
                             <p *ngIf="routeMenu.length -1 !=  index"> / </p>
                         </div>
                     </div>
@@ -54,12 +54,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="vistas row">
-                <button [ngClass]="{ 'seleccionado' : vistaActiva === 1 }" (click)="vistaSeleccionada(1)" class="vista">{{
-                    'pos.home.vistaTarea' | translate }}</button>
-                <button [ngClass]="{ 'seleccionado' : vistaActiva === 2 }" (click)="vistaSeleccionada(2); calendario(true)"
-                    class="vista">{{ 'pos.home.vistaCalendario' | translate }}</button>
-            </div> -->
             </mat-sidenav>
             <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
                 <mat-toolbar class="head__sidenav">
@@ -78,6 +72,7 @@
                         <p class="ajustesMenu" *ngIf="horaFin"> {{'crm.ajustes.finLab' | translate}} </p>
                         <p class="ajustesMenu" *ngIf="setDias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
                         <p class="ajustesMenu" *ngIf="sizes">{{'pos.preferencias.fuente' | translate}}</p>
+                        <p class="ajustesMenu" *ngIf="color">Preferencia de Colores</p>
 
                     </div>
                     <span class="spacer"></span>
@@ -122,6 +117,16 @@
                             <p class="descripcion" *ngIf="tema == 1"> {{'pos.preferencias.oscuro' | translate}} </p>
                         </div>
                     </div>
+                    <!-- Colores -->
+                    <div class="configuraciones" (click)="verColor()">
+                        <mat-icon class="iconos-detalles">palette</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">Paleta de colores</p>
+                            <p class="descripcion">Cambia los colores de tu preferencia.</p>
+                        </div>
+                    </div>
+
                     <!-- Digitos -->
                     <div class="configuraciones-digitos">
                         <mat-icon class="iconos-detalles">123</mat-icon>
@@ -264,6 +269,38 @@
                             {{'pos.home.inactivo' | translate}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
+
+                <div class="horarioLaboral" *ngIf="color">
+                    <mat-accordion class="opciones-colores">
+                        <span class="spacer"></span>
+                        <mat-expansion-panel class="acordeon" hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="titulo-acordeon">
+                                    <p>Color</p>
+                                    <span class="spacer"></span>
+                                    <button mat-raised-button
+                                        [ngStyle]="{
+                                    'background-color': colorSeleccionado?.valor ?? null,
+                                    'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
+                                        Seleccionar
+                                    </button>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="paleta-color">
+                                <div class="opcion-color" *ngFor="let color of colores, let index = index"
+                                    (click)="seleccionarColor(color, index)">
+                                    <span class="spacer"></span>
+                                    <p class="circulo"
+                                        [ngClass]="{'circulo-seleccionado': colorSeleccionado?.id === color.id}"
+                                        [ngStyle]="{'background-color': color.valor}">
+                                    </p>
+                                    <span class="spacer"></span>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                        <span class="spacer"></span>
+                    </mat-accordion>
+                </div>
                 <!-- Mostrar detalles del usuario -->
 
                 <div class="detallesUsuario" *ngIf="detallesUsuario">
@@ -277,7 +314,7 @@
                     </div>
                     <p class="userName">{{user.toUpperCase()}}</p>
 
-                    <div class="detalles-usuario"></div>
+                    <div class="detalles-borde"></div>
                     <div class="detalles-usuario">
                         <mat-icon class="iconos-detalles">business</mat-icon>
                         <span class="spacer"></span>
@@ -305,9 +342,11 @@
                     <div class="detalles-usuario cursor" (click)="verErrores()">
                         <mat-icon class="iconos-detalles">report</mat-icon>
                         <span class="spacer"></span>
-                        <div class="detalle">
-                            <p class="subtitulo">Ver Errores</p>
-                            <p class="descripcion">Historial de errores.</p>
+                        <div class="detalle d-flex">
+                            <p class="subtitulo">Historial de errores.</p>
+                            <span class="spacer"></span>
+                            <mat-icon>navigate_next</mat-icon>
+                            <!-- <p class="descripcion">Historial de errores.</p> -->
                         </div>
                     </div>
                     <div class="detalles-usuario">
@@ -360,6 +399,13 @@
                 </mat-toolbar>
                 <!-- Regresar tema -->
                 <mat-toolbar class="backColorNavBar" *ngIf="temas">
+                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </mat-toolbar>
+
+                <!-- Regresar colores -->
+                <mat-toolbar class="backColorNavBar" *ngIf="color">
                     <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
@@ -423,8 +469,11 @@
                             <div class="rutasMenuPeque"
                                 [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : '' "
                                 (click)="changeRouteActive(index)">
-                                <p class="">{{route.name}}</p>
-                                <p class="" *ngIf="routeMenu.length -1 !=  index">/ </p>
+                                <p class="ruta"
+                                    [ngClass]="routeMenu.length -1 == index ? 'itemRouteActive' : 'routeInactive' ">
+                                    {{route.name}}
+                                </p>
+                                <p class="" *ngIf="routeMenu.length -1 !=  index"> / </p>
                                 <!-- <mat-icon>arrow_forward_ios</mat-icon> -->
                             </div>
                         </div>

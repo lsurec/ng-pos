@@ -169,6 +169,8 @@ export class DetalleComponent implements AfterViewInit {
         bodega,
         productTra.producto,
         productTra.unidad_Medida,
+        this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
 
 
@@ -561,6 +563,8 @@ export class DetalleComponent implements AfterViewInit {
         bodega,
         product.producto,
         product.unidad_Medida,
+        this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
 
 

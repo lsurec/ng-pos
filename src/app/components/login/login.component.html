@@ -36,11 +36,19 @@
                             </div>
                             <!-- Recordar Datos -->
                             <div class="single-bottom">
+                                <div class="dFlex">
+                                    <span class="spacer"></span>
+                                    <mat-checkbox [(ngModel)]="saveMyData" name="guardar"></mat-checkbox>
+                                    <p (click)="saveMyData = !saveMyData">{{ 'pos.login.recordar' | translate }}</p>
+                                    <span class="spacer"></span>
+                                </div>
+                            </div>
+                            <!-- <div class="single-bottom">
                                 <input type="checkbox" id="brand" value="" (click)="rememberMe()" checked
                                     *ngIf="saveMyData">
                                 <input type="checkbox" id="brand" value="" (click)="rememberMe()" *ngIf="!saveMyData">
                                 <label for="brand"><span></span>{{ 'pos.login.recordar' | translate }}</label>
-                            </div>
+                            </div> -->
                             <!-- Ingresar, iniciar sesion -->
                             <!-- <div class="sign-in">
                                 <input type="submit" value="{{ 'pos.login.iniciar' | translate }}">

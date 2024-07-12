@@ -1,20 +1,15 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$seleccionado         : rgba(0, 0, 0, 0.12);
-$color-bordes         : #c1bfbf; //bordes menu
-$color-gris-2         : #777; //sombra y texto gris
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
+$negro        : var(--negro); //texto negro
+$bordes       : var(--bordes-claro);
+$seleccionado : rgba(0, 0, 0, 0.12);
+$fondo        : var(--fondo-claro); //fondo Demosoft
+$scroll       : var(--global-color); //barra azul
 
 
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Toolbar*/
@@ -30,8 +25,8 @@ $background-scrollbar : #134895; //barra azul
 
 .toolbarPhone,
 .toolbarlargeTitle {
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 .toolbar-row {
@@ -54,17 +49,17 @@ $background-scrollbar : #134895; //barra azul
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_main {
@@ -90,8 +85,8 @@ $background-scrollbar : #134895; //barra azul
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -106,11 +101,11 @@ p {
 
 //barra de abajo
 .barra-regresar {
-    background: #FEF5E7;
-    color     : #000000;
+    background: $fondo;
+    color     : $negro;
     height    : 64px !important;
     padding   : 0px;
-    border-top: 1px solid $borde-toolbar;
+    border-top: 1px solid $bordes;
 }
 
 .titulo {
@@ -127,7 +122,7 @@ p {
     display      : flex;
     align-items  : center;
     padding      : 10px 0px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .textos14 {
@@ -144,14 +139,14 @@ p {
     display      : flex;
     align-items  : center;
     padding      : 10px 0px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .documentos-procesados {
     width           : 100%;
     padding         : 10px 20px;
     margin          : 5px 0px;
-    border          : 1px solid $color-bordes;
+    border          : 1px solid $bordes;
     background-color: $seleccionado;
 }
 

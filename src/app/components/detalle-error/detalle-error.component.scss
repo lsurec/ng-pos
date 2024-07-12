@@ -1,22 +1,21 @@
-// N U E V O S  E S T I L O S
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000;
+$fondo  : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll : var(--global-color); //barra azul
+$bordes : var(--bordes-claro); //bordes del calendario
+$negro  : var(--negro);
+$gris   : var(--gris);
 
 .progress {
     padding         : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 0px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
@@ -36,13 +35,13 @@ $color-negro          : #000;
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -51,7 +50,7 @@ $color-negro          : #000;
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -61,7 +60,7 @@ $color-negro          : #000;
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -75,7 +74,7 @@ hr {
 }
 
 .fondo {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .detalleCoincidencias {
@@ -91,7 +90,7 @@ hr {
 
 p {
     margin: 0px;
-    color : $color-negro;
+    color : $negro;
 }
 
 
@@ -141,7 +140,7 @@ p {
     display      : flex;
     align-items  : center;
     height       : 55px;
-    border-bottom: solid 1px $color-bordes;
+    border-bottom: solid 1px $bordes;
 }
 
 .barra-abajo-fija {

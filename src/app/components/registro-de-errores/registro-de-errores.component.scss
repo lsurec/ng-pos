@@ -1,35 +1,17 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$font-serif           : sans-serif; //fuente del texto
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
-$sombra               : rgba(0, 0, 0, 0.1);
-$background-transparent: transparent; //fondo transparennte,
-
-/*SideNav*/
-
+$bordes : var(--bordes-claro);
+$fondo  : var(--fondo-claro); //fondo Demosoft
+$scroll : var(--global-color); //barra rosada
+$sombra : var(--sombra-claro);
+$bloque : var(--bloques-claro);
+$hover  : var(--hover);
+$negro  : var(--negro);
 
 //Pantalla de carga
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
-}
-
-.icon_close_head {
-    cursor: pointer;
-}
-
-.head_carr_end {
-    color      : #000;
-    font-weight: 300;
+    background-color: $fondo;
 }
 
 .spacer {
@@ -54,7 +36,7 @@ mat-sidenav {
     bottom          : 0;
     left            : 0;
     right           : 0;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Fin SideNav*/
@@ -72,8 +54,8 @@ mat-sidenav {
 .toolbarPhone,
 .toolbarlarge {
     // position        : fixed !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 @media screen and (max-width: 767px) {
@@ -92,17 +74,16 @@ mat-sidenav {
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .container_page {
@@ -136,8 +117,8 @@ mat-sidenav {
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -151,7 +132,7 @@ p {
 }
 
 .contenido-sidenav {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 89px) !important;
     padding         : 0px;
     overflow        : auto;
@@ -159,11 +140,11 @@ p {
 
 //barra de abajo
 .barra-regresar {
-    background: #FEF5E7;
-    color     : #000000;
+    background: $fondo;
+    color     : $negro;
     height    : 40px !important;
     padding   : 0px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid $bordes;
 }
 
 .titulo {
@@ -182,16 +163,16 @@ p {
 }
 
 .elemento {
-    // background-color: $background-oficial;
-    background-color: #e4ddd2;
+    // background-color: $fondo;
+    background-color: $bloque;
     border-radius   : 5px;
     font-size       : 17px;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    box-shadow      : $sombra;
 }
 
 
 .elemento:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
     cursor          : pointer;
 }
 

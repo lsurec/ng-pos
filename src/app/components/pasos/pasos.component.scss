@@ -1,18 +1,11 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #a3a3a3; //sombra y texto gris //Nuevo
-$font-serif           : sans-serif; //fuente del texto
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$completado           : rgba(0, 0, 0, 0.5);
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
-$background-transparent: transparent; //fondo transparennte,
-$color-verde : #25a704;
-$color-rojo  : #ce1414;
+$personalizado  : var(--global-color); //bordes y texto azul
+$gris           : var(--gris); //texto gris
+$bordes         : var(--bordes-claro); //sombra y texto gris //Nuevo
+$completado     : var(--bordes-oscuro);
+$fondo          : var(--fondo-claro); //fondo Demosoft
+$scroll         : var(--global-color); //barra rosada
+$correcto-verde : var(--cargo-claro);
+$fallo-rojo     : var(--descuento-claro);
 
 .spacer {
     flex: 1 1 auto;
@@ -27,13 +20,13 @@ p {
 }
 
 .container_main::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_main {
@@ -53,7 +46,7 @@ p {
     width           : 75%;
     text-align      : center;
     padding-bottom  : 20px; //Nuevo
-    background-color: $borde-toolbar;
+    background-color: $bordes;
 }
 
 .logo {
@@ -73,7 +66,7 @@ p {
 .barra_paso {
     margin : 15px 0px;
     padding: 10px 20px 15px; //Nuevo
-    border : 1px solid $color-gris-s; //Nuevo
+    border : 1px solid $bordes; //Nuevo
 }
 
 .texto {
@@ -83,7 +76,7 @@ p {
 }
 
 .pasos_opciones {
-    display: flex;
+    display   : flex;
     // height : calc(100% - 360px); //Nuevo
 }
 
@@ -93,15 +86,15 @@ p {
 }
 
 .cargando {
-    color: $color-gris;
+    color: $gris;
 }
 
 .correcto {
-    color: $color-verde;
+    color: $correcto-verde;
 }
 
 .fallo {
-    color: $color-rojo;
+    color: $fallo-rojo;
 }
 
 .completado {
@@ -121,9 +114,9 @@ p {
 }
 
 .verError {
-    color        : $color-azul;
+    color        : $personalizado;
     font-weight  : 450;
-    border-bottom: $color-azul solid 1px;
+    border-bottom: $personalizado solid 1px;
     cursor       : pointer;
 }
 

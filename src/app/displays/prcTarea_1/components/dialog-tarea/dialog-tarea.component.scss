@@ -1,20 +1,19 @@
-$color-negro          : #000; //texto
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-gris           : #968989cb; // bordes de comentarios
-$color-2-gris         : #857373c9; //texto, bordes
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$background-detalles  : #dad2d286; //fondo detalles 
-$background-flecha    : #3b3939cb; //fondo triangulo
-$background-transparent: transparent; //fondo transparennte, 
+$negro         : var(--negro); //texto
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$flecha        : var(--gris); //fondo triangulo
+$rojo          : var(--error); //texto
+$gris          : var(--gris); //texto
+$bloques       : var(--bordes-claro);
 
 .progress {
     padding         : 0px;
     width           : 750px;
     height          : 430px;
     overflow-y      : auto;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
@@ -23,22 +22,22 @@ $background-transparent: transparent; //fondo transparennte,
     height          : 430px;
     padding-bottom  : 30px;
     overflow-y      : auto;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow-x      : hidden;
 }
 
 .head__sidenav {
     height          : 64px !important;
     padding         : 0px 10px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    background-color: $background-oficial;
+    border-bottom   : 1px solid $bordes;
+    background-color: $fondo;
 }
 
 .head_bottom_sidenav {
     height          : 20px !important;
     padding         : 0px 10px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-    background-color: $background-oficial;
+    border-bottom   : 1px solid $bordes;
+    background-color: $fondo;
 }
 
 .botones {
@@ -58,7 +57,7 @@ $background-transparent: transparent; //fondo transparennte,
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -68,7 +67,7 @@ $background-transparent: transparent; //fondo transparennte,
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -86,13 +85,13 @@ hr {
 }
 
 .dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .verDetalle {
@@ -118,6 +117,7 @@ hr {
 
 p {
     margin: 0px;
+    color : $negro;
 }
 
 @media screen and (max-width: 767px) {
@@ -190,9 +190,9 @@ p {
 .flecha-comentario {
     width        : 0;
     height       : 0;
-    border-top   : 7px solid $background-transparent;
-    border-right : 14px solid $background-flecha;
-    border-bottom: 7px solid $background-transparent;
+    border-top   : 7px solid transparent;
+    border-right : 14px solid $flecha;
+    border-bottom: 7px solid transparent;
     margin-top   : 10px;
     margin-left  : 4.5px;
     margin-right : -20px;
@@ -207,7 +207,7 @@ p {
 .comentario {
     display      : flex;
     height       : 30px;
-    border       : 1px solid $color-gris;
+    border       : 1.5px solid $bordes;
     border-bottom: none;
     font-weight  : bold;
     font-size    : 12px;
@@ -220,7 +220,7 @@ p {
     text-align                : justify;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius : 20px;
-    border                    : $color-gris 1px solid;
+    border                    : $bordes 1.5px solid;
     font-size                 : 14px;
 }
 
@@ -233,7 +233,7 @@ p {
 .linea {
     margin-bottom: -15px;
     height       : 30px;
-    border-left  : $color-gris 2px solid;
+    border-left  : $bordes 2px solid;
     margin-left  : 20px
 }
 
@@ -252,13 +252,12 @@ p {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    border          : 1px solid $bordes;
+    color           : $personalizado;
 }
 
 .lista-archivos {
-    padding       : 5px;
-    padding-bottom: 0px;
+    padding: 5px;
 }
 
 .campo-tarea {
@@ -275,12 +274,12 @@ p {
 
 .nombre-archivos {
     font-size  : 12px;
-    font-weight: 450;
+    font-weight: 400;
 }
 
 .eliminar:hover {
     cursor: pointer;
-    color : #ff0000;
+    color : $rojo;
 }
 
 .archivos-comentar {
@@ -367,7 +366,7 @@ p {
     width        : 15px; //diámetro total 
     height       : 15px; //diámetro total
     border-radius: 50%;
-    border       : 1px solid $color-negro;
+    border       : 1px solid $negro;
 }
 
 .padRight {
@@ -387,7 +386,7 @@ p {
 
 .tipo-tarea {
     border-style    : none;
-    border          : 1px solid $color-bordes;
+    border          : 1px solid $bordes;
     background-color: transparent;
     min-height      : 30px;
     padding         : 2px 10px;
@@ -398,6 +397,19 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
+}
+
+.adjuntos {
+    padding: 5px;
+}
+
+.archivos-adjuntos {
+    width           : 80%;
+    margin-top      : 5px;
+    padding         : 5px;
+    background-color: $bloques;
+    display         : flex;
+    align-items     : center;
 }

@@ -1,21 +1,19 @@
-$color-negro            : #000; //texto negro
-$color-blanco           : #ffff; //resaltar texto blanco
-$color-gris             : darkgray; //numeros que no son del mes
-$color-bordes           : #323f8550; //bordes del calendario
-$background-oficial     : #FEF5E7; //fondo Demosoft
-$background-scrollbar   : #134895; //barra rosada
-$color-azul             : #134895; //resaltar dia de hoy azul
-$background-tareas      : #DF9722; //resaltar tareas naranja
-$background-tareas-rojo : #e61212d5; //resaltar tareas rojo
-$borde-tarea            : rgba(0, 0, 0, 0.12);
-$color-gris-s           : #777; //sombra y texto gris
+$negro         : var(--negro); //texto negro
+$color-blanco  : var(--blanco); //resaltar texto blanco
+$dias-fuera    : var(--dias); //numeros que no son del mes
+$bordes        : var(--bordes-claro); //bordes del calendario
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra rosada
+$gris          : var(--gris); //sombra y texto gris
+$personalizado : var(--global-color);
+
 
 .progress {
     height          : 100vh;
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*SideNav*/
@@ -24,7 +22,7 @@ $color-gris-s           : #777; //sombra y texto gris
 }
 
 .head_carr_end {
-    color      : $color-negro;
+    color      : $negro;
     font-weight: 300;
 }
 
@@ -34,7 +32,7 @@ $color-gris-s           : #777; //sombra y texto gris
 
 mat-sidenav {
     width     : 100%;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .vistasOcultas {
@@ -63,7 +61,7 @@ mat-sidenav {
     .mes-dias,
     .dias-semana,
     .textos-hora-tarea {
-        border-top: solid 1px $color-bordes;
+        border-top: solid 1px $bordes;
     }
 }
 
@@ -122,7 +120,7 @@ mat-sidenav {
     bottom        : 0;
     left          : 0;
     right         : 0;
-    background    : $background-oficial;
+    background    : $fondo;
 }
 
 /*Fin SideNav*/
@@ -135,22 +133,22 @@ mat-sidenav {
 
 .mat-toolbar-row {
     padding      : 0px !important;
-    border-bottom: 1px solid $borde-tarea;
+    border-bottom: 1px solid $bordes;
 }
 
 .toolbarPhone {
     display   : none;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .toolbarPhone {
     position  : fixed !important;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .toolbarlarge {
     position     : fixed !important;
-    background   : $background-oficial;
+    background   : $fondo;
     border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 
@@ -184,7 +182,7 @@ mat-sidenav {
     }
 
     .dia-nombre {
-        border-top: 1px solid $color-bordes;
+        border-top: 1px solid $bordes;
     }
 
 }
@@ -197,18 +195,22 @@ mat-sidenav {
 
 /*Contendo derecho*/
 
-.container_main::-webkit-scrollbar {
-    width: 7px;
+.container_main::-webkit-scrollbar,
+.horarioLaboral::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
 }
 
-.container_main::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
 
+.horarioLaboral::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+}
+
+.horarioLaboral::-webkit-scrollbar-track,
+.container_main::-webkit-scrollbar-track {
+    background: $fondo;
 }
 
 .container_page {
@@ -216,7 +218,7 @@ mat-sidenav {
     width     : 100vw;
     margin-top: 65px;
     position  : fixed;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_start {
@@ -224,7 +226,7 @@ mat-sidenav {
     height      : calc(100% - 129px);
     float       : left;
     overflow    : hidden;
-    background  : $background-oficial;
+    background  : $fondo;
     border-right: 1px solid rgba(0, 0, 0, .12);
 }
 
@@ -232,7 +234,7 @@ mat-sidenav {
     width     : calc(100% - 250px) !important;
     height    : calc(100% - 128px) !important;
     float     : left;
-    background: $background-oficial;
+    background: $fondo;
     overflow  : auto;
 }
 
@@ -255,9 +257,9 @@ mat-sidenav {
 
 .head__sidenav {
     height       : 55px !important;
-    background   : $background-oficial;
+    background   : $fondo;
     padding      : 0px;
-    border-bottom: 1px solid $borde-tarea;
+    border-bottom: 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -274,7 +276,7 @@ mat-sidenav {
 
 .demo-inline-calendar-card {
     width     : 100% !important;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .mat-calendar-header {
@@ -317,7 +319,7 @@ mat-sidenav {
 }
 
 .bl {
-    border-left: 1px solid $color-bordes;
+    border-left: 1px solid $bordes;
 }
 
 .dia-nombre {
@@ -325,7 +327,7 @@ mat-sidenav {
     height          : 35px;
     text-align      : center;
     place-items     : center;
-    border-right    : 1px solid $color-bordes;
+    border-right    : 1px solid $bordes;
     border-bottom   : none;
     margin          : 0px;
     font-weight     : 550;
@@ -341,8 +343,8 @@ mat-sidenav {
 }
 
 .dia-tarea-mes {
-    border-bottom    : 1px solid $color-bordes;
-    border-right     : 1px solid $color-bordes;
+    border-bottom    : 1px solid $bordes;
+    border-right     : 1px solid $bordes;
     border-top       : none;
     min-height       : calc(100px);
     padding-bottom   : 3px;
@@ -352,8 +354,8 @@ mat-sidenav {
 }
 
 .dia-tarea-semana {
-    border-bottom : 1px solid $color-bordes;
-    border-right  : 1px solid $color-bordes;
+    border-bottom : 1px solid $bordes;
+    border-right  : 1px solid $bordes;
     border-top    : none;
     min-height    : calc(100vh - 163px);
     padding-bottom: 3px;
@@ -362,8 +364,6 @@ mat-sidenav {
 }
 
 .num-dia {
-    /* background: #fac0c0; */
-    // padding      : 0px 5px;
     padding-left: 30px;
     margin      : 0px;
     font-size   : 15px;
@@ -374,7 +374,6 @@ mat-sidenav {
 }
 
 .num-otro-dia {
-    /* background: #fac0c0; */
     margin     : 0px;
     font-weight: 550;
     text-align : center;
@@ -387,7 +386,7 @@ mat-sidenav {
 }
 
 .hoy-semana {
-    background  : $color-azul;
+    background  : $personalizado;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -400,7 +399,7 @@ mat-sidenav {
 }
 
 .hoy {
-    background  : $color-azul;
+    background  : $personalizado;
     color       : $color-blanco;
     padding     : 0px 5px;
     padding-left: 24px;
@@ -419,7 +418,7 @@ mat-sidenav {
     font-size   : 15px;
     font-weight : 550;
     text-align  : center;
-    color       : $color-gris;
+    color       : $dias-fuera;
     width       : 80%;
 }
 
@@ -497,13 +496,13 @@ mat-sidenav {
     font-weight  : 550;
     padding      : 10px 5px;
     font-weight  : 500;
-    border-bottom: solid 1px $color-bordes;
+    border-bottom: solid 1px $bordes;
 }
 
 .detalles-hora {
     align-items : center !important;
     min-width   : 80px !important;
-    border-right: 1px solid $color-bordes;
+    border-right: 1px solid $bordes;
 }
 
 .numero-de-hora {
@@ -519,7 +518,7 @@ mat-sidenav {
 
 .alto-cuadro-tarea {
     min-height   : 50px !important;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .cuadro-tarea {
@@ -538,7 +537,7 @@ mat-sidenav {
     max-width    : 150px;
     padding      : 0px 5px;
     border-radius: 25px;
-    border       : $borde-tarea 1px solid;
+    border       : $bordes 1px solid;
     height       : 25px;
 }
 
@@ -546,8 +545,8 @@ mat-sidenav {
     padding      : 13px 5px;
     text-align   : left;
     font-size    : 14px;
-    border-bottom: solid 1px $color-bordes;
-    border-right : solid 1px $color-bordes;
+    border-bottom: solid 1px $bordes;
+    border-right : solid 1px $bordes;
     height       : 45px;
     margin-bottom: 0px;
 }
@@ -616,7 +615,7 @@ mat-sidenav {
     grid-template-columns: repeat(7, 1fr);
     place-items          : center;
     height               : 35px;
-    border               : 1px solid $color-bordes;
+    border               : 1px solid $bordes;
 }
 
 .dias_dos {
@@ -626,7 +625,7 @@ mat-sidenav {
 }
 
 .dia_tarea {
-    border    : 1px solid $color-bordes;
+    border    : 1px solid $bordes;
     width     : 25%;
     min-height: 100px;
 }
@@ -637,7 +636,7 @@ mat-sidenav {
     width      : 25%;
     text-align : center;
     place-items: center;
-    border     : 1px solid $color-bordes;
+    border     : 1px solid $bordes;
     margin     : 0px;
     font-weight: 550;
 }
@@ -651,7 +650,7 @@ mat-sidenav {
     text-align : center;
     place-items: center;
     margin     : 0px;
-    border-left: $color-bordes 1px solid
+    border-left: $bordes 1px solid
 }
 
 .calendario {
@@ -666,12 +665,12 @@ mat-sidenav {
 }
 
 .bordes {
-    border: 1px solid $color-bordes;
+    border: 1px solid $bordes;
 }
 
 .bordes_dos {
     width : 25%;
-    border: 1px solid $color-bordes;
+    border: 1px solid $bordes;
 }
 
 /* Fin Calendario Mes */
@@ -692,14 +691,14 @@ mat-sidenav {
 }
 
 .horarios {
-    border: 1px solid $color-bordes;
+    border: 1px solid $bordes;
 }
 
 .num_hora {
     padding   : 13px 5px;
     text-align: left;
     font-size : 14px;
-    /* border : solid 1px $color-bordes; */
+    /* border : solid 1px $bordes; */
 }
 
 /* Fin Calendario Semana */
@@ -722,7 +721,7 @@ p {
 
 .btn {
     margin-right: 10px;
-    color       : $color-negro;
+    color       : $negro;
     font-size   : 14px;
     font-weight : 550;
 }
@@ -749,7 +748,7 @@ p {
 
 .btn-ocultos {
     margin     : 10px 5px;
-    color      : $color-negro;
+    color      : $negro;
     font-size  : 14px;
     font-weight: 550;
 }
@@ -760,23 +759,23 @@ p {
 
 .detalles_acordeon_oculto {
     margin          : 0px 5px;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     display         : block !important;
 }
 
 .opcionesMenuVistas {
     height          : 38px;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     padding         : 10px;
 }
 
 .color_fondo {
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     position        : relative;
 }
 
 .acordeon {
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
 
 }
 
@@ -793,7 +792,7 @@ p {
 .lista-menu {
     margin          : 10px;
     padding         : 0px 10px;
-    background-color: $color-azul !important;
+    background-color: $personalizado !important;
     color           : $color-blanco !important;
 }
 
@@ -802,19 +801,19 @@ p {
 }
 
 .opcion-vista {
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12) !important;
-    background-color: $background-oficial;
+    border-bottom   : 1px solid $bordes;
+    background-color: $fondo;
 }
 
 .opcion-vista:hover {
-    background-color: $borde-tarea;
+    background-color: $bordes;
 }
 
 .nueva {
     font-size : 20px;
     cursor    : pointer;
     text-align: center;
-    color     : $color-bordes;
+    color     : $bordes;
     height    : 22.5px;
 }
 
@@ -823,19 +822,19 @@ p {
     padding   : 3px 0px;
     cursor    : pointer;
     text-align: center;
-    color     : $color-bordes;
+    color     : $bordes;
     height    : 22.5px;
 }
 
 .nuevo-hoy {
     color           : $color-blanco;
-    background-color: $color-azul;
+    background-color: $personalizado;
     width           : 20%;
 }
 
 .nueva:hover {
     font-weight: bold;
-    color      : $color-gris;
+    color      : $dias-fuera;
 }
 
 .nuevo-hoy:hover {
@@ -857,21 +856,22 @@ p {
 .dia-hoy-crear {
     display         : flex;
     width           : 100%;
-    background-color: $color-azul;
+    background-color: $personalizado;
 }
 
 .dia-crear:hover {
-    background-color: $borde-tarea;
+    background-color: $bordes;
 }
 
 .dia-hoy-crear:hover {
-    background-color: $borde-tarea;
+    background-color: $bordes;
 }
 
 .circulo {
     width        : 8px; //diámetro total 
     height       : 8px; //diámetro total
     border-radius: 50%;
+    border       : 1px solid $gris;
 }
 
 //mostrar tareas en semana 
@@ -883,7 +883,7 @@ p {
     margin       : 3px 5px;
     border-radius: 25px;
     padding      : 0px 3px;
-    border       : 1px solid $borde-tarea;
+    border       : 1px solid $bordes;
     cursor       : pointer;
 }
 
@@ -911,7 +911,7 @@ p {
 
 .configuraciones {
     padding      : 5px 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
     cursor       : pointer;
@@ -919,7 +919,7 @@ p {
 }
 
 .iconos-detalles {
-    color: $color-gris-s;
+    color: $gris;
 }
 
 .detalle {
@@ -927,29 +927,14 @@ p {
 }
 
 .descripcion {
-    color    : $color-gris-s;
+    color    : $gris;
     font-size: 14px;
     word-wrap: break-word;
 }
 
-.horarioLaboral::-webkit-scrollbar {
-    width           : 7px;
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-track {
-    background-color: $background-oficial;
-}
-
-.horarioLaboral::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px #f3c5d3;
-}
-
 .ajustes,
 .horarioLaboral {
-    background-color: $background-oficial;
+    background-color: $fondo;
     height          : calc(100% - 24px) !important;
     padding         : 0px;
     overflow        : auto;
@@ -957,7 +942,7 @@ p {
 
 .separador {
     margin-top   : 0px;
-    border-bottom: 0.8px solid #c4c4c4 !important;
+    border-bottom: 0.8px solid $bordes;
     margin-bottom: 0px;
     width        : 100%;
 }
@@ -974,7 +959,7 @@ p {
 .example-radio-button {
     margin      : 5px 0px;
     padding-left: 15px;
-    color       : #134895;
+    color       : $personalizado;
 }
 
 .radio-button {
@@ -998,6 +983,6 @@ p {
 }
 
 .boton-azul {
-    background-color: $color-azul !important;
+    background-color: $personalizado !important;
     color           : $color-blanco !important;
 }

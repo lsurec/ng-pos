@@ -1,18 +1,19 @@
 <div class="container-main">
 
-    <div class="cambios-cerrar">
-        <span class="spacer"></span>
-        <p class="titulo">{{ 'pos.preferencias.tema' | translate }}</p>
-        <span class="spacer"></span>
-    </div>
+
     <div class="contenido">
+        <div class="cambios-cerrar">
+            <span class="spacer"></span>
+            <p class="titulo">{{ 'pos.preferencias.tema' | translate }}</p>
+            <span class="spacer"></span>
+        </div>
         <div class="titulos-menu">
             <div class="temas-disponibles">
                 <div class="detalles-themas">
                     <span class="spacer"></span>
                     <div class="informacion-tema" (click)="claro(0)" [ngClass]="{'tema-seleccionado': tema == 0}">
-                        <div class="seleccionar-empresa">
-                            <div class="seleccionado d-flex">
+                        <div class="seleccionar-tema">
+                            <div class="t-seleccionado d-flex">
                                 <button mat-icon-button>
                                     <mat-icon>light_mode</mat-icon>
                                 </button>
@@ -20,9 +21,8 @@
                             </div>
                             <span class="spacer"></span>
                         </div>
-                        <div class="seleccionar-empresa">
-                            <img class=" img_empresas" src="assets/claro.png" alt="Logo">
-                            <!-- <p class="linea"></p> -->
+                        <div class="seleccionar-tema">
+                            <img class=" img-tema" src="assets/claro.png" alt="Logo">
                             <span class="spacer"></span>
                         </div>
                     </div>
@@ -34,9 +34,9 @@
                 <div class="detalles-themas">
                     <span class="spacer"></span>
                     <div class="informacion-tema" (click)="oscuro(1)" [ngClass]="{'tema-seleccionado': tema == 1}">
-                        <div class="seleccionar-localidad">
-                            <div class="seleccionado d-flex">
-                                <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <div class="seleccionar-tema">
+                            <div class="t-seleccionado d-flex">
+                                <button mat-icon-button>
                                     <mat-icon>dark_mode</mat-icon>
                                 </button>
                                 <p class="opciones">{{ 'pos.preferencias.oscuro' | translate }}</p>
@@ -44,8 +44,8 @@
                             </div>
                             <span class="spacer"></span>
                         </div>
-                        <div class="seleccionar-localidad">
-                            <img class="img_empresas" src="assets/oscuro.png" alt="Logo">
+                        <div class="seleccionar-tema">
+                            <img class="img-tema" src="assets/oscuro.png" alt="Logo">
                         </div>
                     </div>
                     <span class="spacer"></span>

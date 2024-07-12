@@ -1,16 +1,10 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$font-serif           : sans-serif; //fuente del texto
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
-$sombra               : rgba(0, 0, 0, 0.1);
-$placeholder          : rgba(0, 0, 0, 0.20);
-$requerido            : rgba(0, 0, 0, 0.05);
+$color-blanco  : var(--blanco); //resaltar texto blanco
+$gris          : var(--gris); //texto gris
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra rosada
+$sombra        : var(--sombra-claro);
+$personalizado : var(--global-color);
+$bordes        : var(--bordes-claro); //texto gris
 
 .spacer {
     flex: 1 1 auto;
@@ -20,31 +14,30 @@ $requerido            : rgba(0, 0, 0, 0.05);
 
 .head__sidenav {
     height          : 64px !important;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom   : 1px solid $bordes;
 }
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .container_page {
     height          : 100vh;
     width           : 100vw;
     position        : fixed;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .regresar-crear {
@@ -57,7 +50,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main {
@@ -66,7 +59,8 @@ $requerido            : rgba(0, 0, 0, 0.05);
     width        : 100%;
     height       : calc(100% - 128px);
     float        : left;
-    overflow     : auto;
+    overflow-y   : auto;
+    overflow-x   : hidden;
 }
 
 @media screen and (max-width: 767px) {
@@ -75,19 +69,11 @@ $requerido            : rgba(0, 0, 0, 0.05);
         width     : 100%;
         /* padding: 20px; */
     }
-}
 
-@media screen and (max-width: 280px) {
-
-    .container_main {
-        padding: 0px !important;
-    }
-
-    .fuente {
-        font-size: 14px !important;
+    .descripcion-tarjeta {
+        display: block !important;
     }
 }
-
 
 .inputSearch {
     text-align: center !important;
@@ -108,7 +94,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     left       : 1.5%;
     /* Ajusta la posición horizontalmente según sea necesario */
     transform  : translateY(-50%);
-    color      : $color-azul;
+    color      : $personalizado;
     align-items: center;
 }
 
@@ -119,11 +105,10 @@ $requerido            : rgba(0, 0, 0, 0.05);
     background   : none;
     font-size    : 14px;
     padding-left : 50px;
-    font-family  : $font-serif;
     outline      : none;
     border-style : none;
-    border       : 0.5px solid #c1bfbf;
-    color        : $color-azul;
+    border       : 0.5px solid $bordes;
+    color        : $personalizado;
     border-radius: 20px;
 }
 
@@ -131,11 +116,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     font-size    : 12px;
     text-align   : right;
     padding-right: 20px;
-}
-
-.coincidencias:hover {
-    cursor: pointer;
-    color : $color-azul;
+    cursor       : pointer;
 }
 
 .tipo-busqueda {
@@ -163,7 +144,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     bottom          : 75px;
     right           : 40px;
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $personalizado;
 }
 
 
@@ -175,7 +156,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
     right           : 40px;
     /* Ajusta la posición según tus preferencias */
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $personalizado;
     /* Ajusta el color según tus preferencias */
 }
 
@@ -200,15 +181,11 @@ $requerido            : rgba(0, 0, 0, 0.05);
 
 /* sombra y elevacion de items de lista */
 .tarea {
-    background-color: $background-oficial;
+    background-color: $fondo;
     border-radius   : 5px;
     font-size       : 17px;
-    box-shadow      : 0px 1px 0px 1px $sombra;
+    box-shadow      : $sombra;
 }
-
-// .tarea:hover {
-//     background-color: $placeholder;
-// }
 
 /* justificar texto */
 .justificar {
@@ -233,7 +210,7 @@ $requerido            : rgba(0, 0, 0, 0.05);
 .circulo-estado {
     width        : 15px;
     height       : 15px;
-    border       : 1px solid $color-gris;
+    border       : 1px solid $gris;
     border-radius: 50%;
     margin-left  : 10px;
 }
@@ -253,21 +230,22 @@ p {
     padding      : 5px 8px;
     margin       : 4px;
     cursor       : pointer;
-    border       : 1px solid #ccc;
+    border       : 1px solid $gris;
     border-radius: 20px;
     font-size    : 12px;
 }
 
 .selected {
-    background-color: $color-azul;
-    color           : #fff;
-    border          : 1px solid $color-azul;
+    background-color: $personalizado;
+    color           : var(--blanco);
+    border          : 1px solid $personalizado;
 }
 
 .descripcion {
-    font-size   : 14px;
-    text-align  : justify;
-    padding-left: 10px;
+    font-size    : 14px;
+    text-align   : justify;
+    padding-left : 10px;
+    overflow-wrap: break-word;
 }
 
 .dFlex {
@@ -276,7 +254,11 @@ p {
     padding-top: 3px;
 }
 
-.boton-azul {
-    background-color: $color-azul !important;
-    color           : $color-blanco !important;
+.descripcion-tarjeta {
+    display    : flex;
+    align-items: center;
+}
+
+.tarea:hover {
+    background: $bordes;
 }

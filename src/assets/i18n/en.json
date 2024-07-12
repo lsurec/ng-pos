@@ -572,6 +572,7 @@
             "comentarioCreado": "Comment created successfully.",
             "tareaCreadaExito": "Task created successfully. Task ID: ",
             "archivosNoCargados": "Task created, but files were not saved.",
+            "archivosComentario": "Comment created, but the files were not saved.",
             "usuarios": "User not found, please try searching again.",
             "debeSeleccionar": "To continue, select a company and a workstation.",
             "noSeleccionado": "Not selected.",

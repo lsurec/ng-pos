@@ -275,46 +275,62 @@ export class DetalleTareaComponent {
     return objeto;
   }
 
-  //validar que los campos obilgatorios esten completos
-  validarComentario() {
-    if (this.descripcionComentario.length === 0) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
-    } else {
-      //si todo esta correscto procede a guardar a informacion 
-      this.comentar()
-    }
-  }
-
   async comentar() {
+
+    if (!this.descripcionComentario) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
+      return;
+    }
+
     //crear el objeto del comentario
-    let comentarioN: ComentarInterface =
+    let comentar: ComentarInterface =
     {
       tarea: this.tareaDetalle!.iD_Tarea,
       userName: this.usuarioTarea,
       comentario: this.descripcionComentario,
     }
 
-    //cargar pantalla
     this.isLoading = true;
 
-    //Consumo de api
-    let resNuevoComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentarioN)
+    let resPrimerComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentar);
 
     //Si el servico se ejecuta mal mostar mensaje
-    if (!resNuevoComentario.status) {
+    if (!resPrimerComentario.status) {
       //ocultar carga
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resNuevoComentario.response);
-      console.error(resNuevoComentario.storeProcedure);
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
+      console.error(resPrimerComentario.response);
+      console.error(resPrimerComentario.storeProcedure);
       return
     }
+    //ID del comentario 
+    let idComenario: number = resPrimerComentario.response.res;
+    let urlFiles: string = this.empresa.absolutePathPicture;
 
-    let idComenario: LoginInterface = resNuevoComentario.response;
+    if (this.selectedFiles.length > 0) {
+
+      let resFiles: ResApiInterface = await this._files.postFilesComment(
+        this.selectedFiles,
+        this.tareaDetalle!.iD_Tarea,
+        idComenario,
+        urlFiles
+      );
+
+      //Si el servico se ejecuta mal mostar mensaje
+      if (!resFiles.status) {
+        this.isLoading = false;
+        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
+        console.error(resFiles.response);
+        console.error(resFiles.storeProcedure);
+        return;
+      };
+
+      // this.isLoading = false;
+    };
 
     //armar nuevo comentario
     let comentario: ComentarioInterface = {
-      tarea_Comentario: +idComenario.message,
+      tarea_Comentario: idComenario,
       tarea: this.tareaDetalle!.iD_Tarea,
       comentario: this.descripcionComentario,
       fecha_Hora: new Date,
@@ -346,42 +362,20 @@ export class DetalleTareaComponent {
     //insertar el comentario en la lista de comentarios de la tarea.
     this.comentarios.push(comentarioDetalle);
 
-    //lista de archivos esta vacia:
-    if (this.selectedFiles.length == 0) {
-      this.isLoading = false;
-      this.descripcionComentario = '';
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
-      return;
-    }
-
-    let urlFiles: string = this.empresa.absolutePathPicture;
-
-    //Consumo de api files
-    let resFiles: ResApiInterface = await this._files.postFilesComment(
-      this.selectedFiles,
-      this.tareaDetalle!.iD_Tarea,
-      comentarioDetalle.comentario.tarea_Comentario,
-      urlFiles
-    );
-
-    //Si el servico se ejecuta mal mostar mensaje
+    //Limoiar el comentario y la lista
     this.isLoading = false;
-    if (!resFiles.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
-      console.error(resFiles.response);
-      console.error(resFiles.storeProcedure);
-      return;
-    }
-
-    //mostrar el ID del comentario creado correctamente
-    this._widgetsService.openSnackbar(`${this._translate.instant('crm.alertas.comentarioCreado')}${this.comentarios[this.comentarios.length - 1].comentario.tarea_Comentario}`);
-
     this.descripcionComentario = '';
     this.selectedFiles = [];
+    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
+
   }
 
   eliminarArchivo(index: number) {
-    this.selectedFiles.splice(index, 1);
+    if (index >= 0 && index < this.selectedFiles.length) {
+      const newFiles = [...this.selectedFiles]; // Hacer una copia del array
+      newFiles.splice(index, 1);
+      this.selectedFiles = newFiles; // Asignar la nueva copia al array original
+    }
   }
 
   onFilesSelected(event: any) {

@@ -26,9 +26,17 @@
                     <span class="spacer"></span>
                 </div>
             </div>
-            <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
-            <input type="search" class="inputSearch" [(ngModel)]="searchUser"
-                placeholder="{{'crm.crear.busqueda' | translate}}" (ngModelChange)="onInputChange()">
+            <form #ngForm="ngForm" (ngSubmit)="buscarUsuarios()">
+                <p class="buscar">{{'crm.crear.buscar' | translate}}</p>
+                <div class="buscar-icono">
+                    <input #usuarioInput type="search" name="usuario" class="inputSearch" [(ngModel)]="searchUser"
+                        placeholder="{{'crm.crear.busqueda' | translate}}" autocomplete="off"
+                        (focus)="focusAndSelectText()">
+                    <button type="submit" mat-icon-button class="flecha-regresar">
+                        <mat-icon class="icono-lupa">search</mat-icon>
+                    </button>
+                </div>
+            </form>
         </div>
         <div class="titulos" *ngIf="usuariosResInv.length > 0 ">
             <p class="nombre">{{ 'crm.crear.usuario' | translate }}</p>
@@ -39,7 +47,7 @@
                 <span class="spacer"></span>
                 <div class="seleccionar-responsable" (click)="asignarResponsable(usuario)">
                     <p class="nombre">{{usuario.name}}</p>
-                    <p class="email">{{usuario.email}}</p>
+                    <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                 </div>
             </div>
         </div>
@@ -47,19 +55,17 @@
             <div class="detalleInvitado" *ngFor="let usuario of usuariosResInv">
                 <mat-checkbox [(ngModel)]="usuario.select" color="primary"></mat-checkbox>
                 <span class="spacer"></span>
-                <div class="seleccionar" (click)="usuario.select = true; agregarInvitados()">
+                <div class="seleccionar-usuario" (click)="usuario.select = true; agregarInvitados()">
                     <p class="nombre">{{usuario.name}}</p>
-                    <p class="email">{{usuario.email}}</p>
+                    <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                 </div>
             </div>
         </div>
     </div>
-    <div mat-dialog-actions class="botones" *ngIf="tareasGlobalService.idUsuarios == 2">
-        <button mat-button (click)="closeDialog()" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
-        <button mat-button (click)="agregarInvitados()">{{'crm.crear.guardar' | translate}}</button>
-    </div>
-
-    <div mat-dialog-actions class="botones" *ngIf="tareasGlobalService.idUsuarios == 1">
-        <button mat-button (click)="closeDialog()" cdkFocusInitial>{{'crm.crear.cancelar' | translate}}</button>
+    <div mat-dialog-actions class="barra-abajo-fija" *ngIf="usuariosResInv.length > 0">
+        <button mat-button (click)="closeDialog()">{{'crm.crear.cancelar' | translate}}</button>
+        <button mat-button *ngIf="tareasGlobalService.buscarUsuarios == 2" (click)="enviar()">
+            {{'crm.crear.guardar' | translate}}
+        </button>
     </div>
 </div>

@@ -1,4 +1,4 @@
-$background-oficial : #FEF5E7; //fondo Demosoft
+$fondo : var(--fondo-claro); //fondo Demosoft
 
 
 .example-margin {
@@ -6,5 +6,5 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 }
 
 .acciones {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }

@@ -448,7 +448,7 @@ export class FacturaComponent implements OnInit {
       this.facturaService.refObservacion = doc.refObservacion;
     }
 
-    
+
     this.facturaService.cuenta = doc.cliente; //asignar cliente
     this.facturaService.traInternas = doc.detalles; //asignar detalles
     this.facturaService.montos = doc.pagos; //asignar pagos
@@ -510,7 +510,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
-    
+
     this.setDateNow();
     this.facturaService.setIdDocumentoRef();
 
@@ -549,7 +549,7 @@ export class FacturaComponent implements OnInit {
     }
 
     //Mostrar tab documento (primer pestaña)
-    this.facturaService. showDocumento();
+    this.facturaService.showDocumento();
 
     //limpiar documento local 
     PreferencesService.documento = "";
@@ -631,7 +631,7 @@ export class FacturaComponent implements OnInit {
 
 
     //Seleccionar primera pestaña (petssña documento)
-    this.facturaService .showDocumento();
+    this.facturaService.showDocumento();
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
@@ -1093,6 +1093,8 @@ export class FacturaComponent implements OnInit {
         bodega.bodega,
         prod.producto,
         prod.unidad_Medida,
+        this.facturaService.cuenta.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta.cuenta_Cta ?? "0",
       );
 
 
@@ -1434,16 +1436,24 @@ export class FacturaComponent implements OnInit {
   }
 
   // Función de validación
-  validateDates(): boolean {
-    const validInicioRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fechaRefFin!) <= 0;
-    const validFinRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!) >= 0;
-    const validInicio = this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaRefIni!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaFin!) <= 0;
-    const validFin = this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!) <= 0;
 
-    return validInicioRef && validFinRef && validInicio && validFin;
+
+  validateDates() {
+    // Remover los segundos de las fechas para la comparación
+    this.facturaService.fecha!.setSeconds(0, 0);
+    this.facturaService.fechaRefIni!.setSeconds(0, 0);
+    this.facturaService.fechaRefFin!.setSeconds(0, 0);
+    this.facturaService.fechaIni!.setSeconds(0, 0);
+    this.facturaService.fechaFin!.setSeconds(0, 0);
+
+    if (this.facturaService.fechaRefIni! >= this.facturaService.fecha! && this.facturaService.fechaRefIni! <= this.facturaService.fechaRefFin! &&
+      this.facturaService.fechaRefFin! >= this.facturaService.fechaRefIni! &&
+      this.facturaService.fechaIni! >= this.facturaService.fechaRefIni! && this.facturaService.fechaIni! <= this.facturaService.fechaRefFin! &&
+      this.facturaService.fechaFin! >= this.facturaService.fechaIni! && this.facturaService.fechaFin! <= this.facturaService.fechaRefFin!) {
+      return true;
+    }
+    return false;
+
   }
   //Confirmar documento
   async sendDoc() {

@@ -1,16 +1,12 @@
-$color-naranja        : #df9722;
-$color-negro          : #000000;
-$color-blanco         : #fff;
-$color-gris           : #c1bfbf;
-$color-azul           : #134895;
-$color-bordes         : rgba(0, 0, 0, 0.12); //bordes menu
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
-$color-verde          : #25a704;
-$color-rojo           : #ce1414;
-$color-pestanas       : #555;
-$bordes               : #c1bfbf;
-$color-gris-s         : #777; //sombra y texto gris
+$personalizado  : var(--global-color);
+$negro          : var(--negro);
+$bordes         : var(--bordes-claro); //bordes menu
+$fondo          : var(--fondo-claro); //fondo Demosoft
+$scroll         : var(--global-color); //barra azul
+$cargo-verde    : var(--cargo-claro);
+$descuento-rojo : var(--descuento-claro);
+$pestanas       : var(--pestanas);
+$blanco         : var(--blanco);
 
 .container-main {
     height  : calc(100vh - 128px) !important;
@@ -23,7 +19,7 @@ $color-gris-s         : #777; //sombra y texto gris
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -31,9 +27,9 @@ $color-gris-s         : #777; //sombra y texto gris
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -77,12 +73,12 @@ hr {
 .detalle-documento {
     display   : flex;
     padding   : 5px 0px;
-    border-top: 1px solid $color-bordes;
+    border-top: 1px solid $bordes;
 }
 
 .detalle-documento:hover {
     cursor          : pointer;
-    background-color: $color-bordes;
+    background-color: $bordes;
 }
 
 .info-documento {
@@ -98,29 +94,29 @@ hr {
 
 .fecha-hora {
     font-size: 13px;
-    color    : $color-negro;
+    color    : $negro;
 }
 
 .saldo {
     font-size  : 13px;
-    color      : $color-azul;
+    color      : $personalizado;
     font-weight: 500;
 }
 
 .cargo {
     font-size  : 13px;
-    color      : $color-verde;
+    color      : $cargo-verde;
     font-weight: 500;
 }
 
 .descuento {
     font-size  : 13px;
-    color      : $color-rojo;
+    color      : $descuento-rojo;
     font-weight: 500;
 }
 
 .total {
-    border-top : 1px solid $color-negro;
+    border-top : 1px solid $negro;
     font-size  : 13px;
     font-weight: bold;
 }
@@ -130,13 +126,13 @@ hr {
 }
 
 .listas-documentos::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .listas-documentos::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .listas-documentos {
@@ -163,7 +159,7 @@ hr {
 
 mat-sidenav {
     width           : 365px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 
 }
 
@@ -191,7 +187,7 @@ mat-sidenav {
 
 .toolbarPhone,
 .toolbar-large {
-    background-color: $background-oficial;
+    background-color: $fondo;
     border-bottom   : 1px solid rgba(0, 0, 0, .12);
     padding         : 0px;
 }
@@ -200,7 +196,7 @@ mat-sidenav {
 @media screen and (max-width: 767px) {
     .toolbar-large {
         display         : none !important;
-        background-color: $background-oficial;
+        background-color: $fondo;
     }
 
     .toolbarPhone {
@@ -226,13 +222,7 @@ body {
     height: 100%;
 }
 
-$color1     : #0f3851;
-$color2     : #154d67;
-$color3     : #1a7084;
-$color4     : #2398a0;
-$color5     : #2bc9bf;
-$color-azul : #134895;
-
+$color3 : #1a7084;
 
 .elevation_bar {
     box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
@@ -247,7 +237,7 @@ $color-azul : #134895;
     z-index         : 1000;
     height          : 56px !important;
     background-color: $color3;
-    color           : #fff;
+    color           : $blanco;
     font-size       : 14px;
 }
 
@@ -264,7 +254,7 @@ main {
 
 .contenido-seleccionado {
     display   : none;
-    border-top: 1px solid $color-bordes;
+    border-top: 1px solid $bordes;
 }
 
 .titulo-pestana {
@@ -278,7 +268,7 @@ main {
     padding    : 15px 25px;
     font-weight: 500;
     text-align : center;
-    color      : $color-pestanas;
+    color      : $pestanas;
     border     : 2px solid transparent;
 }
 
@@ -310,8 +300,8 @@ main {
 }
 
 .titulo-pestana:checked+.pestana {
-    color        : $color-azul;
-    border       : 1px solid $color-bordes;
+    color        : $personalizado;
+    border       : 1px solid $bordes;
     border-top   : 3px solid orange;
     border-bottom: 0px;
 }

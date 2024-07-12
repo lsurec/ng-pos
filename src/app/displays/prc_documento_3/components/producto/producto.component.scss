@@ -1,8 +1,9 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000; //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris); //bordes y texto gris
 
 
 .progress {
@@ -10,14 +11,14 @@ $color-negro          : #000; //bordes y texto azul
     padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 10px 20px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
@@ -26,9 +27,9 @@ $color-negro          : #000; //bordes y texto azul
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -43,7 +44,7 @@ $color-negro          : #000; //bordes y texto azul
 }
 
 .close {
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -53,7 +54,7 @@ $color-negro          : #000; //bordes y texto azul
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -68,7 +69,7 @@ hr {
 
 p {
     margin: 0px;
-    color : $color-negro;
+    color : $negro;
 }
 
 .busqueda {
@@ -83,31 +84,18 @@ p {
     padding: 0px 5px 10px;
 }
 
-.campo-obligatorio {
-    font-size  : 12px;
-    font-weight: 450;
-    padding    : 2px 0px;
-}
-
-.obligatorio {
-    color       : #ff0000;
-    font-weight : bold;
-    font-size   : 12px;
-    padding-left: 3px;
-}
-
-.seleccionar {
+.nombre-producto {
     display      : flex;
     width        : 100%;
     align-items  : center;
     height       : 30px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-weight  : 400;
 }
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
@@ -137,9 +125,9 @@ p {
     padding      : 0px 3px;
     outline      : none;
     border-style : none;
-    border-top   : 0.5px solid $color-bordes;
-    border-bottom: 0.5px solid $color-bordes;
-    color        : $color-azul;
+    border-top   : 0.5px solid $bordes;
+    border-bottom: 0.5px solid $bordes;
+    color        : $personalizado;
     width        : 40px;
     text-align   : center;
 }
@@ -162,8 +150,8 @@ p {
     font-size   : 14px;
     outline     : none;
     border-style: none;
-    border      : 0.5px solid $color-bordes;
-    color       : $color-azul;
+    border      : 0.5px solid $bordes;
+    color       : $personalizado;
     width       : 40px;
     display     : flex;
     align-items : center;
@@ -205,15 +193,15 @@ p {
     padding     : 0px 10px;
     outline     : none;
     border-style: none;
-    border      : 0.5px solid $color-bordes;
-    color       : $color-azul;
+    border      : 0.5px solid $bordes;
+    color       : $personalizado;
     width       : 48%;
     margin      : 5px 0px;
 }
 
 .bodegas {
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
 }
 
