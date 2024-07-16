@@ -92,6 +92,7 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
 import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
+import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -154,6 +155,7 @@ import { PrinterConfigurationComponent } from './components/printer-configuratio
     DocsHistorialComponent,
     RegistroDeErroresComponent,
     DetalleErrorComponent,
+    ListaTareasComponent,
   ],
   imports: [
     MatCardModule,

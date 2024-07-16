@@ -1,0 +1,48 @@
+<div *ngIf="verCarga" class="carga">
+    <p>cargando</p>
+    <button mat-raised-button (click)="tareas()">
+        Dejar de cargar y volver a tareas
+    </button>
+</div>
+<div *ngIf="!verCarga" class="contenido">
+    <div *ngIf="verCrear" class="crear">
+        <p>Crear</p>
+
+        <button mat-raised-button (click)="tareas()">
+            Ver Tareas
+        </button>
+
+        <button mat-raised-button (click)="cargar()">
+            Ver Cargar
+        </button>
+    </div>
+
+
+    <div *ngIf="verDetalles" class="detalle">
+        <p>Detalles</p>
+
+        <button mat-raised-button (click)="tareas()">
+            Ver Tareas
+        </button>
+
+        <button mat-raised-button (click)="cargar()">
+            Ver Cargar
+        </button>
+    </div>
+
+    <div *ngIf="verTareas" class="tareas">
+        <p>Tareas</p>
+
+        <button mat-raised-button (click)="crear()">
+            Ver Crear
+        </button>
+        <button mat-raised-button (click)="detalles()">
+            Ver Detalles
+        </button>
+
+        <button mat-raised-button (click)="cargar()">
+            Ver Cargar
+        </button>
+
+    </div>
+</div>
