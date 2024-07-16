@@ -2044,7 +2044,7 @@ export class FacturaComponent implements OnInit {
   async genericFel(): Promise<TypeErrorInterface> {
 
     //TODO:Parametrizar certificador
-    let certificador: number = 1; //1 infile, 2: tekra
+    let certificador: number = 2; //1 infile, 2: tekra
 
     this.dataFel = undefined;
 
