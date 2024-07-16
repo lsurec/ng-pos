@@ -87,9 +87,6 @@ export class AppComponent implements OnInit {
 
     }
 
-    console.log(PreferencesService.colorApp);
-
-
     // Obtener el valor de globalFontSize del servicio y establecerlo como una variable CSS
     document.documentElement.style.setProperty('--global-font-size', this.themeService.globalFontSize);
     document.documentElement.style.setProperty('--global-color-fondo', this.themeService.fondo);

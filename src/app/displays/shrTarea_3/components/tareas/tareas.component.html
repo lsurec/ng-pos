@@ -87,7 +87,7 @@
                             date: 'dd/MM/yyyy'}}</small>
                         <br>
                         <!-- Descripcion (observacion) Tarea -->
-                        <div class="descripcion-tarjeta">
+                        <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
                             <small>{{ 'crm.tarea.descripcion' | translate }}</small>
                             <p class="descripcion">{{item.tarea_Observacion_1}}</p>
                         </div>

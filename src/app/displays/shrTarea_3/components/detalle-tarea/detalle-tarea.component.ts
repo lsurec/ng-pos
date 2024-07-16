@@ -182,7 +182,7 @@ export class DetalleTareaComponent {
 
 
     console.log(this.responsables);
-    
+
   }
 
   async refreshs() {
@@ -655,6 +655,10 @@ export class DetalleTareaComponent {
       newFiles.splice(index, 1);
       this.selectedFiles = newFiles; // Asignar la nueva copia al array original
     }
+  }
+
+  formatText(text: string): string {
+    return text.replace(/\n/g, '<br>');
   }
 
 }

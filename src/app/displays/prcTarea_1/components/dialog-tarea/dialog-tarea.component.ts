@@ -411,4 +411,7 @@ export class DialogTareaComponent {
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.prioridadActualizada'));
   }
 
+  formatText(text: string): string {
+    return text.replace(/\n/g, '<br>');
+  }
 }

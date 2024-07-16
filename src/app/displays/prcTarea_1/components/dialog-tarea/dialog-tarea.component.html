@@ -28,7 +28,11 @@
             <div class="">
                 <p class="campo-detalle">{{'crm.dialog.descripcion' | translate}}</p>
                 <!-- Descripcion de la tarea -->
-                <p class="campo-tarea">{{data.tarea.observacion_1}}</p>
+                <!-- <p class="campo-tarea">{{data.tarea.observacion_1}}</p> -->
+                <div class="campo-tarea">
+                    <p [innerHTML]="formatText(data.tarea.observacion_1)" class="espacio-lineas"></p>
+                </div>
+
             </div>
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.tipo' | translate}}</p>
@@ -78,7 +82,8 @@
                     </div>
                     <!-- decripcion de comentario -->
                     <div class="comentario_desc">
-                        <p>{{comentario.comentario.comentario}}</p>
+                        <p [innerHTML]="formatText(comentario.comentario.comentario)" class="espacio-lineas"></p>
+                        <!-- <p>{{comentario.comentario.comentario}}</p> -->
                         <div class="" *ngIf="comentarios[index].files.length >0">
                             <div class="adjuntos" *ngFor="let file of comentarios[index].files">
                                 <a [href]="file.objeto_URL" target="_blank">
