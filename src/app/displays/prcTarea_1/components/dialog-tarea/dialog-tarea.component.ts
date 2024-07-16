@@ -289,7 +289,7 @@ export class DialogTareaComponent {
 
     //validar que el estado seleccuinado no sea el mismo que el actual
     if (this.estadoTarea?.estado == this.data.tarea.estado) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
       return;
     }
 
@@ -370,7 +370,7 @@ export class DialogTareaComponent {
 
     //validar que el nivel de prioridad seleccuinado no sea el mismo que el actual
     if (this.prioridadTarea?.nivel_Prioridad == this.data.tarea.nivel_Prioridad) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
       return;
     }
 
