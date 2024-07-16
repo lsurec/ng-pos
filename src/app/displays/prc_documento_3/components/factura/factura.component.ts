@@ -52,6 +52,9 @@ import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import { RetryService } from 'src/app/services/retry.service';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { APIInterface } from '../../interfaces/api.interface';
+import { ParametroAPIInterface } from '../../interfaces/parametro-api.interface';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-factura',
@@ -1514,7 +1517,7 @@ export class FacturaComponent implements OnInit {
       this.facturaService.pasos[0].visible = false;
 
       //Empezar proceso FEL 
-      let resFelProcess: TypeErrorInterface = await this.felProcess();
+      let resFelProcess: TypeErrorInterface = await this.genericFel();
 
       //evaluar respuesta proceso fel 
       if (resFelProcess.type == 1) {
@@ -1950,7 +1953,7 @@ export class FacturaComponent implements OnInit {
 
 
     //Empezar proceso FEL 
-    let resFelProcess: TypeErrorInterface = await this.felProcess();
+    let resFelProcess: TypeErrorInterface = await this.genericFel();
 
 
     //evaluar respuesta proceso fel 
@@ -1992,27 +1995,67 @@ export class FacturaComponent implements OnInit {
 
   }
 
+  replaceValues(param: string, document: DocXMLInterface, credenciales: CredencialInterface[],) {
 
-  async felProcess(): Promise<TypeErrorInterface> {
+    // Reemplazar parámetros con valores de la lista de credenciales
+    credenciales.forEach(credencial => {
+      param = param.replace(`{${credencial.campo_Nombre}}`, credencial.campo_Valor);
+    });
 
-    //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
-    // let apiToken: number = 0;
-    // let tokenFel: string = "";
+    // Reemplazar otros valores
+    param = param.replace('{xml_Contenido}', document.xml_Contenido);
+    param = param.replace('{d_Id_Unc}', document.d_Id_Unc.toUpperCase());
+
+    return param;
+
+  }
+
+  replaceValuesJson(param: string, document: DocXMLInterface, credenciales: CredencialInterface[],) {
+    // Suponiendo que param, listCredenciales, documento y token ya están definidos en el contexto
+
+    // Crear un objeto para los parámetros
+    let ObjParam: { [key: string]: any } = {};
+
+    // Dividir el parámetro en subcadenas
+    let subs: string[] = param.split(',');
+
+    subs.forEach(i => {
+      let subs2: string[] = i.split(':');
+
+      // Reemplazar credenciales en las subcadenas
+      credenciales.forEach(ii => {
+        let credencial = JSON.parse(ii.toString()) as { campo_Nombre: string, campo_Valor: string };
+        subs2[1] = subs2[1].replace(`{${credencial.campo_Nombre}}`, credencial.campo_Valor);
+      });
+
+      // Reemplazar otros valores
+      subs2[1] = subs2[1].replace('{xml_Contenido}', document.xml_Contenido);
+      subs2[1] = subs2[1].replace('{d_Id_Unc}', document.d_Id_Unc.toUpperCase());
+
+      // Agregar propiedades y valores al objeto
+      ObjParam[subs2[0]] = subs2[1];
+    });
+
+    // Convertir el objeto a JSON
+    return JSON.stringify(ObjParam);
+
+  }
+
+
+  async genericFel(): Promise<TypeErrorInterface> {
+
+    //TODO:Parametrizar certificador
+    let certificador: number = 1; //1 infile, 2: tekra
 
     this.dataFel = undefined;
 
-    //TODO:Replece for value in database
-    let uuidDoc = ''
+    let apiUse: string = ""; //apiq que se va a usar id
 
-    //TODO:Asiganr el api 
-    let apiUse: string = "";
+    let doc: DocXMLInterface;
 
-    //TODO:Reemplzar y parametrizar
-    let certificador: number = 1;
-
+    let api: APIInterface;
 
     //buscar documento, plantilla xml
-
     let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
       this.user,
       this.token,
@@ -2043,9 +2086,10 @@ export class FacturaComponent implements OnInit {
       return error;
     }
 
-    uuidDoc = templatesXMl[0].d_Id_Unc;
-    // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
+    doc = templatesXMl[0];
 
+
+    //obtner credenciales
     //buscar las credenciales del certificador
     let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
       certificador,
@@ -2063,162 +2107,220 @@ export class FacturaComponent implements OnInit {
       return error;
     }
 
-    //TODO:Api que se va a usar debe buscarse y asignarse aqui 
+    //Api que se va a usar debe buscarse y asignarse aqui 
     let credecniales: CredencialInterface[] = resCredenciales.response;
 
+    //buscar api que se va a usar
     for (let i = 0; i < credecniales.length; i++) {
       const element = credecniales[i];
 
-      if (element.campo_Nombre == "apiUnificadaInfile") {
-
+      if (element.campo_Nombre.toLowerCase() == "certificar") {
         apiUse = element.campo_Valor;
         break;
       }
+
     }
+
 
     if (!apiUse) {
 
-      resCredenciales.response = "No se pudo enonctrar el servicio para procesar el documento, verifica que la configuracion de credendiales y api cataloog esté correcta";
+      resCredenciales.response = "No fue posible obtener el identiifcador para el proceso (certificar)";
 
       let error: TypeErrorInterface = {
         error: resCredenciales,
         type: 1,
       }
-
       return error;
     }
 
-    //Buscvar credenciales de infile
-    let llaveApi: string = "";
-    let llaveFirma: string = "";
-    let usuarioApi: string = "";
-    let usuarioFirma: string = "";
 
-    for (let i = 0; i < credecniales.length; i++) {
-      const element = credecniales[i];
+    //obtner catlogo de apis
+    let resApi: ResApiInterface = await this._felService.getApi(
+      this.user,
+      this.token,
+      apiUse,
+    )
 
-      switch (element.campo_Nombre) {
-        case "LlaveApi":
-          llaveApi = element.campo_Valor;
+    if (!resApi.status) {
+
+      let error: TypeErrorInterface = {
+        error: resApi,
+        type: 1,
+      }
+      return error;
+    }
+
+    let apis: APIInterface[] = resApi.response;
+    api = apis[0];
+
+    if (apis.length == 0) {
+
+      resApi.response = "No se encontraron registros para el servicio (catalogo)"
+
+      let error: TypeErrorInterface = {
+        error: resApi,
+        type: 1,
+      }
+      return error;
+    }
+
+    let resParametros: ResApiInterface = await this._felService.getParamsApi(
+      apiUse,
+      this.user,
+      this.token,
+    )
+
+    if (!resParametros.status) {
+
+      let error: TypeErrorInterface = {
+        error: resParametros,
+        type: 1,
+      }
+      return error;
+    }
+
+    //parametros
+    let params: ParametroAPIInterface[] = resParametros.response;
+
+    //replace parmas in url
+    this.replaceValues(api.url_Api, doc, credecniales);
+
+
+    //set headers
+    let headers = new HttpHeaders();
+
+    //TODO:Agregar proceso para autenticacion por tokens
+
+    // Agregar cada header de la lista a los headers de la solicitud
+
+    let content: string = "";
+
+    params.forEach(param => {
+
+      switch (param.tipo_Parametro) {
+        case 3: //headers
+
+          for (let i = 0; i < credecniales.length; i++) {
+            const element = credecniales[i];
+
+            //si el pareametro tiene
+            if (param.descripcion == element.campo_Nombre) {
+              headers = headers.set(element.campo_Nombre, element.campo_Valor);
+              break;
+            }
+
+          }
 
           break;
-        case "LlaveFirma":
-          llaveFirma = element.campo_Valor;
-          break;
 
-        case "UsuarioApi":
-          usuarioApi = element.campo_Valor;
-          break;
-        case "UsuarioFirma":
-          usuarioFirma = element.campo_Valor;
+        case 2: //body
+
+          if (param.tipo_Dato = 5) //json
+          {
+            // Agregar el Content-Type usando el método set
+            headers = headers.set('Content-Type', "application/json");
+            content = this.replaceValuesJson(param.plantilla, doc, credecniales);
+
+          } else if (param.tipo_Dato = 6) { //xml
+            headers = headers.set('Content-Type', "application/xml");
+            content = this.replaceValues(param.plantilla, doc, credecniales);
+          }
+
           break;
         default:
           break;
       }
-
-    }
-
-    let paramFel: DataInfileInterface = {
-      docXML: templatesXMl[0].xml_Contenido,
-      //   docXML: `<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
-      //   <dte:SAT ClaseDocumento="dte">
-      //     <dte:DTE ID="DatosCertificados">
-      //       <dte:DatosEmision ID="DatosEmision">
-      //         <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-05-28T02:53:51.000-06:00" Tipo="FCAM" />
-      //         <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
-      //           <dte:DireccionEmisor>
-      //             <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
-      //             <dte:CodigoPostal>010020</dte:CodigoPostal>
-      //             <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
-      //             <dte:Departamento>ESCUINTLA</dte:Departamento>
-      //             <dte:Pais>GT</dte:Pais>
-      //           </dte:DireccionEmisor>
-      //         </dte:Emisor>
-      //         <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
-      //           <dte:DireccionReceptor>
-      //             <dte:Direccion>Ciudad</dte:Direccion>
-      //             <dte:CodigoPostal>01007</dte:CodigoPostal>
-      //             <dte:Municipio>Guatemala</dte:Municipio>
-      //             <dte:Departamento>Guatemala</dte:Departamento>
-      //             <dte:Pais>GT</dte:Pais>
-      //           </dte:DireccionReceptor>
-      //         </dte:Receptor>
-      //         <dte:Frases>
-      //           <dte:Frase CodigoEscenario="1" TipoFrase="1" />
-      //         </dte:Frases>
-      //         <dte:Items>
-      //           <dte:Item NumeroLinea="1" BienOServicio="B">
-      //             <dte:Cantidad>1.0000</dte:Cantidad>
-      //             <dte:UnidadMedida>UND</dte:UnidadMedida>
-      //             <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
-      //             <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
-      //             <dte:Precio>2200.0000</dte:Precio>
-      //             <dte:Descuento>0</dte:Descuento>
-      //             <dte:Impuestos>
-      //               <dte:Impuesto>
-      //                 <dte:NombreCorto>IVA</dte:NombreCorto>
-      //                 <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-      //                 <dte:MontoGravable>1964.29</dte:MontoGravable>
-      //                 <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
-      //               </dte:Impuesto>
-      //             </dte:Impuestos>
-      //             <dte:Total>2200.0000</dte:Total>
-      //           </dte:Item>
-      //         </dte:Items>
-      //         <dte:Totales>
-      //           <dte:TotalImpuestos>
-      //             <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
-      //           </dte:TotalImpuestos>
-      //           <dte:GranTotal>2200.0000</dte:GranTotal>
-      //         </dte:Totales>
-      //         <dte:Complementos>
-      //           <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
-      //             <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
-      //               <cfc:Abono>
-      //                 <cfc:NumeroAbono>1</cfc:NumeroAbono>
-      //                 <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
-      //                 <cfc:MontoAbono>2200.00</cfc:MontoAbono>
-      //               </cfc:Abono>
-      //             </cfc:AbonosFacturaCambiaria>
-      //           </dte:Complemento>
-      //         </dte:Complementos>
-      //       </dte:DatosEmision>
-      //     </dte:DTE>
-      //   </dte:SAT>
-      // </dte:GTDocumento>`,
-      identificador: uuidDoc,
-      llaveApi: llaveApi,
-      llaveFirma: llaveFirma,
-      usuarioApi: usuarioApi,
-      usuarioFirma: usuarioFirma,
-    }
+    });
 
 
-    let resCertDoc: ResApiInterface = await this._felService.postInfile(
-      apiUse,
-      paramFel,
-      this.token,
-    )
+    let resDte: ResApiInterface = await this._felService.postDte(api.url_Api, headers, content);
 
-    if (!resCertDoc.status) {
+    if (!resDte.status) {
 
       let error: TypeErrorInterface = {
-        error: resCertDoc,
+        error: resDte,
         type: 1,
       }
-
       return error;
     }
 
-    let doc: any = resCertDoc.response;
 
-    let paramUpdate: ParamUpdateXMLInterface = {
-      documento: doc,
-      documentoCompleto: doc,
-      usuario: this.user,
-      uuid: uuidDoc,
+    //verificar respuestas
+
+    //si no hay un nodo enviar toda la respuesta 
+    if (!api.nodo_FirmaDocumentoResponse) {
+
+      let paramUpdate: ParamUpdateXMLInterface = {
+        documento: resDte.response,
+        documentoCompleto: resDte.response,
+        usuario: this.user,
+        uuid: doc.d_Id_Unc,
+      }
+
+
+      let updateDocRes: TypeErrorInterface = await this.updateDTE(
+        paramUpdate,
+      );
+
+      return updateDocRes;
+
     }
 
+    if (api.tipo_Respuesta == 2) { //Tipo de respuesta XML
+
+      // Crear un objeto XML a partir del string `result`
+      let parser = new DOMParser();
+      let xmlDoc = parser.parseFromString(resDte.response, "text/xml");
+
+      // Seleccionar el nodo específico
+      let xmlNode = xmlDoc.querySelector(api.nodo_FirmaDocumentoResponse);
+
+      let paramUpdate: ParamUpdateXMLInterface = {
+        documento: xmlNode?.textContent ?? "",
+        documentoCompleto: resDte.response,
+        usuario: this.user,
+        uuid: doc.d_Id_Unc,
+      }
+
+
+      let updateDocRes: TypeErrorInterface = await this.updateDTE(
+        paramUpdate,
+      );
+
+      return updateDocRes;
+
+    } else if (api.tipo_Respuesta == 1) {
+      const jsonObject = JSON.parse(resDte.response);
+
+      // Acceder a la propiedad específica
+      const xml = jsonObject[api.nodo_FirmaDocumentoResponse];
+
+      let paramUpdate: ParamUpdateXMLInterface = {
+        documento: xml ?? "",
+        documentoCompleto: resDte.response,
+        usuario: this.user,
+        uuid: doc.d_Id_Unc,
+      }
+
+
+      let updateDocRes: TypeErrorInterface = await this.updateDTE(
+        paramUpdate,
+      );
+
+      return updateDocRes;
+    }
+
+
+    let error: TypeErrorInterface = {
+      error: "fallo al actualizar el documento",
+      type: 1,
+    }
+    return error;
+  }
+
+
+
+  async updateDTE(paramUpdate: ParamUpdateXMLInterface): Promise<TypeErrorInterface> {
     //actualizar odcumento con firma
     let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
       this.token,
@@ -2277,6 +2379,291 @@ export class FacturaComponent implements OnInit {
 
     return error;
   }
+
+  // async felProcess(): Promise<TypeErrorInterface> {
+
+  //   //TODO:Asigna id del api en base de datos, el api es un maestr generico que devuleve cualquier token
+  //   // let apiToken: number = 0;
+  //   // let tokenFel: string = "";
+
+  //   this.dataFel = undefined;
+
+  //   //TODO:Replece for value in database
+  //   let uuidDoc = ''
+
+  //   //TODO:Asiganr el api 
+  //   let apiUse: string = "";
+
+  //   //TODO:Reemplzar y parametrizar
+  //   let certificador: number = 1;
+
+
+  //   //buscar documento, plantilla xml
+
+  //   let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+  //     this.user,
+  //     this.token,
+  //     this.consecutivoDoc,
+  //   )
+
+  //   if (!resXMlCert.status) {
+
+  //     let error: TypeErrorInterface = {
+  //       error: resXMlCert,
+  //       type: 1,
+  //     }
+
+  //     return error;
+  //   }
+
+  //   let templatesXMl: DocXMLInterface[] = resXMlCert.response;
+
+  //   if (templatesXMl.length == 0) {
+
+  //     resXMlCert.response = "No se pudo encontrar el docuemnto xml para certificar.";
+
+  //     let error: TypeErrorInterface = {
+  //       error: resXMlCert,
+  //       type: 1,
+  //     }
+
+  //     return error;
+  //   }
+
+  //   uuidDoc = templatesXMl[0].d_Id_Unc;
+  //   // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
+
+  //   //buscar las credenciales del certificador
+  //   let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+  //     certificador,
+  //     this.empresa.empresa,
+  //     this.user,
+  //     this.token,
+  //   )
+
+  //   if (!resCredenciales.status) {
+
+  //     let error: TypeErrorInterface = {
+  //       error: resCredenciales,
+  //       type: 1,
+  //     }
+  //     return error;
+  //   }
+
+  //   //TODO:Api que se va a usar debe buscarse y asignarse aqui 
+  //   let credecniales: CredencialInterface[] = resCredenciales.response;
+
+  //   for (let i = 0; i < credecniales.length; i++) {
+  //     const element = credecniales[i];
+
+  //     if (element.campo_Nombre == "apiUnificadaInfile") {
+
+  //       apiUse = element.campo_Valor;
+  //       break;
+  //     }
+  //   }
+
+  //   if (!apiUse) {
+
+  //     resCredenciales.response = "No se pudo enonctrar el servicio para procesar el documento, verifica que la configuracion de credendiales y api cataloog esté correcta";
+
+  //     let error: TypeErrorInterface = {
+  //       error: resCredenciales,
+  //       type: 1,
+  //     }
+
+  //     return error;
+  //   }
+
+  //   //Buscvar credenciales de infile
+  //   let llaveApi: string = "";
+  //   let llaveFirma: string = "";
+  //   let usuarioApi: string = "";
+  //   let usuarioFirma: string = "";
+
+  //   for (let i = 0; i < credecniales.length; i++) {
+  //     const element = credecniales[i];
+
+  //     switch (element.campo_Nombre) {
+  //       case "LlaveApi":
+  //         llaveApi = element.campo_Valor;
+
+  //         break;
+  //       case "LlaveFirma":
+  //         llaveFirma = element.campo_Valor;
+  //         break;
+
+  //       case "UsuarioApi":
+  //         usuarioApi = element.campo_Valor;
+  //         break;
+  //       case "UsuarioFirma":
+  //         usuarioFirma = element.campo_Valor;
+  //         break;
+  //       default:
+  //         break;
+  //     }
+
+  //   }
+
+  //   let paramFel: DataInfileInterface = {
+  //     docXML: templatesXMl[0].xml_Contenido,
+  //     //   docXML: `<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
+  //     //   <dte:SAT ClaseDocumento="dte">
+  //     //     <dte:DTE ID="DatosCertificados">
+  //     //       <dte:DatosEmision ID="DatosEmision">
+  //     //         <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-05-28T02:53:51.000-06:00" Tipo="FCAM" />
+  //     //         <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
+  //     //           <dte:DireccionEmisor>
+  //     //             <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
+  //     //             <dte:CodigoPostal>010020</dte:CodigoPostal>
+  //     //             <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
+  //     //             <dte:Departamento>ESCUINTLA</dte:Departamento>
+  //     //             <dte:Pais>GT</dte:Pais>
+  //     //           </dte:DireccionEmisor>
+  //     //         </dte:Emisor>
+  //     //         <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
+  //     //           <dte:DireccionReceptor>
+  //     //             <dte:Direccion>Ciudad</dte:Direccion>
+  //     //             <dte:CodigoPostal>01007</dte:CodigoPostal>
+  //     //             <dte:Municipio>Guatemala</dte:Municipio>
+  //     //             <dte:Departamento>Guatemala</dte:Departamento>
+  //     //             <dte:Pais>GT</dte:Pais>
+  //     //           </dte:DireccionReceptor>
+  //     //         </dte:Receptor>
+  //     //         <dte:Frases>
+  //     //           <dte:Frase CodigoEscenario="1" TipoFrase="1" />
+  //     //         </dte:Frases>
+  //     //         <dte:Items>
+  //     //           <dte:Item NumeroLinea="1" BienOServicio="B">
+  //     //             <dte:Cantidad>1.0000</dte:Cantidad>
+  //     //             <dte:UnidadMedida>UND</dte:UnidadMedida>
+  //     //             <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
+  //     //             <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
+  //     //             <dte:Precio>2200.0000</dte:Precio>
+  //     //             <dte:Descuento>0</dte:Descuento>
+  //     //             <dte:Impuestos>
+  //     //               <dte:Impuesto>
+  //     //                 <dte:NombreCorto>IVA</dte:NombreCorto>
+  //     //                 <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
+  //     //                 <dte:MontoGravable>1964.29</dte:MontoGravable>
+  //     //                 <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
+  //     //               </dte:Impuesto>
+  //     //             </dte:Impuestos>
+  //     //             <dte:Total>2200.0000</dte:Total>
+  //     //           </dte:Item>
+  //     //         </dte:Items>
+  //     //         <dte:Totales>
+  //     //           <dte:TotalImpuestos>
+  //     //             <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
+  //     //           </dte:TotalImpuestos>
+  //     //           <dte:GranTotal>2200.0000</dte:GranTotal>
+  //     //         </dte:Totales>
+  //     //         <dte:Complementos>
+  //     //           <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
+  //     //             <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
+  //     //               <cfc:Abono>
+  //     //                 <cfc:NumeroAbono>1</cfc:NumeroAbono>
+  //     //                 <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
+  //     //                 <cfc:MontoAbono>2200.00</cfc:MontoAbono>
+  //     //               </cfc:Abono>
+  //     //             </cfc:AbonosFacturaCambiaria>
+  //     //           </dte:Complemento>
+  //     //         </dte:Complementos>
+  //     //       </dte:DatosEmision>
+  //     //     </dte:DTE>
+  //     //   </dte:SAT>
+  //     // </dte:GTDocumento>`,
+  //     identificador: uuidDoc,
+  //     llaveApi: llaveApi,
+  //     llaveFirma: llaveFirma,
+  //     usuarioApi: usuarioApi,
+  //     usuarioFirma: usuarioFirma,
+  //   }
+
+
+  //   let resCertDoc: ResApiInterface = await this._felService.postInfile(
+  //     apiUse,
+  //     paramFel,
+  //     this.token,
+  //   )
+
+  //   if (!resCertDoc.status) {
+
+  //     let error: TypeErrorInterface = {
+  //       error: resCertDoc,
+  //       type: 1,
+  //     }
+
+  //     return error;
+  //   }
+
+  //   let doc: any = resCertDoc.response;
+
+  //   let paramUpdate: ParamUpdateXMLInterface = {
+  //     documento: doc,
+  //     documentoCompleto: doc,
+  //     usuario: this.user,
+  //     uuid: uuidDoc,
+  //   }
+
+  //   //actualizar odcumento con firma
+  //   let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+  //     this.token,
+  //     paramUpdate,
+  //   )
+
+  //   if (!resUpdateXml.status) {
+
+  //     let error: TypeErrorInterface = {
+  //       error: resUpdateXml,
+  //       type: 1,
+  //     }
+
+  //     return error;
+  //   }
+
+
+
+  //   let datFel: DataFelInterface[] = resUpdateXml.response;
+
+  //   if (datFel.length != 0) {
+  //     this.dataFel = datFel[0];
+
+  //     //actualizar doc esrctiura
+
+  //     let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
+
+  //     this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
+  //     this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
+  //     this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
+  //     this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
+
+  //     //onjeto para el api
+  //     let document: PostDocumentInterface = {
+  //       estado: 11,
+  //       estructura: JSON.stringify(this.docGlobal),
+  //       user: this.user,
+  //     }
+
+  //     let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+  //       this.token,
+  //       document,
+  //       this.consecutivoDoc,
+  //     );
+
+  //     //TODO:Mensjaje de error
+  //     if (!resUpdateEstructura.status) {
+  //       console.error("No se pudo actalizar documento estructura", resUpdateEstructura);
+  //     }
+  //   }
+
+  //   let error: TypeErrorInterface = {
+  //     error: resUpdateXml,
+  //     type: 0,
+  //   }
+
+  //   return error;
+  // }
 
   //errro 1: error de api
   //error 2: error inerno

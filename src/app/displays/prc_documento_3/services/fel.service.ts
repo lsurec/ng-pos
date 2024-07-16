@@ -14,6 +14,86 @@ export class FelService {
     constructor(private _http: HttpClient) {
     }
 
+
+    private _postDte(
+   
+        url:string,
+        header:HttpHeaders,
+        body:string,
+    ) {
+
+
+
+        //consumo de api
+        return this._http.post(url, body, { headers: header, observe: 'response' });
+
+
+    }
+
+    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
+    postDte(
+        url:string,
+        header:HttpHeaders,
+        body:string,
+    ): Promise<ResApiInterface> {
+        return new Promise((resolve, reject) => {
+            this._postDte(
+               url,
+               header,
+               body,
+            ).subscribe(
+                //si esta correcto
+                res => {
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: res.body,
+                        storeProcedure: ""
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        }
+                        resolve(resApi);
+                    } catch (e) {
+
+
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            }
+                            resolve(resApi);
+                        }
+
+
+                    }
+                }
+            )
+        })
+    }
+
+
     //funcion que va a realizar el consumo privado para obtener las empresas
     private _getReceptor(
         token: string,
@@ -258,7 +338,7 @@ export class FelService {
 
     //funcion que va a realizar el consumo privado para obtener las empresas
     private _getParamsApi(
-        api: number,
+        api: string,
         user: string,
         token: string
     ) {
@@ -275,7 +355,7 @@ export class FelService {
 
     //funcion asyncrona con promesa  para obtener las empresas
     getParamsApi(
-        api: number,
+        api: string,
         user: string,
         token: string
     ): Promise<ResApiInterface> {
@@ -596,7 +676,7 @@ export class FelService {
     private _getApi(
         user: string,
         token: string,
-        api: number,
+        api: string,
     ) {
 
         let headers = new HttpHeaders(
@@ -612,7 +692,7 @@ export class FelService {
     getApi(
         user: string,
         token: string,
-        api: number,
+        api: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getApi(
