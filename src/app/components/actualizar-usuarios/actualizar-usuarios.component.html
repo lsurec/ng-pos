@@ -19,7 +19,7 @@
         <hr>
         <div class="busqueda">
             <!-- RESPONSABLE ACTUAL -->
-            <div class="invitados" *ngIf="tareasGlobalService.idUsuarios == 1">
+            <div *ngIf="tareasGlobalService.idUsuarios == 1">
                 <p class="campo-obligatorio">{{ 'crm.actualizar.responsableActual' | translate }}</p>
                 <div class="responsable">
                     <p>{{tarea.responsables.length == 0 ? noAsignado : responsable.t_UserName }}</p>

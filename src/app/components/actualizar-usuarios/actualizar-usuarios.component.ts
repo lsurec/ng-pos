@@ -22,7 +22,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
     UsuarioService,
   ]
 })
-export class ActualizarUsuariosComponent implements AfterViewInit{
+export class ActualizarUsuariosComponent implements AfterViewInit {
 
   //para seleciconar el valor del texto del input
   @ViewChild('usuarioInput') usuarioInput?: ElementRef;
@@ -58,7 +58,7 @@ export class ActualizarUsuariosComponent implements AfterViewInit{
     this.tarea = tareaActualizar;
 
     console.log("usuarios invitados actuales", this.tarea.invitados);
-    
+
     //Buscar el idioma guardado en le servicio
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
@@ -180,6 +180,13 @@ export class ActualizarUsuariosComponent implements AfterViewInit{
   }
 
   async asignarResponsable(usuario: BuscarUsuariosInterface) {
+
+    //validar que no sea el mismo usuario
+    if (usuario.email == this.responsable.t_UserName) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.asignado'));
+      return;
+    }
+
     let usuarioResponsable: EnviarResponsableInterface = {
       tarea: this.tarea.tarea.iD_Tarea,
       user_Res_Invi: usuario.userName,
@@ -196,17 +203,17 @@ export class ActualizarUsuariosComponent implements AfterViewInit{
       return;
     };
 
-    let responsable: ResponsablesInterface = resResponsable.response[0];
+    let responsableN: ResponsablesInterface = resResponsable.response[0];
 
     let responsableSeleccionado: ResponsablesInterface = {
       t_UserName: usuario.email,
       estado: "activo",
-      userName: responsable.userName,
-      fecha_Hora: responsable.fecha_Hora,
-      m_UserName: responsable.m_UserName,
-      m_Fecha_Hora: responsable.m_Fecha_Hora,
-      dHm: responsable.dHm,
-      consecutivo_Interno: responsable.consecutivo_Interno
+      userName: responsableN.userName,
+      fecha_Hora: responsableN.fecha_Hora,
+      m_UserName: responsableN.m_UserName,
+      m_Fecha_Hora: responsableN.m_Fecha_Hora,
+      dHm: responsableN.dHm,
+      consecutivo_Interno: responsableN.consecutivo_Interno
     }
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.responsableAsignado'));
     this.dialogRef.close([responsableSeleccionado, usuario.name]);

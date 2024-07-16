@@ -593,7 +593,10 @@
             "nuevoIdioma": "Neue Sprache",
             "cambioIdioma": "Um die Änderungen anzuzeigen, muss die Anwendung aktualisiert werden.",
             "fuete": "Schriftgröße.",
-            "cambioFuente": "Sie haben eine neue Schriftgröße ausgewählt. Um die Änderungen anzuzeigen, muss der Browser neu gestartet werden. Klicken Sie auf Akzeptieren, um fortzufahren."
+            "cambioFuente": "Sie haben eine neue Schriftgröße ausgewählt. Um die Änderungen anzuzeigen, muss der Browser neu gestartet werden. Klicken Sie auf Akzeptieren, um fortzufahren.",
+            "asignado": "Zuvor zugewiesener Benutzer.",
+            "estadoIgual": "Zuvor zugewiesener Status.",
+            "prioridadIgual": "Zuvor zugewiesene Priorität."
         }
     }
 }

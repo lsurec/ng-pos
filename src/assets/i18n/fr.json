@@ -592,8 +592,10 @@
             "seleccionar": "Sélectionnez un thème pour continuer.",
             "nuevoIdioma": "Nouvelle Langue",
             "cambioIdioma": "Pour voir les changements, il sera nécessaire de rafraîchir l'application.",
-            "fuete": "Taille de la police.",
-            "cambioFuente": "Vous avez sélectionné une nouvelle taille de police. Pour voir les changements, il est nécessaire de redémarrer le navigateur, cliquez sur accepter pour continuer."
+            "cambioFuente": "Vous avez sélectionné une nouvelle taille de police. Pour voir les changements, il est nécessaire de redémarrer le navigateur, cliquez sur accepter pour continuer.",
+            "asignado": "Utilisateur précédemment assigné.",
+            "estadoIgual": "État précédemment assigné.",
+            "prioridadIgual": "Priorité précédemment assignée."
         }
     }
 }

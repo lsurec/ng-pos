@@ -592,8 +592,10 @@
             "seleccionar": "Seleccione un tema, para continuar.",
             "nuevoIdioma": "Nuevo Idioma",
             "cambioIdioma": "Para visualizar los cambios será necesario refrescar la aplicación.",
-            "fuete": "Tamaño de fuente.",
-            "cambioFuente": "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar."
+            "cambioFuente": "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+            "asignado": "Usuario asignado anteriormente.",
+            "estadoIgual": "Estado asignado anteriormente.",
+            "prioridadIgual": "Prioridad asignada anteriormente."
         }
     }
 }
