@@ -1471,8 +1471,8 @@ export class FacturaComponent implements OnInit {
     //TODO:En produccion evaluar parametro
     //Si se permite fel entrar al proceso
     //Inciar FEL
-    if (this.facturaService.valueParametro(349)) {
-      // if (this._dataUserService.switchState) {
+    // if (this.facturaService.valueParametro(349)) {
+    if (true) {
 
       //iniciar cargas (steps)
       this.facturaService.pasosCompletos = 0;
@@ -2023,8 +2023,7 @@ export class FacturaComponent implements OnInit {
       let subs2: string[] = i.split(':');
 
       // Reemplazar credenciales en las subcadenas
-      credenciales.forEach(ii => {
-        let credencial = JSON.parse(ii.toString()) as { campo_Nombre: string, campo_Valor: string };
+      credenciales.forEach(credencial => {
         subs2[1] = subs2[1].replace(`{${credencial.campo_Nombre}}`, credencial.campo_Valor);
       });
 
@@ -2183,7 +2182,7 @@ export class FacturaComponent implements OnInit {
     let params: ParametroAPIInterface[] = resParametros.response;
 
     //replace parmas in url
-    this.replaceValues(api.url_Api, doc, credecniales);
+    api.url_Api = this.replaceValues(api.url_Api, doc, credecniales);
 
 
     //set headers
@@ -2233,7 +2232,12 @@ export class FacturaComponent implements OnInit {
     });
 
 
-    let resDte: ResApiInterface = await this._felService.postDte(api.url_Api, headers, content);
+    let resDte: ResApiInterface = await this._felService.postDte(
+      api.url_Api,
+      headers,
+      content,
+      this.token,
+    );
 
     if (!resDte.status) {
 

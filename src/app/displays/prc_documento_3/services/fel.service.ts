@@ -20,13 +20,13 @@ export class FelService {
         url:string,
         header:HttpHeaders,
         body:string,
+        token:string,
     ) {
 
-
-
+        header = header.set( "Authorization", "bearer " + token);
+    
         //consumo de api
         return this._http.post(url, body, { headers: header, observe: 'response' });
-
 
     }
 
@@ -35,12 +35,14 @@ export class FelService {
         url:string,
         header:HttpHeaders,
         body:string,
+        token:string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postDte(
                url,
                header,
                body,
+               token,
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -54,6 +56,8 @@ export class FelService {
                 },
                 //si algo sale mal
                 err => {
+                    console.log(err);
+                    
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;
 
