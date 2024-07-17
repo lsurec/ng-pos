@@ -1,5 +1,5 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="detalles && !isLoading">
+<mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')" *ngIf="!isLoading">
     <!-- <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
         <mat-toolbar class="head__sidenav ">
             <span class="spacer"></span>
@@ -218,7 +218,10 @@
                         <p class="tituloTarea">{{resolveObject(tareaDetalle!.descripcion)}}</p>
                         <hr>
                         <p class="observaciones">{{ 'crm.detalles.observacion' | translate }}</p>
-                        <p class="observaciones_desc">{{resolveObject(tareaDetalle!.tarea_Observacion_1)}}</p>
+
+                        <div class="observaciones_desc">
+                            <p [innerHTML]="formatText(tareaDetalle!.tarea_Observacion_1)" class="espacio-lineas"></p>
+                        </div>
                     </div>
                     <!-- <button (click)="verFechas()" mat-icon-button>
                         <mat-icon>home</mat-icon>
@@ -239,7 +242,7 @@
                                 </div>
                                 <!-- decripcion de comentario -->
                                 <div class="comentario_desc">
-                                    <p>{{item.comentario.comentario}}</p>
+                                    <p [innerHTML]="formatText(item.comentario.comentario)" class="espacio-lineas"></p>
                                     <div class="" *ngIf="comentarios[index].files.length >0">
                                         <div class="adjuntos" *ngFor="let file of comentarios[index].files">
                                             <a [href]="file.objeto_URL" target="_blank">
@@ -272,11 +275,11 @@
                                             [(ngModel)]="descripcionComentario" class="escribir-comentario">
                                         </textarea>
                                         <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
-                                            <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p>
+                                            <!-- <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p> -->
 
                                             <div *ngFor="let file of selectedFiles; let i = index"
                                                 class="archivos-adjuntos">
-                                                <p class="nombre-archivos"> - {{ file.name }}</p>
+                                                <p class="nombre-archivos"> {{ file.name }}</p>
                                                 <span class="spacer"></span>
                                                 <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
                                                     matTooltip="eliminar archivo">close</mat-icon>
@@ -297,7 +300,6 @@
                                             </div>
                                             <span class="spacer"></span>
                                             <button mat-button class="subir-comentarios" (click)="comentar()">
-                                                <mat-icon>post_add</mat-icon>
                                                 {{ 'crm.crear.comentar' | translate}}
                                             </button>
                                         </div>

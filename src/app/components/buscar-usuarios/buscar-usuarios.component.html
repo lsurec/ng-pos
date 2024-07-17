@@ -31,6 +31,10 @@
                 <mat-icon class="marginRihgt">info</mat-icon>
                 Marca la casilla del usuario o usuarios que quieras agregar.
             </div>
+            <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2 && listaTemporal.length > 0">
+                Invitados seleccionados ({{listaTemporal.length}})
+            </p>
+
             <hr>
             <div class="encontrados">
                 <div *ngIf=" tareasGlobalService.buscarUsuarios == 1">
@@ -48,7 +52,8 @@
                 </div>
                 <div *ngIf="tareasGlobalService.buscarUsuarios == 2">
                     <div class="detalleInvitado" *ngFor="let usuario of usuarios">
-                        <mat-checkbox [(ngModel)]="usuario.select" color="primary"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="usuario.select" color="primary"
+                            (change)="seleccionar(usuario)"></mat-checkbox>
                         <span class="spacer"></span>
                         <div class="seleccionar-invitados">
                             <span class="spacer"></span>

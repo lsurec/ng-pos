@@ -235,7 +235,7 @@ hr {
 }
 
 .observaciones_desc {
-    padding   : 5px 10px;
+    padding   : 0px 10px 5px;
     text-align: justify;
 }
 
@@ -281,7 +281,6 @@ hr {
     height       : 30px;
     border       : 1.5px solid $bordes;
     border-bottom: none !important;
-    font-weight  : bold;
     font-size    : 13px;
     padding      : 5px;
 }
@@ -528,7 +527,6 @@ mat-accordion {
 }
 
 .archivos-adjuntos {
-    width           : 80%;
     margin-top      : 5px;
     padding         : 5px;
     background-color: $bloques;

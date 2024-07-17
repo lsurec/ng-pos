@@ -24,6 +24,10 @@ $fondo-campos          : #3d3c3c;
 $personalizado :var(--global-color);
 $bloques       : var(--bloques-oscuro);
 
+.espacio-lineas {
+    line-height: 1.2;
+}
+
 html,
 body {
     height             : 100%;

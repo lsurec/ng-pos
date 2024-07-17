@@ -592,8 +592,10 @@
             "seleccionar": "Select a theme to continue.",
             "nuevoIdioma": "New Language",
             "cambioIdioma": "To see the changes, it is necessary to refresh the application.",
-            "fuete": "Font size.",
-            "cambioFuente": "You have selected a new font size. To see the changes, it is necessary to restart the browser. Press accept to continue."
+            "cambioFuente": "You have selected a new font size. To see the changes, it is necessary to restart the browser. Press accept to continue.",
+            "asignado": "Previously assigned user.",
+            "estadoIgual": "Previously assigned status.",
+            "prioridadIgual": "Previously assigned priority."
         }
     }
 }

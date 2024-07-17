@@ -286,6 +286,13 @@ export class DialogTareaComponent {
   };
 
   async nuevoEstadoTarea() {
+
+    //validar que el estado seleccuinado no sea el mismo que el actual
+    if (this.estadoTarea?.estado == this.data.tarea.estado) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarEstadoInterface =
     {
       tarea: this.data.tarea.tarea,
@@ -360,6 +367,13 @@ export class DialogTareaComponent {
   };
 
   async nuevoNivelPrioridad() {
+
+    //validar que el nivel de prioridad seleccuinado no sea el mismo que el actual
+    if (this.prioridadTarea?.nivel_Prioridad == this.data.tarea.nivel_Prioridad) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarNivelPrioridadInterface =
     {
       tarea: this.data.tarea.tarea,
@@ -411,4 +425,7 @@ export class DialogTareaComponent {
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.prioridadActualizada'));
   }
 
+  formatText(text: string): string {
+    return text.replace(/\n/g, '<br>');
+  }
 }
