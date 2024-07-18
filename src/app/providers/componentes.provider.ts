@@ -3,6 +3,7 @@ import { SelectedConfigurationComponent } from "../components/selected-configura
 import { HomeConvertComponent } from "../displays/listado_Documento_Pendiente_Convertir/components/home-convert/home-convert.component";
 import { CalendarioComponent } from "../displays/prcTarea_1/components/calendario/calendario.component";
 import { FacturaComponent } from "../displays/prc_documento_3/components/factura/factura.component";
+import { ListaTareasComponent } from "../displays/shrTarea_3/components/lista-tareas/lista-tareas.component";
 import { TareasComponent } from "../displays/shrTarea_3/components/tareas/tareas.component";
 import { ComponentesInterface } from "../interfaces/components.interface";
 
@@ -29,7 +30,7 @@ export const components: ComponentesInterface[] = [
     },
     {
         id: "Tareas",
-        componente: TareasComponent,
+        componente: ListaTareasComponent,
         visible: false,
     },
     {
