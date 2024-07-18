@@ -2013,6 +2013,8 @@ export class FacturaComponent implements OnInit {
   replaceValuesJson(param: string, document: DocXMLInterface, credenciales: CredencialInterface[],) {
     // Suponiendo que param, listCredenciales, documento y token ya están definidos en el contexto
 
+
+
     // Crear un objeto para los parámetros
     let ObjParam: { [key: string]: any } = {};
 
@@ -2044,7 +2046,7 @@ export class FacturaComponent implements OnInit {
   async genericFel(): Promise<TypeErrorInterface> {
 
     //TODO:Parametrizar certificador
-    let certificador: number = 2; //1 infile, 2: tekra
+    let certificador: number = 1; //1 infile, 2: tekra
 
     this.dataFel = undefined;
 
