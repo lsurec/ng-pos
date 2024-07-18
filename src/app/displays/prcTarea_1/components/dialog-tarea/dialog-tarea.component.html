@@ -34,6 +34,7 @@
                 </div>
 
             </div>
+            <hr>
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.tipo' | translate}}</p>
                 <!-- Descripcion de la tarea -->
@@ -119,7 +120,7 @@
                                 <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p>
 
                                 <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
-                                    <p class="nombre-archivos"> - {{ file.name }}</p>
+                                    <p class="nombre-archivos"> {{ file.name }}</p>
                                     <span class="spacer"></span>
                                     <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
                                         matTooltip="eliminar archivo">close</mat-icon>
