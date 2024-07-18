@@ -79,12 +79,15 @@ export class DetalleTareaComponent {
   usuarioTarea = PreferencesService.user;
   empresa: EmpresaInterface = PreferencesService.empresa;
 
+  verError: boolean = false;
+  regresar: number = 18;
+
   constructor(
     //declaracion de variables privadas
     private _dialog: MatDialog,
     private _usuarioService: UsuarioService,
     private _files: CargarArchivosService,
-    private _widgetsService: NotificationsService,
+    private _notificationService: NotificationsService,
     private _nuevoComentario: CrearTareasComentariosService,
     private _actualizar: RefrescarService,
     private _tareaService: TareaService,
@@ -125,11 +128,24 @@ export class DetalleTareaComponent {
 
     //Si el servico se ejecuta mal mostrar menaje
     if (!resComentarios.status) {
+
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resComentarios.response);
-      console.error(resComentarios.storeProcedure);
-      return
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resComentarios);
+
+      return;
+
     }
 
     //Si se ejecuto bien, obtener la respuesta de apiComentarios
@@ -141,11 +157,24 @@ export class DetalleTareaComponent {
       let resFiles: ResApiInterface = await this._tareaService.getComentariosObjeto(comentario.tarea_Comentario, comentario.tarea);
       //Si el servico se ejecuta mal mostrar menaje
       if (!resFiles.status) {
+
         this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-        console.error(resFiles.response);
-        console.error(resFiles.storeProcedure);
-        return
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resFiles);
+
+        return;
+
       }
 
       let itemComentario: ComentariosDetalle = {
@@ -160,12 +189,25 @@ export class DetalleTareaComponent {
     let resInvitados: ResApiInterface = await this._usuarioService.getUsuariosInvitados(this.tareaDetalle!.iD_Tarea);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resInvitados.status) {
+
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resInvitados.response);
-      console.error(resInvitados.storeProcedure);
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resInvitados);
+
       return;
-    };
+
+    }
 
     this.invitados = resInvitados.response;
 
@@ -173,17 +215,26 @@ export class DetalleTareaComponent {
     let resResponsables: ResApiInterface = await this._usuarioService.getUsuariosResponsables(this.tareaDetalle!.iD_Tarea);
     //Si el servico se ejecuta mal mostar mensaje
     this.isLoading = false;
+
     if (!resResponsables.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resResponsables.response);
-      console.error(resResponsables.storeProcedure);
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resResponsables);
+
       return;
-    };
+    }
 
     this.responsables = resResponsables.response;
-
-
-    console.log(this.responsables);
 
   }
 
@@ -283,7 +334,7 @@ export class DetalleTareaComponent {
   async comentar() {
 
     if (!this.descripcionComentario) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
+      this._notificationService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
       return;
     }
 
@@ -301,13 +352,25 @@ export class DetalleTareaComponent {
 
     //Si el servico se ejecuta mal mostar mensaje
     if (!resPrimerComentario.status) {
-      //ocultar carga
+
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resPrimerComentario.response);
-      console.error(resPrimerComentario.storeProcedure);
-      return
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resPrimerComentario);
+
+      return;
     }
+
     //ID del comentario 
     let idComenario: number = resPrimerComentario.response.res;
     let urlFiles: string = this.empresa.absolutePathPicture;
@@ -323,12 +386,24 @@ export class DetalleTareaComponent {
 
       //Si el servico se ejecuta mal mostar mensaje
       if (!resFiles.status) {
+
         this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
-        console.error(resFiles.response);
-        console.error(resFiles.storeProcedure);
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resFiles);
+
         return;
-      };
+      }
 
       // this.isLoading = false;
     };
@@ -371,7 +446,7 @@ export class DetalleTareaComponent {
     this.isLoading = false;
     this.descripcionComentario = '';
     this.selectedFiles = [];
-    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
+    this._notificationService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
 
   }
 
@@ -617,7 +692,7 @@ export class DetalleTareaComponent {
 
   async eliminarInvitado(usuario: InvitadoInterface, index: number) {
 
-    let verificador = await this._widgetsService.openDialogActions(
+    let verificador = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('crm.alertas.eliminarInvitado'),
         description: this._translate.instant('crm.alertas.mensajeEliminarInvitado'),
@@ -639,15 +714,27 @@ export class DetalleTareaComponent {
 
     //Si el servico se ejecuta mal mostrar menaje
     this.isLoading = false;
+
     if (!resEliminarInvitado.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.invitadosNoActualizados'));
-      console.error(resEliminarInvitado.response);
-      console.error(resEliminarInvitado.storeProcedure);
-      return
-    };
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resEliminarInvitado);
+
+      return;
+    }
 
     this.invitados.splice(index, 1);
-    this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.invitadosActualizados'));
+    this._notificationService.openSnackbar(this._translate.instant('crm.alertas.invitadosActualizados'));
 
   }
 
@@ -662,5 +749,29 @@ export class DetalleTareaComponent {
   formatText(text: string): string {
     return text.replace(/\n/g, '<br>');
   }
+
+
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardra error
+    PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
+    this.verError = true;
+  }
+
 
 }

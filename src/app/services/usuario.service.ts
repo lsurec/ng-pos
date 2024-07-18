@@ -42,10 +42,9 @@ export class UsuarioService {
     }
 
     getUsuariosFiltro(filtro: string): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getUsuariosFiltro(filtro).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -53,23 +52,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
 
     private _postUsuarioResponsable(usuario: EnviarResponsableInterface) {
@@ -89,7 +110,7 @@ export class UsuarioService {
     postUsuarioResponsable(usuario: EnviarResponsableInterface): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postUsuarioResponsable(usuario).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -97,23 +118,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     //funcion que va a realizar el consumo en privado.
     private _getUsuariosResponsables(tarea: number) {
@@ -132,10 +175,9 @@ export class UsuarioService {
     }
 
     getUsuariosResponsables(tarea: number): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getUsuariosResponsables(tarea).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -143,23 +185,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     //funcion que va a realizar el consumo en privado.
     private _postEliminarResponsable(usuario: EliminarUsuarioInterface, consecutivoInterno: number) {
@@ -180,7 +244,7 @@ export class UsuarioService {
     postEliminarResponsable(usuario: EliminarUsuarioInterface, consecutivoInterno: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postEliminarResponsable(usuario, consecutivoInterno).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -188,23 +252,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     private _postUsuarioInvitado(usuario: EnviarInvitadoInterface) {
         let paramsStr = JSON.stringify(usuario); //JSON to String
@@ -223,7 +309,7 @@ export class UsuarioService {
     postUsuarioInvitado(usuario: EnviarInvitadoInterface): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postUsuarioInvitado(usuario).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -231,23 +317,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     //funcion que va a realizar el consumo en privado.
     private _getUsuariosInvitados(tarea: number) {
@@ -266,10 +374,9 @@ export class UsuarioService {
     }
 
     getUsuariosInvitados(tarea: number): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getUsuariosInvitados(tarea).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -277,23 +384,45 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     //funcion que va a realizar el consumo en privado.
     private _postEliminarInvitado(usuario: EliminarUsuarioInterface, tareaUser: number) {
@@ -314,7 +443,7 @@ export class UsuarioService {
     postEliminarInvitado(usuario: EliminarUsuarioInterface, tareaUser: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postEliminarInvitado(usuario, tareaUser).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -322,21 +451,43 @@ export class UsuarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 }
