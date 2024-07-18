@@ -192,6 +192,7 @@ export class FelService {
         credenciales: ParamUpdateXMLInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(credenciales); //JSON to String
+        
         let headers = new HttpHeaders({ "Content-Type": "application/json", "Authorization": "bearer " + token, })
 
         //consumo de api
@@ -220,6 +221,7 @@ export class FelService {
                 },
                 //si algo sale mal
                 err => {
+                    
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;
 
