@@ -2,127 +2,130 @@
 <div *ngIf="!verError">
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
-        <mat-toolbar-row class="head__sidenav">
-            <button mat-icon-button matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" (click)="goBack()">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <p class="titulo">Tareas</p>
-            <span class="spacer"></span>
 
-        </mat-toolbar-row>
-        <div>
-            <div class="container-main" *ngIf="!isLoading">
+    <app-detalle-tarea (newItemEvent)="backPage($event)" *ngIf="verDetalles"></app-detalle-tarea>
 
-                <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]="verTareas">
-                <div class="pestana" for="tab1" matTooltip="Todas" (click)="tareas()">
-                    Todas
-                </div>
+        <div *ngIf="contenidoTareas">
+            <mat-toolbar-row class="head__sidenav">
+                <button mat-icon-button matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <p class="titulo">Tareas</p>
+                <span class="spacer"></span>
 
-                <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]="verCreadas">
-                <div class="pestana" for="tab2" matTooltip="Creadas" (click)="creadas()">
-                    Creadas
-                </div>
+            </mat-toolbar-row>
+            <div>
+                <div class="container-main" *ngIf="!isLoading">
 
-                <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
-                <div class="pestana" for="tab3" matTooltip="Asignadas" (click)="asignadas()">
-                    Asignadas
-                </div>
+                    <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]="verTareas">
+                    <div class="pestana" for="tab1" matTooltip="Todas" (click)="tareas()">
+                        Todas
+                    </div>
 
-                <input class="titulo-pestana" id="tab4" type="radio" name="tabs" [checked]="verInvitaciones">
-                <div class="pestana" for="tab4" matTooltip="Invitaciones" (click)="invitaciones()">
-                    Invitaciones
-                </div>
+                    <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]="verCreadas">
+                    <div class="pestana" for="tab2" matTooltip="Creadas" (click)="creadas()">
+                        Creadas
+                    </div>
 
-                <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
-                    <!-- Veremos todas las tareas del portal -->
-                    <div class="container_main" #contentContainer>
-                        <!-- Buscar tareas por coincidencias -->
-                        <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
-                            <div class="input-container-tarea">
-                                <button class="iconoLupa" mat-icon-button>
-                                    <mat-icon>search</mat-icon> </button>
-                                <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
-                                    autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
-                            </div>
-                            <p class="coincidencias">{{'crm.home.registros' | translate}}
-                                {{buscarTareas.length}}
-                            </p>
-                        </form>
-                        <!--Boton ir arriba-->
-                        <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
-                            <mat-icon>arrow_upward</mat-icon>
-                        </button>
-                        <!--Boton ir abajo-->
-                        <button *ngIf="irAbajo && !irArriba" mat-mini-fab class="button_down_content"
-                            (click)="scrollDown()">
-                            <mat-icon>south</mat-icon>
-                        </button>
-                        <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
-                        <!--Lista de todas las tareas-->
-                        <div *ngIf="buscarTareas.length != 0" class="tareas">
-                            <div *ngFor="let item of buscarTareas">
-                                <div class="list-group espacioLista " (click)="viewTask(item)">
-                                    <a
-                                        class="tarea list-group-item list-group-item-action flex-column align-items-start">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <!-- Titulo Tarea -->
-                                            <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
-                                        </div>
-                                        <div class="dFlex">
-                                            <p>{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</p>
-                                            <span class="spacer"></span>
-                                            <p class="alingLeft fuente negrita">{{ item.tarea_Estado}}</p>
-                                            <div class="circulo-estado"
-                                                [ngStyle]="{'background-color': item.backColor ? item.backColor : '#000'}">
+                    <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
+                    <div class="pestana" for="tab3" matTooltip="Asignadas" (click)="asignadas()">
+                        Asignadas
+                    </div>
+
+                    <input class="titulo-pestana" id="tab4" type="radio" name="tabs" [checked]="verInvitaciones">
+                    <div class="pestana" for="tab4" matTooltip="Invitaciones" (click)="invitaciones()">
+                        Invitaciones
+                    </div>
+
+                    <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
+                        <!-- Veremos todas las tareas del portal -->
+                        <div class="container_main" #contentContainer>
+                            <!-- Buscar tareas por coincidencias -->
+                            <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
+                                <div class="input-container-tarea">
+                                    <button class="iconoLupa" mat-icon-button>
+                                        <mat-icon>search</mat-icon> </button>
+                                    <input class="barra-de-busqueda" type="search" name="search"
+                                        [(ngModel)]="searchText" autocomplete="off"
+                                        placeholder="{{'crm.crear.busqueda' | translate}}">
+                                </div>
+                                <p class="coincidencias">{{'crm.home.registros' | translate}}
+                                    {{buscarTareas.length}}
+                                </p>
+                            </form>
+                            <!--Boton ir arriba-->
+                            <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+                                <mat-icon>arrow_upward</mat-icon>
+                            </button>
+                            <!--Boton ir abajo-->
+                            <button *ngIf="irAbajo && !irArriba" mat-mini-fab class="button_down_content"
+                                (click)="scrollDown()">
+                                <mat-icon>south</mat-icon>
+                            </button>
+                            <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
+                            <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+                            <!--Lista de todas las tareas-->
+                            <div *ngIf="buscarTareas.length != 0" class="tareas">
+                                <div *ngFor="let item of buscarTareas">
+                                    <div class="list-group espacioLista " (click)="viewTask(item)">
+                                        <a
+                                            class="tarea list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <!-- Titulo Tarea -->
+                                                <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
                                             </div>
-                                        </div>
-                                        <!-- Numero de tarea y fecha inicial -->
-                                        <!-- <small class="">{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</small> -->
-                                        <!-- <small class="alingLeft fuente negrita"
-                                            [ngStyle]="{'color': item.backColor ? item.backColor : '#000' }">
-                                            {{ item.tarea_Estado}}</small> -->
-                                        <small>{{ 'crm.tarea.creador' | translate }}
-                                            {{item.usuario_Creador}}</small>
-                                        <small class="alingLeft fuente"> {{ 'crm.tarea.responsable' | translate }} {{
-                                            resolveObject(item.usuario_Responsable)}}</small>
-                                        <br>
-                                        <!-- id de la referencia y descripcion -->
-                                        <small>{{ 'crm.tarea.idReferencia' | translate }} {{item.iD_Referencia}}</small>
-                                        <small class="alingLeft fuente"> {{ 'crm.tarea.fechaIni' | translate }}
-                                            {{item.fecha_Inicial |
-                                            date: 'dd/MM/yyyy'}}</small>
-                                        <br>
-                                        <!-- Descripcion (observacion) Tarea -->
-                                        <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
-                                            <small>{{ 'crm.tarea.descripcion' | translate }}</small>
-                                            <p class="descripcion">{{item.tarea_Observacion_1}}</p>
-                                        </div>
-                                    </a>
+                                            <div class="dFlex">
+                                                <p>{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</p>
+                                                <span class="spacer"></span>
+                                                <p class="alingLeft fuente negrita">{{ item.tarea_Estado}}</p>
+                                                <div class="circulo-estado"
+                                                    [ngStyle]="{'background-color': item.backColor ? item.backColor : '#000'}">
+                                                </div>
+                                            </div>
+                                            <small>{{ 'crm.tarea.creador' | translate }}
+                                                {{item.usuario_Creador}}</small>
+                                            <small class="alingLeft fuente"> {{ 'crm.tarea.responsable' | translate }}
+                                                {{
+                                                resolveObject(item.usuario_Responsable)}}</small>
+                                            <br>
+                                            <!-- id de la referencia y descripcion -->
+                                            <small>{{ 'crm.tarea.idReferencia' | translate }}
+                                                {{item.iD_Referencia}}</small>
+                                            <small class="alingLeft fuente"> {{ 'crm.tarea.fechaIni' | translate }}
+                                                {{item.fecha_Inicial |
+                                                date: 'dd/MM/yyyy'}}</small>
+                                            <br>
+                                            <!-- Descripcion (observacion) Tarea -->
+                                            <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
+                                                <small>{{ 'crm.tarea.descripcion' | translate }}</small>
+                                                <p class="descripcion">{{item.tarea_Observacion_1}}</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas">
-                    Veremos las tareas creadas por el usuario que inició sesion
-                </section>
+                    <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas">
+                        Veremos las tareas creadas por el usuario que inició sesion
+                    </section>
 
-                <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
-                    Veremos las tareas asignadas al usuario que inició sesion
-                </section>
+                    <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
+                        Veremos las tareas asignadas al usuario que inició sesion
+                    </section>
 
-                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
-                    Veremos las tareas a las que el usuario que inició sesion es invitado
-                </section>
+                    <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
+                        Veremos las tareas a las que el usuario que inició sesion es invitado
+                    </section>
+                </div>
             </div>
+            <!-- Mostrar logos -->
+            <app-barra-logos></app-barra-logos>
         </div>
-        <!-- Mostrar logos -->
-        <app-barra-logos></app-barra-logos>
     </div>
 </div>

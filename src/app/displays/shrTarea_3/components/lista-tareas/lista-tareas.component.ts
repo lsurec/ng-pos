@@ -30,6 +30,9 @@ export class ListaTareasComponent implements OnInit {
   verError: boolean = false;
   regresar: number = 1;
 
+  contenidoTareas: boolean = true;
+
+
   verTareas: boolean = true;
   verAsignadas: boolean = false;
   verCreadas: boolean = false;
@@ -168,6 +171,13 @@ export class ListaTareasComponent implements OnInit {
     this.tareaGlobalService.tareaDetalles = tarea;
     this._actualizar.tareaCompleta = tarea;
     this._actualizar.tareas.next(this._actualizar.tareaCompleta);
+
+    this.detalles();
+  }
+
+  //ver pantalla de Home
+  backPage(value: boolean): void {
+    this.verDetalles = value;
   }
 
 
@@ -249,11 +259,14 @@ export class ListaTareasComponent implements OnInit {
     this.verDetalles = false;
     this.verCrear = false;
   }
+
   detalles() {
     this.verDetalles = true;
     this.isLoading = false;
     this.verTareas = false;
     this.verCrear = false;
+    this.contenidoTareas = false;
+
   }
 
   crear() {
@@ -293,5 +306,9 @@ export class ListaTareasComponent implements OnInit {
     this.verCreadas = false;
   }
 
+
+  contenido() {
+    this.contenidoTareas = true;
+  }
 
 }
