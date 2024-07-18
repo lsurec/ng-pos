@@ -26,7 +26,7 @@ export class FelService {
         header = header.set( "Authorization", "bearer " + token);
     
         //consumo de api
-        return this._http.post(url, body, { headers: header, observe: 'response' });
+        return this._http.post(url, body, { headers: header, observe: 'response', responseType: 'text' });
 
     }
 
@@ -56,7 +56,6 @@ export class FelService {
                 },
                 //si algo sale mal
                 err => {
-                    console.log(err);
                     
                     try {
                         let response: ResponseInterface = <ResponseInterface>err.error;

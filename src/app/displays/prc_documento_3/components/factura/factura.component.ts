@@ -2311,7 +2311,6 @@ export class FacturaComponent implements OnInit {
 
     if (!resDte.status) {
 
-
       let error: TypeErrorInterface = {
         error: resDte,
         type: 1,
@@ -2360,7 +2359,6 @@ export class FacturaComponent implements OnInit {
       }
 
 
-
       
       let updateDocRes: TypeErrorInterface = await this.updateDTE(
         paramUpdate,
@@ -2406,13 +2404,9 @@ export class FacturaComponent implements OnInit {
       paramUpdate,
     )
 
-
-
     if (!resUpdateXml.status) {
 
-
-
-
+      
       let error: TypeErrorInterface = {
         error: resUpdateXml,
         type: 1,
@@ -2462,6 +2456,8 @@ export class FacturaComponent implements OnInit {
       error: resUpdateXml,
       type: 0,
     }
+
+    
 
     return error;
   }
