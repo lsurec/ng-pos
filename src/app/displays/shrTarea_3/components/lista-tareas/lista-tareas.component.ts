@@ -8,6 +8,7 @@ import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TareaInterface } from '../../interfaces/tarea-user.interface';
+import { PreferencesService } from 'src/app/services/preferences.service';
 
 @Component({
   selector: 'app-lista-tareas',
@@ -161,18 +162,43 @@ export class ListaTareasComponent implements OnInit {
 
     this.isLoading = false;
 
-    //Si el servico se ejecuta mal mostrar menaje
+    // //Si el servico se ejecuta mal mostrar menaje
+    // if (!resTarea.status) {
+
+    //   if (this.searchText.length == 0) {
+    //     this.tareasTop10();
+    //   } else {
+    //     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
+    //     console.error(resTarea.response);
+    //     console.error(resTarea.storeProcedure);
+    //     return
+    //   }
+    // }
+
+
+    //si algo salio mal
     if (!resTarea.status) {
 
-      if (this.searchText.length == 0) {
-        this.tareasTop10();
-      } else {
-        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-        console.error(resTarea.response);
-        console.error(resTarea.storeProcedure);
-        return
-      }
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
     }
+
+
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.buscarTareas = resTarea.response;
   };
@@ -351,5 +377,29 @@ export class ListaTareasComponent implements OnInit {
     this.verDetalles = false;
     this.tareaGlobalService.contenidoTareas = true;
   }
+
+
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardra error
+    PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
+    this.verError = true;
+  }
+
 
 }
