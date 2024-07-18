@@ -44,5 +44,6 @@ export class GlobalTareasService {
 
     //0 = Todas; 1 = Mis tareas; 2 = Invitaciones; 3 = Asignadas 
     opcionFiltro: number = 0;
+    contenidoTareas: boolean = true;
 
 }

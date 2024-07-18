@@ -30,7 +30,7 @@ export class ListaTareasComponent implements OnInit {
   verError: boolean = false;
   regresar: number = 1;
 
-  contenidoTareas: boolean = true;
+  // contenidoTareas: boolean = true;
 
 
   verTareas: boolean = true;
@@ -265,7 +265,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = false;
     this.verTareas = false;
     this.verCrear = false;
-    this.contenidoTareas = false;
+    this.tareaGlobalService.contenidoTareas = false;
 
   }
 
@@ -308,7 +308,7 @@ export class ListaTareasComponent implements OnInit {
 
 
   contenido() {
-    this.contenidoTareas = true;
+    this.tareaGlobalService.contenidoTareas = true;
   }
 
 }

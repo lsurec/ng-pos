@@ -211,6 +211,9 @@ export class DetalleTareaComponent {
   //regresar a la pantalla anterior.
   backPage(): void {
     this.newItemEvent.emit(true);
+
+    // this.newItemEvent.emit(false);
+    // this.tareasGlobalService.contenidoTareas = true;
   }
 
   //Abrir cerrar Sidenav
