@@ -6,6 +6,9 @@ $fondo         : var(--fondo-claro); //fondo Demosoft
 $scroll        : var(--global-color); //barra azul
 $pestanas      : var(--pestana);
 $activa        : var(--activa-p);
+$gris          : var(--gris); //texto gris
+$sombra        : var(--sombra-claro);
+
 
 //Pantalla de carga
 .progress {
@@ -141,4 +144,258 @@ $activa        : var(--activa-p);
     font-size  : 14px;
     text-align : justify;
     font-weight: 500;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+/*Contendo derecho*/
+
+.head__sidenav {
+    height          : 64px !important;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.container_main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
+}
+
+.container_main::-webkit-scrollbar-track {
+    background-color: $fondo;
+}
+
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+}
+
+.container_page {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    background-color: $fondo;
+}
+
+.regresar-crear {
+    display    : flex;
+    align-items: center;
+}
+
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $fondo;
+}
+
+.container_main {
+    padding   : 0px 15px;
+    width     : 100%;
+    height    : calc(100vh - 192px) !important;
+    float     : left;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 767px) {
+
+    .container_main {
+        width     : 100%;
+        /* padding: 20px; */
+    }
+
+}
+
+.inputSearch {
+    text-align: center !important;
+}
+
+/* Estilo para el contenedor del icono y el campo de entrada */
+.input-container-tarea {
+    position: relative;
+    margin  : 10px 0 0;
+    padding : 0px 15px;
+}
+
+/* Estilo para el icono */
+.iconoLupa {
+    position   : absolute;
+    top        : 46%;
+    /* Ajusta la posición verticalmente según sea necesario */
+    left       : 1.5%;
+    /* Ajusta la posición horizontalmente según sea necesario */
+    transform  : translateY(-50%);
+    color      : $personalizado;
+    align-items: center;
+}
+
+/* estilos para los inputs */
+.barra-de-busqueda {
+    height       : 45px;
+    width        : 100%;
+    background   : none;
+    font-size    : 14px;
+    padding-left : 50px;
+    outline      : none;
+    border-style : none;
+    border       : 0.5px solid $bordes;
+    color        : $personalizado;
+    border-radius: 20px;
+}
+
+.coincidencias {
+    font-size    : 12px;
+    text-align   : right;
+    padding-right: 20px;
+    cursor       : pointer;
+}
+
+.tipo-busqueda {
+    text-align: center;
+    width     : 100%;
+    padding   : 10px 15px 5px;
+}
+
+.buscar {
+    padding-left: 5px;
+    display     : flex;
+}
+
+.buscar-opcion {
+    font-size    : 12px;
+    text-align   : left;
+    padding-right: 5px;
+    padding-left : 15px;
+}
+
+/*Boton ir arriba*/
+.button_up_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    right           : 40px;
+    font-size       : 20px;
+    background-color: $personalizado;
+}
+
+
+.button_down_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    /* Ajusta la posición según tus preferencias */
+    right           : 40px;
+    /* Ajusta la posición según tus preferencias */
+    font-size       : 20px;
+    background-color: $personalizado;
+    /* Ajusta el color según tus preferencias */
+}
+
+@media screen and (max-width: 992px) {
+    .button_up_content {
+        bottom   : 75px;
+        right    : 30px;
+        font-size: 20px;
+    }
+}
+
+.tareas {
+    margin: 0px 15px 0px;
+}
+
+/* estilos para la lista de las tareas */
+.espacioLista {
+    width         : 100%;
+    padding-bottom: 25px;
+    cursor        : pointer;
+}
+
+/* sombra y elevacion de items de lista */
+.tarea {
+    background-color: $fondo;
+    border-radius   : 5px;
+    font-size       : 17px;
+    box-shadow      : $sombra;
+    padding         : 10px;
+}
+
+/* justificar texto */
+.justificar {
+    text-align: justify;
+}
+
+/* fuente negrita */
+.negrita {
+    font-weight: bold;
+}
+
+/*Fin Contendo derecho*/
+.fuente {
+    font-size: 16px;
+}
+
+/* alinea fecha a la derecha */
+.alingLeft {
+    float: right;
+}
+
+.circulo-estado {
+    width        : 15px;
+    height       : 15px;
+    border       : 1px solid $gris;
+    border-radius: 50%;
+    margin-left  : 10px;
+}
+
+@media screen and (max-width: 365px) {
+    .iconoLupa {
+        left: 5.5% !important;
+    }
+}
+
+p {
+    margin: 0px;
+}
+
+.chip {
+    display      : inline-block;
+    padding      : 5px 8px;
+    margin       : 4px;
+    cursor       : pointer;
+    border       : 1px solid $gris;
+    border-radius: 20px;
+    font-size    : 12px;
+}
+
+.selected {
+    background-color: $personalizado;
+    color           : var(--blanco);
+    border          : 1px solid $personalizado;
+}
+
+.descripcion {
+    text-align   : justify;
+    overflow-wrap: break-word;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+    padding-top: 3px;
+}
+
+.tarea:hover {
+    background: $bordes;
+}
+
+.tarjeta-tarea {
+    width     : 100%;
+    padding   : 10px;
+    box-shadow: $sombra;
+    margin    : 5px 0px;
 }

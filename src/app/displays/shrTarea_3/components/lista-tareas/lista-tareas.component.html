@@ -38,7 +38,75 @@
                 </div>
 
                 <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
-                    Veremos todas las tareas del portal
+                    <!-- Veremos todas las tareas del portal -->
+                    <div class="container_main" #contentContainer>
+                        <!-- Buscar tareas por coincidencias -->
+                        <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
+                            <div class="input-container-tarea">
+                                <button class="iconoLupa" mat-icon-button>
+                                    <mat-icon>search</mat-icon> </button>
+                                <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
+                                    autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                            </div>
+                            <p class="coincidencias">{{'crm.home.registros' | translate}}
+                                {{buscarTareas.length}}
+                            </p>
+                        </form>
+                        <!--Boton ir arriba-->
+                        <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+                            <mat-icon>arrow_upward</mat-icon>
+                        </button>
+                        <!--Boton ir abajo-->
+                        <button *ngIf="irAbajo && !irArriba" mat-mini-fab class="button_down_content"
+                            (click)="scrollDown()">
+                            <mat-icon>south</mat-icon>
+                        </button>
+                        <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
+                        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+                        <!--Lista de todas las tareas-->
+                        <div *ngIf="buscarTareas.length != 0" class="tareas">
+                            <div *ngFor="let item of buscarTareas">
+                                <div class="list-group espacioLista " (click)="viewTask(item)">
+                                    <a
+                                        class="tarea list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <!-- Titulo Tarea -->
+                                            <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
+                                        </div>
+                                        <div class="dFlex">
+                                            <p>{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</p>
+                                            <span class="spacer"></span>
+                                            <p class="alingLeft fuente negrita">{{ item.tarea_Estado}}</p>
+                                            <div class="circulo-estado"
+                                                [ngStyle]="{'background-color': item.backColor ? item.backColor : '#000'}">
+                                            </div>
+                                        </div>
+                                        <!-- Numero de tarea y fecha inicial -->
+                                        <!-- <small class="">{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</small> -->
+                                        <!-- <small class="alingLeft fuente negrita"
+                                            [ngStyle]="{'color': item.backColor ? item.backColor : '#000' }">
+                                            {{ item.tarea_Estado}}</small> -->
+                                        <small>{{ 'crm.tarea.creador' | translate }}
+                                            {{item.usuario_Creador}}</small>
+                                        <small class="alingLeft fuente"> {{ 'crm.tarea.responsable' | translate }} {{
+                                            resolveObject(item.usuario_Responsable)}}</small>
+                                        <br>
+                                        <!-- id de la referencia y descripcion -->
+                                        <small>{{ 'crm.tarea.idReferencia' | translate }} {{item.iD_Referencia}}</small>
+                                        <small class="alingLeft fuente"> {{ 'crm.tarea.fechaIni' | translate }}
+                                            {{item.fecha_Inicial |
+                                            date: 'dd/MM/yyyy'}}</small>
+                                        <br>
+                                        <!-- Descripcion (observacion) Tarea -->
+                                        <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
+                                            <small>{{ 'crm.tarea.descripcion' | translate }}</small>
+                                            <p class="descripcion">{{item.tarea_Observacion_1}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas">
