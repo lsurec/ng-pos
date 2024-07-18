@@ -199,4 +199,13 @@ export class EventService {
     verTareasDesdeCrearEvent(eventData: boolean) {
         this.verTareasDesdeCrear.next(eventData);
     }
+
+    //Regresar a tareas desde error
+    private regresarTareasDeError = new Subject<any>();
+
+    regresarTareasDeError$ = this.regresarTareasDeError.asObservable();
+
+    regresarTareasDeErrorEvent(eventData: boolean) {
+        this.regresarTareasDeError.next(eventData);
+    }
 }

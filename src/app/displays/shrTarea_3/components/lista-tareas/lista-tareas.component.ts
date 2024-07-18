@@ -29,10 +29,7 @@ export class ListaTareasComponent implements OnInit {
   verCrear: boolean = false;
   isLoading: boolean = false;
   verError: boolean = false;
-  regresar: number = 1;
-
-  // contenidoTareas: boolean = true;
-
+  regresar: number = 17;
 
   verTareas: boolean = true;
   verAsignadas: boolean = false;
@@ -75,6 +72,10 @@ export class ListaTareasComponent implements OnInit {
       this.tareas();
     });
 
+    //mostrar contenido a regresar de error
+    this._eventService.regresarTareasDeError$.subscribe((eventData) => {
+      this.contenido();
+    });
 
   }
 
@@ -110,12 +111,26 @@ export class ListaTareasComponent implements OnInit {
 
     this.isLoading = false;
 
-    //Si el servico se ejecuta mal mostrar menaje
+    //si algo salio mal
     if (!resTopTareas.status) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resTopTareas.response);
-      console.error(resTopTareas.storeProcedure);
-      return
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTopTareas);
+
+      return;
+
     }
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.buscarTareas = resTopTareas.response;
@@ -161,20 +176,6 @@ export class ListaTareasComponent implements OnInit {
     );
 
     this.isLoading = false;
-
-    // //Si el servico se ejecuta mal mostrar menaje
-    // if (!resTarea.status) {
-
-    //   if (this.searchText.length == 0) {
-    //     this.tareasTop10();
-    //   } else {
-    //     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-    //     console.error(resTarea.response);
-    //     console.error(resTarea.storeProcedure);
-    //     return
-    //   }
-    // }
-
 
     //si algo salio mal
     if (!resTarea.status) {
@@ -374,6 +375,7 @@ export class ListaTareasComponent implements OnInit {
 
 
   contenido() {
+    this.verError = false;
     this.verDetalles = false;
     this.tareaGlobalService.contenidoTareas = true;
   }

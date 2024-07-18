@@ -167,7 +167,7 @@ export class TareaService {
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}tareas//buscar`, { headers: headers });
+        return this._http.get(`${this._urlBase}tareas/buscar`, { headers: headers });
     }
 
     // funcion asyncrona con promise

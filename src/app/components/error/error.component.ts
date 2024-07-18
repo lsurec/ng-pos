@@ -125,6 +125,10 @@ export class ErrorComponent implements OnInit {
         //desde a registro de eerores
         this._eventService.verErroresEvent(true);
         break;
+      case 17:
+        //desde a registro de eerores
+        this._eventService.regresarTareasDeErrorEvent(true);
+        break;
       default:
         this._location.back();
 
