@@ -3,7 +3,9 @@
     <app-progress *ngIf="isLoading" class="progress"></app-progress>
     <div *ngIf="!isLoading">
 
-        <app-detalle-tarea (newItemEvent)="backPage($event)" *ngIf="verDetalles"></app-detalle-tarea>
+        <app-detalle-tarea *ngIf="verDetalles && !verCrear"></app-detalle-tarea>
+        <app-nueva-tarea *ngIf="verCrear && !verDetalles" (desdeTareas)="backPageTareas($event)"
+            (nuevaTarea)="addItem($event)"></app-nueva-tarea>
 
         <div *ngIf="tareaGlobalService.contenidoTareas">
             <mat-toolbar-row class="head__sidenav">
@@ -16,7 +18,11 @@
                 <span class="spacer"></span>
                 <p class="titulo">Tareas</p>
                 <span class="spacer"></span>
-
+                <button mat-raised-button class="boton-azul" (click)="nuevaTarea()"
+                    matTooltip="{{'crm.crear.crear' | translate}}">
+                    <mat-icon>add</mat-icon>
+                    {{'crm.crear.crear' | translate}}
+                </button>
             </mat-toolbar-row>
             <div class="container-main" *ngIf="!isLoading">
 

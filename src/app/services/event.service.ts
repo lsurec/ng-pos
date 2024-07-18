@@ -190,4 +190,13 @@ export class EventService {
     verTareasEvent(eventData: boolean) {
         this.verTareas.next(eventData);
     }
+
+    //Regresar a tareas desde crear
+    private verTareasDesdeCrear = new Subject<any>();
+
+    verTareasDesdeCrear$ = this.verTareasDesdeCrear.asObservable();
+
+    verTareasDesdeCrearEvent(eventData: boolean) {
+        this.verTareasDesdeCrear.next(eventData);
+    }
 }

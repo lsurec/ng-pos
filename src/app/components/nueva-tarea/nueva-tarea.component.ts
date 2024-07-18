@@ -36,6 +36,7 @@ import { UsuariosDialogComponent } from '../usuarios-dialog/usuarios-dialog.comp
 import { BuscarIdReferenciaComponent } from '../buscar-id-referencia/buscar-id-referencia.component';
 import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.component';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-nueva-tarea',
@@ -140,7 +141,8 @@ export class NuevaTareaComponent implements OnInit {
     private _nuevaTarea: CrearTareasComentariosService,
     private _nuevoComentario: CrearTareasComentariosService,
     public tareasGlobalService: GlobalTareasService,
-    private customDatepickerI18n: CustomDatepickerI18n
+    private customDatepickerI18n: CustomDatepickerI18n,
+    private _eventService: EventService,
 
   ) {
 
@@ -937,10 +939,13 @@ export class NuevaTareaComponent implements OnInit {
 
   //regresar a la pantalla anterior.
   backPage(): void {
+    this._eventService.verTareasDesdeCrearEvent(true);
+
+  
     //DOS EVENTOS
-    this.newItemEvent.emit(true); //Calendario
-    this.desdeCalendario.emit(true);
-    this.desdeTareas.emit(true);
+    // this.newItemEvent.emit(true); //Calendario
+    // this.desdeCalendario.emit(true);
+    // this.desdeTareas.emit(true);
   };
 
   //limpiar formulario de tareas

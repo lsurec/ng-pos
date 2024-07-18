@@ -62,8 +62,14 @@ export class ListaTareasComponent implements OnInit {
 
     window.addEventListener('scroll', this.scrollEvent, true);
 
-    //Evento para mostla lista de documentos
+    //Evento para mostla lista de tareas
     this._eventService.verTareas$.subscribe((eventData) => {
+      this.contenido();
+      this.tareas();
+    });
+
+    //Mostrar tareas regresando de crear
+    this._eventService.verTareasDesdeCrear$.subscribe((eventData) => {
       this.contenido();
       this.tareas();
     });
@@ -202,6 +208,8 @@ export class ListaTareasComponent implements OnInit {
     this.tareaGlobalService.idPantalla = 1;
     // this.hideDetalle = false;
     // this.mostrarTareas = false;
+
+    this.crear();
   }
 
   //ver pantalla de Home
@@ -280,23 +288,34 @@ export class ListaTareasComponent implements OnInit {
     this.verDetalles = false;
     this.isLoading = false;
     this.verTareas = false;
+    this.tareaGlobalService.contenidoTareas = false;
+    this.tareaGlobalService.fechaIni = new Date();
+    this.tareaGlobalService.idPantalla = 1;
+
   }
 
   tareas() {
     this.tareaGlobalService.opcionFiltro = 0;
-    this.tareasTop10();
-    this.searchText = "";
+    if (!this.verTareas) {
+      this.tareasTop10();
+      this.searchText = "";
+    }
     this.verTareas = true;
     this.verAsignadas = false;
     this.verCreadas = false;
     this.verInvitaciones = false;
+    this.verCrear = false;
   }
 
   creadas() {
     //Mis tareas (Creadas por mí)
     this.tareaGlobalService.opcionFiltro = 1;
-    this.tareasTop10();
-    this.searchText = "";
+
+    if (!this.verCreadas) {
+      this.tareasTop10();
+      this.searchText = "";
+    }
+
     this.verCreadas = true;
     this.verTareas = false;
     this.verAsignadas = false;
@@ -315,8 +334,12 @@ export class ListaTareasComponent implements OnInit {
   invitaciones() {
     //Invitaciones (Invitados por mí)
     this.tareaGlobalService.opcionFiltro = 2;
-    this.tareasTop10();
-    this.searchText = "";
+
+    if (!this.verInvitaciones) {
+      this.tareasTop10();
+      this.searchText = "";
+    }
+
     this.verInvitaciones = true;
     this.verTareas = false;
     this.verAsignadas = false;
