@@ -283,6 +283,9 @@ export class ListaTareasComponent implements OnInit {
   }
 
   tareas() {
+    this.tareaGlobalService.opcionFiltro = 0;
+    this.tareasTop10();
+    this.searchText = "";
     this.verTareas = true;
     this.verAsignadas = false;
     this.verCreadas = false;
@@ -290,6 +293,10 @@ export class ListaTareasComponent implements OnInit {
   }
 
   creadas() {
+    //Mis tareas (Creadas por mí)
+    this.tareaGlobalService.opcionFiltro = 1;
+    this.tareasTop10();
+    this.searchText = "";
     this.verCreadas = true;
     this.verTareas = false;
     this.verAsignadas = false;
@@ -306,6 +313,10 @@ export class ListaTareasComponent implements OnInit {
   }
 
   invitaciones() {
+    //Invitaciones (Invitados por mí)
+    this.tareaGlobalService.opcionFiltro = 2;
+    this.tareasTop10();
+    this.searchText = "";
     this.verInvitaciones = true;
     this.verTareas = false;
     this.verAsignadas = false;
