@@ -46,10 +46,6 @@ export class DetalleTareaComponent {
 
   // comunicacion entre componentes
   @Output() newItemEvent = new EventEmitter<boolean>();
-  //Idiomas disponibles para la aplicacion 
-  activeLang!: LanguageInterface;
-  languages: LanguageInterface[] = languagesProvider;
-
   //abirir y cerrar el mat expander
   desplegarDetalles: boolean = false;
   fechaHoy: Date = new Date();
@@ -97,20 +93,12 @@ export class DetalleTareaComponent {
     private _eventService: EventService,
 
   ) {
-    //obtener el idioma gardado en el servicio
-    let getLanguage = PreferencesService.lang;
-    if (!getLanguage) {
-      //si no se encuentra asignar el idioma por defecto
-      this.activeLang = languagesProvider[indexDefaultLang];
-    } else {
-      //si se encuentra asignar el idioma que esta guardado
-      let getIndexLang: number = +getLanguage;
-      this.activeLang = languagesProvider[getIndexLang];
-    }
-
     this.fechaHoy = new Date();
 
-    //nombre del usuario logueado.
+    //mostrar contenido a regresar de error
+    this._eventService.regresarDetalleTareaDeError$.subscribe((eventData) => {
+      this.verError = false;
+    });
   }
 
   //TODO: ya envia valores booleanos

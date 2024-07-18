@@ -208,4 +208,13 @@ export class EventService {
     regresarTareasDeErrorEvent(eventData: boolean) {
         this.regresarTareasDeError.next(eventData);
     }
+
+    //Regresar a detalle de tarea desde error
+    private regresarDetalleTareaDeError = new Subject<any>();
+
+    regresarDetalleTareaDeError$ = this.regresarDetalleTareaDeError.asObservable();
+
+    regresarDetalleTareaDeErrorEvent(eventData: boolean) {
+        this.regresarDetalleTareaDeError.next(eventData);
+    }
 }
