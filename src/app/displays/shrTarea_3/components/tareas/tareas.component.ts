@@ -143,7 +143,7 @@ export class TareasComponent {
     if (this.selectedOption == 1) {
       this.isLoading = true;
       //Consumo de api
-      let resTareasDesc: ResApiInterface = await this._tareaService.getTareasFiltro(this.searchText);
+      let resTareasDesc: ResApiInterface = await this._tareaService.getTareasFiltroAnterior(this.searchText);
 
       this.isLoading = false;
 

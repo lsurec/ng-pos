@@ -113,7 +113,60 @@ export class TareaService {
     }
 
     //funcion que va a realizar el consumo en privado.
-    private _getTareasFiltro(filtro: string) {
+    private _getTareasFiltro(filtro: string, opcion: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "filtro": filtro,
+                "opcion": opcion,
+
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/buscar`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasFiltro(filtro: string, opcion: number): Promise<ResApiInterface> {
+        //consumo del primer servicio
+        return new Promise((resolve, reject) => {
+            this._getTareasFiltro(filtro, opcion).subscribe(
+                //si esta correcto
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                },
+                //si algo sale mal
+                err => {
+                    let response: ResponseInterface = <ResponseInterface>err;
+
+                    let resApi: ResApiInterface = {
+                        status: false,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    }
+                    resolve(resApi);
+                }
+            )
+
+        })
+
+    }
+
+    //funcion que va a realizar el consumo en privado.
+    private _getTareasFiltroAnterior(filtro: string) {
 
         //configurar headers
         let headers = new HttpHeaders(
@@ -130,10 +183,10 @@ export class TareaService {
 
     // funcion asyncrona con promise
 
-    getTareasFiltro(filtro: string): Promise<ResApiInterface> {
+    getTareasFiltroAnterior(filtro: string): Promise<ResApiInterface> {
         //consumo del primer servicio
         return new Promise((resolve, reject) => {
-            this._getTareasFiltro(filtro).subscribe(
+            this._getTareasFiltroAnterior(filtro).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
