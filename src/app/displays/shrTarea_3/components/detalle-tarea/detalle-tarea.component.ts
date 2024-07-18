@@ -27,6 +27,7 @@ import { NivelPrioridadInterface } from '../../interfaces/prioridad-tarea.interf
 import { ActualizarUsuariosComponent } from 'src/app/components/actualizar-usuarios/actualizar-usuarios.component';
 import { EliminarUsuarioInterface } from '../../interfaces/eliminar-usuario.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-detalle-tarea',
@@ -90,6 +91,7 @@ export class DetalleTareaComponent {
     private themeService: ThemeService,
     private _translate: TranslateService,
     public tareasGlobalService: GlobalTareasService,
+    private _eventService: EventService,
 
   ) {
     //obtener el idioma gardado en el servicio
@@ -210,10 +212,7 @@ export class DetalleTareaComponent {
 
   //regresar a la pantalla anterior.
   backPage(): void {
-    this.newItemEvent.emit(true);
-
-    // this.newItemEvent.emit(false);
-    // this.tareasGlobalService.contenidoTareas = true;
+    this._eventService.verTareasEvent(true);
   }
 
   //Abrir cerrar Sidenav

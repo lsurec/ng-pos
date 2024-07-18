@@ -62,6 +62,12 @@ export class ListaTareasComponent implements OnInit {
 
     window.addEventListener('scroll', this.scrollEvent, true);
 
+    //Evento para mostla lista de documentos
+    this._eventService.verTareas$.subscribe((eventData) => {
+      this.contenido();
+      this.tareas();
+    });
+
 
   }
 
@@ -308,6 +314,7 @@ export class ListaTareasComponent implements OnInit {
 
 
   contenido() {
+    this.verDetalles = false;
     this.tareaGlobalService.contenidoTareas = true;
   }
 

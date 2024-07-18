@@ -181,4 +181,13 @@ export class EventService {
     verErroresEvent(eventData: boolean) {
         this.verErrores.next(eventData);
     }
+
+    //Regresar a ver tareas
+    private verTareas = new Subject<any>();
+
+    verTareas$ = this.verTareas.asObservable();
+
+    verTareasEvent(eventData: boolean) {
+        this.verTareas.next(eventData);
+    }
 }
