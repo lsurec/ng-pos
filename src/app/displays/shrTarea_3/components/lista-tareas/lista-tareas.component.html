@@ -1,48 +1,60 @@
-<div *ngIf="verCarga" class="carga">
-    <p>cargando</p>
-    <button mat-raised-button (click)="tareas()">
-        Dejar de cargar y volver a tareas
-    </button>
-</div>
-<div *ngIf="!verCarga" class="contenido">
-    <div *ngIf="verCrear" class="crear">
-        <p>Crear</p>
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <div *ngIf="!isLoading">
+        <mat-toolbar-row class="head__sidenav">
+            <button mat-icon-button matTooltip="{{'pos.toolTip.regresarAnterior' | translate}}" (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <p class="titulo">Tareas</p>
+            <span class="spacer"></span>
 
-        <button mat-raised-button (click)="tareas()">
-            Ver Tareas
-        </button>
+        </mat-toolbar-row>
+        <div>
+            <div class="container-main" *ngIf="!isLoading">
 
-        <button mat-raised-button (click)="cargar()">
-            Ver Cargar
-        </button>
-    </div>
+                <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]="verTareas">
+                <div class="pestana" for="tab1" matTooltip="Todas" (click)="tareas()">
+                    Todas
+                </div>
 
+                <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]="verCreadas">
+                <div class="pestana" for="tab2" matTooltip="Creadas" (click)="creadas()">
+                    Creadas
+                </div>
 
-    <div *ngIf="verDetalles" class="detalle">
-        <p>Detalles</p>
+                <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
+                <div class="pestana" for="tab3" matTooltip="Asignadas" (click)="asignadas()">
+                    Asignadas
+                </div>
 
-        <button mat-raised-button (click)="tareas()">
-            Ver Tareas
-        </button>
+                <input class="titulo-pestana" id="tab4" type="radio" name="tabs" [checked]="verInvitaciones">
+                <div class="pestana" for="tab4" matTooltip="Invitaciones" (click)="invitaciones()">
+                    Invitaciones
+                </div>
 
-        <button mat-raised-button (click)="cargar()">
-            Ver Cargar
-        </button>
-    </div>
+                <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
+                    Veremos todas las tareas del portal
+                </section>
 
-    <div *ngIf="verTareas" class="tareas">
-        <p>Tareas</p>
+                <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas">
+                    Veremos las tareas creadas por el usuario que inició sesion
+                </section>
 
-        <button mat-raised-button (click)="crear()">
-            Ver Crear
-        </button>
-        <button mat-raised-button (click)="detalles()">
-            Ver Detalles
-        </button>
+                <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
+                    Veremos las tareas asignadas al usuario que inició sesion
+                </section>
 
-        <button mat-raised-button (click)="cargar()">
-            Ver Cargar
-        </button>
-
+                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
+                    Veremos las tareas a las que el usuario que inició sesion es invitado
+                </section>
+            </div>
+        </div>
+        <!-- Mostrar logos -->
+        <app-barra-logos></app-barra-logos>
     </div>
 </div>

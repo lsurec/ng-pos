@@ -102,6 +102,7 @@ export class AppComponent implements OnInit {
     document.documentElement.style.setProperty('--hover', "#ebebeb");
     document.documentElement.style.setProperty('--pestana', "#555");
     document.documentElement.style.setProperty('--dias', "#a9a9a9");
+    document.documentElement.style.setProperty('--activa-p', "#ffa500");
 
 
 

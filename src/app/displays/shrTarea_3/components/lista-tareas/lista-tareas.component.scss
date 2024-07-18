@@ -1,23 +1,144 @@
-.detalle {
-    width     : 100%;
-    height    : 100vh;
-    background: rebeccapurple;
+$negro         : var(--negro);
+$color-blanco  : var(--blanco);
+$personalizado : var(--global-color);
+$bordes        : var(--bordes-claro); //bordes menu
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$pestanas      : var(--pestana);
+$activa        : var(--activa-p);
+
+//Pantalla de carga
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $fondo;
 }
 
-.tareas {
-    width     : 100%;
-    height    : 100vh;
-    background: yellow;
+//Barra de contenido
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
 }
 
-.crear {
-    width     : 100%;
-    height    : 100vh;
-    background: yellowgreen;
+//ICONOS
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
 }
 
-.carga {
-    width     : 100%;
-    height    : 100vh;
-    background: blue;
+.contenido-seleccionado {
+    display   : none;
+    border-top: 1px solid $bordes;
+}
+
+.titulo-pestana {
+    display: none;
+}
+
+.pestana {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 15px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $pestanas;
+    border     : 2px solid transparent;
+}
+
+.pestana::before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+.pestana[for*='1']:before {
+    content: '\f0ae';
+}
+
+.pestana[for*='2']:before {
+    content: '\f044';
+}
+
+.pestana[for*='3']:before {
+    content: '\f007';
+}
+
+.pestana[for*='4']:before {
+    content: '\f0e0';
+}
+
+.pestana:hover {
+    color : $personalizado;
+    cursor: pointer;
+}
+
+.titulo-pestana:checked+.pestana {
+    color        : $personalizado;
+    border       : 1px solid $bordes;
+    border-top   : 3px solid $activa;
+    border-bottom: 0px;
+}
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3,
+#tab4:checked~.content4 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .pestana {
+        font-size: 0;
+    }
+
+    .pestana:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .pestana {
+        padding: 15px;
+    }
+}
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+}
+
+//Estilo para el contenedor del icono y el campo de entrada
+.input-container {
+    position     : relative;
+    display      : flex;
+    align-items  : center;
+    width        : 100%;
+    border-bottom: 1px solid $bordes;
+    margin-bottom: 5px;
+}
+
+.input-container:hover {
+    border-bottom: 1px solid $personalizado;
+}
+
+//Estilos de Tareas
+
+.titulo {
+    font-size  : 14px;
+    text-align : justify;
+    font-weight: 500;
 }

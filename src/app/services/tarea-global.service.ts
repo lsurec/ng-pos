@@ -42,4 +42,7 @@ export class GlobalTareasService {
 
     buscarUsuarios: number = 0;
 
+    //0 = Todas; 1 = Mis tareas; 2 = Invitaciones; 3 = Asignadas 
+    opcionFiltro: number = 0;
+
 }
