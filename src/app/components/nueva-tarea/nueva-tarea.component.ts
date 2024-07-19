@@ -787,11 +787,23 @@ export class NuevaTareaComponent implements OnInit {
     let resEstados: ResApiInterface = await this._estadoService.getEstado();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEstados.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resEstados.response);
-      console.error(resEstados.storeProcedure);
+      this.isLoading = false;
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resEstados);
+
       return;
-    };
+    }
+
     //Guardar Estados de la tarea
     this.estadosTarea = resEstados.response;
   };
