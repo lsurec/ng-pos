@@ -51,7 +51,6 @@
                                                             <p class="negrita">{{ 'crm.detalles.fechaIni' | translate }}
                                                             </p>
                                                             <p>
-                                                                <!-- {{dateFormat(tareaDetalle!.tarea_Fecha_Ini)}} -->
                                                                 {{tareaDetalle!.tarea_Fecha_Ini
                                                                 | date: 'dd/MM/yyyyhh:mm a'}}
                                                             </p>
@@ -65,8 +64,6 @@
                                                             <p class="negrita">{{ 'crm.detalles.fechaFin' | translate }}
                                                             </p>
                                                             <p>
-                                                                <!-- {{dateFormat(tareaDetalle!.tarea_Fecha_Fin)}} -->
-
                                                                 {{tareaDetalle!.tarea_Fecha_Fin
                                                                 | date: 'dd/MM/yyyy hh:mm a'}}
                                                             </p>
@@ -76,8 +73,9 @@
                                                     <div class="elementos-detalle">
                                                         <mat-icon class="ico_uno">arrow_circle_right</mat-icon>
                                                         <div class="elementos">
-                                                            <p class="negrita">{{ 'crm.detalles.tipoTarea' | translate
-                                                                }}</p>
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.tipoTarea' | translate }}
+                                                            </p>
                                                             <p>{{tareaDetalle!.descripcion_Tipo_Tarea}}</p>
                                                         </div>
                                                     </div>
@@ -85,15 +83,17 @@
                                                     <div class="editar-detalle">
                                                         <mat-icon class="ico_uno">arrow_circle_right</mat-icon>
                                                         <div class="elemento-estado">
-                                                            <p class="negrita">{{ 'crm.detalles.estadoTarea' | translate
-                                                                }}</p>
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.estadoTarea' | translate }}
+                                                            </p>
                                                             <div class="editar-oculto d-flex">
                                                                 <p>{{tareaDetalle!.tarea_Estado}}</p>
                                                                 <span class="spacer"></span>
                                                                 <mat-icon
                                                                     matTooltip="{{ 'crm.detalles.actualizarEstado' | translate }}"
-                                                                    class="agregar-icono"
-                                                                    (click)="actualizarTarea()">edit</mat-icon>
+                                                                    class="agregar-icono" (click)="actualizarTarea()">
+                                                                    edit
+                                                                </mat-icon>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -101,15 +101,18 @@
                                                     <div class="editar-detalle">
                                                         <mat-icon class="ico_uno">arrow_circle_right</mat-icon>
                                                         <div class="elemento-estado">
-                                                            <p class="negrita">{{ 'crm.detalles.prioridad' | translate
-                                                                }}</p>
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.prioridad' | translate }}
+                                                            </p>
                                                             <div class="editar-oculto d-flex">
-                                                                <p>{{resolveObject(tareaDetalle!.nom_Nivel_Prioridad)}}
+                                                                <p>
+                                                                    {{resolveObject(tareaDetalle!.nom_Nivel_Prioridad)}}
                                                                 </p>
                                                                 <span class="spacer"></span>
                                                                 <mat-icon matTooltip="actualizar prioridad"
-                                                                    class="agregar-icono"
-                                                                    (click)="actualizarTarea()">edit</mat-icon>
+                                                                    class="agregar-icono" (click)="actualizarTarea()">
+                                                                    edit
+                                                                </mat-icon>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -125,10 +128,10 @@
                                                     <!-- Usuario responsable de la tarea -->
                                                     <div class="elementos-detalle">
                                                         <mat-icon class="ico_uno">person</mat-icon>
-                                                        <!-- <p class="negrita">{{resolveObject(tareaDetalle!.responsable)}}</p> -->
                                                         <div class="elementos">
-                                                            <p class="negrita">{{ 'crm.detalles.responsable' | translate
-                                                                }}</p>
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.responsable' | translate }}
+                                                            </p>
                                                             <p class="responsables"
                                                                 *ngFor="let responsable of responsables"
                                                                 [ngStyle]="{'color': getColor(responsable.estado), 'font-weight': getFontWeight(responsable.estado)}">
@@ -141,7 +144,9 @@
                                                                 <mat-icon
                                                                     matTooltip="{{ 'crm.detalles.nuevoResponsable' | translate }}"
                                                                     class="agregar-icono"
-                                                                    (click)="cambiarResponsable()">person_add</mat-icon>
+                                                                    (click)="cambiarResponsable()">
+                                                                    person_add
+                                                                </mat-icon>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -149,8 +154,9 @@
                                                     <div class="elementos-detalle">
                                                         <mat-icon class="ico_uno">person</mat-icon>
                                                         <div class="elementos">
-                                                            <p class="negrita">{{ 'crm.detalles.invitados' | translate
-                                                                }}</p>
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.invitados' | translate }}
+                                                            </p>
                                                             <div class="editar-eliminar"
                                                                 *ngFor="let invitado of invitados; let index = index">
                                                                 <div class="invitado">
@@ -159,16 +165,20 @@
                                                                 </div>
                                                                 <mat-icon class="eliminar"
                                                                     matTooltip="{{ 'crm.detalles.eliminarInvitado' | translate }}"
-                                                                    (click)="eliminarInvitado(invitado, index)">close</mat-icon>
+                                                                    (click)="eliminarInvitado(invitado, index)">
+                                                                    close
+                                                                </mat-icon>
                                                             </div>
                                                             <div class="agregar">
-                                                                <p class="invitado">{{ 'crm.detalles.nuevoInvitado' |
-                                                                    translate}}</p>
+                                                                <p class="invitado">
+                                                                    {{ 'crm.detalles.nuevoInvitado' | translate}}
+                                                                </p>
                                                                 <span class="spacer"></span>
                                                                 <mat-icon
                                                                     matTooltip="{{ 'crm.detalles.nuevoInvitado' | translate }}"
-                                                                    class="agregar-icono"
-                                                                    (click)="cambiarInvitados()">person_add</mat-icon>
+                                                                    class="agregar-icono" (click)="cambiarInvitados()">
+                                                                    person_add
+                                                                </mat-icon>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -176,11 +186,15 @@
                                                     <div class="elementos-detalle">
                                                         <mat-icon class="ico_uno">person</mat-icon>
                                                         <div class="elementos">
-                                                            <p class="negrita">{{ 'crm.detalles.creador' | translate }}
+                                                            <p class="negrita">
+                                                                {{ 'crm.detalles.creador' | translate }}
                                                             </p>
-                                                            <p>{{resolveObject(tareaDetalle!.usuario_Creador)}}</p>
+                                                            <p>
+                                                                {{resolveObject(tareaDetalle!.usuario_Creador)}}
+                                                            </p>
                                                             <p class="responsables">
-                                                                {{resolveObject(tareaDetalle!.email_Creador)}}</p>
+                                                                {{resolveObject(tareaDetalle!.email_Creador)}}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,12 +212,10 @@
 
                                 <div class="observaciones_desc">
                                     <p [innerHTML]="formatText(tareaDetalle!.tarea_Observacion_1)"
-                                        class="espacio-lineas"></p>
+                                        class="espacio-lineas">
+                                    </p>
                                 </div>
                             </div>
-                            <!-- <button (click)="verFechas()" mat-icon-button>
-                        <mat-icon>home</mat-icon>
-                    </button> -->
 
                             <!-- fin contenedor de la observacion -->
                             <!-- contenedor de la lista de comentarios -->
@@ -249,19 +261,21 @@
                                                 <p> {{fechaHoy | date: 'dd/MM/yyyy hh:mm a'}} </p>
                                             </div>
                                             <div class="comentario_desc">
+
                                                 <textarea name="notas" id="descripcion" cols="30" rows="2"
                                                     placeholder="{{'crm.crear.comentario' | translate}}"
                                                     [(ngModel)]="descripcionComentario" class="escribir-comentario">
-                                        </textarea>
-                                                <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
-                                                    <!-- <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p> -->
+                                                </textarea>
 
+                                                <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
                                                     <div *ngFor="let file of selectedFiles; let i = index"
                                                         class="archivos-adjuntos">
                                                         <p class="nombre-archivos"> {{ file.name }}</p>
                                                         <span class="spacer"></span>
                                                         <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
-                                                            matTooltip="eliminar archivo">close</mat-icon>
+                                                            matTooltip="eliminar archivo">
+                                                            close
+                                                        </mat-icon>
                                                     </div>
                                                 </div>
                                                 <div class="archivos-comentar">
@@ -316,7 +330,6 @@
                                 <div class="detalle-derecho d-flex">
                                     <div class="elemento-derecho">
                                         <p>
-                                            <!-- {{dateFormat(tareaDetalle!.tarea_Fecha_Ini)}} -->
                                             {{tareaDetalle!.tarea_Fecha_Ini | date: 'dd/MM/yyyy hh:mm a'}}
                                         </p>
                                     </div>
@@ -331,9 +344,7 @@
                                 <div class="detalle-derecho d-flex">
                                     <div class="elemento-derecho">
                                         <p>
-                                            <!-- {{dateFormat(tareaDetalle!.tarea_Fecha_Fin)}} -->
                                             {{ tareaDetalle!.tarea_Fecha_Fin | date: 'dd/MM/yyyy hh:mm a' }}
-                                            <!-- {{tareaDetalle!.fecha_Final | date: 'dd/MM/yyyy hh:mm a'}} -->
                                         </p>
                                     </div>
                                 </div>
