@@ -323,9 +323,13 @@ export class HomeComponent implements OnInit {
 
   async seleccionarColor(color: ColorInterface, index: number): Promise<void> {
 
+    if(PreferencesService.indexColorApp == index.toString()){
+      return;
+    }
+
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
-        title: this._translate.instant('pos.home.colorSelect'),
+        title: this._translate.instant('pos.home.colorSelec'),
         description: this._translate.instant('pos.home.cambiosColor'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
       }

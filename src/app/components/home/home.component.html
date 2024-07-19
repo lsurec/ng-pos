@@ -58,7 +58,7 @@
             <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
                 <mat-toolbar class="head__sidenav">
                     <button mat-icon-button (click)="close('toggle button')"
-                        [matTooltip]="'pos.botones.cerrar' | translate">
+                        matTooltip="{{'pos.botones.cerrar' | translate}}">
                         <mat-icon>close</mat-icon>
                     </button>
                     <span class="spacer"></span>
@@ -236,22 +236,20 @@
                 </div>
 
                 <div class="horarioLaboral" *ngIf="color">
-                    <mat-accordion class="opciones-colores">
-                        <span class="spacer"></span>
-                        <mat-expansion-panel class="acordeon" hideToggle>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title class="titulo-acordeon">
 
-                                    <p>{{'pos.home.color' | translate}}</p>
-                                    <span class="spacer"></span>
-                                    <button mat-raised-button
-                                        [ngStyle]="{
-                                    'background-color': colorSeleccionado?.valor ?? null,
-                                    'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000'}">
-                                        {{'pos.home.seleccionar' | translate}}
-                                    </button>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
+                    <div class="opciones-colores">
+                        <span class="spacer"></span>
+                        <div class="acordeon">
+                            <div class="titulo-acordeon">
+                                <p class="ajustesMenu">{{'pos.home.color' | translate}}</p>
+                                <span class="spacer"></span>
+                                <button mat-raised-button
+                                    [ngStyle]="{
+                                        'background-color': colorSeleccionado?.valor ?? null,
+                                        'color': colorSeleccionado ? (isColorDark(colorSeleccionado.valor) ? '#FFF' : '#000') : '#000' }">
+                                    {{'pos.home.seleccionar' | translate}}
+                                </button>
+                            </div>
                             <div class="paleta-color">
                                 <div class="opcion-color" *ngFor="let color of colores, let index = index"
                                     (click)="seleccionarColor(color, index)">
@@ -263,9 +261,9 @@
                                     <span class="spacer"></span>
                                 </div>
                             </div>
-                        </mat-expansion-panel>
+                        </div>
                         <span class="spacer"></span>
-                    </mat-accordion>
+                    </div>
                 </div>
                 <!-- Mostrar detalles del usuario -->
 
@@ -336,18 +334,18 @@
                 <!-- botones detalle usuario, ajustes y salir -->
                 <mat-toolbar class="backColorNavBar" *ngIf="detallesUsuario">
                     <!-- Ver informacion del usuario -->
-                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.ajustes' | translate">
+                    <button mat-icon-button (click)="verAjustes()" matTooltip="{{'pos.botones.ajustes' | translate}}">
                         <mat-icon>settings</mat-icon>
                     </button>
                     <span class="spacer"></span>
                     <!-- Salir o cerrar sesion -->
-                    <button mat-icon-button (click)="cerrarSesion()" [matTooltip]="'pos.botones.salir' | translate">
+                    <button mat-icon-button (click)="cerrarSesion()" matTooltip="{{'pos.botones.salir' | translate}}">
                         <mat-icon>logout</mat-icon>
                     </button>
                 </mat-toolbar>
                 <!-- boton regresar a detalle usuario -->
                 <mat-toolbar class="backColorNavBar" *ngIf="ajustes">
-                    <button mat-icon-button (click)="verDetalles()" [matTooltip]="'pos.botones.regresar' | translate">
+                    <button mat-icon-button (click)="verDetalles()" matTooltip="{{'pos.botones.regresar' | translate}}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                 </mat-toolbar>
@@ -365,14 +363,14 @@
                 </mat-toolbar>
                 <!-- Regresar tema -->
                 <mat-toolbar class="backColorNavBar" *ngIf="temas">
-                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
+                    <button mat-icon-button (click)="verAjustes()" matTooltip="{{'pos.botones.regresar' | translate}}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                 </mat-toolbar>
 
                 <!-- Regresar colores -->
                 <mat-toolbar class="backColorNavBar" *ngIf="color">
-                    <button mat-icon-button (click)="verAjustes()" [matTooltip]="'pos.botones.regresar' | translate">
+                    <button mat-icon-button (click)="verAjustes()" matTooltip="{{'pos.botones.regresar' | translate}}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
                 </mat-toolbar>
