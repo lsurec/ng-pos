@@ -17,7 +17,7 @@
                     <input #inputSearch type="search" name="usuario" class="inputSearch"
                         [(ngModel)]="searchIdReferencia" placeholder="{{'crm.crear.busqueda' | translate}}"
                         autocomplete="off" (focus)="focusAndSelectText()">
-                    <button type="submit" mat-icon-button class="flecha-regresar">
+                    <button type="submit" mat-icon-button>
                         <mat-icon class="iconoLupa">search</mat-icon>
                     </button>
                 </div>
@@ -25,22 +25,22 @@
 
             <div class="info">
                 <mat-icon class="marginRihgt">info</mat-icon>
-                Presiona sobre el Id de Referencia que quieras agregar.
+                {{'crm.tarea.seleccionarId' | translate}}
             </div>
             <hr>
             <div class="detalleCoincidencias" *ngFor="let referencia of referencias">
                 <div class="seleccionar" [mat-dialog-close]="[referencia]">
                     <p class="nombre">{{referencia.descripcion}}</p>
                     <div class="dFlex">
-                        <p class="titulos">Estado: </p>
+                        <p class="titulos">{{'crm.tarea.estado' | translate}} </p>
                         <p class="nombre">{{referencia.fDes_Estado_Objeto}}</p>
                     </div>
                     <div class="dFlex">
-                        <p class="titulos">Referencia: </p>
+                        <p class="titulos">{{'crm.tarea.idReferencia' | translate}} </p>
                         <p class="nombre">{{referencia.referencia}}</p>
                     </div>
                     <div class="dFlex">
-                        <p class="titulos">ID Referencia: </p>
+                        <p class="titulos">{{'crm.tarea.referencia' | translate}}</p>
                         <p class="nombre">{{referencia.referencia_Id}}</p>
                     </div>
                 </div>

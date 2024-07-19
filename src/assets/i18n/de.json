@@ -20,7 +20,15 @@
             "tipoCambio": "Wechselkurs",
             "tipoDocumento": "Dokumenttyp",
             "serieDocumento": "Dokumentserie",
-            "impresoras": "DRUCKER"
+            "impresoras": "DRUCKER",
+            "prefColores": "Farbpräferenz",
+            "paletaColores": "Farbpalette",
+            "cambiarColor": "Ändern Sie die Farben Ihrer Präferenz.",
+            "color": "Farbe",
+            "colorSelec": "Ausgewählte Farbe",
+            "cambiosColor": "Sie haben eine neue Farbe ausgewählt. Um die Änderungen anzuzeigen, muss der Browser neu gestartet werden. Klicken Sie auf Akzeptieren, um fortzufahren.",
+            "seleccionar": "Auswählen",
+            "historialError": "Fehlerprotokoll."
         },
         "login": {
             "correo": "Benutzer",
@@ -401,7 +409,14 @@
             "tipo": "Typ:",
             "estado": "Status:",
             "prioridad": "Priorität:",
-            "previa": "Vorschau"
+            "previa": "Vorschau",
+            "seleccionarId": "Klicken Sie auf die Referenz-ID, die Sie hinzufügen möchten.",
+            "crearTarea": "Neue Aufgabe erstellen",
+            "correoElec": "E-Mail:",
+            "todas": "Alle",
+            "creadas": "Erstellt",
+            "asignadas": "Zugewiesen",
+            "invitaciones": "Einladungen"
         },
         "login": {
             "correo": "Benutzer",
@@ -520,7 +535,19 @@
             "descripcionRef": "Beschreibung:",
             "referencia": "Referenz",
             "buscarIdReferencia": "REFERENZ-ID AUSWÄHLEN",
-            "adjuntos": "Anhänge"
+            "adjuntos": "Anhänge",
+            "seleccionRes": "Verantwortliche Person auswählen",
+            "seleccionarInvi": "Gäste auswählen",
+            "agregaRes": "Klicken Sie auf den Benutzer, den Sie hinzufügen möchten.",
+            "marcarInvi": "Kreuzen Sie das Kästchen für den Benutzer oder die Benutzer an, die Sie hinzufügen möchten.",
+            "invitadosSelec": "Ausgewählte Gäste",
+            "nuevaTarea": "Neue Aufgabe",
+            "subirArchivos": "Dateien hochladen",
+            "eliminarRes": "Verantwortliche Person entfernen",
+            "invitadosT": "GÄSTE",
+            "eliminarInvi": "Gast entfernen",
+            "eliminarRef": "Referenz-ID entfernen",
+            "eliminarArchivo": "Datei löschen"
         },
         "configuracionLocal": {
             "titulo": "LOKALE KONFIGURATION",

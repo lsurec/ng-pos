@@ -60,10 +60,10 @@
         <mat-toolbar class="toolbarPhone">
             <mat-toolbar-row class="mat-toolbar-row">
                 <!-- Regresar a la pantalla anterior -->
-                <button (click)="backPage()" mat-icon-button [matTooltip]="'regresar'">
+                <button (click)="backPage()" mat-icon-button matTooltip="'{{ 'pos.botones.regresar' | translate }}">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="actualizar" (click)="refresh()">
+                <button mat-icon-button matTooltip="{{ 'pos.botones.ctualizar' | translate }}" (click)="refresh()">
                     <mat-icon>refresh</mat-icon>
                 </button>
                 <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
@@ -79,10 +79,10 @@
         <span class="spacer"></span>
         <mat-toolbar class="toolbarlarge">
             <!-- Regresar a la pantalla anterior -->
-            <button (click)="backPage()" mat-icon-button matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+            <button (click)="backPage()" mat-icon-button matTooltip="{{'pos.botones.regresar' | translate}}">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <button mat-icon-button class="flecha-regresar" matTooltip="actualizar" (click)="refresh()">
+            <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="refresh()">
                 <mat-icon>refresh</mat-icon>
             </button>
             <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
@@ -291,7 +291,7 @@
                                 <!-- <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)" -->
                                 <mat-icon *ngIf="iconoVistaMes( dia,inDay, monthSelectView, yearSelect)"
                                     (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)" class="nueva"
-                                    matTooltip="crear nueva tarea" [ngClass]="[ 
+                                    matTooltip="{{'crm.tarea.crearTarea' | translate}}" [ngClass]="[ 
                                 nuevaHoy(dia, inDay)  ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
                                 <!-- Mostrar las tareas por en la primera y ultima semana del mes seleccionado -->
                             </div>
@@ -372,9 +372,11 @@
                                 <!-- <mat-icon (click)="nuevaTareaSemana(diaSemana.value, resolveMonth(i))" class="nueva" -->
                                 <mat-icon
                                     *ngIf="mostrarIconoSemana(diaSemana, iDia , resolveMonth(iDia), resolveYear(iDia))"
-                                    class="nueva" matTooltip="crear nueva tarea"
+                                    class="nueva" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
                                     (click)="crearTareaSemana(diaSemana, iDia, resolveMonth(iDia), yearSelect)"
-                                    [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
+                                    [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'nuevo-hoy': 'num-otro-dia']">
+                                    add
+                                </mat-icon>
                             </div>
                             <!-- Mostrar las tareas en semanas, solo en el dia que correspodan  -->
 
@@ -444,8 +446,10 @@
                                     <span class="spacer"></span>
                                     <mat-icon
                                         *ngIf="mostrarIconoHora(daySelect, hora) && daySelect >= today && monthSelectView >= month || monthSelectView > month && yearSelect >= year || yearSelect > year"
-                                        class="nueva-dia" matTooltip="crear nueva tarea"
-                                        (click)="obtenerHora(hora.hora24, daySelect, monthSelectView, yearSelect)">add</mat-icon>
+                                        class="nueva-dia" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
+                                        (click)="obtenerHora(hora.hora24, daySelect, monthSelectView, yearSelect)">
+                                        add
+                                    </mat-icon>
                                 </div>
                             </div>
                         </div>

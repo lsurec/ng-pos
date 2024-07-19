@@ -20,7 +20,15 @@
             "tipoCambio": "Tipo de Cambio",
             "tipoDocumento": "Tipo Documento",
             "serieDocumento": "Serie Documento",
-            "impresoras": "IMPRESORAS"
+            "impresoras": "IMPRESORAS",
+            "prefColores": "Preferencia de Colores",
+            "paletaColores": "Paleta de colores",
+            "cambiarColor": "Cambia los colores de tu preferencia.",
+            "color": "Color",
+            "colorSelec": "Color seleccionado",
+            "cambiosColor": "Haz seleccionado un nuevo color. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+            "seleccionar": "Seleccionar",
+            "historialError": "Historial de errores."
         },
         "login": {
             "correo": "Usuario",
@@ -401,7 +409,14 @@
             "tipo": "Tipo:",
             "estado": "Estado:",
             "prioridad": "Prioridad:",
-            "previa": "Vista Previa"
+            "previa": "Vista Previa",
+            "seleccionarId": "Presiona sobre el Id de Referencia que quieras agregar.",
+            "crearTarea": "Crear Nueva Tarea",
+            "correoElec": "Correo electrónico:",
+            "todas": "Todas",
+            "creadas": "Creadas",
+            "asignadas": "Asignadas",
+            "invitaciones": "Invitaciones"
         },
         "login": {
             "correo": "Usuario",
@@ -520,7 +535,19 @@
             "descripcionRef": "Descripción:",
             "referencia": "Referencia",
             "buscarIdReferencia": "SELECCIONAR ID REFERENCIA",
-            "adjuntos": "Archivos adjuntos"
+            "adjuntos": "Archivos adjuntos",
+            "seleccionRes": "Seleccionar Responsable",
+            "seleccionarInvi": "Seleccionar Invitados",
+            "agregaRes": "Presiona sobre el usuario que quieras agregar.",
+            "marcarInvi": "Marca la casilla del usuario o usuarios que quieras agregar.",
+            "invitadosSelec": "Invitados seleccionados",
+            "nuevaTarea": "Nueva Tarea",
+            "subirArchivos": "Subir Archivos",
+            "eliminarRes": "Eliminar responsable",
+            "invitadosT": "INVITADOS",
+            "eliminarInvi": "Eliminar Invitado",
+            "eliminarRef": "Eliminar Id Referencia",
+            "eliminarArchivo": "Eliminar Archivo"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURACION LOCAL",

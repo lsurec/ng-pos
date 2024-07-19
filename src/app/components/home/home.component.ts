@@ -25,8 +25,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
 import { HttpClient } from '@angular/common/http';
-import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.interface';
-import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
 import { CurrencyPipe, DOCUMENT } from '@angular/common';
@@ -93,17 +91,17 @@ export class HomeComponent implements OnInit {
 
 
   //horario laboral
-  horarios: HoraInterface[] = horas; //lista de horas 12h
-  horaInicio: boolean = false;
-  horaFin: boolean = false;
-  inicioHorasLabores: number = indexHoraInicioDefault;
-  finHorasLabores: number = indexHoraFinDefault;
-  inicioLabores!: number;
-  finLabores!: number;
-  setDias: boolean = false;
-  horasLaborales: boolean = false;
-  nombreHoraInicial: string = '';
-  nombreHoraFinal: string = '';
+  // horarios: HoraInterface[] = horas; //lista de horas 12h
+  // horaInicio: boolean = false;
+  // horaFin: boolean = false;
+  // inicioHorasLabores: number = indexHoraInicioDefault;
+  // finHorasLabores: number = indexHoraFinDefault;
+  // inicioLabores!: number;
+  // finLabores!: number;
+  // setDias: boolean = false;
+  // horasLaborales: boolean = false;
+  // nombreHoraInicial: string = '';
+  // nombreHoraFinal: string = '';
   primerDiaSemana: number = 0;
 
   //Variables para mostrar componentes segun el menu
@@ -198,24 +196,6 @@ export class HomeComponent implements OnInit {
       let dia: number = +getDias;
       this.primerDiaSemana = dia;
     };
-
-    //buscamos si hay una hora guardado para el inicio del horario laboral
-    let getPrimeraHora = PreferencesService.inicioLabores;
-    if (getPrimeraHora) {
-      let horaInicial: number = +getPrimeraHora;
-      this.inicioHorasLabores = horaInicial;
-    }
-    //Asignamos el nombre de la hora inicial para mostrarla
-    this.nombreHoraInicial = this.horarios[this.inicioHorasLabores].hora12
-
-    //buscamos si hay una hora guardado para el fin del horario laboral
-    let getUltimaHora = PreferencesService.finLabores;
-    if (getUltimaHora) {
-      let horaFinal: number = +getUltimaHora;
-      this.finHorasLabores = horaFinal;
-    }
-    //Asignamos el nombre de la hora final para mostrarla
-    this.nombreHoraFinal = this.horarios[this.finHorasLabores].hora12;
 
   }
 
@@ -345,8 +325,8 @@ export class HomeComponent implements OnInit {
 
     let verificador: boolean = await this._notificationsService.openDialogActions(
       {
-        title: "Color seleccionado",
-        description: "Haz seleccionado un nuevo color. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+        title: this._translate.instant('pos.home.colorSelect'),
+        description: this._translate.instant('pos.home.cambiosColor'),
         verdadero: this._translate.instant('pos.botones.aceptar'),
       }
     );
@@ -858,52 +838,11 @@ export class HomeComponent implements OnInit {
 
   //Mostrar pantalla de "DIAS" y mantener ocultas todas las demas
   verDias(): void {
-    this.setDias = true;
     this.ajustes = false;
     this.detallesUsuario = false;
     this.idiomas = false;
-    this.horasLaborales = false;
-    this.horaInicio = false;
-    this.horaFin = false;
   };
 
-  //Mostrar pantalla de "HORA INICIAL" y mantener ocultas todas las demas
-  horaInicial(): void {
-    this.horaInicio = true;
-    this.horaFin = false;
-    this.idiomas = false;
-    this.setDias = false;
-    this.ajustes = false;
-    this.horasLaborales = false;
-    this.detallesUsuario = false;
-  };
-
-  //Mostrar pantalla de "HORA FINAL" y mantener ocultas todas las demas
-  horaFinal(): void {
-    this.horaFin = true;
-    this.horaInicio = false;
-    this.idiomas = false;
-    this.setDias = false;
-    this.ajustes = false;
-    this.horasLaborales = false;
-    this.detallesUsuario = false;
-  };
-
-  //Guardar horas del horario laboral seleccionado y regresar a ajustes 
-  setHoras(): void {
-    PreferencesService.inicioLabores = this.inicioLabores.toString();
-    PreferencesService.finLabores = this.finLabores.toString();
-    this.nombreHoraInicial = this.horarios[this.inicioLabores].hora12;
-    this.nombreHoraFinal = this.horarios[this.finLabores].hora12;
-    //Regresar a pantalla de ajustes y ocultar las demas
-    this.verDetalles();
-  };
-
-  //Ocultar boton de continuar y mostrarlo cuando se regrese
-  verContinuar(): void {
-    this.btnRegresar = true;
-    this.horaInicial();
-  };
 
   cambiarPrimerDia(): void {
     PreferencesService.inicioSemana = this.primerDiaSemana.toString();
@@ -929,10 +868,6 @@ export class HomeComponent implements OnInit {
     this.temas = false;
     this.idiomas = false;
     this.sizes = false;
-    this.setDias = false;
-    this.horasLaborales = false;
-    this.horaInicio = false;
-    this.horaFin = false;
     this.color = false;
   };
 
@@ -968,9 +903,6 @@ export class HomeComponent implements OnInit {
     this.ajustes = false;
     this.idiomas = false;
     this.temas = false;
-    this.setDias = false;
-    this.horaInicio = false;
-    this.horaFin = false;
     this.color = false;
   };
 

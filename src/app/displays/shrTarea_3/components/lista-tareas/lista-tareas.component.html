@@ -16,7 +16,7 @@
                     <mat-icon>refresh</mat-icon>
                 </button>
                 <span class="spacer"></span>
-                <p class="titulo">Tareas</p>
+                <p class="titulo">{{dataUserService.nameDisplay }}</p>
                 <span class="spacer"></span>
                 <button mat-raised-button class="boton-azul" (click)="nuevaTarea()"
                     matTooltip="{{'crm.crear.crear' | translate}}">
@@ -27,23 +27,25 @@
             <div class="container-main" *ngIf="!isLoading">
 
                 <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]="verTareas">
-                <div class="pestana" for="tab1" matTooltip="Todas" (click)="tareas()">
-                    Todas
+                <div class="pestana" for="tab1" matTooltip="{{'crm.tarea.todas' | translate}}" (click)="tareas()">
+                    {{'crm.tarea.todas' | translate}}
                 </div>
 
                 <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]="verCreadas">
-                <div class="pestana" for="tab2" matTooltip="Creadas" (click)="creadas()">
-                    Creadas
+                <div class="pestana" for="tab2" matTooltip="{{'crm.tarea.creadas' | translate}}" (click)="creadas()">
+                    {{'crm.tarea.creadas' | translate}}
                 </div>
 
                 <!-- <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
-                <div class="pestana" for="tab3" matTooltip="Asignadas" (click)="asignadas()">
-                    Asignadas
+                <div class="pestana" for="tab3" matTooltip="{{'crm.tarea.asignadas' | translate}}"
+                    (click)="asignadas()">
+                    {{'crm.tarea.asignadas' | translate}}
                 </div> -->
 
                 <input class="titulo-pestana" id="tab4" type="radio" name="tabs" [checked]="verInvitaciones">
-                <div class="pestana" for="tab4" matTooltip="Invitaciones" (click)="invitaciones()">
-                    Invitaciones
+                <div class="pestana" for="tab4" matTooltip="{{'crm.tarea.invitaciones' | translate}}"
+                    (click)="invitaciones()">
+                    {{'crm.tarea.invitaciones' | translate}}
                 </div>
 
                 <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
@@ -187,7 +189,7 @@
                 </section>
 
                 <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
-                    Veremos las tareas asignadas al usuario que inició sesion
+                    <!-- Veremos las tareas asignadas al usuario que inició sesion -->
                 </section>
 
                 <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">

@@ -9,6 +9,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { components } from 'src/app/providers/componentes.provider';
 
 @Component({
   selector: 'app-lista-tareas',
@@ -55,6 +57,7 @@ export class ListaTareasComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _actualizar: RefrescarService,
     public tareaGlobalService: GlobalTareasService,
+    public dataUserService: DataUserService,
 
   ) {
 
@@ -86,15 +89,13 @@ export class ListaTareasComponent implements OnInit {
 
   }
 
-  //regresar a la pantalla anterior
-  backHome(): void {
-    // this.newItemEvent.emit(false);
-    this._eventService.emitCustomEvent(false);
-  }
-
-
   goBack() {
+    //Ocultar todos los componentes 
+    components.forEach(element => {
+      element.visible = false;
+    });
 
+    this._eventService.emitCustomEvent(false);
   }
 
   loadData() {

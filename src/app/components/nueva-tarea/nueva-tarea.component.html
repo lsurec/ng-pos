@@ -36,17 +36,17 @@
                 <!-- Pantalla pequeña -->
                 <mat-toolbar-row>
                     <button (click)="backPage()" mat-icon-button
-                        matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+                        matTooltip="{{'pos.botones.regresarAnterior' | translate}}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="actualizar" (click)="loadData()">
+                    <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="loadData()">
                         <mat-icon>refresh</mat-icon>
                     </button>
 
                     <span class="spacer"></span>
 
-                    <button mat-icon-button matTooltip="Guardar" (click)="validar()">
+                    <button mat-icon-button matTooltip="{{'pos.botones.guardar' | translate}}" (click)="validar()">
                         <mat-icon>save</mat-icon>
                     </button>
 
@@ -66,12 +66,11 @@
             <!-- Pantalla completa -->
             <mat-toolbar class="toolbarlarge">
 
-                <button (click)="backPage()" mat-icon-button
-                    matTooltip="{{'crm.toolTip.regresarAnterior' | translate}}">
+                <button (click)="backPage()" mat-icon-button matTooltip="{{'poa.botones.regresar' | translate}}">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
-                <button mat-icon-button matTooltip="actualizar" (click)="loadData()">
+                <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="loadData()">
                     <mat-icon>refresh</mat-icon>
                 </button>
 
@@ -86,7 +85,7 @@
 
                     <button mat-raised-button class="boton-azul" (click)="limpiarCrear()">
                         <mat-icon>save_outline</mat-icon>
-                        Nueva Tarea
+                        {{'crm.tarea.nuevaTarea' | translate}}
                     </button>
 
                     <!-- Para abrir el explorador de archivos -->
@@ -97,7 +96,8 @@
                     <button mat-raised-button class="boton-azul" matTooltip="Subir Archivos"
                         (click)="fileInput.click()">
                         <mat-icon>attach_file</mat-icon>
-                        Subir Archivos
+                        {{'crm.tarea.subirArchivos' | translate}}
+
                     </button>
                 </div>
 
@@ -353,13 +353,13 @@
                                     {{ 'crm.alertas.requerido' | translate }}
                                 </div>
                                 <div class="usuarios" *ngIf="responsable">
-                                    <p class="titulo-campo">RESPONSABLE</p>
+                                    <p class="titulo-campo">{{ 'crm.detalles.responsable' | translate }}</p>
                                     <div class="respuesta-dialogo">
                                         <div class="dFlex">
                                             <p>{{responsable.name}}</p>
                                             <span class="spacer"></span>
                                             <mat-icon (click)="eliminarResponsable()" class="eliminar"
-                                                matTooltip="eliminar responsable">
+                                                matTooltip="{{ 'crm.crear.eliminarRes' | translate }}">
                                                 close
                                             </mat-icon>
                                         </div>
@@ -378,15 +378,16 @@
                                     </div>
                                     <span class="spacer"></span>
                                 </div>
+
                                 <div class="usuarios" *ngIf="usuariosInvitados.length > 0">
-                                    <p class="titulo-campo">Invitados</p>
+                                    <p class="titulo-campo">{{ 'crm.crear.invitadosT' | translate }}</p>
                                     <div class="respuesta-dialogo"
                                         *ngFor="let invitado of usuariosInvitados; let index = index">
                                         <div class="dFlex">
                                             <p>{{invitado.name}}</p>
                                             <span class="spacer"></span>
                                             <mat-icon (click)="eliminarInvitado(index)" class="eliminar"
-                                                matTooltip="eliminar invitado">
+                                                matTooltip="{{ 'crm.crear.eliminarInvi' | translate }}">
                                                 close
                                             </mat-icon>
                                         </div>
@@ -411,13 +412,14 @@
                                     {{ 'crm.alertas.requerido' | translate }}
                                 </div>
                                 <div class="usuarios" *ngIf="idReferencia">
-                                    <p class="titulo-campo">ID Referencia</p>
+
+                                    <p class="titulo-campo">{{ 'crm.crear.referenciaId' | translate }}</p>
                                     <div class="respuesta-dialogo">
                                         <div class="dFlex">
                                             <p>{{idReferencia.descripcion}}</p>
                                             <span class="spacer"></span>
                                             <mat-icon (click)="eliminarIdReferencia()" class="eliminar"
-                                                matTooltip="eliminar Id referencia">
+                                                matTooltip="{{ 'crm.crear.eliminarRef' | translate }}">
                                                 close
                                             </mat-icon>
                                         </div>
@@ -430,12 +432,13 @@
 
                     <div class="bloque-menus" *ngIf="selectedFiles.length > 0">
                         <div class="archivos">
-                            <p class="titulo-campo">Archivos Seleccionados ({{selectedFiles.length}}) </p>
                             <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
                                 <p class="nombre-archivos"> - {{ file.name }}</p>
                                 <span class="spacer"></span>
                                 <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
-                                    matTooltip="eliminar archivo">close</mat-icon>
+                                    matTooltip="{{ 'crm.crear.eliminarArchivo' | translate }}">
+                                    close
+                                </mat-icon>
                             </div>
                         </div>
                     </div>

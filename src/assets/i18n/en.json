@@ -20,7 +20,15 @@
             "tipoCambio": "Exchange Rate",
             "tipoDocumento": "Document Type",
             "serieDocumento": "Document Series",
-            "impresoras": "PRINTERS"
+            "impresoras": "PRINTERS",
+            "prefColores": "Color Preference",
+            "paletaColores": "Color Palette",
+            "cambiarColor": "Change to your preferred colors.",
+            "color": "Color",
+            "colorSelec": "Selected Color",
+            "cambiosColor": "You have selected a new color. To view the changes, it is necessary to restart the browser. Click accept to continue.",
+            "seleccionar": "Select",
+            "historialError": "Error Log."
         },
         "login": {
             "correo": "Username",
@@ -401,7 +409,14 @@
             "tipo": "Type:",
             "estado": "Status:",
             "prioridad": "Priority:",
-            "previa": "Preview"
+            "previa": "Preview",
+            "seleccionarId": "Click on the Reference ID you want to add.",
+            "crearTarea": "Create New Task",
+            "correoElec": "Email:",
+            "todas": "All",
+            "creadas": "Created",
+            "asignadas": "Assigned",
+            "invitaciones": "Invitations"
         },
         "login": {
             "correo": "User",
@@ -520,7 +535,19 @@
             "descripcionRef": "Description:",
             "referencia": "Reference",
             "buscarIdReferencia": "SELECT REFERENCE ID",
-            "adjuntos": "Attachments"
+            "adjuntos": "Attached Files",
+            "seleccionRes": "Select Responsible Person",
+            "seleccionarInvi": "Select Guests",
+            "agregaRes": "Click on the user you want to add.",
+            "marcarInvi": "Check the box for the user or users you want to add.",
+            "invitadosSelec": "Selected Guests",
+            "nuevaTarea": "New Task",
+            "subirArchivos": "Upload Files",
+            "eliminarRes": "Remove Responsible Person",
+            "invitadosT": "GUESTS",
+            "eliminarInvi": "Remove Guest",
+            "eliminarRef": "Remove Reference ID",
+            "eliminarArchivo": "Delete File"
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",

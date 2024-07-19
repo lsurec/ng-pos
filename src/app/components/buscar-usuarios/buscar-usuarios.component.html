@@ -3,8 +3,12 @@
     <div class="barra-fija">
         <span class="spacer"></span>
         <!-- Titulo -->
-        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 1">Seleccionar Responsable</p>
-        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2">Seleccionar Invitados</p>
+        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 1">
+            {{'crm.crear.seleccionRes' | translate}}
+        </p>
+        <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2">
+            {{'crm.crear.seleccionInvi' | translate}}
+        </p>
         <span class="spacer"></span>
         <!-- Cerrar dialogo -->
         <span class="close" (click)="closeDialog()">&times;</span>
@@ -25,14 +29,14 @@
 
             <div class="info" *ngIf="tareasGlobalService.buscarUsuarios == 1">
                 <mat-icon class="marginRihgt">info</mat-icon>
-                Presiona sobre el usuario que quieras agregar.
+                {{'crm.crear.agregarRes' | translate}}
             </div>
             <div class="info" *ngIf="tareasGlobalService.buscarUsuarios == 2">
                 <mat-icon class="marginRihgt">info</mat-icon>
-                Marca la casilla del usuario o usuarios que quieras agregar.
+                {{'crm.crear.marcarInvi' | translate}}
             </div>
             <p class="verDetalle" *ngIf="tareasGlobalService.buscarUsuarios == 2 && listaTemporal.length > 0">
-                Invitados seleccionados ({{listaTemporal.length}})
+                {{'crm.crear.invitadosSelec' | translate}} ({{listaTemporal.length}})
             </p>
 
             <hr>
@@ -44,7 +48,7 @@
                             [mat-dialog-close]="[usuario]">
                             <p class="nombre">{{usuario.name}}</p>
                             <div class="dFlex">
-                                <p class="titulos" *ngIf="usuario.email"> Correo electronico: </p>
+                                <p class="titulos" *ngIf="usuario.email"> {{'crm.tarea.correoElec' | translate}} </p>
                                 <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
                             <span class="spacer"></span>
                             <div [mat-dialog-close]="[usuario]">
                                 <p class="nombre">{{usuario.name}}</p>
-                                <p class="titulos" *ngIf="usuario.email"> Correo electronico: </p>
+                                <p class="titulos" *ngIf="usuario.email"> {{'crm.tarea.correoElec' | translate}} </p>
                                 <p class="email" *ngIf="usuario.email">{{usuario.email}}</p>
                             </div>
                         </div>
