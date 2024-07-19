@@ -856,11 +856,22 @@ export class NuevaTareaComponent implements OnInit {
     let resPeriodicidad: ResApiInterface = await this._tiempoService.getTiempoPeriodicidad();
     //Si el servico se ejecuta mal mostar mensaje
     if (!resPeriodicidad.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resPeriodicidad.response);
-      console.error(resPeriodicidad.storeProcedure);
+      this.isLoading = false;
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resPeriodicidad);
+
       return;
-    };
+    }
     //Guardar Estados de la tarea
     this.periodicidad = resPeriodicidad.response;
   };
