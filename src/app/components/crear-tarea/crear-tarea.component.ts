@@ -599,7 +599,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
   //Obtener el Tipo de la Tarea
   async getTipoTarea(): Promise<void> {
     //Consumo de api
-    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea();
+    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea(this.usuarioTarea);
     ///Si el servico se ejecuta mal mostrar mensaje
     if (!resTipos.status) {
       this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));

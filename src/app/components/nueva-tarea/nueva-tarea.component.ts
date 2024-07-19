@@ -799,14 +799,26 @@ export class NuevaTareaComponent implements OnInit {
   //Obtener el Tipo de la Tarea
   async getTipoTarea(): Promise<void> {
     //Consumo de api
-    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea();
+    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea(this.usuarioTarea);
+
     ///Si el servico se ejecuta mal mostrar mensaje
     if (!resTipos.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resTipos.response);
-      console.error(resTipos.storeProcedure);
+      this.isLoading = false;
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTipos);
+
       return;
-    };
+    }
     //Guardar respuesta en Lista Tipo Tarea
     this.tiposTarea = resTipos.response;
   };
