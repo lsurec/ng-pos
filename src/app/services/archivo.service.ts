@@ -39,7 +39,7 @@ export class CargarArchivosService {
     postFiles(files: File[]): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postFiles(files).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -47,23 +47,47 @@ export class CargarArchivosService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    console.log(err);
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: response.data,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
     private _adjuntarArchivos(files: File[], tarea: number, tareaComentario: number) {
         const formData = new FormData();
@@ -86,7 +110,7 @@ export class CargarArchivosService {
     adjuntarArchivos(files: File[], tarea: number, tareaComentario: number): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._adjuntarArchivos(files, tarea, tareaComentario).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -94,23 +118,47 @@ export class CargarArchivosService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    console.log(err);
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: response.data,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 
 
     //Nuevo servicio para adjuntar archivos a los comentarios
@@ -136,7 +184,7 @@ export class CargarArchivosService {
     postFilesComment(files: File[], tarea: number, tareaComentario: number, urlCarpeta: string): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._postFilesComment(files, tarea, tareaComentario, urlCarpeta).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -144,21 +192,45 @@ export class CargarArchivosService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    console.log(err);
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 }

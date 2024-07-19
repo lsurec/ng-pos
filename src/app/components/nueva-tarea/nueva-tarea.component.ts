@@ -1171,11 +1171,21 @@ export class NuevaTareaComponent implements OnInit {
     //Si el servico se ejecuta mal mostar mensaje
     if (!resNuevaTarea.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-      console.error(resNuevaTarea.response);
-      console.error(resNuevaTarea.storeProcedure);
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resNuevaTarea);
+
       return;
-    };
+    }
 
     //Guardar Tarea
     let nuevasTareas: CrearTareaInterface[] = resNuevaTarea.response;
@@ -1266,12 +1276,21 @@ export class NuevaTareaComponent implements OnInit {
 
     if (!resResponsable.status) {
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.responsableNoAsignado'));
-      console.error(resResponsable.response);
-      console.error(resResponsable.storeProcedure);
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resResponsable);
+
       return;
-    };
-    // };
+    }
 
     if (this.usuariosInvitados.length > 0) {
       // Suponiendo que this.usuariosInvitados es un array de objetos con propiedades userName
@@ -1289,9 +1308,19 @@ export class NuevaTareaComponent implements OnInit {
         // Verificar si la llamada fue exitosa
         if (!resInvitado.status) {
           this.isLoading = false;
-          this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.invitadosNoGuardados'));
-          console.error(resInvitado.response);
-          console.error(resInvitado.storeProcedure);
+          let verificador = await this._widgetsService.openDialogActions(
+            {
+              title: this._translate.instant('pos.alertas.salioMal'),
+              description: this._translate.instant('pos.alertas.error'),
+              verdadero: this._translate.instant('pos.botones.informe'),
+              falso: this._translate.instant('pos.botones.aceptar'),
+            }
+          );
+
+          if (!verificador) return;
+
+          this.mostrarError(resInvitado);
+
           return;
         }
 
@@ -1315,12 +1344,21 @@ export class NuevaTareaComponent implements OnInit {
 
       //Si el servico se ejecuta mal mostar mensaje
       if (!resPrimerComentario.status) {
-        //ocultar carga
         this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
-        console.error(resPrimerComentario.response);
-        console.error(resPrimerComentario.storeProcedure);
-        return
+        let verificador = await this._widgetsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resPrimerComentario);
+
+        return;
       }
 
       //asignar la respuesra del comentario a la interface. 
@@ -1337,13 +1375,24 @@ export class NuevaTareaComponent implements OnInit {
 
       //Si el servico se ejecuta mal mostar mensaje
       this.isLoading = false;
+
       if (!resFiles.status) {
         this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
-        console.error(resFiles.response);
-        console.error(resFiles.storeProcedure);
+        let verificador = await this._widgetsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resFiles);
+
         return;
-      };
+      }
     };
 
     // // F I N - C O M E N T A R I O
