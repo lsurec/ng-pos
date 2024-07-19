@@ -126,6 +126,9 @@ export class NuevaTareaComponent implements OnInit {
   token = PreferencesService.token;
   empresa: EmpresaInterface = PreferencesService.empresa;
 
+  verError: boolean = false;
+  regresar: number = 19;
+
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialog,
@@ -168,6 +171,11 @@ export class NuevaTareaComponent implements OnInit {
     //Funcion que carga datos
     this.seleccionarResponsable = 1;
     this.seleccionarInvitados = 2;
+
+    //mostrar contenido a regresar de error
+    this._eventService.regresarCrear$.subscribe((eventData) => {
+      this.verError = false;
+    });
 
 
   }
@@ -941,7 +949,7 @@ export class NuevaTareaComponent implements OnInit {
   backPage(): void {
     this._eventService.verTareasDesdeCrearEvent(true);
 
-  
+
     //DOS EVENTOS
     // this.newItemEvent.emit(true); //Calendario
     // this.desdeCalendario.emit(true);
@@ -1564,6 +1572,28 @@ export class NuevaTareaComponent implements OnInit {
     } else {
       return diffInYears; // diferencia en años
     }
+  }
+
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardra error
+    PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
+    this.verError = true;
   }
 
 }

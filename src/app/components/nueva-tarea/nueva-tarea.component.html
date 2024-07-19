@@ -1,42 +1,74 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <div *ngIf="!isLoading">
+        <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
 
-<div *ngIf="!isLoading">
-    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+            <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+                <mat-toolbar class="head__sidenav">
+                    <button mat-icon-button (click)="close('toggle button')"
+                        [matTooltip]="'pos.botones.cerrar' | translate">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <p>Titulo del la pestaña</p>
+                    <span class="spacer"></span>
+                </mat-toolbar>
+                <!-- Contenido del sidenav -->
+                <div class="contenido-sidenav">
+                    <p>Aqui va el contenido de la pestaña</p>
+                </div>
 
-        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
-            <mat-toolbar class="head__sidenav">
-                <button mat-icon-button (click)="close('toggle button')"
-                    [matTooltip]="'pos.botones.cerrar' | translate">
-                    <mat-icon>close</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <p>Titulo del la pestaña</p>
-                <span class="spacer"></span>
-            </mat-toolbar>
-            <!-- Contenido del sidenav -->
-            <div class="contenido-sidenav">
-                <p>Aqui va el contenido de la pestaña</p>
-            </div>
+                <!-- Barra de abajo para regresar y salir -->
+                <mat-toolbar class="barra-regresar">
+                    <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </mat-toolbar>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <!-- Barras para titulos y boton de cerrar sidenav -->
+                <!-- Aqui van los botones para abrir la pestañan del sidenav -->
+                <mat-toolbar class="toolbarPhone">
+                    <!-- Pantalla pequeña -->
+                    <mat-toolbar-row>
+                        <button (click)="backPage()" mat-icon-button
+                            matTooltip="{{'pos.botones.regresarAnterior' | translate}}">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
 
-            <!-- Barra de abajo para regresar y salir -->
-            <mat-toolbar class="barra-regresar">
-                <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
-                    <mat-icon>settings</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
-                    <mat-icon>logout</mat-icon>
-                </button>
-            </mat-toolbar>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <!-- Barras para titulos y boton de cerrar sidenav -->
-            <!-- Aqui van los botones para abrir la pestañan del sidenav -->
-            <mat-toolbar class="toolbarPhone">
-                <!-- Pantalla pequeña -->
-                <mat-toolbar-row>
-                    <button (click)="backPage()" mat-icon-button
-                        matTooltip="{{'pos.botones.regresarAnterior' | translate}}">
+                        <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}"
+                            (click)="loadData()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+
+                        <span class="spacer"></span>
+
+                        <button mat-icon-button matTooltip="{{'pos.botones.guardar' | translate}}" (click)="validar()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+
+                        <button mat-icon-button matTooltip="Nueva Tarea" (click)="limpiarCrear()">
+                            <mat-icon>note_add_outline</mat-icon>
+                        </button>
+                        <input type="file" class="form-control" id="inputGroupFile04"
+                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
+                            (change)="onFilesSelected($event)" style="display: none;" #fileInput>
+
+                        <button mat-icon-button matTooltip="Subir Archivos" (click)="fileInput.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+
+                <!-- Pantalla completa -->
+                <mat-toolbar class="toolbarlarge">
+
+                    <button (click)="backPage()" mat-icon-button matTooltip="{{'poa.botones.regresar' | translate}}">
                         <mat-icon>arrow_back</mat-icon>
                     </button>
 
@@ -46,410 +78,378 @@
 
                     <span class="spacer"></span>
 
-                    <button mat-icon-button matTooltip="{{'pos.botones.guardar' | translate}}" (click)="validar()">
-                        <mat-icon>save</mat-icon>
-                    </button>
+                    <div class="funciones">
+                        <span class="spacer"></span>
+                        <button mat-raised-button class="boton-azul" (click)="validar()">
+                            <mat-icon>save</mat-icon>
+                            {{'pos.botones.guardar' | translate}}
+                        </button>
 
-                    <button mat-icon-button matTooltip="Nueva Tarea" (click)="limpiarCrear()">
-                        <mat-icon>note_add_outline</mat-icon>
-                    </button>
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                        aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
-                        (change)="onFilesSelected($event)" style="display: none;" #fileInput>
+                        <button mat-raised-button class="boton-azul" (click)="limpiarCrear()">
+                            <mat-icon>save_outline</mat-icon>
+                            {{'crm.crear.nuevaTarea' | translate}}
+                        </button>
 
-                    <button mat-icon-button matTooltip="Subir Archivos" (click)="fileInput.click()">
-                        <mat-icon>attach_file</mat-icon>
-                    </button>
-                </mat-toolbar-row>
-            </mat-toolbar>
+                        <!-- Para abrir el explorador de archivos -->
 
-            <!-- Pantalla completa -->
-            <mat-toolbar class="toolbarlarge">
-
-                <button (click)="backPage()" mat-icon-button matTooltip="{{'poa.botones.regresar' | translate}}">
-                    <mat-icon>arrow_back</mat-icon>
-                </button>
-
-                <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="loadData()">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-
-                <span class="spacer"></span>
-
-                <div class="funciones">
-                    <span class="spacer"></span>
-                    <button mat-raised-button class="boton-azul" (click)="validar()">
-                        <mat-icon>save</mat-icon>
-                        {{'pos.botones.guardar' | translate}}
-                    </button>
-
-                    <button mat-raised-button class="boton-azul" (click)="limpiarCrear()">
-                        <mat-icon>save_outline</mat-icon>
-                        {{'crm.tarea.nuevaTarea' | translate}}
-                    </button>
-
-                    <!-- Para abrir el explorador de archivos -->
-
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                        aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
-                        (change)="onFilesSelected($event)" style="display: none;" #fileInput>
-                    <button mat-raised-button class="boton-azul" matTooltip="Subir Archivos"
-                        (click)="fileInput.click()">
-                        <mat-icon>attach_file</mat-icon>
-                        {{'crm.tarea.subirArchivos' | translate}}
-
-                    </button>
-                </div>
-
-            </mat-toolbar>
-            <div class="container_main">
-                <div class="formulario" [formGroup]="formulario">
-                    <div class="bloque-menus">
-                        <div class="dFlex">
-                            <p class="titulo-campo">{{ 'crm.crear.titulo' | translate }}</p>
-                            <p class="obligatorio">*</p>
-                        </div>
-                        <input type="text" formControlName="titulo"
-                            placeholder="{{ 'crm.crear.tituloTarea' | translate }}..." class="titulo-tarea"
-                            [ngClass]="{'error': formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid}"
-                            autocomplete="off">
-                        <div class="error-message"
-                            *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid">
-                            <!-- <p class="circulo-error"></p> -->
-                            {{ 'crm.alertas.requerido' | translate }}
-                        </div>
-                    </div>
-                    <div class="bloque-menus">
-                        <div class="dFlex">
-                            <p class="titulo-campo">{{ 'crm.crear.observacion' | translate }}</p>
-                            <p class="obligatorio">*</p>
-                        </div>
-                        <textarea formControlName="descripcion" id="descripcion" cols="30" rows="3"
-                            class="observacion-tarea" placeholder="{{ 'crm.crear.descripcion' | translate }}"
-                            [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
-                        <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
-                            class="error-message">
-                            {{ 'crm.alertas.requerido' | translate }}
-                        </div>
+                        <input type="file" class="form-control" id="inputGroupFile04"
+                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" multiple
+                            (change)="onFilesSelected($event)" style="display: none;" #fileInput>
+                        <button mat-raised-button class="boton-azul" matTooltip="Subir Archivos"
+                            (click)="fileInput.click()">
+                            <mat-icon>attach_file</mat-icon>
+                            {{'crm.crear.subirArchivos' | translate}}
+                        </button>
                     </div>
 
-                    <div class="bloque-menus">
-                        <div class="datos-tarea">
-                            <div class="contenido-izquierdo">
-                                <div class="d-flex">
-                                    <p class="titulo-campo">{{ 'crm.crear.tipo' | translate }}</p>
-                                    <p class="obligatorio">*</p>
-                                </div>
-                                <mat-select formControlName="tipo" class="tipo-tarea"
-                                    placeholder="{{ 'crm.crear.tipoTarea' | translate }}">
-                                    <mat-option *ngFor="let tipo of tiposTarea" [value]="tipo">
-                                        {{tipo.descripcion}}
-                                    </mat-option>
-                                </mat-select>
-                            </div>
-                            <div class="contenido-izquierdo">
-                                <div class="d-flex">
-                                    <p class="titulo-campo">{{ 'crm.crear.estado' | translate }}</p>
-                                    <p class="obligatorio">*</p>
-                                </div>
-                                <div class="tipo-tarea">
-                                    {{estadoTarea!.descripcion}}
-                                </div>
-                            </div>
-                            <div class="contenido-izquierdo">
-                                <div class="d-flex">
-                                    <p class="titulo-campo">{{ 'crm.crear.prioridad' | translate }}</p>
-                                    <p class="obligatorio">*</p>
-                                </div>
-                                <mat-select formControlName="prioridad" class="tipo-tarea"
-                                    placeholder="{{ 'crm.crear.prioridadTarea' | translate }}">
-                                    <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad">
-                                        {{prioridad.nombre }}
-                                    </mat-option>
-                                </mat-select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="formulario">
-                    <div class="bloque-menus">
-                        <!-- Seleccionar fechas y horas desde tareas -->
-                        <div class="fechas-hora" *ngIf="tareasGlobalService.idPantalla == 1">
-                            <div class="fecha-hora">
-                                <p class="titulo-campo">{{ 'crm.crear.fechaIni' | translate }}</p>
-                                <div class="reloj-calendario">
-                                    <form class="fecha-calendario ">
-                                        <div class="input-group">
-                                            <input class="form-control" name="dp"
-                                                [value]="tareasGlobalService.fechaInicialFormat" ngbDatepicker
-                                                [minDate]="tareasGlobalService.fechaStruct!" #d="ngbDatepicker"
-                                                (dateSelect)="onDateChange($event)"
-                                                (ngModelChange)="validateStartDate()" />
-                                            <button class="btn btn-outline-secondary ver-calendario"
-                                                (click)="d.toggle()" type="button">
-                                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <span class="spacer"></span>
-                                    <div class="horas">
-                                        <div class="hora-calendario">
-                                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                                [min]="getHoraInput(tareasGlobalService.horaInicioMinima!)"
-                                                [(ngModel)]="tareasGlobalService.horaInicial"
-                                                (ngModelChange)="validateStartDate()">
-                                            <ngx-material-timepicker #horaInicioPiker
-                                                [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
-                                        </div>
-                                        <button class="btn btn-outline-secondary ver-hora"
-                                            (click)="abrirTimePicker(horaInicioPiker)" type="button">
-                                            <mat-icon class="ico-calendario">access_time</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-                            <div class="fecha-hora">
-                                <p class="titulo-campo">{{ 'crm.crear.fechaFin' | translate }}</p>
-                                <div class="reloj-calendario">
-                                    <form class="fecha-calendario">
-                                        <div class="input-group">
-                                            <input class="form-control" name="dp"
-                                                [value]="tareasGlobalService.fechaFinalFormat" ngbDatepicker
-                                                [minDate]="tareasGlobalService.inputFechaInicial!" #d2="ngbDatepicker"
-                                                (dateSelect)="onEndDateChange($event)"
-                                                (ngModelChange)="validateEndDate()" />
-                                            <button class="btn btn-outline-secondary ver-calendario"
-                                                (click)="d2.toggle()" type="button">
-                                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <span class="spacer"></span>
-
-                                    <div class="horas">
-                                        <div class="hora-calendario">
-                                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                                [(ngModel)]="tareasGlobalService.horaFinal"
-                                                (ngModelChange)="validateEndDate()"
-                                                [min]="getHoraInput(tareasGlobalService.horaFinMinima!)">
-                                            <ngx-material-timepicker #horaFinalPiker
-                                                [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
-                                        </div>
-                                        <button class="btn btn-outline-secondary ver-hora"
-                                            (click)="abrirTimePicker(horaFinalPiker)" type="button">
-                                            <mat-icon class="ico-calendario">access_time</mat-icon>
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seleccionar fechas y horas del calendario -->
-                        <div class="fechas-hora" *ngIf="tareasGlobalService.idPantalla == 2">
-                            <div class="fecha-hora">
-                                <p class="titulo-campo">{{ 'crm.crear.fechaIni' | translate }}</p>
-                                <div class="reloj-calendario">
-                                    <form class="fecha-calendario ">
-                                        <div class="input-group">
-                                            <input class="form-control" name="dp"
-                                                [value]="tareasGlobalService.fechaInicialFormat" ngbDatepicker
-                                                [minDate]="getStructureDate(fechaTarea!)"
-                                                [maxDate]="getStructureDate(fechaTarea!)" #d="ngbDatepicker"
-                                                (dateSelect)="onDateChange($event)" />
-                                            <button class="btn btn-outline-secondary ver-calendario"
-                                                (click)="d.toggle()" type="button">
-                                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <span class="spacer"></span>
-                                    <div class="horas">
-                                        <div class="hora-calendario">
-                                            <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
-                                                [min]="getHoraInput(tareasGlobalService.fechaIniCalendario!)"
-                                                [(ngModel)]="tareasGlobalService.horaInicial"
-                                                (ngModelChange)="validateStartDateCalendar()">
-                                            <ngx-material-timepicker #horaInicioPiker
-                                                [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
-                                        </div>
-                                        <button class="btn btn-outline-secondary ver-hora"
-                                            (click)="abrirTimePicker(horaInicioPiker)" type="button">
-                                            <mat-icon class="ico-calendario">access_time</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-                            <div class="fecha-hora">
-                                <p class="titulo-campo">{{ 'crm.crear.fechaFin' | translate }}</p>
-                                <div class="reloj-calendario">
-                                    <form class="fecha-calendario">
-                                        <div class="input-group">
-                                            <input class="form-control" name="dp"
-                                                [value]="tareasGlobalService.fechaFinalFormat" ngbDatepicker
-                                                [minDate]="tareasGlobalService.inputFechaInicial!" #d2="ngbDatepicker"
-                                                (dateSelect)="onEndDateChange($event)"
-                                                (ngModelChange)="validateEndDateCalendar()" />
-                                            <button class="btn btn-outline-secondary ver-calendario"
-                                                (click)="d2.toggle()" type="button">
-                                                <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                                            </button>
-                                        </div>
-                                    </form>
-                                    <span class="spacer"></span>
-
-                                    <div class="horas">
-                                        <div class="hora-calendario">
-                                            <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
-                                                [(ngModel)]="tareasGlobalService.horaFinal"
-                                                (ngModelChange)="validateEndDateCalendar()"
-                                                [min]="getHoraInput(tareasGlobalService.calendarioHoraFinMinima!)">
-                                            <ngx-material-timepicker #horaFinalPiker
-                                                [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
-                                        </div>
-                                        <button class="btn btn-outline-secondary ver-hora"
-                                            (click)="abrirTimePicker(horaFinalPiker)" type="button">
-                                            <mat-icon class="ico-calendario">access_time</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="fecha-hora">
-                            <p class="titulo-campo">{{ 'crm.crear.estimado' | translate }}</p>
+                </mat-toolbar>
+                <div class="container_main">
+                    <div class="formulario" [formGroup]="formulario">
+                        <div class="bloque-menus">
                             <div class="dFlex">
-                                <div class="minutos" [ngClass]="{'error': requerido && !duracion}">
-                                    <span class="spacer"></span>
-                                    <p>{{duracion}}</p>
-                                    <span class="spacer"></span>
-                                </div>
-                                <div class="seleccionar-tiempo">
-                                    {{tiempoEstimado?.descripcion}}
-                                </div>
+                                <p class="titulo-campo">{{ 'crm.crear.titulo' | translate }}</p>
+                                <p class="obligatorio">*</p>
                             </div>
-                            <div *ngIf="requerido && !duracion" class="error-message">
+                            <input type="text" formControlName="titulo"
+                                placeholder="{{ 'crm.crear.tituloTarea' | translate }}..." class="titulo-tarea"
+                                [ngClass]="{'error': formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid}"
+                                autocomplete="off">
+                            <div class="error-message"
+                                *ngIf="formulario.get('titulo')?.touched && formulario.get('titulo')?.invalid">
+                                <!-- <p class="circulo-error"></p> -->
                                 {{ 'crm.alertas.requerido' | translate }}
                             </div>
                         </div>
-                    </div>
-                    <div class="bloque-menus">
-                        <div class="abrir-dialogos">
-                            <div class="seleccion">
-                                <div class="dFlex">
-                                    <div class="buscar-usu-ref-id" (click)="agregarResponsable()"
-                                        [ngClass]="{'fondoerror': requerido && responsable == undefined}">
-                                        <span class="spacer"></span>
-                                        <div class="texto-botones">
-                                            {{ 'crm.crear.responsable' | translate }}
-                                        </div>
-                                        <span class="spacer"></span>
-                                    </div>
-                                    <p class="obligatorio25">*</p>
-                                </div>
-                                <div *ngIf="requerido && !responsable" class="error-message">
-                                    {{ 'crm.alertas.requerido' | translate }}
-                                </div>
-                                <div class="usuarios" *ngIf="responsable">
-                                    <p class="titulo-campo">{{ 'crm.detalles.responsable' | translate }}</p>
-                                    <div class="respuesta-dialogo">
-                                        <div class="dFlex">
-                                            <p>{{responsable.name}}</p>
-                                            <span class="spacer"></span>
-                                            <mat-icon (click)="eliminarResponsable()" class="eliminar"
-                                                matTooltip="{{ 'crm.crear.eliminarRes' | translate }}">
-                                                close
-                                            </mat-icon>
-                                        </div>
-                                        <p>{{responsable.email}}</p>
-                                    </div>
-                                </div>
+                        <div class="bloque-menus">
+                            <div class="dFlex">
+                                <p class="titulo-campo">{{ 'crm.crear.observacion' | translate }}</p>
+                                <p class="obligatorio">*</p>
                             </div>
-
-                            <span class="spacer"></span>
-
-                            <div class="seleccion">
-                                <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
-                                    <span class="spacer"></span>
-                                    <div class="texto-botones">
-                                        {{ 'crm.crear.invitado' | translate }}
-                                    </div>
-                                    <span class="spacer"></span>
-                                </div>
-
-                                <div class="usuarios" *ngIf="usuariosInvitados.length > 0">
-                                    <p class="titulo-campo">{{ 'crm.crear.invitadosT' | translate }}</p>
-                                    <div class="respuesta-dialogo"
-                                        *ngFor="let invitado of usuariosInvitados; let index = index">
-                                        <div class="dFlex">
-                                            <p>{{invitado.name}}</p>
-                                            <span class="spacer"></span>
-                                            <mat-icon (click)="eliminarInvitado(index)" class="eliminar"
-                                                matTooltip="{{ 'crm.crear.eliminarInvi' | translate }}">
-                                                close
-                                            </mat-icon>
-                                        </div>
-                                        <p class="email">{{invitado.email}}</p>
-                                    </div>
-                                </div>
+                            <textarea formControlName="descripcion" id="descripcion" cols="30" rows="3"
+                                class="observacion-tarea" placeholder="{{ 'crm.crear.descripcion' | translate }}"
+                                [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
+                            <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
+                                class="error-message">
+                                {{ 'crm.alertas.requerido' | translate }}
                             </div>
-                            <span class="spacer"></span>
-                            <div class="seleccion">
-                                <div class="dFlex">
-                                    <div class="buscar-usu-ref-id" (click)="buscarReferencia()"
-                                        [ngClass]="{'fondoerror': requerido && idReferencia == undefined}">
-                                        <span class="spacer"></span>
-                                        <div class="texto-botones">
-                                            {{ 'crm.crear.referenciaId' | translate }}
-                                        </div>
-                                        <span class="spacer"></span>
-                                    </div>
-                                    <p class="obligatorio25">*</p>
-                                </div>
-                                <div *ngIf="requerido && !idReferencia" class="error-message">
-                                    {{ 'crm.alertas.requerido' | translate }}
-                                </div>
-                                <div class="usuarios" *ngIf="idReferencia">
+                        </div>
 
-                                    <p class="titulo-campo">{{ 'crm.crear.referenciaId' | translate }}</p>
-                                    <div class="respuesta-dialogo">
-                                        <div class="dFlex">
-                                            <p>{{idReferencia.descripcion}}</p>
-                                            <span class="spacer"></span>
-                                            <mat-icon (click)="eliminarIdReferencia()" class="eliminar"
-                                                matTooltip="{{ 'crm.crear.eliminarRef' | translate }}">
-                                                close
-                                            </mat-icon>
-                                        </div>
-                                        <p class="negrita">{{idReferencia.referencia_Id}}</p>
+                        <div class="bloque-menus">
+                            <div class="datos-tarea">
+                                <div class="contenido-izquierdo">
+                                    <div class="d-flex">
+                                        <p class="titulo-campo">{{ 'crm.crear.tipo' | translate }}</p>
+                                        <p class="obligatorio">*</p>
                                     </div>
+                                    <mat-select formControlName="tipo" class="tipo-tarea"
+                                        placeholder="{{ 'crm.crear.tipoTarea' | translate }}">
+                                        <mat-option *ngFor="let tipo of tiposTarea" [value]="tipo">
+                                            {{tipo.descripcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                                <div class="contenido-izquierdo">
+                                    <div class="d-flex">
+                                        <p class="titulo-campo">{{ 'crm.crear.estado' | translate }}</p>
+                                        <p class="obligatorio">*</p>
+                                    </div>
+                                    <div class="tipo-tarea">
+                                        {{estadoTarea!.descripcion}}
+                                    </div>
+                                </div>
+                                <div class="contenido-izquierdo">
+                                    <div class="d-flex">
+                                        <p class="titulo-campo">{{ 'crm.crear.prioridad' | translate }}</p>
+                                        <p class="obligatorio">*</p>
+                                    </div>
+                                    <mat-select formControlName="prioridad" class="tipo-tarea"
+                                        placeholder="{{ 'crm.crear.prioridadTarea' | translate }}">
+                                        <mat-option *ngFor="let prioridad of prioridadesTarea" [value]="prioridad">
+                                            {{prioridad.nombre }}
+                                        </mat-option>
+                                    </mat-select>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="bloque-menus" *ngIf="selectedFiles.length > 0">
-                        <div class="archivos">
-                            <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
-                                <p class="nombre-archivos"> - {{ file.name }}</p>
+                    <div class="formulario">
+                        <div class="bloque-menus">
+                            <!-- Seleccionar fechas y horas desde tareas -->
+                            <div class="fechas-hora" *ngIf="tareasGlobalService.idPantalla == 1">
+                                <div class="fecha-hora">
+                                    <p class="titulo-campo">{{ 'crm.crear.fechaIni' | translate }}</p>
+                                    <div class="reloj-calendario">
+                                        <form class="fecha-calendario ">
+                                            <div class="input-group">
+                                                <input class="form-control" name="dp"
+                                                    [value]="tareasGlobalService.fechaInicialFormat" ngbDatepicker
+                                                    [minDate]="tareasGlobalService.fechaStruct!" #d="ngbDatepicker"
+                                                    (dateSelect)="onDateChange($event)"
+                                                    (ngModelChange)="validateStartDate()" />
+                                                <button class="btn btn-outline-secondary ver-calendario"
+                                                    (click)="d.toggle()" type="button">
+                                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <span class="spacer"></span>
+                                        <div class="horas">
+                                            <div class="hora-calendario">
+                                                <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
+                                                    [min]="getHoraInput(tareasGlobalService.horaInicioMinima!)"
+                                                    [(ngModel)]="tareasGlobalService.horaInicial"
+                                                    (ngModelChange)="validateStartDate()">
+                                                <ngx-material-timepicker #horaInicioPiker
+                                                    [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
+                                            </div>
+                                            <button class="btn btn-outline-secondary ver-hora"
+                                                (click)="abrirTimePicker(horaInicioPiker)" type="button">
+                                                <mat-icon class="ico-calendario">access_time</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <span class="spacer"></span>
-                                <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
-                                    matTooltip="{{ 'crm.crear.eliminarArchivo' | translate }}">
-                                    close
-                                </mat-icon>
+                                <div class="fecha-hora">
+                                    <p class="titulo-campo">{{ 'crm.crear.fechaFin' | translate }}</p>
+                                    <div class="reloj-calendario">
+                                        <form class="fecha-calendario">
+                                            <div class="input-group">
+                                                <input class="form-control" name="dp"
+                                                    [value]="tareasGlobalService.fechaFinalFormat" ngbDatepicker
+                                                    [minDate]="tareasGlobalService.inputFechaInicial!"
+                                                    #d2="ngbDatepicker" (dateSelect)="onEndDateChange($event)"
+                                                    (ngModelChange)="validateEndDate()" />
+                                                <button class="btn btn-outline-secondary ver-calendario"
+                                                    (click)="d2.toggle()" type="button">
+                                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <span class="spacer"></span>
+
+                                        <div class="horas">
+                                            <div class="hora-calendario">
+                                                <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
+                                                    [(ngModel)]="tareasGlobalService.horaFinal"
+                                                    (ngModelChange)="validateEndDate()"
+                                                    [min]="getHoraInput(tareasGlobalService.horaFinMinima!)">
+                                                <ngx-material-timepicker #horaFinalPiker
+                                                    [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
+                                            </div>
+                                            <button class="btn btn-outline-secondary ver-hora"
+                                                (click)="abrirTimePicker(horaFinalPiker)" type="button">
+                                                <mat-icon class="ico-calendario">access_time</mat-icon>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seleccionar fechas y horas del calendario -->
+                            <div class="fechas-hora" *ngIf="tareasGlobalService.idPantalla == 2">
+                                <div class="fecha-hora">
+                                    <p class="titulo-campo">{{ 'crm.crear.fechaIni' | translate }}</p>
+                                    <div class="reloj-calendario">
+                                        <form class="fecha-calendario ">
+                                            <div class="input-group">
+                                                <input class="form-control" name="dp"
+                                                    [value]="tareasGlobalService.fechaInicialFormat" ngbDatepicker
+                                                    [minDate]="getStructureDate(fechaTarea!)"
+                                                    [maxDate]="getStructureDate(fechaTarea!)" #d="ngbDatepicker"
+                                                    (dateSelect)="onDateChange($event)" />
+                                                <button class="btn btn-outline-secondary ver-calendario"
+                                                    (click)="d.toggle()" type="button">
+                                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <span class="spacer"></span>
+                                        <div class="horas">
+                                            <div class="hora-calendario">
+                                                <input [ngxTimepicker]="horaInicioPiker" readonly class="hora"
+                                                    [min]="getHoraInput(tareasGlobalService.fechaIniCalendario!)"
+                                                    [(ngModel)]="tareasGlobalService.horaInicial"
+                                                    (ngModelChange)="validateStartDateCalendar()">
+                                                <ngx-material-timepicker #horaInicioPiker
+                                                    [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
+                                            </div>
+                                            <button class="btn btn-outline-secondary ver-hora"
+                                                (click)="abrirTimePicker(horaInicioPiker)" type="button">
+                                                <mat-icon class="ico-calendario">access_time</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="spacer"></span>
+                                <div class="fecha-hora">
+                                    <p class="titulo-campo">{{ 'crm.crear.fechaFin' | translate }}</p>
+                                    <div class="reloj-calendario">
+                                        <form class="fecha-calendario">
+                                            <div class="input-group">
+                                                <input class="form-control" name="dp"
+                                                    [value]="tareasGlobalService.fechaFinalFormat" ngbDatepicker
+                                                    [minDate]="tareasGlobalService.inputFechaInicial!"
+                                                    #d2="ngbDatepicker" (dateSelect)="onEndDateChange($event)"
+                                                    (ngModelChange)="validateEndDateCalendar()" />
+                                                <button class="btn btn-outline-secondary ver-calendario"
+                                                    (click)="d2.toggle()" type="button">
+                                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <span class="spacer"></span>
+
+                                        <div class="horas">
+                                            <div class="hora-calendario">
+                                                <input [ngxTimepicker]="horaFinalPiker" readonly class="hora"
+                                                    [(ngModel)]="tareasGlobalService.horaFinal"
+                                                    (ngModelChange)="validateEndDateCalendar()"
+                                                    [min]="getHoraInput(tareasGlobalService.calendarioHoraFinMinima!)">
+                                                <ngx-material-timepicker #horaFinalPiker
+                                                    [defaultTime]="getHoraInput(tareasGlobalService.fecha!)"></ngx-material-timepicker>
+                                            </div>
+                                            <button class="btn btn-outline-secondary ver-hora"
+                                                (click)="abrirTimePicker(horaFinalPiker)" type="button">
+                                                <mat-icon class="ico-calendario">access_time</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="fecha-hora">
+                                <p class="titulo-campo">{{ 'crm.crear.estimado' | translate }}</p>
+                                <div class="dFlex">
+                                    <div class="minutos" [ngClass]="{'error': requerido && !duracion}">
+                                        <span class="spacer"></span>
+                                        <p>{{duracion}}</p>
+                                        <span class="spacer"></span>
+                                    </div>
+                                    <div class="seleccionar-tiempo">
+                                        {{tiempoEstimado?.descripcion}}
+                                    </div>
+                                </div>
+                                <div *ngIf="requerido && !duracion" class="error-message">
+                                    {{ 'crm.alertas.requerido' | translate }}
+                                </div>
                             </div>
                         </div>
+                        <div class="bloque-menus">
+                            <div class="abrir-dialogos">
+                                <div class="seleccion">
+                                    <div class="dFlex">
+                                        <div class="buscar-usu-ref-id" (click)="agregarResponsable()"
+                                            [ngClass]="{'fondoerror': requerido && responsable == undefined}">
+                                            <span class="spacer"></span>
+                                            <div class="texto-botones">
+                                                {{ 'crm.crear.responsable' | translate }}
+                                            </div>
+                                            <span class="spacer"></span>
+                                        </div>
+                                        <p class="obligatorio25">*</p>
+                                    </div>
+                                    <div *ngIf="requerido && !responsable" class="error-message">
+                                        {{ 'crm.alertas.requerido' | translate }}
+                                    </div>
+                                    <div class="usuarios" *ngIf="responsable">
+                                        <p class="titulo-campo">{{ 'crm.detalles.responsable' | translate }}</p>
+                                        <div class="respuesta-dialogo">
+                                            <div class="dFlex">
+                                                <p>{{responsable.name}}</p>
+                                                <span class="spacer"></span>
+                                                <mat-icon (click)="eliminarResponsable()" class="eliminar"
+                                                    matTooltip="{{ 'crm.crear.eliminarRes' | translate }}">
+                                                    close
+                                                </mat-icon>
+                                            </div>
+                                            <p>{{responsable.email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span class="spacer"></span>
+
+                                <div class="seleccion">
+                                    <div class="buscar-usu-ref-id" (click)="agregarInvitado()">
+                                        <span class="spacer"></span>
+                                        <div class="texto-botones">
+                                            {{ 'crm.crear.invitado' | translate }}
+                                        </div>
+                                        <span class="spacer"></span>
+                                    </div>
+
+                                    <div class="usuarios" *ngIf="usuariosInvitados.length > 0">
+                                        <p class="titulo-campo">{{ 'crm.crear.invitadosT' | translate }}</p>
+                                        <div class="respuesta-dialogo"
+                                            *ngFor="let invitado of usuariosInvitados; let index = index">
+                                            <div class="dFlex">
+                                                <p>{{invitado.name}}</p>
+                                                <span class="spacer"></span>
+                                                <mat-icon (click)="eliminarInvitado(index)" class="eliminar"
+                                                    matTooltip="{{ 'crm.crear.eliminarInvi' | translate }}">
+                                                    close
+                                                </mat-icon>
+                                            </div>
+                                            <p class="email">{{invitado.email}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="spacer"></span>
+                                <div class="seleccion">
+                                    <div class="dFlex">
+                                        <div class="buscar-usu-ref-id" (click)="buscarReferencia()"
+                                            [ngClass]="{'fondoerror': requerido && idReferencia == undefined}">
+                                            <span class="spacer"></span>
+                                            <div class="texto-botones">
+                                                {{ 'crm.crear.referenciaId' | translate }}
+                                            </div>
+                                            <span class="spacer"></span>
+                                        </div>
+                                        <p class="obligatorio25">*</p>
+                                    </div>
+                                    <div *ngIf="requerido && !idReferencia" class="error-message">
+                                        {{ 'crm.alertas.requerido' | translate }}
+                                    </div>
+                                    <div class="usuarios" *ngIf="idReferencia">
+
+                                        <p class="titulo-campo">{{ 'crm.crear.referenciaId' | translate }}</p>
+                                        <div class="respuesta-dialogo">
+                                            <div class="dFlex">
+                                                <p>{{idReferencia.descripcion}}</p>
+                                                <span class="spacer"></span>
+                                                <mat-icon (click)="eliminarIdReferencia()" class="eliminar"
+                                                    matTooltip="{{ 'crm.crear.eliminarRef' | translate }}">
+                                                    close
+                                                </mat-icon>
+                                            </div>
+                                            <p class="negrita">{{idReferencia.referencia_Id}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bloque-menus" *ngIf="selectedFiles.length > 0">
+                            <div class="archivos">
+                                <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
+                                    <p class="nombre-archivos"> - {{ file.name }}</p>
+                                    <span class="spacer"></span>
+                                    <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
+                                        matTooltip="{{ 'crm.crear.eliminarArchivo' | translate }}">
+                                        close
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
-            <!-- Mostrar logos -->
-            <app-barra-logos></app-barra-logos>
-
-        </mat-sidenav-content>
-
-    </mat-sidenav-container>
+                <!-- Mostrar logos -->
+                <app-barra-logos></app-barra-logos>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
 </div>

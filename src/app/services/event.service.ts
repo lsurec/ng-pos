@@ -217,4 +217,22 @@ export class EventService {
     regresarDetalleTareaDeErrorEvent(eventData: boolean) {
         this.regresarDetalleTareaDeError.next(eventData);
     }
+
+    //regresar a crear tarea desde error
+    private regresarCrear = new Subject<any>();
+
+    regresarCrear$ = this.regresarCrear.asObservable();
+
+    regresarCrearEvent(eventData: boolean) {
+        this.regresarCrear.next(eventData);
+    }
+
+    //regresar a calendario de error
+    private regresarCalendario = new Subject<any>();
+
+    regresarCalendario$ = this.regresarCalendario.asObservable();
+
+    regresarCalendarioEvent(eventData: boolean) {
+        this.regresarCalendario.next(eventData);
+    }
 }
