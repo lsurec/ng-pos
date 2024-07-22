@@ -1,463 +1,468 @@
-<!-- Pantalla de carga  -->
-<app-progress *ngIf="isLoading && !crearTarea" class="progress"></app-progress>
-<!-- <app-crear-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
-    (nuevaTareaCalendario)="addTarea($event)" [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-crear-tarea> -->
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <!-- Pantalla de carga  -->
+    <app-progress *ngIf="isLoading && !crearTarea" class="progress"></app-progress>
 
-<app-nueva-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
-    (nuevaTareaCalendario)="addTarea($event)" [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-nueva-tarea>
+    <app-nueva-tarea *ngIf="crearTarea" (desdeCalendario)="backPageCalendario($event)"
+        (nuevaTareaCalendario)="addTarea($event)"
+        [fechaTarea]="tareasGlobalService.fechaIniCalendario"></app-nueva-tarea>
 
-<!-- inicio de sidenav -->
-<mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
-    *ngIf=" !isLoading && mostrarCalendario">
-    <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-        <mat-toolbar class="head__sidenav ">
+    <!-- inicio de sidenav -->
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
+        *ngIf=" !isLoading && mostrarCalendario">
+        <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="head__sidenav ">
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="close('toggle button')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar>
+        </mat-sidenav>
+        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="head__sidenav ">
+                <button mat-icon-button (click)="close('toggle button')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <!-- Lista de opciones de vista de calendario -->
+                <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
+                    <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
+                <mat-menu #menu="matMenu">
+                    <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
+                    <div class="menuVistas">
+                        <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
+                            <p>{{ 'crm.calendario.mes' | translate}}</p>
+                        </button>
+
+                        <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
+                            <p>{{ 'crm.calendario.semana' | translate}}</p>
+                        </button>
+
+                        <button mat-menu-item class="opcion-vista" (click)="seeDay()">
+                            <p>{{ 'crm.calendario.dia' | translate}}</p>
+                        </button>
+
+                        <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
+                            <p> {{ 'crm.calendario.horaLaboral' | translate}}</p>
+                        </button>
+                    </div>
+                </mat-menu>
+            </mat-toolbar>
+
+            <!-- Date-Picker oculto  -->
+            <div class="selector-calendario-oculto">
+                <mat-card class="demo-inline-calendar-card">
+                    <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
+                        (selectedChange)="syncCalendars($event)"></mat-calendar>
+                </mat-card>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-toolbar class="toolbarPhone">
+                <mat-toolbar-row class="mat-toolbar-row">
+                    <!-- Regresar a la pantalla anterior -->
+                    <button (click)="backPage()" mat-icon-button matTooltip="'{{ 'pos.botones.regresar' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="{{ 'pos.botones.ctualizar' | translate }}" (click)="refresh()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
+                    <button mat-stroked-button class="boton-azul" (click)="hoy()">
+                        {{ 'crm.calendario.hoy' | translate }}
+                    </button>
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="sidenavend.open()">
+                        <mat-icon>calendar_month</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
             <span class="spacer"></span>
-            <button mat-icon-button (click)="close('toggle button')">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-    </mat-sidenav>
-    <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
-        <mat-toolbar class="head__sidenav ">
-            <button mat-icon-button (click)="close('toggle button')">
-                <mat-icon>close</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <!-- Lista de opciones de vista de calendario -->
-            <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
-                <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
-            <mat-menu #menu="matMenu">
-                <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
-                <div class="menuVistas">
-                    <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
-                        <p>{{ 'crm.calendario.mes' | translate}}</p>
-                    </button>
-
-                    <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
-                        <p>{{ 'crm.calendario.semana' | translate}}</p>
-                    </button>
-
-                    <button mat-menu-item class="opcion-vista" (click)="seeDay()">
-                        <p>{{ 'crm.calendario.dia' | translate}}</p>
-                    </button>
-
-                    <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
-                        <p> {{ 'crm.calendario.horaLaboral' | translate}}</p>
-                    </button>
-                </div>
-            </mat-menu>
-        </mat-toolbar>
-
-        <!-- Date-Picker oculto  -->
-        <div class="selector-calendario-oculto">
-            <mat-card class="demo-inline-calendar-card">
-                <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
-                    (selectedChange)="syncCalendars($event)"></mat-calendar>
-            </mat-card>
-        </div>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row class="mat-toolbar-row">
+            <mat-toolbar class="toolbarlarge">
                 <!-- Regresar a la pantalla anterior -->
-                <button (click)="backPage()" mat-icon-button matTooltip="'{{ 'pos.botones.regresar' | translate }}">
+                <button (click)="backPage()" mat-icon-button matTooltip="{{'pos.botones.regresar' | translate}}">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="{{ 'pos.botones.ctualizar' | translate }}" (click)="refresh()">
+                <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="refresh()">
                     <mat-icon>refresh</mat-icon>
                 </button>
+
                 <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
                 <button mat-stroked-button class="boton-azul" (click)="hoy()">
                     {{ 'crm.calendario.hoy' | translate }}
                 </button>
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="sidenavend.open()">
-                    <mat-icon>calendar_month</mat-icon>
-                </button>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <span class="spacer"></span>
-        <mat-toolbar class="toolbarlarge">
-            <!-- Regresar a la pantalla anterior -->
-            <button (click)="backPage()" mat-icon-button matTooltip="{{'pos.botones.regresar' | translate}}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-icon-button matTooltip="{{'pos.botones.actualizar' | translate}}" (click)="refresh()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-            <!-- Ir a la fecha del dia de hoy, depediendo de la vista seleccionada -->
-            <button mat-stroked-button class="boton-azul" (click)="hoy()">
-                {{ 'crm.calendario.hoy' | translate }}
-            </button>
 
-            <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
-            <div class="cambiar-mes d-flex" *ngIf="verMes">
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="backMonth()">
-                    <mat-icon> chevron_left </mat-icon>
-                </button>
-                <button mat-icon-button (click)="nextMonth()">
-                    <mat-icon>chevron_right </mat-icon>
-                </button>
-                <p class="mes-nombre nombre">
-                    {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' |translate }} {{yearSelect}}
-                </p>
-                <span class="spacer"></span>
-            </div>
-            <!-- mostrar fecha de semana, cambiar a la semana siguiente y semana anterior -->
-            <div class="d-flex" *ngIf="verSemana">
-                <span class="spacer"></span>
-                <button mat-icon-button (click)="backWeek()">
-                    <mat-icon> chevron_left </mat-icon>
-                </button>
-                <button mat-icon-button (click)="nextWeek()">
-                    <mat-icon>chevron_right </mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <p class="semana-nombre nombre">{{generateNameWeeck()}} </p>
-                <span class="spacer"></span>
-            </div>
-            <!-- mostrar fecha del dia, cambiar al dia anterior y dia siguiente -->
-            <div class="d-flex" *ngIf="verDia">
-                <button mat-icon-button (click)="backDay()">
-                    <mat-icon> chevron_left </mat-icon>
-                </button>
-                <button mat-icon-button (click)="nextDay()">
-                    <mat-icon>chevron_right </mat-icon>
-                </button>
-                <p class="dia-nombre-pc nombre">
-                    {{daySelect}} {{ 'crm.calendario.delMes' | translate }} {{obtenerNombreMes(monthSelectView)}}
-                    {{ 'crm.calendario.delMes' | translate }} {{yearSelect}}
-                </p>
-            </div>
-            <span class="spacer"></span>
-
-            <!-- Lista de opciones de vista de calendario -->
-            <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
-                <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
-            <mat-menu #menu="matMenu">
-                <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
-                <div class="menuVistas">
-                    <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
-                        <p>{{ 'crm.calendario.mes' | translate}}</p>
+                <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
+                <div class="cambiar-mes d-flex" *ngIf="verMes">
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="backMonth()">
+                        <mat-icon> chevron_left </mat-icon>
                     </button>
-
-                    <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
-                        <p>{{ 'crm.calendario.semana' | translate}}</p>
+                    <button mat-icon-button (click)="nextMonth()">
+                        <mat-icon>chevron_right </mat-icon>
                     </button>
-
-                    <button mat-menu-item class="opcion-vista" (click)="seeDay()">
-                        <p>{{ 'crm.calendario.dia' | translate}}</p>
-                    </button>
-
-                    <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
-                        <p>{{ 'crm.calendario.horaLaboral' | translate}}</p>
-                    </button>
+                    <p class="mes-nombre nombre">
+                        {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' |translate }} {{yearSelect}}
+                    </p>
+                    <span class="spacer"></span>
                 </div>
-            </mat-menu>
-        </mat-toolbar>
-        <div class="container_page">
-            <!-- Contenido lado izquierdo -->
-            <div class="container_start">
-                <span class="spacer"></span>
-                <div class="dFlex">
-                    <button (click)="verAjustes()" mat-icon-button *ngIf="inicio || fin || dias">
-                        <mat-icon>arrow_back</mat-icon>
+                <!-- mostrar fecha de semana, cambiar a la semana siguiente y semana anterior -->
+                <div class="d-flex" *ngIf="verSemana">
+                    <span class="spacer"></span>
+                    <button mat-icon-button (click)="backWeek()">
+                        <mat-icon> chevron_left </mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="nextWeek()">
+                        <mat-icon>chevron_right </mat-icon>
                     </button>
                     <span class="spacer"></span>
-                    <p class="ajustesMenu" *ngIf="tituloAjustes">{{ 'crm.ajustes.configuraciones' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="inicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
-                    <p class="ajustesMenu" *ngIf="fin"> {{'crm.ajustes.finLab' | translate}} </p>
-                    <p class="ajustesMenu" *ngIf="dias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
+                    <p class="semana-nombre nombre">{{generateNameWeeck()}} </p>
                     <span class="spacer"></span>
-                    <button mat-icon-button (click)="verAjustes()" *ngIf="tituloAjustes && picker">
-                        <mat-icon>settings</mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="verPiker()" *ngIf="!picker && ajustes">
-                        <mat-icon>calendar_month</mat-icon>
-                    </button>
                 </div>
+                <!-- mostrar fecha del dia, cambiar al dia anterior y dia siguiente -->
+                <div class="d-flex" *ngIf="verDia">
+                    <button mat-icon-button (click)="backDay()">
+                        <mat-icon> chevron_left </mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="nextDay()">
+                        <mat-icon>chevron_right </mat-icon>
+                    </button>
+                    <p class="dia-nombre-pc nombre">
+                        {{daySelect}} {{ 'crm.calendario.delMes' | translate }} {{obtenerNombreMes(monthSelectView)}}
+                        {{ 'crm.calendario.delMes' | translate }} {{yearSelect}}
+                    </p>
+                </div>
+                <span class="spacer"></span>
 
-                <div class="separador"></div>
+                <!-- Lista de opciones de vista de calendario -->
+                <button mat-stroked-button [matMenuTriggerFor]="menu" class="lista-menu">
+                    <mat-icon>expand_more</mat-icon>{{vistaActiva}} </button>
+                <mat-menu #menu="matMenu">
+                    <!-- Vistas: Mes, Semana, Dia, Horas Laborales -->
+                    <div class="menuVistas">
+                        <button mat-menu-item class="opcion-vista" (click)="seeMonth()">
+                            <p>{{ 'crm.calendario.mes' | translate}}</p>
+                        </button>
 
-                <div class="ajustes" *ngIf="ajustes">
+                        <button mat-menu-item class="opcion-vista" (click)="seeWeek()">
+                            <p>{{ 'crm.calendario.semana' | translate}}</p>
+                        </button>
 
-                    <!-- PRIMER DIA DE LA SEMANA -->
-                    <div class="configuraciones" (click)="verDias()">
-                        <mat-icon class="iconos-detalles">today</mat-icon>
+                        <button mat-menu-item class="opcion-vista" (click)="seeDay()">
+                            <p>{{ 'crm.calendario.dia' | translate}}</p>
+                        </button>
+
+                        <button mat-menu-item class="opcion-vista" *ngIf="verDia" (click)="hora8()">
+                            <p>{{ 'crm.calendario.horaLaboral' | translate}}</p>
+                        </button>
+                    </div>
+                </mat-menu>
+            </mat-toolbar>
+            <div class="container_page">
+                <!-- Contenido lado izquierdo -->
+                <div class="container_start">
+                    <span class="spacer"></span>
+                    <div class="dFlex">
+                        <button (click)="verAjustes()" mat-icon-button *ngIf="inicio || fin || dias">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
                         <span class="spacer"></span>
-                        <div class="detalle">
-                            <p class="subtitulo">{{ 'crm.ajustes.semana' | translate }}</p>
-                            <p class="descripcion">
-                                {{capitalizarTexto(getLrCode()[primerDiaSemana])}}
-                            </p>
+                        <p class="ajustesMenu" *ngIf="tituloAjustes">{{ 'crm.ajustes.configuraciones' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="inicio">{{ 'crm.ajustes.inicioLab' | translate }}</p>
+                        <p class="ajustesMenu" *ngIf="fin"> {{'crm.ajustes.finLab' | translate}} </p>
+                        <p class="ajustesMenu" *ngIf="dias">{{ 'crm.ajustes.inicioSema' | translate }}</p>
+                        <span class="spacer"></span>
+                        <button mat-icon-button (click)="verAjustes()" *ngIf="tituloAjustes && picker">
+                            <mat-icon>settings</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="verPiker()" *ngIf="!picker && ajustes">
+                            <mat-icon>calendar_month</mat-icon>
+                        </button>
+                    </div>
+
+                    <div class="separador"></div>
+
+                    <div class="ajustes" *ngIf="ajustes">
+
+                        <!-- PRIMER DIA DE LA SEMANA -->
+                        <div class="configuraciones" (click)="verDias()">
+                            <mat-icon class="iconos-detalles">today</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{ 'crm.ajustes.semana' | translate }}</p>
+                                <p class="descripcion">
+                                    {{capitalizarTexto(getLrCode()[primerDiaSemana])}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Seleccionar hora inicial -->
+                        <div class="configuraciones" (click)="verHoraInicio()">
+                            <mat-icon class="iconos-detalles">history_toggle_off</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
+                                <p class="descripcion">
+                                    {{horaInicio.hora12}} {{ 'crm.ajustes.rango' | translate }} {{horaFin.hora12}}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Seleccionar hora inicial -->
-                    <div class="configuraciones" (click)="verHoraInicio()">
-                        <mat-icon class="iconos-detalles">history_toggle_off</mat-icon>
-                        <span class="spacer"></span>
-                        <div class="detalle">
-                            <p class="subtitulo">{{ 'crm.ajustes.horas' | translate }} </p>
-                            <p class="descripcion">
-                                {{horaInicio.hora12}} {{ 'crm.ajustes.rango' | translate }} {{horaFin.hora12}}
-                            </p>
+                    <div class="ajustes" *ngIf="inicio">
+                        <!-- Seleccionar inicio de labores -->
+                        <div class="horarioLaboral">
+                            <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores"
+                                (ngModelChange)="verHoraFin()">
+                                <mat-radio-button class="example-radio-button separador"
+                                    *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
+                                    {{hora.hora12}}
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
-                </div>
-
-                <div class="ajustes" *ngIf="inicio">
-                    <!-- Seleccionar inicio de labores -->
-                    <div class="horarioLaboral">
-                        <mat-radio-group class="example-radio-group" [(ngModel)]="inicioLabores"
-                            (ngModelChange)="verHoraFin()">
+                    <div class="ajustes" *ngIf="fin">
+                        <div class="horarioLaboral">
+                            <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
+                                <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
+                                    <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores"
+                                        [value]="i" color="primary">
+                                        {{hora.hora12}}
+                                    </mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div class="ajustes" *ngIf="dias">
+                        <!-- Seleccionar primer dia semana -->
+                        <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
+                            (ngModelChange)="cambiarPrimerDia()">
                             <mat-radio-button class="example-radio-button separador"
-                                *ngFor="let hora of horarios; let i = index" [value]="i" color="primary">
-                                {{hora.hora12}}
+                                *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
+                                {{capitalizarTexto(dia)}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
+                    <!-- Date Picker -->
+                    <div class="selector-calendario" *ngIf="picker">
+                        <mat-card class="demo-inline-calendar-card">
+                            <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
+                                (selectedChange)="syncCalendars($event)"></mat-calendar>
+                        </mat-card>
+                    </div>
                 </div>
-                <div class="ajustes" *ngIf="fin">
-                    <div class="horarioLaboral">
-                        <mat-radio-group [(ngModel)]="finLabores" (ngModelChange)="setHoras()">
-                            <div *ngFor="let hora of horarios; let i = index" class="listaHoras">
-                                <mat-radio-button class="example-radio-button separador" *ngIf="i > inicioLabores"
-                                    [value]="i" color="primary">
-                                    {{hora.hora12}}
-                                </mat-radio-button>
+                <!-- Mostrar el calendario segun la vista seleccionada -->
+                <div class="container_main">
+                    <!-- CALENDARIO MES -->
+                    <div class="calendario-mes" *ngIf="verMes && !verSemana &&!verDia">
+                        <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
+                        <div class="nombre-cambiar">
+                            <div class="nombre-oculto">
+                                <p class="nombre-fecha">{{obtenerNombreMes(monthSelectView)}}
+                                    {{ 'crm.calendario.delMes' |translate}} {{yearSelect}}
+                                </p>
                             </div>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div class="ajustes" *ngIf="dias">
-                    <!-- Seleccionar primer dia semana -->
-                    <mat-radio-group class="example-radio-group" [(ngModel)]="primerDiaSemana"
-                        (ngModelChange)="cambiarPrimerDia()">
-                        <mat-radio-button class="example-radio-button separador"
-                            *ngFor="let dia of getLrCode(); let i = index" [value]="i" color="primary">
-                            {{capitalizarTexto(dia)}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                </div>
-                <!-- Date Picker -->
-                <div class="selector-calendario" *ngIf="picker">
-                    <mat-card class="demo-inline-calendar-card">
-                        <mat-calendar [(selected)]="datePicker" (selectedChange)="fechaSeleccionada()"
-                            (selectedChange)="syncCalendars($event)"></mat-calendar>
-                    </mat-card>
-                </div>
-            </div>
-            <!-- Mostrar el calendario segun la vista seleccionada -->
-            <div class="container_main">
-                <!-- CALENDARIO MES -->
-                <div class="calendario-mes" *ngIf="verMes && !verSemana &&!verDia">
-                    <!-- mostrar fecha de mes, cambiar al mes siguiente y mes anterior -->
-                    <div class="nombre-cambiar">
-                        <div class="nombre-oculto">
-                            <p class="nombre-fecha">{{obtenerNombreMes(monthSelectView)}}
-                                {{ 'crm.calendario.delMes' |translate}} {{yearSelect}}
-                            </p>
+                            <span class="spacer"></span>
+                            <button mat-icon-button (click)="backMonth()">
+                                <mat-icon> chevron_left </mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="nextMonth()">
+                                <mat-icon>chevron_right </mat-icon>
+                            </button>
                         </div>
-                        <span class="spacer"></span>
-                        <button mat-icon-button (click)="backMonth()">
-                            <mat-icon> chevron_left </mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="nextMonth()">
-                            <mat-icon>chevron_right </mat-icon>
-                        </button>
-                    </div>
-                    <!-- Mostrar los dias del mes -->
-                    <div class="mes-dias">
-                        <!-- Mostrar nombre de los dias, Lun, Mar, ... Dom, el orden es configurable -->
-                        <div *ngFor="let dia of diasView; let i = index" class="dia-nombre">{{dia| slice:0:3}}</div>
-                        <!-- Ordenar y posicionar los dias en el indice que correspondan -->
-                        <div [style.gridColumnStart]="first ? dia?.indexWeek : 'auto'"
-                            *ngFor="let dia of monthSelect; let first = first; let inDay = index; let c = count"
-                            class="dia-tarea-mes">
-                            <!-- Resaltar el dia de hoy -->
-                            <div [ngClass]="[ nuevaHoy(dia, inDay)  ? 'dia-hoy-crear': 'dia-crear']">
+                        <!-- Mostrar los dias del mes -->
+                        <div class="mes-dias">
+                            <!-- Mostrar nombre de los dias, Lun, Mar, ... Dom, el orden es configurable -->
+                            <div *ngFor="let dia of diasView; let i = index" class="dia-nombre">{{dia| slice:0:3}}</div>
+                            <!-- Ordenar y posicionar los dias en el indice que correspondan -->
+                            <div [style.gridColumnStart]="first ? dia?.indexWeek : 'auto'"
+                                *ngFor="let dia of monthSelect; let first = first; let inDay = index; let c = count"
+                                class="dia-tarea-mes">
+                                <!-- Resaltar el dia de hoy -->
+                                <div [ngClass]="[ nuevaHoy(dia, inDay)  ? 'dia-hoy-crear': 'dia-crear']">
 
-                                <div (click)="irAlDia(dia, inDay, resolveMonth(inDay))" [ngClass]="[ 
+                                    <div (click)="irAlDia(dia, inDay, resolveMonth(inDay))" [ngClass]="[ 
                                 nuevaHoy(dia, inDay)  ? 'hoy': 'num-dia',
                                 inDay >=0  && inDay<7  && dia.value   > semanas[0][6].value  ? 'num-dia-anterior':'num-dia',
                                     inDay >=monthSelect.length -6  && inDay<monthSelect.length   && dia.value   < semanas[semanas.length -1][0].value  ? 'num-dia-anterior':'num-dia' 
                                     ]">
-                                    <!-- Numero del dia -->
-                                    <span>{{dia?.value}}</span>
-                                </div>
-                                <span class="spacer"></span>
-                                <!-- <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)" -->
-                                <mat-icon *ngIf="iconoVistaMes( dia,inDay, monthSelectView, yearSelect)"
-                                    (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)" class="nueva"
-                                    matTooltip="{{'crm.tarea.crearTarea' | translate}}" [ngClass]="[ 
+                                        <!-- Numero del dia -->
+                                        <span>{{dia?.value}}</span>
+                                    </div>
+                                    <span class="spacer"></span>
+                                    <!-- <mat-icon *ngIf="mostrarIcono(inDay, monthSelectView, yearSelect)" -->
+                                    <mat-icon *ngIf="iconoVistaMes( dia,inDay, monthSelectView, yearSelect)"
+                                        (click)="crearTareaVistaMes(dia, inDay, monthSelectView , yearSelect)"
+                                        class="nueva" matTooltip="{{'crm.tarea.crearTarea' | translate}}" [ngClass]="[ 
                                 nuevaHoy(dia, inDay)  ? 'nuevo-hoy': 'num-otro-dia']">add</mat-icon>
-                                <!-- Mostrar las tareas por en la primera y ultima semana del mes seleccionado -->
-                            </div>
-
-                            <!-- Mostrar las tareas solo en los dias de la primera semana -->
-                            <div *ngIf="inDay >=0  && inDay<7  && dia.value   > semanas[0][6].value" class="verTareas">
-                                <div class="mostrar-tareas"
-                                    *ngFor="let tarea of tareaDia(dia.value, monthSelectView == 1 ? 12 : monthSelectView -1 ,monthSelectView == 1 ? yearSelect -1 : yearSelect)"
-                                    [matTooltip]="tarea.texto">
-                                    <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
-                                    <span class="spacer"></span>
-                                    <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
-                                    <span class="spacer"></span>
+                                    <!-- Mostrar las tareas por en la primera y ultima semana del mes seleccionado -->
                                 </div>
-                            </div>
 
-                            <!-- Mostrar las tareas solo en los dias del mes seleccionado Ej: 1 - 31 -->
-                            <div *ngIf="monthCurrent(dia.value,inDay)" class="verTareas">
-                                <div class="mostrar-tareas"
-                                    *ngFor="let tarea of tareaDia(dia.value,monthSelectView,yearSelect)"
-                                    [matTooltip]="tarea.texto">
-                                    <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
-                                    <span class="spacer"></span>
-                                    <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
-                                    <span class="spacer"></span>
-                                </div>
-                            </div>
-
-                            <!-- Mostrar las tareas solo en la ultima semana -->
-                            <div class="verTareas"
-                                *ngIf="inDay >=monthSelect.length -6  && inDay<monthSelect.length   && dia.value   < semanas[semanas.length -1][0].value">
-                                <div class="mostrar-tareas"
-                                    *ngFor="let tarea of tareaDia(dia.value,monthSelectView == 12 ? 1 : monthSelectView +1 ,monthSelectView == 12 ? yearSelect +1 : yearSelect)"
-                                    [matTooltip]="tarea.texto">
-                                    <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
-                                    <span class="spacer"></span>
-                                    <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
-                                    <span class="spacer"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CALENDARIO SEMANA -->
-                <div class="calendario-semana" *ngIf="!verMes && verSemana && !verDia">
-                    <!-- mostrar fecha de la semana, cambiar a ls semana siguiente y semana anterior -->
-                    <div class="nombre-cambiar">
-                        <div class="nombre-oculto">
-                            <p class="nombre-fecha">{{generateNameWeeck()}} </p>
-                        </div>
-                        <span class="spacer"></span>
-                        <button mat-icon-button (click)="backWeek()">
-                            <mat-icon> chevron_left </mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="nextWeek()">
-                            <mat-icon>chevron_right </mat-icon>
-                        </button>
-                    </div>
-                    <!-- Mostrar los dias del mes -->
-                    <div class="dias-semana">
-                        <!-- Mostrar nombre de los dias, Lun, Mar, ... Dom, el orden es configurable -->
-                        <p *ngFor="let dia of diasView; let i = index" class="dia-nombre">
-                            {{dia| slice:0:3}}</p>
-                        <!-- Ordenar los dias en el indice que correspondan -->
-                        <div [style.gridColumnStart]="first ? diaSemana?.indexWeek : 'auto'"
-                            *ngFor="let diaSemana of semanas[indexWeekActive]; let first = first; let iDia = index"
-                            class="dia-tarea-semana">
-                            <div class="dia-crear">
-                                <!-- Resaltar el dia de hoy en semana -->
-                                <div (click)="irAlDiaSemana(diaSemana, iDia)"
-                                    [ngClass]="[today == diaSemana?.value && resolveMonth(iDia) == month && yearSelect == year ? 'hoy-semana': 'num-dia']">
-                                    <!-- Numero de dia -->
-                                    <span>{{diaSemana?.value}}</span>
-                                </div>
-                                <span class="spacer"></span>
-                                <!-- <mat-icon class="nueva" matTooltip="crear nueva tarea" [ngClass]="[  -->
-                                <!-- <mat-icon (click)="nuevaTareaSemana(diaSemana.value, resolveMonth(i))" class="nueva" -->
-                                <mat-icon
-                                    *ngIf="mostrarIconoSemana(diaSemana, iDia , resolveMonth(iDia), resolveYear(iDia))"
-                                    class="nueva" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
-                                    (click)="crearTareaSemana(diaSemana, iDia, resolveMonth(iDia), yearSelect)"
-                                    [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'nuevo-hoy': 'num-otro-dia']">
-                                    add
-                                </mat-icon>
-                            </div>
-                            <!-- Mostrar las tareas en semanas, solo en el dia que correspodan  -->
-
-                            <div class="verTareas">
-                                <div class="mostrar-tareas"
-                                    *ngFor="let tarea of tareaDia(diaSemana.value , resolveMonth(iDia), resolveYear(iDia))"
-                                    [matTooltip]="tarea.texto">
-                                    <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
-                                    <span class="spacer"></span>
-                                    <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
-                                    <span class="spacer"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CALENDARIO DIA -->
-                <div class="calendario-dia" *ngIf="!verMes && !verSemana && verDia">
-                    <!-- mostrar fecha del dia, cambiar al dia siguiente y dia anterior -->
-                    <div class="nombre-cambiar">
-                        <div class="nombre-oculto">
-                            <!-- Mostrar nombre de la dia seleccionado -->
-                            <p class="nombre-fecha">
-                                {{daySelect}} {{ 'crm.calendario.delMes' | translate }}
-                                {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' | translate }}
-                                {{yearSelect}}
-                            </p>
-                        </div>
-                        <span class="spacer"></span>
-                        <button mat-icon-button (click)="backDay()">
-                            <mat-icon> chevron_left </mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="nextDay()">
-                            <mat-icon>chevron_right </mat-icon>
-                        </button>
-                    </div>
-
-                    <!-- Mostrar tareas en calendadio vista dia  -->
-                    <div class="textos-hora-tarea">
-                        <div class="descripciones-hora-tarea">
-                            <div class="detalles-hora">
-                                <p class="nombre-horario-tarea">{{ 'crm.calendario.horario' | translate }}</p>
-                            </div>
-                            <div class="detalles-tarea">
-                                <p class="nombre-horario-tarea">{{ 'crm.calendario.tareas' | translate }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="textos-hora-tarea">
-                        <div *ngFor="let hora of horas; let i = index">
-                            <div class="descripciones-hora-tarea alto-cuadro-tarea" *ngIf="hora.visible">
-                                <div class="detalles-hora">
-                                    <p class="numero-de-hora">{{hora.hora12}}</p>
-                                </div>
-                                <div class="cuadro-tarea">
-
-                                    <div class="tareas-dia-hora"
-                                        *ngFor="let tarea of tareaHora(hora.hora24, tareaDia(daySelect, monthSelectView, yearSelect))"
+                                <!-- Mostrar las tareas solo en los dias de la primera semana -->
+                                <div *ngIf="inDay >=0  && inDay<7  && dia.value   > semanas[0][6].value"
+                                    class="verTareas">
+                                    <div class="mostrar-tareas"
+                                        *ngFor="let tarea of tareaDia(dia.value, monthSelectView == 1 ? 12 : monthSelectView -1 ,monthSelectView == 1 ? yearSelect -1 : yearSelect)"
                                         [matTooltip]="tarea.texto">
                                         <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
                                         <span class="spacer"></span>
                                         <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
                                         <span class="spacer"></span>
                                     </div>
+                                </div>
+
+                                <!-- Mostrar las tareas solo en los dias del mes seleccionado Ej: 1 - 31 -->
+                                <div *ngIf="monthCurrent(dia.value,inDay)" class="verTareas">
+                                    <div class="mostrar-tareas"
+                                        *ngFor="let tarea of tareaDia(dia.value,monthSelectView,yearSelect)"
+                                        [matTooltip]="tarea.texto">
+                                        <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
+                                        <span class="spacer"></span>
+                                        <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
+                                        <span class="spacer"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Mostrar las tareas solo en la ultima semana -->
+                                <div class="verTareas"
+                                    *ngIf="inDay >=monthSelect.length -6  && inDay<monthSelect.length   && dia.value   < semanas[semanas.length -1][0].value">
+                                    <div class="mostrar-tareas"
+                                        *ngFor="let tarea of tareaDia(dia.value,monthSelectView == 12 ? 1 : monthSelectView +1 ,monthSelectView == 12 ? yearSelect +1 : yearSelect)"
+                                        [matTooltip]="tarea.texto">
+                                        <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
+                                        <span class="spacer"></span>
+                                        <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
+                                        <span class="spacer"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CALENDARIO SEMANA -->
+                    <div class="calendario-semana" *ngIf="!verMes && verSemana && !verDia">
+                        <!-- mostrar fecha de la semana, cambiar a ls semana siguiente y semana anterior -->
+                        <div class="nombre-cambiar">
+                            <div class="nombre-oculto">
+                                <p class="nombre-fecha">{{generateNameWeeck()}} </p>
+                            </div>
+                            <span class="spacer"></span>
+                            <button mat-icon-button (click)="backWeek()">
+                                <mat-icon> chevron_left </mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="nextWeek()">
+                                <mat-icon>chevron_right </mat-icon>
+                            </button>
+                        </div>
+                        <!-- Mostrar los dias del mes -->
+                        <div class="dias-semana">
+                            <!-- Mostrar nombre de los dias, Lun, Mar, ... Dom, el orden es configurable -->
+                            <p *ngFor="let dia of diasView; let i = index" class="dia-nombre">
+                                {{dia| slice:0:3}}</p>
+                            <!-- Ordenar los dias en el indice que correspondan -->
+                            <div [style.gridColumnStart]="first ? diaSemana?.indexWeek : 'auto'"
+                                *ngFor="let diaSemana of semanas[indexWeekActive]; let first = first; let iDia = index"
+                                class="dia-tarea-semana">
+                                <div class="dia-crear">
+                                    <!-- Resaltar el dia de hoy en semana -->
+                                    <div (click)="irAlDiaSemana(diaSemana, iDia)"
+                                        [ngClass]="[today == diaSemana?.value && resolveMonth(iDia) == month && yearSelect == year ? 'hoy-semana': 'num-dia']">
+                                        <!-- Numero de dia -->
+                                        <span>{{diaSemana?.value}}</span>
+                                    </div>
                                     <span class="spacer"></span>
+                                    <!-- <mat-icon class="nueva" matTooltip="crear nueva tarea" [ngClass]="[  -->
+                                    <!-- <mat-icon (click)="nuevaTareaSemana(diaSemana.value, resolveMonth(i))" class="nueva" -->
                                     <mat-icon
-                                        *ngIf="mostrarIconoHora(daySelect, hora) && daySelect >= today && monthSelectView >= month || monthSelectView > month && yearSelect >= year || yearSelect > year"
-                                        class="nueva-dia" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
-                                        (click)="obtenerHora(hora.hora24, daySelect, monthSelectView, yearSelect)">
+                                        *ngIf="mostrarIconoSemana(diaSemana, iDia , resolveMonth(iDia), resolveYear(iDia))"
+                                        class="nueva" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
+                                        (click)="crearTareaSemana(diaSemana, iDia, resolveMonth(iDia), yearSelect)"
+                                        [ngClass]="[today == diaSemana?.value && monthSelectView == month && yearSelect == year ? 'nuevo-hoy': 'num-otro-dia']">
                                         add
                                     </mat-icon>
+                                </div>
+                                <!-- Mostrar las tareas en semanas, solo en el dia que correspodan  -->
+
+                                <div class="verTareas">
+                                    <div class="mostrar-tareas"
+                                        *ngFor="let tarea of tareaDia(diaSemana.value , resolveMonth(iDia), resolveYear(iDia))"
+                                        [matTooltip]="tarea.texto">
+                                        <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}</p>
+                                        <span class="spacer"></span>
+                                        <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
+                                        <span class="spacer"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CALENDARIO DIA -->
+                    <div class="calendario-dia" *ngIf="!verMes && !verSemana && verDia">
+                        <!-- mostrar fecha del dia, cambiar al dia siguiente y dia anterior -->
+                        <div class="nombre-cambiar">
+                            <div class="nombre-oculto">
+                                <!-- Mostrar nombre de la dia seleccionado -->
+                                <p class="nombre-fecha">
+                                    {{daySelect}} {{ 'crm.calendario.delMes' | translate }}
+                                    {{obtenerNombreMes(monthSelectView)}} {{ 'crm.calendario.delMes' | translate }}
+                                    {{yearSelect}}
+                                </p>
+                            </div>
+                            <span class="spacer"></span>
+                            <button mat-icon-button (click)="backDay()">
+                                <mat-icon> chevron_left </mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="nextDay()">
+                                <mat-icon>chevron_right </mat-icon>
+                            </button>
+                        </div>
+
+                        <!-- Mostrar tareas en calendadio vista dia  -->
+                        <div class="textos-hora-tarea">
+                            <div class="descripciones-hora-tarea">
+                                <div class="detalles-hora">
+                                    <p class="nombre-horario-tarea">{{ 'crm.calendario.horario' | translate }}</p>
+                                </div>
+                                <div class="detalles-tarea">
+                                    <p class="nombre-horario-tarea">{{ 'crm.calendario.tareas' | translate }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="textos-hora-tarea">
+                            <div *ngFor="let hora of horas; let i = index">
+                                <div class="descripciones-hora-tarea alto-cuadro-tarea" *ngIf="hora.visible">
+                                    <div class="detalles-hora">
+                                        <p class="numero-de-hora">{{hora.hora12}}</p>
+                                    </div>
+                                    <div class="cuadro-tarea">
+
+                                        <div class="tareas-dia-hora"
+                                            *ngFor="let tarea of tareaHora(hora.hora24, tareaDia(daySelect, monthSelectView, yearSelect))"
+                                            [matTooltip]="tarea.texto">
+                                            <p class="descripcion-tarea" (click)="openDialogTask(tarea)">{{tarea.texto}}
+                                            </p>
+                                            <span class="spacer"></span>
+                                            <p class="circulo" [ngStyle]="{ 'background': tarea.backColor }"></p>
+                                            <span class="spacer"></span>
+                                        </div>
+                                        <span class="spacer"></span>
+                                        <mat-icon
+                                            *ngIf="mostrarIconoHora(daySelect, hora) && daySelect >= today && monthSelectView >= month || monthSelectView > month && yearSelect >= year || yearSelect > year"
+                                            class="nueva-dia" matTooltip="{{'crm.tarea.crearTarea' | translate}}"
+                                            (click)="obtenerHora(hora.hora24, daySelect, monthSelectView, yearSelect)">
+                                            add
+                                        </mat-icon>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Mostrar logos -->
-        <app-barra-logos></app-barra-logos>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+            <!-- Mostrar logos -->
+            <app-barra-logos></app-barra-logos>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

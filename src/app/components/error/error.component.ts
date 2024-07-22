@@ -137,6 +137,10 @@ export class ErrorComponent implements OnInit {
         //desde error a crear tarea
         this._eventService.regresarCrearEvent(true);
         break;
+      case 20:
+        //desde error a calendario
+        this._eventService.regresarCalendarioEvent(true);
+        break;
       default:
         this._location.back();
         break;
