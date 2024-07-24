@@ -105,6 +105,70 @@ export class DetalleTareaComponent {
     this.loadData();
   }
 
+  async obtenerComentarios() {
+    this.isLoading = true;
+    let resComentarios: ResApiInterface = await this._tareaService.getComentarios(this.tareaDetalle!.iD_Tarea);
+
+    //Si el servico se ejecuta mal mostrar menaje
+    if (!resComentarios.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resComentarios);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de apiComentarios
+    let comentarios: ComentarioInterface[] = resComentarios.response;
+
+    this.comentarios = [];
+
+    for (const comentario of comentarios) {
+      let resFiles: ResApiInterface = await this._tareaService.getComentariosObjeto(comentario.tarea_Comentario, comentario.tarea);
+      //Si el servico se ejecuta mal mostrar menaje
+      if (!resFiles.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resFiles);
+
+        return;
+
+      }
+
+      let itemComentario: ComentariosDetalle = {
+        comentario: comentario,
+        files: resFiles.response
+      }
+      this.comentarios.push(itemComentario);
+
+    }
+  }
+
   async loadData() {
     this.fechaHoy = new Date();
     // this.tareaEncontrada.tarea = task;
@@ -426,6 +490,10 @@ export class DetalleTareaComponent {
 
     //insertar el comentario en la lista de comentarios de la tarea.
     this.comentarios.push(comentarioDetalle);
+
+    if(this.selectedFiles.length > 0){
+      await this.obtenerComentarios();
+    }
 
     //Limoiar el comentario y la lista
     this.isLoading = false;
