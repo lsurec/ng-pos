@@ -491,7 +491,7 @@ export class DetalleTareaComponent {
     //insertar el comentario en la lista de comentarios de la tarea.
     this.comentarios.push(comentarioDetalle);
 
-    if(this.selectedFiles.length > 0){
+    if (this.selectedFiles.length > 0) {
       await this.obtenerComentarios();
     }
 
