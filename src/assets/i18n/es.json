@@ -167,7 +167,7 @@
             "tipoCuenta": "Seleccione un tipo de cuenta",
             "dinTipoRef": "No se pudo encontrar el tipo de referencia.",
             "cuentaNoEncontrada": "No se pudo encontrar la cuenta correntista ref.",
-            "seleccioneTipoRef": "Debe seleccionar un tipo de referencia.",
+            "seleccioneTipoRef": "Debes seleccionar un tipo de referencia.",
             "restriccionFechas": "Las fechas no son válidas. Por favor, revisa las restricciones",
             "docEditado": "Documento editado correctamente.",
             "tipoRefNoEncontrado": "No se pudo encontrar el tipo de referencia.",
