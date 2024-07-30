@@ -13,7 +13,6 @@ import { EnviarInvitadoInterface } from 'src/app/displays/shrTarea_3/interfaces/
 import { TiempoEstimadoInterface, TiemposInterface } from 'src/app/displays/shrTarea_3/interfaces/periodicidad.interface';
 import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
 import { EnviarResponsableInterface } from 'src/app/displays/shrTarea_3/interfaces/responsable.interface';
-import { TareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tarea-user.interface';
 import { TipoTareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tipo-tarea.interface';
 import { BuscarUsuariosInterface } from 'src/app/displays/shrTarea_3/interfaces/usuario.interface';
 import { EstadoService } from 'src/app/displays/shrTarea_3/services/estado.service';
@@ -37,6 +36,7 @@ import { BuscarIdReferenciaComponent } from '../buscar-id-referencia/buscar-id-r
 import { BuscarUsuariosComponent } from '../buscar-usuarios/buscar-usuarios.component';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EventService } from 'src/app/services/event.service';
+import { TareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tarea.interface';
 
 @Component({
   selector: 'app-nueva-tarea',
@@ -1194,6 +1194,7 @@ export class NuevaTareaComponent implements OnInit {
       //Nueva Tarea Tareas
       let tareaCreada: TareaInterface =
       {
+        id: 0,
         tarea: null,
         iD_Tarea: nuevasTareas[0].tarea,
         usuario_Creador: this.usuarioTarea,

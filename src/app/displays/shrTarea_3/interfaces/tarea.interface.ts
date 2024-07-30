@@ -1,5 +1,6 @@
 export interface TareaInterface {
-    tarea:                     any;
+    id:                        number;
+    tarea:                     null;
     iD_Tarea:                  number;
     usuario_Creador:           string;
     email_Creador:             string;

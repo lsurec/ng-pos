@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { TareaInterface } from '../displays/shrTarea_3/interfaces/tarea-user.interface';
 import { TareaCalendarioInterface } from '../displays/prcTarea_1/interfaces/tarea-calendario.interface';
+import { TareaInterface } from '../displays/shrTarea_3/interfaces/tarea.interface';
 
 @Injectable({
     providedIn: 'root'

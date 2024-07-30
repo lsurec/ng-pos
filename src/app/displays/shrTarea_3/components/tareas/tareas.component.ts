@@ -2,7 +2,6 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TareaService } from '../../services/tarea.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { DetalleInterface } from '../../interfaces/detalle-tarea.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
@@ -16,6 +15,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { busquedaEspaniol, busquedaIngles } from 'src/app/providers/dias.provider';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TareaInterface } from '../../interfaces/tarea.interface';
 
 @Component({
   selector: 'app-tareas',

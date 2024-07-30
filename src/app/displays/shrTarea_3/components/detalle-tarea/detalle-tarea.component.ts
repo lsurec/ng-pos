@@ -8,7 +8,6 @@ import { ComentarInterface, ComentarioInterface } from 'src/app/interfaces/comen
 import { InvitadoInterface } from '../../interfaces/invitado.interface';
 import { ResponsablesInterface } from '../../interfaces/responsable.interface';
 import { EstadoInterface } from '../../interfaces/estado-tarea.interface';
-import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { ComentariosDetalle, DetalleInterface } from '../../interfaces/detalle-tarea.interface';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +24,7 @@ import { ActualizarUsuariosComponent } from 'src/app/components/actualizar-usuar
 import { EliminarUsuarioInterface } from '../../interfaces/eliminar-usuario.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EventService } from 'src/app/services/event.service';
+import { TareaInterface } from '../../interfaces/tarea.interface';
 
 @Component({
   selector: 'app-detalle-tarea',

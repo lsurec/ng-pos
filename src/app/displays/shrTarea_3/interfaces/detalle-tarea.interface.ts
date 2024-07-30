@@ -2,7 +2,7 @@ import { ComentarioInterface } from "src/app/interfaces/comentario.interface";
 import { InvitadoInterface } from "./invitado.interface";
 import { ObjetoInterface } from "./objetos-comentario.interface";
 import { ResponsablesInterface } from "./responsable.interface";
-import { TareaInterface } from "./tarea-user.interface";
+import { TareaInterface } from "./tarea.interface";
 
 export interface DetalleInterface {
     tarea: TareaInterface;

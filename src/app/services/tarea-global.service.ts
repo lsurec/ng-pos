@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { TareaInterface } from "../displays/shrTarea_3/interfaces/tarea-user.interface";
+import { TareaInterface } from "../displays/shrTarea_3/interfaces/tarea.interface";
 
 @Injectable({
     providedIn: 'root',

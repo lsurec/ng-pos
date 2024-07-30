@@ -7,10 +7,10 @@ import { RefrescarService } from 'src/app/services/refrescar-tarea.service';
 import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 import { components } from 'src/app/providers/componentes.provider';
+import { TareaInterface } from '../../interfaces/tarea.interface';
 
 @Component({
   selector: 'app-lista-tareas',
@@ -40,7 +40,7 @@ export class ListaTareasComponent implements OnInit {
 
   topTareas: number = 10; //ultimas tareas
   searchText: string = ""; //filtro de tareas
-  buscarTareas: TareaInterface[] = [];
+  tareasEncontradas: TareaInterface[] = [];
 
   //Botones
   //Subir contenido
@@ -134,7 +134,7 @@ export class ListaTareasComponent implements OnInit {
 
     }
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
-    this.buscarTareas = resTopTareas.response;
+    this.tareasEncontradas = resTopTareas.response;
   }
 
 
@@ -202,7 +202,7 @@ export class ListaTareasComponent implements OnInit {
 
 
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
-    this.buscarTareas = resTarea.response;
+    this.tareasEncontradas = resTarea.response;
   };
 
 
@@ -249,7 +249,7 @@ export class ListaTareasComponent implements OnInit {
 
   addItem(newItem: TareaInterface): void {
     //agregar la taree creada al principio de todas las tareas
-    this.buscarTareas.unshift(newItem);
+    this.tareasEncontradas.unshift(newItem);
   }
 
 

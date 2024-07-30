@@ -60,7 +60,7 @@
                                     autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
                             </div>
                             <p class="coincidencias">{{'crm.home.registros' | translate}}
-                                {{buscarTareas.length}}
+                                {{tareasEncontradas.length}}
                             </p>
                         </form>
                         <!--Boton ir arriba-->
@@ -73,10 +73,10 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="buscarTareas.length != 0" class="tareas">
-                            <div *ngFor="let item of buscarTareas">
+                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
+                            <div *ngFor="let item of tareasEncontradas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">
@@ -130,7 +130,7 @@
                                     autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
                             </div>
                             <p class="coincidencias">{{'crm.home.registros' | translate}}
-                                {{buscarTareas.length}}
+                                {{tareasEncontradas.length}}
                             </p>
                         </form>
                         <!--Boton ir arriba-->
@@ -143,10 +143,10 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="buscarTareas.length != 0" class="tareas">
-                            <div *ngFor="let item of buscarTareas">
+                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
+                            <div *ngFor="let item of tareasEncontradas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">
@@ -204,7 +204,7 @@
                                     autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
                             </div>
                             <p class="coincidencias">{{'crm.home.registros' | translate}}
-                                {{buscarTareas.length}}
+                                {{tareasEncontradas.length}}
                             </p>
                         </form>
                         <!--Boton ir arriba-->
@@ -217,10 +217,10 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="buscarTareas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="buscarTareas.length != 0" class="tareas">
-                            <div *ngFor="let item of buscarTareas">
+                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
+                            <div *ngFor="let item of tareasEncontradas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">
