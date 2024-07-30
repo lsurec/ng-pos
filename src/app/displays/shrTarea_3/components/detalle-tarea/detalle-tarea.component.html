@@ -363,9 +363,12 @@
                             </div>
                             <!-- Estado de la tarea -->
                             <div class="icono-titulo">
-                                <div class="d-flex">
+                                <div class="dFlex">
                                     <mat-icon class="icono-detalle">arrow_circle_right</mat-icon>
                                     <p class="negrita">{{ 'crm.detalles.estadoTarea' | translate }}</p>
+                                    <div class="circulo-estado"
+                                        [ngStyle]="{'background-color': tareaDetalle!.backColor ? tareaDetalle!.backColor : '#000'}">
+                                    </div>
                                 </div>
                                 <div class="detalle-derecho d-flex">
                                     <p class="editar">{{tareaDetalle!.tarea_Estado}}</p>

@@ -535,3 +535,16 @@ mat-accordion {
     display         : flex;
     align-items     : center;
 }
+
+.circulo-estado {
+    width        : 20px;
+    height       : 20px;
+    border       : 1px solid $gris;
+    margin       : 5px;
+    border-radius: 50%;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
