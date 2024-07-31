@@ -80,14 +80,17 @@ hr {
     opacity   : .25;
 }
 
+textarea::-webkit-scrollbar,
 .dialog::-webkit-scrollbar {
     width: 7px;
 }
 
+textarea::-webkit-scrollbar-track,
 .dialog::-webkit-scrollbar-track {
     background: $fondo;
 }
 
+textarea::-webkit-scrollbar-thumb,
 .dialog::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;

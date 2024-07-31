@@ -2403,7 +2403,6 @@ export class FacturaComponent implements OnInit {
           Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
           Tra_Monto: transaccion.total,
-          //TODO:veridificar monto por dias
           Tra_Monto_Dias: transaccion.precioDia,
         }
 

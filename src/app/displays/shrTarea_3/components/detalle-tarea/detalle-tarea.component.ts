@@ -105,6 +105,28 @@ export class DetalleTareaComponent {
     this.loadData();
   }
 
+  convertLinksToHtml(text: string): string {
+    // Expresión regular para encontrar URLs en el texto
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    // Función de reemplazo para envolver las URLs con etiquetas <a>
+    const replaceFunction = (url: string) => {
+      return `<a href="${url}" target="_blank" style="color: blue;">${url}</a>`;
+    };
+
+    // Reemplaza las URLs en el texto
+    const convertedText = text.replace(urlRegex, replaceFunction);
+
+    return convertedText;
+  }
+
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto'; // Resetea la altura para calcular la nueva altura
+    const newHeight = Math.min(textarea.scrollHeight, 150); // Calcula la nueva altura, con un máximo de 150px (10 rows aprox.)
+    textarea.style.height = newHeight + 'px';
+  }
+
   async obtenerComentarios() {
     this.isLoading = true;
     let resComentarios: ResApiInterface = await this._tareaService.getComentarios(this.tareaDetalle!.iD_Tarea);

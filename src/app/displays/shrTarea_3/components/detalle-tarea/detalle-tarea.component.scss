@@ -157,6 +157,7 @@ mat-sidenav {
 
 //S C R O L L 
 
+textarea::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb,
 .comentarios::-webkit-scrollbar-thumb,
 .detalle-tarea::-webkit-scrollbar-thumb {
@@ -165,12 +166,14 @@ mat-sidenav {
     border          : 3px $fondo;
 }
 
+textarea::-webkit-scrollbar,
 .container_main::-webkit-scrollbar,
 .comentarios::-webkit-scrollbar,
 .detalle-tarea::-webkit-scrollbar {
     width: 7px;
 }
 
+textarea::-webkit-scrollbar-track,
 .container_main::-webkit-scrollbar-track,
 .comentarios::-webkit-scrollbar-track,
 .detalle-tarea::-webkit-scrollbar-track {

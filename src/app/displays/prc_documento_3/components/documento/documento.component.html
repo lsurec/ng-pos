@@ -308,7 +308,7 @@
         <div class="detalles-fondo" *ngIf=" facturaService.valueParametro(384)">
             <p class="textosBold14">{{ facturaService.getTextParam(384) ?? 'pos.factura.observacion' | translate }}</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.observacion"
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservacion"
                 (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 

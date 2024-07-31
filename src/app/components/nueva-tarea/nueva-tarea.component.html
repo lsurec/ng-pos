@@ -127,7 +127,8 @@
                             </div>
                             <textarea formControlName="descripcion" id="descripcion" cols="30" rows="3"
                                 class="observacion-tarea" placeholder="{{ 'crm.crear.descripcion' | translate }}"
-                                [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"></textarea>
+                                [ngClass]="{'error': formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid}"
+                                (input)="autoResize($event)" style="overflow:auto; resize:none;"></textarea>
                             <div *ngIf="formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid"
                                 class="error-message">
                                 {{ 'crm.alertas.requerido' | translate }}

@@ -30,7 +30,8 @@
                 <!-- Descripcion de la tarea -->
                 <!-- <p class="campo-tarea">{{data.tarea.observacion_1}}</p> -->
                 <div class="campo-tarea">
-                    <p [innerHTML]="formatText(data.tarea.observacion_1)" class="espacio-lineas"></p>
+                    <p [innerHTML]="formatText(convertLinksToHtml(data.tarea.observacion_1))" class="espacio-lineas">
+                    </p>
                 </div>
 
             </div>
@@ -83,7 +84,8 @@
                     </div>
                     <!-- decripcion de comentario -->
                     <div class="comentario_desc">
-                        <p [innerHTML]="formatText(comentario.comentario.comentario)" class="espacio-lineas"></p>
+                        <p [innerHTML]="formatText(convertLinksToHtml(comentario.comentario.comentario))"
+                            class="espacio-lineas"></p>
                         <!-- <p>{{comentario.comentario.comentario}}</p> -->
                         <div class="" *ngIf="comentarios[index].files.length >0">
                             <div class="adjuntos" *ngFor="let file of comentarios[index].files">
@@ -112,9 +114,10 @@
                             <p>{{fechaHoy | date: 'dd/MM/yyyy hh:mm a'}}</p>
                         </div>
                         <div class="comentario_desc">
-                            <textarea name="notas" id="descripcion" cols="30" rows="2"
+                            <textarea name="notas" id="descripcion" cols="30" rows="3"
                                 placeholder="{{'crm.crear.comentario' | translate}}" [(ngModel)]="comentarioDesc"
-                                class="escribir-comentario">
+                                class="escribir-comentario" (input)="autoResize($event)"
+                                style="overflow:auto; resize:none;">
                             </textarea>
                             <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
                                 <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p>

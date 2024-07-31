@@ -87,14 +87,17 @@ mat-sidenav {
 
 //Contendo derecho
 
+textarea::-webkit-scrollbar,
 .container_main::-webkit-scrollbar {
     width: 7px;
 }
 
+textarea::-webkit-scrollbar-track,
 .container_main::-webkit-scrollbar-track {
     background: $fondo;
 }
 
+textarea::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
