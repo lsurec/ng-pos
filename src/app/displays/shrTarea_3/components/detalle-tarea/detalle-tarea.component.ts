@@ -498,7 +498,8 @@ export class DetalleTareaComponent {
         objeto_Nombre: element.name,
         objeto_Size: '',
         objeto_URL: '',
-        tarea_Comentario_Objeto: 1
+        tarea_Comentario_Objeto: 1,
+        observacion_1: element.name,
       }
       archivos.push(archivo)
     }
