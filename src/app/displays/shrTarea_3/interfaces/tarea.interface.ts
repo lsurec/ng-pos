@@ -26,4 +26,5 @@ export interface TareaInterface {
     nivel_Prioridad:           number;
     nom_Nivel_Prioridad:       string;
     filtro:                    string;
+    registros?:                number;
 }

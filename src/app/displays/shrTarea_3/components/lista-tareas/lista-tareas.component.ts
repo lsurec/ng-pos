@@ -33,6 +33,8 @@ export class ListaTareasComponent implements OnInit {
   verError: boolean = false;
   regresar: number = 17;
 
+  registosTotales : number = 0;
+
   verTareas: boolean = true;
   verAsignadas: boolean = false;
   verCreadas: boolean = false;
@@ -173,7 +175,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-      this.searchText, this.tareaGlobalService.opcionFiltro,
+      this.searchText, 1, 10 ///TODO: modificar los rangos
     );
 
     this.isLoading = false;
