@@ -44,7 +44,6 @@ import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataInfileInterface } from '../../interfaces/data.infile.interface';
 import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
 import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
-import * as pdfMake from 'pdfmake/build/pdfmake';
 import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
 import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
 import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
@@ -52,6 +51,10 @@ import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import { RetryService } from 'src/app/services/retry.service';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: 'app-factura',
@@ -1837,7 +1840,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.isLoading = false;
 
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
-      pdfMake.createPdf(docDefinition).print();
+
+      pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).print();
+
+      // pdfMake.createPdf(docDefinition).print();
 
       if (
         this.facturaService.nuevoDoc) {
@@ -1854,7 +1860,8 @@ export class FacturaComponent implements OnInit {
 
 
     if (encabezado.preview != 0) {
-      pdfMake.createPdf(docDefinition).print();
+      // pdfMake.createPdf(docDefinition).print();
+      pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).print();
       return;
     }
 
@@ -1885,7 +1892,7 @@ export class FacturaComponent implements OnInit {
 
 
 
-    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs) ;
 
     // return;
     pdfDocGenerator.getBlob(async (blob) => {
@@ -1946,7 +1953,8 @@ export class FacturaComponent implements OnInit {
 
     if (!verificador) return;
 
-    pdfMake.createPdf(doc).print();
+    pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).print();
+    // pdfMake.createPdf(doc).print();
 
 
 

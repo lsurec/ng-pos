@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { urlApi } from '../providers/api.provider';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ResApiInterface } from '../interfaces/res-api.interface';
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { DocPrintModel } from '../interfaces/doc-print.interface';
-import { PreferencesService } from './preferences.service';
 import { TranslateService } from '@ngx-translate/core';
-import { GlobalConvertService } from '../displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 @Injectable()
 export class PrinterService {
@@ -1806,8 +1804,8 @@ export class PrinterService {
             }
         };
 
-
         var docDefinition: TDocumentDefinitions = {
+           
             info: {
                 title: doc.documento.titulo,
                 author: 'Demosoft',

@@ -91,7 +91,6 @@ import { DocsHistorialComponent } from './components/docs-historial/docs-histori
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
-import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
 import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
 @NgModule({
   declarations: [
@@ -130,7 +129,6 @@ import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tar
     TypesDocsComponent,
     OriginDocsComponent,
     DestinationDocsComponent,
-    PrinterConfigurationComponent,
     ConvertDocsComponent,
     DetailsDestDocsComponent,
     HomeConvertComponent,
