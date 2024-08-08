@@ -2256,9 +2256,12 @@ export class FacturaComponent implements OnInit {
 
       let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
+
+      let strDate: string = `${fechaAnt.getDate()}/${fechaAnt.getMonth()+1}/${fechaAnt.getFullYear()} ${fechaAnt.getHours()}:${fechaAnt.getMinutes()}:${fechaAnt.getSeconds()}` 
+
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
-      this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
+      this.docGlobal!.Doc_FEL_fechaCertificacion = strDate;
       this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
 
       //onjeto para el api
