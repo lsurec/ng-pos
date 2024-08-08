@@ -25,4 +25,5 @@ export interface TareaInterface {
     backColor:                 string;
     nivel_Prioridad:           number;
     nom_Nivel_Prioridad:       string;
+    filtro:                    string;
 }

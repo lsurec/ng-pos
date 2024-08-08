@@ -988,6 +988,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
         backColor: "#000",
         nivel_Prioridad: this.prioridadTarea!.nivel_Prioridad,
         nom_Nivel_Prioridad: this.prioridadTarea!.nombre,
+        filtro: "",
       };
 
       //agregar tareas en tareas
