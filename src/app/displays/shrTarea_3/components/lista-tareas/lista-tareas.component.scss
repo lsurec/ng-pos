@@ -212,7 +212,7 @@ $sombra        : var(--sombra-claro);
 }
 
 .inputSearch {
-    text-align: center !important;
+    position: relative;
 }
 
 /* Estilo para el contenedor del icono y el campo de entrada */
@@ -398,4 +398,44 @@ p {
     padding   : 10px;
     box-shadow: $sombra;
     margin    : 5px 0px;
+}
+
+.resultados {
+    position        : absolute;
+    top             : 100%;
+    left            : 0;
+    width           : 100%;
+    background-color: $fondo;
+    border          : 1px solid $bordes;
+    z-index         : 1000;
+    max-height      : 200px;
+    overflow-y      : auto;
+    box-shadow      : $sombra;
+}
+
+.resultado {
+    padding   : 8px 16px;
+    cursor    : pointer;
+    border    : solid 1px $bordes;
+    border-top: none;
+}
+
+.resultado:hover {
+    background-color: $bordes;
+}
+
+.id-titulo-fecha {
+    display: flex;
+}
+
+.desc {
+    padding-left: 5px;
+}
+
+.highlight {
+    color: green;
+}
+
+.verMas {
+    padding: 10px 0px;
 }

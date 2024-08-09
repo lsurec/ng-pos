@@ -26,12 +26,33 @@
             </mat-toolbar-row>
             <div class="container-main" *ngIf="!isLoading">
                 <!-- Buscar tareas por coincidencias -->
-                <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
+                <form #searchForm="ngForm" (ngSubmit)="filtrarResultados(0)" class="inputSearch">
                     <div class="input-container-tarea">
                         <button class="iconoLupa" mat-icon-button>
-                            <mat-icon>search</mat-icon> </button>
+                            <mat-icon>search</mat-icon>
+                        </button>
                         <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
                             autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}">
+                    </div>
+                    <div class="resultados" *ngIf="tareasFiltro.length > 0">
+                        <div *ngFor="let tarea of tareasFiltro, let index = index" class="resultado">
+
+                            <div class="id-titulo-fecha" (click)="viewTask(tarea)">
+                                <p>{{ tarea.iD_Tarea }}</p>
+                                <p class="desc">
+                                    <!-- [ngClass]="{ 'highlight': tarea.descripcion.toLowerCase().includes(searchText.toLowerCase()) }" -->
+                                    {{tarea.descripcion }}
+                                </p>
+                                <!-- <p class="desc" [innerHTML]="highlightText(tarea.descripcion, searchText)"></p> -->
+                                <span class="spacer"></span>
+                                <p>{{ tarea.fecha_Inicial | date: 'dd/MM/yyyy hh:mm a'}}</p>
+                            </div>
+                        </div>
+
+                        <div class="verMas">
+                            <button mat-stroked-button (click)="filtrarResultados(1)">Ver más</button>
+                        </div>
+
                     </div>
                 </form>
 

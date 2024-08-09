@@ -138,10 +138,19 @@ export class ListaTareasComponent implements OnInit {
     this.tareasEncontradas = resTopTareas.response;
   }
 
+  highlightText(text: string, search: string): string {
+    if (!search.trim()) return text;
 
+    // Convertir ambos textos a minúsculas
+    const lowerText = text.toLowerCase();
+    const lowerSearch = search.toLowerCase();
 
+    // Crear una expresión regular para buscar el texto
+    const regex = new RegExp(`(${lowerSearch})`, 'gi');
 
-
+    // Reemplazar el texto coincidente por el texto resaltado
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  }
 
   //Escuchando scroll en todos los elementos
   scrollEvent = (event: any): void => {
@@ -206,6 +215,107 @@ export class ListaTareasComponent implements OnInit {
     this.tareasEncontradas = resTarea.response;
   };
 
+
+  tareasFiltro: TareaInterface[] = [];
+  previousSearchText: string = '';
+
+  rangoIni: number = 1;
+  rangoFin: number = 10;
+
+  async filtrarResultados(vermas: number) {
+
+    const trimmedText = this.searchText.trim();
+
+    // Si no se ha presionado ninguna tecla o el texto es igual al anterior
+    if (trimmedText.length == 0 || trimmedText === this.previousSearchText && vermas != 1) {
+      return;
+    }
+
+    // Actualiza el valor anterior con el valor actual
+    this.previousSearchText = trimmedText;
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    if (vermas == 1) {
+
+      this.rangoIni + 10;
+      this.rangoFin + 10;
+
+      //aumentar los rangos
+      let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+        trimmedText, this.rangoIni, this.rangoIni
+      );
+
+      //si algo salio mal
+      if (!resTarea.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resTarea);
+
+        return;
+
+      }
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      let tareasMas: TareaInterface[] = resTarea.response;
+
+      //insetrar ala lista
+      // Insertar la lista de tareas en `tareasFiltro`
+      this.tareasFiltro.push(...tareasMas);
+
+    } else {
+
+      this.rangoIni = 1;
+      this.rangoFin = 10;
+
+      //Consumo de api
+      let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+        trimmedText, this.rangoIni, this.rangoFin
+      );
+
+      this.isLoading = false;
+
+      //si algo salio mal
+      if (!resTarea.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resTarea);
+
+        return;
+
+      }
+
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      this.tareasFiltro = resTarea.response;
+
+    }
+
+  }
 
   async viewTask(tarea: TareaInterface): Promise<void> {
 
@@ -334,7 +444,8 @@ export class ListaTareasComponent implements OnInit {
     this.tareaGlobalService.opcionFiltro = 0;
     if (!this.verTareas) {
       this.tareasTop10();
-      this.searchText = "";
+      // this.searchText = "";
+      // this.tareasFiltro = [];
     }
     this.verTareas = true;
     this.verAsignadas = false;
