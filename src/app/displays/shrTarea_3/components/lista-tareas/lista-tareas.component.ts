@@ -173,7 +173,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-      this.searchText, this.tareaGlobalService.opcionFiltro,
+      this.searchText, 1, 10
     );
 
     this.isLoading = false;
