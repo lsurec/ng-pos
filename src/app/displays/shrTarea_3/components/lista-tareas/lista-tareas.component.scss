@@ -52,7 +52,7 @@ $sombra        : var(--sombra-claro);
 .pestana {
     display    : inline-block;
     margin     : 0 0 -1px;
-    padding    : 15px 25px;
+    padding    : 5px 25px;
     font-weight: 500;
     text-align : center;
     color      : $pestanas;
@@ -196,7 +196,7 @@ $sombra        : var(--sombra-claro);
 .container_main {
     padding   : 0px 15px;
     width     : 100%;
-    height    : calc(100vh - 192px) !important;
+    height    : calc(100vh - 234px) !important;
     float     : left;
     overflow-y: auto;
     overflow-x: hidden;
@@ -217,9 +217,9 @@ $sombra        : var(--sombra-claro);
 
 /* Estilo para el contenedor del icono y el campo de entrada */
 .input-container-tarea {
-    position: relative;
-    margin  : 10px 0 0;
-    padding : 0px 15px;
+    position     : relative;
+    padding      : 10px 15px;
+    border-bottom: solid 1px $bordes;
 }
 
 /* Estilo para el icono */
@@ -249,10 +249,10 @@ $sombra        : var(--sombra-claro);
 }
 
 .coincidencias {
-    font-size    : 12px;
-    text-align   : right;
-    padding-right: 20px;
-    cursor       : pointer;
+    font-size : 12px;
+    text-align: right;
+    padding   : 5px 20px;
+    cursor    : pointer;
 }
 
 .tipo-busqueda {
@@ -310,9 +310,9 @@ $sombra        : var(--sombra-claro);
 
 /* estilos para la lista de las tareas */
 .espacioLista {
-    width         : 100%;
-    padding-bottom: 25px;
-    cursor        : pointer;
+    width        : 100%;
+    margin-bottom: 25px;
+    cursor       : pointer;
 }
 
 /* sombra y elevacion de items de lista */
