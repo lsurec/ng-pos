@@ -27,4 +27,5 @@ export interface TareaInterface {
     nom_Nivel_Prioridad:       string;
     filtro:                    string;
     registros?:                number;
+    roxMax?:                   number;
 }

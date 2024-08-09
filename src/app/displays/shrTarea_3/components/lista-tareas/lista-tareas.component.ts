@@ -24,8 +24,11 @@ import { TareaInterface } from '../../interfaces/tarea.interface';
 })
 export class ListaTareasComponent implements OnInit {
 
+  @ViewChild('contentContainer', { static: false }) contentContainer!: ElementRef;
+
+
   // Referencia al elemento con la clase container_main
-  @ViewChild('contentContainer') contentContainer!: ElementRef;
+  // @ViewChild('contentContainer') contentContainer!: ElementRef;
 
   verDetalles: boolean = false;
   verCrear: boolean = false;
@@ -33,7 +36,7 @@ export class ListaTareasComponent implements OnInit {
   verError: boolean = false;
   regresar: number = 17;
 
-  registosTotales : number = 0;
+  registosTotales: number = 0;
 
   verTareas: boolean = true;
   verAsignadas: boolean = false;
@@ -89,6 +92,9 @@ export class ListaTareasComponent implements OnInit {
     this.irArriba = false;
     this.searchText = "";
 
+    // Actualizar rangos para la próxima vez
+    this.rangoInicial += 10;
+    this.rangoFinal += 10;
   }
 
   goBack() {
@@ -104,6 +110,9 @@ export class ListaTareasComponent implements OnInit {
     this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
+    //reestableces los rangos
+    this.rangoInicial = 1;
+    this.rangoFinal = 10;
   }
 
   //obtener ultimas tareas
@@ -145,7 +154,7 @@ export class ListaTareasComponent implements OnInit {
 
 
   //Escuchando scroll en todos los elementos
-  scrollEvent = (event: any): void => {
+  scrollEvent2 = (event: any): void => {
 
     const number = event.srcElement.scrollTop; //Donde inicia el scroll
     //verificar que el scrool se ejecute dentro de la calse container_main
@@ -158,6 +167,201 @@ export class ListaTareasComponent implements OnInit {
       }
     }
   }
+
+  scrollEvent = (event: any): void => {
+    const element = event.srcElement;
+    const scrollTop = element.scrollTop;
+    const scrollHeight = element.scrollHeight;
+    const clientHeight = element.clientHeight;
+
+    // Verificar si el scroll se ejecuta dentro de la clase container_main
+    if (element.className === "container_main") {
+      // Verificar si estamos a menos de 80px del final del contenedor
+      if (scrollHeight - scrollTop <= clientHeight + 80) {
+        this.agregarMasElementos();
+      }
+
+      // Mostrar u ocultar botón para ir arriba
+      if (scrollTop > this.showScrollHeight) {
+        this.irArriba = true;
+      } else if (scrollTop < this.hideScrollHeight) {
+        this.irArriba = false;
+      }
+    }
+  }
+
+  lista: number[] = this.generarNumeros(1, 10);
+  rangoInicial: number = 1;
+  rangoFinal: number = 10;
+  limiteTareas: number = 10;
+  finalAlcanzado: boolean = false;
+
+  async agregarMasElementos(): Promise<void> {
+    // Si ya se alcanzó el final, no hacer nada
+    if (this.finalAlcanzado) {
+      return;
+    }
+
+    const posicionScrollActual = this.contentContainer.nativeElement.scrollTop;
+
+    // Generar y agregar más tareas a la lista
+    let nuevosElementos = await this.agregarTareas(this.rangoInicial, this.rangoFinal);
+
+    if (nuevosElementos.length === 0) {
+      // Si no hay nuevos elementos, marcar como final alcanzado
+      this.finalAlcanzado = true;
+      return;
+    }
+
+    this.tareasEncontradas.push(...nuevosElementos);
+
+    console.log(this.tareasEncontradas.length);
+
+    // Actualizar los rangos para la próxima vez
+    this.rangoInicial += 10;
+    this.rangoFinal += 10;
+
+    // Verificar si con estos nuevos elementos se alcanzó o superó el límite
+    if (this.tareasEncontradas.length >= this.limiteTareas) {
+      // Recortar la lista si sobrepasa el límite
+      this.tareasEncontradas = this.tareasEncontradas.slice(0, this.limiteTareas);
+      this.finalAlcanzado = true;  // Marcar como final alcanzado
+    }
+
+    // Mantener la posición del scroll
+    setTimeout(() => {
+      this.contentContainer.nativeElement.scrollTop = posicionScrollActual;
+    }, 0);
+  }
+
+
+  async agregarMasElementos4(): Promise<void> {
+    const posicionScrollActual = this.contentContainer.nativeElement.scrollTop;
+
+    // Generar y agregar más tareas a la lista
+    let nuevosElementos = await this.agregarTareas(this.rangoInicial, this.rangoFinal);
+
+    if (nuevosElementos.length == 0) {
+      return;
+    }
+
+    if (nuevosElementos.length > 0) {
+      this.tareasEncontradas.push(...nuevosElementos);
+
+      // Actualizar los rangos para la próxima vez
+      this.rangoInicial += 10;
+      this.rangoFinal += 10;
+
+      // Verificar si con estos nuevos elementos se alcanzó o superó el límite
+      if (this.tareasEncontradas.length >= this.limiteTareas) {
+        // Recortar la lista si sobrepasa el límite
+        this.tareasEncontradas = this.tareasEncontradas.slice(0, this.limiteTareas);
+      }
+    }
+
+    // Mantener la posición del scroll
+    setTimeout(() => {
+      this.contentContainer.nativeElement.scrollTop = posicionScrollActual;
+    }, 0);
+  }
+
+
+  async agregarMasElementos3(): Promise<void> {
+    const posicionScrollActual = this.contentContainer.nativeElement.scrollTop;
+
+    // Generar y agregar más tareas a la lista
+    let nuevosElementos = await this.agregarTareas(this.rangoInicial, this.rangoFinal);
+    if (nuevosElementos.length > 0) {
+      this.tareasEncontradas.push(...nuevosElementos);
+
+      // Actualizar los rangos para la próxima vez
+      this.rangoInicial += 10;
+      this.rangoFinal += 10;
+    }
+
+    // Mantener la posición del scroll
+    setTimeout(() => {
+      this.contentContainer.nativeElement.scrollTop = posicionScrollActual;
+    }, 0);
+  }
+
+
+
+  generarNumeros(inicio: number, fin: number): number[] {
+    return Array.from({ length: fin - inicio + 1 }, (_, i) => i + inicio);
+  }
+
+  async agregarTareas(rangoInicial: number, rangoFinal: number): Promise<TareaInterface[]> {
+    // Consumo de API
+    let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+      this.searchText, rangoInicial, rangoFinal
+    );
+
+    this.isLoading = false;
+
+    // Si algo salió mal
+    if (!resTarea.status) {
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return [];
+
+      this.mostrarError(resTarea);
+      return [];
+    }
+
+    let tareas: TareaInterface[] = resTarea.response;
+
+    console.log(tareas);
+
+
+    // Retornar la lista de tareas obtenidas
+    return tareas;
+  }
+
+
+  // async agregarTareas(rangoInicial: number, rangoFinal: number) {
+  //   //Consumo de api
+  //   let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+  //     this.searchText, rangoInicial, rangoFinal
+  //   );
+
+  //   this.isLoading = false;
+
+  //   //si algo salio mal
+  //   if (!resTarea.status) {
+
+  //     this.isLoading = false;
+
+  //     let verificador = await this._notificationService.openDialogActions(
+  //       {
+  //         title: this._translate.instant('pos.alertas.salioMal'),
+  //         description: this._translate.instant('pos.alertas.error'),
+  //         verdadero: this._translate.instant('pos.botones.informe'),
+  //         falso: this._translate.instant('pos.botones.aceptar'),
+  //       }
+  //     );
+
+  //     if (!verificador) return;
+
+  //     this.mostrarError(resTarea);
+
+  //     return;
+
+  //   }
+
+
+  //   //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+  //   this.tareasEncontradas = resTarea.response;
+  // }
 
   //Evento del scroll
   ngOnDestroy(): void {

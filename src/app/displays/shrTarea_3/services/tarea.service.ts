@@ -173,6 +173,11 @@ export class TareaService {
     // funcion asyncrona con promise
 
     getTareasFiltro(filtro: string, rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        console.log(rangoIni);
+        console.log(rangoFin);
+        
+        
         return new Promise((resolve, reject) => {
             this._getTareasFiltro(filtro, rangoIni, rangoFin).subscribe(
                 // Si la respuesta es correcta

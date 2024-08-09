@@ -196,10 +196,15 @@ $sombra        : var(--sombra-claro);
 .container_main {
     padding   : 0px 15px;
     width     : 100%;
-    height    : calc(100vh - 192px) !important;
+    height    : calc(100vh - 186px) !important;
     float     : left;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+
+.numero{
+    font-size: 40px !important;
 }
 
 @media screen and (max-width: 767px) {
