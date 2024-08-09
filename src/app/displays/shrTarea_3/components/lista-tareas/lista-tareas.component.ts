@@ -48,6 +48,7 @@ export class ListaTareasComponent implements OnInit {
   irAbajo: boolean = true;
   showScrollHeight: number = 400; //En cuantos pixeles se va a mostrar el boton
   hideScrollHeight: number = 200; //en cuantos se va a ocultar
+  isScrolling: boolean = false;
 
   constructor(
 
@@ -255,36 +256,43 @@ export class ListaTareasComponent implements OnInit {
 
   //IR HACIA ABAJO
   scrollDown() {
+    if (this.isScrolling) return; // Si ya está desplazándose, no hacer nada
+    this.isScrolling = true; // Marca que el desplazamiento ha comenzado
     const container = this.contentContainer.nativeElement;
-    this.smoothScroll(container, container.scrollHeight, 2000); // Desliza en 2 segundos
+    this.smoothScroll(container, container.scrollHeight, 2000, () => {
+      this.isScrolling = false; // Desbloquea el desplazamiento al finalizar
+    });
   }
 
   //IR HACIA ARRIBA
   scrollUp() {
+    if (this.isScrolling) return; // Si ya está desplazándose, no hacer nada
+    this.isScrolling = true; // Marca que el desplazamiento ha comenzado
     const container = this.contentContainer.nativeElement;
-    this.smoothScroll(container, 0, 2000); // Desliza en 2 segundos
+    this.smoothScroll(container, 0, 2000, () => {
+      this.isScrolling = false; // Desbloquea el desplazamiento al finalizar
+    });
   }
 
   //REALIZAR EL SCROLL
-  smoothScroll(element: HTMLElement, target: number, duration: number) {
-    const start = element.scrollTop; // Posición inicial del desplazamiento
-    const change = target - start; // Cambio total necesario en la posición
-    const increment = 20; // Intervalo de tiempo entre cada frame de la animación
-    let currentTime = 0; // Tiempo actual transcurrido
-
-    // Función que anima el desplazamiento
+  smoothScroll(element: HTMLElement, target: number, duration: number, callback: () => void) {
+    const start = element.scrollTop;
+    const change = target - start;
+    const increment = 20;
+    let currentTime = 0;
 
     const animateScroll = () => {
-      currentTime += increment; // Incrementa el tiempo actual
-      // Calcula la nueva posición usando la función de easing
+      currentTime += increment;
       const val = this.easeInOutQuad(currentTime, start, change, duration);
-      element.scrollTop = val; // Ajusta la posición del elemento
+      element.scrollTop = val;
       if (currentTime < duration) {
-        setTimeout(animateScroll, increment); // Continúa la animación si no ha terminado
+        setTimeout(animateScroll, increment);
+      } else {
+        callback(); // Llama al callback al finalizar el desplazamiento
       }
     };
 
-    animateScroll(); // Inicia la animación
+    animateScroll();
   }
 
   //CREAR ANIMACION
