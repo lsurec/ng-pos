@@ -84,7 +84,7 @@ export class ListaTareasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.tareasTop10();
+    this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
 
@@ -100,7 +100,7 @@ export class ListaTareasComponent implements OnInit {
   }
 
   loadData() {
-    // this.tareasTop10();
+    this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
   }
