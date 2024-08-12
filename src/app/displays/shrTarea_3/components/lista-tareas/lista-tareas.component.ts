@@ -221,6 +221,7 @@ export class ListaTareasComponent implements OnInit {
 
   rangoIni: number = 1;
   rangoFin: number = 10;
+  intervaloRegistros: number = 10;
 
   verMas: boolean = true;
 
@@ -242,6 +243,8 @@ export class ListaTareasComponent implements OnInit {
 
       this.rangoIni += 10;
       this.rangoFin += 10;
+
+      console.log(this.rangoFin, "rango fin");
 
       this.isLoading = true;
 
@@ -277,8 +280,21 @@ export class ListaTareasComponent implements OnInit {
       //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
       let tareasMas: TareaInterface[] = resTarea.response;
 
-      if (tareasMas.length == 0) {
-        return;
+      if (tareasMas.length < 10) {
+
+        let restaIni: number = this.rangoIni - (this.rangoIni - tareasMas.length);
+
+        console.log(restaIni);
+
+        this.rangoIni = this.tareasFiltro.length + restaIni;
+        this.rangoFin = +10;
+
+        if (tareasMas.length == 0) {
+          console.log("sin mas registros");
+
+          return;
+        }
+
       }
 
       this.isLoading = false;
@@ -291,12 +307,12 @@ export class ListaTareasComponent implements OnInit {
       this.rangoIni = 1;
       this.rangoFin = 10;
 
+      this.isLoading = true;
+
       //Consumo de api
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
         trimmedText, this.rangoIni, this.rangoFin
       );
-
-      this.isLoading = true;
 
       //si algo salio mal
       if (!resTarea.status) {
