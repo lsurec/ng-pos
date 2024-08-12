@@ -159,15 +159,18 @@ $sombra        : var(--sombra-claro);
     border-bottom   : 1px solid $bordes;
 }
 
+.resultados::-webkit-scrollbar,
 .container_main::-webkit-scrollbar {
     width           : 7px;
     background-color: $fondo;
 }
 
+.resultados::-webkit-scrollbar-track,
 .container_main::-webkit-scrollbar-track {
     background-color: $fondo;
 }
 
+.resultados::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
@@ -236,23 +239,24 @@ $sombra        : var(--sombra-claro);
 
 /* estilos para los inputs */
 .barra-de-busqueda {
-    height       : 45px;
-    width        : 100%;
-    background   : none;
-    font-size    : 14px;
-    padding-left : 50px;
-    outline      : none;
-    border-style : none;
-    border       : 0.5px solid $bordes;
-    color        : $personalizado;
-    border-radius: 20px;
+    height                 : 45px;
+    width                  : 100%;
+    background             : none;
+    font-size              : 14px;
+    padding-left           : 50px;
+    outline                : none;
+    border-style           : none;
+    border                 : 0.5px solid $bordes;
+    color                  : $personalizado;
+    border-top-right-radius: 20px;
+    border-top-left-radius : 20px;
+    // border-radius: 20px;
 }
 
 .coincidencias {
     font-size : 12px;
     text-align: right;
     padding   : 5px 20px;
-    cursor    : pointer;
 }
 
 .tipo-busqueda {
@@ -402,15 +406,16 @@ p {
 
 .resultados {
     position        : absolute;
-    top             : 100%;
-    left            : 0;
-    width           : 100%;
+    width           : calc(100% - 30px);
     background-color: $fondo;
-    border          : 1px solid $bordes;
     z-index         : 1000;
     max-height      : 200px;
     overflow-y      : auto;
     box-shadow      : $sombra;
+}
+
+.border-radius {
+    border-radius: 20px !important;
 }
 
 .resultado {
@@ -439,3 +444,8 @@ p {
 .verMas {
     padding: 10px 0px;
 }
+
+.encontradas {
+    width: 80%;
+}
+

@@ -84,7 +84,7 @@ export class ListaTareasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tareasTop10();
+    // this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
 
@@ -100,7 +100,7 @@ export class ListaTareasComponent implements OnInit {
   }
 
   loadData() {
-    this.tareasTop10();
+    // this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
   }
@@ -222,6 +222,8 @@ export class ListaTareasComponent implements OnInit {
   rangoIni: number = 1;
   rangoFin: number = 10;
 
+  verMas: boolean = true;
+
   async filtrarResultados(vermas: number) {
 
     const trimmedText = this.searchText.trim();
@@ -238,12 +240,14 @@ export class ListaTareasComponent implements OnInit {
     //si ver mas es = 1 aumenta los rangos
     if (vermas == 1) {
 
-      this.rangoIni = this.rangoIni + 10;
-      this.rangoFin = this.rangoFin + 10;
+      this.rangoIni += 10;
+      this.rangoFin += 10;
+
+      this.isLoading = true;
 
       //aumentar los rangos
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-        trimmedText, this.rangoIni, this.rangoIni
+        trimmedText, this.rangoIni, this.rangoFin
       );
 
       //si algo salio mal
@@ -268,15 +272,16 @@ export class ListaTareasComponent implements OnInit {
 
       }
 
+      this.isLoading = false;
+
       //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
       let tareasMas: TareaInterface[] = resTarea.response;
 
       if (tareasMas.length == 0) {
-
-        console.log("ya no debe agregar");
-
         return;
       }
+
+      this.isLoading = false;
 
       // Insertar la lista de tareas en `tareasFiltro`
       this.tareasFiltro.push(...tareasMas);
@@ -291,7 +296,7 @@ export class ListaTareasComponent implements OnInit {
         trimmedText, this.rangoIni, this.rangoFin
       );
 
-      this.isLoading = false;
+      this.isLoading = true;
 
       //si algo salio mal
       if (!resTarea.status) {
@@ -315,6 +320,8 @@ export class ListaTareasComponent implements OnInit {
 
       }
 
+
+      this.isLoading = false;
 
       //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
       this.tareasFiltro = resTarea.response;
