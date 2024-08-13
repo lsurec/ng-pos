@@ -103,6 +103,7 @@ export class ListaTareasComponent implements OnInit {
     this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
+    this.tareasFiltro = [];
   }
 
   //obtener ultimas tareas
@@ -230,9 +231,9 @@ export class ListaTareasComponent implements OnInit {
     const trimmedText = this.searchText.trim();
 
     // Si no se ha presionado ninguna tecla o el texto es igual al anterior
-    if (trimmedText.length == 0 || trimmedText === this.previousSearchText && vermas == 0) {
-      return;
-    }
+    // if (trimmedText.length == 0 || trimmedText === this.previousSearchText && vermas == 0 && this.tareasFiltro.length > 0) {
+    //   return;
+    // }
 
     // Actualiza el valor anterior con el valor actual
     this.previousSearchText = trimmedText;

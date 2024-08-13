@@ -25,9 +25,6 @@
                 </button>
             </mat-toolbar-row>
             <div class="container-main" *ngIf="!isLoading">
-                <p class="coincidencias">{{'crm.home.registros' | translate}}
-                    {{tareasFiltro.length}}
-                </p>
                 <!-- Buscar tareas por coincidencias -->
                 <form #searchForm="ngForm" (ngSubmit)="filtrarResultados(0)" class="inputSearch">
                     <div class="input-container-tarea">
@@ -38,6 +35,9 @@
                             autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}"
                             [ngClass]="{ 'border-radius': tareasFiltro.length == 0}">
                         <div class="resultados" *ngIf="tareasFiltro.length > 0">
+                            <p class="registros">{{'crm.home.registros' | translate}}
+                                {{tareasFiltro.length}}
+                            </p>
                             <div class="espacio-result">
                                 <div *ngFor="let tarea of tareasFiltro, let index = index" class="resultado">
 
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="verMas">
-                                    <button mat-stroked-button (click)="filtrarResultados(1)">Ver más</button>
+                                    <p (click)="filtrarResultados(1)">Ver más</p>
                                 </div>
                             </div>
                         </div>

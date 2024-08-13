@@ -259,6 +259,13 @@ $sombra        : var(--sombra-claro);
     padding   : 5px 20px;
 }
 
+.registros {
+    font-size    : 12px;
+    text-align   : right;
+    padding      : 5px 20px;
+    border-bottom: solid 1px $bordes;
+}
+
 .tipo-busqueda {
     text-align: center;
     width     : 100%;
@@ -409,7 +416,7 @@ p {
     width           : calc(100% - 30px);
     background-color: $fondo;
     z-index         : 1000;
-    max-height      : 200px;
+    max-height      : 300px;
     overflow-y      : auto;
     box-shadow      : $sombra;
 }
@@ -442,10 +449,12 @@ p {
 }
 
 .verMas {
-    padding: 10px;
+    padding        : 10px;
+    color          : $personalizado;
+    text-decoration: underline;
+    cursor         : pointer;
 }
 
 .encontradas {
     width: 80%;
 }
-
