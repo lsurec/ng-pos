@@ -237,14 +237,14 @@ export class ListaTareasComponent implements OnInit {
     // Actualiza el valor anterior con el valor actual
     this.previousSearchText = trimmedText;
 
+    if (this.tareasFiltro.length == 0) {
+      this.rangoIni = 1;
+      this.rangoFin = this.intervaloRegistros;
+    }
+
     // Realiza la búsqueda
     //si ver mas es = 1 aumenta los rangos
     if (vermas == 1) {
-
-      this.rangoIni += 10;
-      this.rangoFin += 10;
-
-      console.log(this.rangoFin, "rango fin");
 
       this.isLoading = true;
 
@@ -280,27 +280,13 @@ export class ListaTareasComponent implements OnInit {
       //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
       let tareasMas: TareaInterface[] = resTarea.response;
 
-      if (tareasMas.length < 10) {
-
-        let restaIni: number = this.rangoIni - (this.rangoIni - tareasMas.length);
-
-        console.log(restaIni);
-
-        this.rangoIni = this.tareasFiltro.length + restaIni;
-        this.rangoFin = +10;
-
-        if (tareasMas.length == 0) {
-          console.log("sin mas registros");
-
-          return;
-        }
-
-      }
-
       this.isLoading = false;
 
       // Insertar la lista de tareas en `tareasFiltro`
       this.tareasFiltro.push(...tareasMas);
+
+      this.rangoIni = this.tareasFiltro.length + 1;
+      this.rangoFin = this.rangoIni + this.intervaloRegistros;
 
     } else {
 
@@ -342,6 +328,8 @@ export class ListaTareasComponent implements OnInit {
       //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
       this.tareasFiltro = resTarea.response;
 
+      this.rangoIni += this.intervaloRegistros;
+      this.rangoFin += this.intervaloRegistros;
     }
 
   }
