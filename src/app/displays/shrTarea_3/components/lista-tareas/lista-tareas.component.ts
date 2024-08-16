@@ -158,17 +158,58 @@ export class ListaTareasComponent implements OnInit {
     return text.replace(regex, '<span class="highlight">$1</span>');
   }
 
-  //Escuchando scroll en todos los elementos
-  scrollEvent = (event: any): void => {
+  // //Escuchando scroll en todos los elementos
+  // scrollEvent = (event: any): void => {
 
-    const number = event.srcElement.scrollTop; //Donde inicia el scroll
-    //verificar que el scrool se ejecute dentro de la calse container_main
-    if (event.srcElement.className == "container_main") {
-      //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
-      if (number > this.showScrollHeight) {
-        this.irArriba = true; //Mostrar boton
-      } else if (number < this.hideScrollHeight) {
-        this.irArriba = false; //ocultar boton
+  //   const number = event.srcElement.scrollTop; //Donde inicia el scroll
+  //   //verificar que el scrool se ejecute dentro de la calse container_main
+  //   if (event.srcElement.className == "container_main") {
+  //     //evakuar si el scroll esta en la cantidad de pixeles para mostrar el boton
+  //     if (number > this.showScrollHeight) {
+  //       this.irArriba = true; //Mostrar boton
+  //     } else if (number < this.hideScrollHeight) {
+  //       this.irArriba = false; //ocultar boton
+  //     }
+  //   }
+  // }
+
+  hasReachedThreshold: boolean = false; // Bandera para controlar la ejecución
+
+  creadasCarga: boolean = false;
+  todasCarga: boolean = true;
+
+  // Escuchando scroll en todos los elementos
+  scrollEvent = (event: any): void => {
+    const element = event.srcElement;
+    const scrollTop = element.scrollTop; // Donde inicia el scroll
+    const scrollHeight = element.scrollHeight; // Altura total del contenido
+    const clientHeight = element.clientHeight; // Altura visible del contenedor
+
+    // Verificar que el scroll se ejecute dentro de la clase container_main
+    if (element.className === "container_main") {
+      // Calcular la distancia restante hasta el final del contenedor
+      const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+
+      // Verificar si la distancia es menor o igual a 50 píxeles y si no se ha ejecutado antes
+      if (distanceToBottom <= 250 && !this.hasReachedThreshold) {
+
+        this.hasReachedThreshold = true; // Marcar como ejecutado
+        if (this.verCreadas) {
+          this.recargarCreadas();
+        }
+      }
+
+      // Resetear la bandera cuando el usuario esté lejos de los 50 píxeles (por ejemplo, a 260 píxeles)
+      if (distanceToBottom >= 260 && this.hasReachedThreshold) {
+        this.hasReachedThreshold = false;
+      }
+
+
+      // Lógica para mostrar/ocultar el botón irArriba
+      if (scrollTop > this.showScrollHeight) {
+        this.irArriba = true; // Mostrar botón
+      } else if (scrollTop < this.hideScrollHeight) {
+        this.irArriba = false; // Ocultar botón
       }
     }
   }
@@ -227,6 +268,10 @@ export class ListaTareasComponent implements OnInit {
 
   rangoIni: number = 1;
   rangoFin: number = 10;
+
+  rangoCreadasIni: number = 1;
+  rangoCreadasFin: number = 10;
+
   intervaloRegistros: number = 10;
 
   verMas: boolean = true;
@@ -626,6 +671,60 @@ export class ListaTareasComponent implements OnInit {
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.creadasTareas = resTarea.response;
   };
+
+  async recargarCreadas() {
+
+    this.creadasCarga = true;
+
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this._tareaService.getTareasCreadas(
+      this.rangoCreadasIni, this.rangoCreadasFin
+    );
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let tareasMas: TareaInterface[] = resTarea.response;
+
+    if (tareasMas.length == 0) {
+      this.hasReachedThreshold = true;
+    } else {
+      this.hasReachedThreshold = false;
+
+    }
+
+    this.creadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.creadasTareas.push(...tareasMas);
+
+    //aumentar el intervalo de 10 a 20
+
+    let mas10: number = 10;
+
+    this.rangoCreadasIni = this.creadasTareas.length + 1;
+    this.rangoCreadasFin = this.rangoCreadasIni + this.intervaloRegistros + mas10;
+
+    // this.hasReachedThreshold = false;
+  }
 
   //TOP TAREAS ASIGNADAS
   async obtenerAsignadas(): Promise<void> {
