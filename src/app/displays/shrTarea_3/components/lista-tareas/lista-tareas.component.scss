@@ -8,6 +8,7 @@ $pestanas      : var(--pestana);
 $activa        : var(--activa-p);
 $gris          : var(--gris); //texto gris
 $sombra        : var(--sombra-claro);
+$barra-carga   : rgba(0, 0, 0, 0.2);
 
 
 //Pantalla de carga
@@ -394,7 +395,7 @@ p {
     overflow-wrap: break-word;
 }
 
-.dFlex {
+.color-estado {
     display    : flex;
     align-items: center;
     padding-top: 3px;
@@ -457,4 +458,68 @@ p {
 
 .encontradas {
     width: 80%;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -800px 0
+    }
+
+    100% {
+        background-position: 800px 0
+    }
+}
+
+.animated-background {
+    animation-duration       : 2s;
+    animation-fill-mode      : forwards;
+    animation-iteration-count: infinite;
+    animation-name           : placeHolderShimmer;
+    animation-timing-function: linear;
+    background-color         : #f6f7f8;
+    background               : linear-gradient(to right, #eeeeee 8%, $barra-carga 18%, #eeeeee 33%);
+    background-size          : 800px 104px;
+    height                   : 15px;
+    position                 : relative;
+}
+
+.carga10 {
+    width        : 10%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga20 {
+    width        : 20%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga30 {
+    width        : 30%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga40 {
+    width        : 40%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga50 {
+    width        : 50%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.carga60 {
+    width        : 60%;
+    border-radius: 10px;
+    margin-bottom: 5px;
 }
