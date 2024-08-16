@@ -152,7 +152,7 @@ export class TareaService {
 
 
     //funcion que va a realizar el consumo en privado.
-    private _getTareasFiltro(filtro: string, rangoIni: number, rangoFin: number) {
+    private _getTareasFiltro(filtro: string, opcion: number, rangoIni: number, rangoFin: number) {
 
         //configurar headers
         let headers = new HttpHeaders(
@@ -161,6 +161,7 @@ export class TareaService {
                 "Authorization": "bearer " + this._token,
                 "user": this._user,
                 "filtro": filtro,
+                "opcion": opcion,
                 "rangoIni": rangoIni,
                 "rangoFin": rangoFin,
             }
@@ -172,12 +173,12 @@ export class TareaService {
 
     // funcion asyncrona con promise
 
-    getTareasFiltro(filtro: string, rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+    getTareasFiltro(filtro: string, opcion: number, rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
 
-       // console.log("ini", rangoIni, "fin", rangoFin);
+        // console.log("ini", rangoIni, "fin", rangoFin);
 
         return new Promise((resolve, reject) => {
-            this._getTareasFiltro(filtro, rangoIni, rangoFin).subscribe(
+            this._getTareasFiltro(filtro, opcion, rangoIni, rangoFin).subscribe(
                 // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;

@@ -184,7 +184,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-      this.searchText, 1, 10
+      this.searchText, 1, 1, 10
     );
 
     this.isLoading = false;
@@ -251,7 +251,7 @@ export class ListaTareasComponent implements OnInit {
 
       //aumentar los rangos
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-        trimmedText, this.rangoIni, this.rangoFin
+        trimmedText, this.tareaGlobalService.opcionFiltro, this.rangoIni, this.rangoFin
       );
 
       //si algo salio mal
@@ -298,7 +298,7 @@ export class ListaTareasComponent implements OnInit {
 
       //Consumo de api
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-        trimmedText, this.rangoIni, this.rangoFin
+        trimmedText, this.tareaGlobalService.opcionFiltro, this.rangoIni, this.rangoFin
       );
 
       //si algo salio mal
