@@ -67,11 +67,11 @@
                     {{'crm.tarea.creadas' | translate}}
                 </div>
 
-                <!-- <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
+                <input class="titulo-pestana" id="tab3" type="radio" name="tabs" [checked]="verAsignadas">
                 <div class="pestana" for="tab3" matTooltip="{{'crm.tarea.asignadas' | translate}}"
                     (click)="asignadas()">
                     {{'crm.tarea.asignadas' | translate}}
-                </div> -->
+                </div>
 
                 <input class="titulo-pestana" id="tab4" type="radio" name="tabs" [checked]="verInvitaciones">
                 <div class="pestana" for="tab4" matTooltip="{{'crm.tarea.invitaciones' | translate}}"
@@ -83,7 +83,7 @@
                     <!-- Veremos todas las tareas del portal -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
-                            {{tareasEncontradas.length}}
+                            {{todasTareas.length}}
                         </p>
                         <!--Boton ir arriba-->
                         <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
@@ -95,10 +95,10 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="todasTareas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
-                            <div *ngFor="let item of tareasEncontradas">
+                        <div *ngIf="todasTareas.length != 0" class="tareas">
+                            <div *ngFor="let item of todasTareas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">
@@ -144,7 +144,7 @@
                     <!-- Veremos las tareas creadas por el usuario que inició sesion -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
-                            {{tareasEncontradas.length}}
+                            {{creadasTareas.length}}
                         </p>
                         <!--Boton ir arriba-->
                         <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
@@ -156,10 +156,10 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="creadasTareas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
-                            <div *ngFor="let item of tareasEncontradas">
+                        <div *ngIf="creadasTareas.length != 0" class="tareas">
+                            <div *ngFor="let item of creadasTareas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">
@@ -203,13 +203,9 @@
 
                 <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
                     <!-- Veremos las tareas asignadas al usuario que inició sesion -->
-                </section>
-
-                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
-                    <!-- Veremos las tareas a las que el usuario que inició sesion es invitado -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
-                            {{tareasEncontradas.length}}
+                            {{asignadasTareas.length}}
                         </p>
                         <!--Boton ir arriba-->
                         <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
@@ -221,10 +217,71 @@
                             <mat-icon>south</mat-icon>
                         </button>
                         <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
-                        <app-not-found-item *ngIf="tareasEncontradas.length == 0 && !isLoading"></app-not-found-item>
+                        <app-not-found-item *ngIf="asignadasTareas.length == 0 && !isLoading"></app-not-found-item>
                         <!--Lista de todas las tareas-->
-                        <div *ngIf="tareasEncontradas.length != 0" class="tareas">
-                            <div *ngFor="let item of tareasEncontradas">
+                        <div *ngIf="asignadasTareas.length != 0" class="tareas">
+                            <div *ngFor="let item of asignadasTareas">
+                                <div class="list-group espacioLista" (click)="viewTask(item)">
+                                    <a
+                                        class="tarea list-group-item list-group-item-action flex-column align-items-start">
+                                        <!-- Titulo Tarea -->
+                                        <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
+                                        <div class="dFlex">
+                                            <p>{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</p>
+                                            <span class="spacer"></span>
+                                            <p class="alingLeft fuente negrita">{{ item.tarea_Estado}}</p>
+                                            <div class="circulo-estado"
+                                                [ngStyle]="{'background-color': item.backColor ? item.backColor : '#000'}">
+                                            </div>
+                                        </div>
+                                        <small>
+                                            {{ 'crm.tarea.creador' | translate }} {{item.usuario_Creador}}
+                                        </small>
+                                        <small class="alingLeft fuente">
+                                            {{ 'crm.tarea.responsable' | translate }}
+                                            {{ resolveObject(item.usuario_Responsable)}}
+                                        </small>
+                                        <br>
+                                        <!-- id de la referencia y descripcion -->
+                                        <small>{{ 'crm.tarea.idReferencia' | translate }}
+                                            {{item.iD_Referencia}}</small>
+                                        <small class="alingLeft fuente">
+                                            {{ 'crm.tarea.fechaIni' | translate }}
+                                            {{item.fecha_Inicial | date: 'dd/MM/yyyy hh:mm a'}}
+                                        </small>
+                                        <br>
+                                        <!-- Descripcion (observacion) Tarea -->
+                                        <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
+                                            <small>{{ 'crm.tarea.descripcion' | translate }}</small>
+                                            <p class="descripcion">{{item.tarea_Observacion_1}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
+                    <!-- Veremos las tareas a las que el usuario que inició sesion es invitado -->
+                    <div class="container_main" #contentContainer>
+                        <p class="coincidencias">{{'crm.home.registros' | translate}}
+                            {{invitacionesTareas.length}}
+                        </p>
+                        <!--Boton ir arriba-->
+                        <button *ngIf="irArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+                            <mat-icon>arrow_upward</mat-icon>
+                        </button>
+                        <!--Boton ir abajo-->
+                        <button *ngIf="irAbajo && !irArriba" mat-mini-fab class="button_down_content"
+                            (click)="scrollDown()">
+                            <mat-icon>south</mat-icon>
+                        </button>
+                        <!-- pantalla "NO ENCONTRADO" antes de iniciar busqueda -->
+                        <app-not-found-item *ngIf="invitacionesTareas.length == 0 && !isLoading"></app-not-found-item>
+                        <!--Lista de todas las tareas-->
+                        <div *ngIf="invitacionesTareas.length != 0" class="tareas">
+                            <div *ngFor="let item of invitacionesTareas">
                                 <div class="list-group espacioLista" (click)="viewTask(item)">
                                     <a
                                         class="tarea list-group-item list-group-item-action flex-column align-items-start">

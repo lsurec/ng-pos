@@ -42,6 +42,11 @@ export class ListaTareasComponent implements OnInit {
   searchText: string = ""; //filtro de tareas
   tareasEncontradas: TareaInterface[] = [];
 
+  todasTareas: TareaInterface[] = [];
+  creadasTareas: TareaInterface[] = [];
+  asignadasTareas: TareaInterface[] = [];
+  invitacionesTareas: TareaInterface[] = [];
+
   //Botones
   //Subir contenido
   irArriba: boolean = false;
@@ -84,7 +89,7 @@ export class ListaTareasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tareasTop10();
+    this.obtenerTodas();
     this.irArriba = false;
     this.searchText = "";
 
@@ -184,7 +189,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-      this.searchText, 1, 1, 10
+      this.searchText, 1, 10
     );
 
     this.isLoading = false;
@@ -251,7 +256,7 @@ export class ListaTareasComponent implements OnInit {
 
       //aumentar los rangos
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-        trimmedText, this.tareaGlobalService.opcionFiltro, this.rangoIni, this.rangoFin
+        trimmedText, this.rangoIni, this.rangoFin
       );
 
       //si algo salio mal
@@ -298,7 +303,7 @@ export class ListaTareasComponent implements OnInit {
 
       //Consumo de api
       let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-        trimmedText, this.tareaGlobalService.opcionFiltro, this.rangoIni, this.rangoFin
+        trimmedText, this.rangoIni, this.rangoFin
       );
 
       //si algo salio mal
@@ -459,11 +464,9 @@ export class ListaTareasComponent implements OnInit {
   }
 
   tareas() {
-    this.tareaGlobalService.opcionFiltro = 0;
-    if (!this.verTareas) {
-      this.tareasTop10();
-      // this.searchText = "";
-      // this.tareasFiltro = [];
+    this.tareaGlobalService.opcionFiltro = 1;
+    if (!this.verTareas && this.todasTareas.length == 0) {
+      this.obtenerTodas();
     }
     this.verTareas = true;
     this.verAsignadas = false;
@@ -474,11 +477,10 @@ export class ListaTareasComponent implements OnInit {
 
   creadas() {
     //Mis tareas (Creadas por mí)
-    this.tareaGlobalService.opcionFiltro = 1;
+    this.tareaGlobalService.opcionFiltro = 2;
 
-    if (!this.verCreadas) {
-      this.tareasTop10();
-      this.searchText = "";
+    if (!this.verCreadas && this.creadasTareas.length == 0) {
+      this.obtenerCreadas();
     }
 
     this.verCreadas = true;
@@ -489,6 +491,13 @@ export class ListaTareasComponent implements OnInit {
   }
 
   asignadas() {
+    //Mis Asignaciones (Mi usuario es responsable de la tarea)
+    this.tareaGlobalService.opcionFiltro = 3;
+
+    if (!this.verCreadas && this.asignadasTareas.length == 0) {
+      this.obtenerAsignadas();
+    }
+
     this.verAsignadas = true;
     this.verTareas = false;
     this.verCreadas = false;
@@ -497,12 +506,11 @@ export class ListaTareasComponent implements OnInit {
   }
 
   invitaciones() {
-    //Invitaciones (Invitados por mí)
-    this.tareaGlobalService.opcionFiltro = 2;
+    //Invitaciones (Invitaciones para mi usuario)
+    this.tareaGlobalService.opcionFiltro = 4;
 
-    if (!this.verInvitaciones) {
-      this.tareasTop10();
-      this.searchText = "";
+    if (!this.verInvitaciones && this.invitacionesTareas.length == 0) {
+      this.obtenerInvitaciones();
     }
 
     this.verInvitaciones = true;
@@ -541,5 +549,157 @@ export class ListaTareasComponent implements OnInit {
     this.verError = true;
   }
 
+
+  //TOP TODAS LAS TAREAS
+
+  async obtenerTodas(): Promise<void> {
+
+    this.isLoading = true;
+    //Consumo de api
+    let resTarea: ResApiInterface = await this._tareaService.getTareasTodas(
+      1, 10,
+    );
+
+    this.isLoading = false;
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    this.todasTareas = resTarea.response;
+  };
+
+  //obtener creadas
+  async obtenerCreadas(): Promise<void> {
+
+    this.isLoading = true;
+    //Consumo de api
+    let resTarea: ResApiInterface = await this._tareaService.getTareasCreadas(
+      1, 10,
+    );
+
+    this.isLoading = false;
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    this.creadasTareas = resTarea.response;
+  };
+
+  //TOP TAREAS ASIGNADAS
+  async obtenerAsignadas(): Promise<void> {
+
+    this.isLoading = true;
+    //Consumo de api
+    let resTarea: ResApiInterface = await this._tareaService.getTareasAsignadas(
+      1, 10,
+    );
+
+    this.isLoading = false;
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    this.asignadasTareas = resTarea.response;
+  };
+
+  //TOP TAREAS INVITACIONES
+  async obtenerInvitaciones(): Promise<void> {
+
+    this.isLoading = true;
+    //Consumo de api
+    let resTarea: ResApiInterface = await this._tareaService.getTareasInvitaciones(
+      1, 10,
+    );
+
+    this.isLoading = false;
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    this.invitacionesTareas = resTarea.response;
+  };
 
 }
