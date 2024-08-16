@@ -52,7 +52,7 @@ $sombra        : var(--sombra-claro);
 .pestana {
     display    : inline-block;
     margin     : 0 0 -1px;
-    padding    : 15px 25px;
+    padding    : 5px 25px;
     font-weight: 500;
     text-align : center;
     color      : $pestanas;
@@ -159,15 +159,18 @@ $sombra        : var(--sombra-claro);
     border-bottom   : 1px solid $bordes;
 }
 
+.resultados::-webkit-scrollbar,
 .container_main::-webkit-scrollbar {
     width           : 7px;
     background-color: $fondo;
 }
 
+.resultados::-webkit-scrollbar-track,
 .container_main::-webkit-scrollbar-track {
     background-color: $fondo;
 }
 
+.resultados::-webkit-scrollbar-thumb,
 .container_main::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
@@ -196,7 +199,7 @@ $sombra        : var(--sombra-claro);
 .container_main {
     padding   : 0px 15px;
     width     : 100%;
-    height    : calc(100vh - 192px) !important;
+    height    : calc(100vh - 234px) !important;
     float     : left;
     overflow-y: auto;
     overflow-x: hidden;
@@ -212,14 +215,14 @@ $sombra        : var(--sombra-claro);
 }
 
 .inputSearch {
-    text-align: center !important;
+    position: relative;
 }
 
 /* Estilo para el contenedor del icono y el campo de entrada */
 .input-container-tarea {
-    position: relative;
-    margin  : 10px 0 0;
-    padding : 0px 15px;
+    position     : relative;
+    padding      : 10px 15px;
+    border-bottom: solid 1px $bordes;
 }
 
 /* Estilo para el icono */
@@ -236,23 +239,31 @@ $sombra        : var(--sombra-claro);
 
 /* estilos para los inputs */
 .barra-de-busqueda {
-    height       : 45px;
-    width        : 100%;
-    background   : none;
-    font-size    : 14px;
-    padding-left : 50px;
-    outline      : none;
-    border-style : none;
-    border       : 0.5px solid $bordes;
-    color        : $personalizado;
-    border-radius: 20px;
+    height                 : 45px;
+    width                  : 100%;
+    background             : none;
+    font-size              : 14px;
+    padding-left           : 50px;
+    outline                : none;
+    border-style           : none;
+    border                 : 0.5px solid $bordes;
+    color                  : $personalizado;
+    border-top-right-radius: 20px;
+    border-top-left-radius : 20px;
+    // border-radius: 20px;
 }
 
 .coincidencias {
+    font-size : 12px;
+    text-align: right;
+    padding   : 5px 20px;
+}
+
+.registros {
     font-size    : 12px;
     text-align   : right;
-    padding-right: 20px;
-    cursor       : pointer;
+    padding      : 5px 20px;
+    border-bottom: solid 1px $bordes;
 }
 
 .tipo-busqueda {
@@ -310,9 +321,9 @@ $sombra        : var(--sombra-claro);
 
 /* estilos para la lista de las tareas */
 .espacioLista {
-    width         : 100%;
-    padding-bottom: 25px;
-    cursor        : pointer;
+    width        : 100%;
+    margin-bottom: 25px;
+    cursor       : pointer;
 }
 
 /* sombra y elevacion de items de lista */
@@ -398,4 +409,52 @@ p {
     padding   : 10px;
     box-shadow: $sombra;
     margin    : 5px 0px;
+}
+
+.resultados {
+    position        : absolute;
+    width           : calc(100% - 30px);
+    background-color: $fondo;
+    z-index         : 1000;
+    max-height      : 300px;
+    overflow-y      : auto;
+    box-shadow      : $sombra;
+}
+
+.border-radius {
+    border-radius: 20px !important;
+}
+
+.resultado {
+    padding   : 8px 16px;
+    cursor    : pointer;
+    border    : solid 1px $bordes;
+    border-top: none;
+}
+
+.resultado:hover {
+    background-color: $bordes;
+}
+
+.id-titulo-fecha {
+    display: flex;
+}
+
+.desc {
+    padding-left: 5px;
+}
+
+.highlight {
+    color: green;
+}
+
+.verMas {
+    padding        : 10px;
+    color          : $personalizado;
+    text-decoration: underline;
+    cursor         : pointer;
+}
+
+.encontradas {
+    width: 80%;
 }

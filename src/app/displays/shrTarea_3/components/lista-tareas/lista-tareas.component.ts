@@ -48,6 +48,7 @@ export class ListaTareasComponent implements OnInit {
   irAbajo: boolean = true;
   showScrollHeight: number = 400; //En cuantos pixeles se va a mostrar el boton
   hideScrollHeight: number = 200; //en cuantos se va a ocultar
+  isScrolling: boolean = false;
 
   constructor(
 
@@ -102,6 +103,7 @@ export class ListaTareasComponent implements OnInit {
     this.tareasTop10();
     this.irArriba = false;
     this.searchText = "";
+    this.tareasFiltro = [];
   }
 
   //obtener ultimas tareas
@@ -137,10 +139,19 @@ export class ListaTareasComponent implements OnInit {
     this.tareasEncontradas = resTopTareas.response;
   }
 
+  highlightText(text: string, search: string): string {
+    if (!search.trim()) return text;
 
+    // Convertir ambos textos a minúsculas
+    const lowerText = text.toLowerCase();
+    const lowerSearch = search.toLowerCase();
 
+    // Crear una expresión regular para buscar el texto
+    const regex = new RegExp(`(${lowerSearch})`, 'gi');
 
-
+    // Reemplazar el texto coincidente por el texto resaltado
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  }
 
   //Escuchando scroll en todos los elementos
   scrollEvent = (event: any): void => {
@@ -173,7 +184,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-      this.searchText, this.tareaGlobalService.opcionFiltro,
+      this.searchText, 1, 10
     );
 
     this.isLoading = false;
@@ -205,6 +216,124 @@ export class ListaTareasComponent implements OnInit {
     this.tareasEncontradas = resTarea.response;
   };
 
+
+  tareasFiltro: TareaInterface[] = [];
+  previousSearchText: string = '';
+
+  rangoIni: number = 1;
+  rangoFin: number = 10;
+  intervaloRegistros: number = 10;
+
+  verMas: boolean = true;
+
+  async filtrarResultados(vermas: number) {
+
+    const trimmedText = this.searchText.trim();
+
+    // Si no se ha presionado ninguna tecla o el texto es igual al anterior
+    // if (trimmedText.length == 0 || trimmedText === this.previousSearchText && vermas == 0 && this.tareasFiltro.length > 0) {
+    //   return;
+    // }
+
+    // Actualiza el valor anterior con el valor actual
+    this.previousSearchText = trimmedText;
+
+    if (this.tareasFiltro.length == 0) {
+      this.rangoIni = 1;
+      this.rangoFin = this.intervaloRegistros;
+    }
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    if (vermas == 1) {
+
+      this.isLoading = true;
+
+      //aumentar los rangos
+      let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+        trimmedText, this.rangoIni, this.rangoFin
+      );
+
+      //si algo salio mal
+      if (!resTarea.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resTarea);
+
+        return;
+
+      }
+
+      this.isLoading = false;
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      let tareasMas: TareaInterface[] = resTarea.response;
+
+      this.isLoading = false;
+
+      // Insertar la lista de tareas en `tareasFiltro`
+      this.tareasFiltro.push(...tareasMas);
+
+      this.rangoIni = this.tareasFiltro.length + 1;
+      this.rangoFin = this.rangoIni + this.intervaloRegistros;
+
+    } else {
+
+      this.rangoIni = 1;
+      this.rangoFin = 10;
+
+      this.isLoading = true;
+
+      //Consumo de api
+      let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
+        trimmedText, this.rangoIni, this.rangoFin
+      );
+
+      //si algo salio mal
+      if (!resTarea.status) {
+
+        this.isLoading = false;
+
+        let verificador = await this._notificationService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resTarea);
+
+        return;
+
+      }
+
+
+      this.isLoading = false;
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      this.tareasFiltro = resTarea.response;
+
+      this.rangoIni += this.intervaloRegistros;
+      this.rangoFin += this.intervaloRegistros;
+    }
+
+  }
 
   async viewTask(tarea: TareaInterface): Promise<void> {
 
@@ -255,36 +384,43 @@ export class ListaTareasComponent implements OnInit {
 
   //IR HACIA ABAJO
   scrollDown() {
+    if (this.isScrolling) return; // Si ya está desplazándose, no hacer nada
+    this.isScrolling = true; // Marca que el desplazamiento ha comenzado
     const container = this.contentContainer.nativeElement;
-    this.smoothScroll(container, container.scrollHeight, 2000); // Desliza en 2 segundos
+    this.smoothScroll(container, container.scrollHeight, 2000, () => {
+      this.isScrolling = false; // Desbloquea el desplazamiento al finalizar
+    });
   }
 
   //IR HACIA ARRIBA
   scrollUp() {
+    if (this.isScrolling) return; // Si ya está desplazándose, no hacer nada
+    this.isScrolling = true; // Marca que el desplazamiento ha comenzado
     const container = this.contentContainer.nativeElement;
-    this.smoothScroll(container, 0, 2000); // Desliza en 2 segundos
+    this.smoothScroll(container, 0, 2000, () => {
+      this.isScrolling = false; // Desbloquea el desplazamiento al finalizar
+    });
   }
 
   //REALIZAR EL SCROLL
-  smoothScroll(element: HTMLElement, target: number, duration: number) {
-    const start = element.scrollTop; // Posición inicial del desplazamiento
-    const change = target - start; // Cambio total necesario en la posición
-    const increment = 20; // Intervalo de tiempo entre cada frame de la animación
-    let currentTime = 0; // Tiempo actual transcurrido
-
-    // Función que anima el desplazamiento
+  smoothScroll(element: HTMLElement, target: number, duration: number, callback: () => void) {
+    const start = element.scrollTop;
+    const change = target - start;
+    const increment = 20;
+    let currentTime = 0;
 
     const animateScroll = () => {
-      currentTime += increment; // Incrementa el tiempo actual
-      // Calcula la nueva posición usando la función de easing
+      currentTime += increment;
       const val = this.easeInOutQuad(currentTime, start, change, duration);
-      element.scrollTop = val; // Ajusta la posición del elemento
+      element.scrollTop = val;
       if (currentTime < duration) {
-        setTimeout(animateScroll, increment); // Continúa la animación si no ha terminado
+        setTimeout(animateScroll, increment);
+      } else {
+        callback(); // Llama al callback al finalizar el desplazamiento
       }
     };
 
-    animateScroll(); // Inicia la animación
+    animateScroll();
   }
 
   //CREAR ANIMACION
@@ -326,7 +462,8 @@ export class ListaTareasComponent implements OnInit {
     this.tareaGlobalService.opcionFiltro = 0;
     if (!this.verTareas) {
       this.tareasTop10();
-      this.searchText = "";
+      // this.searchText = "";
+      // this.tareasFiltro = [];
     }
     this.verTareas = true;
     this.verAsignadas = false;
