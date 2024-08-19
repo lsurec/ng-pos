@@ -687,6 +687,8 @@ export class ListaTareasComponent implements OnInit {
     //si algo salio mal
     if (!resTarea.status) {
 
+      this.todasCarga = false;
+
       let verificador = await this._notificationService.openDialogActions(
         {
           title: this._translate.instant('pos.alertas.salioMal'),
@@ -777,6 +779,8 @@ export class ListaTareasComponent implements OnInit {
 
     //si algo salio mal
     if (!resTarea.status) {
+
+      this.creadasCarga = false;
 
       let verificador = await this._notificationService.openDialogActions(
         {
@@ -872,6 +876,8 @@ export class ListaTareasComponent implements OnInit {
     //si algo salio mal
     if (!resTarea.status) {
 
+      this.asignadasCarga = false;
+
       let verificador = await this._notificationService.openDialogActions(
         {
           title: this._translate.instant('pos.alertas.salioMal'),
@@ -962,6 +968,8 @@ export class ListaTareasComponent implements OnInit {
 
     //si algo salio mal
     if (!resTarea.status) {
+
+      this.invitacionesCarga = false;
 
       let verificador = await this._notificationService.openDialogActions(
         {
