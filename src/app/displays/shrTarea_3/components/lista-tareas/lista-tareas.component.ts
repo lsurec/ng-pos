@@ -202,9 +202,6 @@ export class ListaTareasComponent implements OnInit {
         }
 
         if (this.verCreadas) {
-
-          console.log("aqui 2");
-
           this.recargarCreadas();
         }
 
@@ -227,6 +224,10 @@ export class ListaTareasComponent implements OnInit {
       if (distanceToBottom >= 300 && this.hasReachedThreshold) {
 
         if (this.verTareas && !this.todasCarga) {
+          this.hasReachedThreshold = false;
+        }
+
+        if (this.verCreadas && !this.creadasCarga) {
           this.hasReachedThreshold = false;
         }
       }
@@ -756,12 +757,14 @@ export class ListaTareasComponent implements OnInit {
 
     }
 
-
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.creadasTareas = resTarea.response;
+
+    this.rangoCreadasIni = this.creadasTareas[this.creadasTareas.length - 1].id + 1;
+    this.rangoCreadasFin = this.rangoCreadasIni + 10;
   };
 
-  async recargarCreadas() {
+  async recargar2Creadas() {
 
     this.creadasCarga = true;
 
@@ -810,6 +813,57 @@ export class ListaTareasComponent implements OnInit {
     let mas10: number = 10;
 
     this.rangoCreadasIni = this.creadasTareas.length + 1;
+    this.rangoCreadasFin = this.rangoCreadasIni + this.intervaloRegistros + mas10;
+
+  }
+
+  async recargarCreadas() {
+
+    this.creadasCarga = true;
+
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this._tareaService.getTareasCreadas(
+      this.rangoCreadasIni, this.rangoCreadasFin
+    );
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let tareasMas: TareaInterface[] = resTarea.response;
+
+    this.creadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.creadasTareas.push(...tareasMas);
+
+    if (tareasMas.length == 0 && this.verCreadas) {
+      this.hasReachedThreshold = true;
+    } else {
+      this.hasReachedThreshold = false;
+    }
+
+    //actualizar rangos
+    let mas10: number = 10;
+
+    this.rangoCreadasIni = this.creadasTareas[this.creadasTareas.length - 1].id + 1;
     this.rangoCreadasFin = this.rangoCreadasIni + this.intervaloRegistros + mas10;
 
   }
