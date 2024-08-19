@@ -358,41 +358,6 @@ export class DetalleTareaComponent {
 
   }
 
-  ajustarFecha(fecha: Date): Date {
-
-    console.log(fecha, "fecha");
-
-    let fechaCambio: Date = new Date(fecha);
-    console.log(fechaCambio, "fecha delcambio");
-
-    const diferenciaHoraria: number = fechaCambio.getTimezoneOffset() / 60;
-
-    console.log(diferenciaHoraria);
-    console.log(
-      fecha.setHours(fechaCambio.getHours() - diferenciaHoraria), "euuuuu"
-    );
-
-
-    if (diferenciaHoraria > 0) {
-      fecha.setHours(fechaCambio.getHours() - diferenciaHoraria);
-
-      return fecha;
-    } else {
-      fecha.setHours(fechaCambio.getHours() + diferenciaHoraria);
-      return fecha;
-    }
-
-    return fecha;
-
-    if (diferenciaHoraria > 0) {
-      let fechaMenos = new Date(fecha.setHours(fecha.getHours() + diferenciaHoraria));
-      return fechaMenos;
-    } else {
-      let fechaMas = new Date(fecha.setHours(fecha.getHours() - diferenciaHoraria));
-      return fechaMas;
-    }
-  }
-
   //mostrar un mensaje de no disponible 
   //cuando la informacion de los detalles esta vacia
   //cuando la informacion de los detalles esta vacia
@@ -686,17 +651,6 @@ export class DetalleTareaComponent {
 
     // Retorna la fecha en el formato "dd/mm/yyyy hh:mm AM/PM"
     return `${day}/${month}/${year}     ${formatTime(date)}`;
-  }
-
-  verFechas() {
-    console.log("----------Inicio-------------");
-    console.log(this.tareaDetalle!.fecha_Inicial);
-    console.log(this.tareaDetalle!.tarea_Fecha_Ini);
-    console.log("------------Fin--------------");
-    console.log(this.tareaDetalle!.fecha_Inicial);
-    console.log(this.tareaDetalle!.tarea_Fecha_Fin);
-    console.log("------------------------------");
-
   }
 
   cambiarResponsable(): void {

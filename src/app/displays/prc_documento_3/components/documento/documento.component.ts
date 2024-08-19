@@ -664,7 +664,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   setCF(): void {
     this.switchState = !this.switchState;
 
-    console.log(this.switchState);
+    // console.log(this.switchState);
 
 
     if (this.switchState) {

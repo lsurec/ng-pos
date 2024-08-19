@@ -28,23 +28,6 @@ export class TraducirComponent {
   }
 
 
-  // translateText(text: string): string {
-  //   this.translationService.translate(text).subscribe(
-  //     (response) => {
-  //       // Maneja la respuesta aquí
-  //       let translatedText: string = response.data.translations[0].translatedText;
-  //       console.log('Texto traducido:', translatedText);
-  //       return translatedText;
-  //     },
-  //     (error) => {
-  //       console.error('Error al traducir:', error);
-  //       return text;
-  //     }
-  //   );
-
-  //   return text;
-  // }
-
   async traducirTexto(texto: string) {
     const res = await fetch("https://es.libretranslate.com/translate", {
       method: "POST",
@@ -59,7 +42,6 @@ export class TraducirComponent {
       headers: { "Content-Type": "application/json" }
     });
 
-    console.log(await res.json());
   }
 
   translatedText: string | undefined;

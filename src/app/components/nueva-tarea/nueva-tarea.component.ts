@@ -334,7 +334,6 @@ export class NuevaTareaComponent implements OnInit {
 
 
     // this.tiempoCalculado = await this.tiempoEstimadoCalc(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
-    // console.log(this.tiempoCalculado);
   }
 
   fechaCalendario() {
@@ -1076,9 +1075,6 @@ export class NuevaTareaComponent implements OnInit {
     this.tareasGlobalService.fechaIni = this.convertValidDate(this.tareasGlobalService.inputFechaInicial!, this.tareasGlobalService.horaInicial);
     this.tareasGlobalService.fechaFin = this.convertValidDate(this.tareasGlobalService.inputFechaFinal!, this.tareasGlobalService.horaFinal);
 
-    // console.log(this.formatDate(this.tareasGlobalService.inputFechaInicial!), this.getHoraInput(this.tareasGlobalService.fechaIni));
-    // console.log(this.formatDate(this.tareasGlobalService.inputFechaFinal!), this.getHoraInput(this.tareasGlobalService.fechaFin));
-    // return
 
     if (this.titulo.length == 0 || this.tipoTarea === null || this.estadoTarea === null || this.prioridadTarea === null || this.idReferencia === null || this.descripcion.length === 0 || this.responsable == undefined) {
       this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
@@ -1166,9 +1162,6 @@ export class NuevaTareaComponent implements OnInit {
       tiempo_Estimado_Tipo_Periocidad: this.tiempoEstimado!.tipo_Periodicidad,
       tiempo_Estimado: this.duracion,
     };
-
-
-    // console.log(tareaPrueba);
 
     //mostrar pantalla de carga
     this.isLoading = true;
@@ -1473,7 +1466,6 @@ export class NuevaTareaComponent implements OnInit {
       } else {
         this.requerido = true;
         this.formulario.get('responsable')?.setErrors({ required: true });
-        console.log("error");
       }
     });
   }
@@ -1513,8 +1505,6 @@ export class NuevaTareaComponent implements OnInit {
     let usuario = this._dialog.open(BuscarUsuariosComponent, { data: this.usuariosInvitados });
     usuario.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
-
         let nuevosSeleccionados: BuscarUsuariosInterface[] = result;
 
         // Filtrar usuarios para eliminar los duplicados
@@ -1539,7 +1529,6 @@ export class NuevaTareaComponent implements OnInit {
       } else {
         this.requerido = true;
         this.formulario.get('idReferencia')?.setErrors({ required: true });
-        console.log("error");
       }
     });
   };
