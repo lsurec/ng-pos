@@ -176,7 +176,9 @@ export class ListaTareasComponent implements OnInit {
   hasReachedThreshold: boolean = false; // Bandera para controlar la ejecución
 
   creadasCarga: boolean = false;
-  todasCarga: boolean = true;
+  asignadasCarga: boolean = false;
+  invitacionesCarga: boolean = false;
+  todasCarga: boolean = false;
 
   // Escuchando scroll en todos los elementos
   scrollEvent = (event: any): void => {
@@ -194,14 +196,39 @@ export class ListaTareasComponent implements OnInit {
       if (distanceToBottom <= 250 && !this.hasReachedThreshold) {
 
         this.hasReachedThreshold = true; // Marcar como ejecutado
+
+        if (this.verTareas) {
+          this.recargarTodas();
+        }
+
         if (this.verCreadas) {
+
+          console.log("aqui 2");
+
           this.recargarCreadas();
+        }
+
+        if (this.verAsignadas) {
+
+          console.log("aqui 3");
+
+          this.recargarAsignadas();
+        }
+
+        if (this.verInvitaciones) {
+
+          console.log("aqui 4");
+
+          this.recargarInvitaciones();
         }
       }
 
-      // Resetear la bandera cuando el usuario esté lejos de los 50 píxeles (por ejemplo, a 260 píxeles)
-      if (distanceToBottom >= 260 && this.hasReachedThreshold) {
-        this.hasReachedThreshold = false;
+      // Resetear la bandera cuando el usuario esté lejos de los 50 píxeles (por ejemplo, a 300 píxeles)
+      if (distanceToBottom >= 300 && this.hasReachedThreshold) {
+
+        if (this.verTareas && !this.todasCarga) {
+          this.hasReachedThreshold = false;
+        }
       }
 
 
@@ -269,8 +296,17 @@ export class ListaTareasComponent implements OnInit {
   rangoIni: number = 1;
   rangoFin: number = 10;
 
+  rangoTodasIni: number = 1;
+  rangoTodasFin: number = 10;
+
   rangoCreadasIni: number = 1;
   rangoCreadasFin: number = 10;
+
+  rangoAsignadasIni: number = 1;
+  rangoAsignadasFin: number = 10;
+
+  rangoInvitacionesIni: number = 1;
+  rangoInvitacionesFin: number = 10;
 
   intervaloRegistros: number = 10;
 
@@ -602,7 +638,7 @@ export class ListaTareasComponent implements OnInit {
     this.isLoading = true;
     //Consumo de api
     let resTarea: ResApiInterface = await this._tareaService.getTareasTodas(
-      1, 10,
+      this.rangoTodasIni, this.rangoTodasFin,
     );
 
     this.isLoading = false;
@@ -629,10 +665,63 @@ export class ListaTareasComponent implements OnInit {
 
     }
 
-
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.todasTareas = resTarea.response;
+
+    this.rangoTodasIni = this.todasTareas[this.todasTareas.length - 1].id + 1;
+    this.rangoTodasFin = this.rangoTodasIni + 10;
   };
+
+  async recargarTodas() {
+
+    this.todasCarga = true;
+
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this._tareaService.getTareasTodas(
+      this.rangoTodasIni, this.rangoTodasFin
+    );
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let tareasMas: TareaInterface[] = resTarea.response;
+
+    this.todasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.todasTareas.push(...tareasMas);
+
+    if (tareasMas.length == 0 && this.verTareas) {
+      this.hasReachedThreshold = true;
+    } else {
+      this.hasReachedThreshold = false;
+    }
+
+    //actualizar rangos
+    let mas10: number = 10;
+
+    this.rangoTodasIni = this.todasTareas[this.todasTareas.length - 1].id + 1;
+    this.rangoTodasFin = this.rangoTodasIni + this.intervaloRegistros + mas10;
+
+  }
 
   //obtener creadas
   async obtenerCreadas(): Promise<void> {
@@ -723,7 +812,6 @@ export class ListaTareasComponent implements OnInit {
     this.rangoCreadasIni = this.creadasTareas.length + 1;
     this.rangoCreadasFin = this.rangoCreadasIni + this.intervaloRegistros + mas10;
 
-    // this.hasReachedThreshold = false;
   }
 
   //TOP TAREAS ASIGNADAS
@@ -764,6 +852,59 @@ export class ListaTareasComponent implements OnInit {
     this.asignadasTareas = resTarea.response;
   };
 
+  async recargarAsignadas() {
+
+    this.asignadasCarga = true;
+
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this._tareaService.getTareasAsignadas(
+      this.rangoAsignadasIni, this.rangoAsignadasFin
+    );
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let tareasMas: TareaInterface[] = resTarea.response;
+
+    if (tareasMas.length == 0 && this.verAsignadas) {
+      this.hasReachedThreshold = true;
+    } else {
+      this.hasReachedThreshold = false;
+
+    }
+
+    this.asignadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.asignadasTareas.push(...tareasMas);
+
+    //aumentar el intervalo de 10 a 20
+
+    let mas10: number = 10;
+
+    this.rangoAsignadasIni = this.asignadasTareas.length + 1;
+    this.rangoAsignadasFin = this.rangoAsignadasIni + this.intervaloRegistros + mas10;
+
+  }
+
   //TOP TAREAS INVITACIONES
   async obtenerInvitaciones(): Promise<void> {
 
@@ -800,5 +941,58 @@ export class ListaTareasComponent implements OnInit {
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     this.invitacionesTareas = resTarea.response;
   };
+
+  async recargarInvitaciones() {
+
+    this.invitacionesCarga = true;
+
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this._tareaService.getTareasInvitaciones(
+      this.rangoInvitacionesIni, this.rangoInvitacionesFin
+    );
+
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      let verificador = await this._notificationService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let tareasMas: TareaInterface[] = resTarea.response;
+
+    if (tareasMas.length == 0 && this.verInvitaciones) {
+      this.hasReachedThreshold = true;
+    } else {
+      this.hasReachedThreshold = false;
+
+    }
+
+    this.asignadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.invitacionesTareas.push(...tareasMas);
+
+    //aumentar el intervalo de 10 a 20
+
+    let mas10: number = 10;
+
+    this.rangoInvitacionesIni = this.asignadasTareas.length + 1;
+    this.rangoInvitacionesFin = this.rangoInvitacionesIni + this.intervaloRegistros + mas10;
+
+  }
 
 }
