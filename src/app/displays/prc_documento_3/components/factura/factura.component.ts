@@ -676,12 +676,30 @@ export class FacturaComponent implements OnInit {
     //Series disponobles
     this.facturaService.series = resSeries.response;
 
-    //si solo hay una serie seleccionarla por defecto;
     if (this.facturaService.series.length == 1) {
       //seleccionar serie
       this.facturaService.serie = this.facturaService.series[0];
       this.facturaService.serieCopy = this.facturaService.series[0];
-      let serie: string = this.facturaService.serie.serie_Documento;
+    }
+
+
+    if (this.globalConvertService.editDoc) {
+      let origin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
+
+      for (let i = 0; i < this.facturaService.series.length; i++) {
+        const element = this.facturaService.series[i];
+        if (origin.serie_Documento == element.serie_Documento) {
+          this.facturaService.serie = element;
+          break;
+        }
+      }
+
+    }
+
+    //si solo hay una serie seleccionarla por defecto;
+    if (this.facturaService.serie) {
+
+      let serie: string = this.facturaService.serie!.serie_Documento;
 
       //buscar vendedores
       let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -840,43 +858,45 @@ export class FacturaComponent implements OnInit {
 
     let docOrigin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
 
-    let existRef: number = -1;
+    if (docOrigin.tipo_Referencia != null) {
+      let existRef: number = -1;
 
-    for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
-      const element = this.facturaService.tiposReferencia[i];
-      if (element.tipo_Referencia == docOrigin.tipo_Referencia) {
-        existRef = i;
-        break;
+      for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
+        const element = this.facturaService.tiposReferencia[i];
+        if (element.tipo_Referencia == docOrigin.tipo_Referencia) {
+          existRef = i;
+          break;
+        }
       }
-    }
 
 
-    if (existRef == -1) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.tipoRefNoEncontrado'));
-    } else {
+      if (existRef == -1) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.tipoRefNoEncontrado'));
+      } else {
 
-      this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
-
-
-    }
-
-    let existCuentaRef: number = -1;
-
-    for (let i = 0; i < this.facturaService.vendedores.length; i++) {
-      const element = this.facturaService.vendedores[i];
-      if (element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref) {
-        existCuentaRef = i;
-        break;
+        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
       }
+
     }
+    //realizar la busqyeda de la cuenta ref si hay elementos en la lista
+    if (this.facturaService.vendedores.length > 0) {
+      let existCuentaRef: number = -1;
 
+      for (let i = 0; i < this.facturaService.vendedores.length; i++) {
+        const element = this.facturaService.vendedores[i];
+        if (element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref) {
+          existCuentaRef = i;
+          break;
+        }
+      }
 
-    if (existCuentaRef == -1) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaNoEncontrada'));
-    } else {
-      this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
+      if (existCuentaRef == -1) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaNoEncontrada'));
+      } else {
+        this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
+      }
+
     }
-
 
 
     //--EMpiezan datos
@@ -1892,7 +1912,7 @@ export class FacturaComponent implements OnInit {
 
 
 
-    const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs) ;
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
     // return;
     pdfDocGenerator.getBlob(async (blob) => {
@@ -2265,7 +2285,7 @@ export class FacturaComponent implements OnInit {
       let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
 
-      let strDate: string = `${fechaAnt.getDate()}/${fechaAnt.getMonth()+1}/${fechaAnt.getFullYear()} ${fechaAnt.getHours()}:${fechaAnt.getMinutes()}:${fechaAnt.getSeconds()}` 
+      let strDate: string = `${fechaAnt.getDate()}/${fechaAnt.getMonth() + 1}/${fechaAnt.getFullYear()} ${fechaAnt.getHours()}:${fechaAnt.getMinutes()}:${fechaAnt.getSeconds()}`
 
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
@@ -2603,14 +2623,14 @@ export class FacturaComponent implements OnInit {
       fechaFin: this.facturaService.fechaFin,
       fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
       fechaIni: this.facturaService.fechaIni,
+      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
       localizacion: this.globalConvertService.docOriginSelect!.localizacion,
       mUser: this.user,
       observacion: this.facturaService.observacion,
+      referencia: this.globalConvertService.docOriginSelect!.referencia,
       serieDocumento: this.globalConvertService.docOriginSelect!.serie_Documento,
       tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
       user: this.globalConvertService.docOriginSelect!.usuario,
-      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
-      referencia: this.globalConvertService.docOriginSelect!.referencia,
     }
 
     this.facturaService.isLoading = true;

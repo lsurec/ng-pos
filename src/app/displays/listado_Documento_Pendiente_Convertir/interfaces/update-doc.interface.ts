@@ -1,23 +1,23 @@
 export interface UpdateDocInterface {
-    tipoDocumento: number;
-    serieDocumento: string;
-    empresa: number;
-    localizacion: number;
-    estacionTrabajo: number;
-    fechaHora: Date;
-    user: string;
-    mUser: string;
-    cuentaCorrentista: number;
-    cuentaCuenta: string;
-    documentoNombre: string;
-    documentoNit: string;
-    documentoDireccion: string;
-    observacion: string;
-    fechaDocumento: Date;
-    cuentaCorrentistaRef: number | null | undefined;
-    consecutivoInterno: number;
-    fechaIni: Date | null | undefined;
-    fechaFin: Date | null | undefined;
-    idDocumento: string;
-    referencia:number | null | undefined, 
+    consecutivoInterno: number,
+    cuentaCorrentista: number,
+    cuentaCorrentistaRef: number | null | undefined,
+    cuentaCuenta: string,
+    documentoDireccion: string,
+    documentoNit: string,
+    documentoNombre: string,
+    empresa: number,
+    estacionTrabajo: number,
+    fechaDocumento: Date,
+    fechaFin: Date | null | undefined,
+    fechaHora: Date,
+    fechaIni: Date | null | undefined,
+    idDocumento: string,
+    localizacion: number,
+    mUser: string,
+    observacion: string,
+    referencia: number | null | undefined,
+    serieDocumento: string,
+    tipoDocumento: number,
+    user: string,
 }
