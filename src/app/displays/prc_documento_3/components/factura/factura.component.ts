@@ -2589,6 +2589,15 @@ export class FacturaComponent implements OnInit {
   }
 
   async modifyDoc() {
+
+    if (this.facturaService.valueParametro(58)) {
+      if (!this.facturaService.tipoReferencia) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccioneTipoRef'));
+        return;
+      }
+    }
+
+    //confrumar cambio
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
@@ -2627,7 +2636,7 @@ export class FacturaComponent implements OnInit {
       localizacion: this.globalConvertService.docOriginSelect!.localizacion,
       mUser: this.user,
       observacion: this.facturaService.observacion,
-      referencia: this.globalConvertService.docOriginSelect!.referencia,
+      referencia: this.facturaService.tipoReferencia?.tipo_Referencia,
       serieDocumento: this.globalConvertService.docOriginSelect!.serie_Documento,
       tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
       user: this.globalConvertService.docOriginSelect!.usuario,
