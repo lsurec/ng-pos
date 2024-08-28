@@ -141,6 +141,11 @@ export class CalendarioComponent implements OnInit {
       this.verError = false;
     });
 
+    this._eventService.regresarCalendariodeCrear$.subscribe((eventData) => {
+      this.mostrarCalendario = true;
+    });
+
+
     //obtener feccha de hoy y asignar 
     this.today = this.fechaHoy.getDate(); //fecha del dia
     this.month = this.fechaHoy.getMonth() + 1; //mes

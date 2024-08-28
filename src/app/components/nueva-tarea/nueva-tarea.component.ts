@@ -366,8 +366,8 @@ export class NuevaTareaComponent implements OnInit {
     this.tareasGlobalService.horaInicial = this.getHoraInput(dateNow);
     this.tareasGlobalService.horaFinal = this.getHoraInput(horaFinalInput30);
 
-    this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
-    this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.fechaStruct);
+    this.tareasGlobalService.fechaInicialFormat = this.formatDate(this.tareasGlobalService.inputFechaInicial);
+    this.tareasGlobalService.fechaFinalFormat = this.formatDate(this.tareasGlobalService.inputFechaFinal);
 
     this.duracion = this.tiempoNum(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin);
     this.tiempoEstimado = this.periodicidad[this.tiempoTipo(this.tareasGlobalService.fechaIni, this.tareasGlobalService.fechaFin)];
@@ -1001,6 +1001,7 @@ export class NuevaTareaComponent implements OnInit {
   //regresar a la pantalla anterior.
   backPage(): void {
     this._eventService.verTareasDesdeCrearEvent(true);
+    this._eventService.regresarCalendariodeCrearEvent(true);
 
 
     //DOS EVENTOS

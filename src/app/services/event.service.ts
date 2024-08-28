@@ -235,4 +235,13 @@ export class EventService {
     regresarCalendarioEvent(eventData: boolean) {
         this.regresarCalendario.next(eventData);
     }
+
+    //regresar a calendario de crear
+    private regresarCalendariodeCrear = new Subject<any>();
+
+    regresarCalendariodeCrear$ = this.regresarCalendariodeCrear.asObservable();
+
+    regresarCalendariodeCrearEvent(eventData: boolean) {
+        this.regresarCalendariodeCrear.next(eventData);
+    }
 }

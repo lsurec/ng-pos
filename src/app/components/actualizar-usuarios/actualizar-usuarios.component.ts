@@ -180,7 +180,7 @@ export class ActualizarUsuariosComponent implements AfterViewInit {
   async asignarResponsable(usuario: BuscarUsuariosInterface) {
 
     //validar que no sea el mismo usuario
-    if (usuario.email == this.responsable.t_UserName) {
+    if (this.responsable != null && usuario.email == this.responsable.t_UserName) {
       this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.asignado'));
       return;
     }
