@@ -1015,7 +1015,11 @@ export class FacturaComponent implements OnInit {
     for (const tra of this.globalConvertService.detailsOrigin) {
       let resProduct = await this._productService.getProduct(
         token,
+        user,
+        estacion,
         tra.detalle.id,
+        0,
+        100,
       );
 
 
