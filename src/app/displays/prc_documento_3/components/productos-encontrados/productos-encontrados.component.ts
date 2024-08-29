@@ -13,6 +13,7 @@ import { ImagenComponent } from '../imagen/imagen.component';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { FacturaService } from '../../services/factura.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -38,6 +39,7 @@ export class ProductosEncontradosComponent {
     private _notificationsService: NotificationsService,
     private _translate: TranslateService,
     public facturaService: FacturaService,
+    private _eventService: EventService,
 
   ) {
     //porudtcos disponibles
@@ -102,113 +104,76 @@ export class ProductosEncontradosComponent {
     this._dialog.open(ImagenComponent, { data: imagenesProducto })
   }
 
-  async filtrarResultados(vermas: number) {
+  async filtrarResultados() {
 
-    // const trimmedText = this.facturaService.searchProduct.trim();
-
-    // // Si no se ha presionado ninguna tecla o el texto es igual al anterior
-    // // if (trimmedText.length == 0 || trimmedText === this.previousSearchText && vermas == 0 && this.tareasFiltro.length > 0) {
-    // //   return;
-    // // }
-
-    // // Actualiza el valor anterior con el valor actual
-
-    // if (this.productos.length == 0) {
-    //   this.facturaService.rangoIni = 1;
-    //   this.facturaService.rangoFin = this.facturaService.intervaloRegistros;
-    // }
-
-    // // Realiza la búsqueda
-    // //si ver mas es = 1 aumenta los rangos
-    // if (vermas == 1) {
-
-    //   this.isLoading = true;
-
-    //   //aumentar los rangos
-    //   let resTarea: ResApiInterface = await this.productService.getProduct(
-    //     trimmedText, 
-    //     "i"
-    //     // this.facturaService.rangoIni, this.facturaService.rangoFin,
-    //   );
-
-    //   //si algo salio mal
-    //   if (!resTarea.status) {
-
-    //     this.isLoading = false;
-
-    //     let verificador = await this._notificationService.openDialogActions(
-    //       {
-    //         title: this._translate.instant('pos.alertas.salioMal'),
-    //         description: this._translate.instant('pos.alertas.error'),
-    //         verdadero: this._translate.instant('pos.botones.informe'),
-    //         falso: this._translate.instant('pos.botones.aceptar'),
-    //       }
-    //     );
-
-    //     if (!verificador) return;
-
-    //     this.mostrarError(resTarea);
-
-    //     return;
-
-    //   }
-
-    //   this.isLoading = false;
-
-    //   //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
-    //   let tareasMas: TareaInterface[] = resTarea.response;
-
-    //   this.isLoading = false;
-
-    //   // Insertar la lista de tareas en `tareasFiltro`
-    //   this.tareasFiltro.push(...tareasMas);
-
-    //   this.rangoIni = this.tareasFiltro.length + 1;
-    //   this.rangoFin = this.rangoIni + this.intervaloRegistros;
-
-    // } else {
-
-    //   this.rangoIni = 1;
-    //   this.rangoFin = 10;
-
-    //   this.isLoading = true;
-
-    //   //Consumo de api
-    //   let resTarea: ResApiInterface = await this._tareaService.getTareasFiltro(
-    //     trimmedText, this.rangoIni, this.rangoFin
-    //   );
-
-    //   //si algo salio mal
-    //   if (!resTarea.status) {
-
-    //     this.isLoading = false;
-
-    //     let verificador = await this._notificationService.openDialogActions(
-    //       {
-    //         title: this._translate.instant('pos.alertas.salioMal'),
-    //         description: this._translate.instant('pos.alertas.error'),
-    //         verdadero: this._translate.instant('pos.botones.informe'),
-    //         falso: this._translate.instant('pos.botones.aceptar'),
-    //       }
-    //     );
-
-    //     if (!verificador) return;
-
-    //     this.mostrarError(resTarea);
-
-    //     return;
-
-    //   }
+    const trimmedText = this.facturaService.searchProduct.trim();
 
 
-    //   this.isLoading = false;
+    // Realiza la búsqueda
+    //Aumenta los rangos
 
-    //   //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
-    //   this.tareasFiltro = resTarea.response;
+    this.isLoading = true;
 
-    //   this.rangoIni += this.intervaloRegistros;
-    //   this.rangoFin += this.intervaloRegistros;
-    // }
+    //aumentar los rangos
+    let resTarea: ResApiInterface = await this.productService.getProduct(
+      this.token,
+      this.user,
+      this.estacion,
+      trimmedText,
+      this.facturaService.rangoIni,
+      this.facturaService.rangoFin,
+    );
 
+    //si algo salio mal
+    if (!resTarea.status) {
+
+      this.isLoading = false;
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTarea);
+
+      return;
+
+    }
+
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    let productosMas: ProductoInterface[] = resTarea.response;
+
+    this.isLoading = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    this.productos.push(...productosMas);
+
+    this.facturaService.rangoIni = this.productos.length + 1;
+    this.facturaService.rangoFin = this.facturaService.rangoIni + this.facturaService.intervaloRegistros;
+
+  }
+
+  mostrarError(res: ResApiInterface) {
+
+    let dateNow: Date = new Date();
+
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+
+    PreferencesService.error = error;
+    this._eventService.verInformeErrorEvent(true);
   }
 }

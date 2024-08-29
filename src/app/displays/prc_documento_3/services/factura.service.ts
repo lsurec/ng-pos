@@ -34,7 +34,7 @@ export class FacturaService {
     tabDocummento: boolean = true; //contorlador para la pestaña documento
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
     tabPago: boolean = false; //Contorlador para la pestaña de pago
-    searchText: string = "";  //Texto para bsucar productos
+    // searchText: string = "";  //Texto para bsucar productos
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
     verError: boolean = false; //ocultar y mostrar pantalla de error
@@ -128,8 +128,8 @@ export class FacturaService {
     idFiltroPreferencia: number = 1;
 
     rangoIni: number = 1;
-    rangoFin: number = 10;
-    intervaloRegistros: number = 10;
+    rangoFin: number = 20;
+    intervaloRegistros: number = 20;
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
@@ -243,8 +243,7 @@ export class FacturaService {
         this.refObservacion = undefined;
         this.observacion = "";
         this.searchClient = "";
-        this.searchText = "";
-
+        this.searchProduct = "";
     }
 
     addLeadingZero(number: number): string {
@@ -460,7 +459,7 @@ export class FacturaService {
         //Agregar transaccion
         this.traInternas.unshift(transaccion);
 
-        this.searchText = "";
+        this.searchProduct = "";
 
         //calcluar totales
         this.calculateTotales();

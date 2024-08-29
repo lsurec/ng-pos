@@ -652,7 +652,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    this.facturaService.searchText = "";
+    this.facturaService.searchProduct = "";
 
     this.facturaService.isLoading = false;
 

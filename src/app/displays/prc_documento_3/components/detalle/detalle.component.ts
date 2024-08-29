@@ -393,6 +393,9 @@ export class DetalleComponent implements AfterViewInit {
   //bsuqueda de productos
   async performanSearch() {
 
+    this.facturaService.rangoIni = 1;
+    this.facturaService.rangoFin = 20;
+
     let productos: ProductoInterface[] = [];
 
     //verificar que la cantidad sea numerica
@@ -415,7 +418,7 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //validar que siempre hay nun texto para buscar
-    if (!this.facturaService.searchText) {
+    if (!this.facturaService.searchProduct) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
@@ -428,7 +431,7 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //eliminar espacios al final de la cadena
-    this.facturaService.searchText = this.facturaService.searchText.trim();
+    this.facturaService.searchProduct = this.facturaService.searchProduct.trim();
 
 
     //consumo api busqueda id
@@ -441,9 +444,9 @@ export class DetalleComponent implements AfterViewInit {
       this.token,
       this.user,
       this.estacion,
-      this.facturaService.searchText,
-      0,
-      20,
+      this.facturaService.searchProduct,
+      this.facturaService.rangoIni,
+      this.facturaService.rangoFin,
 
     );
 
@@ -473,6 +476,14 @@ export class DetalleComponent implements AfterViewInit {
     productos = resproductoDesc.response;
 
 
+    //Modificar: se han aumentado los rangos
+    if (productos.length < this.facturaService.intervaloRegistros) {
+      this.facturaService.rangoIni = productos.length + 1;
+      this.facturaService.rangoFin = this.facturaService.rangoIni + this.facturaService.intervaloRegistros;
+    } else {
+      this.facturaService.rangoIni += this.facturaService.intervaloRegistros;
+      this.facturaService.rangoFin += this.facturaService.intervaloRegistros;
+    }
 
     //si no hay coincie¿dencias mostrar alerta
     if (productos.length == 0) {

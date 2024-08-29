@@ -533,6 +533,9 @@ export class ProductService {
         start: number,
         end: number,
     ): Promise<ResApiInterface> {
+
+        console.log(search, start, end);
+        
         return new Promise((resolve, reject) => {
             this._getProduct(
                 token,
