@@ -502,28 +502,45 @@ export class ProductService {
     //funcion que va a realizar el consumo privado para obtner los prodictos en una busqueda por descripcion
     private _getProduct(
         token: string,
+        user: string,
+        station: number,
         search: string,
+        start: number,
+        end: number,
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
+                "user": user,
+                "station": station,
+                "search": search,
+                "start": start,
+                "end": end,
             }
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/buscar/${search}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Producto/buscar`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa para obtner los prodictos en una busqueda por descripcion
     getProduct(
         token: string,
-        descripcion: string,
+        user: string,
+        station: number,
+        search: string,
+        start: number,
+        end: number,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getProduct(
                 token,
-                descripcion,
+                user,
+                station,
+                search,
+                start,
+                end,
             ).subscribe(
                 //si esta correcto
                 res => {

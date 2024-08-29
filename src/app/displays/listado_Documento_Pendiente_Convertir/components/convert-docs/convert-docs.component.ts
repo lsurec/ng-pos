@@ -150,7 +150,11 @@ export class ConvertDocsComponent {
 
       let resProduct = await this._productService.getProduct(
         this.token,
+        this.user,
+        this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
         tra.detalle.id,
+        0,
+        100,
       );
 
 

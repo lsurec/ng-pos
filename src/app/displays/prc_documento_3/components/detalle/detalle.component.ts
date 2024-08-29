@@ -439,7 +439,12 @@ export class DetalleComponent implements AfterViewInit {
 
     let resproductoDesc = await this._productService.getProduct(
       this.token,
+      this.user,
+      this.estacion,
       this.facturaService.searchText,
+      0,
+      20,
+
     );
 
 
