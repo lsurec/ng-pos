@@ -1,14 +1,10 @@
-import { Component, Inject } from '@angular/core';
-import { FactorConversionInterface } from '../../interfaces/factor-conversion.interface';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { PrecioInterface } from '../../interfaces/precio.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
-import { ProductoService } from '../../services/producto.service';
 import { ProductService } from '../../services/product.service';
 import { TranslateService } from '@ngx-translate/core';
-import { UnitarioInterface } from '../../interfaces/unitario.interface';
 import { ImagenComponent } from '../imagen/imagen.component';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
@@ -22,6 +18,8 @@ import { EventService } from 'src/app/services/event.service';
   providers: [ProductService]
 })
 export class ProductosEncontradosComponent {
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   productos: ProductoInterface[] = []; //lista de productos encontrados
   isLoading: boolean = false; //pantalla de carga
@@ -105,16 +103,13 @@ export class ProductosEncontradosComponent {
   }
 
   async filtrarResultados() {
-
     const trimmedText = this.facturaService.searchProduct.trim();
 
-
-    // Realiza la búsqueda
-    //Aumenta los rangos
+    // Captura la posición actual del scroll antes de cargar
+    const currentScrollPosition = this.scrollContainer.nativeElement.scrollTop;
 
     this.isLoading = true;
 
-    //aumentar los rangos
     let resTarea: ResApiInterface = await this.productService.getProduct(
       this.token,
       this.user,
@@ -124,40 +119,38 @@ export class ProductosEncontradosComponent {
       this.facturaService.rangoFin,
     );
 
-    //si algo salio mal
     if (!resTarea.status) {
-
       this.isLoading = false;
 
-      let verificador = await this._notificationsService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
+      let verificador = await this._notificationsService.openDialogActions({
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      });
 
       if (!verificador) return;
 
       this.mostrarError(resTarea);
-
       return;
-
     }
 
-
-    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    // Si la respuesta es exitosa, se agregan los nuevos productos
     let productosMas: ProductoInterface[] = resTarea.response;
+
+    // Agregar los nuevos productos a la lista existente
+    this.productos.push(...productosMas);
 
     this.isLoading = false;
 
-    // Insertar la lista de tareas en `tareasFiltro`
-    this.productos.push(...productosMas);
-
+    // Ajusta los rangos para la siguiente carga
     this.facturaService.rangoIni = this.productos.length + 1;
     this.facturaService.rangoFin = this.facturaService.rangoIni + this.facturaService.intervaloRegistros;
 
+    // Restaura la posición del scroll después de que los productos se hayan agregado
+    setTimeout(() => {
+      this.scrollContainer.nativeElement.scrollTop = currentScrollPosition;
+    }, 0);
   }
 
   mostrarError(res: ResApiInterface) {
