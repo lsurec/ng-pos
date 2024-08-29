@@ -127,8 +127,9 @@ export class FacturaService {
     filtroPreferencia: number = 1;
     idFiltroPreferencia: number = 1;
 
-
-
+    rangoIni: number = 1;
+    rangoFin: number = 10;
+    intervaloRegistros: number = 10;
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
