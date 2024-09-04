@@ -131,6 +131,17 @@ export class FacturaService {
     rangoFin: number = 20;
     intervaloRegistros: number = 20;
 
+    confirmarCotizacion: boolean = false;
+
+    terminosyCondiciones: String[] = [
+        "1. Esta Cotización no es reservación.",
+        "2. Al confirmar su cotización se requiere de contrato firmado.",
+        "3. Los precios cotizados están sujetos a cambios.",
+        "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+        "5. Se solicitara cheque de garantía.",
+        "6. Se cobrará por daños al mobiliario y equipo según contrato.",
+    ];
+
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
     pasos: loadStepInterface[] = [
@@ -244,6 +255,7 @@ export class FacturaService {
         this.observacion = "";
         this.searchClient = "";
         this.searchProduct = "";
+        this.confirmarCotizacion = false;
     }
 
     addLeadingZero(number: number): string {

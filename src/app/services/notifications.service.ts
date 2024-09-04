@@ -15,6 +15,8 @@ import { ProductoComponent } from "../displays/prc_documento_3/components/produc
 import { InformeProductosComponent } from "../displays/prc_documento_3/components/informe-productos/informe-productos.component";
 import { ConfirmarNuevoDocComponent } from "../components/confirmar-nuevo-doc/confirmar-nuevo-doc.component";
 import { ProductosEncontradosComponent } from "../displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component";
+import { EditarTerminosComponent } from "../displays/prc_documento_3/components/editar-terminos/editar-terminos.component";
+import { InputTerminoComponent } from "../displays/prc_documento_3/components/input-termino/input-termino.component";
 
 @Injectable({
     providedIn: 'root'
@@ -157,6 +159,29 @@ export class NotificationsService {
             });
         });
     }
+
+    openTerms(mensajes: String[]): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(EditarTerminosComponent, { data: mensajes })
+
+            dialogRef.afterClosed().subscribe(result => {
+                resolve(result);
+            });
+        });
+    }
+
+    editTerm(index: number): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(InputTerminoComponent, { data: index })
+
+            dialogRef.afterClosed().subscribe(result => {
+                resolve(result);
+            });
+        });
+    }
+
 
     //Muestra mmensaje de eror, y navega a  pantalla de informe de errores
     async showErrorAlert(res: ResApiInterface) {

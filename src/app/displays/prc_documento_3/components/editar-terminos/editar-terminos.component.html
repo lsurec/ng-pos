@@ -1,0 +1,34 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="verDetalle">TERMINOS Y CONDICIONES</p>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+<div class="cantidad-registros">
+    <span class="spacer"></span>
+    <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }} ({{facturaService.terminosyCondiciones.length
+        }}) </p>
+</div>
+<!-- Dialogo de los detalles de las tareas -->
+<div mat-dialog-content class="dialog" *ngIf="!isLoading" #scrollContainer>
+    <div class="contenedor">
+        <div class="busqueda">
+            <div class="contenido-izquierdo">
+                <div class="" *ngFor="let producto of facturaService.terminosyCondiciones; let index = index">
+                    <div class="seleccionar-imagen">
+                        <div class="seleccionar">
+                            <p class="textos">{{producto}} </p>
+                            <!-- <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto}}</p> -->
+                        </div>
+                        <span class="spacer"></span>
+                        <button mat-icon-button (click)="editar(index)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

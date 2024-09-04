@@ -1388,7 +1388,7 @@ export class FacturaComponent implements OnInit {
   // }
 
   //Confirmar documento
-  printDoc() {
+  async printDoc() {
 
     //Si no hay serie seleccionado mostrar mensaje
     if (!this.facturaService.serie) {
@@ -1448,6 +1448,38 @@ export class FacturaComponent implements OnInit {
     }
 
     //validar fechas si existen
+
+    if (this.facturaService.tipoDocumento! == 20) {
+      let verificador: boolean = await this._notificationService.openDialogActions(
+        {
+          title: "¿Desea modificar terminos y condiciones para este documento?",
+          description: "Podrá editar, eliminar y/o agregar terminos y condiciones.",
+          falso: this._translate.instant('pos.botones.modificar'),
+          verdadero: this._translate.instant('pos.botones.imprimir'),
+
+        }
+      );
+
+
+      if (!verificador) {
+        console.log("abrir el dialogo");
+
+        let resDialogMensajes = await this._notificationService.openTerms(this.facturaService.terminosyCondiciones);
+
+        if (!resDialogMensajes) return;
+
+        this.facturaService.terminosyCondiciones = resDialogMensajes;
+
+        console.log("Llego aqui");
+
+        return;
+      }
+
+      this.sendDoc();
+
+      return;
+
+    }
 
     this.sendDoc();
 

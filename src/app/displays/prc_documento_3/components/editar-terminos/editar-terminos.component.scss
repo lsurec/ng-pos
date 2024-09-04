@@ -1,0 +1,186 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris);
+$hover         : var(--hover);
+$personalizado : var(--global-color);
+
+
+.progress {
+    padding         : 0px;
+    padding-right   : 0px;
+    width           : 680px;
+    height          : 430px;
+    background-color: $fondo;
+}
+
+.dialog {
+    padding         : 10px 10px 15px 15px;
+    width           : 700px;
+    height          : 430px;
+    background-color: $fondo;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.contenedor {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.dialog::-webkit-scrollbar {
+    width: 7px;
+}
+
+.dialog::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.dialog::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.close {
+    width      : 40px;
+    color      : $gris;
+    float      : left !important;
+    font-size  : 28px;
+    font-weight: bold;
+    cursor     : pointer;
+    text-align : center;
+}
+
+.close:hover,
+.close:focus {
+    color          : black;
+    text-decoration: none;
+    cursor         : pointer;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+p {
+    margin: 0px;
+    color : $negro;
+}
+
+.busqueda {
+    text-align : left !important;
+    font-size  : 14px;
+    width      : 100%;
+    font-weight: 450;
+    align-items: center;
+}
+
+.contenido-izquierdo {
+    //corregir ancho del contenedor
+    min-height      : 35px;
+    align-items     : center;
+    // margin-bottom: 5px;
+    width           : 100%;
+    padding-left    : 5px;
+    padding-right   : 5px;
+}
+
+.seleccionar-imagen {
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+    margin       : 10px 0px;
+}
+
+.seleccionar {
+    width           : 90%;
+    cursor          : pointer;
+    min-height      : 30px;
+    // border-bottom: 1px solid $bordes;
+    font-weight     : 400;
+    padding         : 5px 10px;
+}
+
+.seleccionar:hover {
+    background-color: $hover;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 10px;
+    font-size       : 14px;
+    font-weight     : 500;
+}
+
+.verMas {
+    padding        : 10px;
+    color          : $personalizado;
+    text-decoration: underline;
+    cursor         : pointer;
+}
+
+
+.verDetalle {
+    font-weight   : 500;
+    text-align    : center;
+    margin-bottom : 0px;
+    padding       : 10px;
+    padding-bottom: 0;
+}
+
+.titulos {
+    display    : flex;
+    align-items: center;
+    padding    : 3px 0px;
+}
+
+.subtitulo {
+    font-size  : 14px;
+    font-weight: 550;
+}
+
+.textos {
+    font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .dialog,
+    .progress {
+        width  : 100% !important;
+        padding: 10px 10px 15px 15px;
+    }
+
+    .contenedor {
+        padding: 0px !important;
+    }
+
+    .verDetalle {
+        font-size: 15px !important;
+    }
+}
