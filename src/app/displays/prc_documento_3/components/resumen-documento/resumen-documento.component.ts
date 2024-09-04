@@ -1185,6 +1185,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     let documento: DocumentoData = {
+evento:      "",
       consecutivo: this.consecutivoDoc,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
@@ -1203,6 +1204,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let currentDate: Date = new Date();
 
     let cliente: Cliente = {
+      tipo :cuenta?.des_Grupo_Cuenta ?? "",
       correo: cuenta?.eMail ?? "",
       nombre: cuenta?.factura_Nombre ?? "",
       direccion: cuenta?.factura_Direccion ?? "",
