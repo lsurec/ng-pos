@@ -1,16 +1,16 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$color-gris-s         : #777; //sombra y texto gris
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-naranja        : #DF9722; //resaltar tareas naranja
-$border-color         : rgba(0, 0, 0, .09);
-$font-serif           : sans-serif; //fuente del texto
-$background-options   : #fff; //fondo blanco
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra rosada
-$background-botones   : #134895; //resaltar botones azul
+$color-negro        : #000; //texto negro
+$color-azul         : #134895; //bordes y texto azul
+$color-blanco       : #fff; //resaltar texto blanco
+$color-gris         : #666666; //texto gris
+$color-gris-s       : #777; //sombra y texto gris
+$color-bordes       : #CED4DA; //bordes del calendario
+$color-naranja      : #DF9722; //resaltar tareas naranja
+$border-color       : rgba(0, 0, 0, .09);
+$font-serif         : sans-serif; //fuente del texto
+$background-options : #fff; //fondo blanco
+$fondo              : var(--fondo-claro); //fondo Demosoft
+$scroll             : var(--global-color); //barra rosada
+$background-botones : var(--global-color); //resaltar botones azul
 $background-transparent: transparent; //fondo transparennte,
 
 .progress {
@@ -18,7 +18,7 @@ $background-transparent: transparent; //fondo transparennte,
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -29,17 +29,16 @@ $background-transparent: transparent; //fondo transparennte,
 
 .llenar-formulario::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .llenar-formulario::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .llenar-formulario::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px #f3c5d3;
 }
 
 .container-page {
@@ -193,7 +192,7 @@ mat-form-field {
     cursor          : pointer;
     border-right    : 0.5px solid $color-bordes;
     border-top      : 0.5px solid $color-bordes;
-    background-color: #134895;
+    background-color: $color-azul;
     color           : $color-blanco;
 }
 
@@ -216,7 +215,7 @@ mat-form-field {
 }
 
 .opcion-info:hover {
-    background-color: #134895;
+    background-color: $color-azul;
     color           : $color-blanco;
 }
 
@@ -402,7 +401,7 @@ mat-icon {
 }
 
 .izquierda {
-    background-color: #134895;
+    background-color: $color-azul;
     min-height      : 500px;
     width           : 50%;
 }

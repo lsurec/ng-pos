@@ -20,7 +20,7 @@ export class TipoTareaService {
     }
 
     //funcion que va a realizar el consumo privado
-    private _getTipoTarea() {
+    private _getTipoTarea(user: string) {
         //confgurar headers
 
         let headers = new HttpHeaders(
@@ -30,15 +30,14 @@ export class TipoTareaService {
             }
         )
         //consumo de api
-        return this._http.get(`${this._urlBase}tareas/tipos/desa018`, { headers: headers });
-        // return this._http.get(`${this._urlBase}tareas/tipos/${this._user}`, { headers: headers });
+        return this._http.get(`${this._urlBase}tareas/tipos/${user}`, { headers: headers });
     }
 
     //funcion asyncrona con promesa
-    getTipoTarea(): Promise<ResApiInterface> {
+    getTipoTarea(user: string): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
-            this._getTipoTarea().subscribe(
-                //si esta correcto
+            this._getTipoTarea(user).subscribe(
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -46,21 +45,43 @@ export class TipoTareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 }

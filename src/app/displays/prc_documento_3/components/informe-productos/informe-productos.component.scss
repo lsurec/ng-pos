@@ -1,23 +1,24 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000; //bordes y texto azul
-
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris);
+$rojo          : var(--error);
 
 .progress {
     padding         : 0px;
     padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 10px 10px 15px 15px;
     width           : 700px;
     height          : 350px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -25,9 +26,9 @@ $color-negro          : #000; //bordes y texto azul
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .contenedor {
@@ -40,13 +41,13 @@ $color-negro          : #000; //bordes y texto azul
 }
 
 .dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -55,7 +56,7 @@ $color-negro          : #000; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -80,7 +81,7 @@ hr {
 
 p {
     margin: 0px;
-    color : $color-negro;
+    color : $negro;
 }
 
 .busqueda {
@@ -108,7 +109,7 @@ p {
 }
 
 .obligatorio {
-    color       : #ff0000;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 12px;
     padding-left: 3px;
@@ -117,7 +118,7 @@ p {
 .seleccionar {
     width        : 100%;
     min-height   : 30px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-weight  : 400;
     padding      : 5px 0px;
 }
@@ -128,11 +129,8 @@ p {
 }
 
 .verDetalle {
-    font-weight   : 500;
-    text-align    : center;
-    margin-bottom : 0px;
-    padding       : 10px;
-    padding-bottom: 0;
+    font-weight: 500;
+    text-align : center;
 }
 
 .titulos {
@@ -148,7 +146,7 @@ p {
 
 .adver {
     font-size  : 12px;
-    color      : #7c7676;
+    color      : $gris;
     font-weight: 550;
 }
 
@@ -163,15 +161,15 @@ p {
 
 
 .descargar {
-    color        : $color-azul;
+    color        : $personalizado;
     font-weight  : bold;
     cursor       : pointer;
     font-size    : 12px;
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizado;
 }
 
 .informacion {
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 10px 15px;
     overflow-x      : hidden;
 }

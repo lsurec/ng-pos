@@ -1,16 +1,18 @@
-$color-naranja      : #df9722;
-$color-negro        : #000000;
-$color-blanco       : #fff;
-$color-gris         : #c1bfbf;
-$color-azul         : #134895;
-$background-oficial : #FEF5E7; //fondo Demosoft
-
+$naranja      : var(--pestana-oscuro);
+$negro        : var(--negro);
+$preferencia  : var(--global-color); // fondo, bordes y texto azul
+$blanco       : var(--blanco);
+$bordes       : var(--bordes-claro); //bordes menu
+$fondo        : var(--fondo-claro); //fondo Demosoft
+$scroll       : var(--global-color); //barra azul
+$seleccionado : var(--seleccionado2);
+$version      : var(--gris);
 
 .container_main {
     width     : 100% !important;
     height    : 100% !important;
     float     : left;
-    background: $background-oficial;
+    background: $fondo;
     overflow  : auto;
     padding   : 0px 15px;
 }
@@ -27,8 +29,8 @@ $background-oficial : #FEF5E7; //fondo Demosoft
     padding    : 10px;
     font-weight: normal;
     background : none;
-    border     : 1px solid $color-gris;
-    color      : $color-naranja;
+    border     : 1px solid $bordes;
+    color      : $naranja;
     outline    : none;
     font-size  : 14px;
     margin     : 6px 0 17px 0px;
@@ -37,12 +39,12 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 .login-right input[type="text"]:hover,
 .login-right input[type="password"]:hover,
 .login-right input[type="email"]:hover {
-    border: 1px solid $color-naranja;
+    border: 1px solid $naranja;
 }
 
 .login-right h4 {
     text-align: start;
-    color     : $color-negro;
+    color     : $negro;
     font-size : 14px;
     margin    : 0 0 0px 0;
 }
@@ -50,8 +52,8 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 
 
 .login-right input[type="submit"] {
-    background        : $color-azul;
-    color             : $color-blanco;
+    background        : $preferencia;
+    color             : $blanco;
     font-size         : 17px;
     border            : none;
     width             : 100%;
@@ -64,14 +66,14 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 }
 
 .login-right input[type="submit"]:hover {
-    background: $color-naranja;
-    color     : $color-blanco;
+    background: $naranja;
+    color     : $blanco;
 }
 
 
 .iniciar {
-    background        : $color-azul;
-    color             : $color-blanco;
+    background        : $preferencia;
+    color             : $blanco;
     border            : none;
     width             : 100%;
     outline           : none;
@@ -83,18 +85,18 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 }
 
 .iniciar:hover {
-    background: $color-naranja;
-    color     : $color-blanco;
+    background: $naranja;
+    color     : $blanco;
 }
 
 .login-right h3 {
-    color        : $color-naranja;
+    color        : $naranja;
     font-size    : 22px;
     margin-bottom: 23px;
 }
 
 .login-right h6 {
-    color        : $color-naranja;
+    color        : $naranja;
     font-size    : 15px;
     margin-bottom: 23px;
 }
@@ -102,7 +104,6 @@ $background-oficial : #FEF5E7; //fondo Demosoft
 .sign-in a,
 p {
     font-size      : 13px;
-    color          : rgb(48, 46, 46);
     cursor         : pointer;
     text-decoration: none;
 }
@@ -112,11 +113,11 @@ p {
 }
 
 .sign-in a:hover {
-    color: $color-naranja;
+    color: $naranja;
 }
 
 .sign-in p:hover {
-    color: $color-naranja;
+    color: $naranja;
 }
 
 .ver-clave:hover {
@@ -132,8 +133,8 @@ p {
     margin-left: 5px;
 }
 
-.single-bottom label:hover {
-    color: $color-naranja;
+.single-bottom:hover {
+    color: $naranja;
 
 }
 
@@ -165,4 +166,23 @@ p {
 
 p {
     margin: 0px;
+}
+
+.version {
+    display    : flex;
+    align-items: center;
+    position   : absolute;
+    bottom     : 20px;
+    right      : 15px;
+    cursor     : auto;
+}
+
+.num-version {
+    color       : $version;
+    padding-left: 5px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
 }

@@ -62,6 +62,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   }
   ngOnInit(): void {
+    this.calculateTotal();
     this.deshabilitarImagenTemp();
   }
 
@@ -155,6 +156,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       bodega,
       this.producto.producto,
       this.producto.unidad_Medida,
+      this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+      this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
 
     //si algo salió mal
@@ -673,9 +676,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     if (event.key.toLowerCase() === "enter") {
       //evita o bloquea la funcion que tiene por defecto
       event.preventDefault();
+      this.facturaService.tabDetalle = false;
       //realiza la funcion que se necesite
       //Agregar transaccion
       this.enviar();
+
+
+      setTimeout(() => {
+        this.facturaService.tabDetalle = true;
+      }, 0);
     }
   }
 

@@ -2,7 +2,6 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TareaService } from '../../services/tarea.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { TareaInterface } from '../../interfaces/tarea-user.interface';
 import { DetalleInterface } from '../../interfaces/detalle-tarea.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
@@ -16,6 +15,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { GlobalTareasService } from 'src/app/services/tarea-global.service';
 import { busquedaEspaniol, busquedaIngles } from 'src/app/providers/dias.provider';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TareaInterface } from '../../interfaces/tarea.interface';
 
 @Component({
   selector: 'app-tareas',
@@ -133,11 +133,17 @@ export class TareasComponent {
 
   //buscar tareas por creiteriod e busqueda
   async buscarTarea(): Promise<void> {
+
+    if (this.searchText.length == 0) {
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
+      return;
+    }
+
     this.crearTarea = false;
     if (this.selectedOption == 1) {
       this.isLoading = true;
       //Consumo de api
-      let resTareasDesc: ResApiInterface = await this._tareaService.getTareasFiltro(this.searchText);
+      let resTareasDesc: ResApiInterface = await this._tareaService.getTareasFiltroAnterior(this.searchText);
 
       this.isLoading = false;
 

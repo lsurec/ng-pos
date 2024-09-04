@@ -35,10 +35,9 @@ export class TareaService {
 
     // funcion asyncrona con promise
     getTareasCalendario(): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getTareasCalendario().subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -46,23 +45,43 @@ export class TareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
-
+            );
+        });
     }
 
     //funcion que va a realizar el consumo en privado.
@@ -82,10 +101,9 @@ export class TareaService {
 
     // funcion asyncrona con promise
     getTareasUserCalendario(fechaIni: string, fechaFin: string): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getTareasUserCalendario(fechaIni, fechaFin).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -93,27 +111,416 @@ export class TareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
+    }
+
+
+    //funcion que va a realizar el consumo en privado.
+    private _getTareasFiltro(filtro: string, rangoIni: number, rangoFin: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "filtro": filtro,
+                "rangoIni": rangoIni,
+                "rangoFin": rangoFin,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/buscar`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasFiltro(filtro: string, rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        // console.log("ini", rangoIni, "fin", rangoFin);
+
+        return new Promise((resolve, reject) => {
+            this._getTareasFiltro(filtro, rangoIni, rangoFin).subscribe(
+                // Si la respuesta es correcta
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
 
                     let resApi: ResApiInterface = {
-                        status: false,
+                        status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
-                }
-            )
-        })
+                },
+                // Si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
+    }
+
+
+    //TODAS LAS TAREAS
+    private _getTareasTodas(rangoIni: number, rangoFin: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "rangoIni": rangoIni,
+                "rangoFin": rangoFin,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/todas`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasTodas(rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        // console.log("ini", rangoIni, "fin", rangoFin);
+
+        return new Promise((resolve, reject) => {
+            this._getTareasTodas(rangoIni, rangoFin).subscribe(
+                // Si la respuesta es correcta
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    };
+                    resolve(resApi);
+                },
+                // Si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
     }
 
     //funcion que va a realizar el consumo en privado.
-    private _getTareasFiltro(filtro: string) {
+    //servicio para obtener el top de tareas por rango
+    private _getTareasCreadas(rangoIni: number, rangoFin: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "rangoIni": rangoIni,
+                "rangoFin": rangoFin,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/creadas`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasCreadas(rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        // console.log("ini", rangoIni, "fin", rangoFin);
+
+        return new Promise((resolve, reject) => {
+            this._getTareasCreadas(rangoIni, rangoFin).subscribe(
+                // Si la respuesta es correcta
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    };
+                    resolve(resApi);
+                },
+                // Si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
+    }
+
+    //asignadas
+    private _getTareasAsignadas(rangoIni: number, rangoFin: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "rangoIni": rangoIni,
+                "rangoFin": rangoFin,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/asignadas`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasAsignadas(rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        console.log("ini", rangoIni, "fin", rangoFin);
+
+        return new Promise((resolve, reject) => {
+            this._getTareasAsignadas(rangoIni, rangoFin).subscribe(
+                // Si la respuesta es correcta
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    };
+                    resolve(resApi);
+                },
+                // Si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
+    }
+
+    //invitaciones
+    private _getTareasInvitaciones(rangoIni: number, rangoFin: number) {
+
+        //configurar headers
+        let headers = new HttpHeaders(
+            {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + this._token,
+                "user": this._user,
+                "rangoIni": rangoIni,
+                "rangoFin": rangoFin,
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}tareas/invitaciones`, { headers: headers });
+    }
+
+    // funcion asyncrona con promise
+
+    getTareasInvitaciones(rangoIni: number, rangoFin: number): Promise<ResApiInterface> {
+
+        // console.log("ini", rangoIni, "fin", rangoFin);
+
+        return new Promise((resolve, reject) => {
+            this._getTareasInvitaciones(rangoIni, rangoFin).subscribe(
+                // Si la respuesta es correcta
+                res => {
+                    let response: ResponseInterface = <ResponseInterface>res;
+
+                    let resApi: ResApiInterface = {
+                        status: true,
+                        response: response.data,
+                        storeProcedure: response.storeProcedure
+                    };
+                    resolve(resApi);
+                },
+                // Si algo sale mal
+                err => {
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
+                    }
+                }
+            );
+        });
+    }
+
+    //funcion que va a realizar el consumo en privado.
+    private _getTareasFiltroAnterior(filtro: string) {
 
         //configurar headers
         let headers = new HttpHeaders(
@@ -130,10 +537,10 @@ export class TareaService {
 
     // funcion asyncrona con promise
 
-    getTareasFiltro(filtro: string): Promise<ResApiInterface> {
+    getTareasFiltroAnterior(filtro: string): Promise<ResApiInterface> {
         //consumo del primer servicio
         return new Promise((resolve, reject) => {
-            this._getTareasFiltro(filtro).subscribe(
+            this._getTareasFiltroAnterior(filtro).subscribe(
                 //si esta correcto
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
@@ -229,10 +636,9 @@ export class TareaService {
     // funcion asyncrona con promise
 
     getComentarios(tarea: number): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getComentarios(tarea).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -240,24 +646,45 @@ export class TareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
-
+            );
+        });
     }
+
 
     //funcion que va a realizar el consumo en privado.
 
@@ -280,10 +707,9 @@ export class TareaService {
     // funcion asyncrona con promise
 
     getComentariosObjeto(tareaComentario: number, tarea: number): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getComentariosObjeto(tareaComentario, tarea).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -291,22 +717,43 @@ export class TareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
 
     //ultimas tareas relacionadas al usuario
@@ -324,10 +771,9 @@ export class TareaService {
     }
 
     getTopTareas(topTareas: number): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getTopTareas(topTareas).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -335,21 +781,43 @@ export class TareaService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: err.error,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
+            );
+        });
     }
+
 }

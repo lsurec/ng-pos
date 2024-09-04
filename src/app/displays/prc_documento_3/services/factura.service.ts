@@ -29,12 +29,12 @@ import { FormControl } from '@angular/forms';
 export class FacturaService {
 
     idDocumentoRef: number = 0;
-
+    tipoHistorial: number = 0;
     //controlar las vistas de las pestañas
     tabDocummento: boolean = true; //contorlador para la pestaña documento
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
     tabPago: boolean = false; //Contorlador para la pestaña de pago
-    searchText: string = "";  //Texto para bsucar productos
+    // searchText: string = "";  //Texto para bsucar productos
     searchClient: string = ""; //input busqueda cliente
     searchProduct: string = ""; //input busqueda producto
     verError: boolean = false; //ocultar y mostrar pantalla de error
@@ -102,7 +102,6 @@ export class FacturaService {
     refDescripcion?: string;
     refDireccionEntrega?: string;
     refObservacion?: string;
-    refObservaciones?: string; //nueva
 
 
     //fechas
@@ -134,8 +133,9 @@ export class FacturaService {
     filtroPreferencia: number = 1;
     idFiltroPreferencia: number = 1;
 
-
-
+    rangoIni: number = 1;
+    rangoFin: number = 20;
+    intervaloRegistros: number = 20;
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
@@ -173,6 +173,29 @@ export class FacturaService {
         if (!PreferencesService.filtroProducto) {
             PreferencesService.filtroProducto = 1;
         }
+    }
+
+
+
+    //mostrar pestaña doccumento
+    showDocumento() {
+        this.tabDocummento = true;
+        this.tabDetalle = false;
+        this.tabPago = false;
+    }
+
+    //mostrar pestaña detalle
+    showDetalle() {
+        this.tabDocummento = false;
+        this.tabDetalle = true;
+        this.tabPago = false;
+    }
+
+    //mostrar pestaña pagos
+    showPago() {
+        this.tabDocummento = false;
+        this.tabDetalle = false;
+        this.tabPago = true;
     }
 
 
@@ -226,8 +249,7 @@ export class FacturaService {
         this.refObservacion = undefined;
         this.observacion = "";
         this.searchClient = "";
-        this.searchText = "";
-
+        this.searchProduct = "";
     }
 
     addLeadingZero(number: number): string {
@@ -441,7 +463,9 @@ export class FacturaService {
         transaccion.isChecked = this.selectAllTra;
 
         //Agregar transaccion
-        this.traInternas.push(transaccion);
+        this.traInternas.unshift(transaccion);
+
+        this.searchProduct = "";
 
         //calcluar totales
         this.calculateTotales();

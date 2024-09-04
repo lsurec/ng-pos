@@ -1,0 +1,525 @@
+$negro         : var(--negro);
+$color-blanco  : var(--blanco);
+$personalizado : var(--global-color);
+$bordes        : var(--bordes-claro); //bordes menu
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$pestanas      : var(--pestana);
+$activa        : var(--activa-p);
+$gris          : var(--gris); //texto gris
+$sombra        : var(--sombra-claro);
+$barra-carga   : rgba(0, 0, 0, 0.2);
+
+
+//Pantalla de carga
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $fondo;
+}
+
+//Barra de contenido
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+//ICONOS
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+.contenido-seleccionado {
+    display   : none;
+    border-top: 1px solid $bordes;
+}
+
+.titulo-pestana {
+    display: none;
+}
+
+.pestana {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 5px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $pestanas;
+    border     : 2px solid transparent;
+}
+
+.pestana::before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+.pestana[for*='1']:before {
+    content: '\f0ae';
+}
+
+.pestana[for*='2']:before {
+    content: '\f044';
+}
+
+.pestana[for*='3']:before {
+    content: '\f007';
+}
+
+.pestana[for*='4']:before {
+    content: '\f0e0';
+}
+
+.pestana:hover {
+    color : $personalizado;
+    cursor: pointer;
+}
+
+.titulo-pestana:checked+.pestana {
+    color        : $personalizado;
+    border       : 1px solid $bordes;
+    border-top   : 3px solid $activa;
+    border-bottom: 0px;
+}
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3,
+#tab4:checked~.content4 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .pestana {
+        font-size: 0;
+    }
+
+    .pestana:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .pestana {
+        padding: 15px;
+    }
+}
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+}
+
+//Estilo para el contenedor del icono y el campo de entrada
+.input-container {
+    position     : relative;
+    display      : flex;
+    align-items  : center;
+    width        : 100%;
+    border-bottom: 1px solid $bordes;
+    margin-bottom: 5px;
+}
+
+.input-container:hover {
+    border-bottom: 1px solid $personalizado;
+}
+
+//Estilos de Tareas
+
+.titulo {
+    font-size  : 14px;
+    text-align : justify;
+    font-weight: 500;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+/*Contendo derecho*/
+
+.head__sidenav {
+    height          : 64px !important;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.resultados::-webkit-scrollbar,
+.container_main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
+}
+
+.resultados::-webkit-scrollbar-track,
+.container_main::-webkit-scrollbar-track {
+    background-color: $fondo;
+}
+
+.resultados::-webkit-scrollbar-thumb,
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+}
+
+.container_page {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    background-color: $fondo;
+}
+
+.regresar-crear {
+    display    : flex;
+    align-items: center;
+}
+
+.progress {
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $fondo;
+}
+
+.container_main {
+    padding   : 0px 15px;
+    width     : 100%;
+    height    : calc(100vh - 234px) !important;
+    float     : left;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 767px) {
+
+    .container_main {
+        width     : 100%;
+        /* padding: 20px; */
+    }
+
+}
+
+.inputSearch {
+    position: relative;
+}
+
+/* Estilo para el contenedor del icono y el campo de entrada */
+.input-container-tarea {
+    position     : relative;
+    padding      : 10px 15px;
+    border-bottom: solid 1px $bordes;
+}
+
+/* Estilo para el icono */
+.iconoLupa {
+    position   : absolute;
+    top        : 46%;
+    /* Ajusta la posición verticalmente según sea necesario */
+    left       : 1.5%;
+    /* Ajusta la posición horizontalmente según sea necesario */
+    transform  : translateY(-50%);
+    color      : $personalizado;
+    align-items: center;
+}
+
+/* estilos para los inputs */
+.barra-de-busqueda {
+    height                 : 45px;
+    width                  : 100%;
+    background             : none;
+    font-size              : 14px;
+    padding-left           : 50px;
+    outline                : none;
+    border-style           : none;
+    border                 : 0.5px solid $bordes;
+    color                  : $personalizado;
+    border-top-right-radius: 20px;
+    border-top-left-radius : 20px;
+    // border-radius: 20px;
+}
+
+.coincidencias {
+    font-size : 12px;
+    text-align: right;
+    padding   : 5px 20px;
+}
+
+.registros {
+    font-size    : 12px;
+    text-align   : right;
+    padding      : 5px 20px;
+    border-bottom: solid 1px $bordes;
+}
+
+.tipo-busqueda {
+    text-align: center;
+    width     : 100%;
+    padding   : 10px 15px 5px;
+}
+
+.buscar {
+    padding-left: 5px;
+    display     : flex;
+}
+
+.buscar-opcion {
+    font-size    : 12px;
+    text-align   : left;
+    padding-right: 5px;
+    padding-left : 15px;
+}
+
+/*Boton ir arriba*/
+.button_up_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    right           : 40px;
+    font-size       : 20px;
+    background-color: $personalizado;
+}
+
+
+.button_down_content {
+    position        : fixed;
+    z-index         : 1000;
+    bottom          : 75px;
+    /* Ajusta la posición según tus preferencias */
+    right           : 40px;
+    /* Ajusta la posición según tus preferencias */
+    font-size       : 20px;
+    background-color: $personalizado;
+    /* Ajusta el color según tus preferencias */
+}
+
+@media screen and (max-width: 992px) {
+    .button_up_content {
+        bottom   : 75px;
+        right    : 30px;
+        font-size: 20px;
+    }
+}
+
+.tareas {
+    margin: 0px 15px 0px;
+}
+
+/* estilos para la lista de las tareas */
+.espacioLista {
+    width        : 100%;
+    margin-bottom: 25px;
+    cursor       : pointer;
+}
+
+/* sombra y elevacion de items de lista */
+.tarea {
+    background-color: $fondo;
+    border-radius   : 5px;
+    font-size       : 17px;
+    box-shadow      : $sombra;
+    padding         : 10px;
+}
+
+/* justificar texto */
+.justificar {
+    text-align: justify;
+}
+
+/* fuente negrita */
+.negrita {
+    font-weight: bold;
+}
+
+/*Fin Contendo derecho*/
+.fuente {
+    font-size: 16px;
+}
+
+/* alinea fecha a la derecha */
+.alingLeft {
+    float: right;
+}
+
+.circulo-estado {
+    width        : 15px;
+    height       : 15px;
+    border       : 1px solid $gris;
+    border-radius: 50%;
+    margin-left  : 10px;
+}
+
+@media screen and (max-width: 365px) {
+    .iconoLupa {
+        left: 5.5% !important;
+    }
+}
+
+p {
+    margin: 0px;
+}
+
+.chip {
+    display      : inline-block;
+    padding      : 5px 8px;
+    margin       : 4px;
+    cursor       : pointer;
+    border       : 1px solid $gris;
+    border-radius: 20px;
+    font-size    : 12px;
+}
+
+.selected {
+    background-color: $personalizado;
+    color           : var(--blanco);
+    border          : 1px solid $personalizado;
+}
+
+.descripcion {
+    text-align   : justify;
+    overflow-wrap: break-word;
+}
+
+.color-estado {
+    display    : flex;
+    align-items: center;
+    padding-top: 3px;
+}
+
+.tarea:hover {
+    background: $bordes;
+}
+
+.tarjeta-tarea {
+    width     : 100%;
+    padding   : 10px;
+    box-shadow: $sombra;
+    margin    : 5px 0px;
+}
+
+.resultados {
+    position        : absolute;
+    width           : calc(100% - 30px);
+    background-color: $fondo;
+    z-index         : 1000;
+    max-height      : 300px;
+    overflow-y      : auto;
+    box-shadow      : $sombra;
+}
+
+.border-radius {
+    border-radius: 20px !important;
+}
+
+.resultado {
+    padding   : 8px 16px;
+    cursor    : pointer;
+    border    : solid 1px $bordes;
+    border-top: none;
+}
+
+.resultado:hover {
+    background-color: $bordes;
+}
+
+.id-titulo-fecha {
+    display: flex;
+}
+
+.desc {
+    padding-left: 5px;
+}
+
+.highlight {
+    color: green;
+}
+
+.verMas {
+    padding        : 10px;
+    color          : $personalizado;
+    text-decoration: underline;
+    cursor         : pointer;
+}
+
+.encontradas {
+    width: 80%;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -800px 0
+    }
+
+    100% {
+        background-position: 800px 0
+    }
+}
+
+.animated-background {
+    animation-duration       : 2s;
+    animation-fill-mode      : forwards;
+    animation-iteration-count: infinite;
+    animation-name           : placeHolderShimmer;
+    animation-timing-function: linear;
+    background-color         : #f6f7f8;
+    background               : linear-gradient(to right, #eeeeee 8%, $barra-carga 18%, #eeeeee 33%);
+    background-size          : 800px 104px;
+    height                   : 15px;
+    position                 : relative;
+}
+
+.carga10 {
+    width        : 10%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga20 {
+    width        : 20%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga30 {
+    width        : 30%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga40 {
+    width        : 40%;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.carga50 {
+    width        : 50%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.carga60 {
+    width        : 60%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}

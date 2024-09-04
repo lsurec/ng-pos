@@ -1,0 +1,150 @@
+$fondo  : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll : var(--global-color); //barra azul
+$bordes : var(--bordes-claro); //bordes del calendario
+$negro  : var(--negro);
+$gris   : var(--gris);
+
+.progress {
+    padding         : 0px;
+    width           : 680px;
+    height          : 430px;
+    background-color: $fondo;
+}
+
+.dialog {
+    padding         : 0px;
+    width           : 700px;
+    height          : 430px;
+    background-color: $fondo;
+    overflow        : hidden;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.contenedor {
+    padding   : 10px 20px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100% - 50px);
+}
+
+.contenedor::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenedor::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.close {
+    width      : 40px;
+    color      : $gris;
+    float      : left !important;
+    font-size  : 28px;
+    font-weight: bold;
+    cursor     : pointer;
+    text-align : center;
+}
+
+.close:hover,
+.close:focus {
+    color          : $negro;
+    text-decoration: none;
+    cursor         : pointer;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.fondo {
+    background-color: $fondo;
+}
+
+.detalleCoincidencias {
+    text-align: left !important;
+    font-size : 14px;
+    width     : 100%;
+}
+
+.titulos {
+    font-weight  : 450 !important;
+    padding-right: 5px;
+}
+
+p {
+    margin: 0px;
+    color : $negro;
+}
+
+
+@media screen and (max-width: 280px) {
+    .close {
+        font-size  : 22px !important;
+        align-items: center !important;
+        height     : 30px !important;
+    }
+
+    hr {
+        margin: 0.3rem 0;
+    }
+
+    .progress {
+        padding: 0px !important;
+        width  : 200px !important;
+    }
+
+    .dialog {
+        padding: 10px 20px;
+        width  : 200px !important;
+    }
+
+    .contenedor {
+        padding-left: 5px !important;
+        width       : 190px !important;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+
+    .dialog,
+    .progress {
+        width: 400px !important;
+    }
+
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.barra-fija {
+    display      : flex;
+    align-items  : center;
+    height       : 55px;
+    border-bottom: solid 1px $bordes;
+}
+
+.barra-abajo-fija {
+    display    : flex;
+    align-items: center;
+    height     : 50px;
+}

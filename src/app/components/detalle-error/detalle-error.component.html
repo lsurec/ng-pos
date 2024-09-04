@@ -1,0 +1,36 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<div class="fondo" *ngIf="!isLoading">
+    <div class="barra-fija">
+        <span class="spacer"></span>
+        <!-- Titulo -->
+        <p class="titulos">Error: {{error?.error}} </p>
+        <span class="spacer"></span>
+        <!-- Cerrar dialogo -->
+        <span class="close" (click)="closeDialog()">&times;</span>
+    </div>
+    <!-- Dialogo de los detalles de las tareas -->
+    <div mat-dialog-content class="dialog">
+        <div class="contenedor">
+            <div class="detalleCoincidencias">
+                <div class="dFlex">
+                    <p class="titulos">Fecha: </p>
+                    <p>{{error?.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}</p>
+                    <span class="spacer"></span>
+                    <p class="titulos">Usuario: </p>
+                    <p>{{error?.usuario}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="detalleCoincidencias">
+                <p class="titulos">Descripción:</p>
+                <p>{{error?.descripcion}}</p>
+            </div>
+        </div>
+        <div mat-dialog-actions class="barra-abajo-fija">
+            <span class="spacer"></span>
+            <button mat-button (click)="closeDialog()">
+                {{'pos.botones.cerrar' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

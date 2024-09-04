@@ -20,7 +20,15 @@
             "tipoCambio": "Exchange Rate",
             "tipoDocumento": "Document Type",
             "serieDocumento": "Document Series",
-            "impresoras": "PRINTERS"
+            "impresoras": "PRINTERS",
+            "prefColores": "Color Preference",
+            "paletaColores": "Color Palette",
+            "cambiarColor": "Change to your preferred colors.",
+            "color": "Color",
+            "colorSelec": "Selected Color",
+            "cambiosColor": "You have selected a new color. To view the changes, it is necessary to restart the browser. Click accept to continue.",
+            "seleccionar": "Select",
+            "historialError": "Error Log."
         },
         "login": {
             "correo": "Username",
@@ -403,7 +411,14 @@
             "tipo": "Type:",
             "estado": "Status:",
             "prioridad": "Priority:",
-            "previa": "Preview"
+            "previa": "Preview",
+            "seleccionarId": "Click on the Reference ID you want to add.",
+            "crearTarea": "Create New Task",
+            "correoElec": "Email:",
+            "todas": "All",
+            "creadas": "Created",
+            "asignadas": "Assigned",
+            "invitaciones": "Invitations"
         },
         "login": {
             "correo": "User",
@@ -522,7 +537,19 @@
             "descripcionRef": "Description:",
             "referencia": "Reference",
             "buscarIdReferencia": "SELECT REFERENCE ID",
-            "adjuntos": "Attachments"
+            "adjuntos": "Attached Files",
+            "seleccionRes": "Select Responsible Person",
+            "seleccionarInvi": "Select Guests",
+            "agregaRes": "Click on the user you want to add.",
+            "marcarInvi": "Check the box for the user or users you want to add.",
+            "invitadosSelec": "Selected Guests",
+            "nuevaTarea": "New Task",
+            "subirArchivos": "Upload Files",
+            "eliminarRes": "Remove Responsible Person",
+            "invitadosT": "GUESTS",
+            "eliminarInvi": "Remove Guest",
+            "eliminarRef": "Remove Reference ID",
+            "eliminarArchivo": "Delete File"
         },
         "configuracionLocal": {
             "titulo": "LOCAL CONFIGURATION",
@@ -550,6 +577,7 @@
             "idioma": "You can also change the application language later according to your preference."
         },
         "alertas": {
+            "requerido": "Required field.",
             "deFecha": "from",
             "salioMal": "Something went wrong, please try again",
             "ok": "Accept",
@@ -573,6 +601,7 @@
             "comentarioCreado": "Comment created successfully.",
             "tareaCreadaExito": "Task created successfully. Task ID: ",
             "archivosNoCargados": "Task created, but files were not saved.",
+            "archivosComentario": "Comment created, but the files were not saved.",
             "usuarios": "User not found, please try searching again.",
             "debeSeleccionar": "To continue, select a company and a workstation.",
             "noSeleccionado": "Not selected.",
@@ -592,8 +621,10 @@
             "seleccionar": "Select a theme to continue.",
             "nuevoIdioma": "New Language",
             "cambioIdioma": "To see the changes, it is necessary to refresh the application.",
-            "fuete": "Font size.",
-            "cambioFuente": "You have selected a new font size. To see the changes, it is necessary to restart the browser. Press accept to continue."
+            "cambioFuente": "You have selected a new font size. To see the changes, it is necessary to restart the browser. Press accept to continue.",
+            "asignado": "Previously assigned user.",
+            "estadoIgual": "Previously assigned status.",
+            "prioridadIgual": "Previously assigned priority."
         }
     }
 }

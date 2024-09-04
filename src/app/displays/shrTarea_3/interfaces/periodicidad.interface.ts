@@ -1,5 +1,9 @@
 export interface TiemposInterface {
-// export interface PeriodicidadInterface {
     tipo_Periodicidad: number;
-    descripcion:       string;
+    descripcion: string;
+}
+
+export interface TiempoEstimadoInterface {
+    duracion: number;
+    descripcion: TiemposInterface;
 }

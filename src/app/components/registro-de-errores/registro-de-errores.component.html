@@ -1,0 +1,97 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+
+<div *ngIf="!isLoading">
+    <app-error *ngIf="verError" [regresar]="regresar"></app-error>
+    <div *ngIf="!verError">
+        <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')">
+
+            <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+                <mat-toolbar class="head__sidenav">
+                    <button mat-icon-button (click)="close('toggle button')"
+                        [matTooltip]="'pos.botones.cerrar' | translate">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <!-- Contenido del sidenav -->
+                <div class="contenido-sidenav">
+                    <p>hola</p>
+                </div>
+
+                <!-- Barra de abajo para regresar y salir -->
+                <mat-toolbar class="barra-regresar">
+                    <button mat-icon-button [matTooltip]="'pos.botones.ajustes' | translate">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <button mat-icon-button [matTooltip]="'pos.botones.salir' | translate">
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </mat-toolbar>
+            </mat-sidenav>
+            <mat-sidenav-content>
+
+                <!-- Barras para titulos y boton de cerrar sidenav -->
+                <mat-toolbar class="toolbarPhone">
+                    <mat-toolbar-row>
+                        <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                            (click)="loadData()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <p class="titulo">Historial de Errores</p>
+                        <span class="spacer"></span>
+                        <!-- <button mat-icon-button (click)="sidenavend.open()">
+                            <mat-icon>menu</mat-icon>
+                        </button> -->
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <mat-toolbar class="toolbarlarge">
+
+                    <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                        (click)="loadData()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <p class="titulo">Historial de Errores</p>
+
+                    <span class="spacer"></span>
+
+                    <!-- <button mat-icon-button (click)="sidenavend.open()">
+                        <mat-icon>menu</mat-icon>
+                    </button> -->
+                </mat-toolbar>
+
+                <!-- Contenido del componente -->
+                <div class="container_main">
+                    <p class="coincidencias">
+                        {{'crm.home.registros' | translate}} ({{errors.length}})
+                    </p>
+                    <div class="tarjeta-error">
+                        <div class="list-group espacioLista" *ngFor="let error of errors" (click)="detalles(error)">
+                            <hr>
+                            <div class="dFlex">
+                                <p class="negrita">Error No. {{error.error}} </p>
+                                <span class="spacer"></span>
+                                <p class="negrita">
+                                    Fecha y hora: {{error.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}
+                                </p>
+                            </div>
+                            <a class="elemento list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="" matTooltip="Click, para ver los detalles.">
+                                    <p class="negrita"> Usuario: {{error.usuario}} </p>
+                                    <p class="titulo-error">{{error.descripcion}}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+</div>

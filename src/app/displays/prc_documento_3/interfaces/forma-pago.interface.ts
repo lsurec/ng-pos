@@ -22,4 +22,5 @@ export interface FormaPagoInterface {
     bloquear_Documento:  boolean;
     url:                 string;
     req_Cuenta_Bancaria: null;
+    select:   boolean;
 }

@@ -3,7 +3,7 @@ import { DialogActionsComponent } from "../components/dialog-actions/dialog-acti
 import { ErrorInterface } from "../interfaces/error.interface";
 import { Injectable } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
 import { PreferencesService } from "./preferences.service";
 import { ResApiInterface } from "../interfaces/res-api.interface";
 import { RouteNamesService } from "./route.names.service";
@@ -25,6 +25,9 @@ import { ProductosEncontradosComponent } from "../displays/prc_documento_3/compo
 //serivicio para notificaciones en cul quir parte del proyecto
 export class NotificationsService {
 
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+    verticalPosition: MatSnackBarVerticalPosition = 'top';
+
     //Inicializar snack
     constructor(
         private _snackBar: MatSnackBar,
@@ -37,7 +40,16 @@ export class NotificationsService {
 
     //Abrir o mostar  snackbar
     openSnackbar(message: string) {
-        this._snackBar.open(message, this._translate.instant('pos.alertas.ok'), { duration: 5 * 3000 })
+        this._snackBar.open(
+            message,
+            this._translate.instant('pos.alertas.ok'),
+            {
+                horizontalPosition: this.horizontalPosition,
+                verticalPosition: this.verticalPosition,
+                duration: 5 * 3000,
+                panelClass: ['center-snackbar']
+            }
+        )
     }
 
     openSnackbarAction(

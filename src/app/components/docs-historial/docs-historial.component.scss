@@ -1,0 +1,337 @@
+$personalizado  : var(--global-color);
+$negro          : var(--negro);
+$bordes         : var(--bordes-claro); //bordes menu
+$fondo          : var(--fondo-claro); //fondo Demosoft
+$scroll         : var(--global-color); //barra azul
+$cargo-verde    : var(--cargo-claro);
+$descuento-rojo : var(--descuento-claro);
+$pestanas       : var(--pestanas);
+$blanco         : var(--blanco);
+
+.container-main {
+    height  : calc(100vh - 128px) !important;
+    width   : 100%;
+    padding : 0px;
+    overflow: hidden;
+}
+
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $fondo;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.registros {
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 10px;
+}
+
+.titulo {
+    font-size  : 14px;
+    text-align : center;
+    font-weight: 500;
+}
+
+.subtitulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+.detalle-documento {
+    display   : flex;
+    padding   : 5px 0px;
+    border-top: 1px solid $bordes;
+}
+
+.detalle-documento:hover {
+    cursor          : pointer;
+    background-color: $bordes;
+}
+
+.info-documento {
+    width  : 60%;
+    padding: 5px 10px;
+}
+
+.totales {
+    padding   : 5px 10px;
+    text-align: right;
+
+}
+
+.fecha-hora {
+    font-size: 13px;
+    color    : $negro;
+}
+
+.saldo {
+    font-size  : 13px;
+    color      : $personalizado;
+    font-weight: 500;
+}
+
+.cargo {
+    font-size  : 13px;
+    color      : $cargo-verde;
+    font-weight: 500;
+}
+
+.descuento {
+    font-size  : 13px;
+    color      : $descuento-rojo;
+    font-weight: 500;
+}
+
+.total {
+    border-top : 1px solid $negro;
+    font-size  : 13px;
+    font-weight: bold;
+}
+
+.listas-documentos::-webkit-scrollbar {
+    width: 7px;
+}
+
+.listas-documentos::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.listas-documentos::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.listas-documentos {
+    height    : calc(100vh - 190px) !important;
+    width     : 100%;
+    padding   : 0px 25px;
+    overflow-y: auto;
+}
+
+.mat-mdc-radio-button .mat-mdc-radio-button {
+    margin-left: 16px;
+}
+
+.form-switch .form-check-input {
+    border-color: #bdb76b;
+    height      : 20px;
+}
+
+//Inicial en grande
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0px !important;
+}
+
+mat-sidenav {
+    width           : 365px;
+    background-color: $fondo;
+
+}
+
+@media screen and (max-width: 365px) {
+    mat-sidenav {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-sidenav {
+        width: 100%;
+    }
+
+    .contenedorModulo {
+        width: 100% !important;
+    }
+
+}
+
+/*Toolbar*/
+.toolbarPhone {
+    display: none;
+}
+
+.toolbarPhone,
+.toolbar-large {
+    background-color: $fondo;
+    border-bottom   : 1px solid rgba(0, 0, 0, .12);
+    padding         : 0px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .toolbar-large {
+        display         : none !important;
+        background-color: $fondo;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+        width  : 100% !important;
+    }
+}
+
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width : 100%;
+    height: 100%;
+}
+
+$color3 : #1a7084;
+
+.elevation_bar {
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+
+.nav_bar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 1000;
+    height          : 56px !important;
+    background-color: $color3;
+    color           : $blanco;
+    font-size       : 14px;
+}
+
+// body {
+//     font : 14px/1 'Open Sans', sans-serif;
+//     color: #555;
+// }
+
+
+main {
+    width : 100%;
+    height: 100%;
+}
+
+.contenido-seleccionado {
+    display   : none;
+    border-top: 1px solid $bordes;
+}
+
+.titulo-pestana {
+    display: none;
+
+}
+
+.pestana {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 15px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $pestanas;
+    border     : 2px solid transparent;
+}
+
+.pestana::before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+.pestana[for*='1']:before {
+    content: '\f1da';
+}
+
+.pestana[for*='2']:before {
+    content: '\f017';
+}
+
+.pestana[for*='3']:before {
+    content: '\f0d6';
+}
+
+.pestana[for*='4']:before {
+    content: '\f01c';
+}
+
+.pestana:hover {
+    color : #888;
+    cursor: pointer;
+}
+
+.titulo-pestana:checked+.pestana {
+    color        : $personalizado;
+    border       : 1px solid $bordes;
+    border-top   : 3px solid orange;
+    border-bottom: 0px;
+}
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .pestana {
+        font-size: 0;
+    }
+
+    .pestana:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .pestana {
+        padding: 15px;
+    }
+}
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+}

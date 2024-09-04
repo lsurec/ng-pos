@@ -10,8 +10,11 @@ import { PrintConvertInterface } from '../../interfaces/print-convert.interface'
 import { Empresa, DocumentoData, Cliente, Item, Montos, Certificador, PoweredBy, } from 'src/app/interfaces/doc-print.interface';
 import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: 'app-details-dest-docs',
@@ -163,6 +166,7 @@ export class DetailsDestDocsComponent {
 
     //datos del documento
     let documento: DocumentoData = {
+      consecutivo: 0,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: this._translate.instant('pos.factura.documento_generico'),
       fechaCert: "",
@@ -281,7 +285,8 @@ export class DetailsDestDocsComponent {
 
     const docDefinition = await this._printService.getPDFDocTMU(this.globalConvertSrevice.docPrint);
 
-    pdfMake.createPdf(docDefinition).open();
+    // pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).open();
 
     //TODO:Proceso de impresion debe testearse y optimizarse
     //Verificar que ya se haya configurado antes 

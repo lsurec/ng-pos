@@ -1,30 +1,22 @@
-$color-negro          : #000; //texto
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-gris           : #968989cb; // bordes de comentarios
-$color-2-gris         : #857373c9; //texto, bordes
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$background-detalles  : #dad2d286; //fondo detalles
-$background-flecha    : #3b3939cb; //fondo triangulo
-$background-transparent: transparent; //fondo transparennte,
+$bordes        : var(--bordes-claro); //bordes
+$personalizado : var(--global-color); //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bloques       : var(--bordes-claro); //fondo detalles
+$flecha        : var(--gris); //fondo triangulo
+$gris          : var(--gris); //fondo 
+$rojo          : var(--error); //fondo 
 
 /*SideNav*/
 
 .head__sidenav {
+    width           : 100%;
     height          : 64px !important;
-    background-color: $background-oficial;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.icon_close_head {
-    cursor: pointer;
-}
-
-.head_carr_end {
-    color      : $color-negro;
-    font-weight: 300;
+    border-bottom   : 1px solid $bordes;
 }
 
 .spacer {
@@ -33,7 +25,7 @@ $background-transparent: transparent; //fondo transparennte,
 
 mat-sidenav {
     width     : 365px;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 @media screen and (max-width: 280px) {
@@ -47,12 +39,11 @@ mat-sidenav {
 }
 
 .progress {
-    padding         : 10px 20px;
-    width           : 100%;
-    height          : 100%;
-    padding-bottom  : 30px;
-    overflow-y      : auto;
-    background-color: $background-oficial;
+    height          : 100vh;
+    width           : 100vw;
+    position        : fixed;
+    align-items     : center;
+    background-color: $fondo;
 }
 
 .sidenav_container {
@@ -63,7 +54,7 @@ mat-sidenav {
     bottom        : 0;
     left          : 0;
     right         : 0;
-    background    : $background-oficial;
+    background    : $fondo;
 }
 
 /*Fin SideNav*/
@@ -72,13 +63,13 @@ mat-sidenav {
 
 .toolbarPhone {
     display   : none;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .toolbarPhone,
 .toolbarlarge {
     position  : fixed !important;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .acordeon_oculto {
@@ -103,40 +94,25 @@ mat-sidenav {
 /*Fin Toolbar*/
 
 /*Contendo derecho*/
-
-.container_main::-webkit-scrollbar {
-    width: 7px;
-}
-
-.container_main::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
-
-.container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px $background-oficial;
-}
-
 .container_page {
     height    : calc(100% - 128px);
     width     : 100vw;
     position  : fixed;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_start {
     height    : 100%;
     float     : left;
     overflow  : auto;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .container_main {
     width     : 100%;
     height    : 100%;
     float     : left;
-    background: $background-oficial;
+    background: $fondo;
 }
 
 
@@ -174,37 +150,34 @@ mat-sidenav {
     width         : 250PX;
     float         : left;
     overflow      : auto;
-    background    : $background-oficial;
-    border-left   : 1px solid rgba(0, 0, 0, .12);
+    background    : $fondo;
+    border-left   : 1px solid $bordes;
     padding-bottom: 10px;
 }
 
-.comentarios::-webkit-scrollbar {
-    width: 7px;
-}
+//S C R O L L 
 
-.comentarios::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
-
-.comentarios::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+textarea::-webkit-scrollbar-thumb,
+.container_main::-webkit-scrollbar-thumb,
+.comentarios::-webkit-scrollbar-thumb,
+.detalle-tarea::-webkit-scrollbar-thumb {
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
+textarea::-webkit-scrollbar,
+.container_main::-webkit-scrollbar,
+.comentarios::-webkit-scrollbar,
 .detalle-tarea::-webkit-scrollbar {
     width: 7px;
 }
 
+textarea::-webkit-scrollbar-track,
+.container_main::-webkit-scrollbar-track,
+.comentarios::-webkit-scrollbar-track,
 .detalle-tarea::-webkit-scrollbar-track {
-    background: $background-oficial;
-}
-
-.detalle-tarea::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
-    border-radius   : 20px;
-    border          : 3px $background-oficial;
+    background: $fondo;
 }
 
 /*Fin Contenido detalles*/
@@ -217,24 +190,35 @@ p {
 
 .titulo-flecha {
     display      : flex;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid $bordes;
     align-items  : center;
 }
 
 .tituloTarea {
-    padding    : 10px 10px;
     font-weight: bold;
-    text-align : center;
+    text-align : justify;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.adjuntos {
+    padding: 5px;
 }
 
 /* color de fondo de toda la pantalla */
 .color_fondo {
-    background-color: $background-transparent;
+    background-color: transparent;
 }
 
 .mat-expansion-panel-body {
     padding         : 0 !important;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     margin          : 0px -20px;
     border-radius   : 0px !important;
 }
@@ -244,20 +228,19 @@ p {
 /* Observacion Estilos */
 
 .observacion {
-    margin          : 15px;
-    word-wrap       : break-word;
-    background-color: $background-oficial !important;
+    margin   : 15px;
+    word-wrap: break-word;
 }
 
 .observaciones {
     height          : 35px;
-    background-color: $background-transparent;
+    background-color: transparent;
     font-weight     : bold;
     padding         : 5px;
 }
 
 .observaciones_desc {
-    padding   : 5px 10px;
+    padding   : 0px 10px 5px;
     text-align: justify;
 }
 
@@ -284,9 +267,9 @@ p {
 .flecha-comentario {
     width        : 0;
     height       : 0;
-    border-top   : 7px solid $background-transparent;
-    border-right : 14px solid $background-flecha;
-    border-bottom: 7px solid $background-transparent;
+    border-top   : 7px solid transparent;
+    border-right : 14px solid $flecha;
+    border-bottom: 7px solid transparent;
     margin-top   : 10px;
     margin-left  : 4.5px;
     margin-right : -20px;
@@ -301,9 +284,8 @@ p {
 .comentario {
     display      : flex;
     height       : 30px;
-    border       : 1px solid $color-gris;
-    border-bottom: none;
-    font-weight  : bold;
+    border       : 1.5px solid $bordes;
+    border-bottom: none !important;
     font-size    : 13px;
     padding      : 5px;
 }
@@ -313,7 +295,7 @@ p {
     text-align                : justify;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius : 20px;
-    border                    : $color-gris 1px solid;
+    border                    : $bordes 1.5px solid;
 }
 
 .ico_link {
@@ -325,7 +307,7 @@ p {
 .linea {
     margin-bottom: -15px;
     height       : 30px;
-    border-left  : $color-gris 2px solid;
+    border-left  : $bordes 2px solid;
     margin-left  : 20px
 }
 
@@ -337,14 +319,14 @@ p {
 }
 
 .detalle-derecho {
-    background-color: $background-detalles;
+    background-color: $bloques;
     padding         : 8px;
     font-size       : 14px;
     align-items     : center;
 }
 
 .detalle-actualizar {
-    background-color   : $background-detalles;
+    background-color   : $bloques;
     padding            : 8px;
     font-size          : 14px;
     // display         : flex;
@@ -389,11 +371,11 @@ p {
 .editar-eliminar {
     width        : 100%;
     display      : flex;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
 }
 
 // .editar-eliminar:hover {
-//     background-color: $color-bordes
+//     background-color: $bordes
 // }
 
 .eliminar {
@@ -402,7 +384,7 @@ p {
 
 .eliminar:hover {
     cursor: pointer;
-    color : #ff0000;
+    color : $rojo;
 }
 
 /* fin detalles lado derecho */
@@ -416,14 +398,14 @@ mat-accordion {
 .detalles_acordeon_oculto {
     margin          : 10px 15px;
     width           : 90%;
-    background-color: $background-oficial !important;
+    background-color: $fondo !important;
     padding         : 0px;
 }
 
 .elementos-detalle {
     display      : flex;
     min-height   : 50px;
-    border       : 1px solid $color-2-gris;
+    border       : 1.5px solid $bordes;
     border-radius: 20px;
     margin       : 10px;
     font-size    : 14px;
@@ -433,7 +415,7 @@ mat-accordion {
 .editar-detalle {
     min-height   : 50px;
     display      : flex;
-    border       : 1px solid $color-2-gris;
+    border       : 1.5px solid $bordes;
     border-radius: 20px;
     margin       : 10px;
     font-size    : 14px;
@@ -470,7 +452,7 @@ mat-accordion {
 
 .responsables {
     word-wrap    : break-word;
-    border-bottom: 1px solid $color-gris;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
     padding      : 3px 0px;
 }
@@ -510,9 +492,7 @@ mat-accordion {
 }
 
 .lista-archivos {
-    margin-left   : 15px;
-    padding       : 5px;
-    padding-bottom: 0px;
+    padding: 5px;
 }
 
 .nombre-archivos {
@@ -531,8 +511,8 @@ mat-accordion {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    border          : 1px solid $bordes;
+    color           : $personalizado;
 }
 
 .detalle-titulos {
@@ -549,4 +529,25 @@ mat-accordion {
 .icono-titulo {
     padding-top: 10px;
     margin     : 0px 10px;
+}
+
+.archivos-adjuntos {
+    margin-top      : 5px;
+    padding         : 5px;
+    background-color: $bloques;
+    display         : flex;
+    align-items     : center;
+}
+
+.circulo-estado {
+    width        : 20px;
+    height       : 20px;
+    border       : 1px solid $gris;
+    margin       : 5px;
+    border-radius: 50%;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
 }

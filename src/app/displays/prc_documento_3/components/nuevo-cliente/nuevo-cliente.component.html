@@ -6,7 +6,8 @@
             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-            <button (click)="loadData()" mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+            <button (click)="loadData()" mat-icon-button aria-label
+                matTooltip="{{ 'pos.botones.actualizar' | translate }}">
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>
@@ -21,23 +22,23 @@
                     <form #searchForm="ngForm" class="formulario" (ngSubmit)="guardar()">
                         <div class="campos">
                             <input type="text" name="nombre" placeholder="{{ 'pos.factura.nombre' | translate }}"
-                                class="detalles" [(ngModel)]="nombre">
+                                class="campos-detalles" [(ngModel)]="nombre">
                         </div>
                         <div class="campos">
                             <input type="text" name="direccion" placeholder="{{ 'pos.factura.direccion' | translate }}"
-                                class="detalles" [(ngModel)]="direccion">
+                                class="campos-detalles" [(ngModel)]="direccion">
                         </div>
                         <div class="campos">
                             <input type="text" name="nit" placeholder="{{ 'pos.factura.nit' | translate }}"
-                                class="detalles" [(ngModel)]="nit">
+                                class="campos-detalles" [(ngModel)]="nit">
                         </div>
                         <div class="campos">
                             <input type="text" name="telefono" placeholder="{{ 'pos.factura.telefono' | translate }}"
-                                class="detalles" [(ngModel)]="telefono">
+                                class="campos-detalles" [(ngModel)]="telefono">
                         </div>
                         <div class="campos d-flex">
                             <input type="text" name="correo" placeholder="{{ 'pos.factura.correo' | translate }}"
-                                class="detalles" [(ngModel)]="correo">
+                                class="campos-detalles" [(ngModel)]="correo">
                         </div>
                         <div class="informacion">
                             <p class="subtitulo">{{ 'pos.factura.tipoCuenta' | translate }}</p>
@@ -61,7 +62,6 @@
             </div>
         </div>
         <!-- Mostrar logos -->
-        <!-- <app-barra-logos></app-barra-logos> -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <app-barra-logos></app-barra-logos>
     </div>
 </div>

@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-
 import { AplicacionesInterface } from 'src/app/interfaces/aplicaciones.interface';
 import { ComponentesInterface } from 'src/app/interfaces/components.interface';
 import { DisplayInterface } from 'src/app/interfaces/displays.interface';
-import { DigitosInterface, FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
+import { FontSizeInterface, LanguageInterface } from 'src/app/interfaces/language.interface';
 import { MenuDataInterface, MenuInterface } from 'src/app/interfaces/menu.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
@@ -25,18 +24,12 @@ import { PrinterService } from 'src/app/services/printer.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { ReceptionService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/reception.service';
-import { TypesDocConvertInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/types-doc-convert.interface';
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import * as pdfMake from 'pdfmake/build/pdfmake';
 import { HttpClient } from '@angular/common/http';
-import { HoraInterface } from 'src/app/displays/prcTarea_1/interfaces/hora.interface';
-import { horas, indexHoraFinDefault, indexHoraInicioDefault } from 'src/app/providers/horas.provider';
 import { diasEspaniol, diasIngles } from 'src/app/providers/dias.provider';
 import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.service';
-import { UtilitiesService } from 'src/app/services/utilities.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
-
+import { ColorInterface } from 'src/app/interfaces/filtro.interface';
 
 @Component({
   selector: 'app-home',
@@ -86,6 +79,7 @@ export class HomeComponent implements OnInit {
   sizes: boolean = false;
   btnRegresar: boolean = false;
   tema!: number;
+  color: boolean = false;
 
   ///LENGUAJES: Opciones lenguajes
   activeLang: LanguageInterface;
@@ -97,17 +91,17 @@ export class HomeComponent implements OnInit {
 
 
   //horario laboral
-  horarios: HoraInterface[] = horas; //lista de horas 12h
-  horaInicio: boolean = false;
-  horaFin: boolean = false;
-  inicioHorasLabores: number = indexHoraInicioDefault;
-  finHorasLabores: number = indexHoraFinDefault;
-  inicioLabores!: number;
-  finLabores!: number;
-  setDias: boolean = false;
-  horasLaborales: boolean = false;
-  nombreHoraInicial: string = '';
-  nombreHoraFinal: string = '';
+  // horarios: HoraInterface[] = horas; //lista de horas 12h
+  // horaInicio: boolean = false;
+  // horaFin: boolean = false;
+  // inicioHorasLabores: number = indexHoraInicioDefault;
+  // finHorasLabores: number = indexHoraFinDefault;
+  // inicioLabores!: number;
+  // finLabores!: number;
+  // setDias: boolean = false;
+  // horasLaborales: boolean = false;
+  // nombreHoraInicial: string = '';
+  // nombreHoraFinal: string = '';
   primerDiaSemana: number = 0;
 
   //Variables para mostrar componentes segun el menu
@@ -145,7 +139,9 @@ export class HomeComponent implements OnInit {
     private _globalConvertService: GlobalConvertService,
     private _receptionService: ReceptionService,
     private _http: HttpClient,
-    private customDatepickerI18n: CustomDatepickerI18n
+    private customDatepickerI18n: CustomDatepickerI18n,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {
 
     this._eventService.customEvent$.subscribe((eventData) => {
@@ -155,6 +151,10 @@ export class HomeComponent implements OnInit {
     this._eventService.regresarHomedesdeImpresoras$.subscribe((eventData) => {
       this.impresora = false;
       this.hideHome = false;
+    });
+
+    this._eventService.verHome$.subscribe((eventData) => {
+      this.verHistorialErrores = false;
     });
 
     //Funcion que carga datos
@@ -197,24 +197,6 @@ export class HomeComponent implements OnInit {
       this.primerDiaSemana = dia;
     };
 
-    //buscamos si hay una hora guardado para el inicio del horario laboral
-    let getPrimeraHora = PreferencesService.inicioLabores;
-    if (getPrimeraHora) {
-      let horaInicial: number = +getPrimeraHora;
-      this.inicioHorasLabores = horaInicial;
-    }
-    //Asignamos el nombre de la hora inicial para mostrarla
-    this.nombreHoraInicial = this.horarios[this.inicioHorasLabores].hora12
-
-    //buscamos si hay una hora guardado para el fin del horario laboral
-    let getUltimaHora = PreferencesService.finLabores;
-    if (getUltimaHora) {
-      let horaFinal: number = +getUltimaHora;
-      this.finHorasLabores = horaFinal;
-    }
-    //Asignamos el nombre de la hora final para mostrarla
-    this.nombreHoraFinal = this.horarios[this.finHorasLabores].hora12;
-
   }
 
   loadData() {
@@ -236,7 +218,19 @@ export class HomeComponent implements OnInit {
       this.dataUserService.decimalPlaces = 2;
     }
 
-    this.start();
+
+    if (!PreferencesService.colorApp) {
+      this.colorSeleccionado = {
+        id: 2,
+        nombre: "Primario",
+        valor: "#134895"
+      };
+
+    } else {
+      let indexColor: number = +PreferencesService.indexColorApp;
+      this.colorSeleccionado = this.colores[indexColor];
+    }
+
   }
 
   fontsSizes: FontSizeInterface[] = [
@@ -263,10 +257,54 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-
   sizeSelect?: FontSizeInterface;
 
+  colorSeleccionado: ColorInterface | null = null;
+
+  colores: ColorInterface[] = [
+    {
+      id: 1,
+      nombre: "Primario",
+      valor: "#134895"
+    },
+    {
+      id: 2,
+      valor: "#9b2a35",
+      nombre: "Rojo"
+    },
+    {
+      id: 3,
+      valor: "#008000",
+      nombre: "Verde"
+    },
+    {
+      id: 4,
+      valor: "#800080",
+      nombre: "Morado"
+    },
+    {
+      id: 5,
+      valor: "#6F4E37",
+      nombre: "Café"
+    },
+    {
+      id: 6,
+      valor: "#000000",
+      nombre: "Negro"
+    },
+  ];
+
   async cambiarFuente(index: number) {
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('crm.alertas.fuete'),
+        description: this._translate.instant('crm.alertas.cambioFuente'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
 
     this.sizeSelect = this.fontsSizes[index];
 
@@ -278,24 +316,67 @@ export class HomeComponent implements OnInit {
 
     PreferencesService.idFontSizeStorage = `${index}`;
 
-    console.log(this.sizeSelect);
-
-
-    let verificador: boolean = await this._notificationsService.openDialogActions(
-      {
-        title: this._translate.instant('crm.alertas.fuete'),
-        description: this._translate.instant('crm.alertas.cambioFuente'),
-        verdadero: this._translate.instant('pos.botones.aceptar'),
-      }
-    );
-
-    if (!verificador) return;
     // Usando window.location.reload()
     window.location.reload();
 
   }
 
+  async seleccionarColor(color: ColorInterface, index: number): Promise<void> {
+
+    if(PreferencesService.indexColorApp == index.toString()){
+      return;
+    }
+
+    let verificador: boolean = await this._notificationsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.home.colorSelec'),
+        description: this._translate.instant('pos.home.cambiosColor'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.colorSeleccionado = color;
+    //Guardar la preferencia
+    PreferencesService.colorApp = this.colores[index].valor;
+    PreferencesService.indexColorApp = index.toString();
+
+    // Usando window.location.reload()
+    window.location.reload();
+
+  }
+
+  isColorDark(color: string): boolean {
+    // Remove the hash if present
+    const hex = color.replace('#', '');
+
+    // Convert hex to RGB
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate the brightness (using a common formula)
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // Return true if the color is dark, otherwise false
+    return brightness < 128;
+  }
+
+  panelOpenState: boolean = false;
+
   ngOnInit(): void {
+
+    //color de fondo
+    let getColor: string = PreferencesService.colorApp;
+
+    if (!getColor) {
+      this.themeService.color = "#134895";
+      PreferencesService.colorApp = this.themeService.color;
+    } else {
+      this.themeService.color = getColor;
+      PreferencesService.colorApp = this.themeService.color;
+    }
 
     // asiganr moneda 
     this.dataUserService.simboloMoneda = this.empresa.moneda_Simbolo;
@@ -466,9 +547,9 @@ export class HomeComponent implements OnInit {
           display: display,
           // Colores configurables para la seleccion de menu.
           colorBackground: display.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
-          colorSelected: display.colorSelected ?? "#134895", // Color al para objeto seleccionado.
+          colorSelected: display.colorSelected ?? PreferencesService.colorApp ?? "#134895", // Color al para objeto seleccionado.
           colorFontNotSelect: display.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada).
-          colorFontSelect: display.colorFontSelect ?? "#FFFFFF", //Color para fuente al ser seleccionada.
+          colorFontSelect: display.colorFontSelect ?? (this.isColorDark(PreferencesService.colorApp) ? '#FFF' : '#000'), //Color para fuente al ser seleccionada.
           colorMargenSelect: display.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
         };
 
@@ -490,9 +571,9 @@ export class HomeComponent implements OnInit {
           route: "",
           children: this.ordenarNodos(padres, hijos),
           colorBackground: item.application.colorBackground ?? "#FFFFFF", // Color para background de la pantalla.
-          colorSelected: item.application.colorSelected ?? "#134895", // Color al para objeto seleccionado.
+          colorSelected: item.application.colorSelected ?? PreferencesService.colorApp ?? "#134895", // Color al para objeto seleccionado.
           colorFontNotSelect: item.application.colorFontNotSelect ?? "#000000", //Color para fuente normal(no seleccionada).
-          colorFontSelect: item.application.colorFontSelect ?? "#FFFFFF", //Color para fuente al ser seleccionada.
+          colorFontSelect: item.application.colorFontSelect ?? (this.isColorDark(PreferencesService.colorApp) ? '#FFF' : '#000'), //Color para fuente al ser seleccionada.
           colorMargenSelect: item.application.colorMargenSelect ?? "#df9722", // Color del la linea izquierda de seleccion del menu.
           idChild: null,
           idFather: null,
@@ -761,52 +842,11 @@ export class HomeComponent implements OnInit {
 
   //Mostrar pantalla de "DIAS" y mantener ocultas todas las demas
   verDias(): void {
-    this.setDias = true;
     this.ajustes = false;
     this.detallesUsuario = false;
     this.idiomas = false;
-    this.horasLaborales = false;
-    this.horaInicio = false;
-    this.horaFin = false;
   };
 
-  //Mostrar pantalla de "HORA INICIAL" y mantener ocultas todas las demas
-  horaInicial(): void {
-    this.horaInicio = true;
-    this.horaFin = false;
-    this.idiomas = false;
-    this.setDias = false;
-    this.ajustes = false;
-    this.horasLaborales = false;
-    this.detallesUsuario = false;
-  };
-
-  //Mostrar pantalla de "HORA FINAL" y mantener ocultas todas las demas
-  horaFinal(): void {
-    this.horaFin = true;
-    this.horaInicio = false;
-    this.idiomas = false;
-    this.setDias = false;
-    this.ajustes = false;
-    this.horasLaborales = false;
-    this.detallesUsuario = false;
-  };
-
-  //Guardar horas del horario laboral seleccionado y regresar a ajustes 
-  setHoras(): void {
-    PreferencesService.inicioLabores = this.inicioLabores.toString();
-    PreferencesService.finLabores = this.finLabores.toString();
-    this.nombreHoraInicial = this.horarios[this.inicioLabores].hora12;
-    this.nombreHoraFinal = this.horarios[this.finLabores].hora12;
-    //Regresar a pantalla de ajustes y ocultar las demas
-    this.verDetalles();
-  };
-
-  //Ocultar boton de continuar y mostrarlo cuando se regrese
-  verContinuar(): void {
-    this.btnRegresar = true;
-    this.horaInicial();
-  };
 
   cambiarPrimerDia(): void {
     PreferencesService.inicioSemana = this.primerDiaSemana.toString();
@@ -832,10 +872,7 @@ export class HomeComponent implements OnInit {
     this.temas = false;
     this.idiomas = false;
     this.sizes = false;
-    this.setDias = false;
-    this.horasLaborales = false;
-    this.horaInicio = false;
-    this.horaFin = false;
+    this.color = false;
   };
 
   verTema(): void {
@@ -844,14 +881,24 @@ export class HomeComponent implements OnInit {
     this.detallesUsuario = false;
 
     this.idiomas = false;
+    this.color = false;
   }
+
+  verColor(): void {
+    this.color = true;
+    this.temas = false;
+    this.ajustes = false;
+    this.detallesUsuario = false;
+    this.idiomas = false;
+  }
+
 
   //Mostrar pantalla de "MENU" y mantener ocultas todas las demas
   verMenu(): void {
     this.ajustes = true;
     this.detallesUsuario = false;
-
     this.idiomas = false;
+    this.color = false;
   };
 
   //Mostrar pantalla de "DETALLES DE USUARIO" y mantener ocultas todas las demas
@@ -860,9 +907,7 @@ export class HomeComponent implements OnInit {
     this.ajustes = false;
     this.idiomas = false;
     this.temas = false;
-    this.setDias = false;
-    this.horaInicio = false;
-    this.horaFin = false;
+    this.color = false;
   };
 
   //Mostrar pantalla de "LENGUAJES" y mantener ocultas todas las demas
@@ -870,28 +915,15 @@ export class HomeComponent implements OnInit {
     this.idiomas = true;
     this.ajustes = false;
     this.detallesUsuario = false;
+    this.color = false;
   };
-
-  verDecimales(): void {
-    this.sizes = false;
-    this.idiomas = false;
-    this.ajustes = false;
-    this.detallesUsuario = false;
-  };
-
-  verDigitos(): void {
-    this.sizes = false;
-    this.idiomas = false;
-    this.ajustes = false;
-    this.detallesUsuario = false;
-  };
-
 
   verSizes(): void {
     this.sizes = true;
     this.idiomas = false;
     this.ajustes = false;
     this.detallesUsuario = false;
+    this.color = false;
   };
 
 
@@ -1029,33 +1061,11 @@ export class HomeComponent implements OnInit {
     PreferencesService.decimales = this.dataUserService.decimalPlaces.toString();
   }
 
-  intervalId: NodeJS.Timeout | null = null;
-  startTime: number = 0;
-  totalElapsedMinutes: number = 0;
-  minutosTrascurridos: number = 5;
+  verHistorialErrores: boolean = false;
 
-  start() {
-    this.startTime = Date.now();
-    this.intervalId = setInterval(() => {
-      const currentTime: number = Date.now();
-      const elapsedTime: number = currentTime - this.startTime;
-      const elapsedMinutes: number = Math.floor(elapsedTime / 60000);
 
-      if (elapsedMinutes >= this.minutosTrascurridos) {
-        this.totalElapsedMinutes += elapsedMinutes;
-
-        this._notificationsService.openSnackbar(`Han pasado ${this.totalElapsedMinutes} minutos`);
-        console.log(`Han pasado ${this.totalElapsedMinutes} minutos`);
-        this.startTime = currentTime; // Reinicia el inicio del tiempo
-      }
-    }, 1000); // Verifica cada segundo
-  }
-
-  stop() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
+  verErrores() {
+    this.verHistorialErrores = true;
   }
 
 }

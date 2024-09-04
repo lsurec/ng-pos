@@ -1,29 +1,38 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$negro         : var(--negro);
+$rojo          : var(--error);
+$bloque        : var(--bordes-claro);
+$hover         : var(--hover);
+$gris          : var(--gris);
+
 
 .progress {
     padding         : 0px;
-    padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
-    padding         : 10px 0px 10px 20px;
+    padding         : 0px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
     overflow        : hidden;
 }
 
+.spacer {
+    flex: 1 1 auto;
+}
+
 .contenedor {
-    overflow-y   : auto;
-    overflow-x   : hidden;
-    height       : calc(100% - 52px);
-    padding-right: 20px;
+    padding   : 10px 20px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100% - 50px);
 }
 
 .contenedor::-webkit-scrollbar {
@@ -31,13 +40,13 @@ $color-azul           : #134895; //bordes y texto azul
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -46,7 +55,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -56,7 +65,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close:hover,
 .close:focus {
-    color          : black;
+    color          : $negro;
     text-decoration: none;
     cursor         : pointer;
 }
@@ -69,111 +78,88 @@ hr {
     opacity   : .25;
 }
 
-.verDetalle {
-    font-weight   : 500;
-    text-align    : center;
-    margin-bottom : 0px;
-    padding       : 10px;
-    padding-bottom: 0;
+.fondo {
+    background-color: $fondo;
 }
 
-.busqueda {
-    // display    : flex;
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
+.nombre {
+    min-width: 40%;
+    font-size: 12px;
 }
 
-.buscar {
-    min-width   : 80px;
-    font-size   : 12px;
-    padding-left: 5px;
+.detalleCoincidencias {
+    display      : flex;
+    text-align   : left !important;
+    font-size    : 14px;
+    width        : 100%;
+    align-items  : center;
+    border-bottom: 1px solid $bordes;
+}
+
+.titulos {
+    font-weight  : 550 !important;
+    padding-right: 5px;
+}
+
+p {
+    margin: 0px;
+    color : $negro;
+}
+
+.seleccionar {
+    width           : 100%;
+    cursor          : pointer;
+    min-height      : 30px;
+    padding         : 5px 10px;
+    margin          : 5px 0px;
+    background-color: $bloque;
+}
+
+.seleccionar:hover {
+    background-color: $hover;
 }
 
 .inputSearch {
     width           : 100%;
     border-style    : none;
-    border          : 1px solid $color-bordes;
     background-color: transparent;
-    min-height      : 35px;
-    padding         : 2px 5px;
-    font-size       : 12px;
     outline         : none;
-    margin          : 0px;
-    color           : $color-azul;
+    color           : $personalizado;
 }
 
-.estado {
-    text-align  : justify;
-    padding-left: 15px;
-}
+@media screen and (max-width: 280px) {
+    .close {
+        font-size  : 22px !important;
+        align-items: center !important;
+        height     : 30px !important;
+    }
 
-.referencia {
-    width: 80px;
-}
+    hr {
+        margin: 0.3rem 0;
+    }
 
-.tipo-referencia {
-    text-align: justify;
-    width     : calc(100% - 100px);
-    padding   : 0px 10px;
-}
+    .progress {
+        padding: 0px !important;
+        width  : 200px !important;
+    }
 
-.detalle-idReferencia {
-    display    : flex;
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    align-items: center;
-}
+    .dialog {
+        padding: 10px 20px;
+        width  : 200px !important;
+    }
 
-.titulos {
-    display      : flex;
-    text-align   : left !important;
-    font-size    : 14px;
-    width        : 100%;
-    font-weight  : 450;
-    border-bottom: 1px solid $color-bordes;
-    padding-right: 15px;
-    padding-top  : 10px;
-}
+    .seleccionar {
+        height     : auto !important;
+        padding    : 3px 0px !important;
+        align-items: center !important;
+        width      : 130px !important;
+    }
 
-p {
-    margin: 0px;
-}
+    .contenedor {
+        padding-left: 5px !important;
+        width       : 190px !important;
+    }
 
-.seleccionar {
-    display      : flex;
-    width        : 100%;
-    cursor       : pointer;
-    align-items  : center;
-    min-height   : 30px;
-    border-bottom: 1px solid $color-bordes;
-    padding      : 5px 15px;
-}
-
-.seleccionar:hover {
-    background-color: #ebebeb;
-}
-
-.botones {
-    padding: 0px;
-    display: flex;
-    width  : 100%;
-    height : 40px;
-}
-
-.example-radio-group {
-    display       : flex;
-    flex-direction: column;
-    margin        : 15px 0;
-    align-items   : flex-start;
-}
-
-.opciones {
-    margin : 5px;
-    display: flex;
 }
 
 @media screen and (max-width: 767px) {
@@ -182,4 +168,54 @@ p {
     .progress {
         width: 400px !important;
     }
+
+    .seleccionar {
+        min-height: 30px !important;
+        display   : block !important;
+    }
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.buscar-icono {
+    display      : flex;
+    align-items  : center;
+    border-bottom: solid 1px $personalizado;
+}
+
+.icono-lupa {
+    color: $personalizado;
+}
+
+.barra-fija {
+    display      : flex;
+    align-items  : center;
+    height       : 55px;
+    border-bottom: solid 1px $bordes;
+}
+
+.barra-abajo-fija {
+    display    : flex;
+    align-items: center;
+    height     : 50px;
+}
+
+.encontrados {
+    margin-top: 10px;
+}
+
+.info {
+    font-size  : 12px !important;
+    color      : $rojo;
+    display    : flex;
+    align-items: center;
+    padding-top: 10px;
+    text-align : right;
+}
+
+.marginRihgt {
+    margin-right: 5px;
 }

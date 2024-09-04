@@ -120,6 +120,9 @@ export class CalendarioComponent implements OnInit {
   idPantalla: number = 2;
   diaTareaSeleccionado!: Date;
 
+  verError: boolean = false;
+  regresar: number = 20;
+
   constructor(
     //Declaracion de variables privadas
     private _tareaService: TareaCalendarioService,
@@ -133,7 +136,15 @@ export class CalendarioComponent implements OnInit {
     private _translate: TranslateService,
   ) {
 
-    // this.nuevaTarea()
+    //mostrar contenido a regresar de error
+    this._eventService.regresarCalendario$.subscribe((eventData) => {
+      this.verError = false;
+    });
+
+    this._eventService.regresarCalendariodeCrear$.subscribe((eventData) => {
+      this.mostrarCalendario = true;
+    });
+
 
     //obtener feccha de hoy y asignar 
     this.today = this.fechaHoy.getDate(); //fecha del dia
@@ -314,11 +325,23 @@ export class CalendarioComponent implements OnInit {
 
     //Si el servico se ejecuta mal mostrar menaje
     if (!resVerTarea.status) {
+
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resVerTarea.response);
-      console.error(resVerTarea.storeProcedure);
-      return
+
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resVerTarea);
+
+      return;
     }
 
     //Si se ejecuto bien, obtener la respuesta de apiComentarios
@@ -329,10 +352,21 @@ export class CalendarioComponent implements OnInit {
       //Si el servico se ejecuta mal mostrar menaje
       if (!resFiles.status) {
         this.isLoading = false;
-        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-        console.error(resFiles.response);
-        console.error(resFiles.storeProcedure);
-        return
+
+        let verificador = await this._widgetsService.openDialogActions(
+          {
+            title: this._translate.instant('pos.alertas.salioMal'),
+            description: this._translate.instant('pos.alertas.error'),
+            verdadero: this._translate.instant('pos.botones.informe'),
+            falso: this._translate.instant('pos.botones.aceptar'),
+          }
+        );
+
+        if (!verificador) return;
+
+        this.mostrarError(resFiles);
+
+        return;
       }
 
       let itemComentario: ComentariosDetalle = {
@@ -1589,10 +1623,24 @@ export class CalendarioComponent implements OnInit {
     this.isLoading = false;
     //Si el servico se ejecuta mal mostar mensaje
     if (!resTareasCalendario.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resTareasCalendario.response);
-      console.error(resTareasCalendario.storeProcedure);
-      return
+
+      this.isLoading = false;
+
+      let verificador = await this._widgetsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.mostrarError(resTareasCalendario);
+
+      return;
+
     }
     //Si se ejecuto bien, obtener la respuesta de apiRespuestaTareas
     this.tareas = resTareasCalendario.response;
@@ -1864,4 +1912,27 @@ export class CalendarioComponent implements OnInit {
     this.refresh();
     this.verAjustes();
   };
+
+  //motstrar oantalla de informe de error
+  mostrarError(res: ResApiInterface) {
+
+    //Fecha y hora ctual
+    let dateNow: Date = new Date();
+
+    //informe de error
+    let error = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+
+    }
+
+    //guardra error
+    PreferencesService.error = error;
+
+    //mmostrar pantalla de informe de error
+    this.verError = true;
+  }
+
 }

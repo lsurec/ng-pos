@@ -182,4 +182,84 @@ export class EventService {
         this.regresarDesdeHistorialSinConfirmar.next(eventData);
     }
 
+    //ver home
+    private verHome = new Subject<any>();
+
+    verHome$ = this.verHome.asObservable();
+
+    verHomeEvent(eventData: boolean) {
+        this.verHome.next(eventData);
+    }
+
+    //ver errores
+    private verErrores = new Subject<any>();
+
+    verErrores$ = this.verErrores.asObservable();
+
+    verErroresEvent(eventData: boolean) {
+        this.verErrores.next(eventData);
+    }
+
+    //Regresar a ver tareas
+    private verTareas = new Subject<any>();
+
+    verTareas$ = this.verTareas.asObservable();
+
+    verTareasEvent(eventData: boolean) {
+        this.verTareas.next(eventData);
+    }
+
+    //Regresar a tareas desde crear
+    private verTareasDesdeCrear = new Subject<any>();
+
+    verTareasDesdeCrear$ = this.verTareasDesdeCrear.asObservable();
+
+    verTareasDesdeCrearEvent(eventData: boolean) {
+        this.verTareasDesdeCrear.next(eventData);
+    }
+
+    //Regresar a tareas desde error
+    private regresarTareasDeError = new Subject<any>();
+
+    regresarTareasDeError$ = this.regresarTareasDeError.asObservable();
+
+    regresarTareasDeErrorEvent(eventData: boolean) {
+        this.regresarTareasDeError.next(eventData);
+    }
+
+    //Regresar a detalle de tarea desde error
+    private regresarDetalleTareaDeError = new Subject<any>();
+
+    regresarDetalleTareaDeError$ = this.regresarDetalleTareaDeError.asObservable();
+
+    regresarDetalleTareaDeErrorEvent(eventData: boolean) {
+        this.regresarDetalleTareaDeError.next(eventData);
+    }
+
+    //regresar a crear tarea desde error
+    private regresarCrear = new Subject<any>();
+
+    regresarCrear$ = this.regresarCrear.asObservable();
+
+    regresarCrearEvent(eventData: boolean) {
+        this.regresarCrear.next(eventData);
+    }
+
+    //regresar a calendario de error
+    private regresarCalendario = new Subject<any>();
+
+    regresarCalendario$ = this.regresarCalendario.asObservable();
+
+    regresarCalendarioEvent(eventData: boolean) {
+        this.regresarCalendario.next(eventData);
+    }
+
+    //regresar a calendario de crear
+    private regresarCalendariodeCrear = new Subject<any>();
+
+    regresarCalendariodeCrear$ = this.regresarCalendariodeCrear.asObservable();
+
+    regresarCalendariodeCrearEvent(eventData: boolean) {
+        this.regresarCalendariodeCrear.next(eventData);
+    }
 }

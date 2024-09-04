@@ -1,12 +1,18 @@
 <div class="container-main">
-    <div class="cambios-cerrar">
+    <!-- <div class="cambios-cerrar">
         <span class="spacer"></span>
         <p class="titulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
         <span class="spacer"></span>
-    </div>
+    </div> -->
 
     <div class="contenido">
         <div class="titulos-menu">
+            <div class="cambios-cerrar">
+                <span class="spacer"></span>
+                <p class="titulo">{{ 'pos.ajustes.idiomaT' | translate }}</p>
+                <span class="spacer"></span>
+            </div>
+
             <div class="detalles-lenguajes" *ngFor="let item of languages; let i = index">
                 <span class="spacer"></span>
                 <div class="informacion-tema" (click)="changeLang(i)">
@@ -34,5 +40,4 @@
 
 </div>
 <!-- Mostrar logos -->
-<!-- <app-barra-logos></app-barra-logos> -->
-<app-barra-logo-demosoft></app-barra-logo-demosoft>
+<app-barra-logos></app-barra-logos>

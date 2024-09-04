@@ -120,22 +120,19 @@ export class NuevoClienteComponent implements OnInit {
 
 
     //validar formulario
-    if (!this.nombre || !this.direccion || !this.nit || !this.telefono || !this.correo) {
+    if (!this.nombre || !this.nit) {
       this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.completar'));
       return
     }
 
-    //Validar correo
-    if (!this.validarCorreo(this.correo)) {
-      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
-      return;
+    if (this.correo) {
+      //Validar correo
+      if (!this.validarCorreo(this.correo)) {
+        this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.correoNoValido'));
+        return;
+      }
     }
 
-    //Validar Grupo Cuenta
-    if (!this.validarCorreo(this.correo)) {
-      this._notificationsServie.openSnackbar(this.translate.instant('pos.alertas.tipoCuenta'));
-      return;
-    }
 
     //nueva cuneta
     let cuenta: CuentaCorrentistaInterface = {
@@ -146,7 +143,7 @@ export class NuevoClienteComponent implements OnInit {
       nit: this.nit,
       nombre: this.nombre,
       telefono: this.telefono,
-      grupoCuenta: this.tipoCuenta!.grupo_Cuenta,
+      grupoCuenta: this.tipoCuenta?.grupo_Cuenta ?? 0,
 
     }
 

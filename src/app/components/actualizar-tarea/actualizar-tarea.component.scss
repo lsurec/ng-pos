@@ -1,13 +1,15 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$personalizado : var(--global-color); //bordes y texto azul
+$rojo          : var(--error);
+$gris          : var(--gris);
 
 .progress {
     width           : 100%;
     height          : 100%;
     padding         : 10px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
@@ -15,7 +17,7 @@ $color-azul           : #134895; //bordes y texto azul
     padding-right   : 0px;
     width           : 380px;
     height          : 400px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .contenedor {
@@ -29,13 +31,13 @@ $color-azul           : #134895; //bordes y texto azul
 }
 
 .contenedor::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .contenedor::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -44,7 +46,7 @@ $color-azul           : #134895; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -98,7 +100,7 @@ hr {
     font-size    : 14px;
     width        : 100%;
     align-items  : center;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .titulos {
@@ -109,7 +111,7 @@ hr {
     font-weight  : 450;
     padding-left : 50px;
     padding-top  : 15px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .busqueda {
@@ -182,18 +184,7 @@ p {
     cursor          : pointer;
     align-items     : center;
     height          : 30px;
-    // border-bottom: 1px solid $color-bordes;
-}
-
-.detalle:hover {
-    background-color: #ebebeb;
-}
-
-.botones {
-    padding: 0px;
-    display: flex;
-    width  : 100%;
-    height : 40px;
+    // border-bottom: 1px solid $bordes;
 }
 
 //nuevoooooooooooooo
@@ -210,7 +201,7 @@ p {
 
 .tipo-tarea {
     border-style       : none;
-    border             : 1px solid $color-bordes;
+    border             : 1px solid $bordes;
     // width           : 400px;
     background-color   : transparent;
     min-height         : 30px;
@@ -226,7 +217,7 @@ p {
 }
 
 .obligatorio {
-    color       : #ff0000;
+    color       : $rojo;
     font-weight : bold;
     font-size   : 12px;
     padding-left: 3px;
@@ -234,7 +225,7 @@ p {
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 

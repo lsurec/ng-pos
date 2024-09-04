@@ -398,9 +398,13 @@ export class DetalleDocumentoComponent implements OnInit {
       let sku: ResponseInterface = resSku.response;
 
 
-      let resProducto: ResApiInterface = await this._productoService.getProductId(
+      let resProducto: ResApiInterface = await this._productoService.getProduct(
         this.token,
+        this.user,
+        estacionId,
         sku.data,
+        0,
+        100,
       );
 
 

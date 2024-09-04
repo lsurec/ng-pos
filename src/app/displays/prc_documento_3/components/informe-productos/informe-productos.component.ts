@@ -7,14 +7,15 @@ import { ProductService } from 'src/app/displays/prc_documento_3/services/produc
 import { ProductoService } from 'src/app/displays/prc_documento_3/services/producto.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PrinterService } from 'src/app/services/printer.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 
 @Component({
   selector: 'app-informe-productos',
   templateUrl: './informe-productos.component.html',
   styleUrls: ['./informe-productos.component.scss'],
-  providers:[PrinterService]
+  providers: [PrinterService]
 })
 export class InformeProductosComponent {
 
@@ -26,10 +27,10 @@ export class InformeProductosComponent {
     //Instancias de los servicios qeu se van  a usar
     public dialogRef: MatDialogRef<InformeProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public productosEncontrados: ValidateProductInterface[],
-    private _pirntService:PrinterService,
+    private _pirntService: PrinterService,
   ) {
     //porudtcos disponibles
-    this.productos = productosEncontrados;    
+    this.productos = productosEncontrados;
   }
 
 
@@ -38,7 +39,7 @@ export class InformeProductosComponent {
     this.dialogRef.close();
   }
 
-  async downloadPDF(){
+  async downloadPDF() {
 
 
 
@@ -46,8 +47,9 @@ export class InformeProductosComponent {
 
     let doc = await this._pirntService.getFormatProductValidate(this.productos);
 
-    
-    pdfMake.createPdf(doc).open();
+    pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
+
+    // pdfMake.createPdf(doc).open();
 
 
   }

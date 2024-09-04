@@ -17,6 +17,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +49,8 @@ export class LoginComponent {
     private _widgetsService: NotificationsService,
     private _tipoCambioService: TipoCambioService,
     private _localSettingsService: LocalSettingsService,
+    public dataUserService: DataUserService,
+
   ) {
   }
 
@@ -177,10 +180,6 @@ export class LoginComponent {
 
     this._router.navigate([RouteNamesService.LOCAL_CONFIG]);
 
-  };
-  //Permanencia de la sesión
-  rememberMe(): void {
-    this.saveMyData ? this.saveMyData = false : this.saveMyData = true;
   };
 
   cambiarUrl(): void {

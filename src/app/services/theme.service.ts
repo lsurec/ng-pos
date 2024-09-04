@@ -10,6 +10,8 @@ export class ThemeService {
     // Tamaño de fuente global
 
     globalFontSize: string = "14px";
+    fondo: string = "#FEF5E7";
+    color: string = "#134895";
 
     //cambiar tema
     toggleTheme(): void {

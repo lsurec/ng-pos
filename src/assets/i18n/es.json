@@ -20,7 +20,15 @@
             "tipoCambio": "Tipo de Cambio",
             "tipoDocumento": "Tipo Documento",
             "serieDocumento": "Serie Documento",
-            "impresoras": "IMPRESORAS"
+            "impresoras": "IMPRESORAS",
+            "prefColores": "Preferencia de Colores",
+            "paletaColores": "Paleta de colores",
+            "cambiarColor": "Cambia los colores de tu preferencia.",
+            "color": "Color",
+            "colorSelec": "Color seleccionado",
+            "cambiosColor": "Haz seleccionado un nuevo color. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+            "seleccionar": "Seleccionar",
+            "historialError": "Historial de errores."
         },
         "login": {
             "correo": "Usuario",
@@ -159,7 +167,7 @@
             "tipoCuenta": "Seleccione un tipo de cuenta",
             "dinTipoRef": "No se pudo encontrar el tipo de referencia.",
             "cuentaNoEncontrada": "No se pudo encontrar la cuenta correntista ref.",
-            "seleccioneTipoRef": "Debe seleccionar un tipo de referencia.",
+            "seleccioneTipoRef": "Debes seleccionar un tipo de referencia.",
             "restriccionFechas": "Las fechas no son válidas. Por favor, revisa las restricciones",
             "docEditado": "Documento editado correctamente.",
             "tipoRefNoEncontrado": "No se pudo encontrar el tipo de referencia.",
@@ -403,7 +411,14 @@
             "tipo": "Tipo:",
             "estado": "Estado:",
             "prioridad": "Prioridad:",
-            "previa": "Vista Previa"
+            "previa": "Vista Previa",
+            "seleccionarId": "Presiona sobre el Id de Referencia que quieras agregar.",
+            "crearTarea": "Crear Nueva Tarea",
+            "correoElec": "Correo electrónico:",
+            "todas": "Todas",
+            "creadas": "Creadas",
+            "asignadas": "Asignadas",
+            "invitaciones": "Invitaciones"
         },
         "login": {
             "correo": "Usuario",
@@ -513,7 +528,7 @@
             "eliminar": "eliminar archivo.",
             "usuarios": "SELECCIONAR USUARIO RESPONSABLE E INVITADOS",
             "buscar": "Buscar: ",
-            "busqueda": "escriba para realizar la busqueda.",
+            "busqueda": "Escriba para realizar la busqueda.",
             "usuario": "Usuario",
             "email": "Email",
             "cancelar": "CANCELAR",
@@ -522,7 +537,19 @@
             "descripcionRef": "Descripción:",
             "referencia": "Referencia",
             "buscarIdReferencia": "SELECCIONAR ID REFERENCIA",
-            "adjuntos": "Archivos adjuntos"
+            "adjuntos": "Archivos adjuntos",
+            "seleccionRes": "Seleccionar Responsable",
+            "seleccionarInvi": "Seleccionar Invitados",
+            "agregaRes": "Presiona sobre el usuario que quieras agregar.",
+            "marcarInvi": "Marca la casilla del usuario o usuarios que quieras agregar.",
+            "invitadosSelec": "Invitados seleccionados",
+            "nuevaTarea": "Nueva Tarea",
+            "subirArchivos": "Subir Archivos",
+            "eliminarRes": "Eliminar responsable",
+            "invitadosT": "INVITADOS",
+            "eliminarInvi": "Eliminar Invitado",
+            "eliminarRef": "Eliminar Id Referencia",
+            "eliminarArchivo": "Eliminar Archivo"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURACION LOCAL",
@@ -550,6 +577,7 @@
             "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia."
         },
         "alertas": {
+            "requerido": "Campo requerido.",
             "deFecha": "de",
             "salioMal": "Algo salió mal, intente de nuevo",
             "ok": "Aceptar",
@@ -573,6 +601,7 @@
             "comentarioCreado": "Comentario creado correctamente.",
             "tareaCreadaExito": "Tarea creada correctamente. ID Tarea: ",
             "archivosNoCargados": "Tarea creada, pero no se guardaron los archivos.",
+            "archivosComentario": "Comentario creado, pero no se guardaron los archivos.",
             "usuarios": "Usuario no encontrado, intente realizar una búsqueda nuevamente.",
             "debeSeleccionar": "Para continuar, seleccione una empresa y una estación de trabajo.",
             "noSeleccionado": "No seleccionada.",
@@ -592,8 +621,10 @@
             "seleccionar": "Seleccione un tema, para continuar.",
             "nuevoIdioma": "Nuevo Idioma",
             "cambioIdioma": "Para visualizar los cambios será necesario refrescar la aplicación.",
-            "fuete": "Tamaño de fuente.",
-            "cambioFuente": "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar."
+            "cambioFuente": "Haz seleccionado un nuevo tamaño de fuente. Para visualizar los cambios es necesario reiniciar el navegador, pulsa aceptar para continuar.",
+            "asignado": "Usuario asignado anteriormente.",
+            "estadoIgual": "Estado asignado anteriormente.",
+            "prioridadIgual": "Prioridad asignada anteriormente."
         }
     }
 }

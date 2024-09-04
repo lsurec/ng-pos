@@ -1,10 +1,8 @@
 <app-progress *ngIf="globalConvertService.isLoading" class="progress"></app-progress>
 <ng-container *ngIf="!globalConvertService.isLoading">
-<ng-container *ngIf="!globalConvertService.editDoc">
-    <app-error *ngIf="globalConvertService.showError" [regresar]="globalConvertService.regresar"></app-error>
-    <ng-container *ngIf="!globalConvertService.showError">
-            <app-printer-configuration *ngIf="globalConvertService.verPrint" [volver]="3"
-                [document]="globalConvertService. docPrint"></app-printer-configuration>
+    <ng-container *ngIf="!globalConvertService.editDoc">
+        <app-error *ngIf="globalConvertService.showError" [regresar]="globalConvertService.regresar"></app-error>
+        <ng-container *ngIf="!globalConvertService.showError">
             <app-types-docs *ngIf="globalConvertService.verTiposDocConversion"></app-types-docs>
             <app-origin-docs *ngIf="globalConvertService.verDocOrigen"></app-origin-docs>
             <app-destination-docs *ngIf="globalConvertService.verDocDestino"></app-destination-docs>

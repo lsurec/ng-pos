@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FiltroInterface } from '../../interfaces/filtro.interface';
 import { ImagenProductoInterface, ProductoInterface } from '../../interfaces/producto.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { ProductosEncontradosComponent } from '../productos-encontrados/productos-encontrados.component';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../services/product.service';
@@ -23,6 +22,7 @@ import { DataUserService } from '../../services/data-user.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
+import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 
 @Component({
   selector: 'app-detalle',
@@ -47,6 +47,7 @@ export class DetalleComponent implements AfterViewInit {
   estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
   documento: number = this.facturaService.tipoDocumento!; //Tipo docuemtno seleccioando (display)
   tipoDesCar: number = 1; //tipo de cargo o descuento (monto o porcentaje)
+  tipoCambio: number = PreferencesService.tipoCambio;
 
 
 
@@ -97,6 +98,7 @@ export class DetalleComponent implements AfterViewInit {
   //editar transacciines que ay fueron agregadas
   async editTra(indexTra: number) {
 
+    this.facturaService.isLoading = true;
 
     //Limpiar bodegas previas
     this.productoService.bodegas = [];
@@ -107,7 +109,7 @@ export class DetalleComponent implements AfterViewInit {
     this.productoService.cantidad = this.facturaService.traInternas[indexTra].cantidad.toString();
 
 
-    let productTra = this.facturaService.traInternas[indexTra].producto; //producto de la transaccion
+    let productTra: ProductoInterface = this.facturaService.traInternas[indexTra].producto; //producto de la transaccion
     let boddegaTra = this.facturaService.traInternas[indexTra].bodega; // bodega  de la transaccion
     let precioTra = this.facturaService.traInternas[indexTra].precio; //tipo precio de la transaccion
 
@@ -169,6 +171,8 @@ export class DetalleComponent implements AfterViewInit {
         bodega,
         productTra.producto,
         productTra.unidad_Medida,
+        this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
 
 
@@ -341,7 +345,7 @@ export class DetalleComponent implements AfterViewInit {
 
     //abrir dialogo producto con lo datos cargados
 
-    let resDialogProd = await this._notificationsService.openDetalleporoduct(productTra);
+    let resDialogProd: TypeErrorInterface = await this._notificationsService.openDetalleporoduct(productTra);
 
     this.productoService.cantidad = "1";
 
@@ -387,7 +391,10 @@ export class DetalleComponent implements AfterViewInit {
   }
 
   //bsuqueda de productos
-  async buscarProducto() {
+  async performanSearch() {
+
+    this.facturaService.rangoIni = 1;
+    this.facturaService.rangoFin = 20;
 
     let productos: ProductoInterface[] = [];
 
@@ -411,7 +418,7 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //validar que siempre hay nun texto para buscar
-    if (!this.facturaService.searchText) {
+    if (!this.facturaService.searchProduct) {
       this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.ingreseCaracter'));
       return;
     }
@@ -424,20 +431,27 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //eliminar espacios al final de la cadena
-    this.facturaService.searchText = this.facturaService.searchText.trim();
+    this.facturaService.searchProduct = this.facturaService.searchProduct.trim();
 
 
     //consumo api busqueda id
 
     this.facturaService.isLoading = true;
 
-    let resProductId: ResApiInterface = await this._productService.getProductId(
+
+
+    let resproductoDesc = await this._productService.getProduct(
       this.token,
-      this.facturaService.searchText,
+      this.user,
+      this.estacion,
+      this.facturaService.searchProduct,
+      this.facturaService.rangoIni,
+      this.facturaService.rangoFin,
+
     );
 
 
-    if (!resProductId.status) {
+    if (!resproductoDesc.status) {
 
       this.facturaService.isLoading = false;
 
@@ -452,49 +466,24 @@ export class DetalleComponent implements AfterViewInit {
 
       if (!verificador) return;
 
-      this.verError(resProductId);
+      this.verError(resproductoDesc);
 
       return;
 
     };
 
 
-    productos = resProductId.response;
-
-    if (productos.length == 0) {
-
-      let resproductoDesc = await this._productService.getProductDesc(
-        this.token,
-        this.facturaService.searchText,
-      );
+    productos = resproductoDesc.response;
 
 
-      if (!resproductoDesc.status) {
-
-        this.facturaService.isLoading = false;
-
-        let verificador = await this._notificationsService.openDialogActions(
-          {
-            title: this._translate.instant('pos.alertas.salioMal'),
-            description: this._translate.instant('pos.alertas.error'),
-            verdadero: this._translate.instant('pos.botones.informe'),
-            falso: this._translate.instant('pos.botones.aceptar'),
-          }
-        );
-
-        if (!verificador) return;
-
-        this.verError(resproductoDesc);
-
-        return;
-
-      };
-
-
-      productos = resproductoDesc.response;
-
+    //Modificar: se han aumentado los rangos
+    if (productos.length < this.facturaService.intervaloRegistros) {
+      this.facturaService.rangoIni = productos.length + 1;
+      this.facturaService.rangoFin = this.facturaService.rangoIni + this.facturaService.intervaloRegistros;
+    } else {
+      this.facturaService.rangoIni += this.facturaService.intervaloRegistros;
+      this.facturaService.rangoFin += this.facturaService.intervaloRegistros;
     }
-
 
     //si no hay coincie¿dencias mostrar alerta
     if (productos.length == 0) {
@@ -592,6 +581,8 @@ export class DetalleComponent implements AfterViewInit {
         bodega,
         product.producto,
         product.unidad_Medida,
+        this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
 
 
@@ -686,6 +677,8 @@ export class DetalleComponent implements AfterViewInit {
 
       }
 
+      //TODO: evaluar precios vacios
+
       //si solo ahy precio seleccoanrlo por defectp
       if (this.productoService.precios.length == 1) {
 
@@ -706,8 +699,8 @@ export class DetalleComponent implements AfterViewInit {
             this.productoService.precioU = element.precioU;
             this.productoService.precioText = element.precioU.toString();
 
+            break;
           }
-          break;
 
         }
 
@@ -762,8 +755,6 @@ export class DetalleComponent implements AfterViewInit {
 
     //si no se abre el dialogo agregar ka transaccon directammente
 
-    //TODO:Hacer validaciones y agreagr transaccion
-
     if (!this.productoService.bodega!.posee_Componente) {
       let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
         this.user,
@@ -776,7 +767,7 @@ export class DetalleComponent implements AfterViewInit {
         product.unidad_Medida,
         product.producto,
         UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        8, //TODO:Parametrizar
+        this.tipoCambio,
         this.productoService.precio!.moneda,
         this.productoService.precio!.id,
         this.token,
@@ -828,6 +819,20 @@ export class DetalleComponent implements AfterViewInit {
         return;
       }
     }
+
+
+    //Calcular totral de la transaccion
+    //SI no hau precio seleccionado no calcular
+    if (!this.productoService.precio) {
+      this.productoService.total = 0;
+      return;
+    }
+
+    //convertir cantidad de texto a numerica
+    let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
+
+    //Calcular el total (cantidad * precio seleccionado)
+    this.productoService.total = cantidad! * this.productoService.precio.precioU;
 
     //calcular precio dia si se necesita
 
@@ -917,23 +922,24 @@ export class DetalleComponent implements AfterViewInit {
     }
 
 
+
     // /7agregar transaccion
     this.facturaService.addTransaction(
       {
-        consecutivo: 0,
-        estadoTra: 1,
-        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
-        isChecked: false,
         bodega: this.productoService.bodega,
-        producto: product,
-        precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
         cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
-        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
         cargo: 0,
+        consecutivo: 0,
         descuento: 0,
+        estadoTra: 1,
+        isChecked: false,
         operaciones: [],
+        precio: this.productoService.precio!,
+        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        producto: product,
+        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
       }
     );
 

@@ -1,17 +1,18 @@
-$color-bordes         : #c1bfbf; //bordes menu
-$color-gris           : #777; //sombra y texto gris
-$color-azul           : #134895; // fondo, bordes y texto azul
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
-$bordes               : rgba(0, 0, 0, 0.12);
-$color-naranja        : #df9722;
+$gris        : var(--gris); //sombra y texto gris
+$rojo        : var(--error);
+$requerido   : var(--requerido);
+$preferencia : var(--global-color); // fondo, bordes y texto azul
+$bordes      : var(--bordes-claro); //bordes menu
+$fondo       : var(--fondo-claro); //fondo Demosoft
+$scroll      : var(--global-color); //barra azul
+$sombra      : var(--mas-contenido);
 
 .head__sidenav {
     width           : 100%;
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
     border-bottom   : 1px solid $bordes;
 }
@@ -50,7 +51,7 @@ $color-naranja        : #df9722;
 .localidades::-webkit-scrollbar,
 .empresas::-webkit-scrollbar {
     width           : 6px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .localidades::-webkit-scrollbar-track,
@@ -60,24 +61,24 @@ $color-naranja        : #df9722;
 
 .localidades::-webkit-scrollbar-thumb,
 .empresas::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .contenido::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .contenido::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .contenido::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -97,7 +98,8 @@ p {
 .contenido {
     // height     : calc(100% - 128px);
     align-items: center !important;
-    overflow   : auto;
+    overflow-x : hidden;
+    overflow-y : auto;
     width      : 100%;
     height     : calc(100vh - 128px);
 }
@@ -135,11 +137,11 @@ p {
 .seleccionar-localidad {
     width     : 85%;
     text-align: center !important;
-    border    : 1px solid $color-bordes;
+    border    : 1px solid $bordes;
 }
 
 .linea {
-    box-shadow: 0px -3px 10px 1.5px rgba(0, 0, 0, 0.2);
+    box-shadow: $sombra;
     width     : 100%;
 }
 
@@ -156,11 +158,15 @@ p {
     border-top: none !important;
 }
 
-.boton-guardar {
-    position        : fixed;
-    bottom          : 80px;
-    right           : 20px;
-    background-color: $color-azul;
+.seleccionar-localidad.error,
+.seleccionar-empresa.error {
+    border          : 1.5px solid $rojo;
+    background-color: $requerido;
+}
+
+.error-message {
+    color    : $rojo;
+    font-size: 12px;
 }
 
 .boton-cerrar {
@@ -169,7 +175,7 @@ p {
     bottom          : 75px;
     left            : 60px;
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $preferencia;
 }
 
 .identificadores {
@@ -183,7 +189,7 @@ p {
 .seleccionado {
     padding-left: 10px;
     text-align  : left;
-    border-top  : 1px solid $color-bordes;
+    border-top  : 1px solid $bordes;
     width       : 100% !important;
     align-items : center;
     font-size   : 12px;
@@ -198,7 +204,7 @@ p {
 }
 
 .opciones:hover {
-    color      : $color-azul;
+    color      : $preferencia;
     font-weight: 500;
     cursor     : pointer;
 }
@@ -233,13 +239,13 @@ p {
     width           : 100vw;
     position        : fixed;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .alerta {
     font-size : 14px;
     padding   : 10px 0px;
-    color     : $color-gris;
+    color     : $gris;
     text-align: justify;
 }
 

@@ -12,15 +12,18 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 import { TipoTransaccionService } from '../../services/tipos-transaccion.service';
 import { ParametroService } from '../../services/parametro.service';
 import { PagoService } from '../../services/pago.service';
-import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ProductService } from '../../services/product.service';
 import { ReferenciaService } from '../../services/referencia.service';
-import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
+import { FelService } from '../../services/fel.service';
+import { CredencialInterface } from '../../interfaces/credencial.interface';
+import { DataNitInterface } from '../../interfaces/data-nit.interface';
+import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 
 @Component({
   selector: 'app-documento',
@@ -32,6 +35,7 @@ import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
     ParametroService,
     PagoService,
     ReferenciaService,
+    FelService,
   ]
 })
 export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -73,6 +77,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     public globalConvertService: GlobalConvertService,
     private _productService: ProductService,
     private _referenciaService: ReferenciaService,
+    private _felService: FelService,
   ) {
 
   }
@@ -647,7 +652,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    this.facturaService.searchText = "";
+    this.facturaService.searchProduct = "";
 
     this.facturaService.isLoading = false;
 
@@ -659,7 +664,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
   setCF(): void {
     this.switchState = !this.switchState;
 
-    console.log(this.switchState);
+    // console.log(this.switchState);
 
 
     if (this.switchState) {
@@ -681,6 +686,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         grupo_Cuenta: null
 
       }
+
+
+      this.facturaService.showDetalle();
 
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
@@ -730,25 +738,12 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.facturaService.searchClient,
     );
 
-    this.facturaService.isLoading = false;
 
     if (!resCuenta.status) {
 
       this.facturaService.isLoading = false;
 
-
-      let verificador = await this._notificationService.openDialogActions(
-        {
-          title: this._translate.instant('pos.alertas.salioMal'),
-          description: this._translate.instant('pos.alertas.error'),
-          verdadero: this._translate.instant('pos.botones.informe'),
-          falso: this._translate.instant('pos.botones.aceptar'),
-        }
-      );
-
-      if (!verificador) return;
-
-      this.verError(resCuenta);
+      this.showError(resCuenta);
 
       return;
 
@@ -756,11 +751,173 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let cuentas: ClienteInterface[] = resCuenta.response;
 
-
-    //si no hay coicidencias mostrar mensaje
+    //si no hay coicidencias Buscar nit en 
     if (cuentas.length == 0) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
-      this.facturaService.searchClient = "";
+
+      if (!this.facturaService.valueParametro(349)) {
+        this.facturaService.isLoading = false;
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
+
+        return;
+      }
+
+      let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+
+      if (!resCredenciales.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.showError(resCredenciales);
+
+        return;
+
+      }
+
+      let credecniales: CredencialInterface[] = resCredenciales.response;
+
+
+      //Buscvar credenciales de infile
+      let llaveApi: string = "";
+      let usuarioApi: string = "";
+
+      for (let i = 0; i < credecniales.length; i++) {
+        const element = credecniales[i];
+
+        switch (element.campo_Nombre) {
+          case "LlaveApi":
+            llaveApi = element.campo_Valor;
+
+            break;
+          case "UsuarioApi":
+            usuarioApi = element.campo_Valor;
+            break;
+          default:
+            break;
+        }
+
+      }
+
+
+      let cleanedString = this.facturaService.searchClient.replace(/[\s\-]/g, '');
+
+
+      let resRecpetor: ResApiInterface = await this._felService.getReceptor(
+        this.token,
+        llaveApi,
+        usuarioApi,
+        cleanedString,
+      );
+
+
+      if (!resRecpetor.status) {
+        this.facturaService.isLoading = false;
+
+        this.showError(resRecpetor);
+        return;
+      }
+
+
+      if (!resRecpetor.response) {
+        this.facturaService.isLoading = false;
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinCoincidencias'));
+        return;
+      }
+
+
+      //Crear cuenta correntista
+      //nueva cuneta
+      let cuenta: CuentaCorrentistaInterface = {
+        correo: "",
+        direccion: "",
+        cuenta: 0,
+        cuentaCuenta: "",
+        nit: this.facturaService.searchClient,
+        nombre: resRecpetor.response,
+        telefono: "",
+        grupoCuenta: 0,
+
+      }
+
+      //Usar servicio para actualizar cuenta
+      let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+        this.user,
+        this.token,
+        this.empresa,
+        cuenta,
+      );
+
+
+      //Si el servicio falló
+      if (!resCuenta.status) {
+
+        this.facturaService.isLoading = false;
+
+        this.showError(resCuenta);
+
+        return;
+
+      }
+
+      ////////////////
+
+      //buscar informacin de la cuenta  creada
+      let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+        this.user,
+        this.token,
+        this.empresa,
+        cuenta.nit,
+      );
+
+      // si falló la buqueda de la cuenta creada
+      if (!infoCuenta.response) {
+        this.facturaService.isLoading = false;
+        this.showError(infoCuenta);
+        return;
+      }
+
+      //coincidencias con la cuenta creada
+      let cuentas: ClienteInterface[] = infoCuenta.response;
+
+      //si no se encontró ninguna cuenta
+      if (cuentas.length == 0) {
+        this.facturaService.isLoading = false;
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
+        return;
+      }
+
+      // si solo se encontró una coincidencia
+      if (cuentas.length == 1) {
+        this.facturaService.isLoading = false;
+
+        //seleccionar cuenta
+        this.facturaService.cuenta = cuentas[0];
+        this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+
+        return;
+
+      }
+
+      //Si hay mas de una coincidencia
+      cuentas.forEach(element => {
+        //Busar la primera cuenta que tenga el mismo nit
+        if (element.factura_NIT == cuenta.nit) {
+          //seleccionar cuenta
+          this.facturaService.cuenta = element;
+          this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
+
+          this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreadaSeleccionada'));
+
+
+          this.facturaService.isLoading = false;
+
+          return;
+        }
+      });
+
+      this.facturaService.isLoading = false;
 
       return;
     }
@@ -768,6 +925,10 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //si solo hay uno seleccioanrlo
     if (cuentas.length == 1) {
+
+      this.facturaService.isLoading = false;
+
+
       this.facturaService.cuenta = cuentas[0];
       this.facturaService.searchClient = this.facturaService.cuenta.factura_Nombre;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
@@ -793,6 +954,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     })
 
+    this.facturaService.isLoading = false;
     this.facturaService.searchClient = "";
 
   }
@@ -849,6 +1011,25 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.focusAndSelectText();
     }, 0);
+  }
+
+  async showError(err: ResApiInterface) {
+
+    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaCreada'));
+
+
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.salioMal'),
+        description: this._translate.instant('pos.alertas.error'),
+        verdadero: this._translate.instant('pos.botones.informe'),
+        falso: this._translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.verError(err);
   }
 
 }

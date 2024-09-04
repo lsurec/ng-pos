@@ -6,10 +6,15 @@ import { Injectable } from '@angular/core';
 })
 export class DataUserService {
 
+
+  version:string = "1.0.6";
+
   //Nombre del display al que se está navegando
   nameDisplay: string = "";
 
   urlImage="";
+
+  
   simboloMoneda: string = " ";
   decimalPlaces: number = 2;
   integerDigits: number = 2;

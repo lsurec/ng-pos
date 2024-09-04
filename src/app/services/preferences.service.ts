@@ -35,7 +35,10 @@ export class PreferencesService {
     private static readonly nuevoDocKey: string = 'nuevoDoc';
     private static readonly digitosKey: string = 'digitos';
     private static readonly decimalesKey: string = 'decimales';
-    private static readonly recuperarDocKey: string = 'recuperarDoc';
+    private static readonly colorAppKey: string = 'colorButton';
+    private static readonly fondoAppKey: string = 'fondoApp';
+    private static readonly indexFondoAppKey: string = 'indexFondoApp';
+    private static readonly indexColorAppKey: string = 'indexColor';
 
 
 
@@ -45,7 +48,6 @@ export class PreferencesService {
     static closeSession() {
         localStorage.removeItem(PreferencesService.tokenStorageKey);
         sessionStorage.removeItem(PreferencesService.tokenKey);
-
     }
 
     //lenguaje de la aplicacion
@@ -355,12 +357,45 @@ export class PreferencesService {
     }
 
     @Input()
-    static set recuperarDoc(value: string) {
-        localStorage.setItem(this.recuperarDocKey, value);
+    static set colorApp(value: string) {
+        localStorage.setItem(this.colorAppKey, value);
     }
 
-    static get recuperarDoc(): string {
-        let value = localStorage.getItem(this.recuperarDocKey);
+    static get colorApp(): string {
+        let value = localStorage.getItem(this.colorAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set fondoApp(value: string) {
+        localStorage.setItem(this.fondoAppKey, value);
+    }
+
+    static get fondoApp(): string {
+        let value = localStorage.getItem(this.fondoAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set indexFondoApp(value: string) {
+        localStorage.setItem(this.indexFondoAppKey, value);
+    }
+
+    static get indexFondoApp(): string {
+        let value = localStorage.getItem(this.indexFondoAppKey);
+        if (!value) return "";
+        return value;
+    }
+
+    @Input()
+    static set indexColorApp(value: string) {
+        localStorage.setItem(this.indexColorAppKey, value);
+    }
+
+    static get indexColorApp(): string {
+        let value = localStorage.getItem(this.indexColorAppKey);
         if (!value) return "";
         return value;
     }

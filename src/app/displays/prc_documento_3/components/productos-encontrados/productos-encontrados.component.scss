@@ -1,8 +1,10 @@
-$background-oficial   : #FEF5E7; //fondo Demosoft, bordes scroollbar
-$background-scrollbar : #134895; //barra azul
-$color-bordes         : #CED4DA; //bordes del calendario
-$color-azul           : #134895; //bordes y texto azul
-$color-negro          : #000; //bordes y texto azul
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris);
+$hover         : var(--hover);
+$personalizado : var(--global-color);
 
 
 .progress {
@@ -10,14 +12,14 @@ $color-negro          : #000; //bordes y texto azul
     padding-right   : 0px;
     width           : 680px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .dialog {
     padding         : 10px 10px 15px 15px;
     width           : 700px;
     height          : 430px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .head__sidenav {
@@ -25,9 +27,9 @@ $color-negro          : #000; //bordes y texto azul
     height          : 64px !important;
     display         : flex;
     align-items     : center;
-    background-color: $background-oficial;
+    background-color: $fondo;
     padding         : 0px 15px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .contenedor {
@@ -40,13 +42,13 @@ $color-negro          : #000; //bordes y texto azul
 }
 
 .dialog::-webkit-scrollbar-track {
-    background: $background-oficial;
+    background: $fondo;
 }
 
 .dialog::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .spacer {
@@ -55,7 +57,7 @@ $color-negro          : #000; //bordes y texto azul
 
 .close {
     width      : 40px;
-    color      : #aaa;
+    color      : $gris;
     float      : left !important;
     font-size  : 28px;
     font-weight: bold;
@@ -80,7 +82,7 @@ hr {
 
 p {
     margin: 0px;
-    color : $color-negro;
+    color : $negro;
 }
 
 .busqueda {
@@ -101,42 +103,47 @@ p {
     padding-right   : 5px;
 }
 
-.campo-obligatorio {
-    font-size  : 12px;
-    font-weight: 450;
-    padding    : 2px 0px;
-}
-
-.obligatorio {
-    color       : #ff0000;
-    font-weight : bold;
-    font-size   : 12px;
-    padding-left: 3px;
-}
-
 .seleccionar-imagen {
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     display      : flex;
     align-items  : center;
+    margin       : 10px 0px;
 }
 
 .seleccionar {
     width           : 90%;
     cursor          : pointer;
     min-height      : 30px;
-    // border-bottom: 1px solid $color-bordes;
+    // border-bottom: 1px solid $bordes;
     font-weight     : 400;
-    padding         : 5px 0px;
+    padding         : 5px 10px;
 }
 
 .seleccionar:hover {
-    background-color: #ebebeb;
+    background-color: $hover;
 }
 
 .dFlex {
     display    : flex;
     align-items: center;
 }
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 10px;
+    font-size       : 14px;
+    font-weight     : 500;
+}
+
+.verMas {
+    padding        : 10px;
+    color          : $personalizado;
+    text-decoration: underline;
+    cursor         : pointer;
+}
+
 
 .verDetalle {
     font-weight   : 500;

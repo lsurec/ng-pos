@@ -63,6 +63,9 @@
         <div class="dFlex width80" *ngIf="facturaService.cuenta">
             <p class="titulo">{{facturaService.getTextParam(57) ?? 'Cuenta' | titlecase}}</p>
             <span class="spacer"></span>
+            <button mat-icon-button (click)="agregarCliente()" [matTooltip]="'pos.factura.nueva'  | translate">
+                <mat-icon>person_add</mat-icon>
+            </button>
             <button *ngIf="!switchState" mat-icon-button (click)="actualizar()"
                 [matTooltip]="'pos.factura.actualizar' | translate">
                 <mat-icon>edit</mat-icon>
@@ -96,7 +99,7 @@
                 <p> {{facturaService.cuenta.des_Grupo_Cuenta}}</p>
             </div>
         </div>
-        <div class="width80" *ngIf="facturaService.cuenta">
+        <div class="width80" *ngIf="facturaService.cuenta || facturaService.serie">
             <hr>
         </div>
 
@@ -312,7 +315,7 @@
         <div class="detalles-fondo">
             <p class="textosBold14">Observaciones</p>
             <textarea name="notas" id="descripcion" cols="30" rows="4" class="campos"
-                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.refObservaciones"
+                placeholder="{{ 'pos.factura.escribir' | translate }}" [(ngModel)]="facturaService.observacion"
                 (ngModelChange)="facturaService.saveDocLocal()"></textarea>
         </div>
 

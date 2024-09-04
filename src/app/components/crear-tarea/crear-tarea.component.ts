@@ -11,7 +11,7 @@ import { EnviarInvitadoInterface } from 'src/app/displays/shrTarea_3/interfaces/
 import { TiemposInterface } from 'src/app/displays/shrTarea_3/interfaces/periodicidad.interface';
 import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
 import { EnviarResponsableInterface } from 'src/app/displays/shrTarea_3/interfaces/responsable.interface';
-import { TareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tarea-user.interface';
+import { TareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tarea.interface';
 import { TipoTareaInterface } from 'src/app/displays/shrTarea_3/interfaces/tipo-tarea.interface';
 import { BuscarUsuariosInterface } from 'src/app/displays/shrTarea_3/interfaces/usuario.interface';
 import { EstadoService } from 'src/app/displays/shrTarea_3/services/estado.service';
@@ -599,7 +599,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
   //Obtener el Tipo de la Tarea
   async getTipoTarea(): Promise<void> {
     //Consumo de api
-    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea();
+    let resTipos: ResApiInterface = await this._tipoTareaService.getTipoTarea(this.usuarioTarea);
     ///Si el servico se ejecuta mal mostrar mensaje
     if (!resTipos.status) {
       this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
@@ -943,7 +943,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
       //ID del comentario 
       let idComenario: number = resPrimerComentario.response.res;
 
-      let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, nuevasTareas[0].tarea, idComenario);
+      let resFiles: ResApiInterface = await this._files.adjuntarArchivos(this.selectedFiles, nuevasTareas[0].tarea, idComenario);
 
       //Si el servico se ejecuta mal mostar mensaje
       this.isLoading = false;
@@ -962,6 +962,7 @@ export class CrearTareaComponent implements OnChanges, OnInit {
       //Nueva Tarea Tareas
       let tareaCreada: TareaInterface =
       {
+        id: 0,
         tarea: null,
         iD_Tarea: nuevasTareas[0].tarea,
         usuario_Creador: this.usuarioTarea,
@@ -987,6 +988,11 @@ export class CrearTareaComponent implements OnChanges, OnInit {
         backColor: "#000",
         nivel_Prioridad: this.prioridadTarea!.nivel_Prioridad,
         nom_Nivel_Prioridad: this.prioridadTarea!.nombre,
+        registros: 0,
+        filtroMisInvitaciones: false,
+        filtroMisResponsabilidades: false,
+        filtroMisTareas: false,
+        filtroTodasTareas: false,
       };
 
       //agregar tareas en tareas

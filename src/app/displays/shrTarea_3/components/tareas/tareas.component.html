@@ -1,6 +1,6 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
-<app-crear-tarea *ngIf="crearTarea" (desdeTareas)="backPageTareas($event)"
-    (nuevaTarea)="addItem($event)"></app-crear-tarea>
+<app-nueva-tarea *ngIf="crearTarea" (desdeTareas)="backPageTareas($event)"
+    (nuevaTarea)="addItem($event)"></app-nueva-tarea>
 
 
 <div *ngIf="!isLoading && mostrarTareas" class="container_page">
@@ -14,12 +14,14 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <span class="spacer"></span>
-        <button mat-button (click)="nuevaTarea()" class="nueva" matTooltip="{{'crm.crear.crear' | translate}}">
-            <mat-icon>add</mat-icon> {{'crm.crear.crear' | translate}}
+        <button mat-raised-button class="boton-azul" (click)="nuevaTarea()"
+            matTooltip="{{'crm.crear.crear' | translate}}">
+            <mat-icon>add</mat-icon> 
+            {{'crm.crear.crear' | translate}}
         </button>
     </mat-toolbar-row>
     <!-- Mostrar logos -->
-    <app-barra-logo-demosoft></app-barra-logo-demosoft>
+    <app-barra-logos></app-barra-logos>
     <div class="container_main" *ngIf="hideDetalle" #contentContainer>
         <!-- Buscar tareas por coincidencias -->
         <form #searchForm="ngForm" (ngSubmit)="buscarTarea()" class="inputSearch">
@@ -61,13 +63,19 @@
                             <!-- Titulo Tarea -->
                             <h5 class="negrita justificar fuente mb-1">{{item.descripcion}}</h5>
                         </div>
+                        <div class="dFlex">
+                            <p>{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</p>
+                            <span class="spacer"></span>
+                            <p class="alingLeft fuente negrita">{{ item.tarea_Estado}}</p>
+                            <div class="circulo-estado"
+                                [ngStyle]="{'background-color': item.backColor ? item.backColor : '#000'}">
+                            </div>
+                        </div>
                         <!-- Numero de tarea y fecha inicial -->
-                        <small class="">{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</small>
-                        <small class="alingLeft fuente negrita"
+                        <!-- <small class="">{{ 'crm.tarea.tarea' | translate }} {{item.iD_Tarea}}</small> -->
+                        <!-- <small class="alingLeft fuente negrita"
                             [ngStyle]="{'color': item.backColor ? item.backColor : '#000' }">
-                            {{
-                            item.tarea_Estado}}</small>
-                        <br>
+                            {{ item.tarea_Estado}}</small> -->
                         <small>{{ 'crm.tarea.creador' | translate }}
                             {{item.usuario_Creador}}</small>
                         <small class="alingLeft fuente"> {{ 'crm.tarea.responsable' | translate }} {{
@@ -79,7 +87,7 @@
                             date: 'dd/MM/yyyy'}}</small>
                         <br>
                         <!-- Descripcion (observacion) Tarea -->
-                        <div class="dFlex">
+                        <div class="descripcion-tarjeta" *ngIf="item.tarea_Observacion_1">
                             <small>{{ 'crm.tarea.descripcion' | translate }}</small>
                             <p class="descripcion">{{item.tarea_Observacion_1}}</p>
                         </div>

@@ -20,7 +20,15 @@
             "tipoCambio": "Taux de Change",
             "tipoDocumento": "Type de Document",
             "serieDocumento": "Série de Document",
-            "impresoras": "IMPRIMANTES"
+            "impresoras": "IMPRIMANTES",
+            "prefColores": "Préférence de couleur",
+            "paletaColores": "Palette de couleurs",
+            "cambiarColor": "Changez les couleurs de votre préférence.",
+            "color": "Couleur",
+            "colorSelec": "Couleur sélectionnée",
+            "cambiosColor": "Vous avez sélectionné une nouvelle couleur. Pour voir les changements, il est nécessaire de redémarrer le navigateur. Cliquez sur accepter pour continuer.",
+            "seleccionar": "Sélectionner",
+            "historialError": "Journal des erreurs."
         },
         "login": {
             "correo": "Utilisateur",
@@ -403,7 +411,14 @@
             "tipo": "Type:",
             "estado": "État:",
             "prioridad": "Priorité:",
-            "previa": "Aperçu"
+            "previa": "Vorschau",
+            "seleccionarId": "Klicken Sie auf die Referenz-ID, die Sie hinzufügen möchten.",
+            "crearTarea": "Neue Aufgabe erstellen",
+            "correoElec": "E-Mail:",
+            "todas": "Alle",
+            "creadas": "Erstellt",
+            "asignadas": "Zugewiesen",
+            "invitaciones": "Einladungen"
         },
         "login": {
             "correo": "Utilisateur",
@@ -522,7 +537,19 @@
             "descripcionRef": "Description :",
             "referencia": "Référence",
             "buscarIdReferencia": "SÉLECTIONNER ID RÉFÉRENCE",
-            "adjuntos": "Pièces jointes"
+            "adjuntos": "Fichiers joints",
+            "seleccionRes": "Sélectionner la personne responsable",
+            "seleccionarInvi": "Sélectionner les invités",
+            "agregaRes": "Cliquez sur l'utilisateur que vous souhaitez ajouter.",
+            "marcarInvi": "Cochez la case de l'utilisateur ou des utilisateurs que vous souhaitez ajouter.",
+            "invitadosSelec": "Invités sélectionnés",
+            "nuevaTarea": "Nouvelle Tâche",
+            "subirArchivos": "Télécharger des fichiers",
+            "eliminarRes": "Supprimer la personne responsable",
+            "invitadosT": "INVITÉS",
+            "eliminarInvi": "Supprimer l'invité",
+            "eliminarRef": "Supprimer l'ID de référence",
+            "eliminarArchivo": "Supprimer le fichier"
         },
         "configuracionLocal": {
             "titulo": "CONFIGURATION LOCALE",
@@ -550,6 +577,7 @@
             "idioma": "Vous pourrez également changer la langue de l'application plus tard selon votre préférence."
         },
         "alertas": {
+            "requerido": "Champ requis.",
             "deFecha": "de",
             "salioMal": "Quelque chose a mal tourné, réessayez",
             "ok": "Accepter",
@@ -573,6 +601,7 @@
             "comentarioCreado": "Commentaire créé avec succès.",
             "tareaCreadaExito": "Tâche créée avec succès. ID Tâche :",
             "archivosNoCargados": "Tâche créée, mais les fichiers n'ont pas été enregistrés.",
+            "archivosComentario": "Commentaire créé, mais les fichiers n'ont pas été enregistrés.",
             "usuarios": "Utilisateur non trouvé, essayez de rechercher à nouveau.",
             "debeSeleccionar": "Pour continuer, sélectionnez une entreprise et un poste de travail.",
             "noSeleccionado": "Non sélectionné.",
@@ -592,8 +621,10 @@
             "seleccionar": "Sélectionnez un thème pour continuer.",
             "nuevoIdioma": "Nouvelle Langue",
             "cambioIdioma": "Pour voir les changements, il sera nécessaire de rafraîchir l'application.",
-            "fuete": "Taille de la police.",
-            "cambioFuente": "Vous avez sélectionné une nouvelle taille de police. Pour voir les changements, il est nécessaire de redémarrer le navigateur, cliquez sur accepter pour continuer."
+            "cambioFuente": "Vous avez sélectionné une nouvelle taille de police. Pour voir les changements, il est nécessaire de redémarrer le navigateur, cliquez sur accepter pour continuer.",
+            "asignado": "Utilisateur précédemment assigné.",
+            "estadoIgual": "État précédemment assigné.",
+            "prioridadIgual": "Priorité précédemment assignée."
         }
     }
 }

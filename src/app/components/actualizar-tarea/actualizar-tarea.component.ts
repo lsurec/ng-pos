@@ -115,6 +115,12 @@ export class ActualizarTareaComponent {
   };
 
   async nuevoEstadoTarea() {
+    //validar que el estado seleccuinado no sea el mismo que el actual
+    if (this.estadoTarea?.estado == this.tarea.tarea.estado_Objeto) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarEstadoInterface =
     {
       tarea: this.tarea.tarea.iD_Tarea,
@@ -162,7 +168,7 @@ export class ActualizarTareaComponent {
 
     for (let index = 0; index < this.prioridadesTarea.length; index++) {
       const element = this.prioridadesTarea[index];
-      if (element.nombre == this.tarea.tarea.nom_Nivel_Prioridad) {
+      if (element.nivel_Prioridad == this.tarea.tarea.nivel_Prioridad) {
         this.prioridadTarea = element;
         break;
       }
@@ -171,6 +177,13 @@ export class ActualizarTareaComponent {
   };
 
   async nuevoNivelPrioridad() {
+
+    //validar que el nivel de prioridad seleccuinado no sea el mismo que el actual
+    if (this.prioridadTarea?.nivel_Prioridad == this.tarea.tarea.nivel_Prioridad) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarNivelPrioridadInterface =
     {
       tarea: this.tarea.tarea.iD_Tarea,

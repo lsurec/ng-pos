@@ -37,10 +37,9 @@ export class TareaCalendarioService {
 
     // funcion asyncrona con promise
     getTareasCalendario(fechaIni: string, fechaFin: string): Promise<ResApiInterface> {
-        //consumo del primer servicio
         return new Promise((resolve, reject) => {
             this._getTareasCalendario(fechaIni, fechaFin).subscribe(
-                //si esta correcto
+                // Si la respuesta es correcta
                 res => {
                     let response: ResponseInterface = <ResponseInterface>res;
 
@@ -48,22 +47,45 @@ export class TareaCalendarioService {
                         status: true,
                         response: response.data,
                         storeProcedure: response.storeProcedure
-                    }
+                    };
                     resolve(resApi);
                 },
-                //si algo sale mal
+                // Si algo sale mal
                 err => {
-                    let response: ResponseInterface = <ResponseInterface>err;
+                    console.log(err);
 
-                    let resApi: ResApiInterface = {
-                        status: false,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
+                    try {
+                        let response: ResponseInterface = <ResponseInterface>err.error;
+
+                        let resApi: ResApiInterface = {
+                            status: false,
+                            response: response.data,
+                            storeProcedure: response.storeProcedure,
+                            url: err.url,
+                        };
+                        resolve(resApi);
+                    } catch (e) {
+                        try {
+                            let message = err.message;
+
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: message,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        } catch (ex) {
+                            let resApi: ResApiInterface = {
+                                status: false,
+                                response: err,
+                                url: err.url,
+                            };
+                            resolve(resApi);
+                        }
                     }
-                    resolve(resApi);
                 }
-            )
-        })
-
+            );
+        });
     }
+
 }

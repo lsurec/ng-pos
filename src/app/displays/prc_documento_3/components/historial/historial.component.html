@@ -14,40 +14,136 @@
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>
-            <!-- Titulo de la tarea -->
             <p class="titulo">{{ 'pos.factura.docRecientes' | translate }}</p>
             <span class="spacer"></span>
 
         </mat-toolbar-row>
-        <div class="container-main">
-            <div class="container">
-                <div class="detalles-registros">
-                    <div class="registros">
-                        <span class="spacer"></span>
-                        <p class="subtitulo">{{ 'pos.factura.registros' | translate }} ({{documentos.length}})</p>
-                    </div>
-                    <div class="detalle-documento" *ngFor="let documento of documentos"
-                        (click)="verDetalle(); docSelect = documento">
-                        <div class="info-documento">
-                            <p class="subtitulo">Id Documento Ref:
-                                {{documento.ref_id}} </p>
-                            <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
-                                {{documento.item.consecutivo_Interno}} </p>
-                            <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
-                        </div>
-                        <span class="spacer"></span>
-                        <div class="totales">
-                            <p class="saldo">{{documento.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
-                            <p class="cargo">(+) {{documento.cargo | currency:' ':'symbol':'2.2-2' }} </p>
-                            <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }} </p>
-                            <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
-                        </div>
-                    </div>
+        <div>
+            <div class="container-main" *ngIf="!isLoading">
+
+                <input class="titulo-pestana" id="tab1" type="radio" name="tabs" [checked]="recientes">
+                <div class="pestana" for="tab1" matTooltip="Recientes" (click)="verRecientes()">
+                    Recientes
                 </div>
+
+                <input class="titulo-pestana" id="tab2" type="radio" name="tabs" [checked]="pendientes">
+                <div class="pestana" for="tab2" matTooltip="Pendientes" (click)="verPendientes()">
+                    Pendientes
+                </div>
+
+                <section id="content1" class="content1 contenido-seleccionado" *ngIf="recientes">
+                    <div class="listas-documentos">
+
+
+                        <div class="buscar-documentos">
+                            <form #searchForm="ngForm" (ngSubmit)="buscarDoc()">
+                                <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                                <div class="input-container">
+                                    <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchDoc"
+                                        autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}">
+                                    <button mat-icon-button class="iconoLupa" type="submit">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="registros">
+                            <span class="spacer"></span>
+                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }}
+                                ({{documentosRecientes.length}})
+                            </p>
+                        </div>
+                        <div class="detalle-documento" *ngFor="let documento of documentosRecientes"
+                            (click)="verDetalle(); docSelect = documento">
+                            <div class="info-documento">
+                                <p class="subtitulo">Id Documento Ref:
+                                    {{documento.ref_id}} </p>
+                                <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
+                                    {{documento.item.consecutivo_Interno}} </p>
+                                <p class="subtitulo">{{ 'pos.documento.usuario' | translate }}
+                                    {{documento.item.userName}} </p>
+                                <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
+                            </div>
+                            <span class="spacer"></span>
+                            <div class="totales">
+                                <p class="saldo">{{documento.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                                <p class="cargo">(+) {{documento.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                                <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                                <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="content2" class="content2 contenido-seleccionado" *ngIf="pendientes">
+                    <div class="listas-documentos">
+
+
+                        <div class="dFlex">
+                            <div class="buscar-documentos">
+                                <form #searchForm="ngForm" (ngSubmit)="buscarDoc()">
+                                    <p class="subtitulo">{{ 'pos.factura.buscar' | translate }}</p>
+                                    <div class="input-container">
+                                        <input class="barra-de-busqueda" type="search" name="search"
+                                            [(ngModel)]="searchDoc" autocomplete="off"
+                                            placeholder="{{'pos.inputs.buscar' | translate}}">
+                                        <button mat-icon-button class="iconoLupa" type="submit">
+                                            <mat-icon>search</mat-icon>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <span class="spacer"></span>
+                            <div class="usuario-busqueda">
+                                <form #searchForm="ngForm" (ngSubmit)="buscarDoc()">
+                                    <p class="subtitulo">Filtrar por usuario</p>
+                                    <div class="input-container">
+                                        <input class="barra-de-busqueda" type="search" name="search"
+                                            [(ngModel)]="searchUserDoc" autocomplete="off"
+                                            placeholder="Escribe el usuario">
+                                        <button mat-icon-button class="iconoLupa" type="submit">
+                                            <mat-icon>search</mat-icon>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                        <div class="registros">
+                            <span class="spacer"></span>
+                            <p class="subtitulo">{{ 'pos.factura.registros' | translate }}
+                                ({{documentosPendientes.length}})
+                            </p>
+                        </div>
+                        <div class="detalle-documento" *ngFor="let documento of documentosPendientes"
+                            (click)="verDetalle(); docSelect = documento">
+                            <div class="info-documento">
+                                <p class="subtitulo">Id Documento Ref:
+                                    {{documento.ref_id}} </p>
+                                <p class="subtitulo">{{ 'pos.factura.consecutivo' | translate }}:
+                                    {{documento.item.consecutivo_Interno}} </p>
+                                <p class="subtitulo">{{ 'pos.documento.usuario' | translate }}
+                                    {{documento.item.userName}} </p>
+                                <p class="fecha-hora">{{documento.item.fecha_Hora | date: 'dd/MM/yyyy HH:mm'}} </p>
+                            </div>
+                            <span class="spacer"></span>
+                            <div class="totales">
+                                <p class="saldo">{{documento.subtotal | currency:' ':'symbol':'2.2-2' }} </p>
+                                <p class="cargo">(+) {{documento.cargo | currency:' ':'symbol':'2.2-2' }} </p>
+                                <p class="descuento">(-) {{documento.descuento | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                                <p class="total">{{documento.total | currency:' ':'symbol':'2.2-2' }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
         <!-- Mostrar logos -->
-        <!-- <app-barra-logos></app-barra-logos> -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <app-barra-logos></app-barra-logos>
     </div>
 </div>

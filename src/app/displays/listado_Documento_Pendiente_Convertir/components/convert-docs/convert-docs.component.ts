@@ -148,9 +148,13 @@ export class ConvertDocsComponent {
     //Validar que las transaccones por autorizar esten disponibles
     for (const tra of traCheks) {
 
-      let resProduct = await this._productService.getProductId(
+      let resProduct = await this._productService.getProduct(
         this.token,
+        this.user,
+        this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
         tra.detalle.id,
+        0,
+        100,
       );
 
 
@@ -202,6 +206,8 @@ export class ConvertDocsComponent {
         tra.detalle.bodega,
         prod.producto,
         prod.unidad_Medida,
+        0,
+        "0",
       );
 
 

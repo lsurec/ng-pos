@@ -16,6 +16,7 @@ import { ClipboardService } from 'src/app/services/clipboard.service';
 import { RouteNamesService } from 'src/app/services/route.names.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 
 @Component({
   selector: 'app-api',
@@ -40,6 +41,7 @@ export class ApiComponent {
     private _helloService: HelloService,
     private _clipboardService: ClipboardService,
     private _notificationService: NotificationsService,
+    public dataUserService: DataUserService,
   ) {
   }
 

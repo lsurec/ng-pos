@@ -44,7 +44,6 @@ import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataInfileInterface } from '../../interfaces/data.infile.interface';
 import { DocXMLInterface } from '../../interfaces/doc-xml.interface';
 import { ParamUpdateXMLInterface } from '../../interfaces/param-update-xml.interface';
-import * as pdfMake from 'pdfmake/build/pdfmake';
 import { DetallePrintInterface } from 'src/app/interfaces/detalle-print.interface';
 import { EncabezadoPrintInterface } from 'src/app/interfaces/encabezado-print.interface';
 import { PagoPrintInterface } from 'src/app/interfaces/pago-print.interface';
@@ -52,6 +51,10 @@ import { CurrencyPipe } from '@angular/common';
 import { PrinterService } from 'src/app/services/printer.service';
 import { RetryService } from 'src/app/services/retry.service';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: 'app-factura',
@@ -231,27 +234,6 @@ export class FacturaComponent implements OnInit {
   }
 
 
-
-  //mostrar pestaña doccumento
-  showDocumento() {
-    this.facturaService.tabDocummento = true;
-    this.facturaService.tabDetalle = false;
-    this.facturaService.tabPago = false;
-  }
-
-  //mostrar pestaña detalle
-  showDetalle() {
-    this.facturaService.tabDocummento = false;
-    this.facturaService.tabDetalle = true;
-    this.facturaService.tabPago = false;
-  }
-
-  //mostrar pestaña pagos
-  showPago() {
-    this.facturaService.tabDocummento = false;
-    this.facturaService.tabDetalle = false;
-    this.facturaService.tabPago = true;
-  }
 
   async loadDocumentLocal() {
 
@@ -491,7 +473,7 @@ export class FacturaComponent implements OnInit {
       this.facturaService.refObservacion = doc.refObservacion;
     }
 
-    
+
     this.facturaService.cuenta = doc.cliente; //asignar cliente
     this.facturaService.traInternas = doc.detalles; //asignar detalles
     this.facturaService.montos = doc.pagos; //asignar pagos
@@ -553,6 +535,7 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
+
     this.setDateNow();
     this.facturaService.setIdDocumentoRef();
 
@@ -591,7 +574,7 @@ export class FacturaComponent implements OnInit {
     }
 
     //Mostrar tab documento (primer pestaña)
-    this.showDocumento();
+    this.facturaService.showDocumento();
 
     //limpiar documento local 
     PreferencesService.documento = "";
@@ -673,7 +656,7 @@ export class FacturaComponent implements OnInit {
 
 
     //Seleccionar primera pestaña (petssña documento)
-    this.showDocumento();
+    this.facturaService.showDocumento();
 
     //Si no hay tipo de documento validar
     if (!this.facturaService.tipoDocumento) {
@@ -712,12 +695,30 @@ export class FacturaComponent implements OnInit {
     //Series disponobles
     this.facturaService.series = resSeries.response;
 
-    //si solo hay una serie seleccionarla por defecto;
     if (this.facturaService.series.length == 1) {
       //seleccionar serie
       this.facturaService.serie = this.facturaService.series[0];
       this.facturaService.serieCopy = this.facturaService.series[0];
-      let serie: string = this.facturaService.serie.serie_Documento;
+    }
+
+
+    if (this.globalConvertService.editDoc) {
+      let origin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
+
+      for (let i = 0; i < this.facturaService.series.length; i++) {
+        const element = this.facturaService.series[i];
+        if (origin.serie_Documento == element.serie_Documento) {
+          this.facturaService.serie = element;
+          break;
+        }
+      }
+
+    }
+
+    //si solo hay una serie seleccionarla por defecto;
+    if (this.facturaService.serie) {
+
+      let serie: string = this.facturaService.serie!.serie_Documento;
 
       //buscar vendedores
       let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
@@ -876,43 +877,45 @@ export class FacturaComponent implements OnInit {
 
     let docOrigin: OriginDocInterface = this.globalConvertService.docOriginSelect!;
 
-    let existRef: number = -1;
+    if (docOrigin.tipo_Referencia != null) {
+      let existRef: number = -1;
 
-    for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
-      const element = this.facturaService.tiposReferencia[i];
-      if (element.tipo_Referencia == docOrigin.tipo_Referencia) {
-        existRef = i;
-        break;
+      for (let i = 0; i < this.facturaService.tiposReferencia.length; i++) {
+        const element = this.facturaService.tiposReferencia[i];
+        if (element.tipo_Referencia == docOrigin.tipo_Referencia) {
+          existRef = i;
+          break;
+        }
       }
-    }
 
 
-    if (existRef == -1) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.tipoRefNoEncontrado'));
-    } else {
+      if (existRef == -1) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.tipoRefNoEncontrado'));
+      } else {
 
-      this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
-
-
-    }
-
-    let existCuentaRef: number = -1;
-
-    for (let i = 0; i < this.facturaService.vendedores.length; i++) {
-      const element = this.facturaService.vendedores[i];
-      if (element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref) {
-        existCuentaRef = i;
-        break;
+        this.facturaService.tipoReferencia = this.facturaService.tiposReferencia[existRef];
       }
+
     }
+    //realizar la busqyeda de la cuenta ref si hay elementos en la lista
+    if (this.facturaService.vendedores.length > 0) {
+      let existCuentaRef: number = -1;
 
+      for (let i = 0; i < this.facturaService.vendedores.length; i++) {
+        const element = this.facturaService.vendedores[i];
+        if (element.cuenta_Correntista == docOrigin.cuenta_Correntista_Ref) {
+          existCuentaRef = i;
+          break;
+        }
+      }
 
-    if (existCuentaRef == -1) {
-      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaNoEncontrada'));
-    } else {
-      this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
+      if (existCuentaRef == -1) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaNoEncontrada'));
+      } else {
+        this.facturaService.vendedor = this.facturaService.vendedores[existCuentaRef];
+      }
+
     }
-
 
 
     //--EMpiezan datos
@@ -1029,9 +1032,13 @@ export class FacturaComponent implements OnInit {
 
     //TODO:Cargar productos
     for (const tra of this.globalConvertService.detailsOrigin) {
-      let resProduct = await this._productService.getProductId(
+      let resProduct = await this._productService.getProduct(
         token,
+        user,
+        estacion,
         tra.detalle.id,
+        0,
+        100,
       );
 
 
@@ -1135,6 +1142,8 @@ export class FacturaComponent implements OnInit {
         bodega.bodega,
         prod.producto,
         prod.unidad_Medida,
+        this.facturaService.cuenta.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta.cuenta_Cta ?? "0",
       );
 
 
@@ -1500,16 +1509,24 @@ export class FacturaComponent implements OnInit {
   }
 
   // Función de validación
-  validateDates(): boolean {
-    const validInicioRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fecha!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaRefIni!, this.facturaService.fechaRefFin!) <= 0;
-    const validFinRef = this.compareDatesIgnoringSeconds(this.facturaService.fechaRefFin!, this.facturaService.fechaRefIni!) >= 0;
-    const validInicio = this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaRefIni!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaIni!, this.facturaService.fechaFin!) <= 0;
-    const validFin = this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!) >= 0 &&
-      this.compareDatesIgnoringSeconds(this.facturaService.fechaFin!, this.facturaService.fechaRefFin!) <= 0;
 
-    return validInicioRef && validFinRef && validInicio && validFin;
+
+  validateDates() {
+    // Remover los segundos de las fechas para la comparación
+    this.facturaService.fecha!.setSeconds(0, 0);
+    this.facturaService.fechaRefIni!.setSeconds(0, 0);
+    this.facturaService.fechaRefFin!.setSeconds(0, 0);
+    this.facturaService.fechaIni!.setSeconds(0, 0);
+    this.facturaService.fechaFin!.setSeconds(0, 0);
+
+    if (this.facturaService.fechaRefIni! >= this.facturaService.fecha! && this.facturaService.fechaRefIni! <= this.facturaService.fechaRefFin! &&
+      this.facturaService.fechaRefFin! >= this.facturaService.fechaRefIni! &&
+      this.facturaService.fechaIni! >= this.facturaService.fechaRefIni! && this.facturaService.fechaIni! <= this.facturaService.fechaRefFin! &&
+      this.facturaService.fechaFin! >= this.facturaService.fechaIni! && this.facturaService.fechaFin! <= this.facturaService.fechaRefFin!) {
+      return true;
+    }
+    return false;
+
   }
   //Confirmar documento
   async sendDoc() {
@@ -1737,6 +1754,7 @@ export class FacturaComponent implements OnInit {
     }
 
     let documento: DocumentoData = {
+      consecutivo: this.consecutivoDoc,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
       fechaCert: isFel ? `${fechaCert} ${horaCert}` : "",
@@ -1889,7 +1907,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.isLoading = false;
 
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
-      pdfMake.createPdf(docDefinition).print();
+
+      pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).print();
+
+      // pdfMake.createPdf(docDefinition).print();
 
       if (
         this.facturaService.nuevoDoc) {
@@ -1906,7 +1927,8 @@ export class FacturaComponent implements OnInit {
 
 
     if (encabezado.preview != 0) {
-      pdfMake.createPdf(docDefinition).print();
+      // pdfMake.createPdf(docDefinition).print();
+      pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).print();
       return;
     }
 
@@ -1937,7 +1959,7 @@ export class FacturaComponent implements OnInit {
 
 
 
-    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
     // return;
     pdfDocGenerator.getBlob(async (blob) => {
@@ -1998,7 +2020,8 @@ export class FacturaComponent implements OnInit {
 
     if (!verificador) return;
 
-    pdfMake.createPdf(doc).print();
+    pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).print();
+    // pdfMake.createPdf(doc).print();
 
 
 
@@ -2308,9 +2331,12 @@ export class FacturaComponent implements OnInit {
 
       let fechaAnt: Date = new Date(this.dataFel.fechaHoraCertificacion);
 
+
+      let strDate: string = `${fechaAnt.getDate()}/${fechaAnt.getMonth() + 1}/${fechaAnt.getFullYear()} ${fechaAnt.getHours()}:${fechaAnt.getMinutes()}:${fechaAnt.getSeconds()}`
+
       this.docGlobal!.Doc_FEL_Serie = this.dataFel.serieDocumento;
       this.docGlobal!.Doc_FEL_UUID = this.dataFel.numeroAutorizacion;
-      this.docGlobal!.Doc_FEL_fechaCertificacion = fechaAnt.toISOString();
+      this.docGlobal!.Doc_FEL_fechaCertificacion = strDate;
       this.docGlobal!.Doc_FEL_numeroDocumento = this.dataFel.numeroDocumento;
 
       //onjeto para el api
@@ -2455,7 +2481,6 @@ export class FacturaComponent implements OnInit {
           Tra_Factor_Conversion: !transaccion.precio!.precio ? transaccion.precio!.id : null,
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
           Tra_Monto: transaccion.total,
-          //TODO:veridificar monto por dias
           Tra_Monto_Dias: transaccion.precioDia,
         }
 
@@ -2611,6 +2636,15 @@ export class FacturaComponent implements OnInit {
   }
 
   async modifyDoc() {
+
+    if (this.facturaService.valueParametro(58)) {
+      if (!this.facturaService.tipoReferencia) {
+        this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccioneTipoRef'));
+        return;
+      }
+    }
+
+    //confrumar cambio
     let verificador: boolean = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
@@ -2645,14 +2679,14 @@ export class FacturaComponent implements OnInit {
       fechaFin: this.facturaService.fechaFin,
       fechaHora: this.globalConvertService.docOriginSelect!.fecha_Hora,
       fechaIni: this.facturaService.fechaIni,
+      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
       localizacion: this.globalConvertService.docOriginSelect!.localizacion,
       mUser: this.user,
       observacion: this.facturaService.observacion,
+      referencia: this.facturaService.tipoReferencia?.tipo_Referencia,
       serieDocumento: this.globalConvertService.docOriginSelect!.serie_Documento,
       tipoDocumento: this.globalConvertService.docOriginSelect!.tipo_Documento,
       user: this.globalConvertService.docOriginSelect!.usuario,
-      idDocumento: this.globalConvertService.docOriginSelect!.iD_Documento.toString(),
-      referencia: this.globalConvertService.docOriginSelect!.referencia,
     }
 
     this.facturaService.isLoading = true;

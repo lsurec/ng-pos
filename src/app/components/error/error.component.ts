@@ -121,12 +121,27 @@ export class ErrorComponent implements OnInit {
         this._eventService.regresarAPasosEvent(true);
         break;
       case 16:
-        //desde error de pasos
-        this._eventService.verHistorialSinConfirmarEvent(true);
+        //desde a registro de eerores
+        this._eventService.verErroresEvent(true);
+        break;
+      case 17:
+        //desde a error de tareas
+        this._eventService.regresarTareasDeErrorEvent(true);
+        break;
+      case 18:
+        //desde error a detalles de tarea
+        this._eventService.regresarDetalleTareaDeErrorEvent(true);
+        break;
+      case 19:
+        //desde error a crear tarea
+        this._eventService.regresarCrearEvent(true);
+        break;
+      case 20:
+        //desde error a calendario
+        this._eventService.regresarCalendarioEvent(true);
         break;
       default:
         this._location.back();
-
         break;
     }
   }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { DetalleInterface } from 'src/app/displays/shrTarea_3/interfaces/detalle-tarea.interface';
@@ -22,7 +22,11 @@ import { UsuarioService } from 'src/app/services/usuario.service';
     UsuarioService,
   ]
 })
-export class ActualizarUsuariosComponent {
+export class ActualizarUsuariosComponent implements AfterViewInit {
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('usuarioInput') usuarioInput?: ElementRef;
+  habilitarBotones: boolean = false;
 
   usuariosSeleccionados: BuscarUsuariosInterface[] = []; // Lista para almacenar los usuarios seleccionados
   usuariosResInv: BuscarUsuariosInterface[] = [];
@@ -52,6 +56,7 @@ export class ActualizarUsuariosComponent {
 
   ) {
     this.tarea = tareaActualizar;
+
     //Buscar el idioma guardado en le servicio
     let getLanguage = PreferencesService.lang;
     if (!getLanguage) {
@@ -88,12 +93,12 @@ export class ActualizarUsuariosComponent {
 
   timer: any; //temporizador
 
-  onInputChange() {
-    clearTimeout(this.timer); // Cancelar el temporizador existente
-    this.timer = setTimeout(() => {
-      this.buscarUsuarios(); // Función de filtrado que consume el servicio
-    }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
-  }
+  // onInputChange() {
+  //   clearTimeout(this.timer); // Cancelar el temporizador existente
+  //   this.timer = setTimeout(() => {
+  //     this.buscarUsuarios(); // Función de filtrado que consume el servicio
+  //   }, 1000); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
+  // }
 
   async buscarUsuarios(): Promise<void> {
 
@@ -173,6 +178,13 @@ export class ActualizarUsuariosComponent {
   }
 
   async asignarResponsable(usuario: BuscarUsuariosInterface) {
+
+    //validar que no sea el mismo usuario
+    if (this.responsable != null && usuario.email == this.responsable.t_UserName) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.asignado'));
+      return;
+    }
+
     let usuarioResponsable: EnviarResponsableInterface = {
       tarea: this.tarea.tarea.iD_Tarea,
       user_Res_Invi: usuario.userName,
@@ -189,22 +201,41 @@ export class ActualizarUsuariosComponent {
       return;
     };
 
-    let responsable: ResponsablesInterface = resResponsable.response[0];
+    let responsableN: ResponsablesInterface = resResponsable.response[0];
 
     let responsableSeleccionado: ResponsablesInterface = {
       t_UserName: usuario.email,
       estado: "activo",
-      userName: responsable.userName,
-      fecha_Hora: responsable.fecha_Hora,
-      m_UserName: responsable.m_UserName,
-      m_Fecha_Hora: responsable.m_Fecha_Hora,
-      dHm: responsable.dHm,
-      consecutivo_Interno: responsable.consecutivo_Interno
+      userName: responsableN.userName,
+      fecha_Hora: responsableN.fecha_Hora,
+      m_UserName: responsableN.m_UserName,
+      m_Fecha_Hora: responsableN.m_Fecha_Hora,
+      dHm: responsableN.dHm,
+      consecutivo_Interno: responsableN.consecutivo_Interno
     }
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.responsableAsignado'));
     this.dialogRef.close([responsableSeleccionado, usuario.name]);
   }
 
+  ngAfterViewInit() {
+    this.focusAndSelectText();
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.usuarioInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
+  }
+
+  deshabilitarBotonesTemp() {
+    this.timer = setTimeout(() => {
+      this.habilitarBotones = true;
+    }, 250);
+  }
 
 
 }

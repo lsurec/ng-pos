@@ -496,112 +496,51 @@ export class ProductService {
         )
     }
 
-    //funcion que va a realizar el consumo privado  para obtner los productos en una busqueda por sku
-    private _getProductId(
-        token: string,
-        id: string,
-    ) {
 
-        let headers = new HttpHeaders(
-            {
-                "Authorization": "bearer " + token,
-            }
-        )
-
-        //consumo de api
-        return this._http.get(`${this._urlBase}Producto/buscar/id/${id}`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner los productos en una busqueda por sku
-    getProductId(
-        token: string,
-        id: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getProductId
-                (
-                    token,
-                    id,
-                ).subscribe(
-                    //si esta correcto
-                    res => {
-                        let response: ResponseInterface = <ResponseInterface>res.body;
-
-                        let resApi: ResApiInterface = {
-                            status: true,
-                            response: response.data,
-                            storeProcedure: response.storeProcedure
-                        }
-                        resolve(resApi);
-                    },
-                    //si algo sale mal
-                    err => {
-
-                        try {
-                            let response: ResponseInterface = <ResponseInterface>err.error;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err.error,
-                                storeProcedure: response.storeProcedure,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        } catch (e) {
-
-
-                            try {
-                                let message = err.message;
-
-                                let resApi: ResApiInterface = {
-                                    status: false,
-                                    response: message,
-                                    url: err.url,
-                                }
-                                resolve(resApi);
-
-                            } catch (ex) {
-                                let resApi: ResApiInterface = {
-                                    status: false,
-                                    response: err,
-                                    url: err.url,
-                                }
-                                resolve(resApi);
-                            }
-
-
-                        }
-                    }
-                )
-        }
-        )
-    }
+   
 
     //funcion que va a realizar el consumo privado para obtner los prodictos en una busqueda por descripcion
-    private _getProductDesc(
+    private _getProduct(
         token: string,
-        descripcion: string,
+        user: string,
+        station: number,
+        search: string,
+        start: number,
+        end: number,
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
+                "user": user,
+                "station": station,
+                "search": search,
+                "start": start,
+                "end": end,
             }
         )
 
         //consumo de api
-        return this._http.get(`${this._urlBase}Producto/buscar/descripcion/${descripcion}`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Producto/buscar`, { headers: headers, observe: 'response' });
     }
 
     //funcion asyncrona con promesa para obtner los prodictos en una busqueda por descripcion
-    getProductDesc(
+    getProduct(
         token: string,
-        descripcion: string,
-    ): Promise<ResApiInterface> {
+        user: string,
+        station: number,
+        search: string,
+        start: number,
+        end: number,
+    ): Promise<ResApiInterface> {        
         return new Promise((resolve, reject) => {
-            this._getProductDesc(
+            this._getProduct(
                 token,
-                descripcion,
+                user,
+                station,
+                search,
+                start,
+                end,
             ).subscribe(
                 //si esta correcto
                 res => {
@@ -663,6 +602,8 @@ export class ProductService {
         bodega: number,
         producto: number,
         um: number,
+        correntista:number,
+        cuentaCta: string,
     ) {
 
         let headers = new HttpHeaders(
@@ -672,6 +613,8 @@ export class ProductService {
                 "producto": producto,
                 'um': um,
                 'user': user,
+                'correntista': correntista,
+                'cuentaCta': cuentaCta,
             }
         )
 
@@ -686,6 +629,8 @@ export class ProductService {
         bodega: number,
         producto: number,
         um: number,
+        correntista:number,
+        cuentaCta: string,
     ): Promise<ResApiInterface> {
         return new Promise((resolve, reject) => {
             this._getPrecios(
@@ -694,6 +639,8 @@ export class ProductService {
                 bodega,
                 producto,
                 um,
+                correntista,
+                cuentaCta,
             ).subscribe(
                 //si esta correcto
                 res => {

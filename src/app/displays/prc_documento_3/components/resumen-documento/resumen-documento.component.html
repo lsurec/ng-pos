@@ -1,6 +1,4 @@
 <app-error *ngIf="facturaService.verError" [regresar]="regresar"></app-error>
-<app-printer-configuration *ngIf="!facturaService.verError && verVistaPrevia" [volver]="volver" [pantalla]="1"
-    [document]="docPrint"></app-printer-configuration>
 <div *ngIf="!facturaService.verError && !verVistaPrevia">
     <app-progress *ngIf="isLoading && !facturaService.isStepLoading " class="progress"></app-progress>
     <!-- <app-pasos *ngIf="facturaService.isStepLoading" class="progress"></app-pasos> -->
@@ -253,7 +251,6 @@
         </div>
 
         <!-- Mostrar logos -->
-        <!-- <app-barra-logos></app-barra-logos> -->
-        <app-barra-logo-demosoft></app-barra-logo-demosoft>
+        <app-barra-logos></app-barra-logos>
     </div>
 </div>

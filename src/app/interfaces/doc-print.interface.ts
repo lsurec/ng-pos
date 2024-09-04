@@ -17,6 +17,7 @@ export interface DocumentoData {
   autorizacion: string;
   serieInterna: string;
   noInterno: string;
+  consecutivo: number;
 }
 
 // cliente.interface.ts

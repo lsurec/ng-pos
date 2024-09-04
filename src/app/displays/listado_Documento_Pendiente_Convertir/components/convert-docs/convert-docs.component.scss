@@ -1,21 +1,18 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$seleccionado         : rgba(0, 0, 0, 0.12);
-$color-bordes         : #c1bfbf; //bordes menu
-$color-gris-2         : #777; //sombra y texto gris
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
-$color-verde          : #25a704;
-$color-rojo           : #ce1414;
+$personalizado : var(--global-color); //bordes y texto azul
+$blanco        : var(--blanco); //resaltar texto blanco
+$bordes        : var(--bordes-claro);
+$bloques       : var(--bloques-claro);
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$origen-verde  : var(--cargo-claro);
+$destino-rojo  : var(--descuento-claro);
+$negro         : var(--negro);
 
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Toolbar*/
@@ -31,8 +28,8 @@ $color-rojo           : #ce1414;
 
 .toolbarPhone,
 .toolbarlargeTitle {
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 .toolbar-row {
@@ -55,17 +52,17 @@ $color-rojo           : #ce1414;
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_page {
@@ -107,8 +104,8 @@ $color-rojo           : #ce1414;
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -123,11 +120,11 @@ p {
 
 //barra de abajo
 .barra-regresar {
-    background: #FEF5E7;
-    color     : #000000;
+    background: $fondo;
+    color     : $negro;
     height    : 64px !important;
     padding   : 0px;
-    border-top: 1px solid $borde-toolbar;
+    border-top: 1px solid $bordes;
 }
 
 .titulo {
@@ -144,7 +141,7 @@ p {
     display      : flex;
     align-items  : center;
     padding      : 10px 0px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .textos14 {
@@ -153,7 +150,7 @@ p {
 
 .textosBlancos14 {
     font-size  : 14px;
-    color      : $color-blanco;
+    color      : $blanco;
     font-weight: 550;
 }
 
@@ -164,7 +161,7 @@ p {
 }
 
 .origen-destino {
-    border-top : 1px solid $color-bordes;
+    border-top : 1px solid $bordes;
     padding    : 10px 0px;
     width      : 100%;
     display    : flex;
@@ -175,13 +172,13 @@ p {
 .origen {
     width           : 50%;
     padding         : 10px;
-    background-color: $color-verde;
+    background-color: $origen-verde;
 }
 
 .destino {
     width           : 45%;
     padding         : 10px;
-    background-color: $color-rojo;
+    background-color: $destino-rojo;
 }
 
 .elemento-autorizacion {
@@ -193,13 +190,12 @@ p {
     padding         : 10px;
     width           : 50%;
     display         : flex;
-    background-color: $seleccionado;
+    background-color: $bloques;
 
 }
 
 .autorizacion {
-    width              : 45%;
-    // background-color: #666666;
+    width: 45%;
 }
 
 .barra-de-busqueda {
@@ -210,9 +206,9 @@ p {
     padding-left    : 10px;
     outline         : none;
     border-style    : none;
-    color           : $color-azul;
+    color           : $personalizado;
     // border-radius: 10px;
-    border-bottom   : 1px solid $color-bordes;
+    border-bottom   : 1px solid $bordes;
 }
 
 .informacion {

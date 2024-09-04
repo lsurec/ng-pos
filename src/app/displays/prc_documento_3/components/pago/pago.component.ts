@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { FacturaService } from '../../services/factura.service';
 import { FormaPagoInterface } from '../../interfaces/forma-pago.interface';
@@ -18,7 +18,10 @@ import { TranslateService } from '@ngx-translate/core';
     PagoService,
   ]
 })
-export class PagoComponent {
+export class PagoComponent implements OnInit {
+
+  //para seleciconar el valor del texto del input
+  @ViewChild('montoInput') montoInput?: ElementRef;
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //token de la sesion
@@ -76,10 +79,53 @@ export class PagoComponent {
     this.pagoComponentService.banco = undefined; //banco seleccionado vacio
     this.pagoComponentService.cuentaSelect = undefined; //ceunta bancaria seleccionad avacia
     this.pagoComponentService.forms = false; //oculatar formularios
+
+    this.facturaService.formasPago = this.facturaService.formasPago.map((pago, index) => ({
+      ...pago,
+      select: index === 0
+    }));
   }
+
+  ngOnInit() {
+    this.facturaService.formasPago = this.facturaService.formasPago.map((pago, index) => ({
+      ...pago,
+      select: index === 0
+    }));
+  }
+
+
+  pagoSelect: number = 0;
+
+  //Navegar en la formas de pago
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const key = event.key.toLowerCase();
+    this.pagoSelect = this.facturaService.formasPago.findIndex(pago => pago.select);
+    if (key === 'arrowdown') {
+      event.preventDefault();
+      const nextIndex = (this.pagoSelect + 1) % this.facturaService.formasPago.length;
+      this.facturaService.formasPago[this.pagoSelect].select = false;
+      this.facturaService.formasPago[nextIndex].select = true;
+    } else if (key === 'arrowup') {
+      event.preventDefault();
+      const prevIndex = (this.pagoSelect - 1 + this.facturaService.formasPago.length) % this.facturaService.formasPago.length;
+      this.facturaService.formasPago[this.pagoSelect].select = false;
+      this.facturaService.formasPago[prevIndex].select = true;
+    }
+
+    if (key === "enter" && !this.pagoComponentService.forms) {
+      this.viewForms(this.facturaService.formasPago[this.pagoSelect]);
+    }
+  }
+
 
   //ver fommulario para la forma de pago
   async viewForms(payment: FormaPagoInterface) {
+
+    // Reset select property for all items
+    this.facturaService.formasPago.forEach(p => p.select = false);
+    // Set select property of clicked item to true
+    payment.select = true;
 
     //seleccionar forma de poago
     this.pagoComponentService.pago = payment;
@@ -162,6 +208,10 @@ export class PagoComponent {
 
     //ver formulario para la forma de pago
     this.pagoComponentService.forms = true;
+
+    setTimeout(() => {
+      this.focusAndSelectText();
+    }, 0);
 
   }
 
@@ -358,10 +408,38 @@ export class PagoComponent {
     // Realiza la lógica para eliminar los pagos seleccionados, por ejemplo:
     this.facturaService.montos = this.facturaService.montos.filter((monto) => !monto.checked);
 
+    this.facturaService.montos.forEach(monto => {
+      monto.checked = false;
+    });
+
+    this.selectAllMontos = false;
     //calcular totales
     this.facturaService.calculateTotalesPago();
-      
+
     this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.montosEliminados'));
+  }
+
+  selectText() {
+    if (this.pagoComponentService.monto && this.pagoComponentService.forms) {
+      this.focusAndSelectText();
+    }
+  }
+
+
+  ngAfterViewInit() {
+    if (this.pagoComponentService.monto && this.pagoComponentService.forms) {
+      this.focusAndSelectText();
+    }
+  }
+
+  focusAndSelectText() {
+    const inputElement = this.montoInput!.nativeElement;
+    inputElement.focus();
+
+    // Añade un pequeño retraso antes de seleccionar el texto
+    setTimeout(() => {
+      inputElement.setSelectionRange(0, inputElement.value.length);
+    }, 0);
   }
 }
 

@@ -11,7 +11,7 @@ import { HelpComponent } from './components/help/help.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbDatepickerI18n, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
@@ -24,7 +24,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BarraLogosComponent } from './components/barra-logos/barra-logos.component';
-import { BarraLogoDemosoftComponent } from './components/barra-logo-demosoft/barra-logo-demosoft.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -57,7 +56,6 @@ import { DetalleDocumentoComponent } from './displays/prc_documento_3/components
 import { CargoDescuentoComponent } from './displays/prc_documento_3/components/cargo-descuento/cargo-descuento.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SelectedConfigurationComponent } from './components/selected-configuration/selected-configuration.component';
-import { PrinterConfigurationComponent } from './components/printer-configuration/printer-configuration.component';
 import { TypesDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/types-docs/types-docs.component';
 import { OriginDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/origin-docs/origin-docs.component';
 import { DestinationDocsComponent } from './displays/listado_Documento_Pendiente_Convertir/components/destination-docs/destination-docs.component';
@@ -87,8 +85,13 @@ import { CustomDatepickerI18n } from './services/custom-datepicker-i18n.service'
 import { ConfirmarNuevoDocComponent } from './components/confirmar-nuevo-doc/confirmar-nuevo-doc.component';
 import { CurrencyFormatPipe } from './pipes/currecy-format/currency-format.pipe';
 import { TraducirComponent } from './components/traducir/traducir.component';
-import { RecuperarDocComponent } from './components/recuperar-doc/recuperar-doc.component';
-import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components/docs-sin-confirmar/docs-sin-confirmar.component';
+import { NuevaTareaComponent } from './components/nueva-tarea/nueva-tarea.component';
+import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
+import { DocsHistorialComponent } from './components/docs-historial/docs-historial.component';
+import { ErrorInterceptor } from './interceptors/error/error.interceptor';
+import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
+import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
+import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,7 +106,6 @@ import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components
     LogosComponent,
     ProgressComponent,
     BarraLogosComponent,
-    BarraLogoDemosoftComponent,
     LocalConfigComponent,
     LangComponent,
     ThemeComponent,
@@ -124,7 +126,6 @@ import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components
     CargoDescuentoComponent,
     SidenavComponent,
     SelectedConfigurationComponent,
-    PrinterConfigurationComponent,
     TypesDocsComponent,
     OriginDocsComponent,
     DestinationDocsComponent,
@@ -147,8 +148,12 @@ import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components
     ConfirmarNuevoDocComponent,
     CurrencyFormatPipe,
     TraducirComponent,
-    RecuperarDocComponent,
-    DocsSinConfirmarComponent,
+    NuevaTareaComponent,
+    BuscarUsuariosComponent,
+    DocsHistorialComponent,
+    RegistroDeErroresComponent,
+    DetalleErrorComponent,
+    ListaTareasComponent,
   ],
   imports: [
     MatCardModule,
@@ -193,8 +198,13 @@ import { DocsSinConfirmarComponent } from './displays/prc_documento_3/components
   providers: [
     {
       provide: NgbDatepickerI18n,
-      useClass: CustomDatepickerI18n
-    }
+      useClass: CustomDatepickerI18n,
+    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ErrorInterceptor,
+    //   multi: true,
+    // }
     // DataUserService,
   ],
   bootstrap: [AppComponent]

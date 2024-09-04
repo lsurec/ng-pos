@@ -18,6 +18,7 @@ import { EstadoInterface } from 'src/app/displays/shrTarea_3/interfaces/estado-t
 import { NivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/prioridad-tarea.interface';
 import { ActualizarEstadoInterface, ActualizarNivelPrioridadInterface } from 'src/app/displays/shrTarea_3/interfaces/actualizar-tarea.interface';
 import { ActualizarTareaService } from 'src/app/services/actualizar-tarea.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 
 @Component({
   selector: 'app-dialog-tarea',
@@ -44,13 +45,15 @@ export class DialogTareaComponent {
   fechaHoy: Date = new Date();
   //mostrra y ocultar pantallas
   isLoading: boolean = false;
-  detalles: boolean = true;
 
   estadosTarea: EstadoInterface[] = [];
   estadoTarea: EstadoInterface | null = null; //estado de la tarea
 
   prioridadesTarea: NivelPrioridadInterface[] = [];
   prioridadTarea: NivelPrioridadInterface | null = null;
+
+  empresa: EmpresaInterface = PreferencesService.empresa;
+
 
   constructor(
     //Declaracion de variables privadas
@@ -61,7 +64,6 @@ export class DialogTareaComponent {
     private _nuevoComentario: CrearTareasComentariosService,
     private _tareaService: TareaService,
     private _translate: TranslateService,
-    private _calendarioService: TareaCalendarioService,
     private _estadoService: EstadoService,
     private _prioridad: NivelPrioridadService,
     private _actualizarTareaService: ActualizarTareaService,
@@ -88,6 +90,28 @@ export class DialogTareaComponent {
     await this.getComentarios();
 
     this.isLoading = false;
+  }
+
+  convertLinksToHtml(text: string): string {
+    // Expresión regular para encontrar URLs en el texto
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    // Función de reemplazo para envolver las URLs con etiquetas <a>
+    const replaceFunction = (url: string) => {
+      return `<a href="${url}" target="_blank" style="color: blue;">${url}</a>`;
+    };
+
+    // Reemplaza las URLs en el texto
+    const convertedText = text.replace(urlRegex, replaceFunction);
+
+    return convertedText;
+  }
+
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto'; // Resetea la altura para calcular la nueva altura
+    const newHeight = Math.min(textarea.scrollHeight, 150); // Calcula la nueva altura, con un máximo de 150px (10 rows aprox.)
+    textarea.style.height = newHeight + 'px';
   }
 
   async getComentarios() {
@@ -143,7 +167,7 @@ export class DialogTareaComponent {
     this.selectedFiles = event.target.files;
   };
 
-  removeFile(index: number) {
+  eliminarArchivo(index: number) {
     if (index >= 0 && index < this.selectedFiles.length) {
       const newFiles = [...this.selectedFiles]; // Hacer una copia del array
       newFiles.splice(index, 1);
@@ -151,46 +175,63 @@ export class DialogTareaComponent {
     }
   }
 
-  validarComentario(): void {
-    if (this.comentarioDesc.length === 0) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
-    } else {
-      this.comentar();
-    };
-  };
+  async comentar() {
 
-  //Crear nuevo comentario 
-  async comentar(): Promise<void> {
+    if (!this.comentarioDesc) {
+      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.completarCamposTarea'));
+      return;
+    }
+
     //crear el objeto del comentario
-    let comentarioN: ComentarInterface =
+    let comentar: ComentarInterface =
     {
       tarea: this.data.tarea.tarea,
       userName: this.usuarioTarea,
       comentario: this.comentarioDesc,
     };
-    //cargar pantalla
-    this.isLoading = true;
-    this.detalles = false;
 
-    //Consumo de api
-    let resNuevoComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentarioN)
+    this.isLoading = true;
+
+    let resPrimerComentario: ResApiInterface = await this._nuevoComentario.postNuevoComentario(comentar);
 
     //Si el servico se ejecuta mal mostar mensaje
-    if (!resNuevoComentario.status) {
+    if (!resPrimerComentario.status) {
       //ocultar carga
       this.isLoading = false;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.salioMal'));
-      console.error(resNuevoComentario.response);
-      console.error(resNuevoComentario.storeProcedure);
+      this._widgetsService.openSnackbar(this._translate.instant('pos.alertas.salioMal'));
+      console.error(resPrimerComentario.response);
+      console.error(resPrimerComentario.storeProcedure);
       return
     }
+    //ID del comentario 
+    let idComenario: number = resPrimerComentario.response.res;
+    let urlFiles: string = this.empresa.absolutePathPicture;
 
-    let idComenario: LoginInterface = resNuevoComentario.response;
+    if (this.selectedFiles.length > 0) {
 
+      //Consumo de api files
+      let resFiles: ResApiInterface = await this._files.postFilesComment(
+        this.selectedFiles,
+        this.data.tarea.tarea,
+        idComenario,
+        urlFiles
+      );
+
+      //Si el servico se ejecuta mal mostar mensaje
+      if (!resFiles.status) {
+        this.isLoading = false;
+        this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
+        console.error(resFiles.response);
+        console.error(resFiles.storeProcedure);
+        return;
+      };
+
+      // this.isLoading = false;
+    };
 
     //armar nuevo comentario
     let comentario: ComentarioInterface = {
-      tarea_Comentario: +idComenario.message,
+      tarea_Comentario: idComenario,
       tarea: this.data.tarea.tarea,
       comentario: this.comentarioDesc,
       fecha_Hora: new Date,
@@ -207,7 +248,8 @@ export class DialogTareaComponent {
         objeto_Nombre: element.name,
         objeto_Size: '',
         objeto_URL: '',
-        tarea_Comentario_Objeto: 1
+        tarea_Comentario_Objeto: 1,
+        observacion_1: element.name,
       }
       archivos.push(archivo)
     }
@@ -216,38 +258,19 @@ export class DialogTareaComponent {
     let comentarioDetalle: ComentariosDetalle = {
       comentario: comentario,
       files: archivos
-    };
+    }
+
 
     //insertar el comentario en la lista de comentarios de la tarea.
     this.comentarios.push(comentarioDetalle);
 
-    //lista de archivos esta vacia:
-    if (this.selectedFiles.length == 0) {
-      this.isLoading = false;
-      this.detalles = true;
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
-      return;
-    }
-
-    //Consumo de api files
-    let resFiles: ResApiInterface = await this._files.postFilesComment(this.selectedFiles, this.data.tarea.tarea, comentarioDetalle.comentario.tarea_Comentario);
-
-    //Si el servico se ejecuta mal mostar mensaje
+    //Limoiar el comentario y la lista
     this.isLoading = false;
-    if (!resFiles.status) {
-      this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.archivosNoCargados'));
-      console.error(resFiles.response);
-      console.error(resFiles.storeProcedure);
-      return;
-    }
-
     this.comentarioDesc = '';
     this.selectedFiles = [];
-    //mostrar el ID del comentario creado correctamente
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.comentarioCreado'));
-    this.detalles = true;
 
-  };
+  }
 
   //mostrar un mensaje de no disponible 
   //cuando la informacion de los detalles esta vacia
@@ -286,6 +309,13 @@ export class DialogTareaComponent {
   };
 
   async nuevoEstadoTarea() {
+
+    //validar que el estado seleccuinado no sea el mismo que el actual
+    if (this.estadoTarea?.estado == this.data.tarea.estado) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarEstadoInterface =
     {
       tarea: this.data.tarea.tarea,
@@ -351,7 +381,7 @@ export class DialogTareaComponent {
 
     for (let index = 0; index < this.prioridadesTarea.length; index++) {
       const element = this.prioridadesTarea[index];
-      if (element.nombre == this.data.tarea.nom_Nivel_Prioridad) {
+      if (element.nivel_Prioridad == this.data.tarea.nivel_Prioridad) {
         this.prioridadTarea = element;
         break;
       }
@@ -360,6 +390,13 @@ export class DialogTareaComponent {
   };
 
   async nuevoNivelPrioridad() {
+
+    //validar que el nivel de prioridad seleccuinado no sea el mismo que el actual
+    if (this.prioridadTarea?.nivel_Prioridad == this.data.tarea.nivel_Prioridad) {
+      // this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.estadoIgual'));
+      return;
+    }
+
     let actualizacion: ActualizarNivelPrioridadInterface =
     {
       tarea: this.data.tarea.tarea,
@@ -411,4 +448,7 @@ export class DialogTareaComponent {
     this._widgetsService.openSnackbar(this._translate.instant('crm.alertas.prioridadActualizada'));
   }
 
+  formatText(text: string): string {
+    return text.replace(/\n/g, '<br>');
+  }
 }

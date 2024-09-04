@@ -17,7 +17,7 @@
         <span class="close" (click)="closeDialog()">&times;</span>
     </div>
 </mat-toolbar-row>
-<div mat-dialog-content class="dialog" *ngIf="detalles && !isLoading">
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
     <div class="comentarios">
         <div class="detallesTarea">
             <div class="titulo-cerrar">
@@ -25,11 +25,17 @@
                 <!-- Numero de la tarea -->
                 <p class="campo-tarea"> {{data.tarea.tarea}} </p>
             </div>
-            <div class="barra-titulo">
+            <div class="">
                 <p class="campo-detalle">{{'crm.dialog.descripcion' | translate}}</p>
                 <!-- Descripcion de la tarea -->
-                <p class="campo-tarea">{{data.tarea.descripcion_Tarea}}</p>
+                <!-- <p class="campo-tarea">{{data.tarea.observacion_1}}</p> -->
+                <div class="campo-tarea">
+                    <p [innerHTML]="formatText(convertLinksToHtml(data.tarea.observacion_1))" class="espacio-lineas">
+                    </p>
+                </div>
+
             </div>
+            <hr>
             <div class="barra-titulo">
                 <p class="campo-detalle">{{ 'crm.tarea.tipo' | translate}}</p>
                 <!-- Descripcion de la tarea -->
@@ -74,18 +80,19 @@
                     <div class="comentario">
                         <p>{{comentario.comentario.nameUser}}</p>
                         <span class="spacer"></span>
-                        <p>{{comentario.comentario.fecha_Hora | date: 'dd/MM/yyyy'}}</p>
+                        <p>{{comentario.comentario.fecha_Hora | date: 'dd/MM/yyyy hh:mm a'}}</p>
                     </div>
                     <!-- decripcion de comentario -->
                     <div class="comentario_desc">
-                        <p>{{comentario.comentario.comentario}}</p>
-                        <div class="" *ngIf="data.comentarios[index].files.length >0">
-                            <button mat-button *ngFor="let file of data.comentarios[index].files" class="d-flex">
-                                <!-- arvhivos del comentario -->
-                                <mat-icon class="ico_link"> description </mat-icon>
-                                <p class="nombre-archivos">{{file.objeto_Nombre}}</p>
-                                <!-- fin archios del comentario -->
-                            </button>
+                        <p [innerHTML]="formatText(convertLinksToHtml(comentario.comentario.comentario))"
+                            class="espacio-lineas"></p>
+                        <!-- <p>{{comentario.comentario.comentario}}</p> -->
+                        <div class="" *ngIf="comentarios[index].files.length >0">
+                            <div class="adjuntos" *ngFor="let file of comentarios[index].files">
+                                <a [href]="file.objeto_URL" target="_blank">
+                                    {{file.observacion_1.length == 0 ? file.objeto_Nombre : file.observacion_1 }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <!-- linea para conectar los comentarios -->
@@ -104,24 +111,22 @@
                         <div class="comentario">
                             <p>{{usuarioTarea}}</p>
                             <span class="spacer"></span>
-                            <p>{{fechaHoy | date: 'dd/MM/yyyy'}}</p>
+                            <p>{{fechaHoy | date: 'dd/MM/yyyy hh:mm a'}}</p>
                         </div>
                         <div class="comentario_desc">
-                            <textarea name="notas" id="descripcion" cols="30" rows="2"
+                            <textarea name="notas" id="descripcion" cols="30" rows="3"
                                 placeholder="{{'crm.crear.comentario' | translate}}" [(ngModel)]="comentarioDesc"
-                                class="escribir-comentario">
+                                class="escribir-comentario" (input)="autoResize($event)"
+                                style="overflow:auto; resize:none;">
                             </textarea>
                             <div class="lista-archivos" *ngIf="selectedFiles.length >= 1">
-                                <p class="">{{'crm.crear.adjuntos' | translate}}
-                                    ({{selectedFiles.length}})
-                                </p>
-                                <div *ngFor="let file of selectedFiles; let iFile = index" class="d-flex">
-                                    <p class="nombre-archivos"> - {{ file.name }}</p>
+                                <p>{{'crm.crear.adjuntos' | translate}} ({{selectedFiles.length}})</p>
+
+                                <div *ngFor="let file of selectedFiles; let i = index" class="archivos-adjuntos">
+                                    <p class="nombre-archivos"> {{ file.name }}</p>
                                     <span class="spacer"></span>
-                                    <mat-icon class="eliminar" (click)="removeFile(iFile)"
-                                        matTooltip="{{'crm.crear.eliminar' | translate}}">
-                                        close
-                                    </mat-icon>
+                                    <mat-icon (click)="eliminarArchivo(i)" class="eliminar"
+                                        matTooltip="eliminar archivo">close</mat-icon>
                                 </div>
                             </div>
                             <div class="archivos-comentar">
@@ -137,8 +142,7 @@
                                     </button>
                                 </div>
                                 <span class="spacer"></span>
-                                <button mat-button class="subir-comentarios" (click)="validarComentario()">
-                                    <mat-icon>post_add</mat-icon>
+                                <button mat-button class="subir-comentarios" (click)="comentar()">
                                     {{ 'crm.crear.comentar' | translate}}
                                 </button>
                             </div>

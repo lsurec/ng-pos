@@ -1,20 +1,16 @@
-$color-negro          : #000; //texto negro
-$color-azul           : #134895; //bordes y texto azul
-$color-blanco         : #fff; //resaltar texto blanco
-$color-gris           : #666666; //texto gris
-$borde-toolbar        : rgba(0, 0, 0, 0.12);
-$seleccionado         : rgba(0, 0, 0, 0.12);
-$color-bordes         : #c1bfbf; //bordes menu
-$color-gris-2         : #777; //sombra y texto gris
-$background-oficial   : #FEF5E7; //fondo Demosoft
-$background-scrollbar : #134895; //barra azul
-
+$personalizado : va(--global-color); //bordes y texto azul
+$seleccionado  : var(--bloques-claro);
+$bordes        : var(--bordes-claro); //bordes menu
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$gris          : var(--gris);
+$blanco        : var(--blaco);
 
 .progress {
     padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 /*Toolbar*/
@@ -30,8 +26,8 @@ $background-scrollbar : #134895; //barra azul
 
 .toolbarPhone,
 .toolbarlargeTitle {
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 .toolbar-row {
@@ -55,17 +51,17 @@ $background-scrollbar : #134895; //barra azul
 
 .container_main::-webkit-scrollbar {
     width           : 7px;
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-track {
-    background-color: $background-oficial;
+    background-color: $fondo;
 }
 
 .container_main::-webkit-scrollbar-thumb {
-    background-color: $background-scrollbar;
+    background-color: $scroll;
     border-radius   : 20px;
-    border          : 3px $background-oficial;
+    border          : 3px $fondo;
 }
 
 .container_page {
@@ -94,6 +90,7 @@ $background-scrollbar : #134895; //barra azul
         display: block !important;
     }
 
+    .informacion,
     .fechas,
     .ordenar {
         width: 100% !important;
@@ -102,8 +99,8 @@ $background-scrollbar : #134895; //barra azul
 
 .head__sidenav {
     height          : 44px !important;
-    background-color: $background-oficial;
-    border-bottom   : 1px solid $borde-toolbar;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
 }
 
 /*Fin Contendo derecho*/
@@ -114,15 +111,6 @@ $background-scrollbar : #134895; //barra azul
 
 p {
     margin-bottom: 0px;
-}
-
-//barra de abajo
-.barra-regresar {
-    background: #FEF5E7;
-    color     : #000000;
-    height    : 64px !important;
-    padding   : 0px;
-    border-top: 1px solid $borde-toolbar;
 }
 
 .titulo {
@@ -139,7 +127,7 @@ p {
     display       : flex;
     width         : 100%;
     align-items   : center;
-    border-bottom : 1px solid $color-bordes;
+    border-bottom : 1px solid $bordes;
     padding-bottom: 15px;
 }
 
@@ -157,34 +145,37 @@ p {
 
 .seleccionar {
     border-style : none;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
     font-size    : 12px;
 }
 
 .mat-mdc-select {
-    display: inline-block;
-    width  : 100%;
-    outline: none;
-    height : 30px;
+    display    : flex;
+    width      : 100%;
+    outline    : none;
+    padding    : 0px 5px;
+    background : transparent !important;
+    align-items: center;
+    height     : 50px;
 }
 
 .mat-mdc-option {
     min-height: 30px;
-    color     : $color-azul;
+    color     : $personalizado;
     font-size : 13px;
 }
 
 .lista-documentos {
     width        : 100%;
     padding      : 10px 0px;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .documentos-origen {
     width           : 100%;
     padding         : 10px 20px;
     margin          : 5px 0px;
-    border          : 1px solid $color-bordes;
+    border          : 1px solid $bordes;
     cursor          : pointer;
     background-color: $seleccionado;
 }
@@ -209,8 +200,8 @@ p {
     background-color: transparent !important;
     height          : 35px;
     font-size       : 14px;
-    border          : 1px solid $color-bordes;
-    color           : $color-azul;
+    border          : 1px solid $bordes;
+    color           : $personalizado;
 }
 
 .calendarios {
@@ -223,7 +214,7 @@ p {
 }
 
 .ver-calendario {
-    border     : 1px solid $color-bordes;
+    border     : 1px solid $bordes;
     align-items: center;
     height     : 35px;
 }
@@ -238,15 +229,15 @@ p {
     padding      : 5px 8px;
     margin       : 4px;
     cursor       : pointer;
-    border       : 1px solid #ccc;
+    border       : 1px solid $gris;
     border-radius: 20px;
     font-size    : 12px;
 }
 
 .selected {
-    background-color: $color-azul;
-    color           : #fff;
-    border          : 1px solid $color-azul;
+    background-color: $personalizado;
+    color           : $blanco;
+    border          : 1px solid $personalizado;
 }
 
 
@@ -256,7 +247,7 @@ p {
     display      : flex;
     align-items  : center;
     width        : 75%;
-    border-bottom: 1px solid $color-bordes;
+    border-bottom: 1px solid $bordes;
 }
 
 .barra-de-busqueda {
@@ -267,16 +258,16 @@ p {
     padding-left: 10px;
     outline     : none;
     border-style: none;
-    color       : $color-azul;
+    color       : $personalizado;
 }
 
 .input-container:hover {
-    border-bottom: 1px solid $color-azul;
+    border-bottom: 1px solid $personalizado;
 }
 
 //Estilo para el icono
 .iconoLupa {
-    color: $color-azul;
+    color: $personalizado;
 }
 
 .cambiarFecha {
@@ -303,7 +294,7 @@ p {
     bottom          : 75px;
     right           : 60px;
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $personalizado;
 }
 
 
@@ -313,7 +304,7 @@ p {
     bottom          : 75px;
     right           : 60px;
     font-size       : 20px;
-    background-color: $color-azul;
+    background-color: $personalizado;
 }
 
 @media screen and (max-width: 992px) {
