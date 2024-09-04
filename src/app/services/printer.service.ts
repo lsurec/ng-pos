@@ -1376,6 +1376,29 @@ export class PrinterService {
                                     ]
                                 }
                             ],
+                            [
+                                {
+                                    text: "TIPO CLIENTE:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: doc.cliente.tipo,
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Tipo evento: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: doc.documento.evento,
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
                         ]
                     }
                 },
