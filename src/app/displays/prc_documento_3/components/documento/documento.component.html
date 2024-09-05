@@ -270,6 +270,15 @@
 
     <div class="cliente">
 
+        <div class="informacion-fondo" *ngIf="facturaService.valueParametro(58)">
+            <div class="dFlex">
+                <mat-checkbox class="example-margin" color="primary"
+                    [(ngModel)]="facturaService.confirmarCotizacion"></mat-checkbox>
+                <p class="subtitulo">Confirmar Orden</p>
+            </div>
+
+        </div>
+
         <div class="informacion-fondo" *ngIf="facturaService.vendedores.length > 0" (click)="changeCuentaRef()">
             <p class="subtitulo">{{ 'pos.factura.vendedor' | translate }}</p>
             <mat-select [disabled]="globalConvertService.editDoc" name="estado" class="seleccionar"

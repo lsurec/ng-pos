@@ -516,6 +516,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
+    this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+
 
     this.setDateNow();
     this.facturaService.setIdDocumentoRef();
@@ -1388,7 +1390,7 @@ export class FacturaComponent implements OnInit {
   // }
 
   //Confirmar documento
-  printDoc() {
+  async printDoc() {
 
     //Si no hay serie seleccionado mostrar mensaje
     if (!this.facturaService.serie) {
@@ -1448,6 +1450,40 @@ export class FacturaComponent implements OnInit {
     }
 
     //validar fechas si existen
+
+    if (this.facturaService.tipoDocumento! == 20) {
+      let verificador: boolean = await this._notificationService.openDialogActions(
+        {
+          title: "¿Desea modificar terminos y condiciones para este documento?",
+          description: "Podrá editar, eliminar y/o agregar terminos y condiciones.",
+          falso: this._translate.instant('pos.botones.modificar'),
+          verdadero: this._translate.instant('pos.botones.imprimir'),
+
+        }
+      );
+
+
+      if (!verificador) {
+
+        let resDialogMensajes = await this._notificationService.openTerms(this.facturaService.terminosyCondiciones);
+
+        if (!resDialogMensajes) {
+          this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+          return;
+        }
+
+        this.sendDoc();
+
+        return;
+      }
+
+      this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+
+      this.sendDoc();
+
+      return;
+
+    }
 
     this.sendDoc();
 
@@ -2526,6 +2562,7 @@ export class FacturaComponent implements OnInit {
 
     //documento estructura
     this.docGlobal = {
+      Doc_Confirmar_Orden: this.facturaService.valueParametro(58) ? this.facturaService.confirmarCotizacion : true,
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,

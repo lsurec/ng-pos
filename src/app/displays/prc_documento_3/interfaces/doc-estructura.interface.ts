@@ -1,6 +1,7 @@
 // documento.interface.ts
 
 export interface Documento {
+  Doc_Confirmar_Orden:boolean;
   Doc_Ref_Tipo_Referencia:number | null | undefined,
   Doc_Ref_Fecha_Ini:Date | null | undefined, //entrega
   Doc_Ref_Fecha_Fin:Date | null | undefined, //regoger

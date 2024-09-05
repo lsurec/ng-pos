@@ -92,6 +92,8 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
 import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
+import { EditarTerminosComponent } from './displays/prc_documento_3/components/editar-terminos/editar-terminos.component';
+import { InputTerminoComponent } from './displays/prc_documento_3/components/input-termino/input-termino.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -154,6 +156,8 @@ import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tar
     RegistroDeErroresComponent,
     DetalleErrorComponent,
     ListaTareasComponent,
+    EditarTerminosComponent,
+    InputTerminoComponent,
   ],
   imports: [
     MatCardModule,

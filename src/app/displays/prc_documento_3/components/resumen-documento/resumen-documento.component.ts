@@ -1734,6 +1734,7 @@ evento:      "",
 
     //documento estructura
     this.docGlobal = {
+      Doc_Confirmar_Orden: true,
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
