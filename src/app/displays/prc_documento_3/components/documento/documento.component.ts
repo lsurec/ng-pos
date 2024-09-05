@@ -687,8 +687,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-
-      this.facturaService.showDetalle();
+      if ((this.facturaService.series.length > 1 && this.facturaService.serie != null) && (this.facturaService.vendedores.length > 0 && this.facturaService.vendedor != null) && (this.facturaService.valueParametro(58) && this.facturaService.tipoReferencia != null)) {
+        this.facturaService.showDetalle();
+      }
 
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
