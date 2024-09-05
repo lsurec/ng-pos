@@ -1747,6 +1747,7 @@ export class FacturaComponent implements OnInit {
     }
 
     let documento: DocumentoData = {
+      evento: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.descripcion ?? "" : "",
       consecutivo: this.consecutivoDoc,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
@@ -1763,6 +1764,7 @@ export class FacturaComponent implements OnInit {
     let currentDate: Date = new Date();
 
     let cliente: Cliente = {
+      tipo: cuenta?.des_Grupo_Cuenta ?? "",
       correo: cuenta?.eMail ?? "",
       nombre: cuenta?.factura_Nombre ?? "",
       direccion: cuenta?.factura_Direccion ?? "",

@@ -18,6 +18,7 @@ export interface DocumentoData {
   serieInterna: string;
   noInterno: string;
   consecutivo: number;
+  evento:string,
 }
 
 // cliente.interface.ts
@@ -28,6 +29,7 @@ export interface Cliente {
   nit: string;
   fecha: Date;
   tel: string;
+  tipo:string;
 }
 
 export interface Fechas {

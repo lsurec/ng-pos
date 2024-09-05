@@ -167,6 +167,7 @@ export class DetailsDestDocsComponent {
     //datos del documento
     let documento: DocumentoData = {
       consecutivo: 0,
+      evento:"",
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: this._translate.instant('pos.factura.documento_generico'),
       fechaCert: "",
@@ -182,6 +183,7 @@ export class DetailsDestDocsComponent {
 
     //Datos del cliente
     let cliente: Cliente = {
+      tipo: "",
       nombre: encabezado?.documento_Nombre ?? "",
       direccion: encabezado?.documento_Direccion ?? "",
       nit: encabezado?.documento_Nit ?? "",
