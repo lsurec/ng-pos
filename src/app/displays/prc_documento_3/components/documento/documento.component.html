@@ -270,7 +270,7 @@
 
     <div class="cliente">
 
-        <div class="informacion-fondo">
+        <div class="informacion-fondo" *ngIf="facturaService.valueParametro(58)">
             <div class="dFlex">
                 <mat-checkbox class="example-margin" color="primary"
                     [(ngModel)]="facturaService.confirmarCotizacion"></mat-checkbox>
