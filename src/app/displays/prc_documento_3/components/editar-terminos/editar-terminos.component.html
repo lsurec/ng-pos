@@ -1,5 +1,3 @@
-<app-progress *ngIf="isLoading" class="progress"></app-progress>
-
 <mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
     <span class="spacer"></span>
     <p class="verDetalle">TERMINOS Y CONDICIONES</p>
@@ -7,46 +5,41 @@
     <span class="close" (click)="closeDialog()">&times;</span>
 </mat-toolbar-row>
 <div class="cantidad-registros">
-    <p class="campo-obligatorio">{{ 'pos.factura.registros' | translate }}
+    <p>{{ 'pos.factura.registros' | translate }}
         ({{facturaService.terminosyCondiciones.length}})
     </p>
 
     <span class="spacer"></span>
 
-    <button mat-raised-button class="boton-azul" (click)="editar(-1)">
+    <button mat-stroked-button (click)="editar(-1)">
         <mat-icon>add</mat-icon>
+        {{ 'pos.botones.agregar' | translate }}
     </button>
 
 </div>
 <!-- Dialogo de los detalles de las tareas -->
 <div mat-dialog-content class="dialog" *ngIf="!isLoading" #scrollContainer>
     <div class="contenedor">
-        <div class="busqueda">
-            <div class="contenido-izquierdo">
-                <div class="" *ngFor="let producto of facturaService.terminosyCondiciones; let index = index">
-                    <div class="seleccionar-imagen">
-                        <div class="seleccionar">
-                            <p class="textos">{{index+1}}. {{producto}} </p>
-                            <!-- <p class="subtitulo">{{ 'pos.factura.sku' | translate }}: {{producto}}</p> -->
-                        </div>
-                        <span class="spacer"></span>
-                        <button mat-icon-button (click)="editar(index)">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="eliminar(index)">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
+        <div class="" *ngFor="let producto of facturaService.terminosyCondiciones; let index = index">
+            <div class="seleccionar-imagen">
+                <div class="seleccionar">
+                    <p class="textos">{{index+1}}. {{producto}} </p>
                 </div>
+                <span class="spacer"></span>
+                <button mat-icon-button (click)="editar(index)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="eliminar(index)">
+                    <mat-icon>close</mat-icon>
+                </button>
             </div>
         </div>
     </div>
-
-    <div class="dFlex">
-        <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
-        <span class="spacer"></span>
+    <div class="botones-dialogo">
         <button mat-stroked-button [mat-dialog-close]="false">
-            {{ 'pos.botones.cancelar' | translate }}</button>
+            {{ 'pos.botones.cancelar' | translate }}
+        </button>
+        <span class="spacer"></span>
         <button mat-stroked-button [mat-dialog-close]="true">
             {{ 'pos.botones.modificar'| translate }}
         </button>

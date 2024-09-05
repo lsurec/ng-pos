@@ -516,6 +516,8 @@ export class FacturaComponent implements OnInit {
     this.facturaService.refDireccionEntrega = undefined;
     this.facturaService.refObservacion = undefined;
     this.facturaService.observacion = "";
+    this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+
 
     this.setDateNow();
     this.facturaService.setIdDocumentoRef();
@@ -1465,12 +1467,17 @@ export class FacturaComponent implements OnInit {
 
         let resDialogMensajes = await this._notificationService.openTerms(this.facturaService.terminosyCondiciones);
 
-        if (!resDialogMensajes) return;
+        if (!resDialogMensajes) {
+          this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+          return;
+        }
 
         this.sendDoc();
 
         return;
       }
+
+      this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
 
       this.sendDoc();
 
@@ -2553,7 +2560,7 @@ export class FacturaComponent implements OnInit {
 
     //documento estructura
     this.docGlobal = {
-      Doc_Confirmar_Orden:  this.facturaService.valueParametro(58) ? this.facturaService.confirmarCotizacion : true,
+      Doc_Confirmar_Orden: this.facturaService.valueParametro(58) ? this.facturaService.confirmarCotizacion : true,
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,

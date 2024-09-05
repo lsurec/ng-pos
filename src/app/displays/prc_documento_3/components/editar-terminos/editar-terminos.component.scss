@@ -6,20 +6,11 @@ $gris          : var(--gris);
 $hover         : var(--hover);
 $personalizado : var(--global-color);
 
-
-.progress {
-    padding         : 0px;
-    padding-right   : 0px;
-    width           : 680px;
-    height          : 430px;
-    background-color: $fondo;
-}
-
 .dialog {
-    padding         : 10px 10px 15px 15px;
+    padding         : 0px;
     width           : 700px;
-    height          : 430px;
     background-color: $fondo;
+    overflow        : hidden;
 }
 
 .head__sidenav {
@@ -35,17 +26,19 @@ $personalizado : var(--global-color);
 .contenedor {
     overflow-y: auto;
     overflow-x: hidden;
+    height    : 325px;
+    padding   : 5px 10px;
 }
 
-.dialog::-webkit-scrollbar {
+.contenedor::-webkit-scrollbar {
     width: 7px;
 }
 
-.dialog::-webkit-scrollbar-track {
+.contenedor::-webkit-scrollbar-track {
     background: $fondo;
 }
 
-.dialog::-webkit-scrollbar-thumb {
+.contenedor::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
     border          : 3px $fondo;
@@ -53,6 +46,41 @@ $personalizado : var(--global-color);
 
 .spacer {
     flex: 1 1 auto;
+}
+
+.seleccionar-imagen {
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+    margin       : 10px 0px;
+}
+
+.seleccionar {
+    width      : 90%;
+    cursor     : pointer;
+    min-height : 30px;
+    font-weight: 400;
+    padding    : 5px 10px;
+}
+
+.seleccionar:hover {
+    background-color: $hover;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.textos {
+    font-size: 14px;
+}
+
+.botones-dialogo {
+    padding      : 0px 10px;
+    display      : flex;
+    align-items  : center;
+    margin-bottom: 10px;
 }
 
 .close {
@@ -85,65 +113,14 @@ p {
     color : $negro;
 }
 
-.busqueda {
-    text-align : left !important;
-    font-size  : 14px;
-    width      : 100%;
-    font-weight: 450;
-    align-items: center;
-}
-
-.contenido-izquierdo {
-    //corregir ancho del contenedor
-    min-height      : 35px;
-    align-items     : center;
-    // margin-bottom: 5px;
-    width           : 100%;
-    padding-left    : 5px;
-    padding-right   : 5px;
-}
-
-.seleccionar-imagen {
-    border-bottom: 1px solid $bordes;
-    display      : flex;
-    align-items  : center;
-    margin       : 10px 0px;
-}
-
-.seleccionar {
-    width           : 90%;
-    cursor          : pointer;
-    min-height      : 30px;
-    // border-bottom: 1px solid $bordes;
-    font-weight     : 400;
-    padding         : 5px 10px;
-}
-
-.seleccionar:hover {
-    background-color: $hover;
-}
-
-.dFlex {
-    display    : flex;
-    align-items: center;
-}
-
 .cantidad-registros {
     display         : flex;
     align-items     : center;
     background-color: $fondo;
-    padding         : 0px 10px;
+    padding         : 5px 10px 0px;
     font-size       : 14px;
     font-weight     : 500;
 }
-
-.verMas {
-    padding        : 10px;
-    color          : $personalizado;
-    text-decoration: underline;
-    cursor         : pointer;
-}
-
 
 .verDetalle {
     font-weight   : 500;
@@ -153,20 +130,9 @@ p {
     padding-bottom: 0;
 }
 
-.titulos {
-    display    : flex;
-    align-items: center;
-    padding    : 3px 0px;
-}
 
-.subtitulo {
-    font-size  : 14px;
-    font-weight: 550;
-}
+// ----------------------------------------
 
-.textos {
-    font-size: 14px;
-}
 
 @media screen and (max-width: 767px) {
 
