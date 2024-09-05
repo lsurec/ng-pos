@@ -134,12 +134,12 @@ export class FacturaService {
     confirmarCotizacion: boolean = false;
 
     terminosyCondiciones: String[] = [
-        "1. Esta Cotización no es reservación.",
-        "2. Al confirmar su cotización se requiere de contrato firmado.",
-        "3. Los precios cotizados están sujetos a cambios.",
-        "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
-        "5. Se solicitara cheque de garantía.",
-        "6. Se cobrará por daños al mobiliario y equipo según contrato.",
+        "Esta Cotización no es reservación.",
+        "Al confirmar su cotización se requiere de contrato firmado.",
+        "Los precios cotizados están sujetos a cambios.",
+        "Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+        "Se solicitara cheque de garantía.",
+        "Se cobrará por daños al mobiliario y equipo según contrato.",
     ];
 
     //estados:1 cargando; 2:correcto; 3:error

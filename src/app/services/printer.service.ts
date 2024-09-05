@@ -6,6 +6,7 @@ import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { FacturaService } from '../displays/prc_documento_3/services/factura.service';
 
 @Injectable()
 export class PrinterService {
@@ -14,7 +15,8 @@ export class PrinterService {
 
     //inicializar http
     constructor(private _http: HttpClient,
-        private _translate: TranslateService,
+    private _facturaService: FacturaService,
+    private _translate: TranslateService,
     ) {
     }
 
@@ -1020,6 +1022,39 @@ export class PrinterService {
 
 
 
+        let terminos: any[] = [];
+
+
+        for (let i = 0; i < this._facturaService.terminosyCondiciones.length; i++) {
+            const element = this._facturaService.terminosyCondiciones[i];
+            terminos.push(
+                {
+                    marginTop: 2,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: `${i + 1}. `,
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: element,
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+
+            );
+        }
+
+
         let transacciones: any[] = [];
 
         doc.items.forEach(item => {
@@ -1553,143 +1588,7 @@ export class PrinterService {
                     bold: true,
                     fontSize: 13,
                 },
-                {
-                    marginTop: 2,
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '1. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Esta Cotización no es reservación',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '2. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Al confirmar su cotizacion se requiere de contrato firmado',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '3. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Los precios cotizados estan sujetos a cambios',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '4. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se cobrara Q 125.00 por cheque rechazado por cargos administrativos',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '5. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se solicitara cheque de garantía',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '6. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se cobrará por daños al mobiliario y equipo según contrato ',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                }
+                ...terminos,
             ],
             styles: {
                 headerText: {

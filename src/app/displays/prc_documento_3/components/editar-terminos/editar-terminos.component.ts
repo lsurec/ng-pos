@@ -32,4 +32,12 @@ export class EditarTerminosComponent {
     this._notificationsService.editTerm(index);
   }
 
+  eliminar(index: number) {
+    //eliminar?
+    this.facturaService.terminosyCondiciones.splice(index, 1);
+  }
+
+  nueva(){
+    
+  }
 }

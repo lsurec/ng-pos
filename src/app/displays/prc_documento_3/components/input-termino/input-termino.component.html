@@ -6,8 +6,13 @@
         <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
         <span class="spacer"></span>
 
-        <button mat-stroked-button (click)="modify()" >
+        <button *ngIf="index != -1" mat-stroked-button (click)="modify()">
             {{ 'pos.botones.modificar'| translate }}
+        </button>
+
+
+        <button *ngIf="index == -1" mat-stroked-button (click)="modify()">
+            {{ 'pos.botones.agregar'| translate }}
         </button>
     </div>
 </div>

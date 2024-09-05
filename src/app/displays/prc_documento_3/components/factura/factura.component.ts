@@ -1462,15 +1462,12 @@ export class FacturaComponent implements OnInit {
 
 
       if (!verificador) {
-        console.log("abrir el dialogo");
 
         let resDialogMensajes = await this._notificationService.openTerms(this.facturaService.terminosyCondiciones);
 
         if (!resDialogMensajes) return;
 
-        this.facturaService.terminosyCondiciones = resDialogMensajes;
-
-        console.log("Llego aqui");
+        this.sendDoc();
 
         return;
       }

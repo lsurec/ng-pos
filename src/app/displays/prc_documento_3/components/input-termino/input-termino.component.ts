@@ -17,14 +17,30 @@ export class InputTerminoComponent {
     public facturaService: FacturaService,
   ) {
 
-    this.textModify = facturaService.terminosyCondiciones[index];
+
+    if (index == -1) {
+
+      this.textModify = "";
+    } else {
+      this.textModify = facturaService.terminosyCondiciones[index];
+
+    }
 
 
   }
 
 
   modify() {
-    this.facturaService.terminosyCondiciones[this.index] = this.textModify;
+
+
+    if (this.index == -1) {
+      this.facturaService.terminosyCondiciones.push(this.textModify);
+      
+    } else {
+
+      this.facturaService.terminosyCondiciones[this.index] = this.textModify;
+    }
+
 
 
     this.dialogRef.close();
