@@ -1467,17 +1467,18 @@ export class FacturaComponent implements OnInit {
 
         let resDialogMensajes = await this._notificationService.openTerms(this.facturaService.terminosyCondiciones);
 
+
         if (!resDialogMensajes) {
-          this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
+          this.facturaService.terminosyCondiciones = [...this.facturaService.copiaTerminosyCondiciones];
           return;
-        }
+        };
 
         this.sendDoc();
+
 
         return;
       }
 
-      this.facturaService.terminosyCondiciones = this.facturaService.copiaTerminosyCondiciones;
 
       this.sendDoc();
 
@@ -1486,6 +1487,8 @@ export class FacturaComponent implements OnInit {
     }
 
     this.sendDoc();
+
+
 
 
   }
@@ -1913,6 +1916,8 @@ export class FacturaComponent implements OnInit {
       }
 
       this._notificationService.openSnackbar(`${this._translate.instant('pos.alertas.docCreado')}: ${this.consecutivoDoc}`);
+
+      this.facturaService.terminosyCondiciones = [...this.facturaService.copiaTerminosyCondiciones];
 
       return;
 
