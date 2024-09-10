@@ -510,17 +510,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let vendedorDefault: VendedorInterface;
 
-if(this.facturaService.vendedores.length > 0){
+    if (this.facturaService.vendedores.length > 0) {
 
-   vendedorDefault = this.facturaService.vendedores.reduce((prev, curr) => {
-    return (curr.orden < prev.orden) ? curr : prev;
-  });
+      vendedorDefault = this.facturaService.vendedores.reduce((prev, curr) => {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
 
-}
+    }
 
     //si solo hay un vendedor seleccionarlo por defecto
-      this.facturaService.vendedor = vendedorDefault!;
-      this.facturaService.saveDocLocal();
+    this.facturaService.vendedor = vendedorDefault!;
+    this.facturaService.saveDocLocal();
 
     this.facturaService.tiposTransaccion = [];
 
