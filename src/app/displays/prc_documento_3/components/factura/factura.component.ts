@@ -1111,6 +1111,7 @@ export class FacturaComponent implements OnInit {
           existencia: 0,
           nombre: tra.detalle.bodega_Descripcion,
           posee_Componente: false,
+          orden : 0,
         }
 
       } else {

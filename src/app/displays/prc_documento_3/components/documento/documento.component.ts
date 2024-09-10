@@ -24,6 +24,7 @@ import { FelService } from '../../services/fel.service';
 import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
+import { VendedorInterface } from '../../interfaces/vendedor.interface';
 
 @Component({
   selector: 'app-documento',
@@ -506,11 +507,20 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.vendedores = resVendedor.response;
 
+
+    let vendedorDefault: VendedorInterface;
+
+if(this.facturaService.vendedores.length > 0){
+
+   vendedorDefault = this.facturaService.vendedores.reduce((prev, curr) => {
+    return (curr.orden < prev.orden) ? curr : prev;
+  });
+
+}
+
     //si solo hay un vendedor seleccionarlo por defecto
-    if (this.facturaService.vendedores.length == 1) {
-      this.facturaService.vendedor = this.facturaService.vendedores[0];
+      this.facturaService.vendedor = vendedorDefault!;
       this.facturaService.saveDocLocal();
-    }
 
     this.facturaService.tiposTransaccion = [];
 
