@@ -142,14 +142,7 @@ export class FacturaService {
         "Se cobrará por daños al mobiliario y equipo según contrato.",
     ];
 
-    copiaTerminosyCondiciones: String[] = [
-        "Esta Cotización no es reservación.",
-        "Al confirmar su cotización se requiere de contrato firmado.",
-        "Los precios cotizados están sujetos a cambios.",
-        "Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
-        "Se solicitara cheque de garantía.",
-        "Se cobrará por daños al mobiliario y equipo según contrato.",
-    ];
+    copiaTerminosyCondiciones: String[] = [...this.terminosyCondiciones];
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
