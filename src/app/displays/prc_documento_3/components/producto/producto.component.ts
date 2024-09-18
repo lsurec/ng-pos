@@ -481,7 +481,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
-    if (this.facturaService.valueParametro(44)) {
+    //si el producto es servicio no se hace el calculo
+    if (this.facturaService.valueParametro(44) && this.producto.tipo_Producto != 2) {
 
 
       // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
