@@ -345,7 +345,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
 
-
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
   //guardar transaccion
   async enviar() {
     //Validaciones
@@ -489,14 +491,23 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+        
+       
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() +1);
+        
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
+        
         let res: ResApiInterface = await this._productService.getFormulaPrecioU(
           this.token,
-          this.facturaService.fechaIni!,
-          this.facturaService.fechaFin!,
+          dateStart,
+          dateEnd,
           this.productoService.total.toString(),
         );
-
-
 
         if (!res.status) {
           this.isLoading = false;

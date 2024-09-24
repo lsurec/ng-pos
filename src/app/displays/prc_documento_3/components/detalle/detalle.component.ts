@@ -378,16 +378,11 @@ export class DetalleComponent implements AfterViewInit {
 
       }
     }
-
-
-
-
-
   }
+  
 
-
-  addTransaction() {
-
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
   }
 
   //bsuqueda de productos
@@ -842,6 +837,9 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+
+    //TODO: verificar tipo producto
+    // && this.producto.tipo_Producto != 2
     if (this.facturaService.valueParametro(44)) {
 
 
@@ -849,10 +847,22 @@ export class DetalleComponent implements AfterViewInit {
 
 
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+
+
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
+
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
+
+
         let res: ResApiInterface = await this._productService.getFormulaPrecioU(
           this.token,
-          this.facturaService.fechaIni!,
-          this.facturaService.fechaFin!,
+          dateEnd,
+          dateStart,
           this.productoService.total.toString(),
         );
 

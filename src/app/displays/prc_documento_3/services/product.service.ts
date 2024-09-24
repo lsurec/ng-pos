@@ -231,16 +231,16 @@ export class ProductService {
     //funcion que va a realizar el consumo privado para obtener las empresas
     private _getFormulaPrecioU(
         token: string,
-        fechaIni: Date,
-        fechaFin: Date,
+        fechaIni: string,
+        fechaFin: string,
         precioU: string,
     ) {
 
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
-                "fechaIni": fechaIni.toISOString(),
-                "fechaFin": fechaFin.toISOString(),
+                "fechaIni": fechaIni,
+                "fechaFin": fechaFin,
                 "precioU": precioU,
             }
         )
@@ -252,8 +252,8 @@ export class ProductService {
     //funcion asyncrona con promesa  para obtener las empresas
     getFormulaPrecioU(
         token: string,
-        fechaIni: Date,
-        fechaFin: Date,
+        fechaIni: string,
+        fechaFin: string,
         precioU: string,
 
     ): Promise<ResApiInterface> {

@@ -297,11 +297,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
             this.facturaService.isLoading = true;
-
+            let dateStart: string = `${this.facturaService.fechaIni!.getDate()}/${this.facturaService.fechaIni!.getMonth() + 1}/${this.facturaService.fechaIni!.getFullYear()} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+            let dateEnd: string = `${this.facturaService.fechaFin!.getDate()}/${this.facturaService.fechaFin!.getMonth() + 1}/${this.facturaService.fechaFin!.getFullYear()} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
+        
+            
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
               this.token,
-              this.facturaService.fechaIni,
-              this.facturaService.fechaFin!,
+              dateStart,
+              dateEnd,
               tra.precioCantidad!.toString(),
             );
 
@@ -352,12 +355,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
   async setDateFin() {
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
     //si se debe calcular el preciuo por dias
 
     //si se debe calcular el preciuo por dias
-    if (this.facturaService.valueParametro(44)) {
+    if (this.facturaService.valueParametro(44) ) {
       //si hay productos agregados no se puede cambiar la fechha
 
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin, this.facturaService.fechaIni!)) {
@@ -365,17 +371,29 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.facturaService.traInternas.length > 0) {
 
           //Calcular nuevos totales
-
+          //TODO:verificar tipo producto
+          // && this.producto.tipo_Producto != 2
           for (const tra of this.facturaService.traInternas) {
             let count: number = 0;
 
 
             this.facturaService.isLoading = true;
 
+            
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() +1);
+        
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
+        
+            
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
               this.token,
-              this.facturaService.fechaIni!,
-              this.facturaService.fechaFin,
+              dateStart,
+              dateEnd,
               tra.precioCantidad!.toString(),
             );
 
