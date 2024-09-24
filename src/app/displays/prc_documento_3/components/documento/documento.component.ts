@@ -380,15 +380,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
             this.facturaService.isLoading = true;
 
             
-        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
-        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
-        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
-        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() +1);
-        
-
-        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
-        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
-        
+            let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+            let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+            let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+            let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
+    
+            let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+            let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
+    
+    
             
             let res: ResApiInterface = await this._productService.getFormulaPrecioU(
               this.token,
