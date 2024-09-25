@@ -194,7 +194,7 @@ export class FacturaService {
     //mostrar pestaña detalle
     showDetalle() {
         if(this.vendedores.length > 0 && !this.vendedor){
-            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); //TODO:Translate
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
             return;
         }
         
@@ -207,7 +207,7 @@ export class FacturaService {
     showPago() {
 
         if(this.vendedores.length > 0 && !this.vendedor){
-            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); //TODO:Translate
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
             return;
         }
         
