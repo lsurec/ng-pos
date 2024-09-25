@@ -193,6 +193,11 @@ export class FacturaService {
 
     //mostrar pestaña detalle
     showDetalle() {
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = true;
         this.tabPago = false;
@@ -200,6 +205,12 @@ export class FacturaService {
 
     //mostrar pestaña pagos
     showPago() {
+
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = false;
         this.tabPago = true;

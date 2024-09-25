@@ -292,42 +292,49 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
 
 
+          let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
-            let count: number = 0;
 
 
-            this.facturaService.isLoading = true;
+            if (tra.producto.tipo_Producto != 2) {
+              
 
-            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-              this.token,
-              this.facturaService.fechaIni,
-              this.facturaService.fechaFin!,
-              tra.precioCantidad!.toString(),
-            );
+              this.facturaService.isLoading = true;
+              let dateStart: string = `${this.facturaService.fechaIni!.getDate()}/${this.facturaService.fechaIni!.getMonth() + 1}/${this.facturaService.fechaIni!.getFullYear()} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+              let dateEnd: string = `${this.facturaService.fechaFin!.getDate()}/${this.facturaService.fechaFin!.getMonth() + 1}/${this.facturaService.fechaFin!.getFullYear()} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
 
-            this.facturaService.isLoading = false;
 
-            if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
+              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+                this.token,
+                dateStart,
+                dateEnd,
+                tra.precioCantidad!.toString(),
+              );
 
-              return;
+              this.facturaService.isLoading = false;
+
+              if (!res.status) {
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              let calculoDias: PrecioDiaInterface[] = res.response;
+
+              if (calculoDias.length == 0) {
+                res.response = "No se están obteniendo valores del procedimiento almacenado"
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
             }
-
-            let calculoDias: PrecioDiaInterface[] = res.response;
-
-            if (calculoDias.length == 0) {
-              res.response = "No se están obteniendo valores del procedimiento almacenado"
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
-
-              return;
-            }
-
-            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
-
 
             count++;
 
@@ -352,6 +359,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
   async setDateFin() {
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
     //si se debe calcular el preciuo por dias
@@ -364,44 +374,56 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (this.facturaService.traInternas.length > 0) {
 
-          //Calcular nuevos totales
-
+          let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
-            let count: number = 0;
+
+            if (tra.producto.tipo_Producto != 2) {
 
 
-            this.facturaService.isLoading = true;
+              this.facturaService.isLoading = true;
 
-            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-              this.token,
-              this.facturaService.fechaIni!,
-              this.facturaService.fechaFin,
-              tra.precioCantidad!.toString(),
-            );
 
-            this.facturaService.isLoading = false;
+              let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+              let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+              let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+              let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
 
-            if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
+              let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+              let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
-              return;
+
+
+              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+                this.token,
+                dateStart,
+                dateEnd,
+                tra.precioCantidad!.toString(),
+              );
+
+              this.facturaService.isLoading = false;
+
+              if (!res.status) {
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              let calculoDias: PrecioDiaInterface[] = res.response;
+
+              if (calculoDias.length == 0) {
+                res.response = "No se están obteniendo valores del procedimiento almacenado"
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
             }
-
-            let calculoDias: PrecioDiaInterface[] = res.response;
-
-            if (calculoDias.length == 0) {
-              res.response = "No se están obteniendo valores del procedimiento almacenado"
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
-
-              return;
-            }
-
-            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
-
 
             count++;
 

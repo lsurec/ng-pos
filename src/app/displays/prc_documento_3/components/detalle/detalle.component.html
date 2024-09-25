@@ -130,16 +130,16 @@
                         </div>
 
                         <div class="precios">
-                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">{{ 'pos.factura.cantDias'
+                            <p *ngIf="facturaService.valueParametro(44) && transaccion.producto.tipo_Producto != 2" class="info-producto">{{ 'pos.factura.cantDias'
                                 | translate }}:
                                 {{transaccion.cantidadDias}}
                             </p>
-                            <span class="spacer" *ngIf="facturaService.valueParametro(44)"></span>
+                            <span class="spacer" *ngIf="facturaService.valueParametro(44) && transaccion.producto.tipo_Producto != 2"></span>
                             <p class="info-producto">{{ 'pos.factura.precio_unitario' | translate }}:
                                 {{transaccion.precio?.precioU | currencyFormat }}
                             </p>
                             <span class="spacer"></span>
-                            <p *ngIf="facturaService.valueParametro(44)" class="info-producto">{{
+                            <p *ngIf="facturaService.valueParametro(44) && transaccion.producto.tipo_Producto != 2" class="info-producto">{{
                                 'pos.factura.precioTotalCant' | translate }}:
                                 {{transaccion.precioCantidad | currencyFormat }}
                             </p>

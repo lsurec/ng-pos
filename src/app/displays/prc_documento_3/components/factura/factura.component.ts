@@ -214,6 +214,10 @@ export class FacturaComponent implements OnInit {
     }
   }
 
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
+
 
 
   async loadDocumentLocal() {
@@ -1182,15 +1186,23 @@ export class FacturaComponent implements OnInit {
       let precioDias: number = 0;
       let cantidadDias: number = 0;
 
-      if (this.facturaService.valueParametro(351)) {
+      if (this.facturaService.valueParametro(44) && prod.tipo_Producto != 2) {
 
+
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
 
         let res: ResApiInterface = await this._productService.getFormulaPrecioU(
           token,
-          this.facturaService.fechaIni,
-          this.facturaService.fechaFin,
+          dateStart,
+          dateEnd,
           precioSelect.precioU.toString(),
         );
 

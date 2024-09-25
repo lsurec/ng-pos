@@ -91,6 +91,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     //Calcular el total (cantidad * precio seleccionado)
     this.productoService.total = cantidad! * this.productoService.precio.precioU;
 
+    
+
   }
 
   //editar precii
@@ -345,7 +347,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   }
 
 
-
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
   //guardar transaccion
   async enviar() {
     //Validaciones
@@ -489,14 +493,23 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
+        
+       
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
+
+
         let res: ResApiInterface = await this._productService.getFormulaPrecioU(
           this.token,
-          this.facturaService.fechaIni!,
-          this.facturaService.fechaFin!,
+          dateStart,
+          dateEnd,
           this.productoService.total.toString(),
         );
-
-
 
         if (!res.status) {
           this.isLoading = false;
@@ -553,15 +566,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         {
           consecutivo: 0,
           estadoTra: 1,
-          precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
-          precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+          precioCantidad: this.facturaService.valueParametro(44) && this.producto.tipo_Producto != 2? this.productoService.total : null,
+          precioDia: this.facturaService.valueParametro(44)  && this.producto.tipo_Producto != 2   ? precioDias : null,
           isChecked: false,
           bodega: this.productoService.bodega,
           producto: this.producto,
           precio: this.productoService.precio!,
           cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-          cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
-          total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+          cantidadDias: this.facturaService.valueParametro(44)  && this.producto.tipo_Producto != 2 ? cantidadDias : 0,
+          total: this.facturaService.valueParametro(44)  && this.producto.tipo_Producto != 2 ? precioDias : this.productoService.total,
           cargo: 0,
           descuento: 0,
           operaciones: [],
@@ -577,15 +590,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.traInternas[this.productoService.indexEdit] = {
         consecutivo: this.facturaService.traInternas[this.productoService.indexEdit].consecutivo,
         estadoTra: 1,
-        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        precioCantidad: this.facturaService.valueParametro(44)   && this.producto.tipo_Producto != 2? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44)  && this.producto.tipo_Producto != 2 ? precioDias : null,
         isChecked: false,
         bodega: this.productoService.bodega,
         producto: this.producto,
         precio: this.productoService.precio!,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
-        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+        cantidadDias: this.facturaService.valueParametro(44)   && this.producto.tipo_Producto != 2? cantidadDias : 0,
+        total: this.facturaService.valueParametro(44)  && this.producto.tipo_Producto != 2 ? precioDias : this.productoService.total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
