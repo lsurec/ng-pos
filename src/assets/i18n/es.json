@@ -572,7 +572,9 @@
             "oscuro": "Tema Oscuro",
             "claro": "Tema Claro",
             "cambiar": "Más adelante también podrá cambiar el tema de la aplicación según su preferencia.",
-            "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia."
+            "idioma": "Más adelante también podrá cambiar el idioma de la aplicación según su preferencia.",
+            "exportar": "Exportar preferencias",
+            "importar": "Importar preferencias"
         },
         "alertas": {
             "requerido": "Campo requerido.",

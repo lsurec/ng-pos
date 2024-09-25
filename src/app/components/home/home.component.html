@@ -167,12 +167,17 @@
                         </div>
                     </div>
                     <div class="configuraciones">
-                        <mat-icon class="iconos-detalles">info</mat-icon>
+                        <mat-icon class="iconos-detalles">file_download</mat-icon>
                         <span class="spacer"></span>
-                        <div class="detalle d-flex">
-                            <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
-                            <span class="spacer"></span>
-                            <mat-icon>navigate_next</mat-icon>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'crm.preferencias.exportar' | translate}}</p>
+                        </div>
+                    </div>
+                    <div class="configuraciones">
+                        <mat-icon class="iconos-detalles">file_upload</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'crm.preferencias.importar' | translate}}</p>
                         </div>
                     </div>
 
@@ -324,11 +329,21 @@
                     <div class="detalles-usuario">
                         <mat-icon class="iconos-detalles">info</mat-icon>
                         <span class="spacer"></span>
+                        <div class="detalle d-flex">
+                            <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                            <span class="spacer"></span>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">info</mat-icon>
+                        <span class="spacer"></span>
                         <div class="detalle">
                             <p class="subtitulo">{{'pos.home.versionActual' | translate}}</p>
                             <p class="descripcion">{{dataUserService.version}}</p>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- botones detalle usuario, ajustes y salir -->

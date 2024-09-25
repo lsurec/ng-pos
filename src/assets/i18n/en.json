@@ -571,8 +571,10 @@
             "tema": "APPLICATION THEME",
             "oscuro": "Dark Theme",
             "claro": "Light Theme",
-            "cambiar": "You can also change the application theme later according to your preference.",
-            "idioma": "You can also change the application language later according to your preference."
+            "cambiar": "Later, you will also be able to change the app theme according to your preference.",
+            "idioma": "Later, you will also be able to change the app language according to your preference.",
+            "exportar": "Export preferences",
+            "importar": "Import preferences"
         },
         "alertas": {
             "requerido": "Required field.",
