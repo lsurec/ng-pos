@@ -94,6 +94,9 @@ import { DetalleErrorComponent } from './components/detalle-error/detalle-error.
 import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
 import { EditarTerminosComponent } from './displays/prc_documento_3/components/editar-terminos/editar-terminos.component';
 import { InputTerminoComponent } from './displays/prc_documento_3/components/input-termino/input-termino.component';
+import { HomeRestaurantComponent } from './displays/prcRestaurante/components/home-restaurant/home-restaurant.component';
+import { PinMeseroComponent } from './displays/prcRestaurante/components/pin-mesero/pin-mesero.component';
+import { PermisionsComponent } from './displays/prcRestaurante/components/permisions/permisions.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -158,6 +161,9 @@ import { InputTerminoComponent } from './displays/prc_documento_3/components/inp
     ListaTareasComponent,
     EditarTerminosComponent,
     InputTerminoComponent,
+    HomeRestaurantComponent,
+    PinMeseroComponent,
+    PermisionsComponent,
   ],
   imports: [
     MatCardModule,
