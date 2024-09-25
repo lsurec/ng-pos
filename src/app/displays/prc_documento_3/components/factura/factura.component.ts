@@ -194,8 +194,7 @@ export class FacturaComponent implements OnInit {
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
 
-    this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
-    this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
+
 
     // if (PreferencesService.nuevoDoc.length == 0) {
     //   PreferencesService.nuevoDoc = "0";

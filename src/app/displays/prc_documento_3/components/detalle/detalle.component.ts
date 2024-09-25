@@ -90,8 +90,6 @@ export class DetalleComponent implements AfterViewInit {
     private _dataUserService: DataUserService,
 
   ) {
-    //filtro producto
-    facturaService.filtrosProductos = PreferencesService.filtroProducto;
   }
 
 

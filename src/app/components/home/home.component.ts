@@ -1068,4 +1068,12 @@ export class HomeComponent implements OnInit {
     this.verHistorialErrores = true;
   }
 
+  importPreferences(){
+
+  }
+
+  exportPreferences(){
+    
+  }
+
 }

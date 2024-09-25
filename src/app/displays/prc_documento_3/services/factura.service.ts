@@ -124,8 +124,6 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
-    filtroPreferencia: number = 1;
-    idFiltroPreferencia: number = 1;
 
     rangoIni: number = 1;
     rangoFin: number = 20;
@@ -177,9 +175,7 @@ export class FacturaService {
         private _convertService: GlobalConvertService,
     ) {
 
-        if (!PreferencesService.filtroProducto) {
-            PreferencesService.filtroProducto = 1;
-        }
+        
     }
 
 
