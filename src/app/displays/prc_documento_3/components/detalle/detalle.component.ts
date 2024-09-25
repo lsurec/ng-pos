@@ -674,40 +674,27 @@ export class DetalleComponent implements AfterViewInit {
 
     }
 
-    //TODO: evaluar precios vacios
 
-    //si solo ahy precio seleccoanrlo por defectp
-    if (this.productoService.precios.length == 1) {
+    if (this.productoService.precios.length > 0) {
 
-      let precioU: UnitarioInterface = this.productoService.precios[0];
+      this.productoService.precio = this.productoService.precios.reduce((prev, curr) => {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
 
-      this.productoService.precio = precioU;
-      this.productoService.total = precioU.precioU;
-      this.productoService.precioU = precioU.precioU;
-      this.productoService.precioText = precioU.precioU.toString();
-
-    } else if (this.productoService.precios.length > 1) {
-      //si ahy mas de un precio seleccionar uno por defecto segun campo orden
-      for (let i = 0; i < this.productoService.precios.length; i++) {
-        const element = this.productoService.precios[i];
-        if (element.orden) {
-          this.productoService.precio = element;
-          this.productoService.total = element.precioU;
-          this.productoService.precioU = element.precioU;
-          this.productoService.precioText = element.precioU.toString();
-
-          break;
-        }
-
+      if(!this.productoService.precio){
+        this.productoService.precio = this.productoService.precios[0];
       }
 
-      if (!this.productoService.precio) {
-        this.productoService.precio = this.productoService.precios![0];
-        this.productoService.total = this.productoService.precios![0].precioU;
-        this.productoService.precioU = this.productoService.precios![0].precioU;
-        this.productoService.precioText = this.productoService.precios![0].precioU.toString();
-      }
+      
+      
+      this.productoService.total = this.productoService.precio.precioU;
+      this.productoService.precioU = this.productoService.precio.precioU;
+      this.productoService.precioText = this.productoService.precio.precioU.toString();
+      
     }
+
+    
+
 
     if (this.productoService.bodegas.length > 1 || this.productoService.precios.length > 1 || this.facturaService.valueParametro(351)) {
       this.facturaService.isLoading = false;
@@ -838,9 +825,8 @@ export class DetalleComponent implements AfterViewInit {
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
 
-    //TODO: verificar tipo producto
-    // && this.producto.tipo_Producto != 2
-    if (this.facturaService.valueParametro(44)) {
+  
+    if (this.facturaService.valueParametro(44) && product.tipo_Producto != 2) {
 
 
       // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
@@ -931,6 +917,7 @@ export class DetalleComponent implements AfterViewInit {
       }
     }
 
+    
 
 
     // /7agregar transaccion
@@ -938,7 +925,7 @@ export class DetalleComponent implements AfterViewInit {
       {
         bodega: this.productoService.bodega,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
+        cantidadDias: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? cantidadDias : 0,
         cargo: 0,
         consecutivo: 0,
         descuento: 0,
@@ -946,12 +933,13 @@ export class DetalleComponent implements AfterViewInit {
         isChecked: false,
         operaciones: [],
         precio: this.productoService.precio!,
-        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        precioCantidad: this.facturaService.valueParametro(44) && product.tipo_Producto != 2? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? precioDias : null,
         producto: product,
-        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+        total: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? precioDias : this.productoService.total,
       }
     );
+
 
     this.productoService.cantidad = "1";
     //Transacion agregada

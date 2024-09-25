@@ -295,7 +295,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
 
-            console.log(tra.producto.tipo_Producto);
 
             if (tra.producto.tipo_Producto != 2) {
               
@@ -378,7 +377,6 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
           let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
 
-            console.log(tra.producto.tipo_Producto);
             if (tra.producto.tipo_Producto != 2) {
 
 
