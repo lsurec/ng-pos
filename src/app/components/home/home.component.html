@@ -166,14 +166,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="configuraciones">
+                    <div class="configuraciones" (click)="exportPreferences()">
                         <mat-icon class="iconos-detalles">file_download</mat-icon>
                         <span class="spacer"></span>
                         <div class="detalle">
                             <p class="subtitulo">{{'crm.preferencias.exportar' | translate}}</p>
                         </div>
                     </div>
-                    <div class="configuraciones">
+                    <div class="configuraciones" (click)="fileInput.click()">
+                        <!-- El input está oculto -->
+                        <input type="file" #fileInput (change)="onFileSelected($event)" accept=".json"
+                            style="display: none;" />
+
                         <mat-icon class="iconos-detalles">file_upload</mat-icon>
                         <span class="spacer"></span>
                         <div class="detalle">

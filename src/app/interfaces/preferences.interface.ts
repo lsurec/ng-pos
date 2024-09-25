@@ -2,7 +2,6 @@ export interface PreferencesInterface{
     lang: string;
     theme: string;
     remote: string;
-    document: string;
     size: string;
     idSize: string;
     startDay: string;

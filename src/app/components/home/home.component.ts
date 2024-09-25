@@ -30,6 +30,7 @@ import { CustomDatepickerI18n } from 'src/app/services/custom-datepicker-i18n.se
 import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 import { ColorInterface } from 'src/app/interfaces/filtro.interface';
+import { PreferencesInterface } from 'src/app/interfaces/preferences.interface';
 
 @Component({
   selector: 'app-home',
@@ -323,7 +324,7 @@ export class HomeComponent implements OnInit {
 
   async seleccionarColor(color: ColorInterface, index: number): Promise<void> {
 
-    if(PreferencesService.indexColorApp == index.toString()){
+    if (PreferencesService.indexColorApp == index.toString()) {
       return;
     }
 
@@ -1068,12 +1069,110 @@ export class HomeComponent implements OnInit {
     this.verHistorialErrores = true;
   }
 
-  importPreferences(){
+  exportPreferences() {
+
+    let preferences: PreferencesInterface = {
+      background: PreferencesService.fondoApp,
+      decimal: PreferencesService.decimales,
+      endWork: PreferencesService.finLabores,
+      idBackground: PreferencesService.indexFondoApp,
+      idPrimary: PreferencesService.indexColorApp,
+      idSize: PreferencesService.idFontSizeStorage,
+      int: PreferencesService.digitos,
+      lang: PreferencesService.lang,
+      newDoc: PreferencesService.nuevoDoc,
+      primary: PreferencesService.colorApp,
+      remote: PreferencesService.baseUrl,
+      show: PreferencesService.mostrarAlerta,
+      size: PreferencesService.fontSizeStorage,
+      startDay: PreferencesService.inicioSemana,
+      startWork: PreferencesService.inicioLabores,
+      theme: PreferencesService.theme,
+    }
+
+    const jsonString = JSON.stringify(preferences, null, 2); // 'null, 2' para darle formato al JSON
+
+    // 2. Crear un enlace temporal
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    // 3. Asignar nombre al archivo y descargar
+    a.href = url;
+    a.download = 'preferences-ds.json';
+    a.click();
+
+    // 4. Limpiar el objeto URL
+    window.URL.revokeObjectURL(url);
 
   }
 
-  exportPreferences(){
-    
-  }
 
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        try {
+          // 1. Leer el archivo JSON
+          const json = JSON.parse(e.target.result);
+  
+          // 2. Validar que la estructura del JSON sea correcta
+          if (this.validatePreferencesStructure(json)) {
+            // 3. Si es válido, asignar el objeto a preferences
+            const preferences: PreferencesInterface = json;
+
+            //Asignatr preferencias
+            PreferencesService.fondoApp = preferences.background;
+            PreferencesService.decimales = preferences.decimal;
+            PreferencesService.finLabores = preferences.endWork;
+            PreferencesService.indexFondoApp = preferences.idBackground;
+            PreferencesService.indexColorApp = preferences.idPrimary;
+            PreferencesService.idFontSizeStorage = preferences.idSize;
+            PreferencesService.digitos = preferences.int;
+            PreferencesService.lang = preferences.lang;
+            PreferencesService.nuevoDoc = preferences.newDoc;
+            PreferencesService.colorApp = preferences.primary;
+            PreferencesService.baseUrl = preferences.remote;
+            PreferencesService.mostrarAlerta = preferences.show;
+            PreferencesService.fontSizeStorage = preferences.size;
+            PreferencesService.inicioSemana = preferences.startDay;
+            PreferencesService.inicioLabores = preferences.startWork;
+            PreferencesService.theme = preferences.theme;
+            
+            this._notificationsService.openSnackbar("Preferencias cargadas correctamente"); //TODO:Translate
+            
+
+            
+          } else {
+            this._notificationsService.openSnackbar("Archivo invalido"); //TODO:Translate
+          }
+        } catch (error) {
+          this._notificationsService.openSnackbar("Archivo invalido"); //TODO:Translate
+
+          console.error('Error al leer el archivo JSON', error);
+        }
+      };
+      reader.readAsText(file);
+    }
+  }
+  
+  validatePreferencesStructure(json: any): boolean {
+    const requiredKeys = [
+      'background', 'decimal', 'endWork', 'idBackground', 'idPrimary',
+      'idSize', 'int', 'lang', 'newDoc', 'primary', 'remote', 'show', 'size',
+      'startDay', 'startWork', 'theme'
+    ];
+  
+    // Comprobar si todas las claves están presentes
+    for (const key of requiredKeys) {
+      if (!json.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+  
+  
+    return true;
+  }
 }
