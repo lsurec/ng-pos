@@ -571,8 +571,10 @@
             "tema": "THÈME DE L'APPLICATION",
             "oscuro": "Thème Sombre",
             "claro": "Thème Clair",
-            "cambiar": "Vous pourrez également changer le thème de l'application plus tard selon votre préférence.",
-            "idioma": "Vous pourrez également changer la langue de l'application plus tard selon votre préférence."
+            "cambiar": "Plus tard, vous pourrez également changer le thème de l'application selon vos préférences.",
+            "idioma": "Plus tard, vous pourrez également changer la langue de l'application selon vos préférences.",
+            "exportar": "Exporter les préférences",
+            "importar": "Importer les préférences"
         },
         "alertas": {
             "requerido": "Champ requis.",

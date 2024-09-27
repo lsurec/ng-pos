@@ -194,8 +194,7 @@ export class FacturaComponent implements OnInit {
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
 
-    this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
-    this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
+
 
     // if (PreferencesService.nuevoDoc.length == 0) {
     //   PreferencesService.nuevoDoc = "0";
@@ -1825,7 +1824,9 @@ export class FacturaComponent implements OnInit {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.facturaService.tipoDocumento! == 20 ? this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.facturaService.tipoDocumento! == 20 ? 
+          this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : 
+          this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           imagen64: detail.img_Producto,
