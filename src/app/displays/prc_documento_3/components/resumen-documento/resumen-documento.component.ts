@@ -1041,11 +1041,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     this.isLoading = true;
 
-    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+    const apiEcabezado = ()=> this._documentService.getEncabezados(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resEncabezado: ResApiInterface = await ApiService.apiUse(apiEcabezado) ;
 
     if (!resEncabezado.status) {
 

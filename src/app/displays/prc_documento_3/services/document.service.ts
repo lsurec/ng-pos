@@ -86,7 +86,7 @@ export class DocumentService {
     }
 
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getEncabezados(
+    getEncabezados(
         user: string,
         token: string,
         doc: number,
@@ -102,70 +102,6 @@ export class DocumentService {
 
         //consumo de api
         return this._http.get(`${this._urlBase}Documento/encabezados`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa  para obtener las empresas
-    getEncabezados(
-        user: string,
-        token: string,
-        doc: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getEncabezados(user, token, doc).subscribe(
-                //si esta correcto
-                res => {
-
-
-
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
     }
 
     //funcion que va a realizar el consumo privado pra obtener lo sultimos 10 docummentos hechos

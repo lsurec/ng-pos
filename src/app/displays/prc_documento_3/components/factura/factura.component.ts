@@ -1679,11 +1679,13 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = true;
 
-    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+    const apiEncabezado = ()=> this._documentService.getEncabezados(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resEncabezado: ResApiInterface = await ApiService.apiUse(apiEncabezado) ;
 
     if (!resEncabezado.status) {
 
