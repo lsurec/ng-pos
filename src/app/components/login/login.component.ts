@@ -18,6 +18,7 @@ import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -69,7 +70,13 @@ export class LoginComponent {
 
     //antes de ejecutarse
     this.isLoading = true;
-    let res: ResApiInterface = await this._loginService.postLogin(formValues); //consumo del api
+
+
+    const apiLogin = ()=> this._loginService.postLogin(formValues);
+
+    let res: ResApiInterface = await ApiService.apiUse(apiLogin);  ; //consumo del api
+
+
     //cuandno termina de ejecutarse
 
     ///Si el servico se ejecuta mal mostar menaje
