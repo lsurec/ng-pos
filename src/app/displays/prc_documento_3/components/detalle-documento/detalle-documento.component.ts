@@ -312,13 +312,16 @@ export class DetalleDocumentoComponent implements OnInit {
 
     if (objDoc.Doc_Cuenta_Correntista_Ref) {
 
-      let resCuentaRef: ResApiInterface = await this._cuentaService.getSeller(
+
+      const apiSeller = ()=> this._cuentaService.getSeller(
         this.user,
         this.token,
         tipoDoc,
         serieDoc,
         empresaId,
       );
+
+      let resCuentaRef: ResApiInterface = await ApiService.apiUse(apiSeller);
 
       if (!resCuentaRef.status) {
 

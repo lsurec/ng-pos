@@ -241,15 +241,16 @@ export class FacturaComponent implements OnInit {
 
 
 
-
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+    const apiSeller = ()=> this._cuentaService.getSeller(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
-    )
+    );
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller); 
 
     //si algo salió mal mostrar error
     if (!resVendedor.status) {
@@ -707,14 +708,16 @@ export class FacturaComponent implements OnInit {
 
       let serie: string = this.facturaService.serie!.serie_Documento;
 
-      //buscar vendedores
-      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+      const getSeller = ()=> this._cuentaService.getSeller(
         user,
         token,
         documento,
         serie,
         empresa,
-      )
+      );
+
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await ApiService.apiUse(getSeller); 
 
       //si algo salió mal mostrar error
       if (!resVendedor.status) {

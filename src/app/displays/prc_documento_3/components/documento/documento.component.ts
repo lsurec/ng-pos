@@ -497,14 +497,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.vendedores = [];
     this.facturaService.vendedor = undefined;
 
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+
+    const apiSeller = ()=> this._cuentaService.getSeller(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller);
 
     if (!resVendedor.status) {
 
