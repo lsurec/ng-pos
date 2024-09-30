@@ -2306,11 +2306,13 @@ export class FacturaComponent implements OnInit {
     }
 
 
-    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+    const apiPostIfile = ()=> this._felService.postInfile(
       apiUse,
       paramFel,
       this.token,
-    )
+    );
+
+    let resCertDoc: ResApiInterface = await ApiService.apiUse(apiPostIfile); 
 
     if (!resCertDoc.status) {
 

@@ -541,12 +541,13 @@ export class ResumenDocumentoComponent implements OnInit {
       usuarioFirma: usuarioFirma,
     }
 
-
-    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+    const apiPostInfile = ()=> this._felService.postInfile(
       apiUse,
       paramFel,
       this.token,
-    )
+    );
+
+    let resCertDoc: ResApiInterface = await ApiService.apiUse(apiPostInfile); 
 
 
     if (!resCertDoc.status) {
@@ -575,7 +576,7 @@ export class ResumenDocumentoComponent implements OnInit {
     );
 
     //actualizar odcumento con firma
-    let resUpdateXml: ResApiInterface = await ApiService.apiUse(apiPostXml);
+    let resUpdateXml: ResApiInterface = await ApiService.apiUse(apiPostXml)
 
 
     if (!resUpdateXml.status) {
