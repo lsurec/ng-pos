@@ -223,13 +223,16 @@ export class DetalleComponent implements AfterViewInit {
 
       //si no hay precios buscar factor conversion
       if (this.productoService.precios.length == 0) {
-        let resfactor = await this._productService.getFactorConversion(
+
+        const apiFactor = ()=> this._productService.getFactorConversion(
           this.user,
           this.token,
           bodega,
           productTra.producto,
           productTra.unidad_Medida,
         );
+
+        let resfactor = await ApiService.apiUse(apiFactor);
 
 
         //si no sepudo obtener factores de conversion
@@ -634,13 +637,17 @@ export class DetalleComponent implements AfterViewInit {
 
     //si no hay precios buscar factor conversion
     if (this.productoService.precios.length == 0) {
-      let resfactor = await this._productService.getFactorConversion(
+      
+      const apiFactor = ()=> this._productService.getFactorConversion(
         this.user,
         this.token,
         bodega,
         product.producto,
         product.unidad_Medida,
       );
+
+      
+      let resfactor = await ApiService.apiUse(apiFactor);
 
       //si no feue posible controrar los factores de conversion mostrar error
       if (!resfactor.status) {

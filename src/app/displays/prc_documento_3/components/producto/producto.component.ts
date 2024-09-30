@@ -197,13 +197,16 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     //si no hay precios buscar factor conversion
     if (this.productoService.precios.length == 0) {
-      let resfactor = await this._productService.getFactorConversion(
+      
+      const apiFactor = ()=> this._productService.getFactorConversion(
         this.user,
         this.token,
         bodega,
         this.producto.producto,
         this.producto.unidad_Medida,
       );
+      
+      let resfactor = await ApiService.apiUse(apiFactor);
 
       //si algo salio mal
       if (!resfactor.status) {

@@ -162,7 +162,6 @@ export class ProductService {
         //consumo de api
         return this._http.get(`${this._urlBase}Producto/buscar`, { headers: headers, observe: 'response' });
     }
-
    
     //funcion que va a realizar el consumo privado para obtner los tipos de precios para un producto
     getPrecios(
@@ -192,7 +191,7 @@ export class ProductService {
     }
 
     //funcion que va a realizar el consumo privado para obtner el factor de conversion para un producto
-    private _getFactorConversion(
+    getFactorConversion(
         user: string,
         token: string,
         bodega: number,
@@ -212,74 +211,5 @@ export class ProductService {
 
         //consumo de api
         return this._http.get(`${this._urlBase}Producto/factor/conversion`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtner el factor de conversion para un producto
-    getFactorConversion(
-        user: string,
-        token: string,
-        bodega: number,
-        producto: number,
-        um: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getFactorConversion(
-                user,
-                token,
-                bodega,
-                producto,
-                um,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
     }
 }
