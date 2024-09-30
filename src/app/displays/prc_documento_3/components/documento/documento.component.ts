@@ -673,7 +673,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+      const apiReferencia = ()=> this._referenciaService.getTipoReferencia(this.user, this.token);
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal

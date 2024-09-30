@@ -359,8 +359,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tipoReferencia = undefined;
       this.facturaService.tiposReferencia = [];
 
+      const apiReferencia = ()=> this._referenciaService.getTipoReferencia(this.user, this.token);
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
@@ -818,7 +820,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
+      const apiReferencia = ()=> this._referenciaService.getTipoReferencia(user, token);
+
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
