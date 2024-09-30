@@ -241,7 +241,7 @@ export class FacturaComponent implements OnInit {
 
 
 
-    const apiSeller = ()=> this._cuentaService.getSeller(
+    const apiSeller = () => this._cuentaService.getSeller(
       this.user,
       this.token,
       this.tipoDocumento!,
@@ -250,7 +250,7 @@ export class FacturaComponent implements OnInit {
     );
 
     //buscar vendedores
-    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller); 
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller);
 
     //si algo salió mal mostrar error
     if (!resVendedor.status) {
@@ -708,7 +708,7 @@ export class FacturaComponent implements OnInit {
 
       let serie: string = this.facturaService.serie!.serie_Documento;
 
-      const getSeller = ()=> this._cuentaService.getSeller(
+      const getSeller = () => this._cuentaService.getSeller(
         user,
         token,
         documento,
@@ -717,7 +717,7 @@ export class FacturaComponent implements OnInit {
       );
 
       //buscar vendedores
-      let resVendedor: ResApiInterface = await ApiService.apiUse(getSeller); 
+      let resVendedor: ResApiInterface = await ApiService.apiUse(getSeller);
 
       //si algo salió mal mostrar error
       if (!resVendedor.status) {
@@ -910,15 +910,15 @@ export class FacturaComponent implements OnInit {
 
 
     //--EMpiezan datos
-    
-    const apiCuenta = ()=> this._cuentaService.getClient(
+
+    const apiCuenta = () => this._cuentaService.getClient(
       user,
       token,
       empresa,
       docOrigin.nit,
 
     );
-    
+
     //Cargar cliente
     let resClient: ResApiInterface = await ApiService.apiUse(apiCuenta);
 
@@ -1122,7 +1122,7 @@ export class FacturaComponent implements OnInit {
           existencia: 0,
           nombre: tra.detalle.bodega_Descripcion,
           posee_Componente: false,
-          orden : 0,
+          orden: 0,
         }
 
       } else {
@@ -1696,11 +1696,13 @@ export class FacturaComponent implements OnInit {
 
     let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
-    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+    const apiDetalle = () => this._documentService.getDetalles(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resDetalles: ResApiInterface = await ApiService.apiUse(apiDetalle);
 
     if (!resDetalles.status) {
 
@@ -1714,7 +1716,7 @@ export class FacturaComponent implements OnInit {
 
     let detalles: DetallePrintInterface[] = resDetalles.response;
 
-    const apiPagos = ()=> this._documentService.getPagos(
+    const apiPagos = () => this._documentService.getPagos(
       this.user,
       this.token,
       this.consecutivoDoc!,
@@ -1833,9 +1835,9 @@ export class FacturaComponent implements OnInit {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.facturaService.tipoDocumento! == 20 ? 
-          this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : 
-          this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.facturaService.tipoDocumento! == 20 ?
+            this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! :
+            this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           imagen64: detail.img_Producto,

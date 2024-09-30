@@ -1070,11 +1070,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
-    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+    const apiDetalle = ()=> this._documentService.getDetalles(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resDetalles: ResApiInterface = await ApiService.apiUse(apiDetalle);
 
     if (!resDetalles.status) {
 
