@@ -669,14 +669,17 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = true;
 
-    //Buscar series
-    let resSeries: ResApiInterface = await this._serieService.getSerie(
+
+    const apiSerie = ()=> this._serieService.getSerie(
       user,
       token,
       documento,
       empresa,
       estacion,
     );
+
+    //Buscar series
+    let resSeries: ResApiInterface = await ApiService.apiUse(apiSerie);
 
     //si algo salio al
     if (!resSeries.status) {

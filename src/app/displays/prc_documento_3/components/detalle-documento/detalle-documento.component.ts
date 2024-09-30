@@ -182,13 +182,16 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    let resSerie: ResApiInterface = await this._serieService.getSerie(
+    const apiSerie = ()=> this._serieService.getSerie(
       this.user,
       this.token,
       tipoDoc,
       empresaId,
       estacionId,
     );
+
+
+    let resSerie: ResApiInterface = await ApiService.apiUse(apiSerie);
 
 
     if (!resSerie.status) {
