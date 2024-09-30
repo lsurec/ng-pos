@@ -119,12 +119,9 @@ export class DocumentService {
 
             }
         )
-
         //consumo de api
         return this._http.get(`${this._urlBase}Documento`, { headers: headers, observe: 'response' });
     }
-
-  
 
     //funcion que va a realizar el consumo privado para crear un nuevo documento
     postDocument(
@@ -134,24 +131,21 @@ export class DocumentService {
 
         let paramsStr = JSON.stringify(document); //JSON to String
 
-
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
                 "Content-Type": "application/json",
-
             }
         )
 
         //consumo de api
         return this._http.post(`${this._urlBase}Documento`, paramsStr, { headers: headers, observe: 'response' });
-
     }
 
 
 
     //funcion que va a realizar el consumo privado para crear un nuevo documento
-    private _updateDocument(
+    updateDocument(
         token: string,
         document: PostDocumentInterface,
         consecutivo: number,
@@ -164,74 +158,11 @@ export class DocumentService {
             {
                 "Authorization": "bearer " + token,
                 "Content-Type": "application/json",
-
             }
         )
 
         //consumo de api
         return this._http.post(`${this._urlBase}Documento/update/estructura/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
-
     }
 
-    //funcion asyncrona con promesa para crear un nuevo documento
-    updateDocument(
-        token: string,
-        document: PostDocumentInterface,
-        consecutivo: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._updateDocument(token, document, consecutivo).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
 }

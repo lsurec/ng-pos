@@ -610,12 +610,13 @@ export class ResumenDocumentoComponent implements OnInit {
         user: this.user,
       }
 
-
-      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+      const updateEstructura = ()=> this._documentService.updateDocument(
         this.token,
         document,
         this.consecutivoDoc,
       );
+
+      let resUpdateEstructura: ResApiInterface = await  ApiService.apiUse(updateEstructura);
 
 
       //TODO:Mensjaje de error
