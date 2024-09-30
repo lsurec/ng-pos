@@ -2,8 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { CuentaCorrentistaInterface } from '../interfaces/cuenta-correntista.interface';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { ResponseInterface } from 'src/app/interfaces/response.interface';
 
 @Injectable()
 export class CuentaService {
