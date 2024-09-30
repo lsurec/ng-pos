@@ -2331,11 +2331,14 @@ export class FacturaComponent implements OnInit {
       uuid: uuidDoc,
     }
 
-    //actualizar odcumento con firma
-    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+
+    const postApiXml = ()=> this._felService.postXmlUpdate(
       this.token,
       paramUpdate,
-    )
+    );
+
+    //actualizar odcumento con firma
+    let resUpdateXml: ResApiInterface = await  ApiService.apiUse(postApiXml);
 
     if (!resUpdateXml.status) {
 

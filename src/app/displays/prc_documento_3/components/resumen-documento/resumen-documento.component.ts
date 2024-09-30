@@ -569,12 +569,13 @@ export class ResumenDocumentoComponent implements OnInit {
       uuid: uuidDoc,
     }
 
-
-    //actualizar odcumento con firma
-    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+    const apiPostXml = ()=> this._felService.postXmlUpdate(
       this.token,
       paramUpdate,
-    )
+    );
+
+    //actualizar odcumento con firma
+    let resUpdateXml: ResApiInterface = await ApiService.apiUse(apiPostXml);
 
 
     if (!resUpdateXml.status) {

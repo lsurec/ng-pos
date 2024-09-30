@@ -298,7 +298,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
             if (tra.producto.tipo_Producto != 2) {
-              
+
 
               this.facturaService.isLoading = true;
               let dateStart: string = `${this.facturaService.fechaIni!.getDate()}/${this.facturaService.fechaIni!.getMonth() + 1}/${this.facturaService.fechaIni!.getFullYear()} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
@@ -498,7 +498,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.vendedor = undefined;
 
 
-    const apiSeller = ()=> this._cuentaService.getSeller(
+    const apiSeller = () => this._cuentaService.getSeller(
       this.user,
       this.token,
       this.documento,
@@ -768,7 +768,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Limpiar la lista de registros antes de cada búsqueda
     this.facturaService.isLoading = true;
 
-    const apiGetCUenta = ()=> this._cuentaService.getClient(
+    const apiGetCUenta = () => this._cuentaService.getClient(
       this.user,
       this.token,
       this.empresa,
@@ -839,13 +839,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let cleanedString = this.facturaService.searchClient.replace(/[\s\-]/g, '');
 
-
-      let resRecpetor: ResApiInterface = await this._felService.getReceptor(
+      const apiReceptor = () => this._felService.getReceptor(
         this.token,
         llaveApi,
         usuarioApi,
         cleanedString,
       );
+
+      let resRecpetor: ResApiInterface = await ApiService.apiUse(apiReceptor);
 
 
       if (!resRecpetor.status) {
@@ -878,7 +879,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
 
-      const postCuenta = ()=>  this._cuentaService.postCuenta(
+      const postCuenta = () => this._cuentaService.postCuenta(
         this.user,
         this.token,
         this.empresa,
@@ -901,7 +902,7 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       ////////////////
-      const getCuenta = ()=>this._cuentaService.getClient(
+      const getCuenta = () => this._cuentaService.getClient(
         this.user,
         this.token,
         this.empresa,
