@@ -289,15 +289,17 @@ export class FacturaComponent implements OnInit {
     //tioos de trabnsaccion disponibles
     this.facturaService.tiposTransaccion = resTransaccion.response;
 
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    const apiParam = ()=> this._parametroService.getParametro(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
-    )
+    );
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await  ApiService.apiUse(apiParam);
 
 
 
@@ -757,15 +759,18 @@ export class FacturaComponent implements OnInit {
       //tioos de trabnsaccion disponibles
       this.facturaService.tiposTransaccion = resTransaccion.response;
 
-      //Buscar parametros del documento
-      let resParametro: ResApiInterface = await this._parametroService.getParametro(
+
+      const apiParam =()=> this._parametroService.getParametro(
         user,
         token,
         documento,
         serie,
         empresa,
         estacion,
-      )
+      );
+
+      //Buscar parametros del documento
+      let resParametro: ResApiInterface = await ApiService.apiUse(apiParam); 
 
 
 

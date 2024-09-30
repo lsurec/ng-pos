@@ -584,15 +584,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.parametros;
 
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    const apiParam = ()=> this._parametroService.getParametro(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
       this.estacion,
-    )
+    );
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await ApiService.apiUse(apiParam);
 
     if (!resParametro.status) {
 
