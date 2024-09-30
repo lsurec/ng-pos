@@ -997,11 +997,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     this.isLoading = true;
 
-    let resCot: ResApiInterface = await this._printFormatService.getReportCotizacion(
+    const apiCotFormat = ()=> this._printFormatService.getReportCotizacion(
       this.user,
       this.token,
       this.consecutivoDoc,
     );
+
+    let resCot: ResApiInterface = await ApiService.apiUse(apiCotFormat);
 
     if (!resCot.status) {
       this.isLoading = false;
