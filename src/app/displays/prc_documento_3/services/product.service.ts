@@ -1,7 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { ResponseInterface } from 'src/app/interfaces/response.interface';
 import { PreferencesService } from 'src/app/services/preferences.service';
 
 @Injectable()
