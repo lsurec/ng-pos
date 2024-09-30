@@ -25,6 +25,7 @@ import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/pre
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 import { ValidateProductInterface } from '../../interfaces/validate-product.interface';
 import { CurrencyPipe } from '@angular/common';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-convert-docs',
@@ -257,8 +258,7 @@ export class ConvertDocsComponent {
       }
 
 
-      //verifcar disponiobilidad del producto
-      let resValidaDisponibilidad: ResApiInterface = await this._productService.getValidateProducts(
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.globalConvertSrevice.docOriginSelect!.serie_Documento,
         this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
@@ -274,6 +274,9 @@ export class ConvertDocsComponent {
         precioSelect.id,
         this.token,
       );
+
+      //verifcar disponiobilidad del producto
+      let resValidaDisponibilidad: ResApiInterface = await ApiService.apiUse(apiValidateProd);
 
 
       if (!resValidaDisponibilidad.status) {

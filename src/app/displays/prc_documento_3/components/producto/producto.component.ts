@@ -397,13 +397,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     if (!this.productoService.bodega!.posee_Componente) {
       this.isLoading = true;
 
-      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.facturaService.serie!.serie_Documento,
         this.facturaService.tipoDocumento!,
         this.estacion,
         this.empresa,
-        this.productoService.bodega.bodega,
+        this.productoService.bodega!.bodega,
         this.facturaService.resolveTipoTransaccion(this.producto.tipo_Producto),
         this.producto.unidad_Medida,
         this.producto.producto,
@@ -414,6 +414,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         this.token,
 
       );
+
+      let resDisponibiladProducto: ResApiInterface = await ApiService.apiUse(apiValidateProd) ;
 
       if (!resDisponibiladProducto.status) {
         this.isLoading = false;

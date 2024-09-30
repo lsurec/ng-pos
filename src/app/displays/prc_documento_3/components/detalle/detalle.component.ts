@@ -738,7 +738,8 @@ export class DetalleComponent implements AfterViewInit {
     //si no se abre el dialogo agregar ka transaccon directammente
 
     if (!this.productoService.bodega!.posee_Componente) {
-      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.facturaService.serie!.serie_Documento,
         this.facturaService.tipoDocumento!,
@@ -755,6 +756,8 @@ export class DetalleComponent implements AfterViewInit {
         this.token,
 
       );
+
+      let resDisponibiladProducto: ResApiInterface = await ApiService.apiUse(apiValidateProd);
 
 
       if (!resDisponibiladProducto.status) {
