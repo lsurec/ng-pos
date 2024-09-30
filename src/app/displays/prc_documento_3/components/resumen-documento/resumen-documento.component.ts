@@ -347,11 +347,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //buscar documento, plantilla xml
 
-    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+    const apiXmlCert = ()=> this._felService.getDocXmlCert(
       this.user,
       this.token,
       this.consecutivoDoc,
-    )
+    );
+
+    let resXMlCert: ResApiInterface = await  ApiService.apiUse(apiXmlCert);
 
     if (!resXMlCert.status) {
 
