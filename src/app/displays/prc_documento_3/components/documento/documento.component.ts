@@ -623,13 +623,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.formasPago = [];
 
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+
+    const apiPagos = ()=> this._formaPagoService.getFormas(
       this.token,
       this.empresa,
       serie,
       this.documento,
     );
+
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resFormaPago.status) {

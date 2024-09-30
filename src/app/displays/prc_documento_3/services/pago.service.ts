@@ -13,7 +13,7 @@ export class PagoService {
     }
 
     //funcion que va a realizar el consumo privado para obtener las formas de pago
-    private _getFormas(
+    getFormas(
         token: string,
         empresa: number,
         serie: string,
@@ -32,74 +32,6 @@ export class PagoService {
 
         //consumo de api
         return this._http.get(`${this._urlBase}Pago/formas`, { headers: headers, observe: 'response' });
-    }
-
-    //funcion asyncrona con promesa para obtener las formas de pago
-    getFormas(
-        token: string,
-        empresa: number,
-        serie: string,
-        documento: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getFormas(
-                token,
-                empresa,
-                serie,
-                documento,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
     }
 
     //funcion que va a realizar el consumo privado para obtener los bancos disponibles en una empresa

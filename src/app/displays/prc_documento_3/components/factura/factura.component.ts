@@ -312,13 +312,14 @@ export class FacturaComponent implements OnInit {
     //Parammetros disponibles
     this.facturaService.parametros = resParametro.response;
 
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+    const apiPago = ()=> this._formaPagoService.getFormas(
       this.token,
       this.empresa.empresa,
       this.facturaService.serie!.serie_Documento,
       this.tipoDocumento!,
     );
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPago);
 
     //si algo salio mal
     if (!resFormaPago.status) {
@@ -780,15 +781,15 @@ export class FacturaComponent implements OnInit {
       this.facturaService.parametros = resParametro.response;
 
 
-
-
-      //Buscar formas de pago
-      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+      const apiPagos = ()=> this._formaPagoService.getFormas(
         token,
         empresa,
         serie,
         documento,
       );
+
+      //Buscar formas de pago
+      let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPagos);
 
       //si algo salio mal
       if (!resFormaPago.status) {

@@ -454,13 +454,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
     }
 
-
-    let resPagos: ResApiInterface = await this._pagoService.getFormas(
+    const apiPagos = ()=> this._pagoService.getFormas(
       this.token,
       empresaId,
       serieDoc,
       tipoDoc
     );
+
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resPagos.status) {
