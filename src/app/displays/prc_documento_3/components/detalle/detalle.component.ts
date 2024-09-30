@@ -23,6 +23,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detalle',
@@ -1144,13 +1145,16 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+    const apiObjProd = ()=> this._productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+     
     this.facturaService.isLoading = false;
 
 

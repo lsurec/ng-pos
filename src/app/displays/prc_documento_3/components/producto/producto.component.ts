@@ -22,6 +22,7 @@ import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { CurrencyPipe } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-producto',
@@ -621,13 +622,16 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+    const apiObjProd = ()=> this._productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+    
     this.isLoading = false;
 
 
