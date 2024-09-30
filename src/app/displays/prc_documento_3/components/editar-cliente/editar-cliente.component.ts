@@ -9,6 +9,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { GrupoCuentaInterface } from '../../interfaces/grupo-cuenta.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -86,7 +87,10 @@ export class EditarClienteComponent implements OnInit {
     this.tipoCuenta = undefined;
 
     this.isLoading = true;
-    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user, this.token);
+
+    const apiGetGrupoCuenta = ()=> this._cuentaService.getGrupoCuenta(this.user, this.token);
+
+    let resGrupoCuenta = await ApiService.apiUse(apiGetGrupoCuenta);
 
     this.isLoading = false;
 
