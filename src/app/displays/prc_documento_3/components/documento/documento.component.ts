@@ -25,6 +25,7 @@ import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { VendedorInterface } from '../../interfaces/vendedor.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-documento',
@@ -871,13 +872,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-      //Usar servicio para actualizar cuenta
-      let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+
+      const postCuenta = ()=>  this._cuentaService.postCuenta(
         this.user,
         this.token,
         this.empresa,
         cuenta,
       );
+
+      //Usar servicio para actualizar cuenta
+      let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
 
       //Si el servicio falló

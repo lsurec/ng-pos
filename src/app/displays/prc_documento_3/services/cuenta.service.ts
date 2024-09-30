@@ -30,7 +30,7 @@ export class CuentaService {
 
     
     //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
-    private _postCuenta(
+    postCuenta(
         user: string,
         token: string,
         empresa: number,
@@ -57,71 +57,7 @@ export class CuentaService {
 
     }
 
-    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
-    postCuenta(
-        user: string,
-        token: string,
-        empresa: number,
-        cuenta: CuentaCorrentistaInterface,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._postCuenta(
-                user,
-                token,
-                empresa,
-                cuenta,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        })
-    }
+   
 
     //obtner nombre de una cuenta por idCuenta
     private _getNombreCuenta(token: string, cuenta: number,) {

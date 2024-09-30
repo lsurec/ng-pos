@@ -71,9 +71,9 @@ export class NuevoClienteComponent implements OnInit {
 
     this.isLoading = true;
 
-    const getApiGrupoCuenta = ()=> this._cuentaService.getGrupoCuenta(this.user, this.token);
+    const getApiGrupoCuenta = () => this._cuentaService.getGrupoCuenta(this.user, this.token);
 
-    let resGrupoCuenta = await  ApiService.apiUse(getApiGrupoCuenta);
+    let resGrupoCuenta = await ApiService.apiUse(getApiGrupoCuenta);
 
     this.isLoading = false;
 
@@ -158,14 +158,15 @@ export class NuevoClienteComponent implements OnInit {
 
     this.isLoading = true;
 
-    //Usar servicio crear cuenta
-    let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+    const postCuenta = () => this._cuentaService.postCuenta(
       user,
       token,
       empresa,
       cuenta,
-    )
+    );
 
+    //Usar servicio crear cuenta
+    let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
     //Si el servicio falló
     if (!resCuenta.status) {

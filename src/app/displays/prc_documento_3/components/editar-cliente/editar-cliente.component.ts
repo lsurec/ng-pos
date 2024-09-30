@@ -230,13 +230,15 @@ export class EditarClienteComponent implements OnInit {
 
     this.isLoading = true;
 
-    //Usar servicio para actualizar cuenta
-    let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+    const postCuenta = ()=>this._cuentaService.postCuenta(
       user,
       token,
       empresa,
       cuenta,
-    )
+    );
+
+    //Usar servicio para actualizar cuenta
+    let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
 
     //Si el servicio falló
