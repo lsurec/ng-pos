@@ -226,13 +226,15 @@ export class PagoComponent implements OnInit {
 
     this.facturaService.isLoading = true;
 
-    //buscar cuentas bancarias
-    let resCuentas: ResApiInterface = await this._pagoService.getCuentasBanco(
+    const apiCuentaBanco = ()=> this._pagoService.getCuentasBanco(
       this.user,
       this.token,
       this.empresa,
       this.pagoComponentService.banco!.banco,
     );
+
+    //buscar cuentas bancarias
+    let resCuentas: ResApiInterface = await ApiService.apiUse(apiCuentaBanco);
 
     this.facturaService.isLoading = false;
 

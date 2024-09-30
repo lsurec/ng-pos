@@ -547,13 +547,15 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-
-          let resCuentaBanco = await this._pagoService.getCuentasBanco(
+          const apiCuentaBanco = ()=> this._pagoService.getCuentasBanco(
             this.user,
             this.token,
             empresaId,
-            this.banco.banco,
+            this.banco!.banco,
           );
+
+
+          let resCuentaBanco = await ApiService.apiUse(apiBanco);
 
           if (!resCuentaBanco.status) {
 
