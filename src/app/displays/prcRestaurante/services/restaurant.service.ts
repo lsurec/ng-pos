@@ -12,7 +12,7 @@ export class RestaurantService {
     }
 
     // función que va a realizar el consumo privado para obtener las empresas
-    getEmpresas(
+    getLocations(
         typeDoc: number,
         enterprise: number,
         station: number,

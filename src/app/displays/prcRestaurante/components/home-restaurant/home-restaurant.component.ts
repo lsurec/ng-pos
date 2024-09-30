@@ -35,7 +35,7 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   async getApi(){
-    const res = await firstValueFrom(this._restaurantService.getEmpresas(
+    const res = await firstValueFrom(this._restaurantService.getLocations(
       14,
       1,
       7,
@@ -56,7 +56,7 @@ export class HomeRestaurantComponent implements OnInit {
 
 
 
-    let apiLocations = () => this._restaurantService.getEmpresas(
+    let apiLocations = () => this._restaurantService.getLocations(
       14,
       1,
       7,
