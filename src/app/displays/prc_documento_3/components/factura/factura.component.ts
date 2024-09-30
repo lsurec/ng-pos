@@ -1211,13 +1211,14 @@ export class FacturaComponent implements OnInit {
         let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-
-        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+        const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
           token,
           dateStart,
           dateEnd,
           precioSelect.precioU.toString(),
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
         if (!res.status) {
           this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));

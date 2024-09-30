@@ -305,12 +305,15 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
               let dateEnd: string = `${this.facturaService.fechaFin!.getDate()}/${this.facturaService.fechaFin!.getMonth() + 1}/${this.facturaService.fechaFin!.getFullYear()} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
 
 
-              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
                 this.token,
                 dateStart,
                 dateEnd,
                 tra.precioCantidad!.toString(),
               );
+
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
               this.facturaService.isLoading = false;
 
@@ -393,13 +396,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
               let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-
-              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
                 this.token,
                 dateStart,
                 dateEnd,
                 tra.precioCantidad!.toString(),
               );
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
               this.facturaService.isLoading = false;
 
