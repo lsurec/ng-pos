@@ -1714,12 +1714,13 @@ export class FacturaComponent implements OnInit {
 
     let detalles: DetallePrintInterface[] = resDetalles.response;
 
-    let resPagos: ResApiInterface = await this._documentService.getPagos(
+    const apiPagos = ()=> this._documentService.getPagos(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
 
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
     if (!resPagos.status) {
 

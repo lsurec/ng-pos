@@ -34,6 +34,7 @@ import { DataUserService } from '../../services/data-user.service';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 import { DataFelInterface } from '../../interfaces/data-fel.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -1098,11 +1099,14 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let detalles: DetallePrintInterface[] = resDetalles.response;
 
-    let resPagos: ResApiInterface = await this._documentService.getPagos(
+
+    const apiPagos = ()=> this._documentService.getPagos(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resPagos.status) {
