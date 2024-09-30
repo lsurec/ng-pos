@@ -2158,13 +2158,16 @@ export class FacturaComponent implements OnInit {
     uuidDoc = templatesXMl[0].d_Id_Unc;
     // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
 
-    //buscar las credenciales del certificador
-    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+
+    const apiCredenciales = ()=> this._felService.getCredenciales(
       certificador,
       this.empresa.empresa,
       this.user,
       this.token,
-    )
+    );
+
+    //buscar las credenciales del certificador
+    let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales); 
 
     if (!resCredenciales.status) {
 

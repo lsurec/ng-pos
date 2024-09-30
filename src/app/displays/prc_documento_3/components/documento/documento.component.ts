@@ -800,7 +800,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+      const apiCredenciales = ()=> this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+
+      let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales);
 
       if (!resCredenciales.status) {
 
