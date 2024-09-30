@@ -554,14 +554,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.tiposTransaccion = [];
 
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion) ;
 
     if (!resTransaccion.status) {
 

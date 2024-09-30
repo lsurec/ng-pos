@@ -125,14 +125,15 @@ export class ConvertDocsComponent {
 
     //buscar  informacion de la transacción
 
-
-    let resTipoTransacciones: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
       this.globalConvertSrevice.docOriginSelect!.serie_Documento,
       this.globalConvertSrevice.docOriginSelect!.empresa,
     );
+
+    let resTipoTransacciones: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion) ;
 
     //si no se pudo actualziar mostrar alerta
     if (!resTipoTransacciones.status) {

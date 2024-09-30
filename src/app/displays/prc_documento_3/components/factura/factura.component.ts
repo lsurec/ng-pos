@@ -269,14 +269,16 @@ export class FacturaComponent implements OnInit {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
     }
 
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
     );
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion);
 
     //si algo salio mal
     if (!resTransaccion.status) {
@@ -744,14 +746,17 @@ export class FacturaComponent implements OnInit {
         this.facturaService.vendedor = this.facturaService.vendedores[0];
       }
 
-      //Buscar tipos transaccion
-      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+
+      const apiTipoTransaccion = ()=>  this._tipoTransaccionService.getTipoTransaccion(
         user,
         token,
         documento,
         serie,
         empresa,
       );
+
+      //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion);
 
       //si algo salio mal
       if (!resTransaccion.status) {

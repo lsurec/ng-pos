@@ -116,14 +116,17 @@ export class DocsHistorialComponent implements OnInit {
       //Converitr estructira json str a un objeto JSON
       let estructura: Documento = JSON.parse(doc.estructura);
 
-      //Buscar lostipos de transaccion de un documento recuperado
-      let resTra = await this._tiposTransaccion.getTipoTransaccion(
+
+      const apiTipoTransaccion = ()=> this._tiposTransaccion.getTipoTransaccion(
         this.user,
         this.token,
         estructura.Doc_Tipo_Documento,
         estructura.Doc_Serie_Documento,
         estructura.Doc_Empresa,
       );
+
+      //Buscar lostipos de transaccion de un documento recuperado
+      let resTra = await ApiService.apiUse(apiTipoTransaccion);
 
       //Si algo salio mal
       if (!resTra.status) {
