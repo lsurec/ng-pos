@@ -165,8 +165,8 @@ export class DetalleComponent implements AfterViewInit {
       this.productoService.bodega = this.productoService.bodegas[0];
       let bodega: number = this.productoService.bodega.bodega;
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+
+      const apiPrecio = ()=> this._productService.getPrecios(
         this.user,
         this.token,
         bodega,
@@ -175,6 +175,9 @@ export class DetalleComponent implements AfterViewInit {
         this.facturaService.cuenta?.cuenta_Correntista ?? 0,
         this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
+
+      //buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio);
 
 
       //Si no se pudo obtener precios
@@ -575,8 +578,7 @@ export class DetalleComponent implements AfterViewInit {
     //Si solo hay una bodega
     let bodega: number = this.productoService.bodega.bodega;
 
-    //buscar precios
-    let resPrecio = await this._productService.getPrecios(
+    const apiPrecio = ()=> this._productService.getPrecios(
       this.user,
       this.token,
       bodega,
@@ -585,6 +587,9 @@ export class DetalleComponent implements AfterViewInit {
       this.facturaService.cuenta?.cuenta_Correntista ?? 0,
       this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
+
+    //buscar precios
+    let resPrecio = await  ApiService.apiUse(apiPrecio);
 
 
     //si no fiue pocible obtener los precios mmostrar error 

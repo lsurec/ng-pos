@@ -152,8 +152,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
 
-    //buscar precios
-    let resPrecio = await this._productService.getPrecios(
+
+    const apiPrecio = ()=> this._productService.getPrecios(
       this.user,
       this.token,
       bodega,
@@ -162,6 +162,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.cuenta?.cuenta_Correntista ?? 0,
       this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
+
+    //buscar precios
+    let resPrecio = await ApiService.apiUse(apiPrecio) ;
 
     //si algo salió mal
     if (!resPrecio.status) {

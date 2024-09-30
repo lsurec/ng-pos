@@ -203,8 +203,7 @@ export class ConvertDocsComponent {
       //Detalled del producto encontrados
       let prod: ProductoInterface = productSearch[iProd];
 
-      // /buscar precios
-      let resPrecio = await this._productService.getPrecios(
+      const apiPrecio = ()=> this._productService.getPrecios(
         this.user,
         this.token,
         tra.detalle.bodega,
@@ -213,6 +212,9 @@ export class ConvertDocsComponent {
         0,
         "0",
       );
+
+      // /buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio) ;
 
 
       if (!resPrecio.status) {

@@ -1140,16 +1140,18 @@ export class FacturaComponent implements OnInit {
       }
 
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+      const apiPrecio = ()=>this._productService.getPrecios(
         this.user,
         token,
         bodega.bodega,
         prod.producto,
         prod.unidad_Medida,
-        this.facturaService.cuenta.cuenta_Correntista ?? 0,
-        this.facturaService.cuenta.cuenta_Cta ?? "0",
+        this.facturaService.cuenta!.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta!.cuenta_Cta ?? "0",
       );
+
+      //buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio);
 
 
 
