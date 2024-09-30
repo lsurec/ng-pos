@@ -9,6 +9,7 @@ import { PagoService } from '../../services/pago.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-pago',
@@ -171,12 +172,13 @@ export class PagoComponent implements OnInit {
 
       this.facturaService.isLoading = true;
 
-      //Buscar bancos disponibles
-      let resBancos: ResApiInterface = await this._pagoService.getBancos(
+      const apiBancos = ()=>this._pagoService.getBancos(
         this.user,
         this.token,
         this.empresa,
       );
+      //Buscar bancos disponibles
+      let resBancos: ResApiInterface = await  ApiService.apiUse(apiBancos);
 
       this.facturaService.isLoading = false;
 

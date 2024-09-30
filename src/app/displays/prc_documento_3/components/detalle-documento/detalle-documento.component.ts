@@ -501,11 +501,13 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-        let resBancos: ResApiInterface = await this._pagoService.getBancos(
+        const apiBanco = ()=> this._pagoService.getBancos(
           this.user,
           this.token,
           empresaId,
         );
+
+        let resBancos: ResApiInterface = await ApiService.apiUse(apiBanco) ;
 
 
         if (!resBancos.status) {
