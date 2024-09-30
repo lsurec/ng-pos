@@ -367,11 +367,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
     for (const tra of objDoc.Doc_Transaccion) {
 
-      let resSku: ResApiInterface = await this._productoService.getSku(
+
+      const apiSku = ()=> this._productoService.getSku(
         this.token,
         tra.Tra_Producto,
         tra.Tra_Unidad_Medida,
       );
+
+      let resSku: ResApiInterface = await ApiService.apiUse(apiSku);
 
 
       if (!resSku.status) {
@@ -399,8 +402,7 @@ export class DetalleDocumentoComponent implements OnInit {
 
       let sku: ResponseInterface = resSku.response;
 
-
-      let resProducto: ResApiInterface = await this._productoService.getProduct(
+      const apiProduct = ()=> this._productoService.getProduct(
         this.token,
         this.user,
         estacionId,
@@ -408,6 +410,9 @@ export class DetalleDocumentoComponent implements OnInit {
         0,
         100,
       );
+
+
+      let resProducto: ResApiInterface = await ApiService.apiUse(apiProduct) ;
 
 
       if (!resProducto.status) {

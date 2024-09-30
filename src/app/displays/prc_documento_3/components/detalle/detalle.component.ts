@@ -112,8 +112,7 @@ export class DetalleComponent implements AfterViewInit {
     let boddegaTra = this.facturaService.traInternas[indexTra].bodega; // bodega  de la transaccion
     let precioTra = this.facturaService.traInternas[indexTra].precio; //tipo precio de la transaccion
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -121,6 +120,9 @@ export class DetalleComponent implements AfterViewInit {
       productTra.producto,
       productTra.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //Si bo se pudo obtener ls bodegas
     if (!resBodega.status) {
@@ -433,8 +435,7 @@ export class DetalleComponent implements AfterViewInit {
     this.facturaService.isLoading = true;
 
 
-
-    let resproductoDesc = await this._productService.getProduct(
+    const apiProduct = ()=>  this._productService.getProduct(
       this.token,
       this.user,
       this.estacion,
@@ -443,6 +444,8 @@ export class DetalleComponent implements AfterViewInit {
       this.facturaService.rangoFin,
 
     );
+
+    let resproductoDesc = await ApiService.apiUse(apiProduct);
 
 
     if (!resproductoDesc.status) {
@@ -518,8 +521,7 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -527,6 +529,9 @@ export class DetalleComponent implements AfterViewInit {
       product.producto,
       product.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //si fallo la busquea¿da de bodegas
     if (!resBodega.status) {

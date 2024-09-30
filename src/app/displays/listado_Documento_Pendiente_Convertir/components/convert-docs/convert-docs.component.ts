@@ -149,7 +149,8 @@ export class ConvertDocsComponent {
     //Validar que las transaccones por autorizar esten disponibles
     for (const tra of traCheks) {
 
-      let resProduct = await this._productService.getProduct(
+
+      const apiProduct = ()=> this._productService.getProduct(
         this.token,
         this.user,
         this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
@@ -157,6 +158,8 @@ export class ConvertDocsComponent {
         0,
         100,
       );
+
+      let resProduct = await ApiService.apiUse(apiProduct) ;
 
 
 

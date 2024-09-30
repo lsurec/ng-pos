@@ -1032,7 +1032,8 @@ export class FacturaComponent implements OnInit {
 
     //TODO:Cargar productos
     for (const tra of this.globalConvertService.detailsOrigin) {
-      let resProduct = await this._productService.getProduct(
+      
+      const apiProduct =()=> this._productService.getProduct(
         token,
         user,
         estacion,
@@ -1040,6 +1041,8 @@ export class FacturaComponent implements OnInit {
         0,
         100,
       );
+      
+      let resProduct = await ApiService.apiUse(apiProduct) ;
 
 
       if (!resProduct.status) {
@@ -1083,8 +1086,7 @@ export class FacturaComponent implements OnInit {
 
       let prod: ProductoInterface = productSearch[iProd];
 
-      //buscar bodegas del producto
-      let resBodega = await this._productService.getBodegaProducto(
+      const apibodega = ()=> this._productService.getBodegaProducto(
         user,
         token,
         empresa,
@@ -1092,6 +1094,8 @@ export class FacturaComponent implements OnInit {
         prod.producto,
         prod.unidad_Medida,
       );
+      //buscar bodegas del producto
+      let resBodega = await ApiService.apiUse(apibodega);
 
 
       if (!resBodega.status) {

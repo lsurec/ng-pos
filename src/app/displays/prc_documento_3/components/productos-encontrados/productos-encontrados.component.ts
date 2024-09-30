@@ -114,7 +114,7 @@ export class ProductosEncontradosComponent {
 
     this.isLoading = true;
 
-    let resTarea: ResApiInterface = await this.productService.getProduct(
+    const apiProduct = ()=> this.productService.getProduct(
       this.token,
       this.user,
       this.estacion,
@@ -122,6 +122,8 @@ export class ProductosEncontradosComponent {
       this.facturaService.rangoIni,
       this.facturaService.rangoFin,
     );
+
+    let resTarea: ResApiInterface = await ApiService.apiUse(apiProduct);
 
     if (!resTarea.status) {
       this.isLoading = false;

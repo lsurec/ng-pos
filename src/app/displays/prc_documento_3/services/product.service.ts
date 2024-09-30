@@ -96,7 +96,7 @@ export class ProductService {
 
    
     //funcion que va a realizar el consumo privado para obtner el sku de un producto enviando el id
-    private _getSku(
+    getSku(
         token: string,
         producto: number,
         um: number,
@@ -112,74 +112,9 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/sku/${producto}/${um}`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa para obtner el sku de un producto enviando el id
-    getSku(
-        token: string,
-        producto: number,
-        um: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getSku(
-                token,
-                producto,
-                um,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
 
     //funcion que va a realizar el consumo privado para obtner las bodegas y existencias en las que está un producto
-    private _getBodegaProducto(
+    getBodegaProducto(
         user: string,
         token: string,
         empresa: number,
@@ -203,82 +138,8 @@ export class ProductService {
         return this._http.get(`${this._urlBase}producto/Bodega`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtner las bodegas y existencias en las que está un producto
-    getBodegaProducto(
-        user: string,
-        token: string,
-        empresa: number,
-        estacion: number,
-        producto: number,
-        um: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getBodegaProducto(
-                user,
-                token,
-                empresa,
-                estacion,
-                producto,
-                um,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-
-   
-
     //funcion que va a realizar el consumo privado para obtner los prodictos en una busqueda por descripcion
-    private _getProduct(
+    getProduct(
         token: string,
         user: string,
         station: number,
@@ -302,77 +163,7 @@ export class ProductService {
         return this._http.get(`${this._urlBase}Producto/buscar`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa para obtner los prodictos en una busqueda por descripcion
-    getProduct(
-        token: string,
-        user: string,
-        station: number,
-        search: string,
-        start: number,
-        end: number,
-    ): Promise<ResApiInterface> {        
-        return new Promise((resolve, reject) => {
-            this._getProduct(
-                token,
-                user,
-                station,
-                search,
-                start,
-                end,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
+   
     //funcion que va a realizar el consumo privado para obtner los tipos de precios para un producto
     private _getPrecios(
         user: string,
