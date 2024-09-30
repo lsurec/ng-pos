@@ -55,6 +55,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-factura',
@@ -904,15 +905,19 @@ export class FacturaComponent implements OnInit {
     }
 
 
+
     //--EMpiezan datos
-    //Cargar cliente
-    let resClient: ResApiInterface = await this._cuentaService.getClient(
+    
+    const apiCuenta = ()=> this._cuentaService.getClient(
       user,
       token,
       empresa,
       docOrigin.nit,
 
     );
+    
+    //Cargar cliente
+    let resClient: ResApiInterface = await ApiService.apiUse(apiCuenta);
 
     //si algo salio mal
     if (!resClient.status) {

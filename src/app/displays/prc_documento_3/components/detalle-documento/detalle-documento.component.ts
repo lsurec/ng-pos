@@ -259,12 +259,15 @@ export class DetalleDocumentoComponent implements OnInit {
     let name: ResponseInterface = resName.response;
 
     if (name.data) {
-      let resClient: ResApiInterface = await this._cuentaService.getClient(
+
+      const getApiCuenta = ()=> this._cuentaService.getClient(
         this.user,
         this.token,
         empresaId,
         name.data,
       );
+
+      let resClient: ResApiInterface = await ApiService.apiUse(getApiCuenta);
 
       if (!resClient.status) {
 

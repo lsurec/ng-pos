@@ -66,7 +66,7 @@ export class CuentaService {
 
 
     //funcion que va a realizar el consumo privado para buscar una cuenta (cuenta correntista)
-    private _getClient(
+    getClient(
         user: string,
         token: string,
         empresa: number,
@@ -86,74 +86,6 @@ export class CuentaService {
         return this._http.get(`${this._urlBase}Cuenta`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa para buscar una cuenta (cuenta correntista)
-    getClient(
-        user: string,
-        token: string,
-        empresa: number,
-        filter: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getClient(
-                user,
-                token,
-                empresa,
-                filter,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
 
     //funcion que va a realizar el consumo privado para obtener cuenta correntista ref
     private _getSeller(

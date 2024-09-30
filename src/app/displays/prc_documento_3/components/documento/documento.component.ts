@@ -765,12 +765,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Limpiar la lista de registros antes de cada búsqueda
     this.facturaService.isLoading = true;
 
-    let resCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiGetCUenta = ()=> this._cuentaService.getClient(
       this.user,
       this.token,
       this.empresa,
       this.facturaService.searchClient,
     );
+
+    let resCuenta: ResApiInterface = await ApiService.apiUse(apiGetCUenta);
 
 
     if (!resCuenta.status) {
@@ -896,14 +898,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       ////////////////
-
-      //buscar informacin de la cuenta  creada
-      let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+      const getCuenta = ()=>this._cuentaService.getClient(
         this.user,
         this.token,
         this.empresa,
         cuenta.nit,
       );
+      //buscar informacin de la cuenta  creada
+      let infoCuenta: ResApiInterface = await ApiService.apiUse(getCuenta);
 
       // si falló la buqueda de la cuenta creada
       if (!infoCuenta.response) {

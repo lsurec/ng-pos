@@ -264,14 +264,15 @@ export class EditarClienteComponent implements OnInit {
 
     }
 
-
-    //buscar informacin de la cuenta  actualizada
-    let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiGetCuenta = ()=> this._cuentaService.getClient(
       user,
       token,
       empresa,
       cuenta.nit,
     );
+
+    //buscar informacin de la cuenta  actualizada
+    let infoCuenta: ResApiInterface = await ApiService.apiUse(apiGetCuenta) ;
 
     this.isLoading = false;
 

@@ -191,13 +191,14 @@ export class NuevoClienteComponent implements OnInit {
 
     }
 
-    //buscar informacin de la cuenta  creada
-    let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiCuenta = ()=> this._cuentaService.getClient(
       user,
       token,
       empresa,
       cuenta.nit,
-    );
+    ); 
+    //buscar informacin de la cuenta  creada
+    let infoCuenta: ResApiInterface = await  ApiService.apiUse(apiCuenta);
 
     this.isLoading = false;
 
