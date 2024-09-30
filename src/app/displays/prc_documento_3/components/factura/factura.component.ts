@@ -2636,8 +2636,10 @@ export class FacturaComponent implements OnInit {
       estado: this.facturaService.valueParametro(349) ? 1 : 11,
     }
 
+    const apiPostDoc = ()=> this._documentService.postDocument(this.token, document);
+
     //consumo del servico para crear el documento
-    let resDoc = await this._documentService.postDocument(this.token, document);
+    let resDoc = await ApiService.apiUse(apiPostDoc);
 
     //Si algo salió mal mostrar error
     if (!resDoc.status) {
