@@ -26,6 +26,7 @@ import { MontoIntreface } from '../../interfaces/monto.interface';
 import { BancoInterface } from '../../interfaces/banco.interface';
 import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 import { TipoReferenciaInterface } from '../../interfaces/tipo-referencia';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -227,17 +228,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-
-    let resName: ResApiInterface = await this._cuentaService.getNombreCuenta(
+    const getNombreCuenta = ()=> this._cuentaService.getNombreCuenta(
       this.token,
       idCuenta,
     );
 
-
+    let resName: ResApiInterface = await ApiService.apiUse(getNombreCuenta);
 
     if (!resName.status) {
-
-
 
       this.isLoading = false;
 
