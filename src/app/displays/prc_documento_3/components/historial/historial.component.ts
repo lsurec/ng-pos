@@ -115,14 +115,15 @@ export class HistorialComponent implements OnInit {
     this.documentosRecientes = await this.setDocument(docsRecents);
 
     //PARA DOCUMENTOS PENDIENTES DE MIGRAR
-
-    //Obntner ultimos documentos relizados
-    let resDocPending: ResApiInterface = await this._documentService.getStructureDosPendigs(
+    const getApiDocPending = ()=>this._documentService.getStructureDosPendigs(
       this.user,
       this.token,
       this.searchDoc,
       this.searchUserDoc
-    )
+    );
+
+    //Obntner ultimos documentos relizados
+    let resDocPending: ResApiInterface = await ApiService.apiUse(getApiDocPending); 
 
     //si algo salio mal
     if (!resDocPending.status) {
@@ -348,13 +349,16 @@ export class HistorialComponent implements OnInit {
     if (this.pendientes) {
 
       this.isLoading = true;
-      //Obntner ultimos documentos relizados
-      let resDocPending: ResApiInterface = await this._documentService.getStructureDosPendigs(
+
+      const docPending = ()=> this._documentService.getStructureDosPendigs(
         this.user,
         this.token,
         this.searchUserDoc,
         this.searchDoc,
-      )
+      );
+
+      //Obntner ultimos documentos relizados
+      let resDocPending: ResApiInterface = await ApiService.apiUse(docPending); 
 
       //si algo salio mal
       if (!resDocPending.status) {
