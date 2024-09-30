@@ -159,12 +159,15 @@ export class LoginComponent {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
 
-      //Cargar tipo cambio
-      let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+
+      const apiTipoCambio = ()=> this._tipoCambioService.getTipoCambio(
         user,
         token,
         PreferencesService.empresa.empresa,
       );
+
+      //Cargar tipo cambio
+      let resTipoCammbio = await ApiService.apiUse(apiTipoCambio) ;
 
       this.isLoading = false;
 

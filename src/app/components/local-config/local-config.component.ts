@@ -18,6 +18,7 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { LanguageInterface } from 'src/app/interfaces/language.interface';
 //Providers utilizados
 import { indexDefaultLang, languagesProvider } from 'src/app/providers/languages.provider';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-local-config',
@@ -167,12 +168,15 @@ export class LocalConfigComponent implements OnInit {
 
     this.isLoading = true; //cargar pantalla
 
-    //Cargar tipo cambio
-    let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+
+    const apiTipoCambio = ()=> this._tipoCambioService.getTipoCambio(
       user,
       token,
       PreferencesService.empresa.empresa,
     );
+
+    //Cargar tipo cambio
+    let resTipoCammbio = await ApiService.apiUse(apiTipoCambio);
 
     this.isLoading = false; //detener la carga de la pantalla
 
