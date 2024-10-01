@@ -19,14 +19,12 @@ export class ReceptionService {
 
 
     //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
-    private _insertarTransaccion(
+    insertarTransaccion(
         token: string,
         transaction: NewTransactionInterface,
     ) {
 
         let paramsStr = JSON.stringify(transaction); //JSON to String
-
-
         //confgurar headers
 
         let headers = new HttpHeaders(
@@ -38,74 +36,10 @@ export class ReceptionService {
 
         //consumo de api
         return this._http.post(`${this._urlBase}Recepcion/doc/insertar/transaccion`, paramsStr, { headers: headers, observe: 'response' });
-
-
-    }
-
-    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
-    insertarTransaccion(
-        token: string,
-        transaction: NewTransactionInterface,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._insertarTransaccion(
-                token,
-                transaction,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        })
     }
 
     //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
-    private _anularTransaccion(
+    anularTransaccion(
         token: string,
         transaction: NewTransactionInterface,
     ) {
@@ -128,72 +62,8 @@ export class ReceptionService {
 
     }
 
-    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
-    anularTransaccion(
-        token: string,
-        transaction: NewTransactionInterface,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._anularTransaccion(
-                token,
-                transaction,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        })
-    }
-
-
-
     //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
-    private _updateRef(
+    updateRef(
         token: string,
         doc: UpdateRefInterface,
     ) {
@@ -212,72 +82,7 @@ export class ReceptionService {
 
         //consumo de api
         return this._http.post(`${this._urlBase}Recepcion/modify/doc/ref`, paramsStr, { headers: headers, observe: 'response' });
-
-
     }
-
-    //funcion asyncrona con promesa  pra crear y/o actulaizar una cuenta correntista
-    updateRef(
-        token: string,
-        doc: UpdateRefInterface,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._updateRef(
-                token,
-                doc,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        })
-    }
-
 
     //funcion que va a realizar el consumo privado pra crear y/o actulaizar una cuenta correntista
     private _udateDocument(

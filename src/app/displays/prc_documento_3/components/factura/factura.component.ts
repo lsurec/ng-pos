@@ -2785,10 +2785,12 @@ export class FacturaComponent implements OnInit {
       tipoReferencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
     }
 
-    let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+    const apiUpdateRef =()=> this._recpetionService.updateRef(
       this.token,
       refModify,
     );
+
+    let resRefUpdate: ResApiInterface = await ApiService.apiUse(apiUpdateRef) ;
 
     if (!resRefUpdate.status) {
       this.facturaService.isLoading = false;
@@ -2818,11 +2820,12 @@ export class FacturaComponent implements OnInit {
         usuario: this.user,
       }
 
-
-      let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+      const apiDeleteTra = ()=> this._recpetionService.anularTransaccion(
         this.token,
         transactionEliminar,
       );
+
+      let resTransDelete: ResApiInterface = await ApiService.apiUse(apiDeleteTra);
 
       if (!resTransDelete.status) {
 
@@ -2863,12 +2866,12 @@ export class FacturaComponent implements OnInit {
           usuario: this.user,
         }
 
-
-        let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+        const apiDeleteTra = ()=> this._recpetionService.anularTransaccion(
           this.token,
           transactionActualizar,
         );
 
+        let resTransDelete: ResApiInterface = await ApiService.apiUse(apiDeleteTra);
 
         if (!resTransDelete.status) {
 
@@ -2880,10 +2883,12 @@ export class FacturaComponent implements OnInit {
 
         }
 
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+        const apiUpdateTra = ()=> this._recpetionService.insertarTransaccion(
           this.token,
           transactionActualizar,
         );
+
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTra);
 
         if (!resActualizarTransaccion.status) {
 
@@ -2925,10 +2930,13 @@ export class FacturaComponent implements OnInit {
           usuario: this.user,
         }
 
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+
+        const apiUpdateTra = ()=> this._recpetionService.insertarTransaccion(
           this.token,
           transactionNueva,
         );
+
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTra);
 
         if (!resActualizarTransaccion.status) {
 
