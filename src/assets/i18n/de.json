@@ -571,8 +571,10 @@
             "tema": "ANWENDUNGSTHEMA",
             "oscuro": "Dunkles Thema",
             "claro": "Helles Thema",
-            "cambiar": "Später können Sie das Thema der Anwendung auch nach Ihren Vorlieben ändern.",
-            "idioma": "Später können Sie die Sprache der Anwendung auch nach Ihren Vorlieben ändern."
+            "cambiar": "Später können Sie das Thema der Anwendung auch nach Ihren Wünschen ändern.",
+            "idioma": "Später können Sie auch die Sprache der Anwendung nach Ihren Wünschen ändern.",
+            "exportar": "Einstellungen exportieren",
+            "importar": "Einstellungen importieren"
         },
         "alertas": {
             "requerido": "Pflichtfeld.",

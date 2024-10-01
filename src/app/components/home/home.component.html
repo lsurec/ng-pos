@@ -166,13 +166,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="configuraciones">
-                        <mat-icon class="iconos-detalles">info</mat-icon>
+                    <div class="configuraciones" (click)="exportPreferences()">
+                        <mat-icon class="iconos-detalles">file_download</mat-icon>
                         <span class="spacer"></span>
-                        <div class="detalle d-flex">
-                            <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
-                            <span class="spacer"></span>
-                            <mat-icon>navigate_next</mat-icon>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'crm.preferencias.exportar' | translate}}</p>
+                        </div>
+                    </div>
+                    <div class="configuraciones" (click)="fileInput.click()">
+                        <!-- El input está oculto -->
+                        <input type="file" #fileInput (change)="onFileSelected($event)" accept=".json"
+                            style="display: none;" />
+
+                        <mat-icon class="iconos-detalles">file_upload</mat-icon>
+                        <span class="spacer"></span>
+                        <div class="detalle">
+                            <p class="subtitulo">{{'crm.preferencias.importar' | translate}}</p>
                         </div>
                     </div>
 
@@ -324,11 +333,21 @@
                     <div class="detalles-usuario">
                         <mat-icon class="iconos-detalles">info</mat-icon>
                         <span class="spacer"></span>
+                        <div class="detalle d-flex">
+                            <p class="subtitulo">{{'pos.preferencias.ayuda' | translate}}</p>
+                            <span class="spacer"></span>
+                            <mat-icon>navigate_next</mat-icon>
+                        </div>
+                    </div>
+                    <div class="detalles-usuario">
+                        <mat-icon class="iconos-detalles">info</mat-icon>
+                        <span class="spacer"></span>
                         <div class="detalle">
                             <p class="subtitulo">{{'pos.home.versionActual' | translate}}</p>
                             <p class="descripcion">{{dataUserService.version}}</p>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- botones detalle usuario, ajustes y salir -->

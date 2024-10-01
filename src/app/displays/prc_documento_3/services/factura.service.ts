@@ -124,8 +124,6 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
-    filtroPreferencia: number = 1;
-    idFiltroPreferencia: number = 1;
 
     rangoIni: number = 1;
     rangoFin: number = 20;
@@ -177,9 +175,7 @@ export class FacturaService {
         private _convertService: GlobalConvertService,
     ) {
 
-        if (!PreferencesService.filtroProducto) {
-            PreferencesService.filtroProducto = 1;
-        }
+        
     }
 
 
@@ -193,6 +189,11 @@ export class FacturaService {
 
     //mostrar pestaña detalle
     showDetalle() {
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = true;
         this.tabPago = false;
@@ -200,6 +201,12 @@ export class FacturaService {
 
     //mostrar pestaña pagos
     showPago() {
+
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = false;
         this.tabPago = true;

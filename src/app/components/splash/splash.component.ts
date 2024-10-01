@@ -96,7 +96,6 @@ export class SplashComponent implements OnInit {
     //Buscar empresas y estaciones
     PreferencesService.user = PreferencesService.userStorage;
     PreferencesService.token = PreferencesService.tokenStorage;
-    PreferencesService.conStr = PreferencesService.conStorageStr;
 
     let user = PreferencesService.user;
     let token = PreferencesService.token;
