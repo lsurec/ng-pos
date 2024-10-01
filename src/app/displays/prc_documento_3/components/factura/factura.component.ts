@@ -2758,10 +2758,14 @@ export class FacturaComponent implements OnInit {
     }
 
     this.facturaService.isLoading = true;
-    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+
+
+    const apiUpdateDoc = ()=> this._recpetionService.updateDocument(
       this.token,
       docModify,
     );
+
+    let resUpdateEncabezado: ResApiInterface = await ApiService.apiUse(apiUpdateDoc) ;
 
     if (!resUpdateEncabezado.status) {
       this.facturaService.isLoading = false;

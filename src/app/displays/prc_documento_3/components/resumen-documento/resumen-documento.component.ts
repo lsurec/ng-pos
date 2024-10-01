@@ -709,10 +709,13 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     this.isLoading = true;
-    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+
+    const apiUpdateDoc = ()=> this._recpetionService.updateDocument(
       this.token,
       docModify,
     );
+
+    let resUpdateEncabezado: ResApiInterface = await ApiService.apiUse(apiUpdateDoc);
 
     if (!resUpdateEncabezado.status) {
       this.isLoading = false;

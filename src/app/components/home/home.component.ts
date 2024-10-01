@@ -31,6 +31,7 @@ import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
 import { ColorInterface } from 'src/app/interfaces/filtro.interface';
 import { PreferencesInterface } from 'src/app/interfaces/preferences.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -656,10 +657,13 @@ export class HomeComponent implements OnInit {
 
         this.isLoading = true;
 
-        let res: ResApiInterface = await this._receptionService.getTiposDoc(
+
+        const apiTiposDoc = ()=> this._receptionService.getTiposDoc(
           this.user,
           this.token,
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiTiposDoc);
 
         this.isLoading = false;
         if (!res.status) {
@@ -746,7 +750,8 @@ export class HomeComponent implements OnInit {
     this._globalConvertService.fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
     this._globalConvertService.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
 
-    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+
+    const apiDocOrigen = ()=> this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this._globalConvertService.docSelect!.tipo_Documento,
@@ -754,6 +759,8 @@ export class HomeComponent implements OnInit {
       this._globalConvertService.formatStrFilterDate(this._globalConvertService.fechaFinal!),
       "",
     );
+
+    let res: ResApiInterface = await ApiService.apiUse(apiDocOrigen);
 
     this._globalConvertService.isLoading = false;
 
