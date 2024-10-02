@@ -8,7 +8,9 @@ $personalizado : var(--global-color);
 
 .dialog {
     padding         : 0px;
-    width           : 700px;
+    width           : 400px;
+    height          : 250;
     background-color: $fondo;
     overflow        : hidden;
+    
 }
