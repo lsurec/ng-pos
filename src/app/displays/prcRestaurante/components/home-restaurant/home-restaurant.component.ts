@@ -14,13 +14,17 @@ import { TableInterface } from '../../interfaces/table.interface';
 import { WaiterInterface } from '../../interfaces/waiter.interface';
 import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
 import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
-import { GarnishInterface } from '../../interfaces/garnichs.interface';
+import { GarnishInterface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
+import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
 
 @Component({
   selector: 'app-home-restaurant',
   templateUrl: './home-restaurant.component.html',
   styleUrls: ['./home-restaurant.component.scss'],
-  providers: [RestaurantService]
+  providers: [
+    RestaurantService,
+    ProductService,
+  ]
 })
 export class HomeRestaurantComponent implements OnInit {
 
@@ -45,9 +49,8 @@ export class HomeRestaurantComponent implements OnInit {
   classification?: ClassificationRestaurantInterface;
   products: ProductRestaurantInterface[] = [];
   product?: ProductRestaurantInterface;
-  garnishs: GarnishInterface[] = [];
-  garnish?: GarnishInterface;
 
+  garnishs: GarnishTreeInterface[] = [];
 
   constructor(
     private _restaurantService: RestaurantService,
@@ -55,7 +58,7 @@ export class HomeRestaurantComponent implements OnInit {
     private _translate: TranslateService,
     private _facturaService: FacturaService,
     private _serieService: SerieService,
-
+    private _productService:ProductService,
   ) {
 
   }
@@ -113,6 +116,28 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
+  async laodBodegas():Promise<boolean>{
+
+    const api = () => this._productService.getBodegaProducto(
+      this.user,
+      this.token,
+      this.empresa,
+      this.estacion,
+      this.product!.producto,
+      this.product!.unidad_Medida,
+    );
+
+    let res: ResApiInterface = await ApiService.apiUse(api);
+
+    //si algo salio mal
+    if (!res.status) {
+      this.showError(res);
+
+      return false;
+    }
+    return true;
+  }
+
   async loadGarnishs(): Promise<boolean> {
     const api = () => this._restaurantService.getGarnish(
       this.product!.producto,
@@ -130,12 +155,84 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
-    this.garnishs = res.response;
+    let garnishs: GarnishInterface[] = res.response;
 
     //load tree Garnish
+    this.orderGarnish(garnishs);
 
     return true;
 
+
+
+  }
+
+  orderGarnish(garnishs: GarnishInterface[]) {
+
+    let padres: GarnishTreeInterface[] = [];
+    let hijos: GarnishTreeInterface[] = [];
+
+
+    garnishs.forEach(garnish => {
+
+      let item: GarnishTreeInterface = {
+        children: [],
+        route: [],
+        idChild: garnish.producto_Caracteristica,
+        idFather: garnish.producto_Caracteristica_Padre,
+        item: garnish,
+        selected: null,
+      }
+
+      if (garnish.producto_Caracteristica_Padre == null) {
+        padres.push(item);
+      } else {
+        hijos.push(item);
+      }
+
+
+    });
+
+
+    this.garnishs = this.ordenarNodos(padres, hijos);
+
+    this.loadFirstharnish();
+
+  }
+
+
+  loadFirstharnish() {
+    this.garnishs.forEach(element => {
+      element.route.push(element);
+    });
+  }
+
+  // Función recursiva para ordenar nodos infinitos, recibe nodos principales y nodos a ordenar
+  ordenarNodos(
+    padres: GarnishTreeInterface[], hijos: GarnishTreeInterface[]): GarnishTreeInterface[] {
+    // Recorrer los nodos principales
+    for (var i = 0; i < padres.length; i++) {
+      // Item padre de la iteración
+      let padre: GarnishTreeInterface = padres[i];
+
+      // Recorrer todos los hijos en orden inverso para evitar problemas al eliminar
+      for (var j = hijos.length - 1; j >= 0; j--) {
+        // Item hijo de la iteración
+        let hijo: GarnishTreeInterface = hijos[j];
+
+        // Si coinciden (padre > hijo), agregar ese hijo al padre
+        if (padre.idChild == hijo.idFather) {
+          padre.children.push(hijo); // Agregar hijo al padre
+          // Eliminar al hijo que ya se usó para evitar repetirlo
+          hijos.splice(j, 1);
+
+          // Llamar a la misma función (recursividad) se detiene cuando ya no hay hijos
+          this.ordenarNodos(padre.children, hijos);
+        }
+      }
+    }
+
+    // Retornar nodos ordenados
+    return padres;
   }
 
   async loadProducts(): Promise<boolean> {

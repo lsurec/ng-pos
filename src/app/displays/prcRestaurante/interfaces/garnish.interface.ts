@@ -16,3 +16,13 @@ export interface GarnishInterface {
     f_Des_Unidad_Medida:           null | string;
     nom_Bodega:                    null | string;
 }
+
+export interface GarnishTreeInterface {
+    idFather?: number | null | undefined;
+    idChild?: number | null | undefined;
+    children: GarnishTreeInterface[];
+    route: GarnishTreeInterface[];
+    item?: GarnishInterface | null | undefined;
+    selected?: GarnishInterface | null | undefined;
+  }
+  
