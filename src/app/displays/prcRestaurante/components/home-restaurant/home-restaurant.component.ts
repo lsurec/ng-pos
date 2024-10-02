@@ -13,6 +13,8 @@ import { LocationInterface } from '../../interfaces/locations.interface';
 import { TableInterface } from '../../interfaces/table.interface';
 import { WaiterInterface } from '../../interfaces/waiter.interface';
 import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
+import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
+import { GarnishInterface } from '../../interfaces/garnichs.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -41,6 +43,10 @@ export class HomeRestaurantComponent implements OnInit {
   waiter?: WaiterInterface;
   classifications: ClassificationRestaurantInterface[] = [];
   classification?: ClassificationRestaurantInterface;
+  products: ProductRestaurantInterface[] = [];
+  product?: ProductRestaurantInterface;
+  garnishs: GarnishInterface[] = [];
+  garnish?: GarnishInterface;
 
 
   constructor(
@@ -107,8 +113,33 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
+  async loadGarnishs(): Promise<boolean> {
+    const api = () => this._restaurantService.getGarnish(
+      this.product!.producto,
+      this.product!.unidad_Medida,
+      this.user,
+      this.token,
+    );
+
+    let res: ResApiInterface = await ApiService.apiUse(api);
+
+    //si algo salio mal
+    if (!res.status) {
+      this.showError(res);
+
+      return false;
+    }
+
+    this.garnishs = res.response;
+
+    //load tree Garnish
+
+    return true;
+
+  }
+
   async loadProducts(): Promise<boolean> {
-    
+
     const api = () => this._restaurantService.getProducts(
       this.classification!.clasificacion,
       this.estacion,
@@ -125,6 +156,15 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
+    this.products = res.response;
+
+    if (this.products.length == 0) {
+      this._notificationService.openSnackbar("No hay productos paar esta clasificacion"); //TODO:Translate
+      return false;
+    }
+
+    if (this.products.length == 1)
+      this.product = this.products[0];
 
     return true;
 
