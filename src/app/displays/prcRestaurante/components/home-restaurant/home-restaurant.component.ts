@@ -16,6 +16,10 @@ import { ClassificationRestaurantInterface } from '../../interfaces/classificati
 import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
 import { GarnishInterface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
+import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/bodega-produto.interface';
+import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
+import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
+import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -49,8 +53,13 @@ export class HomeRestaurantComponent implements OnInit {
   classification?: ClassificationRestaurantInterface;
   products: ProductRestaurantInterface[] = [];
   product?: ProductRestaurantInterface;
-
+  bodegas: BodegaProductoInterface[] = [];
+  bodega?: BodegaProductoInterface;
+  unitarios: UnitarioInterface[] = [];
+  unitario?: UnitarioInterface;
   garnishs: GarnishTreeInterface[] = [];
+
+
 
   constructor(
     private _restaurantService: RestaurantService,
@@ -58,7 +67,7 @@ export class HomeRestaurantComponent implements OnInit {
     private _translate: TranslateService,
     private _facturaService: FacturaService,
     private _serieService: SerieService,
-    private _productService:ProductService,
+    private _productService: ProductService,
   ) {
 
   }
@@ -116,8 +125,110 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-  async laodBodegas():Promise<boolean>{
+  async loadPrecioUnitario(): Promise<boolean> {
+    this.unitario = undefined;
+    this.unitarios = [];
 
+
+    const apiPrecio = () => this._productService.getPrecios(
+      this.user,
+      this.token,
+      this.bodega!.bodega,
+      this.product!.producto,
+      this.product!.unidad_Medida,
+      1,
+      "1",
+    );
+
+    let resPrecio: ResApiInterface = await ApiService.apiUse(apiPrecio);
+
+    //si algo salio mal
+    if (!resPrecio.status) {
+      this.showError(resPrecio);
+
+      return false;
+    }
+
+    let precios:PrecioInterface [] = resPrecio.response;
+
+
+    precios.forEach(precio => {
+      this.unitarios.push(
+        {
+          descripcion:precio.des_Tipo_Precio,
+          id:precio.tipo_Precio,
+          moneda: precio.moneda,
+          orden: precio.precio_Orden,
+          precio: true,
+          precioU: precio.precio_Unidad,
+        }
+      )
+    });
+
+
+    if(this.unitarios.length > 0){
+      this.unitario = this.unitarios.reduce((prev, curr) => {
+        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
+        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
+        const currOrden = curr.orden ?? Infinity;
+        return (currOrden < prevOrden) ? curr : prev;
+      });
+
+      return true;
+    }
+
+
+    const apiFactor = () => this._productService.getFactorConversion(
+      this.user,
+      this.token,
+      this.bodega!.bodega,
+      this.product!.producto,
+      this.product!.unidad_Medida,
+    )
+
+    let resFactor: ResApiInterface = await ApiService.apiUse(apiFactor);
+
+    //si algo salio mal
+    if (!resFactor.status) {
+      this.showError(resFactor);
+
+      return false;
+    }
+
+    let factores:FactorConversionInterface[] = resFactor.response;
+
+    factores.forEach(factor => {
+      this.unitarios.push(
+        {
+          descripcion:factor.des_Tipo_Precio,
+          id:factor.tipo_Precio,
+          moneda: factor.moneda,
+          orden: factor.tipo_Precio_Orden,
+          precio: true,
+          precioU: factor.precio_Unidad,
+        }
+      )
+    });
+
+
+    if(this.unitarios.length > 0){
+      this.unitario = this.unitarios.reduce((prev, curr) => {
+        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
+        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
+        const currOrden = curr.orden ?? Infinity;
+        return (currOrden < prevOrden) ? curr : prev;
+      });
+
+    }
+
+    return true;
+
+
+  }
+
+  async laodBodegas(): Promise<boolean> {
+
+    this.bodegas = [];
     const api = () => this._productService.getBodegaProducto(
       this.user,
       this.token,
@@ -135,10 +246,26 @@ export class HomeRestaurantComponent implements OnInit {
 
       return false;
     }
+
+    this.bodegas = res.response;
+
+    if (this.bodegas.length > 0) {
+
+      //TODO:Implementar en POS
+      this.bodega = this.bodegas.reduce((prev, curr) => {
+        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
+        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
+        const currOrden = curr.orden ?? Infinity;
+        return (currOrden < prevOrden) ? curr : prev;
+      });
+    }
+
+
     return true;
   }
 
   async loadGarnishs(): Promise<boolean> {
+    this.garnishs = [];
     const api = () => this._restaurantService.getGarnish(
       this.product!.producto,
       this.product!.unidad_Medida,
@@ -237,6 +364,9 @@ export class HomeRestaurantComponent implements OnInit {
 
   async loadProducts(): Promise<boolean> {
 
+    this.products = [];
+    this.product = undefined;
+
     const api = () => this._restaurantService.getProducts(
       this.classification!.clasificacion,
       this.estacion,
@@ -269,6 +399,9 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   async loadClassifications(): Promise<boolean> {
+
+    this.classifications = [];
+    this.classification = undefined;
 
     const api = () => this._restaurantService.getClassifications(
       this.tipoDocumento,
@@ -336,6 +469,7 @@ export class HomeRestaurantComponent implements OnInit {
   async loadSeries(): Promise<boolean> {
 
     this.series = [];
+    this.serie = undefined;
 
     const api = () => this._serieService.getSerie(
       this.user,
@@ -356,13 +490,15 @@ export class HomeRestaurantComponent implements OnInit {
 
     this.series = res.response;
 
-    //TODO:Implementar en POS
-    this.serie = this.series.reduce((prev, curr) => {
-      // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
-      const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
-      const currOrden = curr.orden ?? Infinity;
-      return (currOrden < prevOrden) ? curr : prev;
-    });
+    if (this.series.length > 0) {
+      //TODO:Implementar en POS
+      this.serie = this.series.reduce((prev, curr) => {
+        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
+        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
+        const currOrden = curr.orden ?? Infinity;
+        return (currOrden < prevOrden) ? curr : prev;
+      });
+    }
 
     return true;
 
@@ -370,6 +506,10 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   async loadLocations(): Promise<boolean> {
+
+    this.locations = [];
+    this.location = undefined;
+
     const api = () => this._restaurantService.getLocations(
       this.tipoDocumento,
       this.empresa,
@@ -399,6 +539,10 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   async loadTables(): Promise<boolean> {
+
+    this.tables = [];
+    this.table = undefined;
+
     const api = () => this._restaurantService.getTables(
       this.tipoDocumento,
       this.empresa,
