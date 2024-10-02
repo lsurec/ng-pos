@@ -357,11 +357,19 @@ main {
 .pestana {
     display    : inline-block;
     margin     : 0 0 -1px;
-    padding    : 15px 25px;
+    padding    : 5px 25px;
     font-weight: 500;
     text-align : center;
     color      : $pestanas;
     border     : 2px solid transparent;
+    display    : inline-flex;
+}
+
+.ico-pestana {
+    margin-right: 5px;
+    display     : flex;
+    align-items : center;
+    font-size   : 20px;
 }
 
 // label:before {
@@ -380,25 +388,25 @@ main {
 //     content: '\f15b';
 // }
 
-.pestana[for*='1']:before {
-    content: '\f15b';
-}
+// .pestana[for*='1']:before {
+//     content: '\f15b';
+// }
 
 // label[for*='2']:before {
 //     content: '\f07a';
 // }
 
-.pestana[for*='2']:before {
-    content: '\f07a';
-}
+// .pestana[for*='2']:before {
+//     content: '\f07a';
+// }
 
 // label[for*='3']:before {
 //     content: '\f0d6';
 // }
 
-.pestana[for*='3']:before {
-    content: '\f0d6';
-}
+// .pestana[for*='3']:before {
+//     content: '\f0d6';
+// }
 
 // label[for*='4']:before {
 //     content: '\f01c';

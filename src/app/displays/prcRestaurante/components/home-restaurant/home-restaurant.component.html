@@ -91,8 +91,8 @@
                         </button>
                         <span class="spacer"></span>
                         <p class="titulo">{{dataUserService.nameDisplay }} </p>
-                        <p class="titulo" style="margin-left: 5px;">
-                            ( globalConvertService.docOriginSelect?.iD_Documento)</p>
+                        <!-- TODO: traducir -->
+                        <p class="titulo" style="margin-left: 5px;">Restaurante</p>
                         <span class="spacer"></span>
                         <div class="circulo-inicial" (click)="sidenavend.open()">
                             <p class="inicial-usuario">{{user[0]}}</p>
@@ -139,9 +139,7 @@
                 </button>
                 <span class="spacer"></span>
                 <!-- Titulo de la tarea -->
-                <p class="titulo">{{dataUserService.nameDisplay }} </p>
-                <p class="titulo" style="margin-left: 5px;">
-                    (globalConvertService.docOriginSelect?.iD_Documento)</p>
+                <p class="titulo">{{dataUserService.nameDisplay }} (Restaurante) </p>
 
                 <span class="spacer"></span>
 
@@ -175,26 +173,26 @@
                     <div class="container-main">
                         <!--Tabs-->
                         <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
-                            [checked]="restaurantService.tabDocummento">
-                        <div class="pestana" for="tab1" matTooltip="{{ 'pos.factura.documento' | translate }}">
-                            {{'pos.factura.documento' | translate }}
+                            [checked]="restaurantService.tabMenu">
+                        <div class="pestana" for="tab1" matTooltip="Menú" (click)="restaurantService.showMenu()">
+                            <span class="material-icons ico-pestana">menu_book</span> Menú
                         </div>
 
                         <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
                             [checked]=" restaurantService.tabDetalle">
                         <div class="pestana" for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
-                            (click)="restaurantService. showDetalle()">{{
-                            'pos.factura.detalle' | translate }}
+                            (click)="restaurantService.showDetalle()">
+                            <span class="material-icons ico-pestana">assignment</span>
+                            {{'pos.factura.detalle' | translate }}
                         </div>
 
                         <input class="titulo-pestana" id="tab3" type="radio" name="tabs"
                             [checked]="restaurantService.tabPago">
 
                         <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
-                            (click)="restaurantService. showPago()">
-                            {{
-                            'pos.factura.pago' | translate }}
-
+                            (click)="restaurantService.showPago()">
+                            <span class="material-icons ico-pestana">payments</span>
+                            {{'pos.factura.pago' | translate }}
                         </div>
 
                         <!--Fin Tabs-->
@@ -203,7 +201,7 @@
                         <section id="content1" class="content1 contenido-seleccionado">
                             <!-- <app-pago></app-pago> -->
                             <!-- <app-detalle></app-detalle> -->
-                            <app-documento *ngIf="restaurantService.tabDocummento"></app-documento>
+                            <app-pin-mesero *ngIf="restaurantService.tabMenu"></app-pin-mesero>
                         </section>
 
                         <section id="content2" class="content2 contenido-seleccionado">
