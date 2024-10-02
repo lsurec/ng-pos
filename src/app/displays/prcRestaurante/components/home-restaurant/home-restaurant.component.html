@@ -1,1 +1,233 @@
-<p>home-restaurant works!</p>
+<app-error [regresar]="regresar" *ngIf="restaurantService.verError"></app-error>
+
+<app-progress *ngIf="restaurantService.isLoading" class="progress"></app-progress>
+
+
+<app-location-table *ngIf="restaurantService.viewLocations"></app-location-table>
+
+<div *ngIf="restaurantService.viewRestaurant">
+
+    <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
+        *ngIf="!restaurantService.verError">
+
+        <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+            <mat-toolbar class="barra-cerrar-titulo">
+                <button mat-icon-button (click)="close('toggle button')"
+                    [matTooltip]="'pos.botones.cerrar' | translate">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar>
+            <!-- Contenido del sidenav -->
+            <div class="contenido-sidenav">
+                <div class="espacio-inicial">
+                    <span class="spacer"></span>
+                    <div class="circular-inicial-grande">
+                        <p class="inicial-usuario-grande">{{user[0]}}</p>
+                    </div>
+                    <span class="spacer"></span>
+                </div>
+                <div class="espacio-inicial">
+                    <span class="spacer"></span>
+                    <p class="userName">{{user.toUpperCase()}}</p>
+                    <span class="spacer"></span>
+                </div>
+                <div class="borde-detalles"></div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">business</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
+                        <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">business</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
+                        <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario">
+                    <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
+                        <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario" *ngIf="restaurantService.documentoName">
+                    <mat-icon class="iconos-detalles">description</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.tipoDocumento' | translate}}</p>
+                        <p class="descripcion"> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
+                    </div>
+                </div>
+                <div class="detalles-usuario" *ngIf="restaurantService.serie">
+                    <mat-icon class="iconos-detalles">description</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="detalle">
+                        <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
+                        <p class="descripcion"> {{restaurantService.serie.descripcion}}
+                            ({{restaurantService.serie.serie_Documento}}) </p>
+                    </div>
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+
+            <!-- Barras para titulos y boton de cerrar sidenav -->
+            <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                <mat-toolbar-row>
+                    <div class="barras">
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button (click)=" goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                            <mat-icon>home</mat-icon>
+                        </button>
+                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                            (click)="loadData()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <p class="titulo">{{dataUserService.nameDisplay }} </p>
+                        <!-- TODO: traducir -->
+                        <p class="titulo" style="margin-left: 5px;">Restaurante</p>
+                        <span class="spacer"></span>
+                        <div class="circulo-inicial" (click)="sidenavend.open()">
+                            <p class="inicial-usuario">{{user[0]}}</p>
+                        </div>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                <mat-toolbar-row>
+                    <div class="barras">
+                        <span class="spacer"></span>
+                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.guardarCambios' | translate }}"
+                            (click)="sendDoc()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <ng-container>
+                            <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
+                                (click)="verHistorial()">
+                                <mat-icon>schedule</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
+                                (click)="newDoc()">
+                                <mat-icon>note_add</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                                (click)="printDoc()">
+                                <mat-icon>print</mat-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbar-large" *ngIf="!restaurantService.isLoading">
+                <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                    <mat-icon>home</mat-icon>
+                </button>
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                    (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <!-- Titulo de la tarea -->
+                <p class="titulo">{{dataUserService.nameDisplay }} (Restaurante) </p>
+
+                <span class="spacer"></span>
+
+                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.guardarCambios' | translate }}"
+                    (click)="sendDoc()">
+                    <mat-icon>save</mat-icon>
+                </button>
+
+                <ng-container>
+                    <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
+                        (click)="verHistorial()">
+                        <mat-icon>schedule</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
+                        (click)="newDoc()">
+                        <mat-icon>note_add</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                        (click)="printDoc()">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                </ng-container>
+                <div class="circulo-inicial" (click)="sidenavend.open()">
+                    <p class="inicial-usuario">{{user[0]}}</p>
+                </div>
+            </mat-toolbar>
+
+            <!-- Contenido del componente -->
+            <div class="container_main">
+                <div *ngIf="!restaurantService.isLoading">
+                    <div class="container-main">
+                        <!--Tabs-->
+                        <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
+                            [checked]="restaurantService.tabMenu">
+                        <div class="pestana" for="tab1" matTooltip="Menú" (click)="restaurantService.showMenu()">
+                            <span class="material-icons ico-pestana">menu_book</span> Menú
+                        </div>
+
+                        <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
+                            [checked]=" restaurantService.tabDetalle">
+                        <div class="pestana" for="tab2" matTooltip="{{ 'pos.factura.detalle' | translate }}"
+                            (click)="restaurantService.showDetalle()">
+                            <span class="material-icons ico-pestana">assignment</span>
+                            {{'pos.factura.detalle' | translate }}
+                        </div>
+
+                        <input class="titulo-pestana" id="tab3" type="radio" name="tabs"
+                            [checked]="restaurantService.tabPago">
+
+                        <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
+                            (click)="restaurantService.showPago()">
+                            <span class="material-icons ico-pestana">payments</span>
+                            {{'pos.factura.pago' | translate }}
+                        </div>
+
+                        <!--Fin Tabs-->
+
+                        <!--Content Tabs-->
+                        <section id="content1" class="content1 contenido-seleccionado">
+                            //Por el momento nada
+                        </section>
+
+                        <section id="content2" class="content2 contenido-seleccionado">
+                            <!-- <app-documento></app-documento> -->
+                            <app-detalle *ngIf="restaurantService.tabDetalle"></app-detalle>
+                        </section>
+
+                        <section id="content3" class="content3 contenido-seleccionado">
+                            <app-pago *ngIf="restaurantService.tabPago"></app-pago>
+                        </section>
+
+                        <!-- <section id="content4">
+                        </section>
+    
+                        <section id="content5">
+                        </section>
+    
+                        <section id="content6">
+                        </section> -->
+                        <!--Fin Content Tabs-->
+                    </div>
+                    <!-- Mostrar logos -->
+                    <app-barra-logos></app-barra-logos>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

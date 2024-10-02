@@ -1,14 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ApiService } from 'src/app/services/api.service';
-import { RestaurantService } from '../../services/restaurant.service';
-import { PreferencesService } from 'src/app/services/preferences.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 import { SerieService } from 'src/app/displays/prc_documento_3/services/serie.service';
-import { SerieInterface } from 'src/app/displays/prc_documento_3/interfaces/serie.interface';
 import { LocationInterface } from '../../interfaces/locations.interface';
 import { TableInterface } from '../../interfaces/table.interface';
 import { WaiterInterface } from '../../interfaces/waiter.interface';
@@ -20,6 +16,15 @@ import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interf
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
 import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
+import { MatSidenav } from '@angular/material/sidenav';
+import { GlobalRestaurantService } from '../../services/global-restaurat.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { PreferencesService } from 'src/app/services/preferences.service';
+import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
+import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
+import { SerieInterface } from 'src/app/displays/prc_documento_3/interfaces/serie.interface';
+import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -28,6 +33,7 @@ import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/inte
   providers: [
     RestaurantService,
     ProductService,
+    SerieService,
   ]
 })
 export class HomeRestaurantComponent implements OnInit {
@@ -37,8 +43,8 @@ export class HomeRestaurantComponent implements OnInit {
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //usuario de la sesion
-  empresa: number = PreferencesService.empresa.empresa; //empresa de la sesion0
-  estacion: number = PreferencesService.estacion.estacion_Trabajo; //estacion de la sesion
+  empresa: EmpresaInterface = PreferencesService.empresa; //empresa de la sesion0
+  estacion: EstacionInterface = PreferencesService.estacion; //estacion de la sesion
   tipoCambio: number = PreferencesService.tipoCambio; ///tipo cambio disponioble
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
@@ -60,8 +66,42 @@ export class HomeRestaurantComponent implements OnInit {
   garnishs: GarnishTreeInterface[] = [];
 
 
+  //Abrir/Cerrar SideNav
+  @ViewChild('sidenavend')
+  sidenavend!: MatSidenav;
+
+  readonly regresar: number = 1; //id de la pnatalla
+
+  nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
+  documentoName: string = ""; //Descripcion tipo de documento
+
+  //Abrir cerrar Sidenav
+  close(reason: string) {
+    this.sidenavend.close();
+  }
+
+
+  goBack() {
+    this.restaurantService.viewLocations = true;
+    this.restaurantService.viewRestaurant = false;
+  }
+
+  loadData() { }
+
+  sendDoc() { }
+
+  verHistorial() { }
+
+  newDoc() { }
+
+  printDoc() { }
+
+
 
   constructor(
+    private notificationService: NotificationsService,
+    public restaurantService: GlobalRestaurantService,
+    public dataUserService: DataUserService,
     private _restaurantService: RestaurantService,
     private _notificationService: NotificationsService,
     private _translate: TranslateService,
@@ -232,8 +272,8 @@ export class HomeRestaurantComponent implements OnInit {
     const api = () => this._productService.getBodegaProducto(
       this.user,
       this.token,
-      this.empresa,
-      this.estacion,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
       this.product!.producto,
       this.product!.unidad_Medida,
     );
@@ -369,7 +409,7 @@ export class HomeRestaurantComponent implements OnInit {
 
     const api = () => this._restaurantService.getProducts(
       this.classification!.clasificacion,
-      this.estacion,
+      this.estacion.estacion_Trabajo,
       this.user,
       this.token,
     );
@@ -405,8 +445,8 @@ export class HomeRestaurantComponent implements OnInit {
 
     const api = () => this._restaurantService.getClassifications(
       this.tipoDocumento,
-      this.empresa,
-      this.estacion,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
       this.serie!.serie_Documento,
       this.user,
       this.token,
@@ -437,7 +477,7 @@ export class HomeRestaurantComponent implements OnInit {
 
     const api = () => this._restaurantService.getAccountPin(
       this.token,
-      this.empresa,
+      this.empresa.empresa,
       "123" //TODO:Parametrizar pin
     );
 
@@ -475,8 +515,8 @@ export class HomeRestaurantComponent implements OnInit {
       this.user,
       this.token,
       this.tipoDocumento,
-      this.empresa,
-      this.estacion,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
     );
 
     let res: ResApiInterface = await ApiService.apiUse(api);
@@ -512,8 +552,8 @@ export class HomeRestaurantComponent implements OnInit {
 
     const api = () => this._restaurantService.getLocations(
       this.tipoDocumento,
-      this.empresa,
-      this.estacion,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
       this.serie!.serie_Documento,
       this.user,
       this.token,
@@ -545,8 +585,8 @@ export class HomeRestaurantComponent implements OnInit {
 
     const api = () => this._restaurantService.getTables(
       this.tipoDocumento,
-      this.empresa,
-      this.estacion,
+      this.empresa.empresa,
+      this.estacion.estacion_Trabajo,
       this.serie!.serie_Documento,
       this.location!.elemento_Asignado,
       this.user,
@@ -606,6 +646,12 @@ export class HomeRestaurantComponent implements OnInit {
 
     return;
   }
+
+
+
+
+  
+
 
 
 
