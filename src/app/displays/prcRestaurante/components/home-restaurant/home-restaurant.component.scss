@@ -626,7 +626,12 @@ label[for*='6']:before {
     display         : flex;
     align-items     : center;
     background-color: $fondo;
-    padding         : 5px 10px 0px;
     font-size       : 14px;
     font-weight     : 500;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $bordes;
+    font-size    : 12px;
 }

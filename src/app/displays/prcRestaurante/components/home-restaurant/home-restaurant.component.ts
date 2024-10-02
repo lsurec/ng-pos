@@ -119,6 +119,12 @@ export class HomeRestaurantComponent implements OnInit {
   printDoc() { }
 
 
+  changeSerie() {
+
+    
+   }
+
+
 
 
   async loadData() {
