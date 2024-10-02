@@ -142,7 +142,7 @@ export class HomeRestaurantComponent implements OnInit {
     };
 
     //Si solo hay una localizacion cargar mesas
-    if (this.restaurantService. locations.length > 1) {
+    if (this.restaurantService.locations.length > 1) {
       this.restaurantService.isLoading = false;
       return;
     }
@@ -182,14 +182,14 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
-    let precios:PrecioInterface [] = resPrecio.response;
+    let precios: PrecioInterface[] = resPrecio.response;
 
 
     precios.forEach(precio => {
       this.unitarios.push(
         {
-          descripcion:precio.des_Tipo_Precio,
-          id:precio.tipo_Precio,
+          descripcion: precio.des_Tipo_Precio,
+          id: precio.tipo_Precio,
           moneda: precio.moneda,
           orden: precio.precio_Orden,
           precio: true,
@@ -199,7 +199,7 @@ export class HomeRestaurantComponent implements OnInit {
     });
 
 
-    if(this.unitarios.length > 0){
+    if (this.unitarios.length > 0) {
       this.unitario = this.unitarios.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
@@ -228,13 +228,13 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
-    let factores:FactorConversionInterface[] = resFactor.response;
+    let factores: FactorConversionInterface[] = resFactor.response;
 
     factores.forEach(factor => {
       this.unitarios.push(
         {
-          descripcion:factor.des_Tipo_Precio,
-          id:factor.tipo_Precio,
+          descripcion: factor.des_Tipo_Precio,
+          id: factor.tipo_Precio,
           moneda: factor.moneda,
           orden: factor.tipo_Precio_Orden,
           precio: true,
@@ -244,7 +244,7 @@ export class HomeRestaurantComponent implements OnInit {
     });
 
 
-    if(this.unitarios.length > 0){
+    if (this.unitarios.length > 0) {
       this.unitario = this.unitarios.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
@@ -641,9 +641,19 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
+  selectLocation(location: LocationInterface) {
+    this.restaurantService.location = location;
+    this.restaurantService.viewTables = true;
+  }
+
+  selectTable(table: TableInterface) {
+    this.restaurantService.table = table;
+
+    this.notificationService.pinMesero();
+
+  }
 
 
-  
 
 
 
