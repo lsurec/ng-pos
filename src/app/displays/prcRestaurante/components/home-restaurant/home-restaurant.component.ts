@@ -51,7 +51,6 @@ export class HomeRestaurantComponent implements OnInit {
   series: SerieInterface[] = [];
   serie?: SerieInterface;
 
-  waiter?: WaiterInterface;
   classifications: ClassificationRestaurantInterface[] = [];
   classification?: ClassificationRestaurantInterface;
   products: ProductRestaurantInterface[] = [];
@@ -476,39 +475,7 @@ export class HomeRestaurantComponent implements OnInit {
     return true;
   }
 
-  async loadPin(): Promise<boolean> {
 
-    this.waiter = undefined;
-
-    const api = () => this._restaurantService.getAccountPin(
-      this.token,
-      this.empresa.empresa,
-      "123" //TODO:Parametrizar pin
-    );
-
-    let res: ResApiInterface = await ApiService.apiUse(api);
-
-    //si algo salio mal
-    if (!res.status) {
-      this.showError(res);
-
-      return false;
-    }
-
-    let waiters: WaiterInterface[] = res.response;
-
-
-    if (waiters.length == 0) {
-
-      this._notificationService.openSnackbar("Pin invalido"); //TODO:Translate
-
-      return false;
-    }
-
-    this.waiter = waiters[0];
-
-    return true;
-  }
 
   //TODO:Implementar Try Catch
   async loadSeries(): Promise<boolean> {
