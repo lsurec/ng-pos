@@ -25,6 +25,8 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { SerieInterface } from 'src/app/displays/prc_documento_3/interfaces/serie.interface';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 import { RestaurantService } from '../../services/restaurant.service';
+import { components } from 'src/app/providers/componentes.provider';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -70,15 +72,38 @@ export class HomeRestaurantComponent implements OnInit {
   nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
   documentoName: string = ""; //Descripcion tipo de documento
 
+  constructor(
+    private notificationService: NotificationsService,
+    public restaurantService: GlobalRestaurantService,
+    public dataUserService: DataUserService,
+    private _restaurantService: RestaurantService,
+    private _notificationService: NotificationsService,
+    private _translate: TranslateService,
+    private _facturaService: FacturaService,
+    private _serieService: SerieService,
+    private _productService: ProductService,
+    private _eventService: EventService,
+
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
   //Abrir cerrar Sidenav
   close(reason: string) {
     this.sidenavend.close();
   }
 
 
-  goBack() {
-    this.restaurantService.viewLocations = true;
-    this.restaurantService.viewRestaurant = false;
+  goBack(): void {
+    components.forEach(element => {
+      element.visible = false;
+    });
+
+    this._eventService.emitCustomEvent(false);
   }
 
   sendDoc() { }
@@ -90,24 +115,6 @@ export class HomeRestaurantComponent implements OnInit {
   printDoc() { }
 
 
-
-  constructor(
-    private notificationService: NotificationsService,
-    public restaurantService: GlobalRestaurantService,
-    public dataUserService: DataUserService,
-    private _restaurantService: RestaurantService,
-    private _notificationService: NotificationsService,
-    private _translate: TranslateService,
-    private _facturaService: FacturaService,
-    private _serieService: SerieService,
-    private _productService: ProductService,
-  ) {
-
-  }
-
-  ngOnInit(): void {
-    this.loadData();
-  }
 
 
   async loadData() {
