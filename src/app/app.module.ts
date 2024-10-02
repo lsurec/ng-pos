@@ -97,7 +97,7 @@ import { InputTerminoComponent } from './displays/prc_documento_3/components/inp
 import { HomeRestaurantComponent } from './displays/prcRestaurante/components/home-restaurant/home-restaurant.component';
 import { PinMeseroComponent } from './displays/prcRestaurante/components/pin-mesero/pin-mesero.component';
 import { PermisionsComponent } from './displays/prcRestaurante/components/permisions/permisions.component';
-import { LocationTableComponent } from './displays/prcRestaurante/components/location-table/location-table.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,7 +165,6 @@ import { LocationTableComponent } from './displays/prcRestaurante/components/loc
     HomeRestaurantComponent,
     PinMeseroComponent,
     PermisionsComponent,
-    LocationTableComponent,
   ],
   imports: [
     MatCardModule,
