@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { LocationInterface, TableInterface } from '../../interfaces/location.interface';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LocationInterface } from '../../interfaces/location.interface';
+import { TableInterface } from '../../interfaces/table.interface';
 
 @Component({
   selector: 'app-location-table',
@@ -31,12 +32,12 @@ export class LocationTableComponent {
   }
 
   selectLocation(location: LocationInterface) {
-    this.restaurantService.locationSelect = location;
+    this.restaurantService.location = location;
     this.restaurantService.viewTables = true;
   }
 
   selectTable(table: TableInterface) {
-    this.restaurantService.tableSelect = table;
+    this.restaurantService.table = table;
 
     this.notificationService.pinMesero();
 
@@ -44,13 +45,13 @@ export class LocationTableComponent {
 
   viewRestaurant() {
 
-    if (this.restaurantService.locationSelect == null) {
+    if (!this.restaurantService.location ) {
       //TODO: traducir
       this.notificationService.openSnackbar(this._translate.instant('Seleccione una ubicacion'));
       return;
     }
 
-    if (this.restaurantService.tableSelect == null) {
+    if (!this.restaurantService.table) {
       //TODO: traducir
       this.notificationService.openSnackbar(this._translate.instant('Seleccione una mesa'));
       return;

@@ -21,13 +21,12 @@
             <p class="titulo">UBICACIONES</p>
 
             <div class="ubicacion" *ngFor="let location of restaurantService.locations"
-                [ngClass]="{'ubicacionMesaSelect': restaurantService.locationSelect && restaurantService.locationSelect.id === location.id}"
+                [ngClass]="{'ubicacionMesaSelect': restaurantService.location && restaurantService.location.elemento_Asignado === location.elemento_Asignado}"
                 (click)="selectLocation(location)">
                 <mat-icon>location_on</mat-icon>
                 <span class="spacer"></span>
                 <div class="descripciones">
-                    <p class="textBold">{{location.nombre}}</p>
-                    <P class="text12">MESAS DISPONIBLES ({{location.disponibles}})</P>
+                    <p class="textBold">{{location.descripcion}}</p>
                 </div>
             </div>
 
@@ -38,12 +37,14 @@
 
             <div class="mesasx2">
                 <div class="mesa" *ngFor="let table of restaurantService.tables" (click)="selectTable(table)"
-                    [ngClass]="{'ubicacionMesaSelect': restaurantService.tableSelect && restaurantService.tableSelect.id === table.id}">
+                    [ngClass]="{'ubicacionMesaSelect': restaurantService.table && restaurantService.table.elemento_Asignado === table.elemento_Asignado}">
                     <mat-icon>table_bar</mat-icon>
                     <span class="spacer"></span>
                     <div class="descripciones">
-                        <p class="textBold"> MESA {{table.id}}</p>
-                        <P class="text12">PERSONAS ({{table.espacios}})</P>
+                        <p class="textBold"> {{table.descripcion}}</p>
+                        
+                        <!--TODO:Cuentas-->
+                        <P class="text12">PERSONAS 0</P>
                     </div>
                 </div>
             </div>

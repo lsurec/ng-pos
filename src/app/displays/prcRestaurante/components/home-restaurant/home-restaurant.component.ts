@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 import { SerieService } from 'src/app/displays/prc_documento_3/services/serie.service';
-import { LocationInterface } from '../../interfaces/locations.interface';
+import { LocationInterface } from '../../interfaces/location.interface';
 import { TableInterface } from '../../interfaces/table.interface';
 import { WaiterInterface } from '../../interfaces/waiter.interface';
 import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
@@ -39,8 +39,6 @@ import { RestaurantService } from '../../services/restaurant.service';
 export class HomeRestaurantComponent implements OnInit {
 
 
-  isLoading: boolean = false;
-
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //usuario de la sesion
   empresa: EmpresaInterface = PreferencesService.empresa; //empresa de la sesion0
@@ -50,10 +48,7 @@ export class HomeRestaurantComponent implements OnInit {
 
   series: SerieInterface[] = [];
   serie?: SerieInterface;
-  locations: LocationInterface[] = [];
-  location?: LocationInterface;
-  tables: TableInterface[] = [];
-  table?: TableInterface;
+
   waiter?: WaiterInterface;
   classifications: ClassificationRestaurantInterface[] = [];
   classification?: ClassificationRestaurantInterface;
@@ -86,8 +81,6 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.viewRestaurant = false;
   }
 
-  loadData() { }
-
   sendDoc() { }
 
   verHistorial() { }
@@ -113,26 +106,26 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.laodData();
+    this.loadData();
   }
 
 
-  async laodData() {
+  async loadData() {
 
-    this.isLoading = true;
+    this.restaurantService.isLoading = true;
     //cargar serie
     let resSerie: boolean = await this.loadSeries();
 
     //si algo salio mal
     if (!resSerie) {
-      this.isLoading = false;
+      this.restaurantService.isLoading = false;
       return;
     };
 
     //Si no hay series mostrar mensaje
     if (this.series.length == 0) {
 
-      this.isLoading = false;
+      this.restaurantService.isLoading = false;
 
       this._notificationService.openSnackbar("No existen series asignadas"); //TODO:Translate
 
@@ -144,13 +137,13 @@ export class HomeRestaurantComponent implements OnInit {
 
     //Si algo salió mal
     if (!resLocation) {
-      this.isLoading = false;
+      this.restaurantService.isLoading = false;
       return;
     };
 
     //Si solo hay una localizacion cargar mesas
-    if (this.locations.length > 1) {
-      this.isLoading = false;
+    if (this.restaurantService. locations.length > 1) {
+      this.restaurantService.isLoading = false;
       return;
     }
 
@@ -159,7 +152,7 @@ export class HomeRestaurantComponent implements OnInit {
 
     //Si algo salió mal
     if (!resTable) {
-      this.isLoading = false;
+      this.restaurantService.isLoading = false;
       return;
     };
 
@@ -547,8 +540,8 @@ export class HomeRestaurantComponent implements OnInit {
 
   async loadLocations(): Promise<boolean> {
 
-    this.locations = [];
-    this.location = undefined;
+    this.restaurantService.locations = [];
+    this.restaurantService.location = undefined;
 
     const api = () => this._restaurantService.getLocations(
       this.tipoDocumento,
@@ -570,25 +563,25 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
-    this.locations = res.response;
+    this.restaurantService.locations = res.response;
 
-    if (this.locations.length == 1)
-      this.location = this.locations[0];
+    if (this.restaurantService.locations.length == 1)
+      this.restaurantService.location = this.restaurantService.locations[0];
 
     return true;
   }
 
   async loadTables(): Promise<boolean> {
 
-    this.tables = [];
-    this.table = undefined;
+    this.restaurantService.tables = [];
+    this.restaurantService.table = undefined;
 
     const api = () => this._restaurantService.getTables(
       this.tipoDocumento,
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
       this.serie!.serie_Documento,
-      this.location!.elemento_Asignado,
+      this.restaurantService.location!.elemento_Asignado,
       this.user,
       this.token,
     );
@@ -604,10 +597,10 @@ export class HomeRestaurantComponent implements OnInit {
       return false;
     }
 
-    this.tables = res.response;
+    this.restaurantService.tables = res.response;
 
-    if (this.tables.length == 1)
-      this.table = this.tables[0];
+    if (this.restaurantService.tables.length == 1)
+      this.restaurantService.table = this.restaurantService.tables[0];
 
     return true;
 

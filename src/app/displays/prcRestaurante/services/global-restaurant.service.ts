@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { SerieInterface } from "../../prc_documento_3/interfaces/serie.interface";
-import { LocationInterface, TableInterface } from "../interfaces/location.interface";
 import { NotificationsService } from "src/app/services/notifications.service";
 import { TranslateService } from "@ngx-translate/core";
+import { LocationInterface } from "../interfaces/location.interface";
+import { TableInterface } from "../interfaces/table.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -11,6 +12,13 @@ import { TranslateService } from "@ngx-translate/core";
 
 //Servicio para commpartir datos del modulo factura
 export class GlobalRestaurantService {
+
+    locations: LocationInterface[] = [];
+    location?: LocationInterface;
+    tables: TableInterface[] = [];
+    table?: TableInterface;
+
+    //----------
     isLoading: boolean = false; //Pantalla de carga
     verError: boolean = false; //ocultar y mostrar pantalla de error
     tipoDocumento?: number; //Tipo de documento
@@ -24,49 +32,12 @@ export class GlobalRestaurantService {
     viewLocations: boolean = true;
     viewRestaurant: boolean = false;
 
-    locationSelect?: LocationInterface;
-    tableSelect?: TableInterface;
+    
 
     viewTables: boolean = false;
     pinMesero: number = 0;
 
-    locations: LocationInterface[] = [
-        {
-            id: 1,
-            nombre: "SALON PRINCIPAL",
-            disponibles: 2,
-        },
-        {
-            id: 2,
-            nombre: "SALON LAS FLORES",
-            disponibles: 2,
-        },
-        {
-            id: 3,
-            nombre: "TERRAZA",
-            disponibles: 6,
-        },
-    ]
-
-    tables: TableInterface[] = [
-        {
-            id: 1,
-            espacios: 2,
-        },
-        {
-            id: 2,
-            espacios: 4,
-        },
-        {
-            id: 3,
-            espacios: 6,
-        },
-        {
-            id: 4,
-            espacios: 8,
-        },
-    ]
-
+   
     constructor(
         private _notificationService: NotificationsService,
         private _translate: TranslateService,
