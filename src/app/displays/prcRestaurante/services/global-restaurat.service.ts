@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
 import { SerieInterface } from "../../prc_documento_3/interfaces/serie.interface";
+import { LocationInterface, TableInterface } from "../interfaces/location.interface";
+import { NotificationsService } from "src/app/services/notifications.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +21,59 @@ export class RestaurantService {
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
     tabPago: boolean = false; //Contorlador para la pestaña de pago
 
+    viewLocations: boolean = true;
+    viewRestaurant: boolean = false;
+
+    locationSelect?: LocationInterface;
+    tableSelect?: TableInterface;
+
+    viewTables: boolean = false;
+    pinMesero: number = 0;
+
+    locations: LocationInterface[] = [
+        {
+            id: 1,
+            nombre: "SALON PRINCIPAL",
+            disponibles: 2,
+        },
+        {
+            id: 2,
+            nombre: "SALON LAS FLORES",
+            disponibles: 2,
+        },
+        {
+            id: 3,
+            nombre: "TERRAZA",
+            disponibles: 6,
+        },
+    ]
+
+    tables: TableInterface[] = [
+        {
+            id: 1,
+            espacios: 2,
+        },
+        {
+            id: 2,
+            espacios: 4,
+        },
+        {
+            id: 3,
+            espacios: 6,
+        },
+        {
+            id: 4,
+            espacios: 8,
+        },
+    ]
+
+    constructor(
+        private _notificationService: NotificationsService,
+        private _translate: TranslateService,
+    ) {
+
+    }
+
     showDetalle() {
         this.tabDetalle = true;
         this.tabMenu = false;
@@ -35,5 +91,9 @@ export class RestaurantService {
         this.tabMenu = true;
         this.tabPago = false;
 
+    }
+
+    async viewPinMesero() {
+        this._notificationService.pinMesero();
     }
 }

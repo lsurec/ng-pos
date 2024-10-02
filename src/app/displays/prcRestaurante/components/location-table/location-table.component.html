@@ -1,3 +1,17 @@
+<mat-toolbar-row class="head__sidenav">
+    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <p class="titulo">{{ 'pos.error.informe' | translate }}</p>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.siguiente' | translate }}"
+        (click)="viewRestaurant()">
+        <mat-icon>save</mat-icon>
+    </button>
+</mat-toolbar-row>
+
+
 <div class="contenido">
 
     <div class="ubicacion-mesa">
@@ -6,7 +20,9 @@
 
             <p class="titulo">UBICACIONES</p>
 
-            <div class="ubicacion" *ngFor="let location of locations">
+            <div class="ubicacion" *ngFor="let location of restaurantService.locations"
+                [ngClass]="{'ubicacionMesaSelect': restaurantService.locationSelect && restaurantService.locationSelect.id === location.id}"
+                (click)="selectLocation(location)">
                 <mat-icon>location_on</mat-icon>
                 <span class="spacer"></span>
                 <div class="descripciones">
@@ -17,11 +33,12 @@
 
         </div>
         <span class="spacer"></span>
-        <div class="mesas">
+        <div class="mesas" *ngIf="restaurantService.viewTables">
             <p class="titulo">MESAS</p>
 
             <div class="mesasx2">
-                <div class="mesa" *ngFor="let table of tables">
+                <div class="mesa" *ngFor="let table of restaurantService.tables" (click)="selectTable(table)"
+                    [ngClass]="{'ubicacionMesaSelect': restaurantService.tableSelect && restaurantService.tableSelect.id === table.id}">
                     <mat-icon>table_bar</mat-icon>
                     <span class="spacer"></span>
                     <div class="descripciones">

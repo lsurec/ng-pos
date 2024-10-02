@@ -1,0 +1,14 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft, bordes scroollbar
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro); //bordes del calendario
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris);
+$hover         : var(--hover);
+$personalizado : var(--global-color);
+
+.dialog {
+    padding         : 0px;
+    width           : 700px;
+    background-color: $fondo;
+    overflow        : hidden;
+}

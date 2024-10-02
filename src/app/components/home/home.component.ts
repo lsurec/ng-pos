@@ -705,6 +705,11 @@ export class HomeComponent implements OnInit {
         this._globalConvertService.docDestino = 1; // mas de un elemento
       }
 
+      if (itemMenu.route == "prcRestaurante") {
+
+        //TODO: si hubieran dantos que cargar para restsurante
+      }
+
 
       //recorremos la lista qeu tiene todos los componentes
       for (let index = 0; index < this.components.length; index++) {
@@ -1117,7 +1122,7 @@ export class HomeComponent implements OnInit {
         try {
           // 1. Leer el archivo JSON
           const json = JSON.parse(e.target.result);
-  
+
           // 2. Validar que la estructura del JSON sea correcta
           if (this.validatePreferencesStructure(json)) {
             // 3. Si es válido, asignar el objeto a preferences
@@ -1140,11 +1145,11 @@ export class HomeComponent implements OnInit {
             PreferencesService.inicioSemana = preferences.startDay;
             PreferencesService.inicioLabores = preferences.startWork;
             PreferencesService.theme = preferences.theme;
-            
-            this._notificationsService.openSnackbar("Preferencias cargadas correctamente"); //TODO:Translate
-            
 
-            
+            this._notificationsService.openSnackbar("Preferencias cargadas correctamente"); //TODO:Translate
+
+
+
           } else {
             this._notificationsService.openSnackbar("Archivo invalido"); //TODO:Translate
           }
@@ -1157,22 +1162,22 @@ export class HomeComponent implements OnInit {
       reader.readAsText(file);
     }
   }
-  
+
   validatePreferencesStructure(json: any): boolean {
     const requiredKeys = [
       'background', 'decimal', 'endWork', 'idBackground', 'idPrimary',
       'idSize', 'int', 'lang', 'newDoc', 'primary', 'remote', 'show', 'size',
       'startDay', 'startWork', 'theme'
     ];
-  
+
     // Comprobar si todas las claves están presentes
     for (const key of requiredKeys) {
       if (!json.hasOwnProperty(key)) {
         return false;
       }
     }
-  
-  
+
+
     return true;
   }
 }

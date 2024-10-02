@@ -1,8 +1,11 @@
-<app-error [regresar]="regresar"></app-error>
+<app-error [regresar]="regresar" *ngIf="restaurantService.verError"></app-error>
 
 <app-progress *ngIf="restaurantService.isLoading" class="progress"></app-progress>
 
-<div>
+
+<app-location-table *ngIf="restaurantService.viewLocations"></app-location-table>
+
+<div *ngIf="restaurantService.viewRestaurant">
 
     <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
         *ngIf="!restaurantService.verError">
@@ -78,11 +81,11 @@
             <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
                 <mat-toolbar-row>
                     <div class="barras">
-                        <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
                             <mat-icon>arrow_back</mat-icon>
                         </button>
 
-                        <button (click)="goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                        <button (click)=" goBack()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
                             <mat-icon>home</mat-icon>
                         </button>
                         <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
@@ -126,7 +129,7 @@
                 </mat-toolbar-row>
             </mat-toolbar>
             <mat-toolbar class="toolbar-large" *ngIf="!restaurantService.isLoading">
-                <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
+                <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
@@ -199,7 +202,7 @@
 
                         <!--Content Tabs-->
                         <section id="content1" class="content1 contenido-seleccionado">
-                            <app-location-table *ngIf="restaurantService.tabMenu"></app-location-table>
+                            //Por el momento nada
                         </section>
 
                         <section id="content2" class="content2 contenido-seleccionado">

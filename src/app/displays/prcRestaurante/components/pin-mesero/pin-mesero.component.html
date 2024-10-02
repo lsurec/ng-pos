@@ -1,1 +1,16 @@
-<p>pin-mesero works!</p>
+<div mat-dialog-content class="dialog">
+
+    <input type="text" [(ngModel)]="restaurantService.pinMesero " name="termino" class="editar-termino">
+
+    <div class="dFlex">
+        <button mat-stroked-button mat-dialog-close>
+            {{ 'pos.botones.cancelar' | translate }}
+        </button>
+
+        <span class="spacer"></span>
+
+        <button mat-stroked-button (click)="guardar()">
+            {{ 'pos.botones.modificar'| translate }}
+        </button>
+    </div>
+</div>

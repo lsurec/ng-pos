@@ -49,7 +49,10 @@ export class HomeRestaurantComponent {
   }
 
 
-  goBack() { }
+  goBack() {
+    this.restaurantService.viewLocations = true;
+    this.restaurantService.viewRestaurant = false;
+  }
 
   loadData() { }
 
