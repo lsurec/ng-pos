@@ -10,7 +10,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 
 //Servicio para commpartir datos del modulo factura
-export class RestaurantService {
+export class GlobalRestaurantService {
     isLoading: boolean = false; //Pantalla de carga
     verError: boolean = false; //ocultar y mostrar pantalla de error
     tipoDocumento?: number; //Tipo de documento
