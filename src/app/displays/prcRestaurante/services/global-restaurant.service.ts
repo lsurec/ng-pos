@@ -4,6 +4,7 @@ import { NotificationsService } from "src/app/services/notifications.service";
 import { TranslateService } from "@ngx-translate/core";
 import { LocationInterface } from "../interfaces/location.interface";
 import { TableInterface } from "../interfaces/table.interface";
+import { WaiterInterface } from "../interfaces/waiter.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +14,8 @@ import { TableInterface } from "../interfaces/table.interface";
 //Servicio para commpartir datos del modulo factura
 export class GlobalRestaurantService {
 
+
+    waiter?: WaiterInterface;
     locations: LocationInterface[] = [];
     location?: LocationInterface;
     tables: TableInterface[] = [];
@@ -35,7 +38,7 @@ export class GlobalRestaurantService {
     viewTables: boolean = false;
     pinMesero: string = "";
 
-   
+
     constructor(
         private _notificationService: NotificationsService,
         private _translate: TranslateService,
