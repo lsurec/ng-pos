@@ -67,7 +67,7 @@ export class HomeRestaurantComponent implements OnInit {
   @ViewChild('sidenavend')
   sidenavend!: MatSidenav;
 
-  readonly regresar: number = 1; //id de la pnatalla
+  readonly regresar: number = 21; //id de la pnatalla
 
   nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
   documentoName: string = ""; //Descripcion tipo de documento
@@ -99,6 +99,11 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   goBack(): void {
+    this.restaurantService.viewLocations = true;
+    this.restaurantService.viewRestaurant = false;
+  }
+
+  backHome() {
     components.forEach(element => {
       element.visible = false;
     });
@@ -644,6 +649,8 @@ export class HomeRestaurantComponent implements OnInit {
 
     //TODO:mostrar pantalla de error
 
+    this.restaurantService.verError = true;
+
     return;
   }
 
@@ -655,7 +662,6 @@ export class HomeRestaurantComponent implements OnInit {
     await this.loadTables();
     this.restaurantService.isLoading = false;
 
-    this.restaurantService.viewTables = true;
   }
 
   selectTable(table: TableInterface) {

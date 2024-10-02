@@ -32,6 +32,7 @@ import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format
 import { ColorInterface } from 'src/app/interfaces/filtro.interface';
 import { PreferencesInterface } from 'src/app/interfaces/preferences.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { GlobalRestaurantService } from 'src/app/displays/prcRestaurante/services/global-restaurant.service';
 
 @Component({
   selector: 'app-home',
@@ -143,6 +144,7 @@ export class HomeComponent implements OnInit {
     private _http: HttpClient,
     private customDatepickerI18n: CustomDatepickerI18n,
     private renderer: Renderer2,
+    public restaurantService: GlobalRestaurantService,
     @Inject(DOCUMENT) private document: Document
   ) {
 
@@ -157,6 +159,11 @@ export class HomeComponent implements OnInit {
 
     this._eventService.verHome$.subscribe((eventData) => {
       this.verHistorialErrores = false;
+    });
+
+    //mostrar contenido a regresar de error
+    this._eventService.homeDeErrorRestaurante$.subscribe((eventData) => {
+      this.restaurantService.verError = false;
     });
 
     //Funcion que carga datos

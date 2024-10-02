@@ -49,7 +49,6 @@ p {
 
 .titulo {
     font-size  : 14px;
-    text-align : center;
     font-weight: 500;
 }
 
@@ -606,4 +605,13 @@ label[for*='6']:before {
     grid-template-columns: repeat(2, 1fr);
     //Espacio entre las mesas, puedes ajustar esto
     gap                  : 0px 15px;
+}
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 5px 10px 0px;
+    font-size       : 14px;
+    font-weight     : 500;
 }
