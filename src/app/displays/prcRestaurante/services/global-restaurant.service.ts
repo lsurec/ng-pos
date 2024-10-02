@@ -36,7 +36,6 @@ export class GlobalRestaurantService {
     viewRestaurant: boolean = false;
 
     viewTables: boolean = false;
-    pinMesero: string = "";
 
 
     constructor(

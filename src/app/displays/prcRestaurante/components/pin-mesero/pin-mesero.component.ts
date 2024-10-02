@@ -22,6 +22,7 @@ import { WaiterInterface } from '../../interfaces/waiter.interface';
 })
 export class PinMeseroComponent {
 
+  pinMesero: string = "";
   token: string = PreferencesService.token; //usuario de la sesion
   empresa: EmpresaInterface = PreferencesService.empresa; //empresa de la sesion0
 
@@ -40,7 +41,7 @@ export class PinMeseroComponent {
 
   async guardar() {
 
-    if (!this.restaurantService.pinMesero) {
+    if (!this.pinMesero) {
       //TODO: traducir
       this._notificationService.openSnackbar(this.translate.instant('Ingrese Pin'));
       return
@@ -48,23 +49,24 @@ export class PinMeseroComponent {
 
     this.restaurantService.isLoading = true;
 
-    await this.loadPin();
+
+    let res:boolean = await this.loadPin();
 
     this.restaurantService.isLoading = false;
 
-    if (!this.restaurantService.waiter) return;
+    if (!res) return;
 
     this.restaurantService.viewRestaurant = true;
     this.restaurantService.viewLocations = false;
 
     this.dialogRef.close();
 
-    this.restaurantService.pinMesero = "";
+    this.pinMesero = "";
 
   }
 
   cancelar() {
-    this.restaurantService.pinMesero = "";
+    this.pinMesero = "";
     this.dialogRef.close();
 
   }
@@ -76,7 +78,7 @@ export class PinMeseroComponent {
     const api = () => this._restaurantService.getAccountPin(
       this.token,
       this.empresa.empresa,
-      "123" //TODO:Parametrizar pin
+      this.pinMesero,
     );
 
     let res: ResApiInterface = await ApiService.apiUse(api);
@@ -100,6 +102,7 @@ export class PinMeseroComponent {
     }
 
     this.restaurantService.waiter = waiters[0];
+
 
     return true;
   }
