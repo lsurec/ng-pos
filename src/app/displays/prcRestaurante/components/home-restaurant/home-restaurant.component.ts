@@ -100,14 +100,30 @@ export class HomeRestaurantComponent implements OnInit {
       return;
     };
 
-    // si hay mas de una mesa 
-    if (this.tables.length > 1) {
-      this.isLoading = false;
-      return;
+  }
+
+  async loadPin():Promise<boolean>{
+    
+    
+    const api = () => this._restaurantService.getAccountPin(
+      this.token,
+      this.empresa,
+      "123" //TODO:Parametrizar pin
+     );
+
+    let res: ResApiInterface = await ApiService.apiUse(api);
+
+    //si algo salio mal
+    if (!res.status) {
+      this.showError(res);
+
+      return false;
     }
 
-    //si solo hay una mesa cragar clasificaciones
 
+
+
+    return true;
   }
 
   //TODO:Implementar Try Catch
