@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { RestaurantService } from '../../services/global-restaurat.service';
+import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
@@ -37,7 +37,7 @@ export class HomeRestaurantComponent {
 
   constructor(
     private notificationService: NotificationsService,
-    public restaurantService: RestaurantService,
+    public restaurantService: GlobalRestaurantService,
     public dataUserService: DataUserService,
 
   ) {
