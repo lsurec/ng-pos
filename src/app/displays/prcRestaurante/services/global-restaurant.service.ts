@@ -28,7 +28,7 @@ export class GlobalRestaurantService {
     tableSelect?: TableInterface;
 
     viewTables: boolean = false;
-    pinMesero: number = 0;
+    pinMesero: string = "";
 
     locations: LocationInterface[] = [
         {
@@ -91,9 +91,5 @@ export class GlobalRestaurantService {
         this.tabMenu = true;
         this.tabPago = false;
 
-    }
-
-    async viewPinMesero() {
-        this._notificationService.pinMesero();
     }
 }

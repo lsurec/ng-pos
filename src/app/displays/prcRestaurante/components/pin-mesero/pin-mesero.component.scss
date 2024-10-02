@@ -6,11 +6,46 @@ $gris          : var(--gris);
 $hover         : var(--hover);
 $personalizado : var(--global-color);
 
+p {
+    margin: 0;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
 .dialog {
-    padding         : 0px;
-    width           : 400px;
-    height          : 250;
-    background-color: $fondo;
-    overflow        : hidden;
-    
+    padding   : 0px;
+    width     : 350px;
+    height    : 200px;
+    background: $fondo;
+    overflow  : hidden;
+}
+
+.contenido {
+    padding: 20px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.pin {
+    width        : 100%;
+    border       : solid 1px $bordes;
+    outline      : none;
+    background   : none;
+    border-radius: 5px;
+    padding      : 5px;
+}
+
+.tituloPin {
+    color      : $personalizado;
+    font-weight: bold;
+    font-size  : 20px !important;
+}
+
+.inputPin {
+    padding: 25px 0px;
 }
