@@ -35,7 +35,7 @@ export class GlobalRestaurantService {
     
 
     viewTables: boolean = false;
-    pinMesero: number = 0;
+    pinMesero: string = "";
 
    
     constructor(
@@ -63,11 +63,4 @@ export class GlobalRestaurantService {
         this.tabPago = false;
 
     }
-
-    async viewPinMesero() {
-        this._notificationService.pinMesero();
-    }
-
-    //-----
-    
 }

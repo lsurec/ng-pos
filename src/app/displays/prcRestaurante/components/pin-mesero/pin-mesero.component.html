@@ -1,16 +1,29 @@
 <div mat-dialog-content class="dialog">
 
-    <input type="text" [(ngModel)]="restaurantService.pinMesero " name="termino" class="editar-termino">
+    <div class="contenido">
 
-    <div class="dFlex">
-        <button mat-stroked-button mat-dialog-close>
-            {{ 'pos.botones.cancelar' | translate }}
-        </button>
+        <p class="tituloPin">
+            PIN MESERO
+        </p>
 
-        <span class="spacer"></span>
+        <div class="inputPin">
+            <input type="password" required [(ngModel)]="restaurantService.pinMesero " name="termino" class="pin"
+                autocomplete="off">
 
-        <button mat-stroked-button (click)="guardar()">
-            {{ 'pos.botones.modificar'| translate }}
-        </button>
+        </div>
+
+        <div class="dFlex">
+            <button mat-stroked-button (click)="cancelar()">
+                {{ 'pos.botones.cancelar' | translate }}
+            </button>
+
+            <span class="spacer"></span>
+
+            <button mat-stroked-button (click)="guardar()">
+                {{ 'pos.botones.aceptar'| translate }}
+            </button>
+        </div>
+
+
     </div>
 </div>
