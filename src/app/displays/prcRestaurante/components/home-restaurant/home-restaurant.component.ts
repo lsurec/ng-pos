@@ -648,8 +648,13 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
-  selectLocation(location: LocationInterface) {
+  async selectLocation(location: LocationInterface) {
     this.restaurantService.location = location;
+
+    this.restaurantService.isLoading = true;
+    await this.loadTables();
+    this.restaurantService.isLoading = false;
+
     this.restaurantService.viewTables = true;
   }
 
