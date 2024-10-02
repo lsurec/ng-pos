@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LocationInterface, TableInterface } from '../../interfaces/location.interface';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
-import { GlobalRestaurantService } from '../../services/global-restaurat.service';
+import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 

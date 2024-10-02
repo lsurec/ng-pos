@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogActionInterface } from 'src/app/interfaces/dialog-actions.interface';
-import { GlobalRestaurantService } from '../../services/global-restaurat.service';
+import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 
 @Component({
   selector: 'app-pin-mesero',

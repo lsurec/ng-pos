@@ -17,7 +17,7 @@ import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/u
 import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
 import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
 import { MatSidenav } from '@angular/material/sidenav';
-import { GlobalRestaurantService } from '../../services/global-restaurat.service';
+import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
