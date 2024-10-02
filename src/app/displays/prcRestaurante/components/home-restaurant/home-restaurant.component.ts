@@ -11,6 +11,8 @@ import { SerieService } from 'src/app/displays/prc_documento_3/services/serie.se
 import { SerieInterface } from 'src/app/displays/prc_documento_3/interfaces/serie.interface';
 import { LocationInterface } from '../../interfaces/locations.interface';
 import { TableInterface } from '../../interfaces/table.interface';
+import { WaiterInterface } from '../../interfaces/waiter.interface';
+import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -36,6 +38,9 @@ export class HomeRestaurantComponent implements OnInit {
   location?: LocationInterface;
   tables: TableInterface[] = [];
   table?: TableInterface;
+  waiter?: WaiterInterface;
+  classifications: ClassificationRestaurantInterface[] = [];
+  classification?: ClassificationRestaurantInterface;
 
 
   constructor(
@@ -102,14 +107,14 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-  async loadPin():Promise<boolean>{
+  async loadProducts(): Promise<boolean> {
     
-    
-    const api = () => this._restaurantService.getAccountPin(
+    const api = () => this._restaurantService.getProducts(
+      this.classification!.clasificacion,
+      this.estacion,
+      this.user,
       this.token,
-      this.empresa,
-      "123" //TODO:Parametrizar pin
-     );
+    );
 
     let res: ResApiInterface = await ApiService.apiUse(api);
 
@@ -121,7 +126,71 @@ export class HomeRestaurantComponent implements OnInit {
     }
 
 
+    return true;
 
+  }
+
+
+  async loadClassifications(): Promise<boolean> {
+
+    const api = () => this._restaurantService.getClassifications(
+      this.tipoDocumento,
+      this.empresa,
+      this.estacion,
+      this.serie!.serie_Documento,
+      this.user,
+      this.token,
+    );
+
+    let res: ResApiInterface = await ApiService.apiUse(api);
+
+    //si algo salio mal
+    if (!res.status) {
+      this.showError(res);
+
+      return false;
+    }
+
+
+    this.classifications = res.response;
+
+    if (this.classifications.length == 1)
+      this.classification = this.classifications[0];
+
+
+    return true;
+  }
+
+  async loadPin(): Promise<boolean> {
+
+    this.waiter = undefined;
+
+    const api = () => this._restaurantService.getAccountPin(
+      this.token,
+      this.empresa,
+      "123" //TODO:Parametrizar pin
+    );
+
+    let res: ResApiInterface = await ApiService.apiUse(api);
+
+    //si algo salio mal
+    if (!res.status) {
+      this.showError(res);
+
+      return false;
+    }
+
+    let waiters: WaiterInterface[] = res.response;
+
+
+    if (waiters.length == 0) {
+
+      this._notificationService.openSnackbar("Pin invalido"); //TODO:Translate
+
+      return false;
+    }
+
+    this.waiter = waiters[0];
 
     return true;
   }
