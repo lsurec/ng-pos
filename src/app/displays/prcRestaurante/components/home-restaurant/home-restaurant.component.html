@@ -199,9 +199,7 @@
 
                         <!--Content Tabs-->
                         <section id="content1" class="content1 contenido-seleccionado">
-                            <!-- <app-pago></app-pago> -->
-                            <!-- <app-detalle></app-detalle> -->
-                            <app-pin-mesero *ngIf="restaurantService.tabMenu"></app-pin-mesero>
+                            <app-location-table *ngIf="restaurantService.tabMenu"></app-location-table>
                         </section>
 
                         <section id="content2" class="content2 contenido-seleccionado">

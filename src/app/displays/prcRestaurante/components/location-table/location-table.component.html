@@ -1,0 +1,38 @@
+<div class="contenido">
+
+    <div class="ubicacion-mesa">
+
+        <div class="ubicaciones">
+
+            <p class="titulo">UBICACIONES</p>
+
+            <div class="ubicacion" *ngFor="let location of locations">
+                <mat-icon>location_on</mat-icon>
+                <span class="spacer"></span>
+                <div class="descripciones">
+                    <p class="textBold">{{location.nombre}}</p>
+                    <P class="text12">MESAS DISPONIBLES ({{location.disponibles}})</P>
+                </div>
+            </div>
+
+        </div>
+        <span class="spacer"></span>
+        <div class="mesas">
+            <p class="titulo">MESAS</p>
+
+            <div class="mesasx2">
+                <div class="mesa" *ngFor="let table of tables">
+                    <mat-icon>table_bar</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="descripciones">
+                        <p class="textBold"> MESA {{table.id}}</p>
+                        <P class="text12">PERSONAS ({{table.espacios}})</P>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
