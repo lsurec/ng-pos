@@ -6,11 +6,11 @@ import { GlobalRestaurantService } from '../../services/global-restaurant.servic
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
-import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
 import { WaiterInterface } from '../../interfaces/waiter.interface';
+import { ErrorInterface } from 'src/app/interfaces/error.interface';
 
 @Component({
   selector: 'app-pin-mesero',
@@ -49,20 +49,21 @@ export class PinMeseroComponent {
 
     this.restaurantService.isLoading = true;
 
+    let res: boolean = await this.loadPin();
 
-    let res:boolean = await this.loadPin();
+    if (!res) {
+      this.restaurantService.isLoading = false;
+      return
+    };
 
-    this.restaurantService.isLoading = false;
-
-    if (!res) return;
+    this.dialogRef.close();
 
     this.restaurantService.viewRestaurant = true;
     this.restaurantService.viewLocations = false;
 
-    this.dialogRef.close();
+    this.restaurantService.isLoading = false;
 
     this.pinMesero = "";
-
   }
 
   cancelar() {
@@ -85,8 +86,10 @@ export class PinMeseroComponent {
 
     //si algo salio mal
     if (!res.status) {
-      // TODO:Ver error
-      // this.showError(res);
+      //cerrar eldialogo y ver error
+      this.dialogRef.close();
+
+      this.showError(res);
 
       return false;
     }
@@ -105,5 +108,40 @@ export class PinMeseroComponent {
 
 
     return true;
+  }
+
+  async showError(res: ResApiInterface) {
+
+    //Diaogo de confirmacion
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this.translate.instant('pos.alertas.salioMal'),
+        description: this.translate.instant('pos.alertas.error'),
+        verdadero: this.translate.instant('pos.botones.informe'),
+        falso: this.translate.instant('pos.botones.aceptar'),
+      }
+    );
+
+    //Cancelar
+    if (!verificador) return;
+
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: res.response,
+      storeProcedure: res.storeProcedure,
+      url: res.url,
+    }
+
+    //Guardar error
+    PreferencesService.error = error;
+
+    //TODO:mostrar pantalla de error
+
+    this.restaurantService.verError = true;
+
+    return;
   }
 }

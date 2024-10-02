@@ -193,7 +193,11 @@ export class NotificationsService {
             let dialogRef = this._dialog.open(PinMeseroComponent)
 
             dialogRef.afterClosed().subscribe(result => {
-                resolve(result);
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
             });
         });
     }

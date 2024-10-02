@@ -1,9 +1,11 @@
+$fondo : var(--fondo-claro); //fondo Demosoft
+
 .progress {
     width      : 100%;
     height     : 100%;
     z-index    : 9999;
     display    : flex;
-    background : transparent;
+    background : $fondo;
     align-items: center;
 }
 

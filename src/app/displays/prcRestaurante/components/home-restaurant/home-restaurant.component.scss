@@ -16,7 +16,6 @@ $gris          : var(--gris); //sombra y texto gris
 }
 
 .progress {
-    padding         : 10px 20px;
     width           : 100%;
     height          : 100vh; //importante para que este centrado
     background-color: $fondo;
@@ -534,9 +533,25 @@ label[for*='6']:before {
 
 //ubicaciones y mesas
 
+.contenido::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenido::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
 .contenido {
-    padding: 10px;
-    width  : 100%;
+    padding   : 10px;
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    overflow-x: auto;
 }
 
 .ubicacion-mesa {

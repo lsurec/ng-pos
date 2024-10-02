@@ -24,8 +24,8 @@
 
                     <div class="ubicaciones">
 
-                        <p class="titulo">UBICACIONES</p>
                         <div class="cantidad-registros">
+                            <p class="titulo">UBICACIONES</p>
                             <span class="spacer"></span>
                             <p class="textBold">
                                 {{ 'pos.factura.registros' | translate }} ({{restaurantService.locations.length }})
@@ -44,9 +44,9 @@
 
                     </div>
                     <span class="spacer"></span>
-                    <div class="mesas" *ngIf="restaurantService.tables">
-                        <p class="titulo">MESAS</p>
+                    <div class="mesas" *ngIf="restaurantService.tables.length > 0">
                         <div class="cantidad-registros">
+                            <p class="titulo">MESAS</p>
                             <span class="spacer"></span>
                             <p class="textBold">
                                 {{ 'pos.factura.registros' | translate }} ({{restaurantService.tables.length }})
@@ -71,7 +71,7 @@
                     </div>
 
                 </div>
-
+                <app-barra-logos></app-barra-logos>
             </div>
         </div>
 
