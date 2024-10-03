@@ -6,7 +6,8 @@ $negro         : var(--negro); //texto negro
 $personalizado : var(--global-color); //bordes y texto azul
 $color-blanco  : var(--blanco); //resaltar texto blanco
 $gris          : var(--gris); //sombra y texto gris
-
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
 
 .container-main {
     height  : calc(100vh - 128px) !important;
@@ -569,11 +570,10 @@ label[for*='6']:before {
 }
 
 .ubicacion {
-    padding      : 5px 10px;
+    padding      : 10px;
     display      : flex;
     align-items  : center;
     border       : solid 1px $bordes;
-    width        : 85%;
     margin-top   : 10px;
     border-radius: 10px
 }
@@ -634,4 +634,19 @@ label[for*='6']:before {
     border-style : none;
     border-bottom: 1px solid $bordes;
     font-size    : 12px;
+}
+
+
+.informacion-fondo {
+    padding         : 10px;
+    margin-bottom   : 10px;
+    background-color: $bloques;
+    box-shadow      : $sombra;
+    border-radius   : 10px;
+}
+
+.tEvento {
+    font-size  : 14px;
+    font-weight: bold;
+    padding    : 10px 0px;
 }
