@@ -683,7 +683,19 @@ label[for*='6']:before {
 }
 
 
-.bloqueT {
+// .bloqueT {
+//     padding     : 10px;
+//     border-right: solid 1px $bordes;
+// }
+
+.bloqueW10T {
+    width       : 10%;
+    padding     : 10px;
+    border-right: solid 1px $bordes;
+}
+
+.bloqueW20T {
+    width       : 20%;
     padding     : 10px;
     border-right: solid 1px $bordes;
 }
@@ -712,4 +724,107 @@ label[for*='6']:before {
 
 .width50 {
     width: 50%;
+}
+
+.tablaDocumentos {
+    width                           : 100%;
+    // overflow-x                   : auto;
+    /* Permite el scroll horizontal */
+    // white-space               : nowrap;
+    /* Evita que las columnas se ajusten en varias líneas */
+    // -webkit-overflow-scrolling   : touch;
+    /* Mejora el desplazamiento en dispositivos táctiles */
+
+    /* Ocultar scrollbars */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Para otros navegadores */
+    -ms-overflow-style: none;
+    /* IE y Edge */
+    scrollbar-width   : none;
+    /* Firefox */
+
+    // .tabla-titulos,
+    // .tabla-lista {
+    //     display        : flex;
+    //     justify-content: space-between;
+    //     width          : 1000px;
+    //     /* Ajusta este valor dependiendo del tamaño de tu tabla para asegurar que se desborde */
+    // }
+
+    // /* Ajustes para pantallas pequeñas */
+    // @media (max-width: 768px) {
+
+    //     .tabla-titulos,
+    //     .tabla-lista {
+    //         width: 1200px;
+    //         /* Aumentar el tamaño total para que haya un desbordamiento visible */
+    //     }
+    // }
+}
+
+@media (max-width: 950px) {
+
+    .tablaDocumentos {
+        white-space               : nowrap;
+        overflow-x                : auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tablaDocumentos {
+        display: block !important;
+    }
+
+    .bloqueW10T,
+    .bloqueW20T {
+        width      : 85px !important;
+        white-space: break-spaces;
+    }
+
+    .mostrarTxt {
+        display: none !important;
+    }
+
+    .ocultarTxt {
+        display: block !important;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .tablaDocumentos {
+        white-space               : nowrap;
+        overflow-x                : auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tablaDocumentos {
+        display: block !important;
+    }
+
+    .bloqueW10T,
+    .bloqueW20T {
+        width      : 80px !important;
+        white-space: break-spaces;
+    }
+
+    .mostrarTxt {
+        display: none !important;
+    }
+
+    .ocultarTxt {
+        display: block !important;
+    }
+
+}
+
+.mostrarTxt {
+    display: block;
+}
+
+.ocultarTxt {
+    display: none;
 }
