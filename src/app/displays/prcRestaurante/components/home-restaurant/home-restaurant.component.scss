@@ -534,14 +534,17 @@ label[for*='6']:before {
 
 //ubicaciones y mesas
 
+.contenido-ubicaciones-mesas::-webkit-scrollbar,
 .contenido::-webkit-scrollbar {
     width: 7px;
 }
 
+.contenido-ubicaciones-mesas::-webkit-scrollbar-track,
 .contenido::-webkit-scrollbar-track {
     background: $fondo;
 }
 
+.contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .contenido::-webkit-scrollbar-thumb {
     background-color: $scroll;
     border-radius   : 20px;
@@ -555,13 +558,21 @@ label[for*='6']:before {
     overflow-x: auto;
 }
 
+
+.contenido-ubicaciones-mesas {
+    padding   : 10px;
+    height    : calc(100vh - 166px) !important;
+    width     : 100%;
+    overflow-x: auto;
+}
+
 .ubicacion-mesa {
     display: flex;
 }
 
 .ubicaciones {
     width  : 40%;
-    padding: 10px;
+    padding: 0px 10px 10px;
 }
 
 .mesas {
@@ -636,17 +647,10 @@ label[for*='6']:before {
     font-size    : 12px;
 }
 
-
 .informacion-fondo {
     padding         : 10px;
     margin-bottom   : 10px;
     background-color: $bloques;
     box-shadow      : $sombra;
     border-radius   : 10px;
-}
-
-.tEvento {
-    font-size  : 14px;
-    font-weight: bold;
-    padding    : 10px 0px;
 }

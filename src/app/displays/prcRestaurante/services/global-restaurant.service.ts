@@ -32,6 +32,9 @@ export class GlobalRestaurantService {
     tabDetalle: boolean = false;  //controlador para la pestaña de detalle
     tabPago: boolean = false; //Contorlador para la pestaña de pago
 
+    tabAccesos: boolean = true;
+    tabMesasAbiertas: boolean = false;
+
     viewLocations: boolean = true;
     viewRestaurant: boolean = false;
 
@@ -62,5 +65,15 @@ export class GlobalRestaurantService {
         this.tabMenu = true;
         this.tabPago = false;
 
+    }
+
+    showRestaurant() {
+        this.tabAccesos = true;
+        this.tabMesasAbiertas = false;
+    }
+
+    mesasAbiertas() {
+        this.tabAccesos = false;
+        this.tabMesasAbiertas = true;
     }
 }
