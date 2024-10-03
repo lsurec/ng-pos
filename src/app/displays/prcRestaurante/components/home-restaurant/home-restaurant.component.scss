@@ -620,6 +620,16 @@ label[for*='6']:before {
     font-size: 12px !important;
 }
 
+.textCenter12 {
+    font-size : 12px !important;
+    text-align: center;
+}
+
+.textLeft12 {
+    font-size : 12px !important;
+    text-align: left;
+}
+
 .titulo {
     font-size  : 14px;
     font-weight: 500;
@@ -653,4 +663,53 @@ label[for*='6']:before {
     background-color: $bloques;
     box-shadow      : $sombra;
     border-radius   : 10px;
+}
+
+//diseño para la tabla de mesas abiertas
+
+.tabla-titulos {
+    display     : flex;
+    width       : 100%;
+    border      : solid 1px $bordes;
+    border-right: none;
+}
+
+.tabla-lista {
+    display     : flex;
+    width       : 100%;
+    border      : solid 1px $bordes;
+    border-right: none;
+    border-top  : none;
+}
+
+
+.bloqueT {
+    padding     : 10px;
+    border-right: solid 1px $bordes;
+}
+
+.tituloTab {
+    font-size  : 14px;
+    font-weight: 500;
+    text-align : center;
+}
+
+.width10 {
+    width: 10%;
+}
+
+.width20 {
+    width: 20%;
+}
+
+.width30 {
+    width: 30%;
+}
+
+.width40 {
+    width: 40%;
+}
+
+.width50 {
+    width: 50%;
 }
