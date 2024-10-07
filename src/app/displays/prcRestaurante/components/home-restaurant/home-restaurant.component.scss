@@ -180,6 +180,11 @@ mat-sidenav {
         width: 100% !important;
     }
 
+
+    .contenido-ubicaciones-mesas {
+        height: calc(100vh - 233px) !important;
+    }
+
 }
 
 .sidenav_container {
@@ -490,11 +495,11 @@ label[for*='6']:before {
     }
 }
 
-@media screen and (max-width: 400px) {
-    .pestana {
-        padding: 15px;
-    }
-}
+// @media screen and (max-width: 400px) {
+//     .pestana {
+//         padding: 15px;
+//     }
+// }
 
 .barras {
     padding    : 0px 16px;
@@ -555,7 +560,8 @@ label[for*='6']:before {
     padding   : 10px;
     height    : calc(100vh - 128px) !important;
     width     : 100%;
-    overflow-x: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
@@ -563,7 +569,8 @@ label[for*='6']:before {
     padding   : 10px;
     height    : calc(100vh - 166px) !important;
     width     : 100%;
-    overflow-x: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .ubicacion-mesa {
@@ -817,6 +824,10 @@ label[for*='6']:before {
 
     .ocultarTxt {
         display: block !important;
+    }
+
+    .contenido-ubicaciones-mesas {
+        height: calc(100vh - 212px) !important;
     }
 
 }

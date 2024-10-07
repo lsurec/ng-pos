@@ -1,23 +1,12 @@
 <div class="contenido">
-    <div class="col-sm-12 col-md-6 col-lg-4 col-xs-3" *ngFor="let element of productos">
-        <div class="container" >
-            <div class="row">
-                <div class="col-md-3 product-me">
-                    <div>
-                        <div class="image-product" *ngIf="!element.url_Img" >
-                            <img src="assets/img/image-not-found.png" class="center">
-                        </div>
-                        <div class="image-product" *ngIf="element.url_Img">
-                            <img src="{{element.url_Img}}">
-                        </div>
-                        <div class="nombre_producto">
-                            <h4>SKU {{element.producto_Id}}</h4>
-                            <p>{{5}}</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="clasificacionesx3">
+        <div class="product-me" *ngFor="let producto of productos">
+            <img src="assets/img/image-not-found.png" *ngIf="!producto.url_Img" class="image-product">
+            <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product">
+            <div class="nombre_producto">
+                <p>SKU {{producto.producto_Id}}</p>
+                <p>{{producto.descripcion}}</p>
             </div>
         </div>
     </div>
-
 </div>

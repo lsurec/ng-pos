@@ -30,6 +30,7 @@ p {
     width     : 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    height    : calc(100vh - 166px);
 }
 
 /*Tarjeta Producto*/
@@ -37,43 +38,58 @@ p {
 .product-me {
     float        : left;
     width        : 100%;
-    height       : 300px;
-    background   : transparent;
     box-shadow   : none;
     border-radius: 10px;
     overflow     : hidden;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     background   : #fff;
 }
 
-.image-product img {
-    width       : 200px;
-    height      : 200px;
-    margin-left : auto;
-    margin-right: auto;
-    display     : block;
-    cursor      : pointer;
+.image-product {
+    width : -webkit-fill-available;
+    height: 200px;
+    cursor: pointer;
 }
 
-.nombre_producto h4 {
-    float        : left;
-    width        : 100%;
-    text-align   : center;
-    margin-bottom: 3px;
-    font-size    : 12px;
-    font-weight  : 600;
-    color        : #aa4060;
-    padding      : 5px;
-}
 
-.nombre_producto p {
-    float        : left;
-    width        : 100%;
-    text-align   : center;
-    margin-bottom: 3px;
-    font-size    : 15px;
-    font-weight  : 600;
-    color        : #d84672;
+.nombre_producto {
+    text-align : center;
+    font-weight: 600;
+    color      : #d84672;
+    padding    : 10px 0px;
 }
 
 /*Fin Tarjeta Producto*/
+
+.clasificacionesx3 {
+    display              : grid;
+    grid-template-columns: repeat(4, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 0px 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contenido {
+        height: calc(100vh - 233px);
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contenido {
+        height: calc(100vh - 212px) !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
