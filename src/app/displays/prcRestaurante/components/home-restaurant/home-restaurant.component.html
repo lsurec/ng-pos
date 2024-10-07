@@ -3,7 +3,7 @@
 <div *ngIf="!restaurantService.verError">
     <app-progress *ngIf="restaurantService.isLoading" class="progress"></app-progress>
 
-    <div *ngIf="!restaurantService.isLoading">
+    <div [hidden]="restaurantService.isLoading">
         <!-- <div *ngIf="restaurantService.viewLocations">
             <mat-toolbar-row class="head__sidenav">
                 <button (click)="backHome()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
@@ -161,7 +161,7 @@
                 <mat-sidenav-content>
 
                     <!-- Barras para titulos y boton de cerrar sidenav -->
-                    <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbarPhone">
                         <mat-toolbar-row>
                             <div class="barras">
                                 <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}"
@@ -183,7 +183,7 @@
                             </div>
                         </mat-toolbar-row>
                     </mat-toolbar>
-                    <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbarPhone">
                         <mat-toolbar-row>
                             <div class="barras">
                                 <span class="spacer"></span>
@@ -209,7 +209,7 @@
                             </div>
                         </mat-toolbar-row>
                     </mat-toolbar>
-                    <mat-toolbar class="toolbar-large" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbar-large">
                         <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}"
                             (click)="backHome()">
                             <mat-icon>arrow_back</mat-icon>
@@ -250,7 +250,7 @@
 
                     <!-- Contenido del componente -->
                     <div class="container_main">
-                        <div *ngIf="!restaurantService.isLoading">
+                        <div>
                             <div class="container-main">
                                 <!--Tabs-->
                                 <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
@@ -519,7 +519,7 @@
                 <mat-sidenav-content>
 
                     <!-- Barras para titulos y boton de cerrar sidenav -->
-                    <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbarPhone">
                         <mat-toolbar-row>
                             <div class="barras">
                                 <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}"
@@ -541,7 +541,7 @@
                             </div>
                         </mat-toolbar-row>
                     </mat-toolbar>
-                    <mat-toolbar class="toolbarPhone" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbarPhone">
                         <mat-toolbar-row>
                             <div class="barras">
                                 <span class="spacer"></span>
@@ -567,7 +567,7 @@
                             </div>
                         </mat-toolbar-row>
                     </mat-toolbar>
-                    <mat-toolbar class="toolbar-large" *ngIf="!restaurantService.isLoading">
+                    <mat-toolbar class="toolbar-large">
                         <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
                             <mat-icon>arrow_back</mat-icon>
                         </button>
@@ -607,7 +607,7 @@
 
                     <!-- Contenido del componente -->
                     <div class="container_main">
-                        <div *ngIf="!restaurantService.isLoading">
+                        <div>
                             <div class="container-main">
                                 <!--Tabs-->
                                 <input class="titulo-pestana" id="tab1" type="radio" name="tabs"

@@ -67,16 +67,6 @@ export class RetryService {
     this.printFormat.next();
   }
 
-
-  //para clasifiaciones de restaurante
-  private classification = new Subject<void>();
-
-  classification$ = this.classification.asObservable();
-
-  classificationRetry() {
-    this.classification.next();
-  }
-
   //para productos de una clasificacion
   private products = new Subject<void>();
 

@@ -41,7 +41,8 @@ export class GlobalRestaurantService {
     viewRestaurant: boolean = false;
 
     pinMesero: string = "";
-
+    
+    classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
 
     product?: elementos;

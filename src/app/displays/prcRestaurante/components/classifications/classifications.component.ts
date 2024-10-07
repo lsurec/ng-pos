@@ -32,20 +32,11 @@ export class ClassificationsComponent implements OnInit {
   ) {
   }
 
+
   ngOnInit(): void {
-
-    console.log("x");
-    
-    
-    this._retryService.classification$.subscribe(() => {
-      this.loadData();
-      return;
-    });
-
     this.loadData();
   }
 
-  classifications: ClassificationRestaurantInterface[] = [];
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //usuario de la sesion
@@ -55,26 +46,17 @@ export class ClassificationsComponent implements OnInit {
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
 
-  selectClassification(clasification: ClassificationRestaurantInterface) {
-    this.restaurantService.classification = clasification;
-    this.restaurantService.viewProducts = true;
-  }
 
-
-  async loadData() {
-
-    // this.restaurantService.isLoading = true;
-
+  async loadData(){
+    this.restaurantService.isLoading = true;
     await this.loadClassifications();
-
-    // this.restaurantService.isLoading = false;
-
+    this.restaurantService.isLoading = false;
   }
 
 
   async loadClassifications(): Promise<boolean> {
 
-    this.classifications = [];
+    this.restaurantService.classifications = [];
     this.restaurantService.classification = undefined;
 
 
@@ -97,17 +79,27 @@ export class ClassificationsComponent implements OnInit {
     }
 
 
-    this.classifications = res.response;
+    console.log("simon si soy");
+    
+    console.log(res.response);
+    
 
-    console.log(this.classifications);
+    this.restaurantService.classifications = res.response;
 
 
-    if (this.classifications.length == 1)
-      this.restaurantService.classification = this.classifications[0];
+
+    if (this.restaurantService.classifications.length == 1)
+      this.restaurantService.classification = this.restaurantService.classifications[0];
 
 
     return true;
   }
+
+  selectClassification(clasification: ClassificationRestaurantInterface) {
+    this.restaurantService.classification = clasification;
+    this.restaurantService.viewProducts = true;
+  }
+
 
   async showError(res: ResApiInterface) {
 

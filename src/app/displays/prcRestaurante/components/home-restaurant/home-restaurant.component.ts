@@ -81,17 +81,16 @@ export class HomeRestaurantComponent implements OnInit {
     private _serieService: SerieService,
     private _productService: ProductService,
     private _eventService: EventService,
-    private _retryService: RetryService,
   ) {
 
   }
 
+
   ngOnInit(): void {
+
     this.loadData();
 
-    if (this.restaurantService.tabMenu && !this.restaurantService.viewProducts) {
-      this.loadData();
-    }
+  
   }
 
   //Abrir cerrar Sidenav
@@ -128,20 +127,7 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
-  refresh() {
-
-    if (this.restaurantService.tabMenu && !this.restaurantService.classification) {
-
-      console.log("entyro");
-
-      //lamar al evento
-      this._retryService.classificationRetry();
-
-      console.log("salio");
-
-
-      return;
-    }
+  async refresh() {
 
     this.loadData();
   }
@@ -194,6 +180,15 @@ export class HomeRestaurantComponent implements OnInit {
       this.restaurantService.isLoading = false;
       return;
     };
+
+    // //cargar serie
+    // let resClasifications: boolean = await this.loadClassifications();
+
+    // //si algo salio mal
+    // if (!resClasifications) {
+    //   this.restaurantService.isLoading = false;
+    //   return;
+    // };
 
   }
 
@@ -630,6 +625,7 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
+ 
 
 
 
