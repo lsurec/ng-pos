@@ -62,6 +62,7 @@ export class PinMeseroComponent {
     this.restaurantService.viewLocations = false;
 
     this.restaurantService.isLoading = false;
+    this.restaurantService.idPantalla = 1; //Clasificaciones
 
     this.pinMesero = "";
   }

@@ -1,11 +1,12 @@
 <div class="contenido">
     <div class="clasificacionesx3">
-        <div class="product-me" *ngFor="let producto of productos" (click)="selectProduct(producto)">
-            <img src="assets/img/image-not-found.png" *ngIf="!producto.url_Img" class="image-product">
-            <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product">
+        <div class="product-me" *ngFor="let producto of products" (click)="selectProduct(producto)">
+            <img src="assets/placeimg.jpg" class="image-product">
+            <!-- <img src="assets/img/image-not-found.png" *ngIf="!producto.url_Img" class="image-product">
+            <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
             <div class="nombre_producto">
                 <p>SKU {{producto.producto_Id}}</p>
-                <p>{{producto.descripcion}}</p>
+                <p>{{producto.des_Producto}}</p>
             </div>
         </div>
     </div>

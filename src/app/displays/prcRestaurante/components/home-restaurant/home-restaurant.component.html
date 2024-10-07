@@ -280,7 +280,8 @@
                                             <div class="informacion-fondo">
                                                 <mat-select name="estado" class="seleccionar"
                                                     placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
-                                                    [(ngModel)]="restaurantService.serie" (ngModelChange)="changeSerie()">
+                                                    [(ngModel)]="restaurantService.serie"
+                                                    (ngModelChange)="changeSerie()">
                                                     <mat-option *ngFor="let serie of series" [value]="serie">
                                                         {{serie.descripcion}}
                                                     </mat-option>
@@ -430,9 +431,7 @@
                                     </div>
                                 </section>
 
-                                <section id="content3" class="content3 contenido-seleccionado">
-                                    <app-pago *ngIf="restaurantService.tabPago"></app-pago>
-                                </section>
+
 
                                 <!--Fin Content Tabs-->
                             </div>
@@ -568,9 +567,18 @@
                         </mat-toolbar-row>
                     </mat-toolbar>
                     <mat-toolbar class="toolbar-large">
-                        <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
+
+                        <!-- Regresa a clasificaciones -->
+                        <button *ngIf="restaurantService.idPantalla == 1" mat-icon-button
+                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
                             <mat-icon>arrow_back</mat-icon>
                         </button>
+
+                        <button *ngIf="restaurantService.idPantalla == 2" mat-icon-button
+                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="backClassifications()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+
                         <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
                             (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
@@ -625,22 +633,14 @@
                                     {{'pos.factura.detalle' | translate }}
                                 </div>
 
-                                <input class="titulo-pestana" id="tab3" type="radio" name="tabs"
-                                    [checked]="restaurantService.tabPago">
-
-                                <div class="pestana" for="tab3" matTooltip="{{ 'pos.factura.pago' | translate }}"
-                                    (click)="restaurantService.showPago()">
-                                    <span class="material-icons ico-pestana">payments</span>
-                                    {{'pos.factura.pago' | translate }}
-                                </div>
-
                                 <!--Fin Tabs-->
 
                                 <!--Content Tabs-->
                                 <section id="content1" class="content1 contenido-seleccionado">
-                                    <app-classifications
-                                        *ngIf="restaurantService.tabMenu && !restaurantService.viewProducts"></app-classifications>
-                                    <app-products *ngIf="restaurantService.viewProducts"></app-products>
+                                    <app-classifications *ngIf="restaurantService.idPantalla == 1">
+                                    </app-classifications>
+
+                                    <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
                                 </section>
 
                                 <section id="content2" class="content2 contenido-seleccionado">
@@ -648,9 +648,6 @@
                                     <app-detalle *ngIf="restaurantService.tabDetalle"></app-detalle>
                                 </section>
 
-                                <section id="content3" class="content3 contenido-seleccionado">
-                                    <app-pago *ngIf="restaurantService.tabPago"></app-pago>
-                                </section>
 
                                 <!-- <section id="content4">
                             </section>

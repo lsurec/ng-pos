@@ -19,4 +19,14 @@ export class LoadRestaurantService {
   }
 
 
+   ///volver a cargar en la pantlla classifications
+   private products = new Subject<void>();
+
+   products$ = this.products.asObservable();
+ 
+   loadProducts() {
+     this.products.next();
+   }
+
+
 }

@@ -13,6 +13,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { RetryService } from 'src/app/services/retry.service';
+import { LoadRestaurantService } from '../../services/load.restaurant.service';
 
 @Component({
   selector: 'app-classifications',
@@ -27,7 +28,7 @@ export class ClassificationsComponent implements OnInit {
     private _facturaService: FacturaService,
     private _notificationService: NotificationsService,
     private _translate: TranslateService,
-    private _retryService: RetryService,
+    private _loadRestaurantService: LoadRestaurantService,
 
   ) {
   }
@@ -35,6 +36,10 @@ export class ClassificationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+
+    this._loadRestaurantService.classifications$.subscribe(() => {
+      this.loadData();
+    });
   }
 
 
@@ -77,12 +82,7 @@ export class ClassificationsComponent implements OnInit {
 
       return false;
     }
-
-
-    console.log("simon si soy");
-    
-    console.log(res.response);
-    
+ 
 
     this.restaurantService.classifications = res.response;
 
@@ -97,7 +97,7 @@ export class ClassificationsComponent implements OnInit {
 
   selectClassification(clasification: ClassificationRestaurantInterface) {
     this.restaurantService.classification = clasification;
-    this.restaurantService.viewProducts = true;
+    this.restaurantService.idPantalla = 2; //Productos
   }
 
 

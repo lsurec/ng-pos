@@ -28,6 +28,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
 import { RetryService } from 'src/app/services/retry.service';
+import { LoadRestaurantService } from '../../services/load.restaurant.service';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -52,13 +53,6 @@ export class HomeRestaurantComponent implements OnInit {
   series: SerieInterface[] = [];
 
 
-  products: ProductRestaurantInterface[] = [];
-  product?: ProductRestaurantInterface;
-  bodegas: BodegaProductoInterface[] = [];
-  bodega?: BodegaProductoInterface;
-  unitarios: UnitarioInterface[] = [];
-  unitario?: UnitarioInterface;
-  garnishs: GarnishTreeInterface[] = [];
 
 
   //Abrir/Cerrar SideNav
@@ -81,6 +75,7 @@ export class HomeRestaurantComponent implements OnInit {
     private _serieService: SerieService,
     private _productService: ProductService,
     private _eventService: EventService,
+    private _loadRestaurantService: LoadRestaurantService,
   ) {
 
   }
@@ -88,9 +83,12 @@ export class HomeRestaurantComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+
     this.loadData();
 
-  
+
   }
 
   //Abrir cerrar Sidenav
@@ -129,7 +127,20 @@ export class HomeRestaurantComponent implements OnInit {
 
   async refresh() {
 
-    this.loadData();
+    switch (this.restaurantService.idPantalla) {
+      case 1: //carga clasiificaciones
+        this._loadRestaurantService.loadClassifications();
+        break;
+      case 2: //carga productos
+        this._loadRestaurantService.loadProducts();
+
+        break;
+
+      default:
+        this.loadData();
+        break;
+    }
+
   }
 
 
@@ -192,277 +203,6 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-  async loadPrecioUnitario(): Promise<boolean> {
-    this.unitario = undefined;
-    this.unitarios = [];
-
-
-    const apiPrecio = () => this._productService.getPrecios(
-      this.user,
-      this.token,
-      this.bodega!.bodega,
-      this.product!.producto,
-      this.product!.unidad_Medida,
-      1,
-      "1",
-    );
-
-    let resPrecio: ResApiInterface = await ApiService.apiUse(apiPrecio);
-
-    //si algo salio mal
-    if (!resPrecio.status) {
-      this.showError(resPrecio);
-
-      return false;
-    }
-
-    let precios: PrecioInterface[] = resPrecio.response;
-
-
-    precios.forEach(precio => {
-      this.unitarios.push(
-        {
-          descripcion: precio.des_Tipo_Precio,
-          id: precio.tipo_Precio,
-          moneda: precio.moneda,
-          orden: precio.precio_Orden,
-          precio: true,
-          precioU: precio.precio_Unidad,
-        }
-      )
-    });
-
-
-    if (this.unitarios.length > 0) {
-      this.unitario = this.unitarios.reduce((prev, curr) => {
-        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
-        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
-        const currOrden = curr.orden ?? Infinity;
-        return (currOrden < prevOrden) ? curr : prev;
-      });
-
-      return true;
-    }
-
-
-    const apiFactor = () => this._productService.getFactorConversion(
-      this.user,
-      this.token,
-      this.bodega!.bodega,
-      this.product!.producto,
-      this.product!.unidad_Medida,
-    )
-
-    let resFactor: ResApiInterface = await ApiService.apiUse(apiFactor);
-
-    //si algo salio mal
-    if (!resFactor.status) {
-      this.showError(resFactor);
-
-      return false;
-    }
-
-    let factores: FactorConversionInterface[] = resFactor.response;
-
-    factores.forEach(factor => {
-      this.unitarios.push(
-        {
-          descripcion: factor.des_Tipo_Precio,
-          id: factor.tipo_Precio,
-          moneda: factor.moneda,
-          orden: factor.tipo_Precio_Orden,
-          precio: true,
-          precioU: factor.precio_Unidad,
-        }
-      )
-    });
-
-
-    if (this.unitarios.length > 0) {
-      this.unitario = this.unitarios.reduce((prev, curr) => {
-        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
-        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
-        const currOrden = curr.orden ?? Infinity;
-        return (currOrden < prevOrden) ? curr : prev;
-      });
-
-    }
-
-    return true;
-
-
-  }
-
-  async laodBodegas(): Promise<boolean> {
-
-    this.bodegas = [];
-    const api = () => this._productService.getBodegaProducto(
-      this.user,
-      this.token,
-      this.empresa.empresa,
-      this.estacion.estacion_Trabajo,
-      this.product!.producto,
-      this.product!.unidad_Medida,
-    );
-
-    let res: ResApiInterface = await ApiService.apiUse(api);
-
-    //si algo salio mal
-    if (!res.status) {
-      this.showError(res);
-
-      return false;
-    }
-
-    this.bodegas = res.response;
-
-    if (this.bodegas.length > 0) {
-
-      //TODO:Implementar en POS
-      this.bodega = this.bodegas.reduce((prev, curr) => {
-        // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
-        const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
-        const currOrden = curr.orden ?? Infinity;
-        return (currOrden < prevOrden) ? curr : prev;
-      });
-    }
-
-
-    return true;
-  }
-
-  async loadGarnishs(): Promise<boolean> {
-    this.garnishs = [];
-    const api = () => this._restaurantService.getGarnish(
-      this.product!.producto,
-      this.product!.unidad_Medida,
-      this.user,
-      this.token,
-    );
-
-    let res: ResApiInterface = await ApiService.apiUse(api);
-
-    //si algo salio mal
-    if (!res.status) {
-      this.showError(res);
-
-      return false;
-    }
-
-    let garnishs: GarnishInterface[] = res.response;
-
-    //load tree Garnish
-    this.orderGarnish(garnishs);
-
-    return true;
-
-
-
-  }
-
-  orderGarnish(garnishs: GarnishInterface[]) {
-
-    let padres: GarnishTreeInterface[] = [];
-    let hijos: GarnishTreeInterface[] = [];
-
-
-    garnishs.forEach(garnish => {
-
-      let item: GarnishTreeInterface = {
-        children: [],
-        route: [],
-        idChild: garnish.producto_Caracteristica,
-        idFather: garnish.producto_Caracteristica_Padre,
-        item: garnish,
-        selected: null,
-      }
-
-      if (garnish.producto_Caracteristica_Padre == null) {
-        padres.push(item);
-      } else {
-        hijos.push(item);
-      }
-
-
-    });
-
-
-    this.garnishs = this.ordenarNodos(padres, hijos);
-
-    this.loadFirstharnish();
-
-  }
-
-
-  loadFirstharnish() {
-    this.garnishs.forEach(element => {
-      element.route.push(element);
-    });
-  }
-
-  // Función recursiva para ordenar nodos infinitos, recibe nodos principales y nodos a ordenar
-  ordenarNodos(
-    padres: GarnishTreeInterface[], hijos: GarnishTreeInterface[]): GarnishTreeInterface[] {
-    // Recorrer los nodos principales
-    for (var i = 0; i < padres.length; i++) {
-      // Item padre de la iteración
-      let padre: GarnishTreeInterface = padres[i];
-
-      // Recorrer todos los hijos en orden inverso para evitar problemas al eliminar
-      for (var j = hijos.length - 1; j >= 0; j--) {
-        // Item hijo de la iteración
-        let hijo: GarnishTreeInterface = hijos[j];
-
-        // Si coinciden (padre > hijo), agregar ese hijo al padre
-        if (padre.idChild == hijo.idFather) {
-          padre.children.push(hijo); // Agregar hijo al padre
-          // Eliminar al hijo que ya se usó para evitar repetirlo
-          hijos.splice(j, 1);
-
-          // Llamar a la misma función (recursividad) se detiene cuando ya no hay hijos
-          this.ordenarNodos(padre.children, hijos);
-        }
-      }
-    }
-
-    // Retornar nodos ordenados
-    return padres;
-  }
-
-  async loadProducts(): Promise<boolean> {
-
-    this.products = [];
-    this.product = undefined;
-
-    const api = () => this._restaurantService.getProducts(
-      this.restaurantService.classification!.clasificacion,
-      this.estacion.estacion_Trabajo,
-      this.user,
-      this.token,
-    );
-
-    let res: ResApiInterface = await ApiService.apiUse(api);
-
-    //si algo salio mal
-    if (!res.status) {
-      this.showError(res);
-
-      return false;
-    }
-
-    this.products = res.response;
-
-    if (this.products.length == 0) {
-      this._notificationService.openSnackbar("No hay productos paar esta clasificacion"); //TODO:Translate
-      return false;
-    }
-
-    if (this.products.length == 1)
-      this.product = this.products[0];
-
-    return true;
-
-  }
 
   //TODO:Implementar Try Catch
   async loadSeries(): Promise<boolean> {
@@ -625,9 +365,9 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
- 
-
-
+  backClassifications() {
+    this.restaurantService.idPantalla = 1; //Clasificaciones
+  }
 
 
 
