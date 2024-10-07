@@ -27,6 +27,7 @@ import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-
 import { RestaurantService } from '../../services/restaurant.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
+import { RetryService } from 'src/app/services/retry.service';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -49,10 +50,8 @@ export class HomeRestaurantComponent implements OnInit {
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
   series: SerieInterface[] = [];
-  serie?: SerieInterface;
 
-  classifications: ClassificationRestaurantInterface[] = [];
-  classification?: ClassificationRestaurantInterface;
+
   products: ProductRestaurantInterface[] = [];
   product?: ProductRestaurantInterface;
   bodegas: BodegaProductoInterface[] = [];
@@ -82,13 +81,17 @@ export class HomeRestaurantComponent implements OnInit {
     private _serieService: SerieService,
     private _productService: ProductService,
     private _eventService: EventService,
-
+    private _retryService: RetryService,
   ) {
 
   }
 
   ngOnInit(): void {
     this.loadData();
+
+    if (this.restaurantService.tabMenu && !this.restaurantService.viewProducts) {
+      this.loadData();
+    }
   }
 
   //Abrir cerrar Sidenav
@@ -121,13 +124,32 @@ export class HomeRestaurantComponent implements OnInit {
 
   changeSerie() {
 
-    
-   }
+
+  }
 
 
+  refresh() {
+
+    if (this.restaurantService.tabMenu && !this.restaurantService.classification) {
+
+      console.log("entyro");
+
+      //lamar al evento
+      this._retryService.classificationRetry();
+
+      console.log("salio");
+
+
+      return;
+    }
+
+    this.loadData();
+  }
 
 
   async loadData() {
+
+
 
     this.restaurantService.isLoading = true;
     //cargar serie
@@ -418,7 +440,7 @@ export class HomeRestaurantComponent implements OnInit {
     this.product = undefined;
 
     const api = () => this._restaurantService.getProducts(
-      this.classification!.clasificacion,
+      this.restaurantService.classification!.clasificacion,
       this.estacion.estacion_Trabajo,
       this.user,
       this.token,
@@ -447,47 +469,11 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-
-  async loadClassifications(): Promise<boolean> {
-
-    this.classifications = [];
-    this.classification = undefined;
-
-    const api = () => this._restaurantService.getClassifications(
-      this.tipoDocumento,
-      this.empresa.empresa,
-      this.estacion.estacion_Trabajo,
-      this.serie!.serie_Documento,
-      this.user,
-      this.token,
-    );
-
-    let res: ResApiInterface = await ApiService.apiUse(api);
-
-    //si algo salio mal
-    if (!res.status) {
-      this.showError(res);
-
-      return false;
-    }
-
-
-    this.classifications = res.response;
-
-    if (this.classifications.length == 1)
-      this.classification = this.classifications[0];
-
-
-    return true;
-  }
-
-
-
   //TODO:Implementar Try Catch
   async loadSeries(): Promise<boolean> {
 
     this.series = [];
-    this.serie = undefined;
+    this.restaurantService.serie = undefined;
 
     const api = () => this._serieService.getSerie(
       this.user,
@@ -510,7 +496,7 @@ export class HomeRestaurantComponent implements OnInit {
 
     if (this.series.length > 0) {
       //TODO:Implementar en POS
-      this.serie = this.series.reduce((prev, curr) => {
+      this.restaurantService.serie = this.series.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
         const currOrden = curr.orden ?? Infinity;
@@ -532,7 +518,7 @@ export class HomeRestaurantComponent implements OnInit {
       this.tipoDocumento,
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
-      this.serie!.serie_Documento,
+      this.restaurantService.serie!.serie_Documento,
       this.user,
       this.token,
     );
@@ -565,7 +551,7 @@ export class HomeRestaurantComponent implements OnInit {
       this.tipoDocumento,
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
-      this.serie!.serie_Documento,
+      this.restaurantService.serie!.serie_Documento,
       this.restaurantService.location!.elemento_Asignado,
       this.user,
       this.token,

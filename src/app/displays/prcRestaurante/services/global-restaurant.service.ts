@@ -5,6 +5,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { LocationInterface } from "../interfaces/location.interface";
 import { TableInterface } from "../interfaces/table.interface";
 import { WaiterInterface } from "../interfaces/waiter.interface";
+import { elementos } from "../interfaces/send-order.interface";
+import { ClassificationRestaurantInterface } from "../interfaces/classification-restaurant.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -40,6 +42,10 @@ export class GlobalRestaurantService {
 
     pinMesero: string = "";
 
+    classification?: ClassificationRestaurantInterface;
+
+    product?: elementos;
+    viewProducts : boolean = false;
 
     constructor(
         private _notificationService: NotificationsService,

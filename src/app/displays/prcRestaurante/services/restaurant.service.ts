@@ -98,7 +98,7 @@ export class RestaurantService {
         });
 
         // consumo de api
-        return this._http.get(`${this._urlBase}Restaurant/classification/products`, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Restaurant/classifications`, { headers: headers, observe: 'response' });
     }
 
     getProducts(

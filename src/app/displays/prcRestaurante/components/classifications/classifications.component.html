@@ -1,0 +1,20 @@
+<div class="contenido">
+
+    <div class="dFlex">
+        <span class="spacer"></span>
+        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadClassifications()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+    <div class="clasificacionesx3">
+        <div class="product-me" *ngFor="let classification of classifications"
+            (click)="selectClassification(classification)">
+            <img src="assets/placeimg.jpg" class="image-product">
+            <!-- <img src="assets/placeimg.jpg" *ngIf="!producto.url_Img" class="image-product"> -->
+            <!-- <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
+            <div class="nombre_producto">
+                <p>{{classification.des_Clasificacion}}</p>
+            </div>
+        </div>
+    </div>
+</div>

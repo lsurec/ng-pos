@@ -10,7 +10,7 @@
                     <mat-icon>home</mat-icon>
                 </button>
                 <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                    (click)="loadData()">
+                    (click)="refresh()">
                     <mat-icon>refresh</mat-icon>
                 </button>
                 <span class="spacer"></span>
@@ -169,7 +169,7 @@
                                     <mat-icon>arrow_back</mat-icon>
                                 </button>
                                 <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="refresh()">
                                     <mat-icon>refresh</mat-icon>
                                 </button>
                                 <span class="spacer"></span>
@@ -215,7 +215,7 @@
                             <mat-icon>arrow_back</mat-icon>
                         </button>
                         <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                            (click)="loadData()">
+                            (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
                         </button>
                         <span class="spacer"></span>
@@ -280,7 +280,7 @@
                                             <div class="informacion-fondo">
                                                 <mat-select name="estado" class="seleccionar"
                                                     placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
-                                                    [(ngModel)]="serie" (ngModelChange)="changeSerie()">
+                                                    [(ngModel)]="restaurantService.serie" (ngModelChange)="changeSerie()">
                                                     <mat-option *ngFor="let serie of series" [value]="serie">
                                                         {{serie.descripcion}}
                                                     </mat-option>
@@ -527,7 +527,7 @@
                                     <mat-icon>arrow_back</mat-icon>
                                 </button>
                                 <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="loadData()">
+                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="refresh()">
                                     <mat-icon>refresh</mat-icon>
                                 </button>
                                 <span class="spacer"></span>
@@ -572,7 +572,7 @@
                             <mat-icon>arrow_back</mat-icon>
                         </button>
                         <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                            (click)="loadData()">
+                            (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
                         </button>
                         <span class="spacer"></span>
@@ -638,8 +638,9 @@
 
                                 <!--Content Tabs-->
                                 <section id="content1" class="content1 contenido-seleccionado">
-                                    <app-product-classifications *ngIf="restaurantService.tabMenu">
-                                    </app-product-classifications>
+                                    <app-classifications
+                                        *ngIf="restaurantService.tabMenu && !restaurantService.viewProducts"></app-classifications>
+                                    <app-products *ngIf="restaurantService.viewProducts"></app-products>
                                 </section>
 
                                 <section id="content2" class="content2 contenido-seleccionado">

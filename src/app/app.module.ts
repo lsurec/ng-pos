@@ -98,6 +98,8 @@ import { HomeRestaurantComponent } from './displays/prcRestaurante/components/ho
 import { PinMeseroComponent } from './displays/prcRestaurante/components/pin-mesero/pin-mesero.component';
 import { PermisionsComponent } from './displays/prcRestaurante/components/permisions/permisions.component';
 import { ProductClassificationsComponent } from './displays/prcRestaurante/components/product-classifications/product-classifications.component';
+import { ClassificationsComponent } from './displays/prcRestaurante/components/classifications/classifications.component';
+import { ProductsComponent } from './displays/prcRestaurante/components/products/products.component';
 
 @NgModule({
   declarations: [
@@ -167,6 +169,8 @@ import { ProductClassificationsComponent } from './displays/prcRestaurante/compo
     PinMeseroComponent,
     PermisionsComponent,
     ProductClassificationsComponent,
+    ClassificationsComponent,
+    ProductsComponent,
   ],
   imports: [
     MatCardModule,
