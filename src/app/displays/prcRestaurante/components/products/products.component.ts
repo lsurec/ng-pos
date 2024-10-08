@@ -67,48 +67,12 @@ export class ProductsComponent implements OnInit {
 
 
   async loadData() {
-
-
     this.restaurantService.isLoading = true;
-
-    let resProduct: boolean = await this.loadProducts();
-
+    await this.loadProducts();
     this.restaurantService.isLoading = false;
-
-    return;
-
-    let resGarnish: boolean = await this.loadGarnishs();
-
-    if (!resGarnish) {
-      this.restaurantService.isLoading = false;
-      return;
-
-    }
-
-
-    let resBodega: boolean = await this.laodBodegas();
-
-    if (!resBodega) {
-      this.restaurantService.isLoading = false;
-      return;
-
-    }
-
-    let resPrecios: boolean = await this.loadPrecioUnitario();
-
-    if (!resPrecios) {
-      this.restaurantService.isLoading = false;
-      return;
-
-    }
-
-    this.restaurantService.isLoading = false;
-
   }
 
   async loadProducts(): Promise<boolean> {
-
-
 
     this.products = [];
     this.product = undefined;
@@ -383,13 +347,34 @@ export class ProductsComponent implements OnInit {
     return padres;
   }
 
-
-
-  selectProduct(product: ProductRestaurantInterface) {
+  async selectProduct(product: ProductRestaurantInterface) {
     this.product = product;
+
+    let resGarnish: boolean = await this.loadGarnishs();
+
+    if (!resGarnish) {
+      this.restaurantService.isLoading = false;
+      return;
+    }
+
+    let resBodega: boolean = await this.laodBodegas();
+
+    if (!resBodega) {
+      this.restaurantService.isLoading = false;
+      return;
+    }
+
+    let resPrecios: boolean = await this.loadPrecioUnitario();
+
+    if (!resPrecios) {
+      this.restaurantService.isLoading = false;
+      return;
+    }
+
+    this.restaurantService.isLoading = false;
+    this.restaurantService.showDetalle();
+
   }
-
-
 
   async showError(res: ResApiInterface) {
 
