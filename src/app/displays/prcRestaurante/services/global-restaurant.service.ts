@@ -7,6 +7,9 @@ import { TableInterface } from "../interfaces/table.interface";
 import { WaiterInterface } from "../interfaces/waiter.interface";
 import { elementos } from "../interfaces/send-order.interface";
 import { ClassificationRestaurantInterface } from "../interfaces/classification-restaurant.interface";
+import { ProductRestaurantInterface } from "../interfaces/product-restaurant";
+import { BodegaProductoInterface } from "../../prc_documento_3/interfaces/bodega-produto.interface";
+import { UnitarioInterface } from "../../prc_documento_3/interfaces/unitario.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -44,7 +47,13 @@ export class GlobalRestaurantService {
     classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
 
-    product?: elementos;
+    bodegas: BodegaProductoInterface[] = [];
+    bodega?: BodegaProductoInterface;
+
+    unitarios: UnitarioInterface[] = [];
+    unitario?: UnitarioInterface;
+
+    product?: ProductRestaurantInterface;
 
     idPantalla: number = 0;
 

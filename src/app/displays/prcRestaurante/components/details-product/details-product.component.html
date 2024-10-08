@@ -1,15 +1,16 @@
 <div class="contenido">
 
-    <p class="textBold">Nombre del producto</p>
-    <p class="text12">SKU del producto</p>
+    <p class="textBold"> {{restaurantService.product?.des_Producto}} </p>
+    <p class="text12"> {{restaurantService.product?.producto_Id}} </p>
 
     <div class="widht40">
         <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
         <div class="informacion-fondo">
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
-                [(ngModel)]="restaurantService.serie" (ngModelChange)="changeSerie()">
-                <mat-option *ngFor="let serie of series" [value]="serie">
-                    {{serie.descripcion}}
+            <mat-select name="estado" class="seleccionar"
+                placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}" [(ngModel)]="restaurantService.bodega"
+                (ngModelChange)="changeBodega()">
+                <mat-option *ngFor="let bodega of restaurantService.bodegas" [value]="bodega">
+                    {{bodega.nombre}}
                 </mat-option>
             </mat-select>
         </div>
@@ -18,10 +19,11 @@
     <div class="widht40">
         <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
         <div class="informacion-fondo">
-            <mat-select name="estado" class="seleccionar" placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
-                [(ngModel)]="restaurantService.serie" (ngModelChange)="changeSerie()">
-                <mat-option *ngFor="let serie of series" [value]="serie">
-                    {{serie.descripcion}}
+            <mat-select name="estado" class="seleccionar"
+                placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
+                [(ngModel)]="restaurantService.unitario" (ngModelChange)="changeSerie()">
+                <mat-option *ngFor="let precio of restaurantService.unitarios" [value]="precio">
+                    {{precio.descripcion}}
                 </mat-option>
             </mat-select>
         </div>
