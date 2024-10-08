@@ -10,6 +10,7 @@ import { ClassificationRestaurantInterface } from "../interfaces/classification-
 import { ProductRestaurantInterface } from "../interfaces/product-restaurant";
 import { BodegaProductoInterface } from "../../prc_documento_3/interfaces/bodega-produto.interface";
 import { UnitarioInterface } from "../../prc_documento_3/interfaces/unitario.interface";
+import { GarnishTreeInterface } from "../interfaces/garnish.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -52,6 +53,8 @@ export class GlobalRestaurantService {
 
     unitarios: UnitarioInterface[] = [];
     unitario?: UnitarioInterface;
+
+    garnishs: GarnishTreeInterface[] = [];
 
     product?: ProductRestaurantInterface;
     total: number = 0; //total de la transaccion (cantidad * precio)

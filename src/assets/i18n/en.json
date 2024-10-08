@@ -374,6 +374,9 @@
             "eliminar": "Are you sure?",
             "confirmar": "Confirm transaction.",
             "docConvert": "Conversion Document."
+        },
+        "restaurante": {
+            "seleccionar": "Select an option."
         }
     },
     "crm": {

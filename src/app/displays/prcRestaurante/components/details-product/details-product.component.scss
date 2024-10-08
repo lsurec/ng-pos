@@ -225,3 +225,37 @@ hr {
     background: $personalizado;
     color     : $blanco;
 }
+
+.example-radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+    font-size     : 12px;
+}
+
+.example-radio-button {
+    margin: 0px;
+    color : $personalizado;
+}
+
+.radio-button {
+    font-size: 12px;
+}
+
+.route-container {
+    display    : flex;
+    align-items: center;
+}
+
+.route-item {
+    cursor     : pointer;
+    display    : flex;
+    align-items: center;
+}
+
+.grey-bold {
+    font-weight: bold;
+    color      : $gris;
+    font-size  : 12px;
+}

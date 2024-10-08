@@ -78,7 +78,34 @@
                 </div>
             </div>
         </div>
+        <div class="guarniciones">
+            <div *ngFor="let father of restaurantService.garnishs; let indexFather = index">
+                <div class="route-container">
+                    <div *ngFor="let route of father.route; let indexRoute = index" class="route-item"
+                        (click)="changeRoute(indexFather, indexRoute)">
+                        <p
+                            [ngClass]="{ 'text12': indexRoute != father.route.length - 1, 'grey-bold': indexRoute == father.route.length - 1 }">
+                            {{ route.item?.descripcion }}
+                        </p>
+                        <mat-icon *ngIf="indexRoute != father.route.length - 1">arrow_right</mat-icon>
+                    </div>
+                </div>
 
+                <div class="text12">
+                    {{ 'pos.restaurante.seleccionar' | translate }}
+                </div>
+
+                <mat-radio-group [(ngModel)]="father.selected" class="example-radio-group">
+                    <mat-radio-button *ngFor="let child of father.route[father.route.length - 1].children"
+                        [value]="child.item" (change)="changeGarnishActive(indexFather, child)"
+                        class="example-radio-button">
+                        {{ child.item?.descripcion }}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+
+        </div>
     </div>
     <hr>
     <div class="botones">

@@ -374,6 +374,9 @@
             "eliminar": "Bist du sicher?",
             "confirmar": "Transaktion bestätigen.",
             "docConvert": "Konversionsdokument."
+        },
+        "restaurante": {
+            "seleccionar": "Wählen Sie eine Option."
         }
     },
     "crm": {

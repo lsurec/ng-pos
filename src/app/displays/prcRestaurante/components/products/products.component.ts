@@ -40,7 +40,6 @@ export class ProductsComponent implements OnInit {
 
   products: ProductRestaurantInterface[] = [];
 
-  garnishs: GarnishTreeInterface[] = [];
 
   constructor(
     public restaurantService: GlobalRestaurantService,
@@ -246,7 +245,7 @@ export class ProductsComponent implements OnInit {
   }
 
   async loadGarnishs(): Promise<boolean> {
-    this.garnishs = [];
+    this.restaurantService.garnishs = [];
     const api = () => this._restaurantService.getGarnish(
       this.restaurantService.product!.producto,
       this.restaurantService.product!.unidad_Medida,
@@ -301,7 +300,7 @@ export class ProductsComponent implements OnInit {
     });
 
 
-    this.garnishs = this.ordenarNodos(padres, hijos);
+    this.restaurantService.garnishs = this.ordenarNodos(padres, hijos);
 
     this.loadFirstharnish();
 
@@ -309,7 +308,7 @@ export class ProductsComponent implements OnInit {
 
 
   loadFirstharnish() {
-    this.garnishs.forEach(element => {
+    this.restaurantService.garnishs.forEach(element => {
       element.route.push(element);
     });
   }

@@ -374,6 +374,9 @@
             "eliminar": "¿Estás seguro?",
             "confirmar": "Confirmar transacción.",
             "docConvert": "Documento Conversión."
+        },
+        "restaurante": {
+            "seleccionar": "Selecciona una opción."
         }
     },
     "crm": {
