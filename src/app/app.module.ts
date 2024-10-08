@@ -100,6 +100,7 @@ import { PermisionsComponent } from './displays/prcRestaurante/components/permis
 import { ProductClassificationsComponent } from './displays/prcRestaurante/components/product-classifications/product-classifications.component';
 import { ClassificationsComponent } from './displays/prcRestaurante/components/classifications/classifications.component';
 import { ProductsComponent } from './displays/prcRestaurante/components/products/products.component';
+import { DetailsProductComponent } from './displays/prcRestaurante/components/details-product/details-product.component';
 
 @NgModule({
   declarations: [
@@ -171,6 +172,7 @@ import { ProductsComponent } from './displays/prcRestaurante/components/products
     ProductClassificationsComponent,
     ClassificationsComponent,
     ProductsComponent,
+    DetailsProductComponent,
   ],
   imports: [
     MatCardModule,
