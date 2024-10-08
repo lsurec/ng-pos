@@ -1,42 +1,110 @@
-<div class="contenido">
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService.product?.producto_Id}} </p>
+    <span class="spacer"></span>
 
-    <p class="textBold"> {{restaurantService.product?.des_Producto}} </p>
-    <p class="text12"> {{restaurantService.product?.producto_Id}} </p>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
 
-    <div class="widht40">
-        <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
-        <div class="informacion-fondo">
-            <mat-select name="estado" class="seleccionar"
-                placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}" [(ngModel)]="restaurantService.bodega"
-                (ngModelChange)="changeBodega()">
-                <mat-option *ngFor="let bodega of restaurantService.bodegas" [value]="bodega">
-                    {{bodega.nombre}}
-                </mat-option>
-            </mat-select>
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+
+    <div class="contenido-dialogo">
+        <div class="imgProducto">
+            <span class="spacer"></span>
+            <!-- <img src="assets/placeimg.jpg" class="image-product"> -->
+            <img src="https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg"
+                class="image-product">
+            <span class="spacer"></span>
+
         </div>
-    </div>
 
-    <div class="widht40">
-        <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
-        <div class="informacion-fondo">
-            <mat-select name="estado" class="seleccionar"
-                placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
-                [(ngModel)]="restaurantService.unitario" (ngModelChange)="changeSerie()">
-                <mat-option *ngFor="let precio of restaurantService.unitarios" [value]="precio">
-                    {{precio.descripcion}}
-                </mat-option>
-            </mat-select>
+        <p class="textBold textCenter12">
+            {{restaurantService.product?.des_Producto}} ({{restaurantService.product?.producto_Id}})
+        </p>
+
+        <hr>
+
+        <div class="producto-cantidad">
+            <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
+            <span class="spacer"></span>
+            <div class="dFlex">
+                <div class="restar" (click)="restar()">
+                    <mat-icon class="sumar-restar">remove</mat-icon>
+                </div>
+                <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
+                    (ngModelChange)="changeCantidad()" (keypress)="validarNumeros($event)">
+                <div class="sumar" (click)="sumar()">
+                    <mat-icon class="sumar-restar">add</mat-icon>
+                </div>
+            </div>
+            <button mat-icon-button matTooltip="{{ 'pos.factura.nueva' | translate }}">
+                <mat-icon>person_add</mat-icon>
+            </button>
         </div>
-    </div>
 
-    <div class="clasificacionesx3">
-        <div class="product-me">
-            <img src="assets/placeimg.jpg" class="image-product">
-            <!-- <img src="assets/placeimg.jpg" *ngIf="!producto.url_Img" class="image-product"> -->
-            <!-- <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
-            <div class="nombre_producto">
-                <p>XS</p>
+        <div class="bodega-tipo-precio">
+
+            <div class="menus">
+                <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
+                <mat-select name="estado" class="bodegas"
+                    placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
+                    [(ngModel)]="restaurantService. bodega" (ngModelChange)="changeBodega()">
+                    <mat-option *ngFor="let bodega of restaurantService. bodegas" [value]="bodega">
+                        ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }}
+                        ({{bodega.existencia}})
+                    </mat-option>
+                </mat-select>
+            </div>
+            <span class="spacer"></span>
+            <div class="menus">
+                <div *ngIf="restaurantService.unitarios.length == 0">
+                    <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
+
+                    <p class="subtitulo">{{ 'pos.factura.sinPrecios' | translate }}</p>
+
+                </div>
+                <div *ngIf="restaurantService.unitarios.length > 0">
+                    <div *ngIf="restaurantService.unitarios[0].precio">
+                        <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
+                        <mat-select name="estado" class="bodegas"
+                            placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
+                            [(ngModel)]="restaurantService.unitario" (ngModelChange)="changePrice()">
+                            <mat-option *ngFor="let precio of restaurantService. unitarios" [value]="precio">
+                                {{precio.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div *ngIf="!restaurantService.unitarios[0].precio">
+                        <p class="subtitulo">{{ 'pos.factura.presentaciones' | translate }}</p>
+                        <mat-select name="estado" class="bodegas"
+                            placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
+                            [(ngModel)]="restaurantService. unitario" (ngModelChange)="changePrice()">
+                            <mat-option *ngFor="let precio of restaurantService. unitarios" [value]="precio">
+                                {{precio.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="">
+            <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
+            <p class="subtitulo">
+                {{restaurantService.unitario!.precioU | currencyFormat }}
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="botones">
+        <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
+        <span class="spacer"></span>
+        <button mat-stroked-button (click)="enviar()">
+            {{ 'pos.botones.agregar' | translate }}
+        </button>
     </div>
 </div>

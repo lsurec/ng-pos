@@ -346,6 +346,9 @@ export class ProductsComponent implements OnInit {
   async selectProduct(product: ProductRestaurantInterface) {
     this.restaurantService.product = product;
 
+    //cuando ya se tenga el producto seleccionado, cargar todo lo necesario y abrir el dualogo
+    this.restaurantService.isLoading = true;
+
     let resGarnish: boolean = await this.loadGarnishs();
 
     if (!resGarnish) {
@@ -368,7 +371,14 @@ export class ProductsComponent implements OnInit {
     }
 
     this.restaurantService.isLoading = false;
-    this.restaurantService.showDetalle();
+
+    let resDialogProd = await this._notificationService.openProductRestaurant();
+
+    if (!resDialogProd) {
+      console.log("NO RECIBIÓ NADA");
+    }
+
+    console.log("SE AGREGA EL PRODUCTO");
 
   }
 

@@ -18,6 +18,7 @@ import { ProductosEncontradosComponent } from "../displays/prc_documento_3/compo
 import { EditarTerminosComponent } from "../displays/prc_documento_3/components/editar-terminos/editar-terminos.component";
 import { InputTerminoComponent } from "../displays/prc_documento_3/components/input-termino/input-termino.component";
 import { PinMeseroComponent } from "../displays/prcRestaurante/components/pin-mesero/pin-mesero.component";
+import { DetailsProductComponent } from "../displays/prcRestaurante/components/details-product/details-product.component";
 
 @Injectable({
     providedIn: 'root'
@@ -147,6 +148,22 @@ export class NotificationsService {
         });
     }
 
+
+    openProductRestaurant(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            const dialogRef = this._dialog.open(DetailsProductComponent, {})
+
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(result);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
 
 
 
