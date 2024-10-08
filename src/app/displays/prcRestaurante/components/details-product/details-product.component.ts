@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { CurrencyPipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-details-product',
   templateUrl: './details-product.component.html',
   styleUrls: ['./details-product.component.scss'],
-  providers: [
-    CurrencyPipe,
-  ]
+  providers: [],
 })
 export class DetailsProductComponent {
 

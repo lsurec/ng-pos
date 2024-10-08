@@ -101,6 +101,7 @@ import { ProductClassificationsComponent } from './displays/prcRestaurante/compo
 import { ClassificationsComponent } from './displays/prcRestaurante/components/classifications/classifications.component';
 import { ProductsComponent } from './displays/prcRestaurante/components/products/products.component';
 import { DetailsProductComponent } from './displays/prcRestaurante/components/details-product/details-product.component';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -219,6 +220,8 @@ import { DetailsProductComponent } from './displays/prcRestaurante/components/de
       provide: NgbDatepickerI18n,
       useClass: CustomDatepickerI18n,
     },
+    CurrencyPipe,
+
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: ErrorInterceptor,

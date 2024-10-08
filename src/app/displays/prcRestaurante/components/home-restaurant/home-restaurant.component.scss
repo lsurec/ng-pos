@@ -830,6 +830,14 @@ label[for*='6']:before {
         height: calc(100vh - 212px) !important;
     }
 
+    .ubicacion-mesa {
+        display: block !important;
+    }
+
+    .ubicaciones,
+    .mesas {
+        width: 100% !important;
+    }
 }
 
 .mostrarTxt {

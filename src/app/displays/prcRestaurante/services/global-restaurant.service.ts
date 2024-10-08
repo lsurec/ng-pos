@@ -54,6 +54,7 @@ export class GlobalRestaurantService {
     unitario?: UnitarioInterface;
 
     product?: ProductRestaurantInterface;
+    total: number = 0; //total de la transaccion (cantidad * precio)
 
     idPantalla: number = 0;
 

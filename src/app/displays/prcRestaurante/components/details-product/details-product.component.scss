@@ -6,6 +6,7 @@ $bloques       : var(--bloques-claro);
 $sombra        : var(--sombra-claro);
 $negro         : var(--negro); //bordes y texto azul
 $gris          : var(--gris); //bordes y texto gris
+$blanco        : var(--blanco);
 
 .spacer {
     flex: 1 1 auto;
@@ -79,16 +80,14 @@ hr {
 }
 
 .contenido-dialogo {
-    height    : calc(100% - 50px);
+    height    : calc(100% - 90px);
     overflow-y: auto;
     overflow-x: hidden;
     padding   : 10px 20px;
 }
 
 .botones {
-    padding    : 0px 20px;
-    display    : flex;
-    align-items: center;
+    padding: 0px 20px;
 }
 
 .textBold {
@@ -183,23 +182,19 @@ hr {
     margin-bottom: 10px;
     display      : flex;
     align-items  : center;
+    position     : relative;
 }
 
 .image-product {
-    height: 150px;
-    cursor: pointer;
+    height       : 150px;
+    border-radius: 10px;
 }
 
 @media screen and (max-width: 767px) {
 
     .dialog,
     .progress {
-        width  : 100%;
-        padding: 10px 10px 15px 15px;
-    }
-
-    .contenedor {
-        padding: 0px !important;
+        width: 100%;
     }
 
     .bodega-tipo-precio {
@@ -209,4 +204,24 @@ hr {
     .menus {
         width: 100% !important;
     }
+
+    .nuevaCuenta {
+        background: $personalizado;
+        color     : $blanco;
+        top       : 70px !important;
+        right     : 10px !important;
+    }
+}
+
+.nuevaCuenta {
+    position: absolute;
+    top     : 60px;
+    right   : 5px;
+    z-index : 10;
+}
+
+.agregarBtn {
+    width     : calc(100% - 150px);
+    background: $personalizado;
+    color     : $blanco;
 }

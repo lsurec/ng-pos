@@ -9,6 +9,9 @@
 
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
 
+    <button mat-icon-button class="nuevaCuenta" matTooltip="{{ 'pos.factura.nueva' | translate }}">
+        <mat-icon>person_add</mat-icon>
+    </button>
 
     <div class="contenido-dialogo">
         <div class="imgProducto">
@@ -20,34 +23,20 @@
 
         </div>
 
-        <p class="textBold textCenter12">
-            {{restaurantService.product?.des_Producto}} ({{restaurantService.product?.producto_Id}})
-        </p>
-
-        <hr>
-
-        <div class="producto-cantidad">
-            <p class="subtitulo">{{ 'pos.factura.cantidad' | translate }}</p>
+        <div class="dFlex">
+            <p class="textBold">
+                {{restaurantService.product?.des_Producto}} ({{restaurantService.product?.producto_Id}})
+            </p>
             <span class="spacer"></span>
-            <div class="dFlex">
-                <div class="restar" (click)="restar()">
-                    <mat-icon class="sumar-restar">remove</mat-icon>
-                </div>
-                <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
-                    (ngModelChange)="changeCantidad()" (keypress)="validarNumeros($event)">
-                <div class="sumar" (click)="sumar()">
-                    <mat-icon class="sumar-restar">add</mat-icon>
-                </div>
-            </div>
-            <button mat-icon-button matTooltip="{{ 'pos.factura.nueva' | translate }}">
-                <mat-icon>person_add</mat-icon>
-            </button>
+            <p class="textBold">
+                {{restaurantService.unitario!.precioU | currencyFormat }}
+            </p>
         </div>
 
+        <hr>
         <div class="bodega-tipo-precio">
-
             <div class="menus">
-                <p class="subtitulo">{{ 'pos.factura.bodega' | translate }}</p>
+                <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
                 <mat-select name="estado" class="bodegas"
                     placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
                     [(ngModel)]="restaurantService. bodega" (ngModelChange)="changeBodega()">
@@ -60,14 +49,14 @@
             <span class="spacer"></span>
             <div class="menus">
                 <div *ngIf="restaurantService.unitarios.length == 0">
-                    <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
+                    <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
 
-                    <p class="subtitulo">{{ 'pos.factura.sinPrecios' | translate }}</p>
+                    <p class="textBold">{{ 'pos.factura.sinPrecios' | translate }}</p>
 
                 </div>
                 <div *ngIf="restaurantService.unitarios.length > 0">
                     <div *ngIf="restaurantService.unitarios[0].precio">
-                        <p class="subtitulo">{{ 'pos.factura.tipo_precio' | translate }}</p>
+                        <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
                         <mat-select name="estado" class="bodegas"
                             placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
                             [(ngModel)]="restaurantService.unitario" (ngModelChange)="changePrice()">
@@ -77,7 +66,7 @@
                         </mat-select>
                     </div>
                     <div *ngIf="!restaurantService.unitarios[0].precio">
-                        <p class="subtitulo">{{ 'pos.factura.presentaciones' | translate }}</p>
+                        <p class="textBold">{{ 'pos.factura.presentaciones' | translate }}</p>
                         <mat-select name="estado" class="bodegas"
                             placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
                             [(ngModel)]="restaurantService. unitario" (ngModelChange)="changePrice()">
@@ -90,21 +79,29 @@
             </div>
         </div>
 
-        <div class="">
-            <p class="subtitulo">{{ 'pos.factura.precio_unitario' | translate }}</p>
-            <p class="subtitulo">
-                {{restaurantService.unitario!.precioU | currencyFormat }}
-            </p>
-
-        </div>
-
     </div>
-
+    <hr>
     <div class="botones">
-        <button mat-stroked-button mat-dialog-close>{{ 'pos.botones.cancelar' | translate }}</button>
-        <span class="spacer"></span>
-        <button mat-stroked-button (click)="enviar()">
-            {{ 'pos.botones.agregar' | translate }}
-        </button>
+        <div class="dFlex">
+            <p class="textBold">{{ 'pos.factura.total' | translate }}</p>
+            <span class="spacer"></span>
+            <p class="textBold"> {{restaurantService.total | currencyFormat }} </p>
+        </div>
+        <div class="dFlex">
+            <div class="dFlex">
+                <div class="restar" (click)="restar()">
+                    <mat-icon class="sumar-restar">remove</mat-icon>
+                </div>
+                <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
+                    (ngModelChange)="changeCantidad()" (keypress)="validarNumeros($event)">
+                <div class="sumar" (click)="sumar()">
+                    <mat-icon class="sumar-restar">add</mat-icon>
+                </div>
+            </div>
+            <span class="spacer"></span>
+            <button class="agregarBtn" mat-stroked-button (click)="enviar()">
+                {{ 'pos.botones.agregar' | translate }}
+            </button>
+        </div>
     </div>
 </div>
