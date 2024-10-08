@@ -4,89 +4,6 @@
     <app-progress *ngIf="restaurantService.isLoading" class="progress"></app-progress>
 
     <div [hidden]="restaurantService.isLoading">
-        <!-- <div *ngIf="restaurantService.viewLocations">
-            <mat-toolbar-row class="head__sidenav">
-                <button (click)="backHome()" mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}">
-                    <mat-icon>home</mat-icon>
-                </button>
-                <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
-                    (click)="refresh()">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-                <span class="spacer"></span>
-                <p class="titulo">Ubicaciones - Mesas</p>
-                <span class="spacer"></span>
-            </mat-toolbar-row>
-
-            <div class="contenido">
-
-                <div class="ubicaciones">
-                    <p class="textBold">{{ 'pos.factura.series' | translate }}</p>
-                    <div class="informacion-fondo">
-                        <mat-select name="estado" class="seleccionar"
-                            placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}" [(ngModel)]="serie"
-                            (ngModelChange)="changeSerie()">
-                            <mat-option *ngFor="let serie of series" [value]="serie">
-                                {{serie.descripcion}}
-                            </mat-option>
-                        </mat-select>
-                    </div>
-                </div>
-
-                <div class="ubicacion-mesa">
-
-                    <div class="ubicaciones">
-
-                        <div class="cantidad-registros">
-                            <p class="titulo">UBICACIONES</p>
-                            <span class="spacer"></span>
-                            <p class="textBold">
-                                {{ 'pos.factura.registros' | translate }} ({{restaurantService.locations.length }})
-                            </p>
-                        </div>
-
-                        <div class="ubicacion" *ngFor="let location of restaurantService.locations"
-                            [ngClass]="{'ubicacionMesaSelect': restaurantService.location && restaurantService.location.elemento_Asignado === location.elemento_Asignado}"
-                            (click)="selectLocation(location)">
-                            <mat-icon>location_on</mat-icon>
-                            <span class="spacer"></span>
-                            <div class="descripciones">
-                                <p class="textBold">{{location.descripcion}}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <span class="spacer"></span>
-                    <div class="mesas" *ngIf="restaurantService.tables.length > 0">
-                        <div class="cantidad-registros">
-                            <p class="titulo">MESAS</p>
-                            <span class="spacer"></span>
-                            <p class="textBold">
-                                {{ 'pos.factura.registros' | translate }} ({{restaurantService.tables.length }})
-                            </p>
-                        </div>
-
-                        <div class="mesasx2">
-                            <div class="mesa" *ngFor="let table of restaurantService.tables"
-                                (click)="selectTable(table)"
-                                [ngClass]="{'ubicacionMesaSelect': restaurantService.table && restaurantService.table.elemento_Asignado === table.elemento_Asignado}">
-                                <mat-icon>table_bar</mat-icon>
-                                <span class="spacer"></span>
-                                <div class="descripciones">
-                                    <p class="textBold"> {{table.descripcion}}</p>
-
-                                    <P class="text12">CUENTAS 0</P>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <app-barra-logos></app-barra-logos>
-            </div>
-        </div> -->
-
         <div *ngIf="restaurantService.viewLocations">
             <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
                 *ngIf="!restaurantService.verError">
@@ -644,8 +561,7 @@
                                 </section>
 
                                 <section id="content2" class="content2 contenido-seleccionado">
-                                    <!-- <app-documento></app-documento> -->
-                                    <app-detalle *ngIf="restaurantService.tabDetalle"></app-detalle>
+                                    <app-details-product *ngIf="restaurantService.tabDetalle"></app-details-product>
                                 </section>
 
 

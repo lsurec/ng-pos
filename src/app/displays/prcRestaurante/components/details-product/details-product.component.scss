@@ -1,0 +1,128 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.contenido::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenido::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.contenido {
+    padding   : 10px;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100vh - 166px);
+}
+
+/*Tarjeta Producto*/
+
+.product-me {
+    float        : left;
+    width        : 100%;
+    box-shadow   : none;
+    border-radius: 10px;
+    overflow     : hidden;
+    margin-bottom: 20px;
+    background   : #fff;
+}
+
+.image-product {
+    width : -webkit-fill-available;
+    height: 200px;
+    cursor: pointer;
+}
+
+
+.nombre_producto {
+    text-align : center;
+    font-weight: 600;
+    color      : #d84672;
+    padding    : 10px 0px;
+}
+
+/*Fin Tarjeta Producto*/
+
+.clasificacionesx3 {
+    display              : grid;
+    grid-template-columns: repeat(4, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 0px 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .contenido {
+        height: calc(100vh - 233px);
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contenido {
+        height: calc(100vh - 212px) !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.informacion-fondo {
+    padding         : 10px;
+    margin-bottom   : 10px;
+    background-color: $bloques;
+    box-shadow      : $sombra;
+    border-radius   : 10px;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $bordes;
+    font-size    : 12px;
+}
+
+.widht40 {
+    width: 40%;
+}
