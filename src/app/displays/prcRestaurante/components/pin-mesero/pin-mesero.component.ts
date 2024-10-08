@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogActionInterface } from 'src/app/interfaces/dialog-actions.interface';
@@ -144,5 +144,20 @@ export class PinMeseroComponent {
     this.restaurantService.verError = true;
 
     return;
+  }
+
+  //detectamos la tecla precionada
+  @HostListener('document:keydown', ['$event'])
+  //Manejo de eventos del declado
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // console.log("Tecla presionada:", event.key);
+
+    //si es enter guardar y validar el pin del mesero
+    if (event.key.toLowerCase() === "enter") {
+      //evita o bloquea la funcion que tiene por defecto
+      event.preventDefault();
+      //realiza la funcion que se necesite
+      this.guardar();
+    }
   }
 }
