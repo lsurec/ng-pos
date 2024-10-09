@@ -1,5 +1,8 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
 <mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <button mat-icon-button (click)="loadData()" matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+        <mat-icon>refresh</mat-icon>
+    </button>
     <span class="spacer"></span>
     <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService. product?.producto_Id}} </p>
     <span class="spacer"></span>
@@ -36,8 +39,8 @@
             <div class="menus">
                 <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
                 <mat-select name="estado" class="bodegas"
-                    placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
-                    [(ngModel)]=" bodega" (ngModelChange)="changeBodega()">
+                    placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}" [(ngModel)]=" bodega"
+                    (ngModelChange)="changeBodega()">
                     <mat-option *ngFor="let bodega of  bodegas" [value]="bodega">
                         ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }}
                         ({{bodega.existencia}})
@@ -56,8 +59,8 @@
                     <div *ngIf="unitarios[0].precio">
                         <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
                         <mat-select name="estado" class="bodegas"
-                            placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
-                            [(ngModel)]="unitario" (ngModelChange)="calcTotal()">
+                            placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}" [(ngModel)]="unitario"
+                            (ngModelChange)="calcTotal()">
                             <mat-option *ngFor="let precio of  unitarios" [value]="precio">
                                 {{precio.descripcion}}
                             </mat-option>
@@ -108,8 +111,7 @@
         <div class="padding020">
             <p class="textBold">Notas para este producto</p>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
-                placeholder="Escribe las instrucciones necesarias."
-                [(ngModel)]="observacion"></textarea>
+                placeholder="Escribe las instrucciones necesarias." [(ngModel)]="observacion"></textarea>
         </div>
     </div>
     <hr>

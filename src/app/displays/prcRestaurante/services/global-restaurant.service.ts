@@ -96,19 +96,18 @@ export class GlobalRestaurantService {
         }
     }
 
-    
-  addTransactionFirst(
-   transaction: TraRestaurantInterface,
-    indexOrder: number,
-  ) {
-     this.orders[indexOrder].transacciones.push(transaction);
-  }
+    addTransactionFirst(
+        transaction: TraRestaurantInterface,
+        indexOrder: number,
+    ) {
+        this.orders[indexOrder].transacciones.push(transaction);
+    }
 
-  
-  addFirst(
-     item: OrderInterface,
-  ) {
-    this.orders.push(item);
-    this.updateOrdersTable();
-  }
+
+    addFirst(
+        item: OrderInterface,
+    ) {
+        this.orders.push(item);
+        this.updateOrdersTable();
+    }
 }

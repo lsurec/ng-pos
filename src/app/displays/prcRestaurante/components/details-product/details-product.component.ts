@@ -220,7 +220,6 @@ export class DetailsProductComponent implements OnInit {
       return;
     }
 
-    
     //TODO:Ir a cuentas
   }
 
@@ -308,6 +307,7 @@ export class DetailsProductComponent implements OnInit {
 
     //si algo salio mal
     if (!resPrecio.status) {
+      this.dialogRef.close();
       this.showError(resPrecio);
 
       return false;
@@ -354,6 +354,7 @@ export class DetailsProductComponent implements OnInit {
 
     //si algo salio mal
     if (!resFactor.status) {
+      this.dialogRef.close();
       this.showError(resFactor);
 
       return false;
@@ -406,6 +407,7 @@ export class DetailsProductComponent implements OnInit {
 
     //si algo salio mal
     if (!res.status) {
+      this.dialogRef.close();
       this.showError(res);
 
       return false;
@@ -441,6 +443,8 @@ export class DetailsProductComponent implements OnInit {
 
     //si algo salio mal
     if (!res.status) {
+
+      this.dialogRef.close();
       this.showError(res);
 
       return false;
@@ -556,7 +560,7 @@ export class DetailsProductComponent implements OnInit {
 
     //TODO:mostrar pantalla de error
 
-    // this.verError = true;
+    this.restaurantService.verError = true;
 
     return;
   }
