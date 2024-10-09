@@ -1,1 +1,28 @@
-<p>new-check works!</p>
+<div mat-dialog-content class="dialog">
+
+    <div class="contenido">
+
+        <p class="tituloPin">
+            NUEVA CUENTA
+        </p>
+
+        <div class="inputPin">
+            <input type="text" required [(ngModel)]="nombre " name="nombre" class="pin" autocomplete="off">
+
+        </div>
+
+        <div class="dFlex">
+            <button mat-stroked-button (click)="cancelar()">
+                {{ 'pos.botones.cancelar' | translate }}
+            </button>
+
+            <span class="spacer"></span>
+
+            <button mat-stroked-button (click)="agregar()">
+                {{ 'pos.botones.agregar'| translate }}
+            </button>
+        </div>
+
+
+    </div>
+</div>

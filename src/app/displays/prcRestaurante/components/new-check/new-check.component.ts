@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-check',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./new-check.component.scss']
 })
 export class NewCheckComponent {
+
+  nombre: string = "";
+
+  constructor(
+    public dialogRef: MatDialogRef<NewCheckComponent>,
+  ) {
+
+  }
+
+  cancelar() { }
+  agregar() { }
 
 }

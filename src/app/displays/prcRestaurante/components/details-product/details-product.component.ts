@@ -564,4 +564,8 @@ export class DetailsProductComponent implements OnInit {
 
     return;
   }
+
+  newCheck() {
+    this._notificationService.newCheck();
+  }
 }

@@ -19,6 +19,7 @@ import { EditarTerminosComponent } from "../displays/prc_documento_3/components/
 import { InputTerminoComponent } from "../displays/prc_documento_3/components/input-termino/input-termino.component";
 import { PinMeseroComponent } from "../displays/prcRestaurante/components/pin-mesero/pin-mesero.component";
 import { DetailsProductComponent } from "../displays/prcRestaurante/components/details-product/details-product.component";
+import { NewCheckComponent } from "../displays/prcRestaurante/components/new-check/new-check.component";
 
 @Injectable({
     providedIn: 'root'
@@ -208,6 +209,21 @@ export class NotificationsService {
         return new Promise((resolve, reject) => {
 
             let dialogRef = this._dialog.open(PinMeseroComponent)
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
+    newCheck(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(NewCheckComponent)
 
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
