@@ -10,5 +10,6 @@ export interface TableInterface {
     obj_Height:              number;
     obj_Width:               number;
     obj_Elemento_Asignado:   any;
+    orders:number[];
 }
 

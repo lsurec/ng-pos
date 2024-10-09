@@ -48,6 +48,7 @@ export class GlobalRestaurantService {
     classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
 
+    
 
 
     product?: ProductRestaurantInterface;

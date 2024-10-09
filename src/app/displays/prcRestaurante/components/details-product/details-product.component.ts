@@ -17,6 +17,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/bodega-produto.interface';
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
+import { TraRestaurantInterface } from '../../interfaces/tra.restaurant.interface';
 
 @Component({
   selector: 'app-details-product',
@@ -169,7 +170,19 @@ export class DetailsProductComponent implements OnInit {
     });
 
 
+    let transaction:TraRestaurantInterface = {
+      bodega: this.bodega,
+      cantidad:this.cantidad,
+       guarniciones: selectGarnishs,
+       observacion: this.observacion,
+       precio: this.unitario,
+       processed: false,
+       producto: this.restaurantService.product!,
+       selected: false,
+    }
+
     
+
   }
 
   //cerrar dialogo
