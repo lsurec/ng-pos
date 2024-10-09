@@ -218,6 +218,23 @@ export class DetailsProductComponent implements OnInit {
     }
 
     //TODO:Ir a cuentas
+
+    this.restaurantService. orders.push(
+      {
+        consecutivo: 0,
+        consecutivoRef: 0,
+        mesa: this.restaurantService.table!,
+        mesero: this.restaurantService.waiter!,
+        nombre: "Cuenta 1", //TODO: reeemplazwr
+        selected: false,
+        transacciones:[],
+        ubicacion: this.restaurantService.location!,
+      }
+     
+    );
+
+    this.restaurantService.updateOrdersTable();
+
   }
 
   //cerrar dialogo
