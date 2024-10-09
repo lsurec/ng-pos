@@ -101,6 +101,7 @@ export class GlobalRestaurantService {
         indexOrder: number,
     ) {
         this.orders[indexOrder].transacciones.push(transaction);
+        this.updateOrdersTable();
     }
 
 
@@ -108,6 +109,15 @@ export class GlobalRestaurantService {
         item: OrderInterface,
     ) {
         this.orders.push(item);
+        this.updateOrdersTable();
+    }
+
+
+    addTransactionToOrder(
+        transaction: TraRestaurantInterface,
+        idexOrder: number,
+    ) {
+        this.orders[idexOrder].transacciones.push(transaction);
         this.updateOrdersTable();
     }
 }

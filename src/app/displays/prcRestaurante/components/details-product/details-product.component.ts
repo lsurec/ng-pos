@@ -197,7 +197,6 @@ export class DetailsProductComponent implements OnInit {
       );
 
 
-      this.observacion = "";
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
       this.closeDialog();
@@ -210,8 +209,6 @@ export class DetailsProductComponent implements OnInit {
         transaction,
         this.restaurantService.table!.orders[0],
       );
-
-      this.observacion = "";
 
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
