@@ -5,13 +5,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { LocationInterface } from "../interfaces/location.interface";
 import { TableInterface } from "../interfaces/table.interface";
 import { WaiterInterface } from "../interfaces/waiter.interface";
-import { elementos } from "../interfaces/send-order.interface";
 import { ClassificationRestaurantInterface } from "../interfaces/classification-restaurant.interface";
 import { ProductRestaurantInterface } from "../interfaces/product-restaurant";
-import { BodegaProductoInterface } from "../../prc_documento_3/interfaces/bodega-produto.interface";
-import { UnitarioInterface } from "../../prc_documento_3/interfaces/unitario.interface";
-import { GarnishTreeInterface } from "../interfaces/garnish.interface";
 import { OrderInterface } from "../interfaces/order.interface";
+import { TraRestaurantInterface } from "../interfaces/tra.restaurant.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -44,7 +41,6 @@ export class GlobalRestaurantService {
     viewLocations: boolean = true;
     viewRestaurant: boolean = false;
 
-    pinMesero: string = "";
 
     classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
@@ -99,4 +95,20 @@ export class GlobalRestaurantService {
             }
         }
     }
+
+    
+  addTransactionFirst(
+   transaction: TraRestaurantInterface,
+    indexOrder: number,
+  ) {
+     this.orders[indexOrder].transacciones.push(transaction);
+  }
+
+  
+  addFirst(
+     item: OrderInterface,
+  ) {
+    this.orders.push(item);
+    this.updateOrdersTable();
+  }
 }
