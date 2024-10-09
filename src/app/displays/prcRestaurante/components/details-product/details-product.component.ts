@@ -181,12 +181,47 @@ export class DetailsProductComponent implements OnInit {
       selected: false,
     }
 
-    if (this.restaurantService.table!.orders.length == 1) {
 
+    if (this.restaurantService.table!.orders.length == 0) {
+      this.restaurantService.addFirst(
+        {
+          consecutivo: 0,
+          consecutivoRef: 0,
+          mesa: this.restaurantService.table!,
+          mesero: this.restaurantService.waiter!,
+          nombre: "Cuenta 1",
+          selected: false,
+          transacciones: [transaction],
+          ubicacion: this.restaurantService.location!,
+        }
+      );
+
+
+      this.observacion = "";
+      this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+
+      this.closeDialog();
+
+      return;
     }
 
+    if (this.restaurantService.table!.orders.length == 1) {
+      this.restaurantService.addTransactionFirst(
+        transaction,
+        this.restaurantService.table!.orders[0],
+      );
 
+      this.observacion = "";
 
+      this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+
+      this.closeDialog();
+
+      return;
+    }
+
+    
+    //TODO:Ir a cuentas
   }
 
   //cerrar dialogo
