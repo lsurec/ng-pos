@@ -83,7 +83,7 @@
                     <div *ngFor="let route of father.route; let indexRoute = index" class="route-item"
                         (click)="changeRoute(indexFather, indexRoute)">
                         <p
-                            [ngClass]="{ 'text12': indexRoute != father.route.length - 1, 'grey-bold': indexRoute == father.route.length - 1 }">
+                            [ngClass]="{ 'grey-normal': indexRoute != father.route.length - 1, 'grey-bold': indexRoute == father.route.length - 1 }">
                             {{ route.item?.descripcion }}
                         </p>
                         <mat-icon *ngIf="indexRoute != father.route.length - 1">arrow_right</mat-icon>

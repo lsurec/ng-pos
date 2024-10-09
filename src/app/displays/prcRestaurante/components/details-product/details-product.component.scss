@@ -178,8 +178,8 @@ hr {
 }
 
 .imgProducto {
-    margin-bottom: 10px 0px;
-    display      : flex;
+    margin : 10px 0px;
+    display: flex;
 }
 
 .image-product {
@@ -245,13 +245,18 @@ hr {
 .grey-bold {
     font-weight: bold;
     color      : $gris;
-    font-size  : 12px;
+    font-size  : 12px !important;
+}
+
+.grey-normal {
+    color    : $gris;
+    font-size: 12px !important;
 }
 
 .separadorGris {
     height    : 10px;
     background: #E3E2E2;
-    margin    : 5px 0px;
+    margin    : 8px 0px;
 }
 
 .padding020 {
