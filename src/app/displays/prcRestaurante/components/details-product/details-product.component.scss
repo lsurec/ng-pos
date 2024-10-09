@@ -83,7 +83,6 @@ hr {
     height    : calc(100% - 90px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding   : 10px 20px;
 }
 
 .botones {
@@ -158,6 +157,7 @@ hr {
 .bodega-tipo-precio {
     display    : flex;
     align-items: center;
+    padding    : 0px 20px;
 }
 
 .menus {
@@ -178,11 +178,8 @@ hr {
 }
 
 .imgProducto {
-    width        : 100%;
-    margin-bottom: 10px;
+    margin-bottom: 10px 0px;
     display      : flex;
-    align-items  : center;
-    position     : relative;
 }
 
 .image-product {
@@ -208,16 +205,7 @@ hr {
     .nuevaCuenta {
         background: $personalizado;
         color     : $blanco;
-        top       : 70px !important;
-        right     : 10px !important;
     }
-}
-
-.nuevaCuenta {
-    position: absolute;
-    top     : 60px;
-    right   : 5px;
-    z-index : 10;
 }
 
 .agregarBtn {
@@ -258,4 +246,18 @@ hr {
     font-weight: bold;
     color      : $gris;
     font-size  : 12px;
+}
+
+.separadorGris {
+    height    : 10px;
+    background: #E3E2E2;
+    margin    : 5px 0px;
+}
+
+.padding020 {
+    padding: 0px 20px;
+}
+
+.guarniciones {
+    padding: 0px 20px;
 }

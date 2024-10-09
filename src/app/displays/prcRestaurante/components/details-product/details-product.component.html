@@ -9,10 +9,6 @@
 
 <div mat-dialog-content class="dialog" *ngIf="!isLoading">
 
-    <button mat-icon-button class="nuevaCuenta" matTooltip="{{ 'pos.factura.nueva' | translate }}">
-        <mat-icon>person_add</mat-icon>
-    </button>
-
     <div class="contenido-dialogo">
         <div class="imgProducto">
             <span class="spacer"></span>
@@ -20,10 +16,12 @@
             <img src="https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg"
                 class="image-product">
             <span class="spacer"></span>
-
+            <button mat-icon-button class="nuevaCuenta" matTooltip="{{ 'pos.factura.nueva' | translate }}">
+                <mat-icon>person_add</mat-icon>
+            </button>
         </div>
 
-        <div class="dFlex">
+        <div class="padding020 dFlex">
             <p class="textBold">
                 {{restaurantService.product?.des_Producto}} ({{restaurantService.product?.producto_Id}})
             </p>
@@ -78,8 +76,9 @@
                 </div>
             </div>
         </div>
-        <div class="guarniciones">
-            <div *ngFor="let father of restaurantService.garnishs; let indexFather = index">
+        <div class="separadorGris"></div>
+        <div *ngFor="let father of restaurantService.garnishs; let indexFather = index">
+            <div class="guarniciones">
                 <div class="route-container">
                     <div *ngFor="let route of father.route; let indexRoute = index" class="route-item"
                         (click)="changeRoute(indexFather, indexRoute)">
@@ -103,8 +102,7 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
-
-
+            <div class="separadorGris"></div>
         </div>
     </div>
     <hr>
