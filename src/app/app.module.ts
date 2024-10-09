@@ -102,6 +102,7 @@ import { ClassificationsComponent } from './displays/prcRestaurante/components/c
 import { ProductsComponent } from './displays/prcRestaurante/components/products/products.component';
 import { DetailsProductComponent } from './displays/prcRestaurante/components/details-product/details-product.component';
 import { CurrencyPipe } from '@angular/common';
+import { NewCheckComponent } from './displays/prcRestaurante/components/new-check/new-check.component';
 
 @NgModule({
   declarations: [
@@ -174,6 +175,7 @@ import { CurrencyPipe } from '@angular/common';
     ClassificationsComponent,
     ProductsComponent,
     DetailsProductComponent,
+    NewCheckComponent,
   ],
   imports: [
     MatCardModule,
