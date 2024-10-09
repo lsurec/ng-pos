@@ -16,7 +16,12 @@ export class NewCheckComponent {
 
   }
 
-  cancelar() { }
-  agregar() { }
+  cancelar() {
+    this.dialogRef.close();
+  }
+
+  agregar() {
+    this.dialogRef.close(this.nombre);
+  }
 
 }

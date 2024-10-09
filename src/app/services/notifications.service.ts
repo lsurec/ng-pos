@@ -226,11 +226,7 @@ export class NotificationsService {
             let dialogRef = this._dialog.open(NewCheckComponent)
 
             dialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
+                resolve(result);
             });
         });
     }
