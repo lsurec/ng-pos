@@ -1,7 +1,7 @@
 <app-progress *ngIf="isLoading" class="progress"></app-progress>
 <mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
     <span class="spacer"></span>
-    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService.product?.producto_Id}} </p>
+    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService. product?.producto_Id}} </p>
     <span class="spacer"></span>
 
     <span class="close" (click)="closeDialog()">&times;</span>
@@ -23,11 +23,11 @@
 
         <div class="padding020 dFlex">
             <p class="textBold">
-                {{restaurantService.product?.des_Producto}} ({{restaurantService.product?.producto_Id}})
+                {{restaurantService. product?.des_Producto}} ({{restaurantService. product?.producto_Id}})
             </p>
             <span class="spacer"></span>
             <p class="textBold">
-                {{restaurantService.unitario!.precioU | currencyFormat }}
+                {{unitario!.precioU | currencyFormat }}
             </p>
         </div>
 
@@ -37,8 +37,8 @@
                 <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
                 <mat-select name="estado" class="bodegas"
                     placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}"
-                    [(ngModel)]="restaurantService. bodega" (ngModelChange)="changeBodega()">
-                    <mat-option *ngFor="let bodega of restaurantService. bodegas" [value]="bodega">
+                    [(ngModel)]=" bodega" (ngModelChange)="changeBodega()">
+                    <mat-option *ngFor="let bodega of  bodegas" [value]="bodega">
                         ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }}
                         ({{bodega.existencia}})
                     </mat-option>
@@ -46,29 +46,29 @@
             </div>
             <span class="spacer"></span>
             <div class="menus">
-                <div *ngIf="restaurantService.unitarios.length == 0">
+                <div *ngIf="unitarios.length == 0">
                     <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
 
                     <p class="textBold">{{ 'pos.factura.sinPrecios' | translate }}</p>
 
                 </div>
-                <div *ngIf="restaurantService.unitarios.length > 0">
-                    <div *ngIf="restaurantService.unitarios[0].precio">
+                <div *ngIf="unitarios.length > 0">
+                    <div *ngIf="unitarios[0].precio">
                         <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
                         <mat-select name="estado" class="bodegas"
                             placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}"
-                            [(ngModel)]="restaurantService.unitario" (ngModelChange)="changePrice()">
-                            <mat-option *ngFor="let precio of restaurantService. unitarios" [value]="precio">
+                            [(ngModel)]="unitario" (ngModelChange)="calcTotal()">
+                            <mat-option *ngFor="let precio of  unitarios" [value]="precio">
                                 {{precio.descripcion}}
                             </mat-option>
                         </mat-select>
                     </div>
-                    <div *ngIf="!restaurantService.unitarios[0].precio">
+                    <div *ngIf="!unitarios[0].precio">
                         <p class="textBold">{{ 'pos.factura.presentaciones' | translate }}</p>
                         <mat-select name="estado" class="bodegas"
                             placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
-                            [(ngModel)]="restaurantService. unitario" (ngModelChange)="changePrice()">
-                            <mat-option *ngFor="let precio of restaurantService. unitarios" [value]="precio">
+                            [(ngModel)]=" unitario" (ngModelChange)="calcTotal()">
+                            <mat-option *ngFor="let precio of  unitarios" [value]="precio">
                                 {{precio.descripcion}}
                             </mat-option>
                         </mat-select>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="separadorGris"></div>
-        <div *ngFor="let father of restaurantService.garnishs; let indexFather = index">
+        <div *ngFor="let father of garnishs; let indexFather = index">
             <div class="guarniciones">
                 <div class="route-container">
                     <div *ngFor="let route of father.route; let indexRoute = index" class="route-item"
@@ -109,7 +109,7 @@
             <p class="textBold">Notas para este producto</p>
             <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
                 placeholder="Escribe las instrucciones necesarias."
-                [(ngModel)]="restaurantService.observacion"></textarea>
+                [(ngModel)]="observacion"></textarea>
         </div>
     </div>
     <hr>
@@ -117,7 +117,7 @@
         <div class="dFlex">
             <p class="textBold">{{ 'pos.factura.total' | translate }}</p>
             <span class="spacer"></span>
-            <p class="textBold"> {{restaurantService.total | currencyFormat }} </p>
+            <p class="textBold"> {{total | currencyFormat }} </p>
         </div>
         <div class="dFlex">
             <div class="dFlex">
@@ -125,7 +125,7 @@
                     <mat-icon class="sumar-restar">remove</mat-icon>
                 </div>
                 <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
-                    (ngModelChange)="changeCantidad()" (keypress)="validarNumeros($event)">
+                    (ngModelChange)="calcTotal()" (keypress)="validarNumeros($event)">
                 <div class="sumar" (click)="sumar()">
                     <mat-icon class="sumar-restar">add</mat-icon>
                 </div>

@@ -11,6 +11,7 @@ import { ProductRestaurantInterface } from "../interfaces/product-restaurant";
 import { BodegaProductoInterface } from "../../prc_documento_3/interfaces/bodega-produto.interface";
 import { UnitarioInterface } from "../../prc_documento_3/interfaces/unitario.interface";
 import { GarnishTreeInterface } from "../interfaces/garnish.interface";
+import { OrderInterface } from "../interfaces/order.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -48,19 +49,13 @@ export class GlobalRestaurantService {
     classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
 
-    bodegas: BodegaProductoInterface[] = [];
-    bodega?: BodegaProductoInterface;
 
-    unitarios: UnitarioInterface[] = [];
-    unitario?: UnitarioInterface;
+    orders: OrderInterface[] = [];
 
-    garnishs: GarnishTreeInterface[] = [];
 
     product?: ProductRestaurantInterface;
-    total: number = 0; //total de la transaccion (cantidad * precio)
 
     idPantalla: number = 0;
-    observacion: string = "";
 
     constructor(
         private _notificationService: NotificationsService,
@@ -87,5 +82,21 @@ export class GlobalRestaurantService {
     mesasAbiertas() {
         this.tabAccesos = false;
         this.tabMesasAbiertas = true;
+    }
+
+
+    updateOrdersTable(): void {
+        for (let i = 0; i < this.tables.length; i++) {
+            const mesa = this.tables[i];
+            this.tables[i].orders = [];
+
+            for (let j = 0; j < this.orders.length; j++) {
+                const order = this.orders[j];
+
+                if (order.mesa.elemento_Id === mesa.elemento_Id) {
+                    this.tables[i].orders.push(j);
+                }
+            }
+        }
     }
 }
