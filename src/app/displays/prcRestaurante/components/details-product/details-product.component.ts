@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GarnishInterface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
+import { GarnishInterface, GarnishTraInteface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
 import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
 import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
@@ -15,6 +15,8 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { TranslateService } from '@ngx-translate/core';
+import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/bodega-produto.interface';
+import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 
 @Component({
   selector: 'app-details-product',
@@ -22,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./details-product.component.scss'],
   providers: [ProductService, RestaurantService,],
 })
-export class DetailsProductComponent  implements OnInit{
+export class DetailsProductComponent implements OnInit {
 
   user: string = PreferencesService.user; //usuario de la sesion
   token: string = PreferencesService.token; //usuario de la sesion
@@ -34,12 +36,24 @@ export class DetailsProductComponent  implements OnInit{
   isLoading: boolean = false;
   cantidad: number = 1;
 
+  total: number = 0;
+
+  bodegas: BodegaProductoInterface[] = [];
+  bodega?: BodegaProductoInterface;
+
+  unitarios: UnitarioInterface[] = [];
+  unitario?: UnitarioInterface;
+  observacion: string = "";
+
+
+  garnishs: GarnishTreeInterface[] = [];
+
   constructor(
-    private _restaurantService:RestaurantService,
+    private _restaurantService: RestaurantService,
     public restaurantService: GlobalRestaurantService,
     public dialogRef: MatDialogRef<DetailsProductComponent>,
-    private _productService:ProductService,
-    private _facturaService:FacturaService,
+    private _productService: ProductService,
+    private _facturaService: FacturaService,
     private _notificationService: NotificationsService,
     private _translate: TranslateService,
 
@@ -52,38 +66,111 @@ export class DetailsProductComponent  implements OnInit{
     this.loadData();
   }
 
- async loadData(){
-     //cuando ya se tenga el producto seleccionado, cargar todo lo necesario y abrir el dualogo
-     this.restaurantService.isLoading = true;
+  async loadData() {
+    //cuando ya se tenga el producto seleccionado, cargar todo lo necesario y abrir el dualogo
+    this.isLoading = true;
 
-     let resGarnish: boolean = await this.loadGarnishs();
- 
-     if (!resGarnish) {
-       this.restaurantService.isLoading = false;
-       return;
-     }
- 
-     let resBodega: boolean = await this.laodBodegas();
- 
-     if (!resBodega) {
-       this.restaurantService.isLoading = false;
-       return;
-     }
- 
-     let resPrecios: boolean = await this.loadPrecioUnitario();
- 
-     if (!resPrecios) {
-       this.restaurantService.isLoading = false;
-       return;
-     }
- 
-     this.restaurantService.isLoading = false;
+    let resGarnish: boolean = await this.loadGarnishs();
+
+    if (!resGarnish) {
+      this.isLoading = false;
+      return;
+    }
+
+    let resBodega: boolean = await this.laodBodegas();
+
+    if (!resBodega) {
+      this.isLoading = false;
+      return;
+    }
+
+    let resPrecios: boolean = await this.loadPrecioUnitario();
+
+    if (!resPrecios) {
+      this.isLoading = false;
+      return;
+    }
+
+    this.isLoading = false;
+
+
+    //asiganr precio unitario
+    this.calcTotal();
+
   }
 
 
-  changeBodega() { }
-  changePrice() { }
-  enviar() { }
+  calcTotal() {
+    this.total = (this.unitario?.precioU ?? 0) * this.cantidad;
+  }
+
+  async changeBodega() {
+
+    this.restaurantService.isLoading = true;
+
+    await this.loadPrecioUnitario();
+
+    this.calcTotal();
+
+    this.restaurantService.isLoading = false;
+
+  }
+
+
+  enviar() {
+
+    if (!this.cantidad || this.cantidad < 1) {
+
+      this._notificationService.openSnackbar("No hay cantidad"); //TODO:Translate
+      return;
+    }
+
+
+    if (!this.bodega) {
+
+      this._notificationService.openSnackbar("No hay bodega seleccionada");  //TODO:Translate
+      return;
+    }
+
+
+    if (!this.unitario) {
+
+      this._notificationService.openSnackbar("No hay precio seleccioando"); //TODO:Translate
+      return;
+    }
+
+    this.garnishs.forEach(node => {
+      if (node.children.length > 0) {
+        if (!node.selected) {
+          this._notificationService.openSnackbar(`Seleccione una opcion (${node.item?.descripcion})`);
+          return; //TODO:Translate
+        }
+      }
+    });
+
+
+    let selectGarnishs: GarnishTraInteface[] = [];
+
+
+    this.garnishs.forEach(element => {
+
+      let routes: GarnishInterface[] = [];
+
+
+      element.route.forEach(item => {
+        routes.push(item.item!);
+      });
+
+      selectGarnishs.push({
+        garnishs: routes,
+        selected: element.selected!,
+      });
+
+    });
+
+
+    
+  }
 
   //cerrar dialogo
   closeDialog(): void {
@@ -99,14 +186,16 @@ export class DetailsProductComponent  implements OnInit{
     if (this.cantidad <= 0) {
       this.cantidad = 1;
     }
+
+    this.calcTotal();
   }
 
 
   sumar() {
     this.cantidad++;
+    this.calcTotal();
   }
 
-  changeCantidad() { }
 
   validarNumeros(event: any) {
     // Obtener el código de la tecla presionada
@@ -120,13 +209,13 @@ export class DetailsProductComponent  implements OnInit{
 
   changeRoute(indexTree: number, indexRoute: number): void {
     // Remover las rutas desde indexRoute + 1 hasta el final
-    this.restaurantService.garnishs[indexTree].route.splice(
+    this.garnishs[indexTree].route.splice(
       indexRoute + 1,
-      this.restaurantService.garnishs[indexTree].route.length - (indexRoute + 1)
+      this.garnishs[indexTree].route.length - (indexRoute + 1)
     );
 
     // Establecer el campo selected como null
-    this.restaurantService.garnishs[indexTree].selected = null;
+    this.garnishs[indexTree].selected = null;
 
   }
 
@@ -134,29 +223,29 @@ export class DetailsProductComponent  implements OnInit{
   changeGarnishActive(index: number, node: GarnishTreeInterface): void {
     // Si el nodo tiene hijos, agregar el nodo a la ruta
     if (node.children && node.children.length > 0) {
-      this.restaurantService.garnishs[index].route.push(node);
-  
+      this.garnishs[index].route.push(node);
+
       // Notificar cambios
       return;
     }
-  
+
     // Si no tiene hijos, seleccionar el item del nodo
-    this.restaurantService.garnishs[index].selected = node.item;
-  
+    this.garnishs[index].selected = node.item;
+
   }
-  
 
 
-  
+
+
   async loadPrecioUnitario(): Promise<boolean> {
-    this.restaurantService.unitario = undefined;
-    this.restaurantService.unitarios = [];
+    this.unitario = undefined;
+    this.unitarios = [];
 
 
     const apiPrecio = () => this._productService.getPrecios(
       this.user,
       this.token,
-      this.restaurantService.bodega!.bodega,
+      this.bodega!.bodega,
       this.restaurantService.product!.producto,
       this.restaurantService.product!.unidad_Medida,
       1,
@@ -176,7 +265,7 @@ export class DetailsProductComponent  implements OnInit{
 
 
     precios.forEach(precio => {
-      this.restaurantService.unitarios.push(
+      this.unitarios.push(
         {
           descripcion: precio.des_Tipo_Precio,
           id: precio.tipo_Precio,
@@ -189,8 +278,8 @@ export class DetailsProductComponent  implements OnInit{
     });
 
 
-    if (this.restaurantService.unitarios.length > 0) {
-      this.restaurantService.unitario = this.restaurantService.unitarios.reduce((prev, curr) => {
+    if (this.unitarios.length > 0) {
+      this.unitario = this.unitarios.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
         const currOrden = curr.orden ?? Infinity;
@@ -204,7 +293,7 @@ export class DetailsProductComponent  implements OnInit{
     const apiFactor = () => this._productService.getFactorConversion(
       this.user,
       this.token,
-      this.restaurantService.bodega!.bodega,
+      this.bodega!.bodega,
       this.restaurantService.product!.producto,
       this.restaurantService.product!.unidad_Medida,
     )
@@ -221,7 +310,7 @@ export class DetailsProductComponent  implements OnInit{
     let factores: FactorConversionInterface[] = resFactor.response;
 
     factores.forEach(factor => {
-      this.restaurantService.unitarios.push(
+      this.unitarios.push(
         {
           descripcion: factor.des_Tipo_Precio,
           id: factor.tipo_Precio,
@@ -234,8 +323,8 @@ export class DetailsProductComponent  implements OnInit{
     });
 
 
-    if (this.restaurantService.unitarios.length > 0) {
-      this.restaurantService.unitario = this.restaurantService.unitarios.reduce((prev, curr) => {
+    if (this.unitarios.length > 0) {
+      this.unitario = this.unitarios.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
         const currOrden = curr.orden ?? Infinity;
@@ -251,7 +340,7 @@ export class DetailsProductComponent  implements OnInit{
 
   async laodBodegas(): Promise<boolean> {
 
-    this.restaurantService.bodegas = [];
+    this.bodegas = [];
     const api = () => this._productService.getBodegaProducto(
       this.user,
       this.token,
@@ -270,12 +359,12 @@ export class DetailsProductComponent  implements OnInit{
       return false;
     }
 
-    this.restaurantService.bodegas = res.response;
+    this.bodegas = res.response;
 
-    if (this.restaurantService.bodegas.length > 0) {
+    if (this.bodegas.length > 0) {
 
       //TODO:Implementar en POS
-      this.restaurantService.bodega = this.restaurantService.bodegas.reduce((prev, curr) => {
+      this.bodega = this.bodegas.reduce((prev, curr) => {
         // Si `prev.orden` o `curr.orden` son nulos, asignar un valor alto o bajo para que no interfieran
         const prevOrden = prev.orden ?? Infinity;  // Asignar Infinity si es nulo
         const currOrden = curr.orden ?? Infinity;
@@ -288,7 +377,7 @@ export class DetailsProductComponent  implements OnInit{
   }
 
   async loadGarnishs(): Promise<boolean> {
-    this.restaurantService.garnishs = [];
+    this.garnishs = [];
     const api = () => this._restaurantService.getGarnish(
       this.restaurantService.product!.producto,
       this.restaurantService.product!.unidad_Medida,
@@ -343,7 +432,7 @@ export class DetailsProductComponent  implements OnInit{
     });
 
 
-    this.restaurantService.garnishs = this.ordenarNodos(padres, hijos);
+    this.garnishs = this.ordenarNodos(padres, hijos);
 
     this.loadFirstharnish();
 
@@ -351,7 +440,7 @@ export class DetailsProductComponent  implements OnInit{
 
 
   loadFirstharnish() {
-    this.restaurantService.garnishs.forEach(element => {
+    this.garnishs.forEach(element => {
       element.route.push(element);
     });
   }
@@ -415,7 +504,7 @@ export class DetailsProductComponent  implements OnInit{
 
     //TODO:mostrar pantalla de error
 
-    this.restaurantService.verError = true;
+    // this.verError = true;
 
     return;
   }

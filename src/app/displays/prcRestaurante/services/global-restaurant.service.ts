@@ -48,19 +48,11 @@ export class GlobalRestaurantService {
     classifications: ClassificationRestaurantInterface[] = [];
     classification?: ClassificationRestaurantInterface;
 
-    bodegas: BodegaProductoInterface[] = [];
-    bodega?: BodegaProductoInterface;
 
-    unitarios: UnitarioInterface[] = [];
-    unitario?: UnitarioInterface;
-
-    garnishs: GarnishTreeInterface[] = [];
 
     product?: ProductRestaurantInterface;
-    total: number = 0; //total de la transaccion (cantidad * precio)
 
     idPantalla: number = 0;
-    observacion: string = "";
 
     constructor(
         private _notificationService: NotificationsService,
