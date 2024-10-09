@@ -25,7 +25,6 @@ export class DetailsProductComponent {
 
   }
 
-  changeSerie() { }
 
   changeBodega() { }
   changePrice() { }
