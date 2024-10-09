@@ -266,3 +266,14 @@ hr {
 .guarniciones {
     padding: 0px 20px;
 }
+
+.campos {
+    color           : $personalizado;
+    width           : 100%;
+    border-style    : none;
+    background-color: transparent;
+    outline         : none;
+    font-size       : 12px !important;
+    padding         : 3px;
+    border-bottom   : solid 1px $gris;
+}

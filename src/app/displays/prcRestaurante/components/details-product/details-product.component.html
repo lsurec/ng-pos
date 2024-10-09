@@ -104,6 +104,13 @@
             </div>
             <div class="separadorGris"></div>
         </div>
+        <!-- TODO: traducir -->
+        <div class="padding020">
+            <p class="textBold">Notas para este producto</p>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
+                placeholder="Escribe las instrucciones necesarias."
+                [(ngModel)]="restaurantService.observacion"></textarea>
+        </div>
     </div>
     <hr>
     <div class="botones">
