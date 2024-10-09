@@ -7,15 +7,7 @@ import { FacturaService } from 'src/app/displays/prc_documento_3/services/factur
 import { SerieService } from 'src/app/displays/prc_documento_3/services/serie.service';
 import { LocationInterface } from '../../interfaces/location.interface';
 import { TableInterface } from '../../interfaces/table.interface';
-import { WaiterInterface } from '../../interfaces/waiter.interface';
-import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
-import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
-import { GarnishInterface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
-import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/bodega-produto.interface';
-import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
-import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/precio.interface';
-import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
 import { MatSidenav } from '@angular/material/sidenav';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
@@ -27,7 +19,6 @@ import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-
 import { RestaurantService } from '../../services/restaurant.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
-import { RetryService } from 'src/app/services/retry.service';
 import { LoadRestaurantService } from '../../services/load.restaurant.service';
 
 @Component({
@@ -307,6 +298,8 @@ export class HomeRestaurantComponent implements OnInit {
 
     if (this.restaurantService.tables.length == 1)
       this.restaurantService.table = this.restaurantService.tables[0];
+
+    this.restaurantService.updateOrdersTable();
 
     return true;
 

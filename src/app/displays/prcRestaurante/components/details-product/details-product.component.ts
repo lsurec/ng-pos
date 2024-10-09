@@ -181,7 +181,9 @@ export class DetailsProductComponent implements OnInit {
        selected: false,
     }
 
+
     
+
 
   }
 
