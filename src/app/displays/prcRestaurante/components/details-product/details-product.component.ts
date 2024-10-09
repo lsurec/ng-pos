@@ -170,19 +170,21 @@ export class DetailsProductComponent implements OnInit {
     });
 
 
-    let transaction:TraRestaurantInterface = {
+    let transaction: TraRestaurantInterface = {
       bodega: this.bodega,
-      cantidad:this.cantidad,
-       guarniciones: selectGarnishs,
-       observacion: this.observacion,
-       precio: this.unitario,
-       processed: false,
-       producto: this.restaurantService.product!,
-       selected: false,
+      cantidad: this.cantidad,
+      guarniciones: selectGarnishs,
+      observacion: this.observacion,
+      precio: this.unitario,
+      processed: false,
+      producto: this.restaurantService.product!,
+      selected: false,
     }
 
+    if (this.restaurantService.table!.orders.length == 1) {
 
-    
+    }
+
 
 
   }
