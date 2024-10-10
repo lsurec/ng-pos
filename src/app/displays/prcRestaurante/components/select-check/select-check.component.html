@@ -15,57 +15,20 @@
     <div class="contenido-dialogo">
 
         <div class="cuentas">
-            <div class="cuenta">
+            <div class="cuenta" *ngFor="let orden of restaurantService.orders">
                 <div class="circulo">
                     <span class="spacer"></span>
                     <mat-icon class="icoCuenta">person</mat-icon>
                     <span class="spacer"></span>
                 </div>
                 <div class="detalleCuenta">
-                    <p class="textBold">Cuenta 1 </p>
-                    <p class="textBold">Total Q 1.00 </p>
+                    <p class="textBold">{{orden.nombre}}</p>
+                    <p class="textBold">Total: Q 1.00 </p>
                 </div>
-                <span class="spacer"></span>
-
                 <div class="editarCuenta">
                     <mat-icon class="icoEditar">edit</mat-icon>
                 </div>
             </div>
-            <div class="cuenta">
-                <div class="circulo">
-                    <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">person</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalleCuenta">
-                    <p class="textBold">Cuenta 1 </p>
-                    <p class="textBold">Total Q 1.00 </p>
-                </div>
-            </div>
-            <div class="cuenta">
-                <div class="circulo">
-                    <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">person</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalleCuenta">
-                    <p class="textBold">Cuenta 1 </p>
-                    <p class="textBold">Total Q 1.00 </p>
-                </div>
-            </div>
-
-            <div class="cuenta">
-                <div class="circulo">
-                    <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">person</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <div class="detalleCuenta">
-                    <p class="textBold">Cuenta 1 </p>
-                    <p class="textBold">Total Q 1.00 </p>
-                </div>
-            </div>
-
         </div>
 
         <div class="cuentas">
