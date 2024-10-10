@@ -1,0 +1,86 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <button mat-icon-button (click)="loadData()" matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService. product?.producto_Id}} </p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+        <div class="cuentas">
+            <div class="cuenta">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">person</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <div class="detalleCuenta">
+                    <p class="textBold">Cuenta 1 </p>
+                    <p class="textBold">Total Q 1.00 </p>
+                </div>
+                <span class="spacer"></span>
+
+                <div class="editarCuenta">
+                    <mat-icon class="icoEditar">edit</mat-icon>
+                </div>
+            </div>
+            <div class="cuenta">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">person</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <div class="detalleCuenta">
+                    <p class="textBold">Cuenta 1 </p>
+                    <p class="textBold">Total Q 1.00 </p>
+                </div>
+            </div>
+            <div class="cuenta">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">person</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <div class="detalleCuenta">
+                    <p class="textBold">Cuenta 1 </p>
+                    <p class="textBold">Total Q 1.00 </p>
+                </div>
+            </div>
+
+            <div class="cuenta">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">person</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <div class="detalleCuenta">
+                    <p class="textBold">Cuenta 1 </p>
+                    <p class="textBold">Total Q 1.00 </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cuentas">
+            <div class="cuenta">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">add</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <div class="detalleCuenta">
+                    <p class="textBold">Nueva Cuenta</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

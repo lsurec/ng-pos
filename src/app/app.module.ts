@@ -103,6 +103,7 @@ import { ProductsComponent } from './displays/prcRestaurante/components/products
 import { DetailsProductComponent } from './displays/prcRestaurante/components/details-product/details-product.component';
 import { CurrencyPipe } from '@angular/common';
 import { NewCheckComponent } from './displays/prcRestaurante/components/new-check/new-check.component';
+import { SelectCheckComponent } from './displays/prcRestaurante/components/select-check/select-check.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +177,7 @@ import { NewCheckComponent } from './displays/prcRestaurante/components/new-chec
     ProductsComponent,
     DetailsProductComponent,
     NewCheckComponent,
+    SelectCheckComponent,
   ],
   imports: [
     MatCardModule,

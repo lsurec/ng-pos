@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GarnishInterface, GarnishTraInteface, GarnishTreeInterface } from '../../interfaces/garnish.interface';
 import { ProductService } from 'src/app/displays/prc_documento_3/services/product.service';
 import { FactorConversionInterface } from 'src/app/displays/prc_documento_3/interfaces/factor-conversion.interface';
@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BodegaProductoInterface } from 'src/app/displays/prc_documento_3/interfaces/bodega-produto.interface';
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 import { TraRestaurantInterface } from '../../interfaces/tra.restaurant.interface';
+import { SelectCheckComponent } from '../select-check/select-check.component';
 
 @Component({
   selector: 'app-details-product',
@@ -57,7 +58,7 @@ export class DetailsProductComponent implements OnInit {
     private _facturaService: FacturaService,
     private _notificationService: NotificationsService,
     private _translate: TranslateService,
-
+    private _dialog: MatDialog,
   ) {
 
 
@@ -219,6 +220,7 @@ export class DetailsProductComponent implements OnInit {
 
     //TODO:Ir a cuentas
 
+    this.selectCheck();
 
 
   }
@@ -586,5 +588,16 @@ export class DetailsProductComponent implements OnInit {
 
       this.restaurantService.updateOrdersTable();
     }
+  }
+
+  selectCheck(): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      let dialogRef = this._dialog.open(SelectCheckComponent)
+
+      dialogRef.afterClosed().subscribe(result => {
+        resolve(result);
+      });
+    });
   }
 }
