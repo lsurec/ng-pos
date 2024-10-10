@@ -120,4 +120,17 @@ export class GlobalRestaurantService {
         this.orders[idexOrder].transacciones.push(transaction);
         this.updateOrdersTable();
     }
+
+
+    getTotal(idexOrder: number) {
+        let total: number = 0;
+
+
+        this.orders[idexOrder].transacciones.forEach(element => {
+
+            total += (element.cantidad * element.precio.precioU);
+        });
+
+        return total;
+    }
 }
