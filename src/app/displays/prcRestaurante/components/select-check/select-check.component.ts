@@ -64,6 +64,8 @@ export class SelectCheckComponent {
 
       );
 
+      this._notificationService.openSnackbar("Cuenta creada."); //TODO:Translate
+
       this.restaurantService.updateOrdersTable();
     }
   }

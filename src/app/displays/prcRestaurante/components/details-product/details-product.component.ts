@@ -227,6 +227,7 @@ export class DetailsProductComponent implements OnInit {
 
         this.restaurantService.addTransactionToOrder(transaction, index);
         this.closeDialog();
+        this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
         return;
       };
@@ -596,6 +597,8 @@ export class DetailsProductComponent implements OnInit {
         }
 
       );
+
+      this._notificationService.openSnackbar("Cuenta creada"); //TODO:Translate
 
       this.restaurantService.updateOrdersTable();
     }
