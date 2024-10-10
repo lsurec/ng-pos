@@ -107,15 +107,11 @@ export class ProductsComponent implements OnInit {
   async selectProduct(product: ProductRestaurantInterface) {
     this.restaurantService.product = product;
 
-   
+
 
     let resDialogProd = await this._notificationService.openProductRestaurant();
 
-    if (!resDialogProd) {
-      console.log("NO RECIBIÓ NADA");
-    }
-
-    console.log("SE AGREGA EL PRODUCTO");
+    if (!resDialogProd) { }
 
   }
 

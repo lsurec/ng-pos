@@ -15,18 +15,20 @@
     <div class="contenido-dialogo">
 
         <div class="cuentas">
-            <div class="cuenta" *ngFor="let orden of restaurantService.orders">
+            <div class="cuenta" *ngFor="let orden of restaurantService.orders; let index = index"
+                (click)="selectCheck(index)">
                 <div class="circulo">
                     <span class="spacer"></span>
                     <mat-icon class="icoCuenta">person</mat-icon>
                     <span class="spacer"></span>
                 </div>
+                <span class="spacer"></span>
                 <div class="detalleCuenta">
                     <p class="textBold">{{orden.nombre}}</p>
-                    <p class="textBold">Total: Q 1.00 </p>
+                    <p class="textBold">Total: {{restaurantService.getTotal(index) | currencyFormat }} </p>
                 </div>
                 <div class="editarCuenta">
-                    <mat-icon class="icoEditar">edit</mat-icon>
+                    <mat-icon class="icoEditar" (click)="renombrar(index)">edit</mat-icon>
                 </div>
             </div>
         </div>
@@ -38,6 +40,7 @@
                     <mat-icon class="icoCuenta">add</mat-icon>
                     <span class="spacer"></span>
                 </div>
+                <span class="spacer"></span>
                 <div class="detalleCuenta">
                     <p class="textBold">Nueva Cuenta</p>
                 </div>

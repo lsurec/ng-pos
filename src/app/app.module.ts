@@ -104,6 +104,7 @@ import { DetailsProductComponent } from './displays/prcRestaurante/components/de
 import { CurrencyPipe } from '@angular/common';
 import { NewCheckComponent } from './displays/prcRestaurante/components/new-check/new-check.component';
 import { SelectCheckComponent } from './displays/prcRestaurante/components/select-check/select-check.component';
+import { RenameCheckComponent } from './displays/prcRestaurante/components/rename-check/rename-check.component';
 
 @NgModule({
   declarations: [
@@ -178,6 +179,7 @@ import { SelectCheckComponent } from './displays/prcRestaurante/components/selec
     DetailsProductComponent,
     NewCheckComponent,
     SelectCheckComponent,
+    RenameCheckComponent,
   ],
   imports: [
     MatCardModule,

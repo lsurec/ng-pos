@@ -218,9 +218,20 @@ export class DetailsProductComponent implements OnInit {
       return;
     }
 
-    //TODO:Ir a cuentas
+    //navega a dialogo de cuentas disponibles
 
-    this.selectCheck();
+    let checkSelected = this._dialog.open(SelectCheckComponent)
+    checkSelected.afterClosed().subscribe(result => {
+      if (result || result == 0) {
+        let index: number = result;
+
+        this.restaurantService.addTransactionToOrder(transaction, index);
+        this.closeDialog();
+
+        return;
+      };
+
+    });
 
 
   }

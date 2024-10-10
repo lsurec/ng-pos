@@ -117,7 +117,11 @@ export class GlobalRestaurantService {
         transaction: TraRestaurantInterface,
         idexOrder: number,
     ) {
+
+        
         this.orders[idexOrder].transacciones.push(transaction);
+
+
         this.updateOrdersTable();
     }
 
