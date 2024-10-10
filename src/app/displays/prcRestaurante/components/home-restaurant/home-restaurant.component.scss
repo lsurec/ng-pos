@@ -8,6 +8,7 @@ $color-blanco  : var(--blanco); //resaltar texto blanco
 $gris          : var(--gris); //sombra y texto gris
 $bloques       : var(--bloques-claro);
 $sombra        : var(--sombra-claro);
+$navegacion    : var(--navegacion-claro);
 
 .container-main {
     height  : calc(100vh - 128px) !important;
@@ -627,6 +628,12 @@ label[for*='6']:before {
     font-size: 12px !important;
 }
 
+.prefBold12 {
+    font-size  : 12px !important;
+    font-weight: bold;
+    color      : $personalizado;
+}
+
 .textCenter12 {
     font-size : 12px !important;
     text-align: center;
@@ -846,4 +853,11 @@ label[for*='6']:before {
 
 .ocultarTxt {
     display: none;
+}
+
+.toolbarNavegacion {
+    background  : $navegacion;
+    cursor      : pointer;
+    height      : 40px;
+    padding-left: 10px;
 }

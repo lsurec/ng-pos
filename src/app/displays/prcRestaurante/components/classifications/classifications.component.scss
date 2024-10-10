@@ -35,7 +35,7 @@ p {
     width     : 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    height    : calc(100vh - 166px);
+    height    : calc(100vh - 168px);
 }
 
 /*Tarjeta Producto*/
@@ -77,10 +77,6 @@ p {
     .clasificacionesx3 {
         grid-template-columns: repeat(3, 1fr);
     }
-
-    .contenido {
-        height: calc(100vh - 233px);
-    }
 }
 
 @media screen and (max-width: 550px) {
@@ -88,9 +84,6 @@ p {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .contenido {
-        height: calc(100vh - 212px) !important;
-    }
 }
 
 @media screen and (max-width: 400px) {
