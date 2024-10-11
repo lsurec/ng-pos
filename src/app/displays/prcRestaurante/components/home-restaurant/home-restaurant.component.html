@@ -566,8 +566,17 @@
                                 <mat-icon (click)="verDetalles()" *ngIf="!verDetalleOrden">chevron_left</mat-icon>
                                 <div
                                     [ngClass]="{ 'detalleOrden' : verDetalleOrden, 'ocultarDetalles' : !verDetalleOrden, }">
-
-                                    <div class="variasCuentas" *ngIf="viewCheck">
+                                    <div class="dFlex">
+                                        <button mat-icon-button
+                                            (click)=" restaurantService.viewCheck ? verDetalles() : goChecks() ">
+                                            <mat-icon>arrow_back</mat-icon>
+                                        </button>
+                                        <p class="prefBold12">
+                                            {{restaurantService.viewCheck ? "" : restaurantService.nameCheck}}
+                                        </p>
+                                    </div>
+                                    <div class="variasCuentas"
+                                        *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck ">
                                         <div class="cuenta" *ngFor="let order of restaurantService.table!.orders">
                                             <div (click)="selectCheck(order)" class="espacioCuenta">
                                                 <div class="circulo">
@@ -590,7 +599,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="variasCuentas" *ngIf="viewTranCheck && !viewCheck">
+                                    <div class="variasCuentas"
+                                        *ngIf="restaurantService.viewTranCheck && !restaurantService.viewCheck">
                                         <div class="transaccion"
                                             *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
                                             <div class="detalleTransaccion">

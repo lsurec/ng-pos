@@ -539,17 +539,19 @@ label[for*='6']:before {
 }
 
 //ubicaciones y mesas
-
+.detalleOrden::-webkit-scrollbar,
 .contenido-ubicaciones-mesas::-webkit-scrollbar,
 .contenido::-webkit-scrollbar {
     width: 7px;
 }
 
+.detalleOrden::-webkit-scrollbar-track,
 .contenido-ubicaciones-mesas::-webkit-scrollbar-track,
 .contenido::-webkit-scrollbar-track {
     background: $fondo;
 }
 
+.detalleOrden::-webkit-scrollbar-thumb,
 .contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .contenido::-webkit-scrollbar-thumb {
     background-color: $scroll;
@@ -877,8 +879,9 @@ label[for*='6']:before {
 
 .detalleOrden {
     border-left: solid 1px $bordes;
-    width      : 250px;
+    width      : 350px;
     height     : calc(100vh - 168px);
+    overflow-y : auto;
 }
 
 .clasificacioProducto {
@@ -910,7 +913,7 @@ label[for*='6']:before {
     display      : flex;
     align-items  : center;
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .cuenta:hover {

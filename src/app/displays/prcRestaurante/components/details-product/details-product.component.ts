@@ -200,6 +200,8 @@ export class DetailsProductComponent implements OnInit {
       );
 
 
+      this.restaurantService.nameCheck = this.restaurantService.orders[0].nombre;
+
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
       this.closeDialog();
@@ -212,6 +214,8 @@ export class DetailsProductComponent implements OnInit {
         transaction,
         this.restaurantService.table!.orders[0],
       );
+
+      this.restaurantService.nameCheck = this.restaurantService.orders[0].nombre;
 
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
@@ -601,6 +605,9 @@ export class DetailsProductComponent implements OnInit {
       );
 
       this._notificationService.openSnackbar("Cuenta creada"); //TODO:Translate
+
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.viewCheck = true;
 
       this.restaurantService.updateOrdersTable();
     }

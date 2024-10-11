@@ -122,6 +122,12 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
+  goChecks() {
+    // this.restaurantService.nameCheck = "";
+    this.restaurantService.viewTranCheck = false;
+    this.restaurantService.viewCheck = true;
+  }
+
   verDetalles() {
 
     if (this.restaurantService.orders.length == 0) {
@@ -130,12 +136,12 @@ export class HomeRestaurantComponent implements OnInit {
     }
 
     if (this.restaurantService.orders.length == 1) {
-      this.viewCheck = false;
-      this.viewTranCheck = true;
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = true;
     }
 
     if (this.restaurantService.orders.length > 1) {
-      this.viewCheck = true;
+      this.restaurantService.viewCheck = true;
     }
 
     this.verDetalleOrden = !this.verDetalleOrden;
@@ -369,6 +375,11 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   async selectLocation(location: LocationInterface) {
+
+    if (location == this.restaurantService.location) {
+      return;
+    }
+
     this.restaurantService.location = location;
 
     this.restaurantService.isLoading = true;
@@ -388,14 +399,14 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.idPantalla = 1; //Clasificaciones
   }
 
-  viewTranCheck: boolean = false;
-  viewCheck: boolean = true;
-
   selectCheck(index: number) {
 
     this.indexCheck = index;
-    this.viewTranCheck = true;
-    this.viewCheck = false;
+
+    this.restaurantService.nameCheck = this.restaurantService.orders[index].nombre;
+
+    this.restaurantService.viewTranCheck = true;
+    this.restaurantService.viewCheck = false;
   }
 
   renombrar(index: number): Promise<any> {

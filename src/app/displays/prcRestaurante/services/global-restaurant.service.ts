@@ -53,6 +53,10 @@ export class GlobalRestaurantService {
 
     idPantalla: number = 0;
 
+    viewTranCheck: boolean = false;
+    viewCheck: boolean = true;
+    nameCheck: string = "";
+
     constructor(
         private _notificationService: NotificationsService,
         private _translate: TranslateService,
@@ -118,7 +122,7 @@ export class GlobalRestaurantService {
         idexOrder: number,
     ) {
 
-        
+
         this.orders[idexOrder].transacciones.push(transaction);
 
 
