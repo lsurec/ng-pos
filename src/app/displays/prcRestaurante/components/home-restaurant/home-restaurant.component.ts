@@ -363,5 +363,9 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
+  //Comandar
+  printComanda(indexOrder:number){
+
+  }
 
 }
