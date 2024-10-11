@@ -15,20 +15,21 @@
     <div class="contenido-dialogo">
 
         <div class="cuentas">
-            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders"
-                (click)="selectCheck(indexOrder)">
-                <div class="circulo">
+            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
+                <div (click)="selectCheck(indexOrder)" class="espacioCuenta">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">person</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
                     <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">person</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <span class="spacer"></span>
-                <div class="detalleCuenta">
-                    <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                    <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                    <div class="detalleCuenta">
+                        <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                        <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                    </div>
                 </div>
                 <div class="editarCuenta">
-                    <mat-icon class="icoEditar" (click)="renombrar(indexOrder)">edit</mat-icon>
+                    <mat-icon class="icoEditar" matTooltip="Renombrar" (click)="renombrar(indexOrder)">edit</mat-icon>
                 </div>
             </div>
         </div>

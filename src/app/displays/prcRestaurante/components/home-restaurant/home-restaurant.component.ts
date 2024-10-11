@@ -20,6 +20,8 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { components } from 'src/app/providers/componentes.provider';
 import { EventService } from 'src/app/services/event.service';
 import { LoadRestaurantService } from '../../services/load.restaurant.service';
+import { RenameCheckComponent } from '../rename-check/rename-check.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -67,9 +69,12 @@ export class HomeRestaurantComponent implements OnInit {
     private _productService: ProductService,
     private _eventService: EventService,
     private _loadRestaurantService: LoadRestaurantService,
+    private _dialog: MatDialog,
   ) {
 
   }
+
+  verDetalleOrden: boolean = false;
 
 
   ngOnInit(): void {
@@ -113,6 +118,10 @@ export class HomeRestaurantComponent implements OnInit {
   changeSerie() {
 
 
+  }
+
+  verDetalles() {
+    this.verDetalleOrden = !this.verDetalleOrden;
   }
 
 
@@ -362,6 +371,63 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.idPantalla = 1; //Clasificaciones
   }
 
+  selectCheck(index: number) {
+  }
 
+  renombrar(index: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      let dialogRef = this._dialog.open(RenameCheckComponent, { data: index })
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  restar() {
+
+    //disminuir cantidad en 1
+    this.cantidad--;
+
+    //si es menor o igual a cero, volver a 1 y mostrar
+    if (this.cantidad <= 0) {
+      this.cantidad = 1;
+    }
+
+    this.calcTotal();
+  }
+
+
+  sumar() {
+    this.cantidad++;
+    this.calcTotal();
+  }
+
+  calcTotal() {
+
+  }
+
+  cantidad: number = 1;
+
+
+  validarNumeros(event: any) {
+    // Obtener el código de la tecla presionada
+    let codigoTecla = event.which ? event.which : event.keyCode;
+
+    // Permitir solo números (códigos de tecla entre 48 y 57 son números en el teclado)
+    if (codigoTecla < 48 || codigoTecla > 57) {
+      event.preventDefault();
+    }
+  }
+
+
+  imagen(){
+    
+  }
 
 }

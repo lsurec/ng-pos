@@ -556,11 +556,81 @@
                             </mat-toolbar>
 
 
+                            <div class="dFlex">
+                                <div class="clasificacioProducto">
+                                    <app-classifications *ngIf="restaurantService.idPantalla == 1">
+                                    </app-classifications>
+                                    <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
+                                </div>
+                                <mat-icon (click)="verDetalles()" *ngIf="verDetalleOrden">chevron_right</mat-icon>
+                                <mat-icon (click)="verDetalles()" *ngIf="!verDetalleOrden">chevron_left</mat-icon>
+                                <div
+                                    [ngClass]="{ 'detalleOrden' : verDetalleOrden, 'ocultarDetalles' : !verDetalleOrden, }">
 
-                            <app-classifications *ngIf="restaurantService.idPantalla == 1">
-                            </app-classifications>
+                                    <div class="variasCuentas" *ngIf="restaurantService.orders.length > 1">
+                                        <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
+                                            <div (click)="selectCheck(indexOrder)" class="espacioCuenta">
+                                                <div class="circulo">
+                                                    <span class="spacer"></span>
+                                                    <mat-icon class="icoCuenta">person</mat-icon>
+                                                    <span class="spacer"></span>
+                                                </div>
+                                                <span class="spacer"></span>
+                                                <div class="detalleCuenta">
+                                                    <p class="textBold12">
+                                                        {{ restaurantService.orders[indexOrder].nombre}}
+                                                    </p>
+                                                    <p class="textBold12"> Total:
+                                                        {{restaurantService.getTotal(indexOrder) | currencyFormat}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="editarCuenta">
+                                                <mat-icon class="icoEditar"
+                                                    (click)="renombrar(indexOrder)">edit</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="variasCuentas" *ngIf="restaurantService.orders.length == 1">
+                                        <div class="transaccion">
+                                            <div class="imgDetalle">
+                                                <div class="detalleTransaccion">
+                                                    <p class="text12">Desayuno Tipico</p>
+                                                    <p class="text12"> {{10 | currencyFormat }} C/U</p>
+                                                    <p class="text10">Bebida Café</p>
+                                                    <p class="text10">Huevos Revueltos</p>
+                                                </div>
+                                            </div>
 
-                            <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
+                                            <div class="cantidad-producto">
+                                                <div class="dFlex">
+                                                    <span class="spacer"></span>
+                                                    <mat-icon matTooltip="Ver producto" class="verimagen"
+                                                        (click)="imagen()">image</mat-icon>
+                                                </div>
+                                                <div class="dFlex">
+                                                    <span class="spacer"></span>
+                                                    <p class="textBold12">{{20 | currencyFormat }} </p>
+                                                </div>
+                                                <div class="dFlex">
+                                                    <div class="restar" (click)="restar()">
+                                                        <p class="sumar-restar">-</p>
+                                                    </div>
+                                                    <input class="cantidad" type="text" name="search"
+                                                        [(ngModel)]="cantidad" autocomplete="off"
+                                                        (ngModelChange)="calcTotal()"
+                                                        (keypress)="validarNumeros($event)">
+                                                    <div class="sumar" (click)="sumar()">
+                                                        <p class="sumar-restar">+</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <!-- Mostrar logos -->
                             <app-barra-logos></app-barra-logos>
                         </div>
