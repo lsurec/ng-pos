@@ -40,6 +40,7 @@ export class GlobalRestaurantService {
 
     viewLocations: boolean = true;
     viewRestaurant: boolean = false;
+    viewMoveCheckTable: boolean = false;
 
 
     classifications: ClassificationRestaurantInterface[] = [];

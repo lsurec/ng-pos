@@ -439,7 +439,7 @@
                             <div class="barras">
                                 <!-- Regresa a clasificaciones -->
                                 <button *ngIf="restaurantService.idPantalla == 1" mat-icon-button
-                                    matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
+                                    matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="viewLocationTable()">
                                     <mat-icon>arrow_back</mat-icon>
                                 </button>
 
@@ -482,8 +482,9 @@
                                         <mat-icon>note_add</mat-icon>
                                     </button>
                                     <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printDoc()">
-                                        <mat-icon>print</mat-icon>
+                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                                        (click)="viewMoveCheckTable()">
+                                        <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
                                 </ng-container>
                             </div>
@@ -492,7 +493,7 @@
                     <mat-toolbar class="toolbar-large">
                         <!-- Regresa a clasificaciones -->
                         <button *ngIf="restaurantService.idPantalla == 1" mat-icon-button
-                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="goBack()">
+                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="viewLocationTable()">
                             <mat-icon>arrow_back</mat-icon>
                         </button>
 
@@ -526,8 +527,8 @@
                                 <mat-icon>note_add</mat-icon>
                             </button>
                             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                                (click)="printDoc()">
-                                <mat-icon>print</mat-icon>
+                                (click)="viewMoveCheckTable()">
+                                <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
                         </ng-container>
                         <div class="circulo-inicial" (click)="sidenavend.open()">
@@ -540,10 +541,12 @@
                         <div>
                             <mat-toolbar class="toolbarNavegacion">
                                 <div class="dFlex">
-                                    <p class="text12" (click)="goBack()"> {{restaurantService.location?.descripcion}}
+                                    <p class="text12" (click)="viewLocationTable()">
+                                        {{restaurantService.location?.descripcion}}
                                     </p>
                                     <p> / </p>
-                                    <p class="text12" (click)="goBack()"> {{restaurantService.table?.descripcion}}</p>
+                                    <p class="text12" (click)="viewLocationTable()">
+                                        {{restaurantService.table?.descripcion}}</p>
                                     <p> / </p>
                                     <!-- TODO: transale -->
                                     <p class="text12" [ngClass]="{ 'prefBold12': !restaurantService.classification, }"
@@ -615,6 +618,7 @@
                                                     <span class="spacer"></span>
                                                     <mat-icon matTooltip="Ver producto" class="verimagen"
                                                         (click)="imagen(tran.producto)">image</mat-icon>
+                                                    <mat-icon class="verimagen">more_vert</mat-icon>
                                                 </div>
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
@@ -647,6 +651,24 @@
                     </div>
                 </mat-sidenav-content>
             </mat-sidenav-container>
+        </div>
+        <div *ngIf="restaurantService.viewMoveCheckTable">
+
+            <mat-toolbar-row class="head__sidenav">
+                <button mat-icon-button matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <p class="textBold">Trasladar</p>
+                <span class="spacer"></span>
+            </mat-toolbar-row>
+
+            <div class="contenido-traslado">
+
+            </div>
+
+            <app-barra-logos></app-barra-logos>
+
         </div>
 
     </div>

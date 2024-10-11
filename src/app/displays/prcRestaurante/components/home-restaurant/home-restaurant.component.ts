@@ -95,8 +95,21 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
-  goBack(): void {
+  viewLocationTable() {
     this.restaurantService.viewLocations = true;
+    this.restaurantService.viewRestaurant = false;
+    this.restaurantService.viewMoveCheckTable = false;
+  }
+
+  viewRestaurant() {
+    this.restaurantService.viewRestaurant = true;
+    this.restaurantService.viewLocations = false;
+    this.restaurantService.viewMoveCheckTable = false;
+  }
+
+  viewMoveCheckTable() {
+    this.restaurantService.viewMoveCheckTable = true;
+    this.restaurantService.viewLocations = false;
     this.restaurantService.viewRestaurant = false;
   }
 
