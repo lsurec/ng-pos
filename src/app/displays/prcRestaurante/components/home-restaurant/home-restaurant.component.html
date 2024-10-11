@@ -593,13 +593,10 @@
                                     <div class="variasCuentas" *ngIf="restaurantService.orders.length == 1">
                                         <div class="transaccion"
                                             *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
-                                            <div class="imgDetalle">
-                                                <div class="detalleTransaccion">
-                                                    <p class="text12">{{tran.producto.des_Producto }}</p>
-                                                    <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
-                                                </div>
+                                            <div class="detalleTransaccion">
+                                                <p class="text12">{{tran.producto.des_Producto }}</p>
+                                                <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
                                             </div>
-
                                             <div class="cantidad-producto">
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
