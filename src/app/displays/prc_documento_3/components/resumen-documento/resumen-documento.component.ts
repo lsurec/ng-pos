@@ -1624,6 +1624,7 @@ evento:      "",
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
               Tra_Monto_Dias: null,
+              Tra_Observacion: null,
             }
           );
 
@@ -1651,7 +1652,7 @@ evento:      "",
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
               Tra_Monto_Dias: null,
-
+              Tra_Observacion: null,
             }
           );
         }
@@ -1676,6 +1677,7 @@ evento:      "",
           Tra_Monto: transaccion.total,
           //TODO:veridificar monto por dias
           Tra_Monto_Dias: transaccion.precioDia,
+          Tra_Observacion:null,
         }
 
       );
