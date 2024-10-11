@@ -129,6 +129,15 @@ export class HomeRestaurantComponent implements OnInit {
       return
     }
 
+    if (this.restaurantService.orders.length == 1) {
+      this.viewCheck = false;
+      this.viewTranCheck = true;
+    }
+
+    if (this.restaurantService.orders.length > 1) {
+      this.viewCheck = true;
+    }
+
     this.verDetalleOrden = !this.verDetalleOrden;
   }
 
@@ -379,9 +388,14 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.idPantalla = 1; //Clasificaciones
   }
 
+  viewTranCheck: boolean = false;
+  viewCheck: boolean = true;
+
   selectCheck(index: number) {
 
     this.indexCheck = index;
+    this.viewTranCheck = true;
+    this.viewCheck = false;
   }
 
   renombrar(index: number): Promise<any> {

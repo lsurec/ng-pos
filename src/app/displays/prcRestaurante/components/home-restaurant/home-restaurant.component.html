@@ -567,7 +567,7 @@
                                 <div
                                     [ngClass]="{ 'detalleOrden' : verDetalleOrden, 'ocultarDetalles' : !verDetalleOrden, }">
 
-                                    <div class="variasCuentas" *ngIf="restaurantService.orders.length > 1">
+                                    <div class="variasCuentas" *ngIf="viewCheck">
                                         <div class="cuenta" *ngFor="let order of restaurantService.table!.orders">
                                             <div (click)="selectCheck(order)" class="espacioCuenta">
                                                 <div class="circulo">
@@ -590,7 +590,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="variasCuentas" *ngIf="restaurantService.orders.length == 1">
+                                    <div class="variasCuentas" *ngIf="viewTranCheck && !viewCheck">
                                         <div class="transaccion"
                                             *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
                                             <div class="detalleTransaccion">
