@@ -1,0 +1,19 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <button mat-icon-button (click)="loadData()" matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService. product?.producto_Id}} </p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+    </div>
+
+</div>

@@ -22,6 +22,8 @@ import { EventService } from 'src/app/services/event.service';
 import { LoadRestaurantService } from '../../services/load.restaurant.service';
 import { RenameCheckComponent } from '../rename-check/rename-check.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ImageRestaurantComponent } from '../image-restaurant/image-restaurant.component';
+import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -426,8 +428,14 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
 
-  imagen(){
-    
+  imagen(producto: ProductRestaurantInterface) {
+
+    if (producto.objeto_Imagen) {
+      this._dialog.open(ImageRestaurantComponent, { data: producto })
+    }
+
+    this._notificationService.openSnackbar("No hay imagen asociada a este producto"); //TODO:Translate
+
   }
 
 }
