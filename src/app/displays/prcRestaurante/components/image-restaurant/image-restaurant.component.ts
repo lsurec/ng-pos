@@ -25,10 +25,6 @@ export class ImageRestaurantComponent {
     this.urlImg = producto.objeto_Imagen ?? "";
   }
 
-
-  loadData() { }
-
-
   closeDialog() {
 
     this.dialogRef.close();

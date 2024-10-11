@@ -568,8 +568,8 @@
                                     [ngClass]="{ 'detalleOrden' : verDetalleOrden, 'ocultarDetalles' : !verDetalleOrden, }">
 
                                     <div class="variasCuentas" *ngIf="restaurantService.orders.length > 1">
-                                        <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
-                                            <div (click)="selectCheck(indexOrder)" class="espacioCuenta">
+                                        <div class="cuenta" *ngFor="let order of restaurantService.table!.orders">
+                                            <div (click)="selectCheck(order)" class="espacioCuenta">
                                                 <div class="circulo">
                                                     <span class="spacer"></span>
                                                     <mat-icon class="icoCuenta">person</mat-icon>
@@ -578,27 +578,25 @@
                                                 <span class="spacer"></span>
                                                 <div class="detalleCuenta">
                                                     <p class="textBold12">
-                                                        {{ restaurantService.orders[indexOrder].nombre}}
+                                                        {{ restaurantService.orders[order].nombre}}
                                                     </p>
                                                     <p class="textBold12"> Total:
-                                                        {{restaurantService.getTotal(indexOrder) | currencyFormat}}
+                                                        {{restaurantService.getTotal(order) | currencyFormat}}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="editarCuenta">
-                                                <mat-icon class="icoEditar"
-                                                    (click)="renombrar(indexOrder)">edit</mat-icon>
+                                                <mat-icon class="icoEditar" (click)="renombrar(order)">edit</mat-icon>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="variasCuentas" *ngIf="restaurantService.orders.length == 1">
-                                        <div class="transaccion">
+                                        <div class="transaccion"
+                                            *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
                                             <div class="imgDetalle">
                                                 <div class="detalleTransaccion">
-                                                    <p class="text12">Desayuno Tipico</p>
-                                                    <p class="text12"> {{10 | currencyFormat }} C/U</p>
-                                                    <p class="text10">Bebida Café</p>
-                                                    <p class="text10">Huevos Revueltos</p>
+                                                    <p class="text12">{{tran.producto.des_Producto }}</p>
+                                                    <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
                                                 </div>
                                             </div>
 
@@ -606,21 +604,23 @@
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
                                                     <mat-icon matTooltip="Ver producto" class="verimagen"
-                                                        (click)="imagen(restaurantService.product!)">image</mat-icon>
+                                                        (click)="imagen(tran.producto)">image</mat-icon>
                                                 </div>
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
-                                                    <p class="textBold12">{{20 | currencyFormat }} </p>
+                                                    <p class="textBold12">
+                                                        {{ tran.cantidad * tran.precio.precioU | currencyFormat }}
+                                                    </p>
                                                 </div>
                                                 <div class="dFlex">
-                                                    <div class="restar" (click)="restar()">
+                                                    <div class="restar" (click)="restar(indexTran)">
                                                         <p class="sumar-restar">-</p>
                                                     </div>
                                                     <input class="cantidad" type="text" name="search"
-                                                        [(ngModel)]="cantidad" autocomplete="off"
+                                                        [(ngModel)]="tran.cantidad" autocomplete="off"
                                                         (ngModelChange)="calcTotal()"
                                                         (keypress)="validarNumeros($event)">
-                                                    <div class="sumar" (click)="sumar()">
+                                                    <div class="sumar" (click)="sumar(indexTran)">
                                                         <p class="sumar-restar">+</p>
                                                     </div>
                                                 </div>

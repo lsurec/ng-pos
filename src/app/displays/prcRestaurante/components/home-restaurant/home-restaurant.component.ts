@@ -46,9 +46,7 @@ export class HomeRestaurantComponent implements OnInit {
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
   series: SerieInterface[] = [];
-
-
-
+  indexCheck: number = 0;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -374,6 +372,8 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   selectCheck(index: number) {
+
+    this.indexCheck = index;
   }
 
   renombrar(index: number): Promise<any> {
@@ -391,22 +391,24 @@ export class HomeRestaurantComponent implements OnInit {
     });
   }
 
-  restar() {
+  restar(indexTra: number) {
+
+
+    if (this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad == 1) {
+      this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad == 1;
+      //TODO: mostrar iconp de basura y dialogo para eliminar transaccion
+      return;
+    }
 
     //disminuir cantidad en 1
-    this.cantidad--;
-
-    //si es menor o igual a cero, volver a 1 y mostrar
-    if (this.cantidad <= 0) {
-      this.cantidad = 1;
-    }
+    this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad--;
 
     this.calcTotal();
   }
 
 
-  sumar() {
-    this.cantidad++;
+  sumar(indexTran: number) {
+    this.restaurantService.orders[this.indexCheck].transacciones[indexTran].cantidad++;
     this.calcTotal();
   }
 
@@ -430,8 +432,12 @@ export class HomeRestaurantComponent implements OnInit {
 
   imagen(producto: ProductRestaurantInterface) {
 
+    //TODO: borrar la imagen
+    producto.objeto_Imagen = "https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg";
+
     if (producto.objeto_Imagen) {
       this._dialog.open(ImageRestaurantComponent, { data: producto })
+      return;
     }
 
     this._notificationService.openSnackbar("No hay imagen asociada a este producto"); //TODO:Translate
