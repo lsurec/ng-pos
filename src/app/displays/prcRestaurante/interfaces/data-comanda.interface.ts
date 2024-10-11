@@ -28,4 +28,5 @@ export interface FormatoComandaInterface{
  bodega:string,
  ipAdress:string,
  detalles:DataComandaInterface[],   
+ error:string,
 }

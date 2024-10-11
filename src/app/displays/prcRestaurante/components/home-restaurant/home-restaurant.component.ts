@@ -24,6 +24,10 @@ import { Documento, Transaccion } from 'src/app/displays/prc_documento_3/interfa
 import { PostDocumentInterface } from 'src/app/displays/prc_documento_3/interfaces/post-document.interface';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
 import { DataComandaInterface, FormatoComandaInterface } from '../../interfaces/data-comanda.interface';
+import { PrinterService } from 'src/app/services/printer.service';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: 'app-home-restaurant',
@@ -33,6 +37,8 @@ import { DataComandaInterface, FormatoComandaInterface } from '../../interfaces/
     RestaurantService,
     ProductService,
     SerieService,
+    PrinterService,
+    DocumentService,
   ]
 })
 export class HomeRestaurantComponent implements OnInit {
@@ -71,6 +77,7 @@ export class HomeRestaurantComponent implements OnInit {
     private _eventService: EventService,
     private _loadRestaurantService: LoadRestaurantService,
     private _documentService: DocumentService,
+    private _printService: PrinterService,
   ) {
 
   }
@@ -570,19 +577,17 @@ export class HomeRestaurantComponent implements OnInit {
 
     }
 
+    //TODO:Verificar depues de comandadas (impresion)
     this.restaurantService.orders[indexOrder].transacciones.forEach(element => {
       element.processed = true;
     });
 
-    this.restaurantService.isLoading = false;
 
     //TODO:Usao web socket
 
-    this.directPrint(indexOrder);
+    await this.directPrint(indexOrder);
 
-    //Impresion directa
-
-    this._notificationService.openSnackbar("Comanda enviada");
+    this.restaurantService.isLoading = false;
 
 
 
@@ -602,9 +607,9 @@ export class HomeRestaurantComponent implements OnInit {
 
     let res = await ApiService.apiUse(api);
 
-    this.restaurantService.isLoading = false;
 
     if (!res.status) {
+      this.restaurantService.isLoading = false;
       this.showError(res);
       return;
     }
@@ -619,6 +624,7 @@ export class HomeRestaurantComponent implements OnInit {
           bodega: detalle.bodega,
           detalles: [detalle],
           ipAdress: detalle.printerName,
+          error: "",
         });
       } else {
         let indexBodega: number = -1;
@@ -630,13 +636,14 @@ export class HomeRestaurantComponent implements OnInit {
           }
         }
 
-        if(indexBodega == -1){
+        if (indexBodega == -1) {
           formats.push({
             bodega: detalle.bodega,
             detalles: [detalle],
             ipAdress: detalle.printerName,
+            error: "",
           });
-        }else{
+        } else {
           formats[indexBodega].detalles.push(detalle);
         }
 
@@ -645,13 +652,74 @@ export class HomeRestaurantComponent implements OnInit {
     });
 
 
+
+
     //Imprimir formatos
+    for (const format of formats) {
+
+      const docDefinition = await this._printService.getComandaTMU(format);
+
+      let resService: ResApiInterface = await this._printService.getStatus();
+
+      if (!resService.status) {
+        format.error = this._translate.instant('pos.alertas.sin_servicio_impresion');
+      }
+
+      if (!format.error) {
+        // encabezado.impresora = "POS-80"
+
+        let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(format.ipAdress);
+
+        if (!resPrintStatus.status) {
+          format.error = `${this._translate.instant('pos.factura.impresora')} ${format.ipAdress} ${this._translate.instant('pos.factura.noDisponible')}.`;
+        }
 
 
+        if (!format.error) {
+          const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
+
+          // return;
+          pdfDocGenerator.getBlob(async (blob) => {
+            // ...
+            var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+            let resPrint: ResApiInterface = await this._printService.postPrint(
+              pdfFile,
+              format.ipAdress,
+              "1",
+            );
 
 
+            if (!resPrint.status) {
+
+              format.error = "Fallo al imprimir";
+              console.error(resPrint.response);
+
+            }
+
+          });
+
+        }
+
+      }
+
+
+    }
+
+    this.restaurantService.isLoading = false;
+
+    // Filtrar los elementos que tienen algo en la propiedad 'error'
+    const comandasConError = formats.filter(comanda => comanda.error !== '');
+
+    if (comandasConError.length > 0) {
+      //TODO:Mostrar dialogo con errores y marcar como enviadas las que sí se enviaron
+
+      
+    } else {
+      
+      this.notificationService.openSnackbar("Comanda enviada");
+    }
 
   }
-
 
 }

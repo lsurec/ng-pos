@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { FacturaService } from '../displays/prc_documento_3/services/factura.service';
+import { FormatoComandaInterface } from '../displays/prcRestaurante/interfaces/data-comanda.interface';
 
 @Injectable()
 export class PrinterService {
@@ -15,8 +16,8 @@ export class PrinterService {
 
     //inicializar http
     constructor(private _http: HttpClient,
-    private _facturaService: FacturaService,
-    private _translate: TranslateService,
+        private _facturaService: FacturaService,
+        private _translate: TranslateService,
     ) {
     }
 
@@ -1727,7 +1728,7 @@ export class PrinterService {
         };
 
         var docDefinition: TDocumentDefinitions = {
-           
+
             info: {
                 title: doc.documento.titulo,
                 author: 'Demosoft',
@@ -1996,6 +1997,119 @@ export class PrinterService {
 
 
 
+            ],
+            styles: {
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                centerBold: {
+                    fontSize: 8,
+                    alignment: 'center',
+                    bold: true,
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+                endText: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                endTextBold: {
+                    fontSize: 8,
+                    alignment: 'right',
+                    bold: true,
+                },
+                header: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'center',
+                },
+                tHeaderLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tHeaderValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                tProductsHeader: {
+                    fontSize: 8.5,
+                    bold: true,
+                },
+                tProductsBody: {
+                    fontSize: 8,
+                },
+                tTotals: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'right',
+                },
+                tClientLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tClientValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                text: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                link: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                    alignment: 'center',
+                },
+            },
+        };
+
+        return docDefinition;
+    }
+
+
+    async getComandaTMU(format: FormatoComandaInterface) {
+        let divider = {
+            layout: 'headerLineOnly',
+            table: {
+                widths: ['100%'],
+                headerRows: 1,
+                body: [
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                ]
+            }
+        };
+
+        var docDefinition: TDocumentDefinitions = {
+
+            info: {
+                title: "COMANDA",
+                author: 'DEMOSOFT S.A.',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
             ],
             styles: {
                 center: {
