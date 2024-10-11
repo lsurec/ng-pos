@@ -594,8 +594,11 @@
                                         <div class="transaccion"
                                             *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
                                             <div class="detalleTransaccion">
-                                                <p class="text12">{{tran.producto.des_Producto }}</p>
+                                                <p class="textBold12">{{tran.producto.des_Producto }}</p>
                                                 <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
+                                                <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
+                                                <p class="textBold12" *ngIf="tran.observacion "> Notas:</p>
+                                                <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
                                             </div>
                                             <div class="cantidad-producto">
                                                 <div class="dFlex">

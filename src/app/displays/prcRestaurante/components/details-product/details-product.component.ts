@@ -141,15 +141,17 @@ export class DetailsProductComponent implements OnInit {
       return;
     }
 
-    this.garnishs.forEach(node => {
-      if (node.children.length > 0) {
+    for (let i = 0; i < this.garnishs.length; i++) {
+      let node: GarnishTreeInterface = this.garnishs[i];
+      // Verificar si tiene hijos
+      if (node.children && node.children.length > 0) {
+        // Verificar si no hay una opción seleccionada
         if (!node.selected) {
           this._notificationService.openSnackbar(`Seleccione una opcion (${node.item?.descripcion})`);
-          return; //TODO:Translate
+          return;
         }
       }
-    });
-
+    }
 
     let selectGarnishs: GarnishTraInteface[] = [];
 

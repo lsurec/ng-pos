@@ -24,6 +24,8 @@ import { RenameCheckComponent } from '../rename-check/rename-check.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageRestaurantComponent } from '../image-restaurant/image-restaurant.component';
 import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
+import { OrderInterface } from '../../interfaces/order.interface';
+import { GarnishTraInteface } from '../../interfaces/garnish.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -121,6 +123,12 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   verDetalles() {
+
+    if (this.restaurantService.orders.length == 0) {
+      this._notificationService.openSnackbar("No hay detalles para visualizar"); //TODO:Translate
+      return
+    }
+
     this.verDetalleOrden = !this.verDetalleOrden;
   }
 
@@ -442,6 +450,39 @@ export class HomeRestaurantComponent implements OnInit {
 
     this._notificationService.openSnackbar("No hay imagen asociada a este producto"); //TODO:Translate
 
+  }
+
+  // getGuarniciones(indexTra: number) {
+  //   return this.restaurantService.orders[this.indexCheck]
+  //     .transacciones[indexTra]
+  //     .guarniciones
+  //     .map((e) =>
+  //       `${e.garnishs.map((guarnicion) => guarnicion.descripcion).join(" ")} ${e.selected.descripcion}`)
+  //     .join(", ");
+  // }
+
+  getGuarniciones(indexTra: number): string {
+    let order: OrderInterface = this.restaurantService.orders[this.indexCheck];
+
+    // Verificar si order, transacciones, guarniciones existen
+    if (!order || !order.transacciones || !order.transacciones[indexTra] || !order.transacciones[indexTra].guarniciones) {
+      return '';
+    }
+
+    let guarniciones: GarnishTraInteface[] = order.transacciones[indexTra].guarniciones;
+
+    return guarniciones
+      .map((garnish) => {
+        const garnishDescriptions = garnish.garnishs
+          .map((guarnicion) => guarnicion.descripcion)
+          .join(' ');
+
+        // Verificar si garnish.selected existe y tiene descripcion
+        const selectedDescription = garnish.selected?.descripcion || '';
+
+        return `${garnishDescriptions} ${selectedDescription}`;
+      })
+      .join(', ');
   }
 
 }
