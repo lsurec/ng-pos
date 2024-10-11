@@ -589,9 +589,6 @@ export class HomeRestaurantComponent implements OnInit {
 
     this.restaurantService.isLoading = false;
 
-
-
-
   }
 
   async directPrint(indexOrder: number) {
@@ -712,7 +709,7 @@ export class HomeRestaurantComponent implements OnInit {
     const comandasConError = formats.filter(comanda => comanda.error !== '');
 
     if (comandasConError.length > 0) {
-      //TODO:Mostrar dialogo con errores y marcar como enviadas las que sí se enviaron
+      //TODO:Mostrar dialogo con errores para volver a imprimir y marcar como enviadas las que sí se enviaron
 
       
     } else {
