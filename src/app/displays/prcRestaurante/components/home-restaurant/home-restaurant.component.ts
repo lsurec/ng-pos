@@ -23,6 +23,7 @@ import { LoadRestaurantService } from '../../services/load.restaurant.service';
 import { Documento, Transaccion } from 'src/app/displays/prc_documento_3/interfaces/doc-estructura.interface';
 import { PostDocumentInterface } from 'src/app/displays/prc_documento_3/interfaces/post-document.interface';
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
+import { DataComandaInterface, FormatoComandaInterface } from '../../interfaces/data-comanda.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -566,7 +567,7 @@ export class HomeRestaurantComponent implements OnInit {
       }
 
 
-      
+
     }
 
     this.restaurantService.orders[indexOrder].transacciones.forEach(element => {
@@ -575,23 +576,80 @@ export class HomeRestaurantComponent implements OnInit {
 
     this.restaurantService.isLoading = false;
 
-      //TODO:Usao web socket
+    //TODO:Usao web socket
 
-      this.directPrint(indexOrder);
+    this.directPrint(indexOrder);
 
-      //Impresion directa
+    //Impresion directa
 
-      this._notificationService.openSnackbar("Comanda enviada");
+    this._notificationService.openSnackbar("Comanda enviada");
 
 
 
 
   }
 
-  directPrint(indexOrder:number){
+  async directPrint(indexOrder: number) {
+
+    let api = () => this._documentService.getDataComanda(
+      this.user,
+      this.token,
+      this.restaurantService.orders[indexOrder].consecutivo,
+    );
+
+    this.restaurantService.isLoading = true;
 
 
-    
+    let res = await ApiService.apiUse(api);
+
+    this.restaurantService.isLoading = false;
+
+    if (!res.status) {
+      this.showError(res);
+      return;
+    }
+
+    let detalles: DataComandaInterface[] = res.response;
+    let formats: FormatoComandaInterface[] = [];
+
+
+    detalles.forEach(detalle => {
+      if (formats.length == 0) {
+        formats.push({
+          bodega: detalle.bodega,
+          detalles: [detalle],
+          ipAdress: detalle.printerName,
+        });
+      } else {
+        let indexBodega: number = -1;
+        for (let i = 0; i < formats.length; i++) {
+          const formato = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if(indexBodega == -1){
+          formats.push({
+            bodega: detalle.bodega,
+            detalles: [detalle],
+            ipAdress: detalle.printerName,
+          });
+        }else{
+          formats[indexBodega].detalles.push(detalle);
+        }
+
+      }
+
+    });
+
+
+    //Imprimir formatos
+
+
+
+
 
   }
 

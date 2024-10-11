@@ -165,4 +165,26 @@ export class DocumentService {
         return this._http.post(`${this._urlBase}Documento/update/estructura/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
     }
 
+
+    getDataComanda(
+        user: string,
+        token: string,
+        consecutivo: number,
+    ) {
+
+        let paramsStr = JSON.stringify(document); //JSON to String
+
+
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "Content-Type": "application/json",
+            }
+        )
+
+        //consumo de api
+        return this._http.post(`${this._urlBase}Printer/comanda/${user}/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
+    }
+
+
 }
