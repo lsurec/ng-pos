@@ -34,6 +34,7 @@ import { PrinterService } from 'src/app/services/printer.service';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ErrorComandaComponent } from '../error-comanda/error-comanda.component';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -777,6 +778,10 @@ export class HomeRestaurantComponent implements OnInit {
     await this.directPrint(indexOrder);
 
     this.restaurantService.isLoading = false;
+
+    // TODO: abrir dialogo
+    // this._dialog.open(ErrorComandaComponent, { data: indexOrder })
+    // return;
 
   }
 

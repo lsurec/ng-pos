@@ -1,0 +1,38 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="textBold">Error</p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+        <div class="comandaBotones">
+
+            <p class="text12">Bebidas frias</p>
+
+            <span class="spacer"></span>
+            <button mat-icon-button matTooltip="Reintentar">
+                <mat-icon>replay</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Imprimir con otro metodo">
+                <mat-icon>print</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="botones">
+        <button mat-stroked-button [mat-dialog-close]="false">
+            {{ 'pos.botones.reintentar' | translate }}
+        </button>
+        <span class="spacer"></span>
+        <button mat-stroked-button [mat-dialog-close]="true">
+            Imprimir con otro metodo.
+        </button>
+    </div>
+</div>
