@@ -11,15 +11,15 @@
 
     <div class="contenido-dialogo">
 
-        <div class="comandaBotones" *ngFor="let error of erroresComanda">
+        <div class="comandaBotones" *ngFor="let error of erroresComanda; let index = index">
 
             <p class="text12"> {{error.error}} </p>
 
             <span class="spacer"></span>
-            <button mat-icon-button matTooltip="Reintentar">
+            <button mat-icon-button matTooltip="Reintentar" (click)="printAgain(index)">
                 <mat-icon>replay</mat-icon>
             </button>
-            <button mat-icon-button matTooltip="Imprimir con otro metodo">
+            <button mat-icon-button matTooltip="Imprimir con otro metodo" (click)="printAnyway(index)">
                 <mat-icon>print</mat-icon>
             </button>
         </div>
@@ -27,11 +27,11 @@
     </div>
 
     <div class="botones">
-        <button mat-stroked-button [mat-dialog-close]="false">
+        <button mat-stroked-button [mat-dialog-close]="false" (click)="printAllAgain()">
             {{ 'pos.botones.reintentar' | translate }}
         </button>
         <span class="spacer"></span>
-        <button mat-stroked-button [mat-dialog-close]="true">
+        <button mat-stroked-button [mat-dialog-close]="true" (click)="printAllAnyway()">
             Imprimir con otro metodo.
         </button>
     </div>
