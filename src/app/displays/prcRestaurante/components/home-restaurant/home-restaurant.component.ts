@@ -35,6 +35,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ErrorComandaComponent } from '../error-comanda/error-comanda.component';
+import { PermisionsComponent } from '../permisions/permisions.component';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -89,7 +90,6 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-  verDetalleOrden: boolean = false;
 
 
   ngOnInit(): void {
@@ -122,14 +122,31 @@ export class HomeRestaurantComponent implements OnInit {
 
   viewMoveCheckTable() {
 
-    // if (this.restaurantService.orders.length == 0) {
-    //   this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
-    //   return;
-    // }
+    if (this.restaurantService.orders.length == 0) {
+      this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
+      return;
+    }
 
-    this.restaurantService.viewMoveCheckTable = true;
-    this.restaurantService.viewLocations = false;
-    this.restaurantService.viewRestaurant = false;
+    let dialogRef = this._dialog.open(PermisionsComponent, {})
+
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      let credenciales = result;
+
+      if (credenciales) {
+        this.restaurantService.viewMoveCheckTable = true;
+        this.restaurantService.viewLocations = false;
+        this.restaurantService.viewRestaurant = false;
+
+        return;
+      }
+
+      this._notificationService.openSnackbar("Usuario o contraseña incorrecta."); //TODO:Translate
+
+      return;
+    })
+
   }
 
   selectCheckAll() {
@@ -185,16 +202,7 @@ export class HomeRestaurantComponent implements OnInit {
       return
     }
 
-    if (this.restaurantService.orders.length == 1) {
-      this.restaurantService.viewCheck = false;
-      this.restaurantService.viewTranCheck = true;
-    }
-
-    if (this.restaurantService.orders.length > 1) {
-      this.restaurantService.viewCheck = true;
-    }
-
-    this.verDetalleOrden = !this.verDetalleOrden;
+    this.restaurantService.verDetalleOrden = !this.restaurantService.verDetalleOrden;
   }
 
 
@@ -455,6 +463,11 @@ export class HomeRestaurantComponent implements OnInit {
 
     this.restaurantService.nameCheck = this.restaurantService.orders[index].nombre;
 
+    if (!this.restaurantService.orders[index].transacciones.length) {
+      this._notificationService.openSnackbar("Cuenta sin transacciones."); //TODO:Translate
+      return;
+    }
+
     this.restaurantService.viewTranCheck = true;
     this.restaurantService.viewCheck = false;
   }
@@ -562,7 +575,7 @@ export class HomeRestaurantComponent implements OnInit {
   //Comandar
   async printComanda(indexOrder: number) {
 
-    if (!this.restaurantService.viewTranCheck || !this.restaurantService.viewTranCheck) {
+    if (this.restaurantService.orders.length > 0 && !this.restaurantService.viewTranCheck) {
       this._notificationService.openSnackbar("Seleccione una cuenta para comandar."); //TODO:Translate
       return;
     }

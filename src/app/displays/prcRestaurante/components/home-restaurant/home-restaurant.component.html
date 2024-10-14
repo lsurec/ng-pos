@@ -511,10 +511,12 @@
                                     </app-classifications>
                                     <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
                                 </div>
-                                <mat-icon (click)="verDetalles()" *ngIf="verDetalleOrden">chevron_right</mat-icon>
-                                <mat-icon (click)="verDetalles()" *ngIf="!verDetalleOrden">chevron_left</mat-icon>
+                                <mat-icon (click)="verDetalles()"
+                                    *ngIf="restaurantService.verDetalleOrden">chevron_right</mat-icon>
+                                <mat-icon (click)="verDetalles()"
+                                    *ngIf="!restaurantService.verDetalleOrden">chevron_left</mat-icon>
                                 <div
-                                    [ngClass]="{ 'detalleOrden' : verDetalleOrden, 'ocultarDetalles' : !verDetalleOrden, }">
+                                    [ngClass]="{ 'detalleOrden' : restaurantService.verDetalleOrden, 'ocultarDetalles' : !restaurantService.verDetalleOrden, }">
                                     <div class="dFlex">
                                         <button mat-icon-button
                                             (click)=" restaurantService.viewCheck ? verDetalles() : goChecks() ">

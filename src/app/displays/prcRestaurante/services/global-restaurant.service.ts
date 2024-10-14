@@ -61,6 +61,7 @@ export class GlobalRestaurantService {
     selectAllChecks: boolean = false; //Seleccionar todas las cuentas
     selectTranAllChecks: boolean = false; //Seleccionar todas las transacciones de una cuenta
 
+    verDetalleOrden: boolean = false;
     viewChecksMove: boolean = true;
     viewTranCheckMove: boolean = false;
     indexMoveCheck: number = 0;

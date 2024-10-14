@@ -206,6 +206,12 @@ export class DetailsProductComponent implements OnInit {
 
       this.closeDialog();
 
+      if (this.restaurantService.orders[0].transacciones.length) {
+        this.restaurantService.verDetalleOrden = true;
+        this.restaurantService.viewCheck = false;
+        this.restaurantService.viewTranCheck = true;
+      }
+
       return;
     }
 
@@ -221,6 +227,10 @@ export class DetailsProductComponent implements OnInit {
 
       this.closeDialog();
 
+      this.restaurantService.verDetalleOrden = true;
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = true;
+
       return;
     }
 
@@ -234,6 +244,9 @@ export class DetailsProductComponent implements OnInit {
         this.restaurantService.addTransactionToOrder(transaction, index);
         this.closeDialog();
         this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+
+        this.restaurantService.viewCheck = true;
+        this.restaurantService.viewTranCheck = false;
 
         return;
       };
