@@ -61,7 +61,6 @@ p {
 /*Fin Tarjeta Producto*/
 
 .clasificacionesx3 {
-    padding-left         : 20px;
     display              : grid;
     grid-template-columns: repeat(3, 1fr);
     //Espacio entre las mesas, puedes ajustar esto
@@ -72,16 +71,29 @@ p {
     .clasificacionesx3 {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .product-me {
+        width: 100% !important;
+    }
+
 }
 
 @media screen and (max-width: 550px) {
     .clasificacionesx3 {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .product-me {
+        width: 100% !important;
+    }
 }
 
 @media screen and (max-width: 400px) {
     .clasificacionesx3 {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-me {
+        width: 100% !important;
     }
 }

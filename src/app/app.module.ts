@@ -108,6 +108,7 @@ import { RenameCheckComponent } from './displays/prcRestaurante/components/renam
 import { ImageRestaurantComponent } from './displays/prcRestaurante/components/image-restaurant/image-restaurant.component';
 import { MoveCheckTransactionComponent } from './displays/prcRestaurante/components/move-check-transaction/move-check-transaction.component';
 import { ErrorComandaComponent } from './displays/prcRestaurante/components/error-comanda/error-comanda.component';
+import { MoveRestaurantComponent } from './displays/prcRestaurante/components/move-restaurant/move-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -186,6 +187,7 @@ import { ErrorComandaComponent } from './displays/prcRestaurante/components/erro
     ImageRestaurantComponent,
     MoveCheckTransactionComponent,
     ErrorComandaComponent,
+    MoveRestaurantComponent,
   ],
   imports: [
     MatCardModule,
