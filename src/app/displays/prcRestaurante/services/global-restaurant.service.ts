@@ -58,6 +58,13 @@ export class GlobalRestaurantService {
     viewCheck: boolean = true;
     nameCheck: string = "";
 
+    selectAllChecks: boolean = false; //Seleccionar todas las cuentas
+    selectTranAllChecks: boolean = false; //Seleccionar todas las transacciones de una cuenta
+
+    viewChecksMove: boolean = true;
+    viewTranCheckMove: boolean = false;
+    indexMoveCheck: number = 0;
+
     constructor(
         private _notificationService: NotificationsService,
         private _translate: TranslateService,

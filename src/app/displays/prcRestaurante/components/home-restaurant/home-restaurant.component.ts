@@ -49,6 +49,7 @@ export class HomeRestaurantComponent implements OnInit {
 
   series: SerieInterface[] = [];
   indexCheck: number = 0;
+  indexMoveCheck: number = 0;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -108,9 +109,33 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   viewMoveCheckTable() {
+
+    // if (this.restaurantService.orders.length == 0) {
+    //   this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
+    //   return;
+    // }
+
     this.restaurantService.viewMoveCheckTable = true;
     this.restaurantService.viewLocations = false;
     this.restaurantService.viewRestaurant = false;
+  }
+
+  selectCheckAll() {
+
+    this.restaurantService.selectAllChecks = !this.restaurantService.selectAllChecks;
+
+    this.restaurantService.orders.forEach(element => {
+      element.selected = this.restaurantService.selectAllChecks;
+    });
+  }
+
+  selectTranCheckAll() {
+
+    this.restaurantService.selectTranAllChecks = !this.restaurantService.selectTranAllChecks;
+
+    this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones.forEach(element => {
+      element.selected = this.restaurantService.selectTranAllChecks;
+    });
   }
 
   backHome() {
@@ -522,5 +547,11 @@ export class HomeRestaurantComponent implements OnInit {
       })
       .join(', ');
   }
+
+  viewChecks() {
+    this.restaurantService.viewChecksMove = true;
+    this.restaurantService.viewTranCheckMove = false;
+  }
+
 
 }

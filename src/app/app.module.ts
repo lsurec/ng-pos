@@ -106,6 +106,7 @@ import { NewCheckComponent } from './displays/prcRestaurante/components/new-chec
 import { SelectCheckComponent } from './displays/prcRestaurante/components/select-check/select-check.component';
 import { RenameCheckComponent } from './displays/prcRestaurante/components/rename-check/rename-check.component';
 import { ImageRestaurantComponent } from './displays/prcRestaurante/components/image-restaurant/image-restaurant.component';
+import { MoveCheckTransactionComponent } from './displays/prcRestaurante/components/move-check-transaction/move-check-transaction.component';
 
 @NgModule({
   declarations: [
@@ -182,6 +183,7 @@ import { ImageRestaurantComponent } from './displays/prcRestaurante/components/i
     SelectCheckComponent,
     RenameCheckComponent,
     ImageRestaurantComponent,
+    MoveCheckTransactionComponent,
   ],
   imports: [
     MatCardModule,

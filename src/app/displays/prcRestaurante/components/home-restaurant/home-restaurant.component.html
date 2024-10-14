@@ -481,8 +481,7 @@
                                         matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
                                         <mat-icon>note_add</mat-icon>
                                     </button>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                                    <button mat-icon-button aria-label matTooltip="Trasladar"
                                         (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
@@ -526,8 +525,7 @@
                                 (click)="newDoc()">
                                 <mat-icon>note_add</mat-icon>
                             </button>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                                (click)="viewMoveCheckTable()">
+                            <button mat-icon-button aria-label matTooltip="Trasladar" (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
                         </ng-container>
@@ -618,7 +616,6 @@
                                                     <span class="spacer"></span>
                                                     <mat-icon matTooltip="Ver producto" class="verimagen"
                                                         (click)="imagen(tran.producto)">image</mat-icon>
-                                                    <mat-icon class="verimagen">more_vert</mat-icon>
                                                 </div>
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
@@ -655,15 +652,32 @@
         <div *ngIf="restaurantService.viewMoveCheckTable">
 
             <mat-toolbar-row class="head__sidenav">
-                <button mat-icon-button matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove "
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!-- Rregresar de transacciones de cuenta -->
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove && restaurantService.viewTranCheckMove "
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewChecks()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <span class="spacer"></span>
                 <p class="textBold">Trasladar</p>
                 <span class="spacer"></span>
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove"
+                    matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
+                    <mat-icon>select_all</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove "
+                    matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
+                    <mat-icon>select_all</mat-icon>
+                </button>
             </mat-toolbar-row>
 
             <div class="contenido-traslado">
+
+                <app-move-check-transaction></app-move-check-transaction>
 
             </div>
 

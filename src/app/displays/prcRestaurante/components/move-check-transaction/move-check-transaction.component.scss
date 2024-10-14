@@ -1,0 +1,252 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris); //bordes y texto gris
+$blanco        : var(--blanco);
+$verde         : var(--cargo-claro);
+$rojo          : var(--descuento-claro);
+$azul          : var(--primario-claro);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.contenido::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenido::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.contenido {
+    padding   : 10px;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100vh - 128px);
+}
+
+.textBold {
+    font-weight: 550;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.textCenter12 {
+    text-align: center;
+}
+
+.textBoldPref12 {
+    font-weight: 550;
+    font-size  : 12px !important;
+    color      : $azul;
+}
+
+.irDetalleCuenta {
+    font-weight  : 550;
+    font-size    : 12px !important;
+    color        : $azul;
+    border-bottom: solid 1px $azul;
+    text-align   : center;
+}
+
+.irDetalleCuenta:hover {
+    font-weight: bold;
+}
+
+.cuenta-detalle {
+    padding    : 10px;
+    display    : flex;
+    align-items: center;
+}
+
+.cuenta {
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    border-radius: 5px;
+}
+
+.cuenta-detalle:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.cuentas {
+    display              : grid;
+    grid-template-columns: repeat(3, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 10px 15px;
+    padding              : 10px 20px 0px;
+}
+
+.espacioCuenta {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
+}
+
+.circulo {
+    background-color: $personalizado;
+    width           : 50px;
+    height          : 50px;
+    border-radius   : 50%;
+    overflow        : hidden;
+    display         : flex;
+    align-items     : center;
+}
+
+.icoCuenta {
+    color    : $blanco;
+    font-size: 25px;
+}
+
+
+.icoEditar {
+    font-size: 18px;
+    cursor   : pointer;
+}
+
+.icoSelect {
+    font-size      : 18px;
+    cursor         : pointer;
+    background     : $verde;
+    color          : $blanco;
+    display        : inline-flex;
+    justify-content: center;
+    align-items    : center;
+    border-radius  : 50%;
+    /* Hace que el fondo sea un círculo */
+    width          : 24px;
+    /* Ajusta el ancho del fondo */
+    height         : 24px;
+    /* Ajusta la altura del fondo */
+    padding        : 0;
+    /* Elimina el padding extra */
+}
+
+.detalleCuenta {
+    width: calc(100% - 60px);
+}
+
+.info {
+    font-size   : 12px !important;
+    color       : $rojo;
+    display     : flex;
+    align-items : center;
+    padding-left: 20px;
+    text-align  : right;
+}
+
+.marginRihgt {
+    margin-right: 5px;
+}
+
+.verTansacciones {
+    padding: 10px;
+    cursor : pointer;
+}
+
+.verTansacciones:hover {
+    cursor: pointer;
+}
+
+.textBold {
+    font-weight: 550;
+}
+
+.cantidad {
+    height       : 35px;
+    background   : none;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $bordes;
+    border-bottom: 0.5px solid $bordes;
+    color        : $personalizado;
+    width        : 25px;
+    text-align   : center;
+}
+
+.sumar,
+.restar {
+    height      : 35px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $bordes;
+    color       : $personalizado;
+    width       : 25px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width      : 100%;
+    text-align : center;
+    font-size  : 20px !important;
+    align-items: flex-end;
+    display    : inline-grid;
+}
+
+.sumar-restar:hover {
+    cursor: pointer;
+}
+
+.transaccion {
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    padding      : 10px;
+    padding-right: 20px;
+    display      : flex;
+    align-items  : center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.detalleTransaccion {
+    width: 100%;
+}
+
+.productoImagen {
+    margin: 0px 10px;
+}
+
+.image-product {
+    height       : 100px;
+    border-radius: 10px;
+}
