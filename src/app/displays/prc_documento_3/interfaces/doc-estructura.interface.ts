@@ -14,7 +14,7 @@ export interface Documento {
   Consecutivo_Interno:number;
   Doc_Tra_Monto: number;
   Doc_CA_Monto: number;
-  Doc_ID_Certificador: number;
+  Doc_ID_Certificador: number | null;
   Doc_Cuenta_Correntista_Ref: number | null;
   Doc_ID_Documento_Ref: number;
   Doc_FEL_numeroDocumento: string | null;
@@ -38,19 +38,20 @@ export interface Documento {
 
 export interface Transaccion {
   D_Consecutivo_Interno:number;
-  Tra_Consecutivo_Interno: number;
-  Tra_Consecutivo_Interno_Padre: number | null;
   Tra_Bodega: number;
-  Tra_Producto: number;
-  Tra_Unidad_Medida: number;
   Tra_Cantidad: number;
-  Tra_Tipo_Cambio: number;
-  Tra_Moneda: number;
-  Tra_Tipo_Precio: number | null;
+  Tra_Consecutivo_Interno_Padre: number | null;
+  Tra_Consecutivo_Interno: number;
   Tra_Factor_Conversion: number | null;
-  Tra_Tipo_Transaccion: number;
-  Tra_Monto: number;
+  Tra_Moneda: number;
   Tra_Monto_Dias: number |  null;
+  Tra_Monto: number;
+  Tra_Producto: number;
+  Tra_Tipo_Cambio: number;
+  Tra_Tipo_Precio: number | null;
+  Tra_Tipo_Transaccion: number;
+  Tra_Unidad_Medida: number;
+  Tra_Observacion:string | null;
 }
 
 export interface CargoAbono {

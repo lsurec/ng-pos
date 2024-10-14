@@ -26,6 +26,14 @@ import { ImageRestaurantComponent } from '../image-restaurant/image-restaurant.c
 import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
 import { OrderInterface } from '../../interfaces/order.interface';
 import { GarnishTraInteface } from '../../interfaces/garnish.interface';
+import { Documento, Transaccion } from 'src/app/displays/prc_documento_3/interfaces/doc-estructura.interface';
+import { PostDocumentInterface } from 'src/app/displays/prc_documento_3/interfaces/post-document.interface';
+import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
+import { DataComandaInterface, FormatoComandaInterface } from '../../interfaces/data-comanda.interface';
+import { PrinterService } from 'src/app/services/printer.service';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: 'app-home-restaurant',
@@ -35,6 +43,8 @@ import { GarnishTraInteface } from '../../interfaces/garnish.interface';
     RestaurantService,
     ProductService,
     SerieService,
+    PrinterService,
+    DocumentService,
   ]
 })
 export class HomeRestaurantComponent implements OnInit {
@@ -68,10 +78,11 @@ export class HomeRestaurantComponent implements OnInit {
     private _translate: TranslateService,
     private _facturaService: FacturaService,
     private _serieService: SerieService,
-    private _productService: ProductService,
     private _eventService: EventService,
     private _loadRestaurantService: LoadRestaurantService,
     private _dialog: MatDialog,
+    private _documentService: DocumentService,
+    private _printService: PrinterService,
   ) {
 
   }
@@ -508,6 +519,355 @@ export class HomeRestaurantComponent implements OnInit {
         return `${garnishDescriptions} ${selectedDescription}`;
       })
       .join(', ');
+  }
+  //Comandar
+  async printComanda(indexOrder: number) {
+
+    let traTotal: number = 0;
+    let transactions: Transaccion[] = [];
+
+
+    let firstPart: number = 0;
+    if (!this.restaurantService.orders[indexOrder].consecutivoRef) {
+      firstPart = this.restaurantService.orders[indexOrder].consecutivoRef;
+    } else {
+      firstPart = Math.floor(Math.random() * 900) + 100;
+    }
+
+    let consecutivo: number = -1;
+
+    this.restaurantService.orders[indexOrder].transacciones.forEach(tra => {
+      let padre: number = consecutivo;
+
+      tra.guarniciones.forEach(element => {
+        consecutivo++;
+
+
+        let fBodega: number = 0;
+        let fProducto: number = 0;
+        let fUnidadMedida: number = 0;
+        let fCantidad: number = 0;
+
+        if (element.selected.f_Producto) {
+          fBodega = element.selected.f_Bodega!;
+          fProducto = element.selected.f_Producto;
+          fUnidadMedida = element.selected.f_Unidad_Medida!;
+          fCantidad = element.selected.cantidad ?? 0;
+        } else {
+          for (let i = 0; i < element.garnishs.length; i++) {
+            const garnish = element.garnishs[i];
+
+            fBodega = garnish.f_Bodega!;
+            fProducto = garnish.f_Producto!;
+            fUnidadMedida = garnish.f_Unidad_Medida!;
+            fCantidad = garnish.cantidad ?? 0;
+          }
+        }
+
+        transactions.push(
+          {
+            D_Consecutivo_Interno: firstPart,
+            Tra_Bodega: fBodega,
+            Tra_Cantidad: fCantidad,
+            Tra_Consecutivo_Interno: consecutivo,
+            Tra_Consecutivo_Interno_Padre: padre,
+            Tra_Factor_Conversion: !tra.precio.precio ? tra.precio.id : null,
+            Tra_Moneda: tra.precio.moneda,
+            Tra_Monto: tra.cantidad * tra.precio.precioU,
+            Tra_Monto_Dias: null,
+            Tra_Producto: fProducto,
+            Tra_Tipo_Cambio: this.tipoCambio,
+            Tra_Tipo_Precio: tra.precio.precio ? tra.precio.id : null,
+            Tra_Tipo_Transaccion: 1,//TODO:Hace falta,
+            Tra_Unidad_Medida: fUnidadMedida,
+            Tra_Observacion: `${element.garnishs.map(e => e.descripcion).join(" ")} ${element.selected.descripcion}`,
+          }
+        );
+
+      });
+
+
+      transactions.push(
+        {
+          D_Consecutivo_Interno: firstPart,
+          Tra_Bodega: tra.bodega.bodega,
+          Tra_Cantidad: tra.cantidad,
+          Tra_Consecutivo_Interno: padre,
+          Tra_Consecutivo_Interno_Padre: null,
+          Tra_Factor_Conversion: !tra.precio.precio ? tra.precio.id : null,
+          Tra_Moneda: tra.precio.moneda,
+          Tra_Monto: tra.cantidad * tra.precio.precioU,
+          Tra_Monto_Dias: null,
+          Tra_Observacion: tra.observacion,
+          Tra_Producto: tra.producto.producto,
+          Tra_Tipo_Cambio: this.tipoCambio,
+          Tra_Tipo_Precio: tra.precio.precio ? tra.precio.id : null,
+          Tra_Tipo_Transaccion: 1, //TODO:Hace falta
+          Tra_Unidad_Medida: tra.producto.unidad_Medida,
+        }
+      );
+
+      traTotal += tra.cantidad * tra.precio.precioU;
+
+      consecutivo++;
+
+    });
+
+
+
+    //Obtener fecha y hora actual
+    let currentDate: Date = new Date();
+
+
+    let dateConsecutivo: Date = new Date();
+
+    let randomNumber1: number = Math.floor(Math.random() * 900) + 100;
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    let strNum1: string = randomNumber1.toString();
+    let combinedStr: string = strNum1 +
+      dateConsecutivo.getDate() +
+      (dateConsecutivo.getMonth() + 1) +
+      dateConsecutivo.getFullYear() +
+      dateConsecutivo.getHours() +
+      dateConsecutivo.getMinutes() +
+      dateConsecutivo.getSeconds();
+
+    //ref id
+    let idDocumentoRef = parseInt(combinedStr, 10);
+
+    let doc: Documento = {
+      Consecutivo_Interno: firstPart,
+      Doc_CA_Monto: 0,
+      Doc_Cargo_Abono: [],
+      Doc_Confirmar_Orden: false,
+      Doc_Cuenta_Correntista: 1, //Parametrizar,
+      Doc_Cuenta_Correntista_Ref: this.restaurantService.orders[indexOrder].mesero.cuenta_Correntista,
+      Doc_Cuenta_Cta: this.restaurantService.orders[indexOrder].mesero.cuenta_Cta,
+      Doc_Elemento_Asignado: 1, //TODO: Hace falta
+      Doc_Empresa: this.empresa.empresa,
+      Doc_Estacion_Trabajo: this.estacion.estacion_Trabajo,
+      Doc_Fecha_Documento: currentDate.toISOString(),
+      Doc_Fecha_Fin: null,
+      Doc_Fecha_Ini: null,
+      Doc_FEL_fechaCertificacion: null,
+      Doc_FEL_numeroDocumento: null,
+      Doc_FEL_Serie: null,
+      Doc_FEL_UUID: null,
+      Doc_ID_Certificador: null,
+      Doc_ID_Documento_Ref: idDocumentoRef,
+      Doc_Observacion_1: "",
+      Doc_Ref_Descripcion: null,
+      Doc_Ref_Fecha_Fin: null,
+      Doc_Ref_Fecha_Ini: null,
+      Doc_Ref_Observacion: null,
+      Doc_Ref_Observacion_2: null,
+      Doc_Ref_Observacion_3: null,
+      Doc_Ref_Tipo_Referencia: null,
+      Doc_Serie_Documento: this.restaurantService.serie!.serie_Documento,
+      Doc_Tipo_Documento: this.tipoDocumento,
+      Doc_Tipo_Pago: 1,//TODO:  Hace falta
+      Doc_Tra_Monto: traTotal,
+      Doc_Transaccion: transactions,
+      Doc_UserName: this.user,
+    }
+
+    let document: PostDocumentInterface = {
+      estado: 1,
+      estructura: JSON.stringify(doc),
+      user: this.user,
+    }
+
+    if (!this.restaurantService.orders[indexOrder].consecutivo) {
+
+
+      const apiPostDoc = () => this._documentService.postDocument(this.token, document);
+
+      this.restaurantService.isLoading = true;
+
+      //consumo del servico para crear el documento
+      let resDoc = await ApiService.apiUse(apiPostDoc);
+      this.restaurantService.isLoading = false;
+
+      if (!resDoc.response) {
+
+        this.showError(resDoc);
+        return;
+      }
+
+      this.restaurantService.orders[indexOrder].consecutivo = resDoc.response.data;
+
+
+
+    } else {
+
+      const apiPostDoc = () => this._documentService.updateDocument(
+        this.token,
+        document,
+        this.restaurantService.orders[indexOrder].consecutivo,
+      );
+
+      this.restaurantService.isLoading = true;
+
+      //consumo del servico para crear el documento
+      let resDoc = await ApiService.apiUse(apiPostDoc);
+      this.restaurantService.isLoading = false;
+
+      if (!resDoc.response) {
+
+        this.showError(resDoc);
+        return;
+      }
+
+
+
+    }
+
+    //TODO:Verificar depues de comandadas (impresion)
+    this.restaurantService.orders[indexOrder].transacciones.forEach(element => {
+      element.processed = true;
+    });
+
+
+    //TODO:Usao web socket
+
+    await this.directPrint(indexOrder);
+
+    this.restaurantService.isLoading = false;
+
+  }
+
+  async directPrint(indexOrder: number) {
+
+    let api = () => this._documentService.getDataComanda(
+      this.user,
+      this.token,
+      this.restaurantService.orders[indexOrder].consecutivo,
+    );
+
+    this.restaurantService.isLoading = true;
+
+
+    let res = await ApiService.apiUse(api);
+
+
+    if (!res.status) {
+      this.restaurantService.isLoading = false;
+      this.showError(res);
+      return;
+    }
+
+    let detalles: DataComandaInterface[] = res.response;
+    let formats: FormatoComandaInterface[] = [];
+
+
+    detalles.forEach(detalle => {
+      let item: FormatoComandaInterface = {
+        bodega: detalle.bodega,
+        detalles: [detalle],
+        ipAdress: 'POS-80',
+        // encabezado.impresora = "POS-80"
+
+        // ipAdress: detalle.printerName,
+        error: "",
+      };
+
+      if (formats.length == 0) {
+
+
+        formats.push(item);
+      } else {
+        let indexBodega: number = -1;
+        for (let i = 0; i < formats.length; i++) {
+          const formato = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if (indexBodega == -1) {
+          formats.push(item);
+        } else {
+          formats[indexBodega].detalles.push(detalle);
+        }
+
+      }
+
+    });
+
+
+
+
+    //Imprimir formatos
+    for (const format of formats) {
+
+      const docDefinition = await this._printService.getComandaTMU(format);
+
+      let resService: ResApiInterface = await this._printService.getStatus();
+
+      if (!resService.status) {
+        format.error = this._translate.instant('pos.alertas.sin_servicio_impresion');
+      }
+
+      if (!format.error) {
+
+        let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(format.ipAdress);
+
+        if (!resPrintStatus.status) {
+          format.error = `${this._translate.instant('pos.factura.impresora')} ${format.ipAdress} ${this._translate.instant('pos.factura.noDisponible')}.`;
+        }
+
+
+        if (!format.error) {
+          const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
+
+          // return;
+          pdfDocGenerator.getBlob(async (blob) => {
+            // ...
+            var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+            let resPrint: ResApiInterface = await this._printService.postPrint(
+              pdfFile,
+              format.ipAdress,
+              "1",
+            );
+
+
+            if (!resPrint.status) {
+
+              format.error = "Fallo al imprimir";
+              console.error(resPrint.response);
+
+            }
+
+          });
+
+        }
+
+      }
+
+
+    }
+
+    this.restaurantService.isLoading = false;
+
+    // Filtrar los elementos que tienen algo en la propiedad 'error'
+    const comandasConError = formats.filter(comanda => comanda.error !== '');
+
+    if (comandasConError.length > 0) {
+      //TODO:Mostrar dialogo con errores para volver a imprimir y marcar como enviadas las que sí se enviaron
+
+      const doc = await this._printService.getComandaTMU(comandasConError[0]);
+
+      pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
+
+
+    } else {
+
+      this.notificationService.openSnackbar("Comanda enviada");
+    }
+
   }
 
 }

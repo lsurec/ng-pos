@@ -2496,6 +2496,7 @@ export class FacturaComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
               Tra_Monto_Dias: null,
+              Tra_Observacion: null,
             }
           );
 
@@ -2523,7 +2524,7 @@ export class FacturaComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
               Tra_Monto_Dias: null,
-
+              Tra_Observacion:null,
             }
           );
         }
@@ -2547,6 +2548,7 @@ export class FacturaComponent implements OnInit {
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
           Tra_Monto: transaccion.total,
           Tra_Monto_Dias: transaccion.precioDia,
+          Tra_Observacion:null,
         }
 
       );

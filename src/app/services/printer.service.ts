@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { FacturaService } from '../displays/prc_documento_3/services/factura.service';
+import { FormatoComandaInterface } from '../displays/prcRestaurante/interfaces/data-comanda.interface';
 
 @Injectable()
 export class PrinterService {
@@ -15,8 +16,8 @@ export class PrinterService {
 
     //inicializar http
     constructor(private _http: HttpClient,
-    private _facturaService: FacturaService,
-    private _translate: TranslateService,
+        private _facturaService: FacturaService,
+        private _translate: TranslateService,
     ) {
     }
 
@@ -1727,7 +1728,7 @@ export class PrinterService {
         };
 
         var docDefinition: TDocumentDefinitions = {
-           
+
             info: {
                 title: doc.documento.titulo,
                 author: 'Demosoft',
@@ -2067,6 +2068,128 @@ export class PrinterService {
                     margin: [0, 0, 0, 4],
                     alignment: 'center',
                 },
+            },
+        };
+
+        return docDefinition;
+    }
+
+
+    async getComandaTMU(format: FormatoComandaInterface) {
+
+        let transacciones: any[] = [];
+
+        format.detalles.forEach(item => {
+            transacciones.push(
+                [
+                    {
+                        text: item.cantidad,
+                        style: "normalText10"
+                    },
+                    {
+                        text: `${item.des_Producto}${item.observacion ? ' (' + item.observacion + ')' : ''}`,
+                        style: "normalText10"
+                    },
+                ],
+            );
+        });
+
+        let currentDate:Date = new Date(format.detalles[0].fecha_Hora);
+
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() +   1;
+        let year = currentDate.getFullYear();
+        let hour = currentDate.getHours();
+        let minutes = currentDate.getMinutes();
+        let seconds = currentDate.getSeconds();
+
+        let dateStr = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+
+
+        var docDefinition: TDocumentDefinitions = {
+
+            info: {
+                title: format.detalles[0].bodega,
+                author: 'DEMOSOFT S.A.',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                {
+                    text: format.detalles[0].des_Ubicacion, style: 'center10',
+                },
+                {
+                    text: `Mesa: ${format.detalles[0].des_Mesa}`, style: 'center',
+                },
+                {
+                    text: `${format.detalles[0].serie_Documento} - ${format.detalles[0].iD_Documento_Ref}`, style: 'center10',
+                },
+                {
+                    margin: [10, 10, 10, 0],
+                    layout: 'noBorders',
+                    table: {
+                        // headers are automatically repeated if the table spans over multiple pages
+                        // you can declare how many rows should be treated as headers
+                        headerRows: 1,
+                        widths: ['10%', '90%'],
+                        body: [
+                            [{ text: 'Cant.', style: "normalText" }, { text: 'Descripción', style: "normalText" },],
+                            ...transacciones
+                        ],
+
+                    }
+                },
+                {
+                    margin: [0, 10, 0, 0],
+                    text: `Le atendió: ${format.detalles[0].userName.toUpperCase()}`, style: 'center',
+                },
+                {
+                    text: dateStr, style: 'center',
+                },
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+            ],
+            styles: {
+                center10: {
+                    fontSize: 10,
+                    alignment: 'center',
+                },
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+
+                normalText: {
+                    fontSize: 8,
+                },
+                normalText10: {
+                    fontSize: 10,
+                },
+
+
             },
         };
 
