@@ -382,7 +382,7 @@ export class HomeRestaurantComponent implements OnInit {
 
 
     let firstPart: number = 0;
-    if (this.restaurantService.orders[indexOrder].consecutivoRef != 0) {
+    if (!this.restaurantService.orders[indexOrder].consecutivoRef) {
       firstPart = this.restaurantService.orders[indexOrder].consecutivoRef;
     } else {
       firstPart = Math.floor(Math.random() * 900) + 100;
@@ -532,7 +532,7 @@ export class HomeRestaurantComponent implements OnInit {
       user: this.user,
     }
 
-    if (this.restaurantService.orders[indexOrder].consecutivo == 0) {
+    if (!this.restaurantService.orders[indexOrder].consecutivo) {
 
 
       const apiPostDoc = () => this._documentService.postDocument(this.token, document);
@@ -616,13 +616,20 @@ export class HomeRestaurantComponent implements OnInit {
 
 
     detalles.forEach(detalle => {
+      let item:FormatoComandaInterface = {
+        bodega: detalle.bodega,
+        detalles: [detalle],
+        ipAdress: 'POS-80',
+        // encabezado.impresora = "POS-80"
+
+        // ipAdress: detalle.printerName,
+        error: "",
+      };
+
       if (formats.length == 0) {
-        formats.push({
-          bodega: detalle.bodega,
-          detalles: [detalle],
-          ipAdress: detalle.printerName,
-          error: "",
-        });
+
+        
+        formats.push(item);
       } else {
         let indexBodega: number = -1;
         for (let i = 0; i < formats.length; i++) {
@@ -634,12 +641,7 @@ export class HomeRestaurantComponent implements OnInit {
         }
 
         if (indexBodega == -1) {
-          formats.push({
-            bodega: detalle.bodega,
-            detalles: [detalle],
-            ipAdress: detalle.printerName,
-            error: "",
-          });
+          formats.push(item);
         } else {
           formats[indexBodega].detalles.push(detalle);
         }
@@ -663,7 +665,6 @@ export class HomeRestaurantComponent implements OnInit {
       }
 
       if (!format.error) {
-        // encabezado.impresora = "POS-80"
 
         let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(format.ipAdress);
 
@@ -711,9 +712,13 @@ export class HomeRestaurantComponent implements OnInit {
     if (comandasConError.length > 0) {
       //TODO:Mostrar dialogo con errores para volver a imprimir y marcar como enviadas las que sí se enviaron
 
-      
+      const doc = await this._printService.getComandaTMU(comandasConError[0]);
+
+      pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
+
+
     } else {
-      
+
       this.notificationService.openSnackbar("Comanda enviada");
     }
 

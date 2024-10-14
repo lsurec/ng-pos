@@ -183,7 +183,8 @@ export class DocumentService {
         )
 
         //consumo de api
-        return this._http.post(`${this._urlBase}Printer/comanda/${user}/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.get(`${this._urlBase}Printer/comanda/${user}/${consecutivo}`, { headers: headers, observe: 'response' });
+
     }
 
 
