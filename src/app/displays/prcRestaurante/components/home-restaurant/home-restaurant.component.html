@@ -119,7 +119,7 @@
                                         <mat-icon>note_add</mat-icon>
                                     </button>
                                     <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printDoc()">
+                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printComanda(0)">
                                         <mat-icon>print</mat-icon>
                                     </button>
                                 </ng-container>
@@ -156,7 +156,7 @@
                                 <mat-icon>note_add</mat-icon>
                             </button>
                             <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                                (click)="printDoc()">
+                                (click)="printComanda(0)">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>
@@ -485,6 +485,10 @@
                                         (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
+                                    <button mat-icon-button aria-label
+                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printComanda(0)">
+                                        <mat-icon>print</mat-icon>
+                                    </button>
                                 </ng-container>
                             </div>
                         </mat-toolbar-row>
@@ -527,6 +531,10 @@
                             </button>
                             <button mat-icon-button aria-label matTooltip="Trasladar" (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
+                            </button>
+                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
+                                (click)="printComanda(0)">
+                                <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>
                         <div class="circulo-inicial" (click)="sidenavend.open()">
