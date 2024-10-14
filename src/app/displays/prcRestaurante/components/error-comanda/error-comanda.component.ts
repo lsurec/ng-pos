@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-error-comanda',
@@ -42,54 +43,57 @@ export class ErrorComandaComponent {
   }
 
 
-  async printAgain(index: number) {
+  async printAgain(indexFormat: number) {
 
 
     this.restaurantService.isLoading = true;
 
 
-    this.erroresComanda[index].error = "";
+    this.erroresComanda[indexFormat].error = "";
 
-    const docDefinition = await this._printService.getComandaTMU(this.erroresComanda[index]);
+    const docDefinition = await this._printService.getComandaTMU(this.erroresComanda[indexFormat]);
 
     let resService: ResApiInterface = await this._printService.getStatus();
 
     if (!resService.status) {
-      this.erroresComanda[index].error = this._translate.instant('pos.alertas.sin_servicio_impresion');
+      this.erroresComanda[indexFormat].error = this._translate.instant('pos.alertas.sin_servicio_impresion');
     }
 
-    if (!this.erroresComanda[index].error) {
+    if (!this.erroresComanda[indexFormat].error) {
 
-      let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(this.erroresComanda[index].ipAdress);
+
+
+      let resPrintStatus: ResApiInterface = await this._printService.getStatusPrint(this.erroresComanda[indexFormat].ipAdress);
 
       if (!resPrintStatus.status) {
-        this.erroresComanda[index].error = `${this._translate.instant('pos.factura.impresora')} ${this.erroresComanda[index].ipAdress} ${this._translate.instant('pos.factura.noDisponible')}.`;
+        this.erroresComanda[indexFormat].error = `${this._translate.instant('pos.factura.impresora')} ${this.erroresComanda[indexFormat].ipAdress} ${this._translate.instant('pos.factura.noDisponible')}.`;
       }
 
 
-      if (!this.erroresComanda[index].error) {
+      if (!this.erroresComanda[indexFormat].error) {
         const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
+        console.log(this.erroresComanda[indexFormat]);
+
         // return;
-        pdfDocGenerator.getBlob(async (blob) => {
-          // ...
-          var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
-          let resPrint: ResApiInterface = await this._printService.postPrint(
-            pdfFile,
-            this.erroresComanda[index].ipAdress,
-            "1",
-          );
+        const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
+
+        var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+        let resPrint: ResApiInterface = await this._printService.postPrint(
+          pdfFile,
+          this.erroresComanda[indexFormat].ipAdress,
+          "1",
+        );
 
 
-          if (!resPrint.status) {
+        if (!resPrint.status) {
 
-            this.erroresComanda[index].error = "Fallo al imprimir";
-            console.error(resPrint.response);
+          this.erroresComanda[indexFormat].error = "Fallo al imprimir";
 
-          }
+        }
 
-        });
 
       }
 
@@ -98,12 +102,12 @@ export class ErrorComandaComponent {
 
     this.restaurantService.isLoading = false;
 
-    if (this.erroresComanda[index].error) {
+    if (this.erroresComanda[indexFormat].error) {
       this._notificationService.openSnackbar("Algo salió mal");
       return;
     } else {
       //eliniinar un elento de la lista
-      this.erroresComanda.splice(index, 1);
+      this.erroresComanda.splice(indexFormat, 1);
 
 
       if (this.erroresComanda.length == 0) {
@@ -113,6 +117,7 @@ export class ErrorComandaComponent {
     }
 
   }
+
 
 
 
@@ -190,7 +195,10 @@ export class ErrorComandaComponent {
           const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
           // return;
-          pdfDocGenerator.getBlob(async (blob) => {
+
+          const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
+
+
             // ...
             var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
@@ -208,7 +216,6 @@ export class ErrorComandaComponent {
 
             }
 
-          });
 
         }
 
@@ -228,6 +235,7 @@ export class ErrorComandaComponent {
       return;
 
     } else {
+
       this._notificationService.openSnackbar("Comanda enviada"); //TODO:Translate
       this.closeDialog();
 
