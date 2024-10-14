@@ -104,24 +104,8 @@
                         <mat-toolbar-row>
                             <div class="barras">
                                 <span class="spacer"></span>
-                                <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.guardarCambios' | translate }}" (click)="sendDoc()">
-                                    <mat-icon>save</mat-icon>
-                                </button>
+                                <!-- Aqui van los botones -->
                                 <ng-container>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                                        (click)="verHistorial()">
-                                        <mat-icon>schedule</mat-icon>
-                                    </button>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
-                                        <mat-icon>note_add</mat-icon>
-                                    </button>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printComanda(0)">
-                                        <mat-icon>print</mat-icon>
-                                    </button>
                                 </ng-container>
                             </div>
                         </mat-toolbar-row>
@@ -140,25 +124,8 @@
                         <p class="titulo">{{dataUserService.nameDisplay }}</p>
 
                         <span class="spacer"></span>
-
-                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.guardarCambios' | translate }}"
-                            (click)="sendDoc()">
-                            <mat-icon>save</mat-icon>
-                        </button>
-
+                        <!-- Aqui van los botones -->
                         <ng-container>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                                (click)="verHistorial()">
-                                <mat-icon>schedule</mat-icon>
-                            </button>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
-                                (click)="newDoc()">
-                                <mat-icon>note_add</mat-icon>
-                            </button>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                                (click)="printComanda(0)">
-                                <mat-icon>print</mat-icon>
-                            </button>
                         </ng-container>
                         <div class="circulo-inicial" (click)="sidenavend.open()">
                             <p class="inicial-usuario">{{user[0]}}</p>
@@ -467,26 +434,13 @@
                         <mat-toolbar-row>
                             <div class="barras">
                                 <span class="spacer"></span>
-                                <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.guardarCambios' | translate }}" (click)="sendDoc()">
-                                    <mat-icon>save</mat-icon>
-                                </button>
                                 <ng-container>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                                        (click)="verHistorial()">
-                                        <mat-icon>schedule</mat-icon>
-                                    </button>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}" (click)="newDoc()">
-                                        <mat-icon>note_add</mat-icon>
-                                    </button>
                                     <button mat-icon-button aria-label matTooltip="Trasladar"
                                         (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
-                                    <button mat-icon-button aria-label
-                                        matTooltip="{{ 'pos.botones.imprimir' | translate }}" (click)="printComanda(0)">
+                                    <!-- TODO: Traducir -->
+                                    <button mat-icon-button matTooltip="Comandar" (click)="printComanda(0)">
                                         <mat-icon>print</mat-icon>
                                     </button>
                                 </ng-container>
@@ -514,26 +468,12 @@
                         <p class="titulo">{{dataUserService.nameDisplay }}</p>
 
                         <span class="spacer"></span>
-
-                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.guardarCambios' | translate }}"
-                            (click)="sendDoc()">
-                            <mat-icon>save</mat-icon>
-                        </button>
-
                         <ng-container>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.factura.docRecientes' | translate }}"
-                                (click)="verHistorial()">
-                                <mat-icon>schedule</mat-icon>
-                            </button>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.nuevoDoc' | translate }}"
-                                (click)="newDoc()">
-                                <mat-icon>note_add</mat-icon>
-                            </button>
                             <button mat-icon-button aria-label matTooltip="Trasladar" (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
-                            <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.imprimir' | translate }}"
-                                (click)="printComanda(0)">
+                            <!-- TODO: Traducir -->
+                            <button mat-icon-button matTooltip="Comandar" (click)="printComanda(0)">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>

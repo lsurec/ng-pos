@@ -561,6 +561,11 @@ export class HomeRestaurantComponent implements OnInit {
   //Comandar
   async printComanda(indexOrder: number) {
 
+    if (!this.restaurantService.viewTranCheck || !this.restaurantService.viewTranCheck) {
+      this._notificationService.openSnackbar("Seleccione una cuenta para comandar."); //TODO:Translate
+      return;
+    }
+
     let traTotal: number = 0;
     let transactions: Transaccion[] = [];
 
