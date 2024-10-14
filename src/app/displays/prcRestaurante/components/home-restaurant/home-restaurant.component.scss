@@ -893,6 +893,16 @@ label[for*='6']:before {
     display: none;
 }
 
+.fondoDetalle {
+    cursor                   : pointer;
+    display                  : flex;
+    align-items              : center;
+    height                   : 100px;
+    background               : $blanco;
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
 //diseño cuentas
 
 .variasCuentas {

@@ -85,8 +85,8 @@
                                     (click)="backHome()">
                                     <mat-icon>arrow_back</mat-icon>
                                 </button>
-                                <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="refresh()">
+                                <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                                    (click)="refresh()">
                                     <mat-icon>refresh</mat-icon>
                                 </button>
                                 <span class="spacer"></span>
@@ -115,7 +115,7 @@
                             (click)="backHome()">
                             <mat-icon>arrow_back</mat-icon>
                         </button>
-                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
                             (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
                         </button>
@@ -415,8 +415,8 @@
                                     <mat-icon>arrow_back</mat-icon>
                                 </button>
 
-                                <button mat-icon-button aria-label
-                                    matTooltip="{{ 'pos.botones.actualizar' | translate }}" (click)="refresh()">
+                                <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                                    (click)="refresh()">
                                     <mat-icon>refresh</mat-icon>
                                 </button>
                                 <span class="spacer"></span>
@@ -435,8 +435,7 @@
                             <div class="barras">
                                 <span class="spacer"></span>
                                 <ng-container>
-                                    <button mat-icon-button aria-label matTooltip="Trasladar"
-                                        (click)="viewMoveCheckTable()">
+                                    <button mat-icon-button matTooltip="Trasladar" (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
                                     <!-- TODO: Traducir -->
@@ -459,7 +458,7 @@
                             <mat-icon>arrow_back</mat-icon>
                         </button>
 
-                        <button mat-icon-button aria-label matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
                             (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
                         </button>
@@ -469,7 +468,7 @@
 
                         <span class="spacer"></span>
                         <ng-container>
-                            <button mat-icon-button aria-label matTooltip="Trasladar" (click)="viewMoveCheckTable()">
+                            <button mat-icon-button matTooltip="Trasladar" (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
                             <!-- TODO: Traducir -->
@@ -511,10 +510,15 @@
                                     </app-classifications>
                                     <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
                                 </div>
-                                <mat-icon (click)="verDetalles()"
-                                    *ngIf="restaurantService.verDetalleOrden">chevron_right</mat-icon>
-                                <mat-icon (click)="verDetalles()"
-                                    *ngIf="!restaurantService.verDetalleOrden">chevron_left</mat-icon>
+                                <div class="fondoDetalle" (click)="verDetalles()"
+                                    *ngIf="!restaurantService.verDetalleOrden">
+                                    <mat-icon (click)="verDetalles()"
+                                        *ngIf="!restaurantService.verDetalleOrden">chevron_left</mat-icon>
+                                </div>
+                                <div (click)="verDetalles()" *ngIf="restaurantService.verDetalleOrden"
+                                    class="fondoDetalle">
+                                    <mat-icon>chevron_right</mat-icon>
+                                </div>
                                 <div
                                     [ngClass]="{ 'detalleOrden' : restaurantService.verDetalleOrden, 'ocultarDetalles' : !restaurantService.verDetalleOrden, }">
                                     <div class="dFlex">
@@ -619,9 +623,17 @@
                     matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove" matTooltip="Trasladar Cuenta"
+                    (click)="trasladarCuenta()">
+                    <mat-icon>drive_file_move_outline</mat-icon>
+                </button>
                 <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove "
                     matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove" matTooltip="Trasladar Transacción"
+                    (click)="trasladarTran()">
+                    <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
             </mat-toolbar-row>
 

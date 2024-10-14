@@ -932,5 +932,14 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.viewTranCheckMove = false;
   }
 
+  trasladarCuenta() {
+    //abre las ubicaciones
+    //selecciona nueva ubicacion y mesa
+  }
+
+  trasladarTran() {
+    //abre las ubicaciones
+    //selecciona la ubicacion, mesa y cuenta 
+  }
 
 }
