@@ -779,10 +779,6 @@ export class HomeRestaurantComponent implements OnInit {
 
     this.restaurantService.isLoading = false;
 
-    // TODO: abrir dialogo
-    // this._dialog.open(ErrorComandaComponent, { data: indexOrder })
-    // return;
-
   }
 
   async directPrint(indexOrder: number) {
@@ -906,11 +902,11 @@ export class HomeRestaurantComponent implements OnInit {
     if (comandasConError.length > 0) {
       //TODO:Mostrar dialogo con errores para volver a imprimir y marcar como enviadas las que sí se enviaron
 
-      const doc = await this._printService.getComandaTMU(comandasConError[0]);
+      this._dialog.open(ErrorComandaComponent, { data: comandasConError })
 
-      pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
-
-
+      return;
+      // const doc = await this._printService.getComandaTMU(comandasConError[0]);
+      // pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
     } else {
 
       this.notificationService.openSnackbar("Comanda enviada");

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormatoComandaInterface } from '../../interfaces/data-comanda.interface';
 
 @Component({
   selector: 'app-error-comanda',
@@ -12,13 +13,14 @@ export class ErrorComandaComponent {
   isLoading: boolean = false;
   error: string = "No se pudo imprimir";
 
+  erroresComanda: FormatoComandaInterface[] = [];
+
   constructor(
     public restaurantService: GlobalRestaurantService,
     public dialogRef: MatDialogRef<ErrorComandaComponent>,
-    @Inject(MAT_DIALOG_DATA) public errorComanda: any,
+    @Inject(MAT_DIALOG_DATA) public errorComanda: FormatoComandaInterface [],
   ) {
-
-    this.error = errorComanda;
+    this.erroresComanda = errorComanda;
 
   }
 

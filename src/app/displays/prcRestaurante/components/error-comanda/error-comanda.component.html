@@ -11,9 +11,9 @@
 
     <div class="contenido-dialogo">
 
-        <div class="comandaBotones">
+        <div class="comandaBotones" *ngFor="let error of erroresComanda">
 
-            <p class="text12">Bebidas frias</p>
+            <p class="text12"> {{error.error}} </p>
 
             <span class="spacer"></span>
             <button mat-icon-button matTooltip="Reintentar">
