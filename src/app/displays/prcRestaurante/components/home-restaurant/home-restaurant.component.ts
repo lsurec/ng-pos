@@ -943,6 +943,8 @@ export class HomeRestaurantComponent implements OnInit {
       return
     }
 
+    this.restaurantService.tipoTraslado = 1;
+
     this.viewSelectNewLocation();
   }
 
@@ -956,6 +958,8 @@ export class HomeRestaurantComponent implements OnInit {
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
+
+    this.restaurantService.tipoTraslado = 2;
 
     this.viewSelectNewLocation();
   }

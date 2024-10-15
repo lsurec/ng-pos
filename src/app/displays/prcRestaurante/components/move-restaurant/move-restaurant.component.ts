@@ -28,15 +28,13 @@ export class MoveRestaurantComponent {
   tipoCambio: number = PreferencesService.tipoCambio; ///tipo cambio disponioble
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
-
-  //1: Cuenta
-  //2: Transaccion
-  tipoTraslado: number = 0;
-
-  firstFormGroup = this._formBuilder.group({
+  formNewLocation = this._formBuilder.group({
   });
 
-  secondFormGroup = this._formBuilder.group({
+  formNewTable = this._formBuilder.group({
+  });
+
+  formConfirm = this._formBuilder.group({
   });
 
   isEditable = true;
@@ -83,7 +81,7 @@ export class MoveRestaurantComponent {
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
       this.restaurantService.serie!.serie_Documento,
-      this.restaurantService.location!.elemento_Asignado,
+      this.newLocation!.elemento_Asignado, //Nueva ubicacion seleccionada
       this.user,
       this.token,
     );
@@ -144,6 +142,10 @@ export class MoveRestaurantComponent {
     this.restaurantService.verError = true;
 
     return;
+  }
+
+  selectCheck(index: number) {
+
   }
 
 }

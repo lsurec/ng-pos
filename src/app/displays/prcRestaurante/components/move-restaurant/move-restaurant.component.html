@@ -1,7 +1,7 @@
 <mat-stepper linear #stepper class="traslado" animationDuration="0">
-    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+    <mat-step [stepControl]="formNewLocation" [editable]="isEditable">
         <ng-template matStepLabel>
-            <p class="step-title">Nueva Ubicación </p>
+            <p class="textBold">Nueva Ubicación </p>
             <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
         </ng-template>
 
@@ -28,12 +28,15 @@
             </div>
 
         </div>
-        <button mat-button matStepperNext>Next</button>
+        <div class="dFlex" *ngIf="newLocation">
+            <span class="spacer"></span>
+            <button mat-button matStepperNext>Next</button>
+        </div>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+    <mat-step [stepControl]="formNewTable" [editable]="isEditable">
 
         <ng-template matStepLabel>
-            <p class="step-title">Nueva Mesa </p>
+            <p class="textBold">Nueva Mesa </p>
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
 
@@ -59,10 +62,46 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <div>
+        <div class="dFlex">
+            <span class="spacer"></span>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
+
+        <ng-template matStepLabel>
+            <p class="textBold">Cuenta </p>
+            <!-- <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p> -->
+        </ng-template>
+
+        <p>Aqui van las cuentas que existan en esa mesa o la opcion de crear cuenta</p>
+
+        <div class="cuentas">
+            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
+                <div class="cuenta-detalle" (click)="selectCheck(indexOrder)">
+                    <div class="espacioCuenta">
+                        <div class="circulo">
+                            <span class="spacer"></span>
+                            <mat-icon class="icoCuenta">person</mat-icon>
+                            <span class="spacer"></span>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="detalleCuenta">
+                            <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                            <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="dFlex">
+            <span class="spacer"></span>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
         </div>
