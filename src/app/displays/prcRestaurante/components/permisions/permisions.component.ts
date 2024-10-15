@@ -54,8 +54,8 @@ export class PermisionsComponent {
 
     //Interface de credenciales
     let formValues: UserInterface = {
-      pass: this.nombre,
-      user: this.clave
+      pass: this.clave,
+      user: this.nombre
     };
 
     //antes de ejecutarse
@@ -73,6 +73,8 @@ export class PermisionsComponent {
       this._restauranteService.isLoading = false;
 
       this.showError(res);
+      this.dialogRef.close();
+
       return;
     };
 
@@ -81,10 +83,11 @@ export class PermisionsComponent {
     let resLogin: LoginInterface = res.response;
     //si algo esta incorrecto mostrar mensaje
 
+    
+
     if (!resLogin.success) {
       this._restauranteService.isLoading = false;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.incorrecto'));
-      this.dialogRef.close();
       return;
     };
 
@@ -108,7 +111,19 @@ export class PermisionsComponent {
       return;
     };
 
+    this._restauranteService.isLoading = false;
+
+
+    if(!resTipoAccion.response["data"]){
+
+      this._notificationService.openSnackbar(`El usuario ${this.nombre} no tiene permisos para esta accion`) //TODO:Translate
+      return  ;
+      
+    }
+    
     this.dialogRef.close(true);
+
+
   }
 
 
