@@ -105,8 +105,11 @@ export class SplashComponent implements OnInit {
     let empresas: EmpresaInterface[] = [];
     let estaciones: EstacionInterface[] = [];
 
+
+    const apiEmpresa = ()=>  this._localSettingsService.getEmpresas(user, token);
+
     // //Consumo de servicios
-    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+    let resEmpresas: ResApiInterface = await ApiService.apiUse(apiEmpresa);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
 
@@ -128,7 +131,9 @@ export class SplashComponent implements OnInit {
     //Guardar Emoresas obtenidas
     empresas = resEmpresas.response;
 
-    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
+    const apiEstacion = ()=> this._localSettingsService.getEstaciones(user, token);
+
+    let resEstacion: ResApiInterface = await ApiService.apiUse(apiEstacion);
 
 
 

@@ -86,8 +86,12 @@ export class LocalConfigComponent implements OnInit {
 
     //cargar pantalla
     this.isLoading = true;
+    
     //Consumo de servicios
-    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
+
+    const apiEmpresa =()=> this._localSettingsService.getEmpresas(user, token);
+
+    let resEmpresas: ResApiInterface = await ApiService.apiUse(apiEmpresa);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
 
@@ -109,8 +113,9 @@ export class LocalConfigComponent implements OnInit {
     //Guardar Emoresas obtenidas
     this.empresas = resEmpresas.response;
 
+    const apiEstacion = ()=> this._localSettingsService.getEstaciones(user, token);
     //Consumo del servicio de Estaciones de trabajo.
-    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
+    let resEstacion: ResApiInterface = await ApiService.apiUse(apiEstacion);
 
     this.isLoading = false; //cargar pantalla
 
