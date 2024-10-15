@@ -1,17 +1,14 @@
 <mat-stepper linear #stepper class="traslado" animationDuration="0">
     <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
         <ng-template matStepLabel>
-            Nueva ubicación
-            <br>
-            <span *ngIf="newLocation">{{ newLocation.descripcion }}</span>
+            <p class="step-title">Nueva Ubicación </p>
+            <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
         </ng-template>
 
         <div class="ubicaciones">
 
             <div class="cantidad-registros">
                 <p class="titulo">UBICACIONES</p>
-                <span class="spacer"></span>
-                <p class="titulo">{{newLocation?.descripcion}}</p>
                 <span class="spacer"></span>
                 <p class="textBold">
                     {{ 'pos.factura.registros' | translate }}
@@ -34,10 +31,10 @@
         <button mat-button matStepperNext>Next</button>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+
         <ng-template matStepLabel>
-            Nueva Mesa
-            <br>
-            <span *ngIf="newTable">{{ newTable.descripcion }}</span>
+            <p class="step-title">Nueva Mesa </p>
+            <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
 
         <div class="mesas" *ngIf="restaurantService.tables.length > 0">
