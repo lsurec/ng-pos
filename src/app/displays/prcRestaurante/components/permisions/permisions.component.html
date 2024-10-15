@@ -6,23 +6,26 @@
             TRASLADO
         </p>
 
-        <div class="inputPin">
-            <input type="text" required [(ngModel)]="nombre" name="nombre" placeholder="Usuario" class="pin"
-                autocomplete="off">
-            <input type="password" required [(ngModel)]="clave" name="clave" placeholder="Contraseña" class="pin"
-                autocomplete="off">
-        </div>
+        <form #loginForm="ngForm" (ngSubmit)="ingresar()">
+            <div class="inputPin">
+                <input type="text" required [(ngModel)]="nombre" name="nombre" placeholder="Usuario" class="pin"
+                    autocomplete="off">
+                <input type="password" required [(ngModel)]="clave" name="clave" placeholder="Contraseña" class="pin"
+                    autocomplete="off">
+            </div>
 
-        <div class="dFlex">
-            <button mat-stroked-button (click)="cancelar()">
-                {{ 'pos.botones.cancelar' | translate }}
-            </button>
+            <div class="dFlex">
+                <button mat-stroked-button (click)="cancelar()">
+                    {{ 'pos.botones.cancelar' | translate }}
+                </button>
 
-            <span class="spacer"></span>
+                <span class="spacer"></span>
 
-            <button mat-stroked-button (click)="guardar()">
-                {{ 'pos.botones.aceptar'| translate }}
-            </button>
-        </div>
+                <button mat-stroked-button (click)="ingresar()">
+                    {{ 'pos.botones.aceptar'| translate }}
+                </button>
+            </div>
+        </form>
+
     </div>
 </div>
