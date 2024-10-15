@@ -26,7 +26,6 @@ export class PermisionsComponent {
   clave: string = "";
   nombre: string = "";
 
-
   constructor(
     private _translate: TranslateService,
     public dialogRef: MatDialogRef<PermisionsComponent>,
@@ -37,10 +36,7 @@ export class PermisionsComponent {
   ) {
   }
 
-
   cancelar() {
-    this.clave = "";
-    this.nombre = "";
     this.dialogRef.close();
   }
 
@@ -51,7 +47,6 @@ export class PermisionsComponent {
       return
     }
 
-
     //Interface de credenciales
     let formValues: UserInterface = {
       pass: this.clave,
@@ -60,7 +55,6 @@ export class PermisionsComponent {
 
     //antes de ejecutarse
     this._restauranteService.isLoading = true;
-
 
     const apiLogin = () => this._loginService.postLogin(formValues);
 
@@ -82,8 +76,6 @@ export class PermisionsComponent {
     //Obtener la respuesta del api login
     let resLogin: LoginInterface = res.response;
     //si algo esta incorrecto mostrar mensaje
-
-    
 
     if (!resLogin.success) {
       this._restauranteService.isLoading = false;
@@ -114,14 +106,14 @@ export class PermisionsComponent {
     this._restauranteService.isLoading = false;
 
 
-    if(!resTipoAccion.response["data"]){
+    if (!resTipoAccion.response["data"]) {
 
       this._notificationService.openSnackbar(`El usuario ${this.nombre} no tiene permisos para esta accion`) //TODO:Translate
-      return  ;
-      
+      return;
+
     }
-    
-    this.dialogRef.close(true);
+
+    this.dialogRef.close();
 
 
   }

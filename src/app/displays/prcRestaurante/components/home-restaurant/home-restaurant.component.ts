@@ -145,10 +145,6 @@ export class HomeRestaurantComponent implements OnInit {
 
         return;
       }
-
-      this._notificationService.openSnackbar("Usuario o contraseña incorrecta."); //TODO:Translate
-
-      return;
     })
 
   }
