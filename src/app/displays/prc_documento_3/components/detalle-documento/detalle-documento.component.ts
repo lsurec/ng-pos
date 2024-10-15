@@ -106,13 +106,10 @@ export class DetalleDocumentoComponent implements OnInit {
 
     this.isLoading = true;
 
-
-    const apiEmpresa = ()=> this._localSettingService.getEmpresas(
+    let resEmpresa: ResApiInterface = await this._localSettingService.getEmpresas(
       this.user,
       this.token,
     );
-
-    let resEmpresa: ResApiInterface = await ApiService.apiUse(apiEmpresa);
 
     if (!resEmpresa.status) {
 
@@ -145,12 +142,10 @@ export class DetalleDocumentoComponent implements OnInit {
       }
     }
 
-    const apiEstacion = ()=> this._localSettingService.getEstaciones(
+    let resEstacion: ResApiInterface = await this._localSettingService.getEstaciones(
       this.user,
       this.token
     );
-
-    let resEstacion: ResApiInterface = await ApiService.apiUse(apiEstacion);
 
 
     if (!resEstacion.status) {

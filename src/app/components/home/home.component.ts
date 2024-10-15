@@ -467,9 +467,7 @@ export class HomeComponent implements OnInit {
 
     this.isLoading = true;
 
-    const apiApp = ()=> this._menu.getAplicaciones(this.user, this.token);
-
-    let resApp: ResApiInterface = await ApiService.apiUse(apiApp);
+    let resApp: ResApiInterface = await this._menu.getAplicaciones(this.user, this.token);
 
     //se ejecuta en caso de que algo salga mal al obtener los datos.
     if (!resApp.status) {
@@ -507,13 +505,12 @@ export class HomeComponent implements OnInit {
 
     // For asyncrono para obtener los displays.
     for (const app of menuData) {
-      const apiDisplay = ()=> this._menu.getDisplays(
+      //consumo de api que busca los displays de una applicaicon
+      let resDisplay: ResApiInterface = await this._menu.getDisplays(
         this.user,
         this.token,
         app.application.application,
       );
-      //consumo de api que busca los displays de una applicaicon
-      let resDisplay: ResApiInterface = await ApiService.apiUse(apiDisplay);
 
       //se ejecuta en caso de que algo salga mal
       if (!resDisplay.status) {

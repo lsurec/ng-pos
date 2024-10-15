@@ -4,7 +4,6 @@ import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { components } from 'src/app/providers/componentes.provider';
-import { ApiService } from 'src/app/services/api.service';
 import { EventService } from 'src/app/services/event.service';
 import { LocalSettingsService } from 'src/app/services/local-settings.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
@@ -71,9 +70,7 @@ export class SelectedConfigurationComponent implements OnInit {
 
     this.isLoading = true;
     // //Consumo de servicios
-
-    const apiEmpresa = ()=> this._localSettingsService.getEmpresas(user, token);
-    let resEmpresas: ResApiInterface = await ApiService.apiUse(apiEmpresa);
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
       this.isLoading = false;
@@ -99,9 +96,7 @@ export class SelectedConfigurationComponent implements OnInit {
     //Guardar Emoresas obtenidas
     this.empresas = resEmpresas.response;
 
-    const apiEstacion = ()=> this._localSettingsService.getEstaciones(user, token);
-
-    let resEstacion: ResApiInterface = await ApiService.apiUse(apiEstacion);
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
     this.isLoading = false;
 

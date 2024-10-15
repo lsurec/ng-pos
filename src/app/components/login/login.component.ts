@@ -116,10 +116,8 @@ export class LoginComponent {
     let user = PreferencesService.user;
     let token = PreferencesService.token;
 
-    const apiEmmpresa = ()=> this._localSettingsService.getEmpresas(user, token);
-
     // //Consumo de servicios
-    let resEmpresas: ResApiInterface = await ApiService.apiUse(apiEmmpresa);
+    let resEmpresas: ResApiInterface = await this._localSettingsService.getEmpresas(user, token);
 
     //Si el servico se ejecuta mal mostar mensaje
     if (!resEmpresas.status) {
@@ -137,10 +135,8 @@ export class LoginComponent {
     //Guardar Emoresas obtenidas
     empresas = resEmpresas.response;
 
-    const apiEstcion = ()=> this._localSettingsService.getEstaciones(user, token);
-
     //Consumo de servcicio que tiene las estaciones de trabajo
-    let resEstacion: ResApiInterface = await ApiService.apiUse(apiEstcion);
+    let resEstacion: ResApiInterface = await this._localSettingsService.getEstaciones(user, token);
 
     //Si algo sale mal
     if (!resEstacion.status) {
