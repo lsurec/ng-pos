@@ -66,6 +66,10 @@ export class GlobalRestaurantService {
     viewTranCheckMove: boolean = false;
     indexMoveCheck: number = 0;
 
+    //1: Cuenta
+    //2: Transaccion
+    tipoTraslado: number = 0;
+
     constructor(
         private _notificationService: NotificationsService,
         private _translate: TranslateService,

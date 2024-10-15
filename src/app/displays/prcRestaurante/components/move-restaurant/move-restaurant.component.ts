@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class MoveRestaurantComponent {
 
+  //1: Cuenta
+  //2: Transaccion
+  tipoTraslado: number = 0;
+
 }

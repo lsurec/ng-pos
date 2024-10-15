@@ -36,6 +36,7 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ErrorComandaComponent } from '../error-comanda/error-comanda.component';
 import { PermisionsComponent } from '../permisions/permisions.component';
+import { TraRestaurantInterface } from '../../interfaces/tra.restaurant.interface';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -935,11 +936,26 @@ export class HomeRestaurantComponent implements OnInit {
   trasladarCuenta() {
     //abre las ubicaciones
     //selecciona nueva ubicacion y mesa
+
+    let orders: OrderInterface[] = this.restaurantService.orders.filter((transaction) => transaction.selected);
+
+    if (orders.length == 0) {
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
+
   }
 
   trasladarTran() {
     //abre las ubicaciones
     //selecciona la ubicacion, mesa y cuenta 
+
+    let traCheks: TraRestaurantInterface[] = this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones.filter((transaction) => transaction.selected);
+
+    if (traCheks.length == 0) {
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
+      return
+    }
   }
 
 }
