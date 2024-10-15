@@ -201,6 +201,7 @@ export class DetailsProductComponent implements OnInit {
 
 
       this.restaurantService.nameCheck = this.restaurantService.orders[0].nombre;
+      this.restaurantService.indexCheck = this.restaurantService.orders.length - 1; //Primera cuenta
 
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
@@ -222,6 +223,7 @@ export class DetailsProductComponent implements OnInit {
       );
 
       this.restaurantService.nameCheck = this.restaurantService.orders[0].nombre;
+      this.restaurantService.indexCheck = this.restaurantService.orders.length - 1; //Primera cuenta
 
       this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 
@@ -241,7 +243,9 @@ export class DetailsProductComponent implements OnInit {
       if (result || result == 0) {
         let index: number = result;
 
-        this.restaurantService.addTransactionToOrder(transaction, index);
+        this.restaurantService.indexCheck = index; //Primera cuenta
+
+        this.restaurantService.addTransactionToOrder(transaction, this.restaurantService.indexCheck);
         this.closeDialog();
         this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
 

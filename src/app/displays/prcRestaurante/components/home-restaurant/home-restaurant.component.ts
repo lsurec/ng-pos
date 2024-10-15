@@ -62,7 +62,6 @@ export class HomeRestaurantComponent implements OnInit {
   tipoDocumento: number = this._facturaService.tipoDocumento!; //Tipo de documento del modulo
 
   series: SerieInterface[] = [];
-  indexCheck: number = 0;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -98,9 +97,6 @@ export class HomeRestaurantComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
-
     this.loadData();
 
 
@@ -113,6 +109,8 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   viewLocationTable() {
+    this.restaurantService.indexCheck = -1; //regresar y limpiar indice de cuenta seleccionada
+    this.restaurantService.verDetalleOrden = false; //Se oculta
     this.restaurantService.viewLocations = true;
     this.restaurantService.viewRestaurant = false;
     this.restaurantService.viewMoveCheckTable = false;
@@ -191,13 +189,14 @@ export class HomeRestaurantComponent implements OnInit {
 
   goChecks() {
     // this.restaurantService.nameCheck = "";
+    this.restaurantService.indexCheck = -1;
     this.restaurantService.viewTranCheck = false;
     this.restaurantService.viewCheck = true;
   }
 
   verDetalles() {
 
-    if (this.restaurantService.orders.length == 0) {
+    if (this.restaurantService.table?.orders.length == 0) {
       this._notificationService.openSnackbar("No hay detalles para visualizar"); //TODO:Translate
       return
     }
@@ -449,6 +448,10 @@ export class HomeRestaurantComponent implements OnInit {
   selectTable(table: TableInterface) {
     this.restaurantService.table = table;
 
+    if (this.restaurantService.indexCheck == -1 && this.restaurantService.table.orders.length == 0) {
+      this.restaurantService.verDetalleOrden = false;
+    }
+
     this.notificationService.pinMesero();
 
   }
@@ -459,7 +462,7 @@ export class HomeRestaurantComponent implements OnInit {
 
   selectCheck(index: number) {
 
-    this.indexCheck = index;
+    this.restaurantService.indexCheck = index;
 
     this.restaurantService.nameCheck = this.restaurantService.orders[index].nombre;
 
@@ -490,21 +493,21 @@ export class HomeRestaurantComponent implements OnInit {
   restar(indexTra: number) {
 
 
-    if (this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad == 1) {
-      this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad == 1;
+    if (this.restaurantService.orders[this.restaurantService.indexCheck].transacciones[indexTra].cantidad == 1) {
+      this.restaurantService.orders[this.restaurantService.indexCheck].transacciones[indexTra].cantidad == 1;
       //TODO: mostrar iconp de basura y dialogo para eliminar transaccion
       return;
     }
 
     //disminuir cantidad en 1
-    this.restaurantService.orders[this.indexCheck].transacciones[indexTra].cantidad--;
+    this.restaurantService.orders[this.restaurantService.indexCheck].transacciones[indexTra].cantidad--;
 
     this.calcTotal();
   }
 
 
   sumar(indexTran: number) {
-    this.restaurantService.orders[this.indexCheck].transacciones[indexTran].cantidad++;
+    this.restaurantService.orders[this.restaurantService.indexCheck].transacciones[indexTran].cantidad++;
     this.calcTotal();
   }
 
@@ -540,17 +543,8 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
-  // getGuarniciones(indexTra: number) {
-  //   return this.restaurantService.orders[this.indexCheck]
-  //     .transacciones[indexTra]
-  //     .guarniciones
-  //     .map((e) =>
-  //       `${e.garnishs.map((guarnicion) => guarnicion.descripcion).join(" ")} ${e.selected.descripcion}`)
-  //     .join(", ");
-  // }
-
   getGuarniciones(indexTra: number): string {
-    let order: OrderInterface = this.restaurantService.orders[this.indexCheck];
+    let order: OrderInterface = this.restaurantService.orders[this.restaurantService.indexCheck];
 
     // Verificar si order, transacciones, guarniciones existen
     if (!order || !order.transacciones || !order.transacciones[indexTra] || !order.transacciones[indexTra].guarniciones) {

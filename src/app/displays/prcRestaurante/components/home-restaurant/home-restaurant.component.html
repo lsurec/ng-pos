@@ -130,6 +130,7 @@
                         <div class="circulo-inicial" (click)="sidenavend.open()">
                             <p class="inicial-usuario">{{user[0]}}</p>
                         </div>
+                        <p> {{restaurantService.indexCheck}} </p>
                     </mat-toolbar>
 
                     <!-- Contenido del componente -->
@@ -479,6 +480,7 @@
                         <div class="circulo-inicial" (click)="sidenavend.open()">
                             <p class="inicial-usuario">{{user[0]}}</p>
                         </div>
+                        <p> {{restaurantService.indexCheck}} </p>
                     </mat-toolbar>
 
                     <!-- Contenido del componente -->
@@ -519,7 +521,7 @@
                                     class="fondoDetalle">
                                     <mat-icon>chevron_right</mat-icon>
                                 </div>
-                                <div
+                                <div *ngIf="restaurantService.table!.orders.length > 0"
                                     [ngClass]="{ 'detalleOrden' : restaurantService.verDetalleOrden, 'ocultarDetalles' : !restaurantService.verDetalleOrden, }">
                                     <div class="dFlex">
                                         <button mat-icon-button
@@ -557,7 +559,7 @@
                                     <div class="variasCuentas"
                                         *ngIf="restaurantService.viewTranCheck && !restaurantService.viewCheck">
                                         <div class="transaccion"
-                                            *ngFor="let tran of restaurantService.orders[indexCheck].transacciones; let indexTran = index">
+                                            *ngFor="let tran of restaurantService.orders[restaurantService.indexCheck].transacciones; let indexTran = index">
                                             <div class="detalleTransaccion">
                                                 <p class="textBold12">{{tran.producto.des_Producto }}</p>
                                                 <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
