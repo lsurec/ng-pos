@@ -113,8 +113,8 @@ export class PermisionsComponent {
 
     }
 
-    this.dialogRef.close();
-
+    //Retornar true para navegar a traslado
+    this.dialogRef.close(true);
 
   }
 

@@ -133,7 +133,6 @@ export class HomeRestaurantComponent implements OnInit {
 
     let dialogRef = this._dialog.open(PermisionsComponent, {})
 
-
     dialogRef.afterClosed().subscribe(result => {
 
       let credenciales = result;
@@ -145,6 +144,7 @@ export class HomeRestaurantComponent implements OnInit {
 
         return;
       }
+
     })
 
   }
