@@ -37,6 +37,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { ErrorComandaComponent } from '../error-comanda/error-comanda.component';
 import { PermisionsComponent } from '../permisions/permisions.component';
 import { TraRestaurantInterface } from '../../interfaces/tra.restaurant.interface';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-home-restaurant',
@@ -881,7 +882,8 @@ export class HomeRestaurantComponent implements OnInit {
           const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
           // return;
-          pdfDocGenerator.getBlob(async (blob) => {
+        const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
+            
             // ...
             var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
@@ -899,7 +901,6 @@ export class HomeRestaurantComponent implements OnInit {
 
             }
 
-          });
 
         }
 
