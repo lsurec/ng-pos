@@ -109,6 +109,7 @@ import { ImageRestaurantComponent } from './displays/prcRestaurante/components/i
 import { MoveCheckTransactionComponent } from './displays/prcRestaurante/components/move-check-transaction/move-check-transaction.component';
 import { ErrorComandaComponent } from './displays/prcRestaurante/components/error-comanda/error-comanda.component';
 import { MoveRestaurantComponent } from './displays/prcRestaurante/components/move-restaurant/move-restaurant.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -227,7 +228,8 @@ import { MoveRestaurantComponent } from './displays/prcRestaurante/components/mo
     MatInputModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatStepperModule,
   ],
   providers: [
     {

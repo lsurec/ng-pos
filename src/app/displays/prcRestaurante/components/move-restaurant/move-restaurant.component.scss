@@ -1,0 +1,140 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris); //bordes y texto gris
+$blanco        : var(--blanco);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+.traslado {
+    background: $fondo;
+}
+
+.contenido-ubicaciones-mesas {
+    padding   : 10px;
+    height    : calc(100vh - 166px) !important;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ubicaciones {
+    padding: 0px 10px 10px;
+}
+
+.mesas {
+    padding: 10px;
+}
+
+.ubicacion {
+    padding      : 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa {
+    padding      : 5px 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa:hover,
+.ubicacion:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.ubicacionMesaSelect {
+    background: $bordes;
+}
+
+.descripciones {
+    width: calc(100% - 40px);
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.text10 {
+    font-size: 10px !important;
+}
+
+.text8 {
+    font-size: 8px !important;
+}
+
+.textBold12 {
+    font-weight: 550;
+    font-size  : 12px !important;
+}
+
+.prefBold12 {
+    font-size  : 12px !important;
+    font-weight: bold;
+    color      : $personalizado;
+}
+
+.textCenter12 {
+    font-size : 12px !important;
+    text-align: center;
+}
+
+.textLeft12 {
+    font-size : 12px !important;
+    text-align: left;
+}
+
+.titulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+
+.mesasx2 {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 0px 15px;
+}
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    font-size       : 14px;
+    font-weight     : 500;
+}

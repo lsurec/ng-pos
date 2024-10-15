@@ -63,7 +63,6 @@ export class HomeRestaurantComponent implements OnInit {
 
   series: SerieInterface[] = [];
   indexCheck: number = 0;
-  indexMoveCheck: number = 0;
 
   //Abrir/Cerrar SideNav
   @ViewChild('sidenavend')
@@ -73,6 +72,9 @@ export class HomeRestaurantComponent implements OnInit {
 
   nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
   documentoName: string = ""; //Descripcion tipo de documento
+
+  selectCheckOrTran: boolean = true;
+  selectNewLocation: boolean = false;
 
   constructor(
     private notificationService: NotificationsService,
@@ -882,24 +884,24 @@ export class HomeRestaurantComponent implements OnInit {
           const pdfDocGenerator = pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs);
 
           // return;
-        const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
-            
-            // ...
-            var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+          const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
 
-            let resPrint: ResApiInterface = await this._printService.postPrint(
-              pdfFile,
-              format.ipAdress,
-              "1",
-            );
+          // ...
+          var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+
+          let resPrint: ResApiInterface = await this._printService.postPrint(
+            pdfFile,
+            format.ipAdress,
+            "1",
+          );
 
 
-            if (!resPrint.status) {
+          if (!resPrint.status) {
 
-              format.error = "Fallo al imprimir";
-              console.error(resPrint.response);
+            format.error = "Fallo al imprimir";
+            console.error(resPrint.response);
 
-            }
+          }
 
 
         }
@@ -945,6 +947,7 @@ export class HomeRestaurantComponent implements OnInit {
       return
     }
 
+    this.viewSelectNewLocation();
   }
 
   trasladarTran() {
@@ -957,6 +960,18 @@ export class HomeRestaurantComponent implements OnInit {
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionar'));
       return
     }
+
+    this.viewSelectNewLocation();
+  }
+
+  viewSelectCheckOrTran() {
+    this.selectCheckOrTran = true;
+    this.selectNewLocation = false;
+  }
+
+  viewSelectNewLocation() {
+    this.selectCheckOrTran = false;
+    this.selectNewLocation = true;
   }
 
 }

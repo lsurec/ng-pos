@@ -1049,6 +1049,7 @@ label[for*='6']:before {
     font-size: 20px !important;
 }
 
-.contenido-traslado {
-    height: calc(100vh - 128px);
+.contenidoTraslado {
+    height    : calc(100vh - 128px);
+    overflow-y: auto;
 }

@@ -606,14 +606,17 @@
         <div *ngIf="restaurantService.viewMoveCheckTable">
 
             <mat-toolbar-row class="head__sidenav">
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove "
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove && !selectNewLocation"
                     matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <!-- Rregresar de transacciones de cuenta -->
-                <button mat-icon-button
-                    *ngIf="restaurantService.viewTranCheckMove && restaurantService.viewTranCheckMove "
+                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove"
                     matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewChecks()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <button mat-icon-button *ngIf="selectNewLocation" matTooltip="Regresar a cuentas."
+                    (click)="viewSelectCheckOrTran()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <span class="spacer"></span>
@@ -637,10 +640,10 @@
                 </button>
             </mat-toolbar-row>
 
-            <div class="contenido-traslado">
+            <div class="contenidoTraslado">
 
-                <app-move-check-transaction></app-move-check-transaction>
-
+                <app-move-check-transaction *ngIf="selectCheckOrTran"></app-move-check-transaction>
+                <app-move-restaurant *ngIf="selectNewLocation"></app-move-restaurant>
             </div>
 
             <app-barra-logos></app-barra-logos>

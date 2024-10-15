@@ -1,1 +1,81 @@
-<p>move-restaurant works!</p>
+<mat-stepper linear #stepper class="traslado" animationDuration="0">
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+        <ng-template matStepLabel>
+            Nueva ubicación
+            <br>
+            <span *ngIf="newLocation">{{ newLocation.descripcion }}</span>
+        </ng-template>
+
+        <div class="ubicaciones">
+
+            <div class="cantidad-registros">
+                <p class="titulo">UBICACIONES</p>
+                <span class="spacer"></span>
+                <p class="titulo">{{newLocation?.descripcion}}</p>
+                <span class="spacer"></span>
+                <p class="textBold">
+                    {{ 'pos.factura.registros' | translate }}
+                    ({{restaurantService.locations.length }})
+                </p>
+            </div>
+            <div class="mesasx2">
+                <div class="ubicacion" *ngFor="let location of restaurantService.locations" [ngClass]="{'ubicacionMesaSelect': newLocation && 
+                        newLocation.elemento_Asignado === location.elemento_Asignado}"
+                    (click)="selectLocation(location)">
+                    <mat-icon>location_on</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="descripciones">
+                        <p class="textBold">{{location.descripcion}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+        <ng-template matStepLabel>
+            Nueva Mesa
+            <br>
+            <span *ngIf="newTable">{{ newTable.descripcion }}</span>
+        </ng-template>
+
+        <div class="mesas" *ngIf="restaurantService.tables.length > 0">
+            <div class="cantidad-registros">
+                <p class="titulo">MESAS</p>
+                <span class="spacer"></span>
+                <p class="textBold">
+                    {{ 'pos.factura.registros' | translate }}
+                    ({{restaurantService.tables.length }})
+                </p>
+            </div>
+
+            <div class="mesasx2">
+                <div class="mesa" *ngFor="let table of restaurantService.tables" (click)="selectTable(table)"
+                    [ngClass]="{'ubicacionMesaSelect': newTable && newTable.elemento_Asignado === table.elemento_Asignado}">
+                    <mat-icon>table_bar</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="descripciones">
+                        <p class="textBold"> {{table.descripcion}}</p>
+
+                        <P class="text12">CUENTAS {{table.orders.length}}</P>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>
