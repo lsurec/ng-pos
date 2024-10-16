@@ -153,6 +153,10 @@ mat-horizontal-content-container {
 }
 
 .cuentas {
+    padding-bottom: 20px;
+}
+
+.cuentasx3 {
     display              : grid;
     grid-template-columns: repeat(3, 1fr);
     //Espacio entre las mesas, puedes ajustar esto

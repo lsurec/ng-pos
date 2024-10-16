@@ -80,35 +80,37 @@
 
         <ng-template matStepLabel>
             <p class="textBold">Cuenta </p>
-            <!-- <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p> -->
+            <p class="step-subtitle" *ngIf="indexNewCheck != -1">{{ restaurantService.orders[indexNewCheck].nombre }}</p>
         </ng-template>
 
-        <div class="cuentas" *ngIf="newTable != undefined">
-            <div class="cuenta" *ngFor="let indexOrder of newTable!.orders" (click)="selectCheck(indexOrder)"
-                [ngClass]="{'checkSelect': indexNewCheck == indexOrder}">
-                <div class="circulo">
+        <div class="cuentas">
+            <div class="cuentasx3" *ngIf=" newTable != undefined && newTable.orders.length > 0">
+                <div class="cuenta" *ngFor="let indexOrder of newTable!.orders" (click)="selectCheck(indexOrder)"
+                    [ngClass]="{'checkSelect': indexNewCheck == indexOrder}">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">person</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
                     <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">person</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <span class="spacer"></span>
-                <div class="detalleCuenta">
-                    <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                    <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                    <div class="detalleCuenta">
+                        <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                        <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="cuentas">
-            <div class="cuenta" (click)="newCheck()">
-                <div class="circulo">
+            <div class="cuentasx3">
+                <div class="cuenta" (click)="newCheck()">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">add</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
                     <span class="spacer"></span>
-                    <mat-icon class="icoCuenta">add</mat-icon>
-                    <span class="spacer"></span>
-                </div>
-                <span class="spacer"></span>
-                <div class="detalleCuenta">
-                    <p class="textBold">Nueva Cuenta</p>
+                    <div class="detalleCuenta">
+                        <p class="textBold">Nueva Cuenta</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,7 +146,7 @@
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.table?.descripcion}}</p>
                 </div>
-                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2">
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
                     <p class="textBold">Cuenta</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[restaurantService.indexMoveCheck].nombre}}</p>
@@ -165,7 +167,7 @@
                     <span class="spacer"></span>
                     <p class="text12"> {{newTable.descripcion}} </p>
                 </div>
-                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2">
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
                     <p class="textBold">Cuenta</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[indexNewCheck].nombre}}</p>

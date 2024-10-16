@@ -66,6 +66,7 @@ export class MoveRestaurantComponent {
     }
 
     this.newLocation = location;
+    console.log(this.newLocation);
 
     this.restaurantService.isLoading = true;
     await this.loadTables();
@@ -75,6 +76,8 @@ export class MoveRestaurantComponent {
 
   selectTable(table: TableInterface) {
     this.newTable = table;
+    console.log(this.newTable);
+    
     this.stepper!.next();
   }
 
