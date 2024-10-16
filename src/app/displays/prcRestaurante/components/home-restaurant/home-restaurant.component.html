@@ -624,20 +624,20 @@
                 <span class="spacer"></span>
                 <p class="textBold">Trasladar</p>
                 <span class="spacer"></span>
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove"
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove && !selectNewLocation"
                     matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove" matTooltip="Trasladar Cuenta"
-                    (click)="trasladarCuenta()">
+                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove  && !selectNewLocation"
+                    matTooltip="Trasladar Cuenta" (click)="trasladarCuenta()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove "
+                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove  && !selectNewLocation"
                     matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove" matTooltip="Trasladar Transacción"
-                    (click)="trasladarTran()">
+                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove  && !selectNewLocation"
+                    matTooltip="Trasladar Transacción" (click)="trasladarTran()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
             </mat-toolbar-row>
