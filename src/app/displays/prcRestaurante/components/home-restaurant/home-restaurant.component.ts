@@ -138,12 +138,57 @@ export class HomeRestaurantComponent implements OnInit {
         this.restaurantService.viewMoveCheckTable = true;
         this.restaurantService.viewLocations = false;
         this.restaurantService.viewRestaurant = false;
-
+        this.restaurantService.selectCheckOrTran = true;
+        // this.restaurantService.selectNewLocation = false;
+        this.marcarFalse();
         return;
       }
 
     })
 
+  }
+
+  viewMoveTable() {
+
+    if (this.restaurantService.orders.length == 0) {
+      this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
+      return;
+    }
+
+    let dialogRef = this._dialog.open(PermisionsComponent, {})
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      let credenciales = result;
+
+      if (credenciales) {
+        this.restaurantService.tipoTraslado = 3; // Mesa
+        this.restaurantService.viewRestaurant = false;
+        this.restaurantService.selectCheckOrTran = false; //ocultar cuentas y transacciones 
+        this.restaurantService.viewMoveCheckTable = true;
+        this.restaurantService.selectNewLocation = true;
+        // this.marcarFalse();
+        return;
+      }
+
+    })
+
+  }
+
+  marcarFalse() {
+    if (this.restaurantService.orders) {
+      // Recorremos cada elemento de la lista de orders
+      this.restaurantService.orders.forEach(order => {
+        order.selected = false;  // Marcamos la propiedad 'selected' en false para cada order
+
+        // Verificamos si la orden tiene transacciones y las recorremos
+        if (order.transacciones) {
+          order.transacciones.forEach(transaccion => {
+            transaccion.selected = false;  // Marcamos la propiedad 'selected' en false para cada transacción
+          });
+        }
+      });
+    }
   }
 
   selectCheckAll() {
@@ -958,8 +1003,17 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   viewSelectCheckOrTran() {
+    //Si el tipo traslado es de mesa == 3
+    if (this.restaurantService.tipoTraslado == 3) {
+      this.restaurantService.selectCheckOrTran = false;
+      this.restaurantService.selectNewLocation = false;
+      this.restaurantService.viewRestaurant = true;
+      return;
+    }
+
     this.restaurantService.selectCheckOrTran = true;
     this.restaurantService.selectNewLocation = false;
+
   }
 
   viewSelectNewLocation() {

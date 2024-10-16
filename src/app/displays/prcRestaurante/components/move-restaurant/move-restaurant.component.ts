@@ -73,7 +73,6 @@ export class MoveRestaurantComponent {
     }
 
     this.newLocation = location;
-    console.log(this.newLocation);
 
     this.restaurantService.isLoading = true;
     await this.loadTables();
@@ -83,7 +82,6 @@ export class MoveRestaurantComponent {
 
   selectTable(table: TableInterface) {
     this.newTable = table;
-    console.log(this.newTable);
 
     this.stepper!.next();
   }
@@ -233,6 +231,46 @@ export class MoveRestaurantComponent {
     //traslado de transacciones
     if (this.restaurantService.tipoTraslado == 2)
       this.moveTranstacion();
+
+    if (this.restaurantService.tipoTraslado == 3)
+      this.moveTable();
+  }
+
+  async moveTable() {
+
+    let contadorErr = 0;
+
+    for (const element of this.restaurantService.table!.orders) {
+
+      this.restaurantService.orders[element].mesa = this.newTable!;
+      this.restaurantService.orders[element].ubicacion = this.newLocation!;
+
+
+      //TODO:Si se crean cambiar condicion
+      if (this.restaurantService.orders[element].consecutivo) {
+        let resOrder = await this.updateOrderRemote(element);
+        if (!resOrder.status) {
+          console.error(resOrder);
+          contadorErr++;
+
+        }
+      }
+
+
+    }
+
+    this.restaurantService.updateOrdersTable();
+
+    if (contadorErr > 0) {
+      this._notificationService.openSnackbar("Algo salió mal al actualizar los datos remotos."); //TODO:Translate
+
+    } else {
+      this._notificationService.openSnackbar("Las mesa se movió correctamente."); //TODO:Translate
+    }
+
+
+    this.viewRestaurant(); // regresar a restaurante
+
   }
 
   async moveTranstacion() {
@@ -275,7 +313,7 @@ export class MoveRestaurantComponent {
 
     if (err == 0) {
 
-      this._notificationService.openSnackbar("Transaccione movidas exitosamente");
+      this._notificationService.openSnackbar("Transacciones movidas exitosamente"); //TODO:Translate
       this.viewRestaurant(); // regresar a restaurante
 
     }
@@ -312,23 +350,23 @@ export class MoveRestaurantComponent {
   async moveCheck() {
 
 
-    let contador:number = 0;
-    let contadorErr:number = 0;
+    let contador: number = 0;
+    let contadorErr: number = 0;
 
     this.restaurantService.isLoading = true;
     for (const element of this.restaurantService.orders) {
-      
-      if(element.selected){
-        
-        element.mesa  = this.newTable!;
+
+      if (element.selected) {
+
+        element.mesa = this.newTable!;
         element.ubicacion = this.newLocation!;
 
         //TODO:Si se crea todo cammbiar condicion
-        if(element.consecutivo){
+        if (element.consecutivo) {
 
           let resupdate = await this.updateOrderRemote(contador);
 
-          if(!resupdate.status){
+          if (!resupdate.status) {
             contadorErr++;
             console.error(resupdate);
           }
@@ -341,13 +379,14 @@ export class MoveRestaurantComponent {
 
     this.restaurantService.isLoading = false;
 
-    if(contadorErr>0){
-      this._notificationService.openSnackbar("Algo salió mal al actualizar los datos remotos.");
+    if (contadorErr > 0) {
+      this._notificationService.openSnackbar("Algo salió mal al actualizar los datos remotos."); //TODO:Translate
 
-    }else{
-      this._notificationService.openSnackbar("Las cuentas se movieron correctamente.");
+    } else {
+      this._notificationService.openSnackbar("Las cuentas se movieron correctamente."); //TODO:Translate
     }
 
+    this.restaurantService.updateOrdersTable();
 
     this.viewRestaurant(); // regresar a restaurante
 
