@@ -130,8 +130,7 @@ export class ErrorComandaComponent {
 
     this.restaurantService.isLoading = false;
 
-
-    this._notificationService.openSnackbar("Comanda enviada"); //TODO:Translate
+    this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
 
     //eliniinar un elento de la lista
     this.erroresComanda.splice(index, 1);
@@ -155,11 +154,7 @@ export class ErrorComandaComponent {
 
       this.closeDialog();
 
-      this._notificationService.openSnackbar("Comanda enviada"); //TODO:Translate
-
-
-
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
     }
 
     this.restaurantService.isLoading = false;
@@ -230,13 +225,11 @@ export class ErrorComandaComponent {
     const comandasConError = this.erroresComanda.filter(comanda => comanda.error !== '');
 
     if (comandasConError.length > 0) {
-      this._notificationService.openSnackbar("Algo salió mal"); //TODO:Translate
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.algoSalioMal'));
       return;
 
     } else {
-
-      this._notificationService.openSnackbar("Comanda enviada"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
       this.closeDialog();
 
     }

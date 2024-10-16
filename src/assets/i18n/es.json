@@ -386,8 +386,8 @@
             "errorComanda": "Error al comandar",
             "marcarCuentas": "Marca la casilla de la cuenta o cuentas que quieras trasladar.",
             "verDetalle": "Ver Detalle",
-            "trasladoCuenta": "Cuenta trasladada correctamente.",
-            "trasladoTran": "Transacción trasladada correctamente.",
+            "trasladoCuenta": "Cuentas trasladadas exitosamente.",
+            "trasladoTran": "Transacciones trasladadas exitosamente.",
             "trasladoMesa": "Mesa trasladada correctamente.",
             "nuevaUbicacion": "Nueva Ubicación",
             "ubicacionesT": "UBICACIONES",
@@ -401,7 +401,9 @@
             "origen": "Origen",
             "ubicacion": "Ubicación",
             "mesa": "Mesa",
-            "destino": "Destino"
+            "destino": "Destino",
+            "comandaEnviada": "Comanda enviada",
+            "errorAlActualizar": "Algo salió mal al actualizar los datos remotos."
         }
     },
     "crm": {

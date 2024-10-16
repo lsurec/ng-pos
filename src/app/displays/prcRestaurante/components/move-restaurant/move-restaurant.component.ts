@@ -266,10 +266,9 @@ export class MoveRestaurantComponent {
     this.restaurantService.updateOrdersTable();
 
     if (contadorErr > 0) {
-      this._notificationService.openSnackbar("Algo salió mal al actualizar los datos remotos."); //TODO:Translate
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.errorAlActualizar'));
     } else {
-      this._notificationService.openSnackbar("Las mesa se movió correctamente."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoMesa'));
     }
 
 
@@ -316,8 +315,7 @@ export class MoveRestaurantComponent {
 
 
     if (err == 0) {
-
-      this._notificationService.openSnackbar("Transacciones movidas exitosamente"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoTran'));
       this.viewRestaurant(); // regresar a restaurante
 
     }
@@ -384,10 +382,9 @@ export class MoveRestaurantComponent {
     this.restaurantService.isLoading = false;
 
     if (contadorErr > 0) {
-      this._notificationService.openSnackbar("Algo salió mal al actualizar los datos remotos."); //TODO:Translate
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.errorAlActualizar'));
     } else {
-      this._notificationService.openSnackbar("Las cuentas se movieron correctamente."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoCuenta'));
     }
 
     this.restaurantService.updateOrdersTable();
