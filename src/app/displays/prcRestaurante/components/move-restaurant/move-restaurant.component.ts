@@ -65,7 +65,6 @@ export class MoveRestaurantComponent {
     }
 
     this.newLocation = location;
-    console.log(this.newLocation);
 
     this.restaurantService.isLoading = true;
     await this.loadTables();
@@ -75,7 +74,6 @@ export class MoveRestaurantComponent {
 
   selectTable(table: TableInterface) {
     this.newTable = table;
-    console.log(this.newTable);
 
     this.stepper!.next();
   }
@@ -222,6 +220,7 @@ export class MoveRestaurantComponent {
     if (this.restaurantService.tipoTraslado == 1) {
       //si tood sale bien
       this.viewRestaurant(); // regresar a restaurante
+      this._notificationService.openSnackbar("Cuenta trasladada correctamente."); //TODO:Translate
 
     }
 
@@ -229,6 +228,14 @@ export class MoveRestaurantComponent {
     if (this.restaurantService.tipoTraslado == 2) {
       //si tood sale bien
       this.viewRestaurant(); // regresar a restaurante
+      this._notificationService.openSnackbar("Transacción trasladada correctamente."); //TODO:Translate
+    }
+
+    //traslado de mesa
+    if (this.restaurantService.tipoTraslado == 3) {
+      //si tood sale bien
+      this.viewRestaurant(); // regresar a restaurante
+      this._notificationService.openSnackbar("Mesa trasladada correctamente."); //TODO:Translate
     }
   }
 
