@@ -399,6 +399,20 @@ export class MoveRestaurantComponent {
     this.newTable = undefined;
     this.newLocation = undefined;
 
+    //si el tipo de traslado es 3, regresar a las ubicacion y
+    if (this.restaurantService.tipoTraslado == 3) {
+      this.restaurantService.viewLocations = true; //mostrar las ubicaciones
+      this.restaurantService.viewRestaurant = false;
+
+      this.restaurantService.selectCheckOrTran = true; //mostrar cuentas
+      this.restaurantService.selectNewLocation = false; //ocultar el destino del traslado
+      this.restaurantService.viewMoveCheckTable = false; //ocultar contenido del traslado
+      this.restaurantService.viewTranCheckMove = false; //ocultar las transacciones de la cuenta
+      this.restaurantService.viewChecksMove = true; //mostrar las cuentas para trasladar
+
+      return;
+    }
+
     this.restaurantService.viewRestaurant = true;
     this.restaurantService.viewLocations = false;
 
