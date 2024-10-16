@@ -248,6 +248,34 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.verDetalleOrden = !this.restaurantService.verDetalleOrden;
   }
 
+  async newCheck() {
+    let nombre: string = await this._notificationService.newCheck();
+
+    if (nombre) {
+
+      this.restaurantService.orders.push(
+        {
+          consecutivo: 0,
+          consecutivoRef: 0,
+          mesa: this.restaurantService.table!,
+          mesero: this.restaurantService.waiter!,
+          nombre: nombre,
+          selected: false,
+          transacciones: [],
+          ubicacion: this.restaurantService.location!,
+        }
+
+      );
+      
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
+
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.viewCheck = true;
+
+      this.restaurantService.updateOrdersTable();
+    }
+  }
+
 
   async refresh() {
 

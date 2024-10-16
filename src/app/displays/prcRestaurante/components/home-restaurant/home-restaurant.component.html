@@ -535,6 +535,12 @@
                                         <p class="prefBold12">
                                             {{restaurantService.viewCheck ? "" : restaurantService.nameCheck}}
                                         </p>
+                                        <span class="spacer"></span>
+                                        <button mat-icon-button
+                                            matTooltip="{{'pos.restaurante.nuevaCuenta' | translate }}"
+                                            (click)="newCheck()">
+                                            <mat-icon>person_add</mat-icon>
+                                        </button>
                                     </div>
                                     <div class="variasCuentas"
                                         *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck ">
