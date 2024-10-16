@@ -204,7 +204,7 @@ export class MoveRestaurantComponent {
 
       );
 
-      this._notificationService.openSnackbar("Cuenta creada."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
       this.restaurantService.updateOrdersTable();
     }
@@ -220,22 +220,21 @@ export class MoveRestaurantComponent {
     if (this.restaurantService.tipoTraslado == 1) {
       //si tood sale bien
       this.viewRestaurant(); // regresar a restaurante
-      this._notificationService.openSnackbar("Cuenta trasladada correctamente."); //TODO:Translate
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoCuenta'));
     }
 
     //traslado de transacciones
     if (this.restaurantService.tipoTraslado == 2) {
       //si tood sale bien
       this.viewRestaurant(); // regresar a restaurante
-      this._notificationService.openSnackbar("Transacción trasladada correctamente."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoTran'));
     }
 
     //traslado de mesa
     if (this.restaurantService.tipoTraslado == 3) {
       //si tood sale bien
       this.viewRestaurant(); // regresar a restaurante
-      this._notificationService.openSnackbar("Mesa trasladada correctamente."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.trasladoMesa'));
     }
   }
 

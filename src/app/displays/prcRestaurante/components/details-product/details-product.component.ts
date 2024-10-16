@@ -123,21 +123,18 @@ export class DetailsProductComponent implements OnInit {
 
     if (!this.cantidad || this.cantidad < 1) {
 
-      this._notificationService.openSnackbar("No hay cantidad"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinCantidad'));
       return;
     }
 
 
     if (!this.bodega) {
-
-      this._notificationService.openSnackbar("No hay bodega seleccionada");  //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionarBodega'));
       return;
     }
 
-
     if (!this.unitario) {
-
-      this._notificationService.openSnackbar("No hay precio seleccioando"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.seleccionarTipoPrecio'));
       return;
     }
 
@@ -202,8 +199,7 @@ export class DetailsProductComponent implements OnInit {
 
       this.restaurantService.nameCheck = this.restaurantService.orders[this.restaurantService.orders.length - 1].nombre;
       this.restaurantService.indexCheck = this.restaurantService.orders.length - 1; //Primera cuenta
-
-      this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.productoAgregado'));
 
       this.closeDialog();
 
@@ -225,7 +221,7 @@ export class DetailsProductComponent implements OnInit {
       this.restaurantService.nameCheck = this.restaurantService.orders[this.restaurantService.orders.length - 1].nombre;
       this.restaurantService.indexCheck = this.restaurantService.orders.length - 1; //Primera cuenta
 
-      this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.productoAgregado'));
 
       this.closeDialog();
 
@@ -247,7 +243,8 @@ export class DetailsProductComponent implements OnInit {
 
         this.restaurantService.addTransactionToOrder(transaction, this.restaurantService.indexCheck);
         this.closeDialog();
-        this._notificationService.openSnackbar("Producto agregado"); //TODO:Translate
+
+        this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.productoAgregado'));
 
         this.restaurantService.viewCheck = true;
         this.restaurantService.viewTranCheck = false;
@@ -621,7 +618,7 @@ export class DetailsProductComponent implements OnInit {
 
       );
 
-      this._notificationService.openSnackbar("Cuenta creada"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
       this.restaurantService.viewTranCheck = false;
       this.restaurantService.viewCheck = true;

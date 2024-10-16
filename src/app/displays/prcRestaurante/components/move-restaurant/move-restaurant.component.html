@@ -1,7 +1,7 @@
 <mat-stepper linear #stepper class="traslado" animationDuration="0">
     <mat-step [stepControl]="formNewLocation" [editable]="isEditable">
         <ng-template matStepLabel>
-            <p class="textBold">Nueva Ubicación </p>
+            <p class="textBold">{{'pos.restaurante.nuevaUbicacion' | translate }} </p>
             <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
         </ng-template>
 

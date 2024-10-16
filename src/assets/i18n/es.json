@@ -376,7 +376,32 @@
             "docConvert": "Documento Conversión."
         },
         "restaurante": {
-            "seleccionar": "Selecciona una opción."
+            "seleccionar": "Selecciona una opción.",
+            "sinCantidad": "No hay cantidad",
+            "productoAgregado": "Producto Agregado",
+            "cuentaCreada": "Cuenta creada correctamente.",
+            "notas": "Notas:",
+            "notasPro": "Notas para este producto.",
+            "instrucciones": "Escribe las instrucciones necesarias.",
+            "errorComanda": "Error al comandar",
+            "marcarCuentas": "Marca la casilla de la cuenta o cuentas que quieras trasladar.",
+            "verDetalle": "Ver Detalle",
+            "trasladoCuenta": "Cuenta trasladada correctamente.",
+            "trasladoTran": "Transacción trasladada correctamente.",
+            "trasladoMesa": "Mesa trasladada correctamente.",
+            "nuevaUbicacion": "Nueva Ubicación",
+            "ubicacionesT": "UBICACIONES",
+            "nuevaMesa": "Nueva Mesa",
+            "mesasT": "MESAS",
+            "cuentasT": "CUENTAS",
+            "cuenta": "Cuenta",
+            "nuevaCuenta": "Nueva Cuenta",
+            "resumen": "Resumen",
+            "traslado": "Traslado",
+            "origen": "Origen",
+            "ubicacion": "Ubicación",
+            "mesa": "Mesa",
+            "destino": "Destino"
         }
     },
     "crm": {

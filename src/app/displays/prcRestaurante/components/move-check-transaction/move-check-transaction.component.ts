@@ -6,6 +6,7 @@ import { OrderInterface } from '../../interfaces/order.interface';
 import { GarnishTraInteface } from '../../interfaces/garnish.interface';
 import { ProductRestaurantInterface } from '../../interfaces/product-restaurant';
 import { ImageRestaurantComponent } from '../image-restaurant/image-restaurant.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-move-check-transaction',
@@ -19,6 +20,7 @@ export class MoveCheckTransactionComponent {
   constructor(
     public restaurantService: GlobalRestaurantService,
     private _dialog: MatDialog,
+    private _translate: TranslateService,
     private _notificationService: NotificationsService,
   ) { }
 
@@ -42,7 +44,7 @@ export class MoveCheckTransactionComponent {
 
       );
 
-      this._notificationService.openSnackbar("Cuenta creada."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
       this.restaurantService.updateOrdersTable();
     }
@@ -101,7 +103,6 @@ export class MoveCheckTransactionComponent {
 
   imagen(producto: ProductRestaurantInterface) {
 
-    //TODO: borrar la imagen
     // producto.objeto_Imagen = "https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg";
 
     if (producto.objeto_Imagen) {
@@ -109,8 +110,7 @@ export class MoveCheckTransactionComponent {
       return;
     }
 
-    this._notificationService.openSnackbar("No hay imagen asociada a este producto"); //TODO:Translate
-
+    this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
   }
 
   restar(indexTra: number) {

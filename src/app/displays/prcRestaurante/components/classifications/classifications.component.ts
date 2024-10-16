@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { elementos } from '../../interfaces/send-order.interface';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { ClassificationRestaurantInterface } from '../../interfaces/classification-restaurant.interface';
 import { RestaurantService } from '../../services/restaurant.service';
@@ -12,7 +11,6 @@ import { FacturaService } from 'src/app/displays/prc_documento_3/services/factur
 import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { RetryService } from 'src/app/services/retry.service';
 import { LoadRestaurantService } from '../../services/load.restaurant.service';
 
 @Component({
@@ -128,8 +126,6 @@ export class ClassificationsComponent implements OnInit {
 
     //Guardar error
     PreferencesService.error = error;
-
-    //TODO:mostrar pantalla de error
 
     this.restaurantService.verError = true;
 

@@ -1,10 +1,9 @@
 <div class="contenido">
     <div *ngIf="restaurantService.viewChecksMove">
 
-
         <div class="info">
             <mat-icon class="marginRihgt">info</mat-icon>
-            Marca la casilla de la cuenta o cuentas que quieras trasladar.
+            {{'pos.restaurante.marcarCuentas' | translate }}
         </div>
 
         <div class="cuentas">
@@ -19,7 +18,8 @@
                         <span class="spacer"></span>
                         <div class="detalleCuenta">
                             <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                            <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                            <p class="textBold">{{'pos.factura.total' | translate }}:
+                                {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
                         </div>
                     </div>
                     <mat-checkbox [(ngModel)]="restaurantService.orders[indexOrder].selected"
@@ -27,7 +27,7 @@
                     </mat-checkbox>
                 </div>
                 <div class="verTansacciones" (click)="viewTranCheck(indexOrder)">
-                    <p class="irDetalleCuenta">Ver Detalle</p>
+                    <p class="irDetalleCuenta">{{'pos.restaurante.verDetalle' | translate }}</p>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <p class="textBold">{{tran.producto.des_Producto }}</p>
                 <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
                 <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
-                <p class="textBold" *ngIf="tran.observacion "> Notas:</p>
+                <p class="textBold" *ngIf="tran.observacion "> {{'pos.restaurante.notas'}}</p>
                 <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
             </div>
             <div class="cantidad-producto">

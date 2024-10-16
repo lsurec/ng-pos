@@ -103,7 +103,7 @@ export class ErrorComandaComponent {
     this.restaurantService.isLoading = false;
 
     if (this.erroresComanda[indexFormat].error) {
-      this._notificationService.openSnackbar("Algo salió mal");
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.algoSalioMal'));
       return;
     } else {
       //eliniinar un elento de la lista
@@ -199,22 +199,22 @@ export class ErrorComandaComponent {
           const blob = await UtilitiesService.generatePdfBlob(pdfDocGenerator);
 
 
-            // ...
-            var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
+          // ...
+          var pdfFile = new File([blob], 'ticket.pdf', { type: 'application/pdf' });
 
-            let resPrint: ResApiInterface = await this._printService.postPrint(
-              pdfFile,
-              format.ipAdress,
-              "1",
-            );
+          let resPrint: ResApiInterface = await this._printService.postPrint(
+            pdfFile,
+            format.ipAdress,
+            "1",
+          );
 
 
-            if (!resPrint.status) {
+          if (!resPrint.status) {
 
-              format.error = "Fallo al imprimir";
-              console.error(resPrint.response);
+            format.error = "Fallo al imprimir";
+            console.error(resPrint.response);
 
-            }
+          }
 
 
         }

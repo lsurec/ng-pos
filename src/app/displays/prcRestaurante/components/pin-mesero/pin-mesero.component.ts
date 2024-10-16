@@ -65,11 +65,35 @@ export class PinMeseroComponent {
     this.restaurantService.idPantalla = 1; //Clasificaciones
 
     this.pinMesero = "";
+
+    this.validarDetalle();
   }
 
   cancelar() {
     this.pinMesero = "";
     this.dialogRef.close();
+
+  }
+
+  validarDetalle() {
+
+    if (this.restaurantService.table!.orders.length == 0) {
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.verDetalleOrden = false;
+    }
+
+    if (this.restaurantService.table?.orders.length == 1) {
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = true;
+      this.restaurantService.verDetalleOrden = true;
+    }
+
+    if (this.restaurantService.table!.orders.length > 0) {
+      this.restaurantService.viewCheck = true;
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.verDetalleOrden = true;
+    }
 
   }
 

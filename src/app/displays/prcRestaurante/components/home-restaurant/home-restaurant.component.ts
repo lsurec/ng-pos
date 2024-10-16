@@ -191,6 +191,28 @@ export class HomeRestaurantComponent implements OnInit {
     }
   }
 
+  validarDetalle() {
+
+    if (this.restaurantService.table!.orders.length == 0) {
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.verDetalleOrden = false;
+    }
+
+    if (this.restaurantService.table?.orders.length == 1) {
+      this.restaurantService.viewCheck = false;
+      this.restaurantService.viewTranCheck = true;
+      this.restaurantService.verDetalleOrden = true;
+    }
+
+    if (this.restaurantService.table!.orders.length > 0) {
+      this.restaurantService.viewCheck = true;
+      this.restaurantService.viewTranCheck = false;
+      this.restaurantService.verDetalleOrden = true;
+    }
+
+  }
+
   selectCheckAll() {
 
     this.restaurantService.selectAllChecks = !this.restaurantService.selectAllChecks;
