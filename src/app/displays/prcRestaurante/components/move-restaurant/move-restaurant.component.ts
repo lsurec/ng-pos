@@ -240,6 +240,8 @@ export class MoveRestaurantComponent {
 
     let contadorErr = 0;
 
+    this.restaurantService.isLoading = true;
+
     for (const element of this.restaurantService.table!.orders) {
 
       this.restaurantService.orders[element].mesa = this.newTable!;
@@ -258,6 +260,8 @@ export class MoveRestaurantComponent {
 
 
     }
+    this.restaurantService.isLoading = false;
+
 
     this.restaurantService.updateOrdersTable();
 
