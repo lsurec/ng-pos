@@ -138,12 +138,28 @@ export class HomeRestaurantComponent implements OnInit {
         this.restaurantService.viewMoveCheckTable = true;
         this.restaurantService.viewLocations = false;
         this.restaurantService.viewRestaurant = false;
-
+        this.marcarFalse();
         return;
       }
 
     })
 
+  }
+
+  marcarFalse() {
+    if (this.restaurantService.orders) {
+      // Recorremos cada elemento de la lista de orders
+      this.restaurantService.orders.forEach(order => {
+        order.selected = false;  // Marcamos la propiedad 'selected' en false para cada order
+
+        // Verificamos si la orden tiene transacciones y las recorremos
+        if (order.transacciones) {
+          order.transacciones.forEach(transaccion => {
+            transaccion.selected = false;  // Marcamos la propiedad 'selected' en false para cada transacción
+          });
+        }
+      });
+    }
   }
 
   selectCheckAll() {
