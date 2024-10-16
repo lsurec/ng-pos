@@ -13,7 +13,6 @@ import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { FacturaService } from 'src/app/displays/prc_documento_3/services/factura.service';
 import { ApiService } from 'src/app/services/api.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
-import { OrderInterface } from '../../interfaces/order.interface';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
@@ -77,8 +76,38 @@ export class MoveRestaurantComponent {
   selectTable(table: TableInterface) {
     this.newTable = table;
     console.log(this.newTable);
-    
+
     this.stepper!.next();
+  }
+
+  timer: any; //temporizador
+
+  mostrarCarga() {
+    this.restaurantService.isLoading = true;
+    this.timer = setTimeout(() => {
+      this.restaurantService.isLoading = false;
+    }, 5000);
+  }
+
+  mostrarError() {
+    let dateNow: Date = new Date(); //fecha del error
+
+    //Crear error
+    let error: ErrorInterface = {
+      date: dateNow,
+      description: "Prueba del error.",
+      storeProcedure: "Prueba del error.",
+      url: "Sin URL, es prueba de error.",
+    }
+
+    //Guardar error
+    PreferencesService.error = error;
+
+    //TODO:mostrar pantalla de error
+
+    this.restaurantService.verError = true;
+
+    return;
   }
 
   async loadTables(): Promise<boolean> {
@@ -185,13 +214,38 @@ export class MoveRestaurantComponent {
 
   cancelar() {
     this.stepper!.reset()
-    this.indexNewCheck = -1;
-    this.newTable = undefined;
-    this.newLocation = undefined;
+    this.viewRestaurant(); // regresar a restaurante
   }
 
   confirmar() {
-    //realizar el traslado de la transaccion
+    //traslado de cuentas
+    if (this.restaurantService.tipoTraslado == 1) {
+      //si tood sale bien
+      this.viewRestaurant(); // regresar a restaurante
+
+    }
+
+    //traslado de transacciones
+    if (this.restaurantService.tipoTraslado == 2) {
+      //si tood sale bien
+      this.viewRestaurant(); // regresar a restaurante
+    }
+  }
+
+  viewRestaurant() {
+    //limpiar
+    this.indexNewCheck = -1;
+    this.newTable = undefined;
+    this.newLocation = undefined;
+
+    this.restaurantService.viewRestaurant = true;
+    this.restaurantService.viewLocations = false;
+
+    this.restaurantService.selectCheckOrTran = true; //mostrar cuentas
+    this.restaurantService.selectNewLocation = false; //ocultar el destino del traslado
+    this.restaurantService.viewMoveCheckTable = false; //ocultar contenido del traslado
+    this.restaurantService.viewTranCheckMove = false; //ocultar las transacciones de la cuenta
+    this.restaurantService.viewChecksMove = true; //mostrar las cuentas para trasladar
   }
 
 }

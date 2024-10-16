@@ -68,6 +68,9 @@ export class GlobalRestaurantService {
     viewTranCheckMove: boolean = false;
     indexMoveCheck: number = 0;
 
+    selectCheckOrTran: boolean = true;
+    selectNewLocation: boolean = false;
+
     //1: Cuenta
     //2: Transaccion
     tipoTraslado: number = 0;

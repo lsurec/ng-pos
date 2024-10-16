@@ -72,8 +72,7 @@ export class HomeRestaurantComponent implements OnInit {
   nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
   documentoName: string = ""; //Descripcion tipo de documento
 
-  selectCheckOrTran: boolean = true;
-  selectNewLocation: boolean = false;
+
 
   constructor(
     private notificationService: NotificationsService,
@@ -959,13 +958,13 @@ export class HomeRestaurantComponent implements OnInit {
   }
 
   viewSelectCheckOrTran() {
-    this.selectCheckOrTran = true;
-    this.selectNewLocation = false;
+    this.restaurantService.selectCheckOrTran = true;
+    this.restaurantService.selectNewLocation = false;
   }
 
   viewSelectNewLocation() {
-    this.selectCheckOrTran = false;
-    this.selectNewLocation = true;
+    this.restaurantService.selectCheckOrTran = false;
+    this.restaurantService.selectNewLocation = true;
   }
 
 }

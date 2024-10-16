@@ -607,36 +607,42 @@
 
             <mat-toolbar-row class="head__sidenav">
                 <!-- Regresar a restaurante desde seleccionar cuenta o transaccion -->
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
                     matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <!-- Rregresar de transacciones de cuenta -->
-                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
                     matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewChecks()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <!-- Regresar a seleccionar cuentas o transacciones -->
-                <button mat-icon-button *ngIf="selectNewLocation" matTooltip="{{ 'pos.botones.regresar' | translate }}"
-                    (click)="viewSelectCheckOrTran()">
+                <button mat-icon-button *ngIf="restaurantService.selectNewLocation"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewSelectCheckOrTran()">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <span class="spacer"></span>
                 <p class="textBold">Trasladar</p>
                 <span class="spacer"></span>
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
                     matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="!restaurantService.viewTranCheckMove  && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
                     matTooltip="Trasladar Cuenta" (click)="trasladarCuenta()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove  && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
                     matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button *ngIf="restaurantService.viewTranCheckMove  && !selectNewLocation"
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
                     matTooltip="Trasladar Transacción" (click)="trasladarTran()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
@@ -644,8 +650,8 @@
 
             <div class="contenidoTraslado">
 
-                <app-move-check-transaction *ngIf="selectCheckOrTran"></app-move-check-transaction>
-                <app-move-restaurant *ngIf="selectNewLocation"></app-move-restaurant>
+                <app-move-check-transaction *ngIf="restaurantService.selectCheckOrTran"></app-move-check-transaction>
+                <app-move-restaurant *ngIf="restaurantService.selectNewLocation"></app-move-restaurant>
             </div>
 
             <app-barra-logos></app-barra-logos>
