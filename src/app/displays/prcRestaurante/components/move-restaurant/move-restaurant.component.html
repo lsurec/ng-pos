@@ -5,6 +5,10 @@
             <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
         </ng-template>
 
+        <button mat-mini-fab class="siguiente" *ngIf="newLocation" matStepperNext>
+            <mat-icon>navigate_next</mat-icon>
+        </button>
+
         <div class="ubicaciones">
 
             <div class="cantidad-registros">
@@ -30,7 +34,7 @@
         </div>
         <div class="dFlex" *ngIf="newLocation">
             <span class="spacer"></span>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext>Siguiente</button>
         </div>
     </mat-step>
     <mat-step [stepControl]="formNewTable" [editable]="isEditable">
@@ -39,6 +43,13 @@
             <p class="textBold">Nueva Mesa </p>
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
+
+        <button mat-mini-fab class="regresar" matStepperPrevious>
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-mini-fab class="siguiente" *ngIf="newTable" matStepperNext>
+            <mat-icon>navigate_next</mat-icon>
+        </button>
 
         <div class="mesas" *ngIf="restaurantService.tables.length > 0">
             <div class="cantidad-registros">
@@ -50,7 +61,7 @@
                 </p>
             </div>
 
-            <div class="mesasx2">
+            <div class="mesasx2" *ngIf="newLocation != undefined">
                 <div class="mesa" *ngFor="let table of restaurantService.tables" (click)="selectTable(table)"
                     [ngClass]="{'ubicacionMesaSelect': newTable && newTable.elemento_Asignado === table.elemento_Asignado}">
                     <mat-icon>table_bar</mat-icon>
@@ -63,12 +74,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="dFlex">
-            <span class="spacer"></span>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-        </div>
     </mat-step>
     <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
 
@@ -77,41 +82,108 @@
             <!-- <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p> -->
         </ng-template>
 
-        <p>Aqui van las cuentas que existan en esa mesa o la opcion de crear cuenta</p>
+        <button mat-mini-fab class="regresar" matStepperPrevious>
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-mini-fab class="siguiente" *ngIf="indexNewCheck != -1" matStepperNext>
+            <mat-icon>navigate_next</mat-icon>
+        </button>
 
-        <div class="cuentas">
-            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
-                <div class="cuenta-detalle" (click)="selectCheck(indexOrder)">
-                    <div class="espacioCuenta">
-                        <div class="circulo">
-                            <span class="spacer"></span>
-                            <mat-icon class="icoCuenta">person</mat-icon>
-                            <span class="spacer"></span>
-                        </div>
-                        <span class="spacer"></span>
-                        <div class="detalleCuenta">
-                            <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                            <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
-                        </div>
-                    </div>
+        <div class="cuentas" *ngIf="newTable != undefined">
+            <div class="cuenta" *ngFor="let indexOrder of newTable!.orders" (click)="selectCheck(indexOrder)"
+                [ngClass]="{'checkSelect': indexNewCheck == indexOrder}">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">person</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <span class="spacer"></span>
+                <div class="detalleCuenta">
+                    <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                    <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
                 </div>
             </div>
         </div>
 
-
-
-        <div class="dFlex">
-            <span class="spacer"></span>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+        <div class="cuentas">
+            <div class="cuenta" (click)="newCheck()">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">add</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <span class="spacer"></span>
+                <div class="detalleCuenta">
+                    <p class="textBold">Nueva Cuenta</p>
+                </div>
+            </div>
         </div>
     </mat-step>
     <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+        <ng-template matStepLabel>
+            <p class="textBold">Resumen </p>
+            <p class="step-subtitle">Traslado</p>
+        </ng-template>
+
+        <button mat-mini-fab class="regresar" matStepperPrevious>
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="origenDestino" *ngIf="newLocation && newTable && indexNewCheck != -1">
+
+            <div class="resumen">
+                <p class="textBold">Origen</p>
+
+                <div class="dFlex">
+                    <p class="textBold">Ubicación</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.location?.descripcion}}</p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">Mesa</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.table?.descripcion}}</p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">Cuenta</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.orders[restaurantService.indexMoveCheck].nombre}}</p>
+                </div>
+            </div>
+            <span class="spacer"></span>
+
+            <div class="resumen">
+                <p class="textBold">Destino</p>
+
+                <div class="dFlex">
+                    <p class="textBold">Ubicación</p>
+                    <span class="spacer"></span>
+                    <p class="text12"> {{newLocation.descripcion}} </p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">Mesa</p>
+                    <span class="spacer"></span>
+                    <p class="text12"> {{newTable.descripcion}} </p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">Cuenta</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.orders[indexNewCheck].nombre}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dFlex">
+            <button mat-raised-button class="boton-azul" (click)="cancelar()"
+                matTooltip="{{'pos.botones.cancelar' | translate}}">
+                {{'pos.botones.cancelar' | translate}}
+            </button>
+            <span class="spacer"></span>
+            <button mat-raised-button class="boton-azul" (click)="confirmar()"
+                matTooltip="{{'pos.botones.confirmar' | translate}}">
+                {{'pos.botones.confirmar' | translate}}
+            </button>
         </div>
     </mat-step>
 </mat-stepper>

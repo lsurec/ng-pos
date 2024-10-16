@@ -81,6 +81,10 @@ mat-horizontal-content-container {
     background: $bordes;
 }
 
+.checkSelect {
+    background: $bordes !important;
+}
+
 .descripciones {
     width: calc(100% - 40px);
 }
@@ -153,7 +157,7 @@ mat-horizontal-content-container {
     grid-template-columns: repeat(3, 1fr);
     //Espacio entre las mesas, puedes ajustar esto
     gap                  : 10px 15px;
-    padding              : 10px 20px 0px;
+    padding-top          : 10px;
 }
 
 .espacioCuenta {
@@ -179,4 +183,45 @@ mat-horizontal-content-container {
 
 .detalleCuenta {
     width: calc(100% - 60px);
+}
+
+.cuenta {
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    border-radius: 5px;
+    padding      : 10px;
+}
+
+.cuenta:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.resumen {
+    width: 45%;
+}
+
+.origenDestino {
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 20px;
+}
+
+/*Boton ir arriba*/
+.regresar {
+    position        : fixed;
+    z-index         : 1000;
+    top             : 250px;
+    background-color: $personalizado;
+}
+
+
+.siguiente {
+    position        : fixed;
+    right           : 25px;
+    top             : 250px;
+    background-color: $personalizado;
 }
