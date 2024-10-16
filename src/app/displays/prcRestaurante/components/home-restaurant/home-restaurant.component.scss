@@ -539,18 +539,21 @@ label[for*='6']:before {
 }
 
 //ubicaciones y mesas
+.contenidoTraslado::-webkit-scrollbar,
 .detalleOrden::-webkit-scrollbar,
 .contenido-ubicaciones-mesas::-webkit-scrollbar,
 .contenido::-webkit-scrollbar {
     width: 7px;
 }
 
+.contenidoTraslado::-webkit-scrollbar-track,
 .detalleOrden::-webkit-scrollbar-track,
 .contenido-ubicaciones-mesas::-webkit-scrollbar-track,
 .contenido::-webkit-scrollbar-track {
     background: $fondo;
 }
 
+.contenidoTraslado::-webkit-scrollbar-thumb,
 .detalleOrden::-webkit-scrollbar-thumb,
 .contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .contenido::-webkit-scrollbar-thumb {

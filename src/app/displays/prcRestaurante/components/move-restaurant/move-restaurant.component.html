@@ -5,10 +5,6 @@
             <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
         </ng-template>
 
-        <button mat-mini-fab class="siguiente" *ngIf="newLocation" matStepperNext>
-            <mat-icon>navigate_next</mat-icon>
-        </button>
-
         <div class="ubicaciones">
 
             <div class="cantidad-registros">
@@ -34,7 +30,9 @@
         </div>
         <div class="dFlex" *ngIf="newLocation">
             <span class="spacer"></span>
-            <button mat-button matStepperNext>Siguiente</button>
+            <button mat-mini-fab class="siguiente" *ngIf="newLocation" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
         </div>
     </mat-step>
     <mat-step [stepControl]="formNewTable" [editable]="isEditable">
@@ -43,13 +41,6 @@
             <p class="textBold">Nueva Mesa </p>
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
-
-        <button mat-mini-fab class="regresar" matStepperPrevious>
-            <mat-icon>chevron_left</mat-icon>
-        </button>
-        <button mat-mini-fab class="siguiente" *ngIf="newTable" matStepperNext>
-            <mat-icon>navigate_next</mat-icon>
-        </button>
 
         <div class="mesas" *ngIf="restaurantService.tables.length > 0">
             <div class="cantidad-registros">
@@ -74,6 +65,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="dFlex">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-mini-fab class="siguiente" *ngIf="newTable" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
     </mat-step>
     <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
 
@@ -81,13 +82,6 @@
             <p class="textBold">Cuenta </p>
             <!-- <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p> -->
         </ng-template>
-
-        <button mat-mini-fab class="regresar" matStepperPrevious>
-            <mat-icon>chevron_left</mat-icon>
-        </button>
-        <button mat-mini-fab class="siguiente" *ngIf="indexNewCheck != -1" matStepperNext>
-            <mat-icon>navigate_next</mat-icon>
-        </button>
 
         <div class="cuentas" *ngIf="newTable != undefined">
             <div class="cuenta" *ngFor="let indexOrder of newTable!.orders" (click)="selectCheck(indexOrder)"
@@ -118,6 +112,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="dFlex">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-mini-fab class="siguiente" *ngIf="indexNewCheck != -1" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>
@@ -125,11 +129,7 @@
             <p class="step-subtitle">Traslado</p>
         </ng-template>
 
-        <button mat-mini-fab class="regresar" matStepperPrevious>
-            <mat-icon>chevron_left</mat-icon>
-        </button>
-
-        <div class="origenDestino" *ngIf="newLocation && newTable && indexNewCheck != -1">
+        <div class="origenDestino" *ngIf="newLocation && newTable">
 
             <div class="resumen">
                 <p class="textBold">Origen</p>
@@ -144,7 +144,7 @@
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.table?.descripcion}}</p>
                 </div>
-                <div class="dFlex">
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2">
                     <p class="textBold">Cuenta</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[restaurantService.indexMoveCheck].nombre}}</p>
@@ -165,13 +165,19 @@
                     <span class="spacer"></span>
                     <p class="text12"> {{newTable.descripcion}} </p>
                 </div>
-                <div class="dFlex">
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2">
                     <p class="textBold">Cuenta</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[indexNewCheck].nombre}}</p>
                 </div>
             </div>
 
+        </div>
+
+        <div class="origenDestino">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
         </div>
 
         <div class="dFlex">

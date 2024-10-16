@@ -116,9 +116,9 @@ mat-horizontal-content-container {
     color      : $personalizado;
 }
 
-.textCenter12 {
-    font-size : 12px !important;
-    text-align: center;
+.textBoldCenter {
+    text-align : center;
+    font-weight: 550;
 }
 
 .textLeft12 {
@@ -201,7 +201,11 @@ mat-horizontal-content-container {
 }
 
 .resumen {
-    width: 45%;
+    width        : 45%;
+    padding      : 10px;
+    border-radius: 5px;
+    box-shadow   : $sombra;
+    border       : solid 1px $bordes;
 }
 
 .origenDestino {
@@ -211,17 +215,7 @@ mat-horizontal-content-container {
 }
 
 /*Boton ir arriba*/
-.regresar {
-    position        : fixed;
-    z-index         : 1000;
-    top             : 250px;
-    background-color: $personalizado;
-}
-
-
+.regresar,
 .siguiente {
-    position        : fixed;
-    right           : 25px;
-    top             : 250px;
     background-color: $personalizado;
 }
