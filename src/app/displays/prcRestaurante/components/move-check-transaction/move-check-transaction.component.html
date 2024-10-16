@@ -27,7 +27,7 @@
                     </mat-checkbox>
                 </div>
                 <div class="verTansacciones" (click)="viewTranCheck(indexOrder)">
-                    <p class="irDetalleCuenta">{{'pos.restaurante.verDetalle' | translate }}</p>
+                    <p class="irDetalleCuenta">{{'pos.restaurante.trasladarTransacciones' | translate }}</p>
                 </div>
             </div>
         </div>
@@ -36,38 +36,22 @@
 
     <div *ngIf="restaurantService.viewTranCheckMove">
 
-        <div class="transaccion"
-            *ngFor="let tran of restaurantService.orders[restaurantService.indexMoveCheck].transacciones; let indexTran = index">
-            <mat-checkbox [(ngModel)]="tran.selected" color="primary">
-            </mat-checkbox>
+        <div class="transaccionesx2">
+            <div class="transaccion" (click)="selectTranCheck(indexTran)"
+                *ngFor="let tran of restaurantService.orders[restaurantService.indexMoveCheck].transacciones; let indexTran = index">
+                <mat-checkbox [(ngModel)]="tran.selected" (click)="selectTranCheck(indexTran)" color="primary">
+                </mat-checkbox>
 
-            <div class="productoImagen" (click)="imagen(tran.producto)">
-                <img [src]="tran.producto.objeto_Imagen?? 'assets/placeimg.jpg'" class="image-product">
-            </div>
-
-            <div class="detalleTransaccion">
-                <p class="textBold">{{tran.producto.des_Producto }}</p>
-                <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
-                <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
-                <p class="textBold" *ngIf="tran.observacion "> {{'pos.restaurante.notas'}}</p>
-                <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
-            </div>
-            <div class="cantidad-producto">
-                <div class="dFlex">
-                    <span class="spacer"></span>
-                    <p class="textBold">
-                        {{ tran.cantidad * tran.precio.precioU | currencyFormat }}
-                    </p>
+                <div class="productoImagen" (click)="imagen(tran.producto)">
+                    <img [src]="tran.producto.objeto_Imagen?? 'assets/placeimg.jpg'" class="image-product">
                 </div>
-                <div class="dFlex">
-                    <div class="restar" (click)="restar(indexTran)">
-                        <p class="sumar-restar">-</p>
-                    </div>
-                    <input class="cantidad" type="text" name="search" [(ngModel)]="tran.cantidad" autocomplete="off"
-                        (ngModelChange)="calcTotal()" (keypress)="validarNumeros($event)">
-                    <div class="sumar" (click)="sumar(indexTran)">
-                        <p class="sumar-restar">+</p>
-                    </div>
+
+                <div class="detalleTransaccion">
+                    <p class="textBold"> {{tran.cantidad}} x {{tran.producto.des_Producto }}</p>
+                    <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
+                    <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
+                    <p class="textBold" *ngIf="tran.observacion "> {{'pos.restaurante.notas' | translate }}</p>
+                    <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
                 </div>
             </div>
         </div>

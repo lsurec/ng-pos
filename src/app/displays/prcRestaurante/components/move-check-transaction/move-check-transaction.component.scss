@@ -89,7 +89,8 @@ p {
     border-radius: 5px;
 }
 
-.cuenta-detalle:hover {
+.transaccion:hover,
+.cuenta:hover {
     cursor    : pointer;
     background: $bordes;
 }
@@ -97,6 +98,14 @@ p {
 .cuentas {
     display              : grid;
     grid-template-columns: repeat(3, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 10px 15px;
+    padding              : 10px 20px 0px;
+}
+
+.transaccionesx2 {
+    display              : grid;
+    grid-template-columns: repeat(1, 1fr);
     //Espacio entre las mesas, puedes ajustar esto
     gap                  : 10px 15px;
     padding              : 10px 20px 0px;
@@ -175,55 +184,6 @@ p {
 
 .textBold {
     font-weight: 550;
-}
-
-.cantidad {
-    height       : 35px;
-    background   : none;
-    padding      : 0px 3px;
-    outline      : none;
-    border-style : none;
-    border-top   : 0.5px solid $bordes;
-    border-bottom: 0.5px solid $bordes;
-    color        : $personalizado;
-    width        : 25px;
-    text-align   : center;
-}
-
-.sumar,
-.restar {
-    height      : 35px;
-    background  : none;
-    font-size   : 14px;
-    outline     : none;
-    border-style: none;
-    border      : 0.5px solid $bordes;
-    color       : $personalizado;
-    width       : 25px;
-    display     : flex;
-    align-items : center;
-}
-
-.restar {
-    border-top-left-radius   : 10px;
-    border-bottom-left-radius: 10px;
-}
-
-.sumar {
-    border-top-right-radius   : 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.sumar-restar {
-    width      : 100%;
-    text-align : center;
-    font-size  : 20px !important;
-    align-items: flex-end;
-    display    : inline-grid;
-}
-
-.sumar-restar:hover {
-    cursor: pointer;
 }
 
 .transaccion {

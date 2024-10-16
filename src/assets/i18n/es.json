@@ -403,7 +403,8 @@
             "mesa": "Mesa",
             "destino": "Destino",
             "comandaEnviada": "Comanda enviada",
-            "errorAlActualizar": "Algo salió mal al actualizar los datos remotos."
+            "errorAlActualizar": "Algo salió mal al actualizar los datos remotos.",
+            "trasladarTransacciones": "Trasladar transacciones."
         }
     },
     "crm": {

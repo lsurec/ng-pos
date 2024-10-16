@@ -113,40 +113,6 @@ export class MoveCheckTransactionComponent {
     this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinImagenes'));
   }
 
-  restar(indexTra: number) {
-
-
-    if (this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTra].cantidad == 1) {
-      this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTra].cantidad == 1;
-      //TODO: mostrar iconp de basura y dialogo para eliminar transaccion
-      return;
-    }
-
-    //disminuir cantidad en 1
-    this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTra].cantidad--;
-
-    this.calcTotal();
-  }
-
-
-  sumar(indexTran: number) {
-    this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTran].cantidad++;
-    this.calcTotal();
-  }
-
-  calcTotal() {
-
-  }
-  validarNumeros(event: any) {
-    // Obtener el código de la tecla presionadad
-    let codigoTecla = event.which ? event.which : event.keyCode;
-
-    // Permitir solo números (códigos de tecla entre 48 y 57 son números en el teclado)
-    if (codigoTecla < 48 || codigoTecla > 57) {
-      event.preventDefault();
-    }
-  }
-
   selectTranCheck(indexTra: number) {
     this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTra].selected = !this.restaurantService.orders[this.restaurantService.indexMoveCheck].transacciones[indexTra].selected;
   }
