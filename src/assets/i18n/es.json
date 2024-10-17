@@ -404,7 +404,9 @@
             "destino": "Destino",
             "comandaEnviada": "Comanda enviada",
             "errorAlActualizar": "Algo salió mal al actualizar los datos remotos.",
-            "trasladarTransacciones": "Trasladar transacciones."
+            "trasladarTransacciones": "Trasladar transacciones.",
+            "eliminar": "Eliminar",
+            "comandada": "Comandada"
         }
     },
     "crm": {

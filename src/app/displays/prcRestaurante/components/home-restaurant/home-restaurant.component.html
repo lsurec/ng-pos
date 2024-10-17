@@ -438,7 +438,8 @@
                                     <button mat-icon-button matTooltip="Trasladar Mesa" (click)="viewMoveTable()">
                                         <mat-icon>move_up</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="Trasladar" (click)="viewMoveCheckTable()">
+                                    <button mat-icon-button matTooltip="Trasladar Transacciones"
+                                        (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
                                     <!-- TODO: Traducir -->
@@ -474,7 +475,7 @@
                             <button mat-icon-button matTooltip="Trasladar Mesa" (click)="viewMoveTable()">
                                 <mat-icon>move_up</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="Trasladar" (click)="viewMoveCheckTable()">
+                            <button mat-icon-button matTooltip="Trasladar Transacciones" (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
                             <!-- TODO: Traducir -->
@@ -518,8 +519,7 @@
                                 </div>
                                 <div class="fondoDetalle" (click)="verDetalles()"
                                     *ngIf="!restaurantService.verDetalleOrden">
-                                    <mat-icon (click)="verDetalles()"
-                                        *ngIf="!restaurantService.verDetalleOrden">chevron_left</mat-icon>
+                                    <mat-icon>chevron_left</mat-icon>
                                 </div>
                                 <div (click)="verDetalles()" *ngIf="restaurantService.verDetalleOrden"
                                     class="fondoDetalle">
@@ -571,17 +571,25 @@
                                         <div class="transaccion"
                                             *ngFor="let tran of restaurantService.orders[restaurantService.indexCheck].transacciones; let indexTran = index">
                                             <div class="detalleTransaccion">
-                                                <p class="textBold12">{{tran.producto.des_Producto }}</p>
+                                                <p class="textBold12">
+                                                    {{tran.processed ? tran.cantidad + " x ": "" }}
+                                                    {{tran.producto.des_Producto }}
+                                                </p>
                                                 <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
                                                 <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
                                                 <p class="textBold12" *ngIf="tran.observacion "> Notas:</p>
-                                                <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
+                                                <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}}
+                                                </p>
                                             </div>
                                             <div class="cantidad-producto">
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
+                                                    <!-- TODO: translate -->
                                                     <mat-icon matTooltip="Ver producto" class="verimagen"
-                                                        (click)="imagen(tran.producto)">image</mat-icon>
+                                                        (click)="imagen(tran.producto)">image_outline</mat-icon>
+                                                    <mat-icon matTooltip="{{'pos.restaurante.eliminar' | translate }}"
+                                                        (click)="eliminarTran(indexTran)"
+                                                        class="verimagen">delete_outline</mat-icon>
                                                 </div>
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
@@ -589,7 +597,7 @@
                                                         {{ tran.cantidad * tran.precio.precioU | currencyFormat }}
                                                     </p>
                                                 </div>
-                                                <div class="dFlex">
+                                                <div class="dFlex" *ngIf="!tran.processed">
                                                     <div class="restar" (click)="restar(indexTran)">
                                                         <p class="sumar-restar">-</p>
                                                     </div>
@@ -601,10 +609,24 @@
                                                         <p class="sumar-restar">+</p>
                                                     </div>
                                                 </div>
+                                                <div class="dFlex" *ngIf="tran.processed">
+                                                    <span class="spacer"></span>
+                                                    <p class="comandada">
+                                                        {{'pos.restaurante.comandada' | translate }}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="totalCuenta"
+                                        *ngIf="restaurantService.indexCheck != -1 && restaurantService.viewTranCheck">
+                                        <p class="textBold12"> Total:</p>
+                                        <span class="spacer"></span>
+                                        <p class="textBold12">
+                                            {{restaurantService.getTotal(restaurantService.indexCheck) |
+                                            currencyFormat}}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 

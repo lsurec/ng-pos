@@ -9,6 +9,7 @@ $gris          : var(--gris); //sombra y texto gris
 $bloques       : var(--bloques-claro);
 $sombra        : var(--sombra-claro);
 $navegacion    : var(--navegacion-claro);
+$rojo          : var(--descuento-claro);
 
 .container-main {
     height  : calc(100vh - 128px) !important;
@@ -909,7 +910,9 @@ label[for*='6']:before {
 //diseño cuentas
 
 .variasCuentas {
-    padding: 10px;
+    padding    : 10px;
+    padding-top: 0px;
+    height     : calc(100% - 76px);
 }
 
 .espacioCuenta {
@@ -977,6 +980,13 @@ label[for*='6']:before {
     align-items  : center;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.totalCuenta {
+    padding    : 10px;
+    display    : flex;
+    align-items: center;
+    padding-top: 0px;
 }
 
 .imgDetalle {
@@ -1055,4 +1065,9 @@ label[for*='6']:before {
 .contenidoTraslado {
     height    : calc(100vh - 128px);
     overflow-y: auto;
+}
+
+.comandada {
+    font-weight: 550;
+    color      : $rojo;
 }

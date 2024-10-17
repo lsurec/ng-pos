@@ -618,6 +618,25 @@ export class HomeRestaurantComponent implements OnInit {
 
   }
 
+  async eliminarTran(indexTra: number) {
+    //Diaogo de confirmacion
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('Estas a punto de eliminar la transaccion. Esta accion no se puede deshacer.'), //TODO:transalte
+        verdadero: this._translate.instant('pos.restaurante.eliminar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    //Cancelar
+    if (!verificador) return;
+
+    this.restaurantService.orders[this.restaurantService.indexCheck].transacciones.splice(indexTra, 1);
+    this._notificationService.openSnackbar("Transaccion eliminada"); //TODO:Translate
+
+  }
+
   getGuarniciones(indexTra: number): string {
     let order: OrderInterface = this.restaurantService.orders[this.restaurantService.indexCheck];
 
