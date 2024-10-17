@@ -443,7 +443,11 @@
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
                                     <!-- TODO: Traducir -->
-                                    <button mat-icon-button matTooltip="Comandar" (click)="printComanda(0)">
+                                    <button mat-icon-button matTooltip="Comandar"
+                                        (click)="printComanda(restaurantService.indexCheck)">
+                                        <mat-icon>desktop_windows</mat-icon>
+                                    </button>
+                                    <button mat-icon-button matTooltip="Imprimir estado de cuenta">
                                         <mat-icon>print</mat-icon>
                                     </button>
                                 </ng-container>
@@ -479,7 +483,11 @@
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
                             <!-- TODO: Traducir -->
-                            <button mat-icon-button matTooltip="Comandar" (click)="printComanda(0)">
+                            <button mat-icon-button matTooltip="Comandar"
+                                (click)="printComanda(restaurantService.indexCheck)">
+                                <mat-icon>desktop_windows</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="Imprimir estado de cuenta">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>
@@ -588,7 +596,7 @@
                                                     <mat-icon matTooltip="Ver producto" class="verimagen"
                                                         (click)="imagen(tran.producto)">image_outline</mat-icon>
                                                     <mat-icon matTooltip="{{'pos.restaurante.eliminar' | translate }}"
-                                                        (click)="eliminarTran(indexTran)"
+                                                        (click)="eliminarTran(indexTran)" *ngIf="!tran.processed"
                                                         class="verimagen">delete_outline</mat-icon>
                                                 </div>
                                                 <div class="dFlex">
@@ -620,9 +628,9 @@
                                     </div>
                                     <div class="totalCuenta"
                                         *ngIf="restaurantService.indexCheck != -1 && restaurantService.viewTranCheck">
-                                        <p class="textBold12"> Total:</p>
+                                        <p class="textBold"> Total:</p>
                                         <span class="spacer"></span>
-                                        <p class="textBold12">
+                                        <p class="textBold">
                                             {{restaurantService.getTotal(restaurantService.indexCheck) |
                                             currencyFormat}}
                                         </p>

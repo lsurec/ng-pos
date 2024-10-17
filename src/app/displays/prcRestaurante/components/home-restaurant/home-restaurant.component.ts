@@ -663,6 +663,11 @@ export class HomeRestaurantComponent implements OnInit {
   //Comandar
   async printComanda(indexOrder: number) {
 
+    if (this.restaurantService.orders.length == 0) {
+      this._notificationService.openSnackbar("No hay cuentas para comandar"); //TODO:Translate
+      return;
+    }
+
     if (this.restaurantService.orders.length > 0 && !this.restaurantService.viewTranCheck) {
       this._notificationService.openSnackbar("Seleccione una cuenta para comandar."); //TODO:Translate
       return;
