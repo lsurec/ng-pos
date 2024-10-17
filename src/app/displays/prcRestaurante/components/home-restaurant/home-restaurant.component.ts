@@ -72,7 +72,7 @@ export class HomeRestaurantComponent implements OnInit {
   nombreDocumento: string = "1 ejemplo"; //Descripcion del tipo de documento
   documentoName: string = ""; //Descripcion tipo de documento
 
-
+  selectAllChecks: boolean = false; //para seleccionar todas las cuentas
 
   constructor(
     private notificationService: NotificationsService,
@@ -202,6 +202,46 @@ export class HomeRestaurantComponent implements OnInit {
       element.selected = this.restaurantService.selectAllChecks;
     });
   }
+
+  async deleteCheck() {
+    // Verificamos si hay al menos una cuenta seleccionada
+    let selectedOrders: OrderInterface[] = this.restaurantService.orders.filter(order => order.selected);
+
+    if (selectedOrders.length == 0) {
+      // Si no hay ninguna cuenta seleccionada, mostramos el mensaje
+      this._notificationService.openSnackbar("Seleccione una cuenta para eliminar");
+      return;
+    }
+
+    //Diaogo de confirmacion
+    let verificador = await this._notificationService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('Estas a punto de eliminar las cuentas seleccionadas. Esta acción no se puede deshacer.'), //TODO:transalte
+        verdadero: this._translate.instant('pos.restaurante.eliminar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    //Cancelar
+    if (!verificador) return;
+
+    // Si hay cuentas seleccionadas, eliminamos las seleccionadas
+    this.restaurantService.orders = this.restaurantService.orders.filter(order => !order.selected);
+    this.restaurantService.updateOrdersTable();
+    this._notificationService.openSnackbar("Cuentas eliminadas correctamente."); //TODO: translate
+
+  }
+
+  //Seleccionar todas las cuentas de la mesa actual
+  selectChecks() {
+    this.selectAllChecks = !this.selectAllChecks;
+    this.restaurantService.orders.forEach(element => {
+      element.selected = this.selectAllChecks;
+    });
+
+  }
+
 
   selectTranCheckAll() {
 

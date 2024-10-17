@@ -545,6 +545,16 @@
                                         </p>
                                         <span class="spacer"></span>
                                         <button mat-icon-button
+                                            *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
+                                            matTooltip="Seleccionar todas las cuentas." (click)="selectChecks()">
+                                            <mat-icon>select_all</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
+                                            *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
+                                            matTooltip="Eliminar cuentas." (click)="deleteCheck()">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
                                             matTooltip="{{'pos.restaurante.nuevaCuenta' | translate }}"
                                             (click)="newCheck()">
                                             <mat-icon>person_add</mat-icon>
@@ -553,6 +563,9 @@
                                     <div class="variasCuentas"
                                         *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck ">
                                         <div class="cuenta" *ngFor="let order of restaurantService.table!.orders">
+                                            <mat-checkbox [(ngModel)]="restaurantService.orders[order].selected"
+                                                color="primary">
+                                            </mat-checkbox>
                                             <div (click)="selectCheck(order)" class="espacioCuenta">
                                                 <div class="circulo">
                                                     <span class="spacer"></span>
