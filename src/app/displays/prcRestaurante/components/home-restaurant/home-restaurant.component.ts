@@ -128,7 +128,7 @@ export class HomeRestaurantComponent implements OnInit {
       return;
     }
 
-    this.restaurantService.tipoTraslado = 0; // Reiniciar
+    this.restaurantService.tipoTraslado = 1; // Traslado de cuentas
 
     let dialogRef = this._dialog.open(PermisionsComponent, {})
 
@@ -1023,6 +1023,7 @@ export class HomeRestaurantComponent implements OnInit {
   viewChecks() {
     this.restaurantService.viewChecksMove = true;
     this.restaurantService.viewTranCheckMove = false;
+    this.restaurantService.tipoTraslado = 1; // Transaccion
   }
 
   trasladarCuenta() {

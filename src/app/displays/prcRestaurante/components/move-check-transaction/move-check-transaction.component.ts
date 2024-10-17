@@ -73,6 +73,8 @@ export class MoveCheckTransactionComponent {
 
     this.restaurantService.indexMoveCheck = indexCheck;
 
+    this.restaurantService.tipoTraslado = 2; // Transaccion
+
     this.restaurantService.viewChecksMove = false;
     this.restaurantService.viewTranCheckMove = true;
   }

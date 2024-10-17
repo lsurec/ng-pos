@@ -666,7 +666,16 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <span class="spacer"></span>
-                <p class="textBold">Trasladar</p>
+                <!-- TODO: translate -->
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 1">
+                    Trasladar Cuenta
+                </p>
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 2">
+                    Trasladar Transacción
+                </p>
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 3">
+                    Trasladar Mesa
+                </p>
                 <span class="spacer"></span>
                 <button mat-icon-button
                     *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
