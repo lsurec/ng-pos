@@ -1,3 +1,4 @@
+import { SerieInterface } from "../../prc_documento_3/interfaces/serie.interface";
 import { LocationInterface } from "./location.interface";
 import { TableInterface } from "./table.interface";
 import { TraRestaurantInterface } from "./tra.restaurant.interface";
@@ -12,5 +13,6 @@ export interface OrderInterface {
     ubicacion: LocationInterface;
     mesa: TableInterface;
     transacciones: TraRestaurantInterface[];
+    serie:SerieInterface;
   }
   

@@ -193,6 +193,7 @@ export class DetailsProductComponent implements OnInit {
           selected: false,
           transacciones: [transaction],
           ubicacion: this.restaurantService.location!,
+          serie:this.restaurantService.serie!,
         }
       );
 
@@ -614,6 +615,7 @@ export class DetailsProductComponent implements OnInit {
           selected: false,
           transacciones: [],
           ubicacion: this.restaurantService.location!,
+          serie:this.restaurantService.serie!,
         }
 
       );

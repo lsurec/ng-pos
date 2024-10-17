@@ -307,6 +307,7 @@ export class HomeRestaurantComponent implements OnInit {
           selected: false,
           transacciones: [],
           ubicacion: this.restaurantService.location!,
+          serie:this.restaurantService.serie!,
         }
 
       );

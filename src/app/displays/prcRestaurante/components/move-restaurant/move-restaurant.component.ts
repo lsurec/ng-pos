@@ -225,6 +225,7 @@ export class MoveRestaurantComponent {
           selected: false,
           transacciones: [],
           ubicacion: this.newLocation!,
+          serie: this.restaurantService.serie!,
         }
 
       );
