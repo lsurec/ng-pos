@@ -128,6 +128,8 @@ export class HomeRestaurantComponent implements OnInit {
       return;
     }
 
+    this.restaurantService.tipoTraslado = 0; // Reiniciar
+
     let dialogRef = this._dialog.open(PermisionsComponent, {})
 
     dialogRef.afterClosed().subscribe(result => {
@@ -155,6 +157,8 @@ export class HomeRestaurantComponent implements OnInit {
       return;
     }
 
+    this.restaurantService.tipoTraslado = 3; // Mesa
+
     let dialogRef = this._dialog.open(PermisionsComponent, {})
 
     dialogRef.afterClosed().subscribe(result => {
@@ -162,7 +166,6 @@ export class HomeRestaurantComponent implements OnInit {
       let credenciales = result;
 
       if (credenciales) {
-        this.restaurantService.tipoTraslado = 3; // Mesa
         this.restaurantService.viewRestaurant = false;
         this.restaurantService.selectCheckOrTran = false; //ocultar cuentas y transacciones 
         this.restaurantService.viewMoveCheckTable = true;
@@ -266,7 +269,7 @@ export class HomeRestaurantComponent implements OnInit {
         }
 
       );
-      
+
       this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
       this.restaurantService.viewTranCheck = false;

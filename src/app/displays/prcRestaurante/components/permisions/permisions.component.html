@@ -2,8 +2,12 @@
 
     <div class="contenido">
 
-        <p class="tituloPin">
-            TRASLADO
+        <p class="tituloPin" *ngIf="restauranteService.tipoTraslado == 3">
+            TRASLADAR MESA
+        </p>
+
+        <p class="tituloPin" *ngIf="restauranteService.tipoTraslado != 3">
+            TRASLADAR TRANSACCIONES
         </p>
 
         <form #loginForm="ngForm" (ngSubmit)="ingresar()">

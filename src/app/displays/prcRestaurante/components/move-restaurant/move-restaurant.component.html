@@ -42,18 +42,18 @@
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
 
-        <div class="mesas" *ngIf="restaurantService.tables.length > 0">
+        <div class="mesas" *ngIf="tables.length > 0">
             <div class="cantidad-registros">
                 <p class="titulo">MESAS</p>
                 <span class="spacer"></span>
                 <p class="textBold">
                     {{ 'pos.factura.registros' | translate }}
-                    ({{restaurantService.tables.length }})
+                    ({{tables.length }})
                 </p>
             </div>
 
             <div class="mesasx2" *ngIf="newLocation != undefined">
-                <div class="mesa" *ngFor="let table of restaurantService.tables" (click)="selectTable(table)"
+                <div class="mesa" *ngFor="let table of tables" (click)="selectTable(table)"
                     [ngClass]="{'ubicacionMesaSelect': newTable && newTable.elemento_Asignado === table.elemento_Asignado}">
                     <mat-icon>table_bar</mat-icon>
                     <span class="spacer"></span>

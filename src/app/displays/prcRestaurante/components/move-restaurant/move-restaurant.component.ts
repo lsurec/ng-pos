@@ -54,6 +54,9 @@ export class MoveRestaurantComponent {
   newTable?: TableInterface; // nueva mesa
   indexNewCheck: number = -1; //nueva cuenta
 
+  locations: LocationInterface[] = [];
+  tables: TableInterface[] = [];
+
   constructor(
     private _translate: TranslateService,
     private _formBuilder: FormBuilder,
@@ -118,7 +121,7 @@ export class MoveRestaurantComponent {
 
   async loadTables(): Promise<boolean> {
 
-    this.restaurantService.tables = [];
+    this.tables = [];
 
     const api = () => this._restaurantService.getTables(
       this.tipoDocumento,
@@ -141,17 +144,33 @@ export class MoveRestaurantComponent {
       return false;
     }
 
-    this.restaurantService.tables = res.response;
+    this.tables = res.response;
 
-    if (this.restaurantService.tables.length == 1)
-      this.newTable = this.restaurantService.tables[0];
+    if (this.tables.length == 1)
+      this.newTable = this.tables[0];
 
-    this.restaurantService.updateOrdersTable();
+    this.updateOrdersTable();
 
     return true;
 
 
   }
+
+  updateOrdersTable(): void {
+    for (let i = 0; i < this.tables.length; i++) {
+      const mesa = this.tables[i];
+      this.tables[i].orders = [];
+
+      for (let j = 0; j < this.restaurantService.orders.length; j++) {
+        const order = this.restaurantService.orders[j];
+
+        if (order.mesa.elemento_Id === mesa.elemento_Id) {
+          this.tables[i].orders.push(j);
+        }
+      }
+    }
+  }
+
 
   async showError(res: ResApiInterface) {
 
@@ -214,7 +233,7 @@ export class MoveRestaurantComponent {
 
       this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
-      this.restaurantService.updateOrdersTable();
+      this.updateOrdersTable();
     }
   }
 

@@ -30,7 +30,7 @@ export class PermisionsComponent {
     private _translate: TranslateService,
     public dialogRef: MatDialogRef<PermisionsComponent>,
     private _notificationService: NotificationsService,
-    private _restauranteService: GlobalRestaurantService,
+    public restauranteService: GlobalRestaurantService,
     private _loginService: LoginService,
     private _tipoAccionService: TipoAccionService,
   ) {
@@ -54,7 +54,7 @@ export class PermisionsComponent {
     };
 
     //antes de ejecutarse
-    this._restauranteService.isLoading = true;
+    this.restauranteService.isLoading = true;
 
     const apiLogin = () => this._loginService.postLogin(formValues);
 
@@ -64,7 +64,7 @@ export class PermisionsComponent {
     ///Si el servico se ejecuta mal mostar menaje
     if (!res.status) {
       //TODO:Pantalla de error
-      this._restauranteService.isLoading = false;
+      this.restauranteService.isLoading = false;
 
       this.showError(res);
       this.dialogRef.close();
@@ -78,7 +78,7 @@ export class PermisionsComponent {
     //si algo esta incorrecto mostrar mensaje
 
     if (!resLogin.success) {
-      this._restauranteService.isLoading = false;
+      this.restauranteService.isLoading = false;
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.incorrecto'));
       return;
     };
@@ -96,14 +96,14 @@ export class PermisionsComponent {
     if (!resTipoAccion.status) {
 
       //TODO:Pantalla de error
-      this._restauranteService.isLoading = false;
+      this.restauranteService.isLoading = false;
 
       this.showError(resTipoAccion);
       this.dialogRef.close();
       return;
     };
 
-    this._restauranteService.isLoading = false;
+    this.restauranteService.isLoading = false;
 
 
     if (!resTipoAccion.response["data"]) {
@@ -149,7 +149,7 @@ export class PermisionsComponent {
 
     //TODO:mostrar pantalla de error
 
-    this._restauranteService.verError = true;
+    this.restauranteService.verError = true;
 
     return;
   }
