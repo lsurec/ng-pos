@@ -237,6 +237,7 @@
                                     <div class="contenido-ubicaciones-mesas">
                                         <div class="tablaDocumentos" *ngIf="restaurantService.orders.length > 0">
                                             <div class="tabla-titulos">
+                                                <span class="spacer"></span>
                                                 <div class="bloqueW10T">
                                                     <p class="tituloTab">{{'pos.restaurante.idDoc' | translate }}</p>
                                                 </div>
@@ -263,44 +264,48 @@
                                                 <div class="bloqueW20T">
                                                     <p class="tituloTab">{{'pos.restaurante.totalT' | translate }}</p>
                                                 </div>
+                                                <span class="spacer"></span>
+
                                             </div>
                                             <div class="tabla-lista"
-                                                *ngFor="let order of restaurantService.orders; let indexOrder = index">
-                                                <div class="bloqueW10T">
+                                                *ngFor="let order of restaurantService.orders; let indexOrder = index; let last = last">
+                                                <span class="spacer"></span>
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].consecutivo}}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].serie.descripcion}}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].ubicacion.descripcion }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].mesa.descripcion }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].mesero.nombre }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].nombre }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW20T">
+                                                <div class="bloqueW20T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.getTotal(indexOrder) | currencyFormat }}
                                                     </p>
                                                 </div>
+                                                <span class="spacer"></span>
                                             </div>
                                         </div>
                                     </div>

@@ -703,34 +703,33 @@ label[for*='6']:before {
 .tabla-titulos {
     display     : flex;
     width       : 100%;
-    border      : solid 1px $bordes;
     border-right: none;
 }
 
 .tabla-lista {
     display     : flex;
     width       : 100%;
-    border      : solid 1px $bordes;
     border-right: none;
     border-top  : none;
 }
 
-
-// .bloqueT {
-//     padding     : 10px;
-//     border-right: solid 1px $bordes;
-// }
-
 .bloqueW10T {
-    width       : 10%;
-    padding     : 10px;
-    border-right: solid 1px $bordes;
+    width        : 10%;
+    padding      : 10px;
+    border       : solid 1px $bordes;
+    border-bottom: none;
+    border-right : none;
 }
 
 .bloqueW20T {
-    width       : 20%;
-    padding     : 10px;
-    border-right: solid 1px $bordes;
+    width        : 25%;
+    padding      : 10px;
+    border       : solid 1px $bordes;
+    border-bottom: none;
+}
+
+.borderBottom {
+    border-bottom: solid 1px $bordes !important;
 }
 
 .tituloTab {
