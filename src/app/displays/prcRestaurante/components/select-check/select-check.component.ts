@@ -60,6 +60,7 @@ export class SelectCheckComponent {
           selected: false,
           transacciones: [],
           ubicacion: this.restaurantService.location!,
+          serie: this.restaurantService.serie!,
         }
 
       );

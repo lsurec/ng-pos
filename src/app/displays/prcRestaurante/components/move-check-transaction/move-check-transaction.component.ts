@@ -40,6 +40,7 @@ export class MoveCheckTransactionComponent {
           selected: false,
           transacciones: [],
           ubicacion: this.restaurantService.location!,
+          serie:this.restaurantService.serie!,
         }
 
       );
