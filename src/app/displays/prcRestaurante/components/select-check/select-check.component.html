@@ -4,9 +4,6 @@
         <mat-icon>refresh</mat-icon>
     </button>
     <span class="spacer"></span>
-    <p class="textBold">{{ 'pos.factura.sku' | translate }}: {{restaurantService. product?.producto_Id}} </p>
-    <span class="spacer"></span>
-
     <span class="close" (click)="closeDialog()">&times;</span>
 </mat-toolbar-row>
 
@@ -25,11 +22,14 @@
                     <span class="spacer"></span>
                     <div class="detalleCuenta">
                         <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                        <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                        <p class="textBold">{{ 'pos.factura.total' | translate }}:
+                            {{restaurantService.getTotal(indexOrder) | currencyFormat }}
+                        </p>
                     </div>
                 </div>
                 <div class="editarCuenta">
-                    <mat-icon class="icoEditar" matTooltip="Renombrar" (click)="renombrar(indexOrder)">edit</mat-icon>
+                    <mat-icon class="icoEditar" matTooltip="{{ 'pos.restaurante.renombrarCuenta' | translate }}"
+                        (click)="renombrar(indexOrder)">edit</mat-icon>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 </div>
                 <span class="spacer"></span>
                 <div class="detalleCuenta">
-                    <p class="textBold">Nueva Cuenta</p>
+                    <p class="textBold">{{ 'pos.restaurante.nuevaCuenta' | translate }}</p>
                 </div>
             </div>
         </div>

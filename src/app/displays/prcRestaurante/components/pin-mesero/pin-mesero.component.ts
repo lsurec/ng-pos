@@ -42,8 +42,7 @@ export class PinMeseroComponent {
   async guardar() {
 
     if (!this.pinMesero) {
-      //TODO: traducir
-      this._notificationService.openSnackbar(this.translate.instant('Ingrese Pin'));
+      this._notificationService.openSnackbar(this.translate.instant('pos.restaurante.ingresePin'));
       return
     }
 
@@ -123,9 +122,7 @@ export class PinMeseroComponent {
 
 
     if (waiters.length == 0) {
-
-      this._notificationService.openSnackbar("Pin invalido"); //TODO:Translate
-
+      this._notificationService.openSnackbar(this.translate.instant('pos.restaurante.pinInvalido'));
       return false;
     }
 
@@ -162,8 +159,6 @@ export class PinMeseroComponent {
 
     //Guardar error
     PreferencesService.error = error;
-
-    //TODO:mostrar pantalla de error
 
     this.restaurantService.verError = true;
 

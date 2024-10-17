@@ -2,6 +2,7 @@ import { Component, HostListener, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-rename-check',
@@ -17,10 +18,9 @@ export class RenameCheckComponent {
     @Inject(MAT_DIALOG_DATA) public index: number,
     public restaurantService: GlobalRestaurantService,
     private _notificationService: NotificationsService,
+    private translate: TranslateService,
   ) {
-
     this.nombre = restaurantService.orders[index].nombre;
-
   }
 
   cancelar() {
@@ -30,8 +30,7 @@ export class RenameCheckComponent {
   renombrar() {
     this.restaurantService.orders[this.index].nombre = this.nombre;
     this.dialogRef.close(this.nombre);
-    this._notificationService.openSnackbar("Cuenta renombrada"); //TODO:Translate
-
+    this._notificationService.openSnackbar(this.translate.instant('pos.restaurante.cuenteRenombrada'));
   }
 
   //detectamos la tecla precionada

@@ -396,6 +396,7 @@
             "cuentasT": "CUENTAS",
             "cuenta": "Cuenta",
             "nuevaCuenta": "Nueva Cuenta",
+            "nuevaCuentaT": "NUEVA CUENTA",
             "resumen": "Resumen",
             "traslado": "Traslado",
             "origen": "Origen",
@@ -406,7 +407,17 @@
             "errorAlActualizar": "Algo salió mal al actualizar los datos remotos.",
             "trasladarTransacciones": "Trasladar transacciones.",
             "eliminar": "Eliminar",
-            "comandada": "Comandada"
+            "comandada": "Comandada",
+            "trasladoMesaT": "TRASLADAR MESA",
+            "trasladoTranT": "TRASLADAR TRANSACCIONES",
+            "sinPermisos": "Este usuario no posee permisos para esta acción.",
+            "pinInvalido": "Pin inválido.",
+            "ingresePin": "Ingrese Pin",
+            "mesero": "Mesero",
+            "pin": "Pin",
+            "noHayProductos": "No hay productos disponibles para esta clasificación.",
+            "cuenteRenombrada": "Cuenta renombrada exitosamente.",
+            "renombrarCuenta": "Renombrar cuenta."
         }
     },
     "crm": {

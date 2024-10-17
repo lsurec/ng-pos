@@ -3,13 +3,11 @@
     <div class="contenido">
 
         <p class="tituloPin">
-            PIN MESERO
+            {{ 'pos.restaurante.pin'| translate }} {{ 'pos.restaurante.mesero'| translate }}
         </p>
 
         <div class="inputPin">
-            <input type="password" required [(ngModel)]="pinMesero " name="termino" class="pin"
-                autocomplete="off">
-
+            <input type="password" required [(ngModel)]="pinMesero " name="termino" class="pin" autocomplete="off">
         </div>
 
         <div class="dFlex">

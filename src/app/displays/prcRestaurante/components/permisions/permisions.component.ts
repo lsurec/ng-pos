@@ -63,7 +63,6 @@ export class PermisionsComponent {
 
     ///Si el servico se ejecuta mal mostar menaje
     if (!res.status) {
-      //TODO:Pantalla de error
       this.restauranteService.isLoading = false;
 
       this.showError(res);
@@ -95,7 +94,6 @@ export class PermisionsComponent {
 
     if (!resTipoAccion.status) {
 
-      //TODO:Pantalla de error
       this.restauranteService.isLoading = false;
 
       this.showError(resTipoAccion);
@@ -107,8 +105,8 @@ export class PermisionsComponent {
 
 
     if (!resTipoAccion.response["data"]) {
-
-      this._notificationService.openSnackbar(`El usuario ${this.nombre} no tiene permisos para esta accion`) //TODO:Translate
+      //sinPermisos
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinPermisos') + " " + this.nombre);
       return;
 
     }
@@ -146,8 +144,6 @@ export class PermisionsComponent {
 
     //Guardar error
     PreferencesService.error = error;
-
-    //TODO:mostrar pantalla de error
 
     this.restauranteService.verError = true;
 

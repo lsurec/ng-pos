@@ -90,7 +90,7 @@ export class ProductsComponent implements OnInit {
     this.products = res.response;
 
     if (this.products.length == 0) {
-      this._notificationService.openSnackbar("No hay productos paar esta clasificacion"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.noHayProductos'));
 
       this.restaurantService.idPantalla = 1; //Clasificaciones
       return false;

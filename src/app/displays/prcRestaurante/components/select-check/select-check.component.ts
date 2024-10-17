@@ -3,6 +3,7 @@ import { GlobalRestaurantService } from '../../services/global-restaurant.servic
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { RenameCheckComponent } from '../rename-check/rename-check.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select-check',
@@ -19,6 +20,7 @@ export class SelectCheckComponent {
     public dialogRef: MatDialogRef<SelectCheckComponent>,
     private _dialog: MatDialog,
     private _notificationService: NotificationsService,
+    private _translate: TranslateService,
   ) { }
 
 
@@ -64,7 +66,7 @@ export class SelectCheckComponent {
 
       );
 
-      this._notificationService.openSnackbar("Cuenta creada."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaCreada'));
 
       this.restaurantService.updateOrdersTable();
     }

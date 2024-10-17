@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { GlobalRestaurantService } from '../../services/global-restaurant.service';
 import { TableInterface } from '../../interfaces/table.interface';
 import { LocationInterface } from '../../interfaces/location.interface';
@@ -199,8 +199,6 @@ export class MoveRestaurantComponent {
 
     //Guardar error
     PreferencesService.error = error;
-
-    //TODO:mostrar pantalla de error
 
     this.restaurantService.verError = true;
 
