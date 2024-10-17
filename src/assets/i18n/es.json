@@ -376,6 +376,7 @@
             "docConvert": "Documento Conversión."
         },
         "restaurante": {
+            "restaurante": "Restaurante",
             "seleccionar": "Selecciona una opción.",
             "sinCantidad": "No hay cantidad",
             "productoAgregado": "Producto Agregado",
@@ -405,11 +406,13 @@
             "destino": "Destino",
             "comandaEnviada": "Comanda enviada",
             "errorAlActualizar": "Algo salió mal al actualizar los datos remotos.",
-            "trasladarTransacciones": "Trasladar transacciones.",
             "eliminar": "Eliminar",
             "comandada": "Comandada",
+            "trasladarCuenta": "Trasladar Cuenta",
+            "trasladarMesa": "Trasladar Mesa",
             "trasladoMesaT": "TRASLADAR MESA",
             "trasladoTranT": "TRASLADAR TRANSACCIONES",
+            "trasladarTran": "Trasladar Transacciones",
             "sinPermisos": "Este usuario no posee permisos para esta acción.",
             "pinInvalido": "Pin inválido.",
             "ingresePin": "Ingrese Pin",
@@ -417,7 +420,20 @@
             "pin": "Pin",
             "noHayProductos": "No hay productos disponibles para esta clasificación.",
             "cuenteRenombrada": "Cuenta renombrada exitosamente.",
-            "renombrarCuenta": "Renombrar cuenta."
+            "renombrarCuenta": "Renombrar cuenta.",
+            "mesasAbiertas": "Mesas Abiertas",
+            "idDoc": "ID DOC",
+            "serieT": "SERIE",
+            "ubicacionT": "UBICACION",
+            "mesaT": "MESA",
+            "ubi": "UBI",
+            "meseroT": "MESERO",
+            "cuentaT": "CUENTA",
+            "totalT": "TOTAL",
+            "comandar": "Comandar",
+            "monitorPrint": "Monitor Print",
+            "clasificaciones": "Clasificaciones",
+            "verProducto": "Ver producto"
         }
     },
     "crm": {

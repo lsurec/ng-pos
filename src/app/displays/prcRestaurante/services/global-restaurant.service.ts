@@ -98,6 +98,11 @@ export class GlobalRestaurantService {
     }
 
     mesasAbiertas() {
+        if (this.orders.length == 0) {
+            this._notificationService.openSnackbar("Aun no hay mesas abiertas."); //TODO:Translate
+            return;
+        }
+
         this.tabAccesos = false;
         this.tabMesasAbiertas = true;
     }

@@ -91,8 +91,6 @@
                                 </button>
                                 <span class="spacer"></span>
                                 <p class="titulo">{{dataUserService.nameDisplay }} </p>
-                                <!-- TODO: traducir -->
-                                <p class="titulo" style="margin-left: 5px;">Restaurante</p>
                                 <span class="spacer"></span>
                                 <div class="circulo-inicial" (click)="sidenavend.open()">
                                     <p class="inicial-usuario">{{user[0]}}</p>
@@ -139,18 +137,20 @@
                                 <!--Tabs-->
                                 <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
                                     [checked]="restaurantService.tabAccesos">
-                                <div class="pestana" for="tab1" matTooltip="Restaurante"
+                                <div class="pestana" for="tab1"
+                                    matTooltip="{{'pos.restaurante.restaurante' | translate }}"
                                     (click)="restaurantService.showRestaurant()">
                                     <span class="material-icons ico-pestana">restaurant</span>
-                                    Restaurante
+                                    {{'pos.restaurante.restaurante' | translate }}
                                 </div>
 
                                 <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
                                     [checked]=" restaurantService.tabMesasAbiertas">
-                                <div class="pestana" for="tab2" matTooltip="Mesas Abiertas"
+                                <div class="pestana" for="tab2"
+                                    matTooltip="{{'pos.restaurante.mesasAbiertas' | translate }}"
                                     (click)="restaurantService.mesasAbiertas()">
                                     <span class="material-icons ico-pestana">table_bar</span>
-                                    Mesas Abiertas
+                                    {{'pos.restaurante.mesasAbiertas' | translate }}
                                 </div>
 
                                 <!--Fin Tabs-->
@@ -178,7 +178,9 @@
                                             <div class="ubicaciones">
 
                                                 <div class="cantidad-registros">
-                                                    <p class="titulo">UBICACIONES</p>
+                                                    <p class="titulo">
+                                                        {{'pos.restaurante.ubicacionesT' | translate }}
+                                                    </p>
                                                     <span class="spacer"></span>
                                                     <p class="textBold">
                                                         {{ 'pos.factura.registros' | translate }}
@@ -201,7 +203,7 @@
                                             <span class="spacer"></span>
                                             <div class="mesas" *ngIf="restaurantService.tables.length > 0">
                                                 <div class="cantidad-registros">
-                                                    <p class="titulo">MESAS</p>
+                                                    <p class="titulo">{{'pos.restaurante.mesasT' | translate }}</p>
                                                     <span class="spacer"></span>
                                                     <p class="textBold">
                                                         {{ 'pos.factura.registros' | translate }}
@@ -217,8 +219,10 @@
                                                         <span class="spacer"></span>
                                                         <div class="descripciones">
                                                             <p class="textBold"> {{table.descripcion}}</p>
-
-                                                            <P class="text12">CUENTAS {{table.orders.length}}</P>
+                                                            <P class="text12">
+                                                                {{'pos.restaurante.cuentasT' | translate }}
+                                                                {{table.orders.length}}
+                                                            </P>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -231,92 +235,74 @@
                                 <!-- MESAS ABIERTAS -->
                                 <section id="content2" class="content2 contenido-seleccionado">
                                     <div class="contenido-ubicaciones-mesas">
-                                        <div class="tablaDocumentos">
+                                        <div class="tablaDocumentos" *ngIf="restaurantService.orders.length > 0">
                                             <div class="tabla-titulos">
                                                 <div class="bloqueW10T">
-                                                    <p class="tituloTab">ID DOC</p>
+                                                    <p class="tituloTab">{{'pos.restaurante.idDoc' | translate }}</p>
                                                 </div>
                                                 <div class="bloqueW10T">
-                                                    <p class="tituloTab">SERIE</p>
+                                                    <p class="tituloTab">{{'pos.restaurante.serieT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab mostrarTxt">
+                                                        {{'pos.restaurante.ubicacionT' | translate }}
+                                                    </p>
+                                                    <p class="tituloTab ocultarTxt">
+                                                        {{'pos.restaurante.ubi' | translate }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.mesaT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.meseroT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.cuentaT' | translate }}</p>
                                                 </div>
                                                 <div class="bloqueW20T">
-                                                    <p class="tituloTab">FECHA HORA</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="tituloTab mostrarTxt">UBICACION</p>
-                                                    <p class="tituloTab ocultarTxt">UBI</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="tituloTab">MESA</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="tituloTab">MESERO</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="tituloTab">CUENTA</p>
-                                                </div>
-                                                <div class="bloqueW20T">
-                                                    <p class="tituloTab">TOTAL</p>
+                                                    <p class="tituloTab">{{'pos.restaurante.totalT' | translate }}</p>
                                                 </div>
                                             </div>
-                                            <div class="tabla-lista">
+                                            <div class="tabla-lista"
+                                                *ngFor="let order of restaurantService.orders; let indexOrder = index">
                                                 <div class="bloqueW10T">
-                                                    <p class="textCenter12">1</p>
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].consecutivo}}
+                                                    </p>
                                                 </div>
                                                 <div class="bloqueW10T">
                                                     <p class="textCenter12">LA CARRETA</p>
                                                 </div>
-                                                <div class="bloqueW20T">
-                                                    <p class="textCenter12">02/10/2024 10:35 am</p>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].ubicacion.descripcion }}
+                                                    </p>
                                                 </div>
                                                 <div class="bloqueW10T">
-                                                    <p class="textCenter12">SALON 1</p>
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].mesa.descripcion }}
+                                                    </p>
                                                 </div>
                                                 <div class="bloqueW10T">
-                                                    <p class="textCenter12">1</p>
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].mesero.nombre }}
+                                                    </p>
                                                 </div>
                                                 <div class="bloqueW10T">
-                                                    <p class="textCenter12">MESERO 1</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">PANFILO CHAVEZ</p>
-                                                </div>
-                                                <div class="bloqueW20T">
-                                                    <p class="textCenter12">Q 150.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="tabla-lista">
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">2</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">LA CARRETA</p>
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].nombre }}
+                                                    </p>
                                                 </div>
                                                 <div class="bloqueW20T">
-                                                    <p class="textCenter12">02/10/2024 2:00 pm</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">SALON 1</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">5</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">MESERO 3</p>
-                                                </div>
-                                                <div class="bloqueW10T">
-                                                    <p class="textCenter12">TIOFILO </p>
-                                                </div>
-                                                <div class="bloqueW20T">
-                                                    <p class="textCenter12">Q 50.00</p>
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.getTotal(indexOrder) | currencyFormat }}
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </section>
-
-
-
                                 <!--Fin Content Tabs-->
                             </div>
                             <!-- Mostrar logos -->
@@ -421,8 +407,6 @@
                                 </button>
                                 <span class="spacer"></span>
                                 <p class="titulo">{{dataUserService.nameDisplay }} </p>
-                                <!-- TODO: traducir -->
-                                <p class="titulo" style="margin-left: 5px;">Restaurante</p>
                                 <span class="spacer"></span>
                                 <div class="circulo-inicial" (click)="sidenavend.open()">
                                     <p class="inicial-usuario">{{user[0]}}</p>
@@ -435,19 +419,22 @@
                             <div class="barras">
                                 <span class="spacer"></span>
                                 <ng-container>
-                                    <button mat-icon-button matTooltip="Trasladar Mesa" (click)="viewMoveTable()">
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.trasladarMesa' | translate }}"
+                                        (click)="viewMoveTable()">
                                         <mat-icon>move_up</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="Trasladar Transacciones"
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.trasladarTran' | translate }}"
                                         (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
-                                    <!-- TODO: Traducir -->
-                                    <button mat-icon-button matTooltip="Comandar"
+                                    <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
                                         (click)="printComanda(restaurantService.indexCheck)">
                                         <mat-icon>desktop_windows</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="Imprimir estado de cuenta">
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
                                         <mat-icon>print</mat-icon>
                                     </button>
                                 </ng-container>
@@ -476,18 +463,19 @@
 
                         <span class="spacer"></span>
                         <ng-container>
-                            <button mat-icon-button matTooltip="Trasladar Mesa" (click)="viewMoveTable()">
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.trasladarMesa' | translate }}"
+                                (click)="viewMoveTable()">
                                 <mat-icon>move_up</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="Trasladar Transacciones" (click)="viewMoveCheckTable()">
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.trasladarTran' | translate }}"
+                                (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
-                            <!-- TODO: Traducir -->
-                            <button mat-icon-button matTooltip="Comandar"
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
                                 (click)="printComanda(restaurantService.indexCheck)">
                                 <mat-icon>desktop_windows</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="Imprimir estado de cuenta">
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>
@@ -508,16 +496,15 @@
                                     <p class="text12" (click)="viewLocationTable()">
                                         {{restaurantService.table?.descripcion}}</p>
                                     <p> / </p>
-                                    <!-- TODO: transale -->
                                     <p class="text12" [ngClass]="{ 'prefBold12': !restaurantService.classification, }"
-                                        (click)="backClassifications()"> Clasificaciones
+                                        (click)="backClassifications()">
+                                        {{'pos.restaurante.clasificaciones' | translate }}
                                     </p>
                                     <p *ngIf="restaurantService.classification"> / </p>
                                     <p class="text12" [ngClass]="{ 'prefBold12': restaurantService.classification, }">
                                         {{restaurantService.classification?.des_Clasificacion}}</p>
                                 </div>
                             </mat-toolbar>
-
 
                             <div class="dFlex">
                                 <div class="clasificacioProducto">
@@ -577,13 +564,16 @@
                                                     <p class="textBold12">
                                                         {{ restaurantService.orders[order].nombre}}
                                                     </p>
-                                                    <p class="textBold12"> Total:
+                                                    <p class="textBold12">
+                                                        {{'pos.factura.total' | translate }}:
                                                         {{restaurantService.getTotal(order) | currencyFormat}}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="editarCuenta">
-                                                <mat-icon class="icoEditar" (click)="renombrar(order)">edit</mat-icon>
+                                                <mat-icon class="icoEditar"
+                                                    matTooltip="{{ 'pos.restaurante.renombrarCuenta' | translate }}"
+                                                    (click)="renombrar(order)">edit</mat-icon>
                                             </div>
                                         </div>
                                     </div>
@@ -598,15 +588,17 @@
                                                 </p>
                                                 <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
                                                 <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
-                                                <p class="textBold12" *ngIf="tran.observacion "> Notas:</p>
+                                                <p class="textBold12" *ngIf="tran.observacion ">
+                                                    {{ 'pos.restaurante.notas' | translate }}
+                                                </p>
                                                 <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}}
                                                 </p>
                                             </div>
                                             <div class="cantidad-producto">
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
-                                                    <!-- TODO: translate -->
-                                                    <mat-icon matTooltip="Ver producto" class="verimagen"
+                                                    <mat-icon class="verimagen"
+                                                        matTooltip="{{ 'pos.restaurante.verProducto' | translate }}"
                                                         (click)="imagen(tran.producto)">image_outline</mat-icon>
                                                     <mat-icon matTooltip="{{'pos.restaurante.eliminar' | translate }}"
                                                         (click)="eliminarTran(indexTran)" *ngIf="!tran.processed"
@@ -641,11 +633,11 @@
                                     </div>
                                     <div class="totalCuenta"
                                         *ngIf="restaurantService.indexCheck != -1 && restaurantService.viewTranCheck">
-                                        <p class="textBold"> Total:</p>
+                                        <p class="textBold">{{'pos.factura.total' | translate }}:</p>
                                         <span class="spacer"></span>
                                         <p class="textBold">
-                                            {{restaurantService.getTotal(restaurantService.indexCheck) |
-                                            currencyFormat}}
+                                            {{restaurantService.getTotal(restaurantService.indexCheck)
+                                            | currencyFormat }}
                                         </p>
                                     </div>
                                 </div>
@@ -679,15 +671,14 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <span class="spacer"></span>
-                <!-- TODO: translate -->
                 <p class="textBold" *ngIf="restaurantService.tipoTraslado == 1">
-                    Trasladar Cuenta
+                    {{'pos.restaurante.trasladarCuenta' | translate }}
                 </p>
                 <p class="textBold" *ngIf="restaurantService.tipoTraslado == 2">
-                    Trasladar Transacción
+                    {{'pos.restaurante.trasladarTran' | translate }}
                 </p>
                 <p class="textBold" *ngIf="restaurantService.tipoTraslado == 3">
-                    Trasladar Mesa
+                    {{'pos.restaurante.trasladarMesa' | translate }}
                 </p>
                 <span class="spacer"></span>
                 <button mat-icon-button
