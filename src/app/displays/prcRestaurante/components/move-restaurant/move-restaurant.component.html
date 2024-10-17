@@ -8,7 +8,7 @@
         <div class="ubicaciones">
 
             <div class="cantidad-registros">
-                <p class="titulo">UBICACIONES</p>
+                <p class="titulo">{{'pos.restaurante.ubicacionesT' | translate }}</p>
                 <span class="spacer"></span>
                 <p class="textBold">
                     {{ 'pos.factura.registros' | translate }}
@@ -38,13 +38,13 @@
     <mat-step [stepControl]="formNewTable" [editable]="isEditable">
 
         <ng-template matStepLabel>
-            <p class="textBold">Nueva Mesa </p>
+            <p class="textBold">{{'pos.restaurante.ubicacionesT' | translate }} </p>
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
 
         <div class="mesas" *ngIf="tables.length > 0">
             <div class="cantidad-registros">
-                <p class="titulo">MESAS</p>
+                <p class="titulo">{{'pos.restaurante.mesasT' | translate }}</p>
                 <span class="spacer"></span>
                 <p class="textBold">
                     {{ 'pos.factura.registros' | translate }}
@@ -60,7 +60,7 @@
                     <div class="descripciones">
                         <p class="textBold"> {{table.descripcion}}</p>
 
-                        <P class="text12">CUENTAS {{table.orders.length}}</P>
+                        <P class="text12">{{'pos.restaurante.cuentasT' | translate }} {{table.orders.length}}</P>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
     <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
 
         <ng-template matStepLabel>
-            <p class="textBold">Cuenta </p>
+            <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
             <p class="step-subtitle" *ngIf="indexNewCheck != -1">{{ restaurantService.orders[indexNewCheck].nombre }}
             </p>
         </ng-template>
@@ -96,7 +96,8 @@
                     <span class="spacer"></span>
                     <div class="detalleCuenta">
                         <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
-                        <p class="textBold">Total: {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                        <p class="textBold">{{'pos.factura.total' | translate }}:
+                            {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
                     </div>
                 </div>
             </div>
@@ -110,7 +111,7 @@
                     </div>
                     <span class="spacer"></span>
                     <div class="detalleCuenta">
-                        <p class="textBold">Nueva Cuenta</p>
+                        <p class="textBold">{{'pos.restaurante.nuevaCuenta' | translate }}</p>
                     </div>
                 </div>
             </div>
@@ -128,27 +129,27 @@
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>
-            <p class="textBold">Resumen </p>
-            <p class="step-subtitle">Traslado</p>
+            <p class="textBold">{{'pos.restaurante.resumen' | translate }} </p>
+            <p class="step-subtitle">{{'pos.restaurante.traslado' | translate }}</p>
         </ng-template>
 
         <div class="origenDestino" *ngIf="newLocation && newTable">
 
             <div class="resumen">
-                <p class="textBold">Origen</p>
+                <p class="textBold">{{'pos.restaurante.origen' | translate }}</p>
 
                 <div class="dFlex">
-                    <p class="textBold">Ubicación</p>
+                    <p class="textBold">{{'pos.restaurante.ubicacion' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.location?.descripcion}}</p>
                 </div>
                 <div class="dFlex">
-                    <p class="textBold">Mesa</p>
+                    <p class="textBold">{{'pos.restaurante.mesa' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.table?.descripcion}}</p>
                 </div>
                 <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
-                    <p class="textBold">Cuenta</p>
+                    <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[restaurantService.indexMoveCheck].nombre}}</p>
                 </div>
@@ -156,20 +157,20 @@
             <span class="spacer"></span>
 
             <div class="resumen">
-                <p class="textBold">Destino</p>
+                <p class="textBold">{{'pos.restaurante.destino' | translate }}</p>
 
                 <div class="dFlex">
-                    <p class="textBold">Ubicación</p>
+                    <p class="textBold">{{'pos.restaurante.ubicacion' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12"> {{newLocation.descripcion}} </p>
                 </div>
                 <div class="dFlex">
-                    <p class="textBold">Mesa</p>
+                    <p class="textBold">{{'pos.restaurante.mesa' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12"> {{newTable.descripcion}} </p>
                 </div>
                 <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
-                    <p class="textBold">Cuenta</p>
+                    <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
                     <span class="spacer"></span>
                     <p class="text12">{{restaurantService.orders[indexNewCheck].nombre}}</p>
                 </div>
