@@ -13,4 +13,5 @@ export interface DetallePrintInterface {
     simbolo_Moneda:          string;
     img_Producto:      any;
     precio_Reposicion: any;
+    tipo_producto:number;
 }
