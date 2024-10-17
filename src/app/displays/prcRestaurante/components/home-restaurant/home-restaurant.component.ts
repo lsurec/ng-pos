@@ -124,7 +124,7 @@ export class HomeRestaurantComponent implements OnInit {
   viewMoveCheckTable() {
 
     if (this.restaurantService.orders.length == 0) {
-      this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinCuentas'));
       return;
     }
 
@@ -153,7 +153,7 @@ export class HomeRestaurantComponent implements OnInit {
   viewMoveTable() {
 
     if (this.restaurantService.orders.length == 0) {
-      this._notificationService.openSnackbar("No hay cuentas para trasladar"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinCuentas'));
       return;
     }
 
@@ -209,7 +209,7 @@ export class HomeRestaurantComponent implements OnInit {
 
     if (selectedOrders.length == 0) {
       // Si no hay ninguna cuenta seleccionada, mostramos el mensaje
-      this._notificationService.openSnackbar("Seleccione una cuenta para eliminar");
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaEliminar'));
       return;
     }
 
@@ -217,7 +217,7 @@ export class HomeRestaurantComponent implements OnInit {
     let verificador = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('Estas a punto de eliminar las cuentas seleccionadas. Esta acción no se puede deshacer.'), //TODO:transalte
+        description: this._translate.instant('pos.restaurante.eliminarCuentas'),
         verdadero: this._translate.instant('pos.restaurante.eliminar'),
         falso: this._translate.instant('pos.botones.cancelar'),
       }
@@ -228,8 +228,9 @@ export class HomeRestaurantComponent implements OnInit {
 
     // Si hay cuentas seleccionadas, eliminamos las seleccionadas
     this.restaurantService.orders = this.restaurantService.orders.filter(order => !order.selected);
+    //cuantas eliminadas y actualizar la mesa
     this.restaurantService.updateOrdersTable();
-    this._notificationService.openSnackbar("Cuentas eliminadas correctamente."); //TODO: translate
+    this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentasEliminadas'));
 
   }
 
@@ -284,7 +285,7 @@ export class HomeRestaurantComponent implements OnInit {
   verDetalles() {
 
     if (this.restaurantService.table?.orders.length == 0) {
-      this._notificationService.openSnackbar("No hay detalles para visualizar"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinDetalle'));
       return
     }
 
@@ -357,9 +358,7 @@ export class HomeRestaurantComponent implements OnInit {
     if (this.series.length == 0) {
 
       this.restaurantService.isLoading = false;
-
-      this._notificationService.openSnackbar("No existen series asignadas"); //TODO:Translate
-
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinSeries'));
       return;
     }
 
@@ -582,7 +581,7 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.nameCheck = this.restaurantService.orders[index].nombre;
 
     if (!this.restaurantService.orders[index].transacciones.length) {
-      this._notificationService.openSnackbar("Cuenta sin transacciones."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.alertas.sinTransacciones'));
       return;
     }
 
@@ -646,15 +645,12 @@ export class HomeRestaurantComponent implements OnInit {
 
   imagen(producto: ProductRestaurantInterface) {
 
-    //TODO: borrar la imagen
-    producto.objeto_Imagen = "https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg";
-
     if (producto.objeto_Imagen) {
       this._dialog.open(ImageRestaurantComponent, { data: producto })
       return;
     }
 
-    this._notificationService.openSnackbar("No hay imagen asociada a este producto"); //TODO:Translate
+    this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinImagen'));
 
   }
 
@@ -663,7 +659,7 @@ export class HomeRestaurantComponent implements OnInit {
     let verificador = await this._notificationService.openDialogActions(
       {
         title: this._translate.instant('pos.alertas.eliminar'),
-        description: this._translate.instant('Estas a punto de eliminar la transaccion. Esta accion no se puede deshacer.'), //TODO:transalte
+        description: this._translate.instant('pos.restaurante.eliminarTran'),
         verdadero: this._translate.instant('pos.restaurante.eliminar'),
         falso: this._translate.instant('pos.botones.cancelar'),
       }
@@ -672,9 +668,9 @@ export class HomeRestaurantComponent implements OnInit {
     //Cancelar
     if (!verificador) return;
 
+    //Eliminar transaccion de la cuenta
     this.restaurantService.orders[this.restaurantService.indexCheck].transacciones.splice(indexTra, 1);
-    this._notificationService.openSnackbar("Transaccion eliminada"); //TODO:Translate
-
+    this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.traEliminada'));
   }
 
   getGuarniciones(indexTra: number): string {
@@ -704,12 +700,12 @@ export class HomeRestaurantComponent implements OnInit {
   async printComanda(indexOrder: number) {
 
     if (this.restaurantService.orders.length == 0) {
-      this._notificationService.openSnackbar("No hay cuentas para comandar"); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinCuentasComandar'));
       return;
     }
 
     if (this.restaurantService.orders.length > 0 && !this.restaurantService.viewTranCheck) {
-      this._notificationService.openSnackbar("Seleccione una cuenta para comandar."); //TODO:Translate
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.cuentaParaComandar'));
       return;
     }
 
@@ -1054,8 +1050,7 @@ export class HomeRestaurantComponent implements OnInit {
       // const doc = await this._printService.getComandaTMU(comandasConError[0]);
       // pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
     } else {
-
-      this.notificationService.openSnackbar("Comanda enviada");
+      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
     }
 
   }

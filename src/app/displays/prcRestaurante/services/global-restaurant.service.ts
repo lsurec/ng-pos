@@ -99,7 +99,7 @@ export class GlobalRestaurantService {
 
     mesasAbiertas() {
         if (this.orders.length == 0) {
-            this._notificationService.openSnackbar("Aun no hay mesas abiertas."); //TODO:Translate
+            this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.sinMesasAbiertas'));
             return;
         }
 

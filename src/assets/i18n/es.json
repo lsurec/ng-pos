@@ -433,7 +433,19 @@
             "comandar": "Comandar",
             "monitorPrint": "Monitor Print",
             "clasificaciones": "Clasificaciones",
-            "verProducto": "Ver producto"
+            "verProducto": "Ver producto",
+            "sinCuentas": "No hay cuentas para trasladar.",
+            "cuentaEliminar": "Selecciona una cuenta para eliminar.",
+            "eliminarCuentas": "Estas a punto de eliminar las cuentas seleccionadas. Esta acción no se puede deshacer.",
+            "cuentasEliminadas": "Cuentas eliminadas correctamente.",
+            "sinDetalle": "No hay detalles para visualizar.",
+            "sinSeries": "No existen series asignadas.",
+            "sinImagen": "No hay imagen asociada a este producto.",
+            "eliminarTran": "Estás a punto de eliminar la transaccion. Esta accion no se puede deshacer.",
+            "traEliminada": "Transacción eliminada.",
+            "sinCuentasComandar": "No existen cuentas para comandar.",
+            "cuentaParaComandar": "Seleccione una cuenta para comandar.",
+            "sinMesasAbiertas": "Aun no hay mesas abiertas."
         }
     },
     "crm": {
