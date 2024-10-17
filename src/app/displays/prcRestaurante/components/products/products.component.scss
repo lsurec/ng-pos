@@ -2,6 +2,7 @@ $fondo         : var(--fondo-claro); //fondo Demosoft
 $scroll        : var(--global-color); //barra azul
 $bordes        : var(--bordes-claro);
 $personalizado : var(--global-color); //bordes y texto azul
+$blanco        : var(--blanco);
 
 .spacer {
     flex: 1 1 auto;
@@ -41,7 +42,7 @@ p {
     box-shadow   : none;
     border-radius: 10px;
     margin-bottom: 20px;
-    background   : #fff;
+    background   : $blanco;
 }
 
 .image-product {
@@ -54,7 +55,7 @@ p {
 .nombre_producto {
     text-align : center;
     font-weight: 600;
-    color      : #d84672;
+    color      : $personalizado;
     padding    : 10px 0px;
 }
 
