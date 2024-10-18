@@ -33,7 +33,8 @@
                         </button>
                         <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
                             autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}"
-                            [ngClass]="{ 'border-radius': tareasFiltro.length == 0}" (click)="verResultados()">
+                            [ngClass]="{ 'border-radius': tareasFiltro.length == 0 || !resultados }"
+                            (click)="verResultados()">
                         <div class="resultados" *ngIf="tareasFiltro.length > 0 && resultados ">
                             <p class="registrosTareas">{{'crm.home.registros' | translate}}
                                 {{tareasFiltro.length}}
