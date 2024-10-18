@@ -540,12 +540,14 @@
                                         <span class="spacer"></span>
                                         <button mat-icon-button
                                             *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
-                                            matTooltip="Seleccionar todas las cuentas." (click)="selectChecks()">
+                                            matTooltip="{{'pos.restaurante.seleccionarCuentas' | translate }}"
+                                            (click)="selectChecks()">
                                             <mat-icon>select_all</mat-icon>
                                         </button>
                                         <button mat-icon-button
                                             *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
-                                            matTooltip="Eliminar cuentas." (click)="deleteCheck()">
+                                            matTooltip="{{'pos.restaurante.eliminarSeleccionadas' | translate }}"
+                                            (click)="deleteCheck()">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                         <button mat-icon-button
@@ -690,22 +692,22 @@
                 <span class="spacer"></span>
                 <button mat-icon-button
                     *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
-                    matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
+                    matTooltip="{{'pos.restaurante.seleccionarCuentas' | translate }}" (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="!restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Trasladar Cuenta" (click)="trasladarCuenta()">
+                    matTooltip="{{'pos.restaurante.trasladarCuenta' | translate }}" (click)="trasladarCuenta()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
+                    matTooltip="{{'pos.restaurante.seleccionarTran' | translate }}" (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Trasladar Transacción" (click)="trasladarTran()">
+                    matTooltip="{{'pos.restaurante.trasladarTran' | translate }}" (click)="trasladarTran()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
             </mat-toolbar-row>

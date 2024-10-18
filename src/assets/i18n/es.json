@@ -390,13 +390,13 @@
             "trasladoCuenta": "Cuentas trasladadas exitosamente.",
             "trasladoTran": "Transacciones trasladadas exitosamente.",
             "trasladoMesa": "Mesa trasladada correctamente.",
-            "nuevaUbicacion": "Nueva ubicación.",
+            "nuevaUbicacion": "Nueva ubicación",
             "ubicacionesT": "UBICACIONES",
-            "nuevaMesa": "Nueva mesa.",
+            "nuevaMesa": "Nueva mesa",
             "mesasT": "MESAS",
             "cuentasT": "CUENTAS",
             "cuenta": "Cuenta",
-            "nuevaCuenta": "Nueva cuenta.",
+            "nuevaCuenta": "Nueva cuenta",
             "nuevaCuentaT": "NUEVA CUENTA",
             "resumen": "Resumen",
             "traslado": "Traslado",
@@ -445,7 +445,10 @@
             "traEliminada": "Transacción eliminada.",
             "sinCuentasComandar": "No existen cuentas para comandar.",
             "cuentaParaComandar": "Selecciona una cuenta para comandar.",
-            "sinMesasAbiertas": "Aún no hay mesas abiertas."
+            "sinMesasAbiertas": "Aún no hay mesas abiertas.",
+            "seleccionarCuentas": "Seleccionar todas las cuentas.",
+            "eliminarSeleccionadas": "Eliminar cuentas.",
+            "seleccionarTran": "Seleccionar todas las transacciones."
         }
     },
     "crm": {
