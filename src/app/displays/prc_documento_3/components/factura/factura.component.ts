@@ -55,6 +55,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-factura',
@@ -194,8 +195,7 @@ export class FacturaComponent implements OnInit {
     //cargar datos necearios al inicio de la aplicacion
     this.loadData();
 
-    this.facturaService.filtroPreferencia = PreferencesService.filtroProducto;
-    this.facturaService.idFiltroPreferencia = PreferencesService.idFiltroProducto;
+
 
     // if (PreferencesService.nuevoDoc.length == 0) {
     //   PreferencesService.nuevoDoc = "0";
@@ -241,15 +241,16 @@ export class FacturaComponent implements OnInit {
 
 
 
-
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+    const apiSeller = () => this._cuentaService.getSeller(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
-    )
+    );
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller);
 
     //si algo salió mal mostrar error
     if (!resVendedor.status) {
@@ -268,14 +269,16 @@ export class FacturaComponent implements OnInit {
       this.facturaService.vendedor = this.facturaService.vendedores[0];
     }
 
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+    const apiTipoTransaccion = () => this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
     );
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion);
 
     //si algo salio mal
     if (!resTransaccion.status) {
@@ -288,15 +291,17 @@ export class FacturaComponent implements OnInit {
     //tioos de trabnsaccion disponibles
     this.facturaService.tiposTransaccion = resTransaccion.response;
 
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    const apiParam = () => this._parametroService.getParametro(
       this.user,
       this.token,
       this.tipoDocumento!,
       this.facturaService.serie!.serie_Documento,
       this.empresa.empresa,
       this.estacion.estacion_Trabajo,
-    )
+    );
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await ApiService.apiUse(apiParam);
 
 
 
@@ -311,13 +316,14 @@ export class FacturaComponent implements OnInit {
     //Parammetros disponibles
     this.facturaService.parametros = resParametro.response;
 
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+    const apiPago = () => this._formaPagoService.getFormas(
       this.token,
       this.empresa.empresa,
       this.facturaService.serie!.serie_Documento,
       this.tipoDocumento!,
     );
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPago);
 
     //si algo salio mal
     if (!resFormaPago.status) {
@@ -355,8 +361,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tipoReferencia = undefined;
       this.facturaService.tiposReferencia = [];
 
+      const apiReferencia = () => this._referenciaService.getTipoReferencia(this.user, this.token);
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
@@ -663,14 +671,17 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = true;
 
-    //Buscar series
-    let resSeries: ResApiInterface = await this._serieService.getSerie(
+
+    const apiSerie = () => this._serieService.getSerie(
       user,
       token,
       documento,
       empresa,
       estacion,
     );
+
+    //Buscar series
+    let resSeries: ResApiInterface = await ApiService.apiUse(apiSerie);
 
     //si algo salio al
     if (!resSeries.status) {
@@ -707,14 +718,16 @@ export class FacturaComponent implements OnInit {
 
       let serie: string = this.facturaService.serie!.serie_Documento;
 
-      //buscar vendedores
-      let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+      const getSeller = () => this._cuentaService.getSeller(
         user,
         token,
         documento,
         serie,
         empresa,
-      )
+      );
+
+      //buscar vendedores
+      let resVendedor: ResApiInterface = await ApiService.apiUse(getSeller);
 
       //si algo salió mal mostrar error
       if (!resVendedor.status) {
@@ -733,14 +746,17 @@ export class FacturaComponent implements OnInit {
         this.facturaService.vendedor = this.facturaService.vendedores[0];
       }
 
-      //Buscar tipos transaccion
-      let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+
+      const apiTipoTransaccion = () => this._tipoTransaccionService.getTipoTransaccion(
         user,
         token,
         documento,
         serie,
         empresa,
       );
+
+      //Buscar tipos transaccion
+      let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion);
 
       //si algo salio mal
       if (!resTransaccion.status) {
@@ -753,15 +769,18 @@ export class FacturaComponent implements OnInit {
       //tioos de trabnsaccion disponibles
       this.facturaService.tiposTransaccion = resTransaccion.response;
 
-      //Buscar parametros del documento
-      let resParametro: ResApiInterface = await this._parametroService.getParametro(
+
+      const apiParam = () => this._parametroService.getParametro(
         user,
         token,
         documento,
         serie,
         empresa,
         estacion,
-      )
+      );
+
+      //Buscar parametros del documento
+      let resParametro: ResApiInterface = await ApiService.apiUse(apiParam);
 
 
 
@@ -777,15 +796,15 @@ export class FacturaComponent implements OnInit {
       this.facturaService.parametros = resParametro.response;
 
 
-
-
-      //Buscar formas de pago
-      let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+      const apiPagos = () => this._formaPagoService.getFormas(
         token,
         empresa,
         serie,
         documento,
       );
+
+      //Buscar formas de pago
+      let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPagos);
 
       //si algo salio mal
       if (!resFormaPago.status) {
@@ -809,7 +828,10 @@ export class FacturaComponent implements OnInit {
       this.facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(user, token);
+      const apiReferencia = () => this._referenciaService.getTipoReferencia(user, token);
+
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
@@ -905,15 +927,19 @@ export class FacturaComponent implements OnInit {
     }
 
 
+
     //--EMpiezan datos
-    //Cargar cliente
-    let resClient: ResApiInterface = await this._cuentaService.getClient(
+
+    const apiCuenta = () => this._cuentaService.getClient(
       user,
       token,
       empresa,
       docOrigin.nit,
 
     );
+
+    //Cargar cliente
+    let resClient: ResApiInterface = await ApiService.apiUse(apiCuenta);
 
     //si algo salio mal
     if (!resClient.status) {
@@ -1019,7 +1045,8 @@ export class FacturaComponent implements OnInit {
 
     //TODO:Cargar productos
     for (const tra of this.globalConvertService.detailsOrigin) {
-      let resProduct = await this._productService.getProduct(
+
+      const apiProduct = () => this._productService.getProduct(
         token,
         user,
         estacion,
@@ -1027,6 +1054,8 @@ export class FacturaComponent implements OnInit {
         0,
         100,
       );
+
+      let resProduct = await ApiService.apiUse(apiProduct);
 
 
       if (!resProduct.status) {
@@ -1070,8 +1099,7 @@ export class FacturaComponent implements OnInit {
 
       let prod: ProductoInterface = productSearch[iProd];
 
-      //buscar bodegas del producto
-      let resBodega = await this._productService.getBodegaProducto(
+      const apibodega = () => this._productService.getBodegaProducto(
         user,
         token,
         empresa,
@@ -1079,6 +1107,8 @@ export class FacturaComponent implements OnInit {
         prod.producto,
         prod.unidad_Medida,
       );
+      //buscar bodegas del producto
+      let resBodega = await ApiService.apiUse(apibodega);
 
 
       if (!resBodega.status) {
@@ -1115,7 +1145,7 @@ export class FacturaComponent implements OnInit {
           existencia: 0,
           nombre: tra.detalle.bodega_Descripcion,
           posee_Componente: false,
-          orden : 0,
+          orden: 0,
         }
 
       } else {
@@ -1123,16 +1153,18 @@ export class FacturaComponent implements OnInit {
       }
 
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+      const apiPrecio = () => this._productService.getPrecios(
         this.user,
         token,
         bodega.bodega,
         prod.producto,
         prod.unidad_Medida,
-        this.facturaService.cuenta.cuenta_Correntista ?? 0,
-        this.facturaService.cuenta.cuenta_Cta ?? "0",
+        this.facturaService.cuenta!.cuenta_Correntista ?? 0,
+        this.facturaService.cuenta!.cuenta_Cta ?? "0",
       );
+
+      //buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio);
 
 
 
@@ -1198,13 +1230,14 @@ export class FacturaComponent implements OnInit {
         let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-
-        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+        const apiPrecioDia = () => this._productService.getFormulaPrecioU(
           token,
           dateStart,
           dateEnd,
           precioSelect.precioU.toString(),
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
         if (!res.status) {
           this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
@@ -1672,11 +1705,13 @@ export class FacturaComponent implements OnInit {
 
     this.facturaService.isLoading = true;
 
-    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+    const apiEncabezado = () => this._documentService.getEncabezados(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resEncabezado: ResApiInterface = await ApiService.apiUse(apiEncabezado);
 
     if (!resEncabezado.status) {
 
@@ -1689,11 +1724,13 @@ export class FacturaComponent implements OnInit {
 
     let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
-    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+    const apiDetalle = () => this._documentService.getDetalles(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resDetalles: ResApiInterface = await ApiService.apiUse(apiDetalle);
 
     if (!resDetalles.status) {
 
@@ -1707,12 +1744,13 @@ export class FacturaComponent implements OnInit {
 
     let detalles: DetallePrintInterface[] = resDetalles.response;
 
-    let resPagos: ResApiInterface = await this._documentService.getPagos(
+    const apiPagos = () => this._documentService.getPagos(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
 
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
     if (!resPagos.status) {
 
@@ -1820,12 +1858,33 @@ export class FacturaComponent implements OnInit {
         subtotal += detail.monto;
       }
 
+      //TODO:Calculo de dias solo debria ser para ALfa Y Omega
+      let precioUnitario: number = detail.monto;
+
+      // Si el tipo de documento es cotización (tipo doc 20)
+      if (this.facturaService.tipoDocumento == 20) {
+        // Si hay cantidad (no es cargo ni descuento)
+        if (detail.cantidad > 0) {
+          // Si no es servicio (tipo producto != 2)
+          if (detail.tipo_producto != 2) {
+            // Calcular precio unitario a partir de los días cobrados
+            precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
+          }
+        }
+      } else {
+        // Si hay cantidad (no es cargo ni descuento)
+        if (detail.cantidad > 0) {
+          // Calcular precio unitario
+          precioUnitario = precioUnitario / detail.cantidad;
+        }
+      }
+
       items.push(
         {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
-          unitario: this.facturaService.tipoDocumento! == 20 ? this.currencyPipe.transform(detail.cantidad > 0 ? (detail.monto / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')! : this.currencyPipe.transform(detail.cantidad > 0 ? detail.monto! / detail.cantidad : detail.monto, ' ', 'symbol', '2.2-2')!,
+          unitario: this.currencyPipe.transform(precioUnitario, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           imagen64: detail.img_Producto,
@@ -2110,12 +2169,13 @@ export class FacturaComponent implements OnInit {
 
 
     //buscar documento, plantilla xml
-
-    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+    const apiXmlCert = () => this._felService.getDocXmlCert(
       this.user,
       this.token,
       this.consecutivoDoc,
-    )
+    );
+
+    let resXMlCert: ResApiInterface = await ApiService.apiUse(apiXmlCert);
 
     if (!resXMlCert.status) {
 
@@ -2144,13 +2204,16 @@ export class FacturaComponent implements OnInit {
     uuidDoc = templatesXMl[0].d_Id_Unc;
     // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
 
-    //buscar las credenciales del certificador
-    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+
+    const apiCredenciales = () => this._felService.getCredenciales(
       certificador,
       this.empresa.empresa,
       this.user,
       this.token,
-    )
+    );
+
+    //buscar las credenciales del certificador
+    let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales);
 
     if (!resCredenciales.status) {
 
@@ -2292,11 +2355,13 @@ export class FacturaComponent implements OnInit {
     }
 
 
-    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+    const apiPostIfile = () => this._felService.postInfile(
       apiUse,
       paramFel,
       this.token,
-    )
+    );
+
+    let resCertDoc: ResApiInterface = await ApiService.apiUse(apiPostIfile);
 
     if (!resCertDoc.status) {
 
@@ -2317,11 +2382,14 @@ export class FacturaComponent implements OnInit {
       uuid: uuidDoc,
     }
 
-    //actualizar odcumento con firma
-    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+
+    const postApiXml = () => this._felService.postXmlUpdate(
       this.token,
       paramUpdate,
-    )
+    );
+
+    //actualizar odcumento con firma
+    let resUpdateXml: ResApiInterface = await ApiService.apiUse(postApiXml);
 
     if (!resUpdateXml.status) {
 
@@ -2359,11 +2427,14 @@ export class FacturaComponent implements OnInit {
         user: this.user,
       }
 
-      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+
+      const apiUpdateEstructura = () => this._documentService.updateDocument(
         this.token,
         document,
         this.consecutivoDoc,
       );
+
+      let resUpdateEstructura: ResApiInterface = await ApiService.apiUse(apiUpdateEstructura);
 
       //TODO:Mensjaje de error
       if (!resUpdateEstructura.status) {
@@ -2444,6 +2515,7 @@ export class FacturaComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
               Tra_Monto_Dias: null,
+              Tra_Observacion: null,
             }
           );
 
@@ -2471,7 +2543,7 @@ export class FacturaComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
               Tra_Monto_Dias: null,
-
+              Tra_Observacion: null,
             }
           );
         }
@@ -2495,6 +2567,7 @@ export class FacturaComponent implements OnInit {
           Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(transaccion.producto.tipo_Producto),
           Tra_Monto: transaccion.total,
           Tra_Monto_Dias: transaccion.precioDia,
+          Tra_Observacion: null,
         }
 
       );
@@ -2622,8 +2695,10 @@ export class FacturaComponent implements OnInit {
       estado: this.facturaService.valueParametro(349) ? 1 : 11,
     }
 
+    const apiPostDoc = () => this._documentService.postDocument(this.token, document);
+
     //consumo del servico para crear el documento
-    let resDoc = await this._documentService.postDocument(this.token, document);
+    let resDoc = await ApiService.apiUse(apiPostDoc);
 
     //Si algo salió mal mostrar error
     if (!resDoc.status) {
@@ -2704,10 +2779,14 @@ export class FacturaComponent implements OnInit {
     }
 
     this.facturaService.isLoading = true;
-    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+
+
+    const apiUpdateDoc = () => this._recpetionService.updateDocument(
       this.token,
       docModify,
     );
+
+    let resUpdateEncabezado: ResApiInterface = await ApiService.apiUse(apiUpdateDoc);
 
     if (!resUpdateEncabezado.status) {
       this.facturaService.isLoading = false;
@@ -2731,10 +2810,12 @@ export class FacturaComponent implements OnInit {
       tipoReferencia: this.facturaService.tipoReferencia?.tipo_Referencia ?? null,
     }
 
-    let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+    const apiUpdateRef = () => this._recpetionService.updateRef(
       this.token,
       refModify,
     );
+
+    let resRefUpdate: ResApiInterface = await ApiService.apiUse(apiUpdateRef);
 
     if (!resRefUpdate.status) {
       this.facturaService.isLoading = false;
@@ -2764,11 +2845,12 @@ export class FacturaComponent implements OnInit {
         usuario: this.user,
       }
 
-
-      let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+      const apiDeleteTra = () => this._recpetionService.anularTransaccion(
         this.token,
         transactionEliminar,
       );
+
+      let resTransDelete: ResApiInterface = await ApiService.apiUse(apiDeleteTra);
 
       if (!resTransDelete.status) {
 
@@ -2809,12 +2891,12 @@ export class FacturaComponent implements OnInit {
           usuario: this.user,
         }
 
-
-        let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+        const apiDeleteTra = () => this._recpetionService.anularTransaccion(
           this.token,
           transactionActualizar,
         );
 
+        let resTransDelete: ResApiInterface = await ApiService.apiUse(apiDeleteTra);
 
         if (!resTransDelete.status) {
 
@@ -2826,10 +2908,12 @@ export class FacturaComponent implements OnInit {
 
         }
 
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+        const apiUpdateTra = () => this._recpetionService.insertarTransaccion(
           this.token,
           transactionActualizar,
         );
+
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTra);
 
         if (!resActualizarTransaccion.status) {
 
@@ -2871,10 +2955,13 @@ export class FacturaComponent implements OnInit {
           usuario: this.user,
         }
 
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+
+        const apiUpdateTra = () => this._recpetionService.insertarTransaccion(
           this.token,
           transactionNueva,
         );
+
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTra);
 
         if (!resActualizarTransaccion.status) {
 

@@ -17,6 +17,9 @@ import { ConfirmarNuevoDocComponent } from "../components/confirmar-nuevo-doc/co
 import { ProductosEncontradosComponent } from "../displays/prc_documento_3/components/productos-encontrados/productos-encontrados.component";
 import { EditarTerminosComponent } from "../displays/prc_documento_3/components/editar-terminos/editar-terminos.component";
 import { InputTerminoComponent } from "../displays/prc_documento_3/components/input-termino/input-termino.component";
+import { PinMeseroComponent } from "../displays/prcRestaurante/components/pin-mesero/pin-mesero.component";
+import { DetailsProductComponent } from "../displays/prcRestaurante/components/details-product/details-product.component";
+import { NewCheckComponent } from "../displays/prcRestaurante/components/new-check/new-check.component";
 
 @Injectable({
     providedIn: 'root'
@@ -147,6 +150,22 @@ export class NotificationsService {
     }
 
 
+    openProductRestaurant(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            const dialogRef = this._dialog.open(DetailsProductComponent, {})
+
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(result);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
 
 
     openProducts(productos: ProductoInterface[]): Promise<any> {
@@ -177,11 +196,40 @@ export class NotificationsService {
             let dialogRef = this._dialog.open(InputTerminoComponent, { data: index })
 
             dialogRef.afterClosed().subscribe(result => {
-                resolve(result);
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
             });
         });
     }
 
+    pinMesero(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(PinMeseroComponent)
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
+    newCheck(): Promise<any> {
+        return new Promise((resolve, reject) => {
+
+            let dialogRef = this._dialog.open(NewCheckComponent)
+
+            dialogRef.afterClosed().subscribe(result => {
+                resolve(result);
+            });
+        });
+    }
 
     //Muestra mmensaje de eror, y navega a  pantalla de informe de errores
     async showErrorAlert(res: ResApiInterface) {

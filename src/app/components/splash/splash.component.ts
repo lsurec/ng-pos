@@ -12,6 +12,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 import { TipoCambioService } from 'src/app/displays/prc_documento_3/services/tipo-cambio.service';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-splash',
@@ -96,7 +97,6 @@ export class SplashComponent implements OnInit {
     //Buscar empresas y estaciones
     PreferencesService.user = PreferencesService.userStorage;
     PreferencesService.token = PreferencesService.tokenStorage;
-    PreferencesService.conStr = PreferencesService.conStorageStr;
 
     let user = PreferencesService.user;
     let token = PreferencesService.token;
@@ -162,13 +162,16 @@ export class SplashComponent implements OnInit {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
 
-      //Cargar tipo cambio
-      let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+      const apiTipoCambio = ()=> this._tipoCambioService.getTipoCambio(
 
         user,
         token,
         PreferencesService.empresa.empresa,
       );
+
+
+      //Cargar tipo cambio
+      let resTipoCammbio = await ApiService.apiUse(apiTipoCambio) ;
 
 
       if (!resTipoCammbio.status) {

@@ -1,0 +1,39 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="textBold">{{'pos.restaurante.errorComanda' | translate }}</p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+        <div class="comandaBotones" *ngFor="let error of erroresComanda; let index = index">
+
+            <p class="text12"> {{error.error}} </p>
+
+            <span class="spacer"></span>
+            <button mat-icon-button matTooltip="{{'pos.botones.reintentar' | translate }}" (click)="printAgain(index)">
+                <mat-icon>replay</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="{{'pos.alertas.imprimirOtroMetodo' | translate }}"
+                (click)="printAnyway(index)">
+                <mat-icon>print</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="botones">
+        <button mat-stroked-button (click)="printAllAgain()">
+            {{ 'pos.botones.reintentar' | translate }}
+        </button>
+        <span class="spacer"></span>
+        <button mat-stroked-button (click)="printAllAnyway()">
+            {{'pos.alertas.imprimirOtroMetodo' | translate }}
+        </button>
+    </div>
+</div>

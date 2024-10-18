@@ -1,0 +1,719 @@
+<app-error [regresar]="regresar" *ngIf="restaurantService.verError"></app-error>
+
+<div *ngIf="!restaurantService.verError">
+    <app-progress *ngIf="restaurantService.isLoading" class="progress"></app-progress>
+
+    <div [hidden]="restaurantService.isLoading">
+        <div *ngIf="restaurantService.viewLocations">
+            <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
+                *ngIf="!restaurantService.verError">
+
+                <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+                    <mat-toolbar class="barra-cerrar-titulo">
+                        <button mat-icon-button (click)="close('toggle button')"
+                            [matTooltip]="'pos.botones.cerrar' | translate">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-toolbar>
+                    <!-- Contenido del sidenav -->
+                    <div class="contenido-sidenav">
+                        <div class="espacio-inicial">
+                            <span class="spacer"></span>
+                            <div class="circular-inicial-grande">
+                                <p class="inicial-usuario-grande">{{user[0]}}</p>
+                            </div>
+                            <span class="spacer"></span>
+                        </div>
+                        <div class="espacio-inicial">
+                            <span class="spacer"></span>
+                            <p class="userName">{{user.toUpperCase()}}</p>
+                            <span class="spacer"></span>
+                        </div>
+                        <div class="borde-detalles"></div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">business</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
+                                <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}})
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">business</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
+                                <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}})
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
+                                <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario" *ngIf="restaurantService.documentoName">
+                            <mat-icon class="iconos-detalles">description</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.tipoDocumento' | translate}}</p>
+                                <p class="descripcion"> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario" *ngIf="restaurantService.serie">
+                            <mat-icon class="iconos-detalles">description</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
+                                <p class="descripcion"> {{restaurantService.serie.descripcion}}
+                                    ({{restaurantService.serie.serie_Documento}}) </p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-sidenav>
+                <mat-sidenav-content>
+
+                    <!-- Barras para titulos y boton de cerrar sidenav -->
+                    <mat-toolbar class="toolbarPhone">
+                        <mat-toolbar-row>
+                            <div class="barras">
+                                <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}"
+                                    (click)="backHome()">
+                                    <mat-icon>arrow_back</mat-icon>
+                                </button>
+                                <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                                    (click)="refresh()">
+                                    <mat-icon>refresh</mat-icon>
+                                </button>
+                                <span class="spacer"></span>
+                                <p class="titulo">{{dataUserService.nameDisplay }} </p>
+                                <span class="spacer"></span>
+                                <div class="circulo-inicial" (click)="sidenavend.open()">
+                                    <p class="inicial-usuario">{{user[0]}}</p>
+                                </div>
+                            </div>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <mat-toolbar class="toolbarPhone">
+                        <mat-toolbar-row>
+                            <div class="barras">
+                                <span class="spacer"></span>
+                                <!-- Aqui van los botones -->
+                                <ng-container>
+                                </ng-container>
+                            </div>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <mat-toolbar class="toolbar-large">
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.inicio' | translate }}"
+                            (click)="backHome()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                            (click)="refresh()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <!-- Titulo de la tarea -->
+                        <p class="titulo">{{dataUserService.nameDisplay }}</p>
+
+                        <span class="spacer"></span>
+                        <!-- Aqui van los botones -->
+                        <ng-container>
+                        </ng-container>
+                        <div class="circulo-inicial" (click)="sidenavend.open()">
+                            <p class="inicial-usuario">{{user[0]}}</p>
+                        </div>
+                    </mat-toolbar>
+
+                    <!-- Contenido del componente -->
+                    <div class="container_main">
+                        <div>
+                            <div class="container-main">
+                                <!--Tabs-->
+                                <input class="titulo-pestana" id="tab1" type="radio" name="tabs"
+                                    [checked]="restaurantService.tabAccesos">
+                                <div class="pestana" for="tab1"
+                                    matTooltip="{{'pos.restaurante.restaurante' | translate }}"
+                                    (click)="restaurantService.showRestaurant()">
+                                    <span class="material-icons ico-pestana">restaurant</span>
+                                    {{'pos.restaurante.restaurante' | translate }}
+                                </div>
+
+                                <input class="titulo-pestana" id="tab2" type="radio" name="tabs"
+                                    [checked]=" restaurantService.tabMesasAbiertas">
+                                <div class="pestana" for="tab2"
+                                    matTooltip="{{'pos.restaurante.mesasAbiertas' | translate }}"
+                                    (click)="restaurantService.mesasAbiertas()">
+                                    <span class="material-icons ico-pestana">table_bar</span>
+                                    {{'pos.restaurante.mesasAbiertas' | translate }}
+                                </div>
+
+                                <!--Fin Tabs-->
+
+                                <!--Content Tabs-->
+                                <section id="content1" class="content1 contenido-seleccionado">
+                                    <div class="contenido-ubicaciones-mesas">
+
+                                        <div class="ubicaciones">
+                                            <p class="textBold">{{ 'pos.factura.series' | translate }}</p>
+                                            <div class="informacion-fondo">
+                                                <mat-select name="estado" class="seleccionar"
+                                                    placeholder="{{ 'pos.factura.seleccionarSerie' | translate }}"
+                                                    [(ngModel)]="restaurantService.serie"
+                                                    (ngModelChange)="changeSerie()">
+                                                    <mat-option *ngFor="let serie of series" [value]="serie">
+                                                        {{serie.descripcion}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="ubicacion-mesa">
+
+                                            <div class="ubicaciones">
+
+                                                <div class="cantidad-registros">
+                                                    <p class="titulo">
+                                                        {{'pos.restaurante.ubicacionesT' | translate }}
+                                                    </p>
+                                                    <span class="spacer"></span>
+                                                    <p class="textBold">
+                                                        {{ 'pos.factura.registros' | translate }}
+                                                        ({{restaurantService.locations.length }})
+                                                    </p>
+                                                </div>
+
+                                                <div class="ubicacion"
+                                                    *ngFor="let location of restaurantService.locations"
+                                                    [ngClass]="{'ubicacionMesaSelect': restaurantService.location && 
+                                                    restaurantService.location.elemento_Asignado === location.elemento_Asignado}" (click)="selectLocation(location)">
+                                                    <mat-icon>location_on</mat-icon>
+                                                    <span class="spacer"></span>
+                                                    <div class="descripciones">
+                                                        <p class="textBold">{{location.descripcion}}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <span class="spacer"></span>
+                                            <div class="mesas" *ngIf="restaurantService.tables.length > 0">
+                                                <div class="cantidad-registros">
+                                                    <p class="titulo">{{'pos.restaurante.mesasT' | translate }}</p>
+                                                    <span class="spacer"></span>
+                                                    <p class="textBold">
+                                                        {{ 'pos.factura.registros' | translate }}
+                                                        ({{restaurantService.tables.length }})
+                                                    </p>
+                                                </div>
+
+                                                <div class="mesasx2">
+                                                    <div class="mesa" *ngFor="let table of restaurantService.tables"
+                                                        (click)="selectTable(table)"
+                                                        [ngClass]="{'ubicacionMesaSelect': restaurantService.table && restaurantService.table.elemento_Asignado === table.elemento_Asignado}">
+                                                        <mat-icon>table_bar</mat-icon>
+                                                        <span class="spacer"></span>
+                                                        <div class="descripciones">
+                                                            <p class="textBold"> {{table.descripcion}}</p>
+                                                            <P class="text12">
+                                                                {{'pos.restaurante.cuentasT' | translate }}
+                                                                {{table.orders.length}}
+                                                            </P>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- MESAS ABIERTAS -->
+                                <section id="content2" class="content2 contenido-seleccionado">
+                                    <div class="contenido-ubicaciones-mesas">
+                                        <div class="tablaDocumentos" *ngIf="restaurantService.orders.length > 0">
+                                            <div class="tabla-titulos">
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.idDoc' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.serieT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab mostrarTxt">
+                                                        {{'pos.restaurante.ubicacionT' | translate }}
+                                                    </p>
+                                                    <p class="tituloTab ocultarTxt">
+                                                        {{'pos.restaurante.ubi' | translate }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.mesaT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.meseroT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="tituloTab">{{'pos.restaurante.cuentaT' | translate }}</p>
+                                                </div>
+                                                <div class="bloqueW20T">
+                                                    <p class="tituloTab">{{'pos.restaurante.totalT' | translate }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="tabla-lista"
+                                                *ngFor="let order of restaurantService.orders; let indexOrder = index">
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].consecutivo}}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].serie.descripcion}}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].ubicacion.descripcion }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].mesa.descripcion }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].mesero.nombre }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW10T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.orders[indexOrder].nombre }}
+                                                    </p>
+                                                </div>
+                                                <div class="bloqueW20T">
+                                                    <p class="textCenter12">
+                                                        {{restaurantService.getTotal(indexOrder) | currencyFormat }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!--Fin Content Tabs-->
+                            </div>
+                            <!-- Mostrar logos -->
+                            <app-barra-logos></app-barra-logos>
+                        </div>
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+        </div>
+
+        <div *ngIf="restaurantService.viewRestaurant">
+            <mat-sidenav-container class="sidenav_container" (backdropClick)="close('backdrop')"
+                *ngIf="!restaurantService.verError">
+
+                <mat-sidenav position="end" #sidenavend (keydown.escape)="close('escape')" disableClose>
+                    <mat-toolbar class="barra-cerrar-titulo">
+                        <button mat-icon-button (click)="close('toggle button')"
+                            [matTooltip]="'pos.botones.cerrar' | translate">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-toolbar>
+                    <!-- Contenido del sidenav -->
+                    <div class="contenido-sidenav">
+                        <div class="espacio-inicial">
+                            <span class="spacer"></span>
+                            <div class="circular-inicial-grande">
+                                <p class="inicial-usuario-grande">{{user[0]}}</p>
+                            </div>
+                            <span class="spacer"></span>
+                        </div>
+                        <div class="espacio-inicial">
+                            <span class="spacer"></span>
+                            <p class="userName">{{user.toUpperCase()}}</p>
+                            <span class="spacer"></span>
+                        </div>
+                        <div class="borde-detalles"></div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">business</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.empresa' | translate}}</p>
+                                <p class="descripcion"> {{empresa.empresa_Nombre | titlecase}} ({{empresa.empresa}})
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">business</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.estacion' | translate}}</p>
+                                <p class="descripcion"> {{estacion.nombre | titlecase}} ({{estacion.estacion_Trabajo}})
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">currency_exchange</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.tipoCambio' | translate}}</p>
+                                <p class="descripcion"> {{tipoCambio | currency:' ':'symbol':'2.2-2'}} </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario" *ngIf="restaurantService.documentoName">
+                            <mat-icon class="iconos-detalles">description</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.tipoDocumento' | translate}}</p>
+                                <p class="descripcion"> {{nombreDocumento | titlecase}} ({{tipoDocumento}}) </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario" *ngIf="restaurantService.serie">
+                            <mat-icon class="iconos-detalles">description</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.home.serieDocumento' | translate}}</p>
+                                <p class="descripcion"> {{restaurantService.serie.descripcion}}
+                                    ({{restaurantService.serie.serie_Documento}}) </p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-sidenav>
+                <mat-sidenav-content>
+
+                    <!-- Barras para titulos y boton de cerrar sidenav -->
+                    <mat-toolbar class="toolbarPhone">
+                        <mat-toolbar-row>
+                            <div class="barras">
+                                <!-- Regresa a clasificaciones -->
+                                <button *ngIf="restaurantService.idPantalla == 1" mat-icon-button
+                                    matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="viewLocationTable()">
+                                    <mat-icon>arrow_back</mat-icon>
+                                </button>
+
+                                <button *ngIf="restaurantService.idPantalla == 2" mat-icon-button
+                                    matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="backClassifications()">
+                                    <mat-icon>arrow_back</mat-icon>
+                                </button>
+
+                                <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                                    (click)="refresh()">
+                                    <mat-icon>refresh</mat-icon>
+                                </button>
+                                <span class="spacer"></span>
+                                <p class="titulo">{{dataUserService.nameDisplay }} </p>
+                                <span class="spacer"></span>
+                                <div class="circulo-inicial" (click)="sidenavend.open()">
+                                    <p class="inicial-usuario">{{user[0]}}</p>
+                                </div>
+                            </div>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <mat-toolbar class="toolbarPhone">
+                        <mat-toolbar-row>
+                            <div class="barras">
+                                <span class="spacer"></span>
+                                <ng-container>
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.trasladarMesa' | translate }}"
+                                        (click)="viewMoveTable()">
+                                        <mat-icon>move_up</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.trasladarTran' | translate }}"
+                                        (click)="viewMoveCheckTable()">
+                                        <mat-icon>drive_file_move_outline</mat-icon>
+                                    </button>
+                                    <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
+                                        (click)="printComanda(restaurantService.indexCheck)">
+                                        <mat-icon>desktop_windows</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                        matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
+                                        <mat-icon>print</mat-icon>
+                                    </button>
+                                </ng-container>
+                            </div>
+                        </mat-toolbar-row>
+                    </mat-toolbar>
+                    <mat-toolbar class="toolbar-large">
+                        <!-- Regresa a clasificaciones -->
+                        <button *ngIf="restaurantService.idPantalla == 1" mat-icon-button
+                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="viewLocationTable()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button *ngIf="restaurantService.idPantalla == 2" mat-icon-button
+                            matTooltip="{{ 'pos.botones.inicio' | translate }}" (click)="backClassifications()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+
+                        <button mat-icon-button matTooltip="{{ 'pos.botones.actualizar' | translate }}"
+                            (click)="refresh()">
+                            <mat-icon>refresh</mat-icon>
+                        </button>
+                        <span class="spacer"></span>
+                        <!-- Titulo de la tarea -->
+                        <p class="titulo">{{dataUserService.nameDisplay }}</p>
+
+                        <span class="spacer"></span>
+                        <ng-container>
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.trasladarMesa' | translate }}"
+                                (click)="viewMoveTable()">
+                                <mat-icon>move_up</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.trasladarTran' | translate }}"
+                                (click)="viewMoveCheckTable()">
+                                <mat-icon>drive_file_move_outline</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
+                                (click)="printComanda(restaurantService.indexCheck)">
+                                <mat-icon>desktop_windows</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
+                                <mat-icon>print</mat-icon>
+                            </button>
+                        </ng-container>
+                        <div class="circulo-inicial" (click)="sidenavend.open()">
+                            <p class="inicial-usuario">{{user[0]}}</p>
+                        </div>
+                    </mat-toolbar>
+
+                    <!-- Contenido del componente -->
+                    <div class="container_main">
+                        <div>
+                            <mat-toolbar class="toolbarNavegacion">
+                                <div class="dFlex">
+                                    <p class="text12" (click)="viewLocationTable()">
+                                        {{restaurantService.location?.descripcion}}
+                                    </p>
+                                    <p> / </p>
+                                    <p class="text12" (click)="viewLocationTable()">
+                                        {{restaurantService.table?.descripcion}}</p>
+                                    <p> / </p>
+                                    <p class="text12" [ngClass]="{ 'prefBold12': !restaurantService.classification, }"
+                                        (click)="backClassifications()">
+                                        {{'pos.restaurante.clasificaciones' | translate }}
+                                    </p>
+                                    <p *ngIf="restaurantService.classification"> / </p>
+                                    <p class="text12" [ngClass]="{ 'prefBold12': restaurantService.classification, }">
+                                        {{restaurantService.classification?.des_Clasificacion}}</p>
+                                </div>
+                            </mat-toolbar>
+
+                            <div class="dFlex">
+                                <div class="clasificacioProducto">
+                                    <app-classifications *ngIf="restaurantService.idPantalla == 1">
+                                    </app-classifications>
+                                    <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
+                                </div>
+                                <div class="fondoDetalle" (click)="verDetalles()"
+                                    *ngIf="!restaurantService.verDetalleOrden">
+                                    <mat-icon>chevron_left</mat-icon>
+                                </div>
+                                <div (click)="verDetalles()" *ngIf="restaurantService.verDetalleOrden"
+                                    class="fondoDetalle">
+                                    <mat-icon>chevron_right</mat-icon>
+                                </div>
+                                <div *ngIf="restaurantService.table!.orders.length > 0"
+                                    [ngClass]="{ 'detalleOrden' : restaurantService.verDetalleOrden, 'ocultarDetalles' : !restaurantService.verDetalleOrden, }">
+                                    <div class="dFlex">
+                                        <button mat-icon-button
+                                            (click)=" restaurantService.viewCheck ? verDetalles() : goChecks() ">
+                                            <mat-icon>arrow_back</mat-icon>
+                                        </button>
+                                        <p class="prefBold12">
+                                            {{restaurantService.viewCheck ? "" : restaurantService.nameCheck}}
+                                        </p>
+                                        <span class="spacer"></span>
+                                        <button mat-icon-button
+                                            *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
+                                            matTooltip="Seleccionar todas las cuentas." (click)="selectChecks()">
+                                            <mat-icon>select_all</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
+                                            *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
+                                            matTooltip="Eliminar cuentas." (click)="deleteCheck()">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
+                                            matTooltip="{{'pos.restaurante.nuevaCuenta' | translate }}"
+                                            (click)="newCheck()">
+                                            <mat-icon>person_add</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="variasCuentas"
+                                        *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck ">
+                                        <div class="cuenta" *ngFor="let order of restaurantService.table!.orders">
+                                            <mat-checkbox [(ngModel)]="restaurantService.orders[order].selected"
+                                                color="primary">
+                                            </mat-checkbox>
+                                            <div (click)="selectCheck(order)" class="espacioCuenta">
+                                                <div class="circulo">
+                                                    <span class="spacer"></span>
+                                                    <mat-icon class="icoCuenta">person</mat-icon>
+                                                    <span class="spacer"></span>
+                                                </div>
+                                                <span class="spacer"></span>
+                                                <div class="detalleCuenta">
+                                                    <p class="textBold12">
+                                                        {{ restaurantService.orders[order].nombre}}
+                                                    </p>
+                                                    <p class="textBold12">
+                                                        {{'pos.factura.total' | translate }}:
+                                                        {{restaurantService.getTotal(order) | currencyFormat}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="editarCuenta">
+                                                <mat-icon class="icoEditar"
+                                                    matTooltip="{{ 'pos.restaurante.renombrarCuenta' | translate }}"
+                                                    (click)="renombrar(order)">edit</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="variasCuentas"
+                                        *ngIf="restaurantService.viewTranCheck && !restaurantService.viewCheck">
+                                        <div class="transaccion"
+                                            *ngFor="let tran of restaurantService.orders[restaurantService.indexCheck].transacciones; let indexTran = index">
+                                            <div class="detalleTransaccion">
+                                                <p class="textBold12">
+                                                    {{tran.processed ? tran.cantidad + " x ": "" }}
+                                                    {{tran.producto.des_Producto }}
+                                                </p>
+                                                <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
+                                                <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
+                                                <p class="textBold12" *ngIf="tran.observacion ">
+                                                    {{ 'pos.restaurante.notas' | translate }}
+                                                </p>
+                                                <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}}
+                                                </p>
+                                            </div>
+                                            <div class="cantidad-producto">
+                                                <div class="dFlex">
+                                                    <span class="spacer"></span>
+                                                    <mat-icon class="verimagen"
+                                                        matTooltip="{{ 'pos.restaurante.verProducto' | translate }}"
+                                                        (click)="imagen(tran.producto)">image_outline</mat-icon>
+                                                    <mat-icon matTooltip="{{'pos.restaurante.eliminar' | translate }}"
+                                                        (click)="eliminarTran(indexTran)" *ngIf="!tran.processed"
+                                                        class="verimagen">delete_outline</mat-icon>
+                                                </div>
+                                                <div class="dFlex">
+                                                    <span class="spacer"></span>
+                                                    <p class="textBold12">
+                                                        {{ tran.cantidad * tran.precio.precioU | currencyFormat }}
+                                                    </p>
+                                                </div>
+                                                <div class="dFlex" *ngIf="!tran.processed">
+                                                    <div class="restar" (click)="restar(indexTran)">
+                                                        <p class="sumar-restar">-</p>
+                                                    </div>
+                                                    <input class="cantidad" type="text" name="search"
+                                                        [(ngModel)]="tran.cantidad" autocomplete="off"
+                                                        (ngModelChange)="calcTotal()"
+                                                        (keypress)="validarNumeros($event)">
+                                                    <div class="sumar" (click)="sumar(indexTran)">
+                                                        <p class="sumar-restar">+</p>
+                                                    </div>
+                                                </div>
+                                                <div class="dFlex" *ngIf="tran.processed">
+                                                    <span class="spacer"></span>
+                                                    <p class="comandada">
+                                                        {{'pos.restaurante.comandada' | translate }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="totalCuenta"
+                                        *ngIf="restaurantService.indexCheck != -1 && restaurantService.viewTranCheck">
+                                        <p class="textBold">{{'pos.factura.total' | translate }}:</p>
+                                        <span class="spacer"></span>
+                                        <p class="textBold">
+                                            {{restaurantService.getTotal(restaurantService.indexCheck)
+                                            | currencyFormat }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mostrar logos -->
+                            <app-barra-logos></app-barra-logos>
+                        </div>
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+        </div>
+        <div *ngIf="restaurantService.viewMoveCheckTable">
+
+            <mat-toolbar-row class="head__sidenav">
+                <!-- Regresar a restaurante desde seleccionar cuenta o transaccion -->
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewRestaurant()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!-- Rregresar de transacciones de cuenta -->
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewChecks()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!-- Regresar a seleccionar cuentas o transacciones -->
+                <button mat-icon-button *ngIf="restaurantService.selectNewLocation"
+                    matTooltip="{{ 'pos.botones.regresar' | translate }}" (click)="viewSelectCheckOrTran()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <span class="spacer"></span>
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 1">
+                    {{'pos.restaurante.trasladarCuenta' | translate }}
+                </p>
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 2">
+                    {{'pos.restaurante.trasladarTran' | translate }}
+                </p>
+                <p class="textBold" *ngIf="restaurantService.tipoTraslado == 3">
+                    {{'pos.restaurante.trasladarMesa' | translate }}
+                </p>
+                <span class="spacer"></span>
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
+                    matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
+                    <mat-icon>select_all</mat-icon>
+                </button>
+                <button mat-icon-button
+                    *ngIf="!restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
+                    matTooltip="Trasladar Cuenta" (click)="trasladarCuenta()">
+                    <mat-icon>drive_file_move_outline</mat-icon>
+                </button>
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
+                    matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
+                    <mat-icon>select_all</mat-icon>
+                </button>
+                <button mat-icon-button
+                    *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
+                    matTooltip="Trasladar Transacción" (click)="trasladarTran()">
+                    <mat-icon>drive_file_move_outline</mat-icon>
+                </button>
+            </mat-toolbar-row>
+
+            <div class="contenidoTraslado">
+
+                <app-move-check-transaction *ngIf="restaurantService.selectCheckOrTran"></app-move-check-transaction>
+                <app-move-restaurant *ngIf="restaurantService.selectNewLocation"></app-move-restaurant>
+            </div>
+
+            <app-barra-logos></app-barra-logos>
+
+        </div>
+
+    </div>
+</div>

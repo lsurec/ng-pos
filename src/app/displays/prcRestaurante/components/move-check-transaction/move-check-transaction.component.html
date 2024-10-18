@@ -1,0 +1,61 @@
+<div class="contenido">
+    <div *ngIf="restaurantService.viewChecksMove">
+
+        <div class="info">
+            <mat-icon class="marginRihgt">info</mat-icon>
+            {{'pos.restaurante.marcarCuentas' | translate }}
+        </div>
+
+        <div class="cuentas">
+            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
+                <div class="cuenta-detalle" (click)="selectCheck(indexOrder)">
+                    <div class="espacioCuenta">
+                        <div class="circulo">
+                            <span class="spacer"></span>
+                            <mat-icon class="icoCuenta">person</mat-icon>
+                            <span class="spacer"></span>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="detalleCuenta">
+                            <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                            <p class="textBold">{{'pos.factura.total' | translate }}:
+                                {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                        </div>
+                    </div>
+                    <mat-checkbox [(ngModel)]="restaurantService.orders[indexOrder].selected"
+                        (click)="selectCheck(indexOrder)" color="primary">
+                    </mat-checkbox>
+                </div>
+                <div class="verTansacciones" (click)="viewTranCheck(indexOrder)">
+                    <p class="irDetalleCuenta">{{'pos.restaurante.trasladoTranT' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="restaurantService.viewTranCheckMove">
+
+        <div class="transaccionesx2">
+            <div class="transaccion" (click)="selectTranCheck(indexTran)"
+                *ngFor="let tran of restaurantService.orders[restaurantService.indexMoveCheck].transacciones; let indexTran = index">
+                <mat-checkbox [(ngModel)]="tran.selected" (click)="selectTranCheck(indexTran)" color="primary">
+                </mat-checkbox>
+
+                <div class="productoImagen" (click)="imagen(tran.producto)">
+                    <img [src]="tran.producto.objeto_Imagen?? 'assets/placeimg.jpg'" class="image-product">
+                </div>
+
+                <div class="detalleTransaccion">
+                    <p class="textBold"> {{tran.cantidad}} x {{tran.producto.des_Producto }}</p>
+                    <p class="text12"> {{tran.precio.precioU | currencyFormat }} C/U</p>
+                    <p class="text12"> {{ getGuarniciones(indexTran) }}</p>
+                    <p class="textBold" *ngIf="tran.observacion "> {{'pos.restaurante.notas' | translate }}</p>
+                    <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}} </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

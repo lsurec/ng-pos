@@ -244,4 +244,15 @@ export class EventService {
     regresarCalendariodeCrearEvent(eventData: boolean) {
         this.regresarCalendariodeCrear.next(eventData);
     }
+
+    //regresar a Home de error restaurante
+    //regresar a calendario de error
+    private homeDeErrorRestaurante = new Subject<any>();
+
+    homeDeErrorRestaurante$ = this.homeDeErrorRestaurante.asObservable();
+
+    homeDeErrorRestauranteEvent(eventData: boolean) {
+        this.homeDeErrorRestaurante.next(eventData);
+    }
+
 }

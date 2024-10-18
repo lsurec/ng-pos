@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { FiltroInterface } from 'src/app/displays/prc_documento_3/interfaces/filtro.interface';
 import { CurrencyPipe } from '@angular/common';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-origin-docs',
@@ -152,8 +153,7 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
     //inciiar proceso
     this.globalConvertSrevice.isLoading = true;
 
-    //Uso del servicio para obtner documentos pendientes de recepcionar
-    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+    const apiDocOrigen  = ()=> this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
@@ -161,6 +161,9 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
       this.globalConvertSrevice.performanSearchOrigin,
     );
+
+    //Uso del servicio para obtner documentos pendientes de recepcionar
+    let res: ResApiInterface = await ApiService.apiUse(apiDocOrigen);
 
     //finalizar proiceso
     this.globalConvertSrevice.isLoading = false;
@@ -306,8 +309,8 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
     //inciar el procespp
     this.globalConvertSrevice.isLoading = true;
 
-    //Consumo del servisio
-    let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
+
+    const apiDetalleOrigen = ()=> this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
       this.globalConvertSrevice.docOriginSelect!.documento,
@@ -318,7 +321,10 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
       this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
       this.globalConvertSrevice.docOriginSelect!.fecha_Reg,
 
-    )
+    );
+
+    //Consumo del servisio
+    let res: ResApiInterface = await ApiService.apiUse(apiDetalleOrigen); 
 
     ///Finaliar el procespo
     this.globalConvertSrevice.isLoading = false;
@@ -353,8 +359,8 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
     //inciar el proceso 
     this.globalConvertSrevice.isLoading = true;
 
-    //Consumo del servico 
-    let res: ResApiInterface = await this._receptionService.getDestinationDocs(
+
+    const apiDocDestino = ()=> this._receptionService.getDestinationDocs(
       this.user,
       this.token,
       doc.tipo_Documento,
@@ -362,6 +368,9 @@ export class OriginDocsComponent implements OnInit, AfterViewInit {
       doc.empresa,
       doc.estacion_Trabajo,
     );
+
+    //Consumo del servico 
+    let res: ResApiInterface = await ApiService.apiUse(apiDocDestino);
 
     //finalizar  carga
     this.globalConvertSrevice.isLoading = false;

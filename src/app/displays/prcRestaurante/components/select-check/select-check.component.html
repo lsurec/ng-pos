@@ -1,0 +1,53 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <button mat-icon-button (click)="loadData()" matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+        <div class="cuentas">
+            <div class="cuenta" *ngFor="let indexOrder of restaurantService.table!.orders">
+                <div (click)="selectCheck(indexOrder)" class="espacioCuenta">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">person</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="detalleCuenta">
+                        <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                        <p class="textBold">{{ 'pos.factura.total' | translate }}:
+                            {{restaurantService.getTotal(indexOrder) | currencyFormat }}
+                        </p>
+                    </div>
+                </div>
+                <div class="editarCuenta">
+                    <mat-icon class="icoEditar" matTooltip="{{ 'pos.restaurante.renombrarCuenta' | translate }}"
+                        (click)="renombrar(indexOrder)">edit</mat-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="cuentas">
+            <div class="cuenta" (click)="newCheck()">
+                <div class="circulo">
+                    <span class="spacer"></span>
+                    <mat-icon class="icoCuenta">add</mat-icon>
+                    <span class="spacer"></span>
+                </div>
+                <span class="spacer"></span>
+                <div class="detalleCuenta">
+                    <p class="textBold">{{ 'pos.restaurante.nuevaCuenta' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

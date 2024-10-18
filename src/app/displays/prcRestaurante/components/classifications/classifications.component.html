@@ -1,0 +1,13 @@
+<div class="contenido">
+    <div class="clasificacionesx3">
+        <div class="product-me" *ngFor="let classification of restaurantService.classifications"
+            (click)="selectClassification(classification)">
+            <img src="assets/placeimg.jpg" class="image-product">
+            <!-- <img src="assets/placeimg.jpg" *ngIf="!producto.url_Img" class="image-product"> -->
+            <!-- <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
+            <div class="nombre_producto">
+                <p>{{classification.des_Clasificacion}}</p>
+            </div>
+        </div>
+    </div>
+</div>

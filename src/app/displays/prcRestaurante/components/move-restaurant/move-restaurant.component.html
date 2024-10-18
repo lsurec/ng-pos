@@ -1,0 +1,199 @@
+<mat-stepper linear #stepper class="traslado" animationDuration="0">
+    <mat-step [stepControl]="formNewLocation" [editable]="isEditable">
+        <ng-template matStepLabel>
+            <p class="textBold">{{'pos.restaurante.nuevaUbicacion' | translate }} </p>
+            <p class="step-subtitle" *ngIf="newLocation">{{ newLocation.descripcion }}</p>
+        </ng-template>
+
+        <div class="ubicaciones">
+
+            <div class="cantidad-registros">
+                <p class="titulo">{{'pos.restaurante.ubicacionesT' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textBold">
+                    {{ 'pos.factura.registros' | translate }}
+                    ({{restaurantService.locations.length }})
+                </p>
+            </div>
+            <div class="mesasx2">
+                <div class="ubicacion" *ngFor="let location of restaurantService.locations" [ngClass]="{'ubicacionMesaSelect': newLocation && 
+                        newLocation.elemento_Asignado === location.elemento_Asignado}"
+                    (click)="selectLocation(location)">
+                    <mat-icon>location_on</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="descripciones">
+                        <p class="textBold">{{location.descripcion}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="dFlex" *ngIf="newLocation">
+            <span class="spacer"></span>
+            <button mat-mini-fab class="siguiente" *ngIf="newLocation" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="formNewTable" [editable]="isEditable">
+
+        <ng-template matStepLabel>
+            <p class="textBold">{{'pos.restaurante.ubicacionesT' | translate }} </p>
+            <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
+        </ng-template>
+
+        <div class="mesas" *ngIf="tables.length > 0">
+            <div class="cantidad-registros">
+                <p class="titulo">{{'pos.restaurante.mesasT' | translate }}</p>
+                <span class="spacer"></span>
+                <p class="textBold">
+                    {{ 'pos.factura.registros' | translate }}
+                    ({{tables.length }})
+                </p>
+            </div>
+
+            <div class="mesasx2" *ngIf="newLocation != undefined">
+                <div class="mesa" *ngFor="let table of tables" (click)="selectTable(table)"
+                    [ngClass]="{'ubicacionMesaSelect': newTable && newTable.elemento_Asignado === table.elemento_Asignado}">
+                    <mat-icon>table_bar</mat-icon>
+                    <span class="spacer"></span>
+                    <div class="descripciones">
+                        <p class="textBold"> {{table.descripcion}}</p>
+
+                        <P class="text12">{{'pos.restaurante.cuentasT' | translate }} {{table.orders.length}}</P>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dFlex">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-mini-fab class="siguiente" *ngIf="newTable" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
+
+        <ng-template matStepLabel>
+            <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
+            <p class="step-subtitle" *ngIf="indexNewCheck != -1">{{ restaurantService.orders[indexNewCheck].nombre }}
+            </p>
+        </ng-template>
+
+        <div class="cuentas">
+            <div class="cuentasx3" *ngIf=" newTable != undefined && newTable.orders.length > 0">
+                <div class="cuenta" *ngFor="let indexOrder of newTable!.orders" (click)="selectCheck(indexOrder)"
+                    [ngClass]="{'checkSelect': indexNewCheck == indexOrder}">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">person</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="detalleCuenta">
+                        <p class="textBold">{{ restaurantService.orders[indexOrder].nombre}}</p>
+                        <p class="textBold">{{'pos.factura.total' | translate }}:
+                            {{restaurantService.getTotal(indexOrder) | currencyFormat }} </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cuentasx3">
+                <div class="cuenta" (click)="newCheck()">
+                    <div class="circulo">
+                        <span class="spacer"></span>
+                        <mat-icon class="icoCuenta">add</mat-icon>
+                        <span class="spacer"></span>
+                    </div>
+                    <span class="spacer"></span>
+                    <div class="detalleCuenta">
+                        <p class="textBold">{{'pos.restaurante.nuevaCuenta' | translate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dFlex">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-mini-fab class="siguiente" *ngIf="indexNewCheck != -1" matStepperNext>
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>
+            <p class="textBold">{{'pos.restaurante.resumen' | translate }} </p>
+            <p class="step-subtitle">{{'pos.restaurante.traslado' | translate }}</p>
+        </ng-template>
+
+        <div class="origenDestino" *ngIf="newLocation && newTable">
+
+            <div class="resumen">
+                <p class="textBold">{{'pos.restaurante.origen' | translate }}</p>
+
+                <div class="dFlex">
+                    <p class="textBold">{{'pos.restaurante.ubicacion' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.location?.descripcion}}</p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">{{'pos.restaurante.mesa' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.table?.descripcion}}</p>
+                </div>
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
+                    <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.orders[restaurantService.indexMoveCheck].nombre}}</p>
+                </div>
+            </div>
+            <span class="spacer"></span>
+
+            <div class="resumen">
+                <p class="textBold">{{'pos.restaurante.destino' | translate }}</p>
+
+                <div class="dFlex">
+                    <p class="textBold">{{'pos.restaurante.ubicacion' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12"> {{newLocation.descripcion}} </p>
+                </div>
+                <div class="dFlex">
+                    <p class="textBold">{{'pos.restaurante.mesa' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12"> {{newTable.descripcion}} </p>
+                </div>
+                <div class="dFlex" *ngIf="restaurantService.tipoTraslado == 2 && indexNewCheck != -1">
+                    <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
+                    <span class="spacer"></span>
+                    <p class="text12">{{restaurantService.orders[indexNewCheck].nombre}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="origenDestino">
+            <button mat-mini-fab class="regresar" matStepperPrevious>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        </div>
+
+        <div class="dFlex">
+            <button mat-raised-button class="boton-azul" (click)="cancelar()"
+                matTooltip="{{'pos.botones.cancelar' | translate}}">
+                {{'pos.botones.cancelar' | translate}}
+            </button>
+            <span class="spacer"></span>
+            <button mat-raised-button class="boton-azul" (click)="confirmar()"
+                matTooltip="{{'pos.botones.confirmar' | translate}}">
+                {{'pos.botones.confirmar' | translate}}
+            </button>
+        </div>
+    </mat-step>
+</mat-stepper>

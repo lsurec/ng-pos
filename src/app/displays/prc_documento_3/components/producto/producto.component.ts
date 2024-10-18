@@ -22,6 +22,7 @@ import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { CurrencyPipe } from '@angular/common';
 import { CurrencyFormatPipe } from 'src/app/pipes/currecy-format/currency-format.pipe';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-producto',
@@ -151,8 +152,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
 
-    //buscar precios
-    let resPrecio = await this._productService.getPrecios(
+
+    const apiPrecio = ()=> this._productService.getPrecios(
       this.user,
       this.token,
       bodega,
@@ -161,6 +162,9 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       this.facturaService.cuenta?.cuenta_Correntista ?? 0,
       this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
+
+    //buscar precios
+    let resPrecio = await ApiService.apiUse(apiPrecio) ;
 
     //si algo salió mal
     if (!resPrecio.status) {
@@ -193,13 +197,16 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     //si no hay precios buscar factor conversion
     if (this.productoService.precios.length == 0) {
-      let resfactor = await this._productService.getFactorConversion(
+      
+      const apiFactor = ()=> this._productService.getFactorConversion(
         this.user,
         this.token,
         bodega,
         this.producto.producto,
         this.producto.unidad_Medida,
       );
+      
+      let resfactor = await ApiService.apiUse(apiFactor);
 
       //si algo salio mal
       if (!resfactor.status) {
@@ -396,13 +403,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     if (!this.productoService.bodega!.posee_Componente) {
       this.isLoading = true;
 
-      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.facturaService.serie!.serie_Documento,
         this.facturaService.tipoDocumento!,
         this.estacion,
         this.empresa,
-        this.productoService.bodega.bodega,
+        this.productoService.bodega!.bodega,
         this.facturaService.resolveTipoTransaccion(this.producto.tipo_Producto),
         this.producto.unidad_Medida,
         this.producto.producto,
@@ -413,6 +420,8 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         this.token,
 
       );
+
+      let resDisponibiladProducto: ResApiInterface = await ApiService.apiUse(apiValidateProd) ;
 
       if (!resDisponibiladProducto.status) {
         this.isLoading = false;
@@ -504,12 +513,14 @@ export class ProductoComponent implements OnInit, AfterViewInit {
         let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+        const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
           this.token,
           dateStart,
           dateEnd,
           this.productoService.total.toString(),
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
         if (!res.status) {
           this.isLoading = false;
@@ -621,13 +632,16 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+    const apiObjProd = ()=> this._productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+    
     this.isLoading = false;
 
 

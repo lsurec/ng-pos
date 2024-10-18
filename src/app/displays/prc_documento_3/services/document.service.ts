@@ -13,8 +13,7 @@ export class DocumentService {
     constructor(private _http: HttpClient) {
     }
 
-
-    private _getStructureDocProcessed(
+    getStructureDocProcessed(
         user: string,
         token: string,
         filter: string,
@@ -33,71 +32,7 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento/structure/processed`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
-    getStructureDocProcessed(
-        user: string,
-        token: string,
-        filter: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getStructureDocProcessed(
-                user,
-                token,
-                filter,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            );
-        });
-    }
-
-    private _getStructureDosPendigs(
+    getStructureDosPendigs(
         user: string,
         token: string,
         userFilter: string,
@@ -119,74 +54,9 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento/structure/pendings`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
-    getStructureDosPendigs(
-        user: string,
-        token: string,
-        userFilter: string,
-        filter: string,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getStructureDosPendigs(
-                user,
-                token,
-                userFilter,
-                filter,
-            ).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            );
-        });
-    }
 
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getPagos(user: string, token: string, doc: number) {
+    getPagos(user: string, token: string, doc: number) {
 
         let headers = new HttpHeaders(
             {
@@ -200,65 +70,8 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento/pagos`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
-    getPagos(user: string, token: string, doc: number): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getPagos(user, token, doc).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getDetalles(user: string, token: string, doc: number) {
+    getDetalles(user: string, token: string, doc: number) {
 
         let headers = new HttpHeaders(
             {
@@ -272,66 +85,8 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento/detalles`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
-    getDetalles(user: string, token: string, doc: number): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getDetalles(user, token, doc).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-
     //funcion que va a realizar el consumo privado para obtener las empresas
-    private _getEncabezados(
+    getEncabezados(
         user: string,
         token: string,
         doc: number,
@@ -349,72 +104,8 @@ export class DocumentService {
         return this._http.get(`${this._urlBase}Documento/encabezados`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa  para obtener las empresas
-    getEncabezados(
-        user: string,
-        token: string,
-        doc: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getEncabezados(user, token, doc).subscribe(
-                //si esta correcto
-                res => {
-
-
-
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
     //funcion que va a realizar el consumo privado pra obtener lo sultimos 10 docummentos hechos
-    private _getDocument(
+    getDocument(
         user: string,
         token: string,
         document: number,
@@ -428,161 +119,33 @@ export class DocumentService {
 
             }
         )
-
         //consumo de api
         return this._http.get(`${this._urlBase}Documento`, { headers: headers, observe: 'response' });
     }
 
-    //funcion asyncrona con promesa pra obtener lo sultimos 10 docummentos hechos
-    getDocument(
-
-        user: string,
-        token: string,
-        document: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._getDocument(user, token, document,).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
-
-
     //funcion que va a realizar el consumo privado para crear un nuevo documento
-    private _postDocument(
+    postDocument(
         token: string,
         document: PostDocumentInterface
     ) {
 
         let paramsStr = JSON.stringify(document); //JSON to String
 
-
         let headers = new HttpHeaders(
             {
                 "Authorization": "bearer " + token,
                 "Content-Type": "application/json",
-
             }
         )
 
         //consumo de api
         return this._http.post(`${this._urlBase}Documento`, paramsStr, { headers: headers, observe: 'response' });
-
     }
 
-    //funcion asyncrona con promesa para crear un nuevo documento
-    postDocument(
-        token: string,
-        document: PostDocumentInterface
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._postDocument(token, document,).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
-
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
-
-
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
-        )
-    }
 
 
     //funcion que va a realizar el consumo privado para crear un nuevo documento
-    private _updateDocument(
+    updateDocument(
         token: string,
         document: PostDocumentInterface,
         consecutivo: number,
@@ -595,74 +158,34 @@ export class DocumentService {
             {
                 "Authorization": "bearer " + token,
                 "Content-Type": "application/json",
-
             }
         )
 
         //consumo de api
         return this._http.post(`${this._urlBase}Documento/update/estructura/${consecutivo}`, paramsStr, { headers: headers, observe: 'response' });
-
     }
 
-    //funcion asyncrona con promesa para crear un nuevo documento
-    updateDocument(
+
+    getDataComanda(
+        user: string,
         token: string,
-        document: PostDocumentInterface,
         consecutivo: number,
-    ): Promise<ResApiInterface> {
-        return new Promise((resolve, reject) => {
-            this._updateDocument(token, document, consecutivo).subscribe(
-                //si esta correcto
-                res => {
-                    let response: ResponseInterface = <ResponseInterface>res.body;
+    ) {
 
-                    let resApi: ResApiInterface = {
-                        status: true,
-                        response: response.data,
-                        storeProcedure: response.storeProcedure
-                    }
-                    resolve(resApi);
-                },
-                //si algo sale mal
-                err => {
-
-                    try {
-                        let response: ResponseInterface = <ResponseInterface>err.error;
-
-                        let resApi: ResApiInterface = {
-                            status: false,
-                            response: err.error,
-                            storeProcedure: response.storeProcedure,
-                            url: err.url,
-                        }
-                        resolve(resApi);
-                    } catch (e) {
+        let paramsStr = JSON.stringify(document); //JSON to String
 
 
-                        try {
-                            let message = err.message;
-
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: message,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-
-                        } catch (ex) {
-                            let resApi: ResApiInterface = {
-                                status: false,
-                                response: err,
-                                url: err.url,
-                            }
-                            resolve(resApi);
-                        }
-
-
-                    }
-                }
-            )
-        }
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "Content-Type": "application/json",
+            }
         )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Printer/comanda/${user}/${consecutivo}`, { headers: headers, observe: 'response' });
+
     }
+
+
 }

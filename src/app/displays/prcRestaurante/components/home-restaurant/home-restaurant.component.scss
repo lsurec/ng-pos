@@ -1,0 +1,1072 @@
+$pestanas      : var(--pestana);
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$negro         : var(--negro); //texto negro
+$personalizado : var(--global-color); //bordes y texto azul
+$blanco        : var(--blanco); //resaltar texto blanco
+$gris          : var(--gris); //sombra y texto gris
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+$navegacion    : var(--navegacion-claro);
+$rojo          : var(--descuento-claro);
+
+.container-main {
+    height  : calc(100vh - 128px) !important;
+    width   : 100%;
+    padding : 0px;
+    overflow: hidden;
+}
+
+.progress {
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $fondo;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 64px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+//BORRAR
+
+.borde-bottom {
+    border-bottom: 1px solid $personalizado;
+    font-weight  : 500;
+}
+
+.titulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+.subtitulo {
+    font-size: 16px;
+}
+
+.descripcion {
+    color    : $gris;
+    font-size: 14px;
+}
+
+.iconos-detalles {
+    color: $gris;
+}
+
+.userName {
+    font-size  : 17px;
+    font-weight: bold;
+    height     : 35px;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $bordes;
+    font-size    : 12px;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $personalizado;
+    font-size : 13px;
+}
+
+.informacion {
+    padding: 10px 0px;
+    width  : 400px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.mat-mdc-radio-button .mat-mdc-radio-button {
+    margin-left: 16px;
+}
+
+.form-switch .form-check-input {
+    border-color: $bordes;
+    height      : 20px;
+}
+
+.circulo-inicial {
+    background-color: $personalizado;
+    width           : 33px;
+    height          : 33px;
+    border-radius   : 50%;
+    overflow        : hidden;
+    margin          : 0px 5px;
+    cursor          : pointer;
+}
+
+.circulo-inicial:hover {
+    cursor: pointer;
+}
+
+.inicial-usuario {
+    text-align: center;
+    color     : $blanco;
+}
+
+//Inicial en grande
+
+.espacio-inicial {
+    width     : 100%;
+    text-align: center;
+    display   : flex;
+}
+
+.circular-inicial-grande {
+    background-color: $personalizado;
+    margin          : 10px 0px;
+    width           : 100px;
+    height          : 100px;
+    border-radius   : 50%;
+    overflow        : hidden;
+}
+
+.inicial-usuario-grande {
+    padding   : 25%;
+    text-align: center;
+    color     : $blanco;
+    font-size : 35px;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0px !important;
+}
+
+/*SideNav*/
+.icon_close_head {
+    cursor: pointer;
+}
+
+.head_carr_end {
+    color      : $negro;
+    font-weight: 300;
+}
+
+mat-sidenav {
+    width           : 365px;
+    background-color: $fondo;
+
+}
+
+@media screen and (max-width: 365px) {
+    mat-sidenav {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-sidenav {
+        width: 100%;
+    }
+
+    .contenedorModulo {
+        width: 100% !important;
+    }
+
+
+    .contenido-ubicaciones-mesas {
+        height: calc(100vh - 233px) !important;
+    }
+
+}
+
+.sidenav_container {
+    display         : flex;
+    flex-direction  : column;
+    position        : absolute;
+    top             : 0;
+    bottom          : 0;
+    left            : 0;
+    right           : 0;
+    background-color: $fondo;
+}
+
+/*Fin SideNav*/
+
+/*Toolbar*/
+
+.icon_toolbar {
+    font-size       : 22px;
+    background-color: $fondo;
+}
+
+.toolbarPhone {
+    display: none;
+}
+
+.toolbarPhone,
+.toolbar-large {
+    // position        : fixed !important;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
+    padding         : 0px;
+}
+
+//barra de abajo
+.barra-regresar {
+    background: var(--fondo-claro);
+    color     : $negro;
+    height    : 40px !important;
+    padding   : 0px;
+    border-top: 1px solid $bordes;
+}
+
+.barra-cerrar-titulo {
+    height          : 44px !important;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
+}
+
+@media screen and (max-width: 767px) {
+    .toolbar-large {
+        display         : none !important;
+        background-color: $fondo;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+        width  : 100% !important;
+    }
+}
+
+.contenido-sidenav {
+    background-color: $fondo;
+    height          : calc(100% - 44px) !important;
+    padding-bottom  : 10px;
+    overflow        : auto;
+}
+
+.detalles-usuario {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+    min-height   : 50px;
+}
+
+.borde-detalles {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+}
+
+.cambioFiltro {
+    padding      : 5px 15px;
+    border-bottom: 1px solid $bordes;
+    display      : flex;
+    align-items  : center;
+    cursor       : pointer;
+}
+
+.cambioFiltro:hover {
+    background-color: $bordes;
+}
+
+.detalle {
+    width: calc(100% - 40px);
+}
+
+/*Fin Toolbar*/
+// nuevoooooooooooooooooooo
+
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+*,
+*:before,
+*:after {
+    margin    : 0;
+    padding   : 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width : 100%;
+    height: 100%;
+}
+
+$color3 : #1a7084;
+
+
+.elevation_bar {
+    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+}
+
+
+.nav_bar {
+    position        : fixed;
+    top             : 0;
+    left            : 0;
+    right           : 0;
+    z-index         : 1000;
+    height          : 56px !important;
+    background-color: $color3;
+    color           : var(--blanco);
+    font-size       : 14px;
+}
+
+main {
+    width : 100%;
+    height: 100%;
+}
+
+// section {
+//     display   : none;
+//     border-top: 1px solid $bordes;
+// }
+
+.contenido-seleccionado {
+    display   : none;
+    border-top: 1px solid $bordes;
+}
+
+// input {
+//     display: none;
+// }
+
+.titulo-pestana {
+    display: none;
+
+}
+
+// label {
+//     display    : inline-block;
+//     margin     : 0 0 -1px;
+//     padding    : 15px 25px;
+//     font-weight: 500;
+//     text-align : center;
+//     color      : $pestanas;
+//     border     : 2px solid transparent;
+// }
+
+.pestana {
+    display    : inline-block;
+    margin     : 0 0 -1px;
+    padding    : 5px 25px;
+    font-weight: 500;
+    text-align : center;
+    color      : $pestanas;
+    border     : 2px solid transparent;
+    display    : inline-flex;
+}
+
+.ico-pestana {
+    margin-right: 5px;
+    display     : flex;
+    align-items : center;
+    font-size   : 20px;
+}
+
+// label:before {
+//     font-family : fontawesome;
+//     font-weight : normal;
+//     margin-right: 10px;
+// }
+
+.pestana::before {
+    font-family : fontawesome;
+    font-weight : normal;
+    margin-right: 10px;
+}
+
+// label[for*='1']:before {
+//     content: '\f15b';
+// }
+
+// .pestana[for*='1']:before {
+//     content: '\f15b';
+// }
+
+// label[for*='2']:before {
+//     content: '\f07a';
+// }
+
+// .pestana[for*='2']:before {
+//     content: '\f07a';
+// }
+
+// label[for*='3']:before {
+//     content: '\f0d6';
+// }
+
+// .pestana[for*='3']:before {
+//     content: '\f0d6';
+// }
+
+// label[for*='4']:before {
+//     content: '\f01c';
+// }
+
+.pestana[for*='4']:before {
+    content: '\f01c';
+}
+
+// label[for*='5']:before {
+//     content: '\f01c';
+// }
+
+label[for*='6']:before {
+    content: '\f002';
+}
+
+// label:hover {
+//     color : var(--pestanas);
+//     cursor: pointer;
+// }
+
+.pestana:hover {
+    color : $pestanas;
+    cursor: pointer;
+}
+
+// input:checked+label {
+//     color        : $personalizado;
+//     border       : 1px solid $bordes;
+//     border-top   : 3px solid orange;
+//     border-bottom: 0px;
+// }
+
+.titulo-pestana:checked+.pestana {
+    color        : $personalizado;
+    border       : 1px solid $bordes;
+    border-top   : 3px solid orange;
+    border-bottom: 0px;
+}
+
+// #tab1:checked~#content1,
+// #tab2:checked~#content2,
+// #tab3:checked~#content3,
+// #tab4:checked~#content4,
+// #tab5:checked~#content5,
+// #tab6:checked~#content6 {
+//     display: block;
+// }
+
+#tab1:checked~.content1,
+#tab2:checked~.content2,
+#tab3:checked~.content3 {
+    display: block;
+}
+
+// @media screen and (max-width: 650px) {
+//     label {
+//         font-size: 0;
+//     }
+
+//     label:before {
+//         margin   : 0;
+//         font-size: 18px;
+//     }
+// }
+
+// @media screen and (max-width: 400px) {
+//     label {
+//         padding: 15px;
+//     }
+// }
+
+@media screen and (max-width: 650px) {
+    .pestana {
+        font-size: 0;
+    }
+
+    .pestana:before {
+        margin   : 0;
+        font-size: 18px;
+    }
+}
+
+// @media screen and (max-width: 400px) {
+//     .pestana {
+//         padding: 15px;
+//     }
+// }
+
+.barras {
+    padding    : 0px 16px;
+    display    : flex;
+    align-items: center;
+    width      : 100%;
+}
+
+.contenido-sidenav::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
+}
+
+.contenido-sidenav::-webkit-scrollbar-track {
+    background-color: $fondo;
+}
+
+.contenido-sidenav::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+}
+
+.separador {
+    margin-top   : 0px;
+    border-bottom: 0.8px solid #c4c4c4 !important;
+    margin-bottom: 0px;
+    width        : 100%;
+}
+
+.aqui {
+    width: 100%;
+}
+
+.opciones {
+    margin-bottom: 5px;
+}
+
+//ubicaciones y mesas
+.contenidoTraslado::-webkit-scrollbar,
+.detalleOrden::-webkit-scrollbar,
+.contenido-ubicaciones-mesas::-webkit-scrollbar,
+.contenido::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenidoTraslado::-webkit-scrollbar-track,
+.detalleOrden::-webkit-scrollbar-track,
+.contenido-ubicaciones-mesas::-webkit-scrollbar-track,
+.contenido::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenidoTraslado::-webkit-scrollbar-thumb,
+.detalleOrden::-webkit-scrollbar-thumb,
+.contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.contenido {
+    padding   : 10px;
+    height    : calc(100vh - 128px) !important;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.contenido-ubicaciones-mesas {
+    padding   : 10px;
+    height    : calc(100vh - 166px) !important;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ubicacion-mesa {
+    display: flex;
+}
+
+.ubicaciones {
+    width  : 40%;
+    padding: 0px 10px 10px;
+}
+
+.mesas {
+    width  : 55%;
+    padding: 10px;
+}
+
+.ubicacion {
+    padding      : 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa {
+    padding      : 5px 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa:hover,
+.ubicacion:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.ubicacionMesaSelect {
+    background: $bordes;
+}
+
+.descripciones {
+    width: calc(100% - 40px);
+}
+
+.textBold {
+    font-weight: bold;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.text10 {
+    font-size: 10px !important;
+}
+
+.text8 {
+    font-size: 8px !important;
+}
+
+.textBold12 {
+    font-weight: 550;
+    font-size  : 12px !important;
+}
+
+.prefBold12 {
+    font-size  : 12px !important;
+    font-weight: bold;
+    color      : $personalizado;
+}
+
+.textCenter12 {
+    font-size : 12px !important;
+    text-align: center;
+}
+
+.textLeft12 {
+    font-size : 12px !important;
+    text-align: left;
+}
+
+.titulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+
+.mesasx2 {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 0px 15px;
+}
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    font-size       : 14px;
+    font-weight     : 500;
+}
+
+.seleccionar {
+    border-style : none;
+    border-bottom: 1px solid $bordes;
+    font-size    : 12px;
+}
+
+.informacion-fondo {
+    padding         : 10px;
+    margin-bottom   : 10px;
+    background-color: $bloques;
+    box-shadow      : $sombra;
+    border-radius   : 10px;
+}
+
+//diseño para la tabla de mesas abiertas
+
+.tabla-titulos {
+    display     : flex;
+    width       : 100%;
+    border      : solid 1px $bordes;
+    border-right: none;
+}
+
+.tabla-lista {
+    display     : flex;
+    width       : 100%;
+    border      : solid 1px $bordes;
+    border-right: none;
+    border-top  : none;
+}
+
+
+// .bloqueT {
+//     padding     : 10px;
+//     border-right: solid 1px $bordes;
+// }
+
+.bloqueW10T {
+    width       : 10%;
+    padding     : 10px;
+    border-right: solid 1px $bordes;
+}
+
+.bloqueW20T {
+    width       : 20%;
+    padding     : 10px;
+    border-right: solid 1px $bordes;
+}
+
+.tituloTab {
+    font-size  : 14px;
+    font-weight: 500;
+    text-align : center;
+}
+
+.width10 {
+    width: 10%;
+}
+
+.width20 {
+    width: 20%;
+}
+
+.width30 {
+    width: 30%;
+}
+
+.width40 {
+    width: 40%;
+}
+
+.width50 {
+    width: 50%;
+}
+
+.tablaDocumentos {
+    width                           : 100%;
+    // overflow-x                   : auto;
+    /* Permite el scroll horizontal */
+    // white-space               : nowrap;
+    /* Evita que las columnas se ajusten en varias líneas */
+    // -webkit-overflow-scrolling   : touch;
+    /* Mejora el desplazamiento en dispositivos táctiles */
+
+    /* Ocultar scrollbars */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Para otros navegadores */
+    -ms-overflow-style: none;
+    /* IE y Edge */
+    scrollbar-width   : none;
+    /* Firefox */
+
+    // .tabla-titulos,
+    // .tabla-lista {
+    //     display        : flex;
+    //     justify-content: space-between;
+    //     width          : 1000px;
+    //     /* Ajusta este valor dependiendo del tamaño de tu tabla para asegurar que se desborde */
+    // }
+
+    // /* Ajustes para pantallas pequeñas */
+    // @media (max-width: 768px) {
+
+    //     .tabla-titulos,
+    //     .tabla-lista {
+    //         width: 1200px;
+    //         /* Aumentar el tamaño total para que haya un desbordamiento visible */
+    //     }
+    // }
+}
+
+@media (max-width: 950px) {
+
+    .tablaDocumentos {
+        white-space               : nowrap;
+        overflow-x                : auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tablaDocumentos {
+        display: block !important;
+    }
+
+    .bloqueW10T,
+    .bloqueW20T {
+        width      : 85px !important;
+        white-space: break-spaces;
+    }
+
+    .mostrarTxt {
+        display: none !important;
+    }
+
+    .ocultarTxt {
+        display: block !important;
+    }
+
+}
+
+@media (max-width: 767px) {
+
+    .tablaDocumentos {
+        white-space               : nowrap;
+        overflow-x                : auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tablaDocumentos {
+        display: block !important;
+    }
+
+    .bloqueW10T,
+    .bloqueW20T {
+        width      : 80px !important;
+        white-space: break-spaces;
+    }
+
+    .mostrarTxt {
+        display: none !important;
+    }
+
+    .ocultarTxt {
+        display: block !important;
+    }
+
+    .contenido-ubicaciones-mesas {
+        height: calc(100vh - 212px) !important;
+    }
+
+    .ubicacion-mesa {
+        display: block !important;
+    }
+
+    .ubicaciones,
+    .mesas {
+        width: 100% !important;
+    }
+}
+
+.mostrarTxt {
+    display: block;
+}
+
+.ocultarTxt {
+    display: none;
+}
+
+.toolbarNavegacion {
+    background  : $navegacion;
+    cursor      : pointer;
+    height      : 40px;
+    padding-left: 10px;
+}
+
+.detalleOrden {
+    border-left: solid 1px $bordes;
+    width      : 350px;
+    height     : calc(100vh - 168px);
+    overflow-y : auto;
+}
+
+.clasificacioProducto {
+    display: block;
+    width  : 100%;
+}
+
+.ocultarDetalles {
+    display: none;
+}
+
+.fondoDetalle {
+    cursor                   : pointer;
+    display                  : flex;
+    align-items              : center;
+    height                   : 100px;
+    background               : $blanco;
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+//diseño cuentas
+
+.variasCuentas {
+    padding    : 10px;
+    padding-top: 0px;
+    height     : calc(100% - 76px);
+}
+
+.espacioCuenta {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
+}
+
+.cuenta {
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    padding      : 10px;
+    display      : flex;
+    align-items  : center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.cuenta:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.circulo {
+    background-color: $personalizado;
+    width           : 30px;
+    height          : 30px;
+    border-radius   : 50%;
+    overflow        : hidden;
+    display         : flex;
+    align-items     : center;
+}
+
+.icoCuenta {
+    color     : $blanco;
+    font-size : 20px;
+    text-align: center;
+}
+
+.editarCuenta {
+    height    : 100%;
+    text-align: end;
+}
+
+.icoEditar {
+    font-size: 18px;
+    cursor   : pointer;
+}
+
+.editarCuenta:hover {
+    color: $personalizado;
+}
+
+.detalleCuenta {
+    width: calc(100% - 40px);
+}
+
+.transaccion {
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    padding      : 10px;
+    display      : flex;
+    align-items  : center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.totalCuenta {
+    padding    : 0px 10px;
+    display    : flex;
+    align-items: center;
+}
+
+.imgDetalle {
+    display    : flex;
+    align-items: center;
+}
+
+.image-product {
+    height       : 50px;
+    width        : 40px;
+    border-radius: 10px;
+}
+
+.detalleTransaccion {
+    width: 100%;
+}
+
+.cantidad {
+    height       : 35px;
+    background   : none;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $bordes;
+    border-bottom: 0.5px solid $bordes;
+    color        : $personalizado;
+    width        : 25px;
+    text-align   : center;
+}
+
+.sumar,
+.restar {
+    height      : 35px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $bordes;
+    color       : $personalizado;
+    width       : 25px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width      : 100%;
+    text-align : center;
+    font-size  : 20px !important;
+    align-items: flex-end;
+    display    : inline-grid;
+}
+
+.sumar-restar:hover {
+    cursor: pointer;
+}
+
+.verimagen:hover {
+    cursor: pointer;
+    color : $personalizado;
+}
+
+.verimagen {
+    font-size: 20px !important;
+}
+
+.contenidoTraslado {
+    height    : calc(100vh - 128px);
+    overflow-y: auto;
+}
+
+.comandada {
+    font-weight: 550;
+    color      : $rojo;
+}

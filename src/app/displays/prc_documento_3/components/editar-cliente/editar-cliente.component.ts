@@ -9,6 +9,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { GrupoCuentaInterface } from '../../interfaces/grupo-cuenta.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -86,7 +87,10 @@ export class EditarClienteComponent implements OnInit {
     this.tipoCuenta = undefined;
 
     this.isLoading = true;
-    let resGrupoCuenta = await this._cuentaService.getGrupoCuenta(this.user, this.token);
+
+    const apiGetGrupoCuenta = ()=> this._cuentaService.getGrupoCuenta(this.user, this.token);
+
+    let resGrupoCuenta = await ApiService.apiUse(apiGetGrupoCuenta);
 
     this.isLoading = false;
 
@@ -226,13 +230,15 @@ export class EditarClienteComponent implements OnInit {
 
     this.isLoading = true;
 
-    //Usar servicio para actualizar cuenta
-    let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+    const postCuenta = ()=>this._cuentaService.postCuenta(
       user,
       token,
       empresa,
       cuenta,
-    )
+    );
+
+    //Usar servicio para actualizar cuenta
+    let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
 
     //Si el servicio falló
@@ -258,14 +264,15 @@ export class EditarClienteComponent implements OnInit {
 
     }
 
-
-    //buscar informacin de la cuenta  actualizada
-    let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiGetCuenta = ()=> this._cuentaService.getClient(
       user,
       token,
       empresa,
       cuenta.nit,
     );
+
+    //buscar informacin de la cuenta  actualizada
+    let infoCuenta: ResApiInterface = await ApiService.apiUse(apiGetCuenta) ;
 
     this.isLoading = false;
 

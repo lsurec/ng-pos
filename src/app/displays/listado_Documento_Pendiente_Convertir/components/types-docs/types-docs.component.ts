@@ -10,6 +10,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-types-docs',
@@ -43,11 +44,13 @@ export class TypesDocsComponent {
     //inciiar proceso
     this.globalConvertSrevice.isLoading = true;
 
-    //consumo del servicio para obtener los tipos de documentos disponibles
-    let res: ResApiInterface = await this._receptionService.getTiposDoc(
+    const apiTiposDoc = ()=> this._receptionService.getTiposDoc(
       this.user,
       this.token,
     );
+
+    //consumo del servicio para obtener los tipos de documentos disponibles
+    let res: ResApiInterface = await  ApiService.apiUse(apiTiposDoc);
 
     //Finalizar proceso
     this.globalConvertSrevice.isLoading = false;
@@ -97,9 +100,7 @@ export class TypesDocsComponent {
     this.globalConvertSrevice. fechaInicial = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
     this.globalConvertSrevice.fechaFinal = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
 
-
-    //Consumo del servixio para obtener documents pendientes de recepcionar
-    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+    const apiDocOrigen = ()=> this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
@@ -107,6 +108,9 @@ export class TypesDocsComponent {
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
       "",
     );
+
+    //Consumo del servixio para obtener documents pendientes de recepcionar
+    let res: ResApiInterface = await ApiService.apiUse(apiDocOrigen);
 
     //Finalizar proceoso
     this.globalConvertSrevice.isLoading = false;

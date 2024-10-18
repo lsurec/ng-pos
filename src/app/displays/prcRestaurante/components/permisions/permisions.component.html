@@ -1,0 +1,35 @@
+<div mat-dialog-content class="dialog">
+
+    <div class="contenido">
+
+        <p class="tituloPin" *ngIf="restauranteService.tipoTraslado == 3">
+            {{ 'pos.restaurante.trasladoMesaT' | translate }}
+        </p>
+
+        <p class="tituloPin" *ngIf="restauranteService.tipoTraslado != 3">
+            {{ 'pos.restaurante.trasladoTranT' | translate }}
+        </p>
+
+        <form #loginForm="ngForm" (ngSubmit)="ingresar()">
+            <div class="inputPin">
+                <input type="text" required [(ngModel)]="nombre" name="nombre"
+                    placeholder="{{ 'pos.login.correo' | translate }}" class="pin" autocomplete="off">
+                <input type="password" required [(ngModel)]="clave" name="clave"
+                    placeholder="{{ 'pos.login.contrasena' | translate }}" class="pin" autocomplete="off">
+            </div>
+
+            <div class="dFlex">
+                <button mat-stroked-button (click)="cancelar()" type="button">
+                    {{ 'pos.botones.cancelar' | translate }}
+                </button>
+
+                <span class="spacer"></span>
+
+                <button mat-stroked-button type="submit">
+                    {{ 'pos.botones.aceptar'| translate }}
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

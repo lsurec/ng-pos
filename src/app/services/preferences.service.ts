@@ -18,8 +18,6 @@ export class PreferencesService {
     private static readonly estacionKey: string = 'estacion';
     private static readonly temaKey: string = 'tema';
     private static readonly urlKey: string = 'url';
-    private static readonly conKey: string = 'conStr';
-    private static readonly conStoragekey: string = 'conStorageStr';
     private static readonly errorKey: string = 'error';
     private static readonly tipoCambioKey: string = 'tipoCambio';
     private static readonly documentkey: string = 'document';
@@ -29,8 +27,6 @@ export class PreferencesService {
     private static readonly diaKey: string = 'primerDia';
     private static readonly inicioLaboresKey: string = 'horaInicio';
     private static readonly finLaboresKey: string = 'horaFin';
-    private static readonly filtroProductoKey: string = 'filtroProducto';
-    private static readonly idFiltroProductoKey: string = 'idFiltroProducto';
     private static readonly mostrarKey: string = 'mostrar';
     private static readonly nuevoDocKey: string = 'nuevoDoc';
     private static readonly digitosKey: string = 'digitos';
@@ -158,30 +154,6 @@ export class PreferencesService {
     }
 
 
-    //cadena de conexion ara fel permanente
-    @Input()
-    static set conStorageStr(value: string) {
-        localStorage.setItem(this.conStoragekey, value);
-    }
-
-    static get conStorageStr(): string {
-        let value = localStorage.getItem(this.conStoragekey);
-        if (!value) return "";
-        return value;
-    }
-
-    //cadena de conexion para fel de la sesion
-    @Input()
-    static set conStr(value: string) {
-        sessionStorage.setItem(this.conKey, value);
-    }
-
-    static get conStr(): string {
-        let value = sessionStorage.getItem(this.conKey);
-        if (!value) return "";
-        return value;
-    }
-
     //informe de error
     @Input()
     static set error(value: ErrorInterface) {
@@ -287,28 +259,7 @@ export class PreferencesService {
         if (!rangoFinal) return "";
         return rangoFinal;
     }
-    //filtro para buscar productos
-    @Input()
-    static set filtroProducto(value: number) {
-        sessionStorage.setItem(this.filtroProductoKey, value.toString());
-    }
-
-    static get filtroProducto(): number {
-        let value = sessionStorage.getItem(this.filtroProductoKey);
-        return parseFloat(value!);
-    }
-
-    //id del filto
-    //filtro para buscar productos
-    @Input()
-    static set idFiltroProducto(value: number) {
-        sessionStorage.setItem(this.idFiltroProductoKey, value.toString());
-    }
-
-    static get idFiltroProducto(): number {
-        let value = sessionStorage.getItem(this.idFiltroProductoKey);
-        return parseFloat(value!);
-    }
+    
     @Input()
     static set mostrarAlerta(value: string) {
         localStorage.setItem(this.mostrarKey, value);

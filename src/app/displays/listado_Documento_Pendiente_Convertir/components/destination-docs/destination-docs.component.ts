@@ -8,6 +8,7 @@ import { DestinationDocInterface } from '../../interfaces/destination-doc.interf
 import { DetailOriginDocInterface } from '../../interfaces/detail-origin-doc.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-destination-docs',
@@ -47,8 +48,8 @@ export class DestinationDocsComponent {
     //iniciar caraga
     this.globalConvertSrevice.isLoading = true;
 
-    //Uso del servicio para obtener detalles dle documento origen
-    let res : ResApiInterface = await this._receptionService.getDetallesDocOrigen(
+
+    const apiDetalleOrigen = ()=> this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
       this.globalConvertSrevice.docOriginSelect!.documento,
@@ -59,7 +60,10 @@ export class DestinationDocsComponent {
       this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
       this.globalConvertSrevice.docOriginSelect!.fecha_Reg,
 
-      )
+      );
+
+    //Uso del servicio para obtener detalles dle documento origen
+    let res : ResApiInterface = await ApiService.apiUse(apiDetalleOrigen);
 
       //finalizar caraga
     this.globalConvertSrevice.isLoading = false;
@@ -98,8 +102,8 @@ export class DestinationDocsComponent {
     //iniciar proceso
     this.globalConvertSrevice.isLoading = true;
 
-    //buscar documentos destino
-    let res: ResApiInterface = await this._receptionService.getDestinationDocs(
+
+    const apiDocDestino = ()=> this._receptionService.getDestinationDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
@@ -107,6 +111,9 @@ export class DestinationDocsComponent {
       this.globalConvertSrevice.docOriginSelect!.empresa,
       this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
     );
+
+    //buscar documentos destino
+    let res: ResApiInterface = await ApiService.apiUse(apiDocDestino);
 
     //finalizar carga
     this.globalConvertSrevice.isLoading = false;

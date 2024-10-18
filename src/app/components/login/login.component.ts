@@ -18,6 +18,7 @@ import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { TipoCambioInterface } from 'src/app/displays/prc_documento_3/interfaces/tipo-cambio.interface';
 import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-user.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -69,7 +70,13 @@ export class LoginComponent {
 
     //antes de ejecutarse
     this.isLoading = true;
-    let res: ResApiInterface = await this._loginService.postLogin(formValues); //consumo del api
+
+
+    const apiLogin = ()=> this._loginService.postLogin(formValues);
+
+    let res: ResApiInterface = await ApiService.apiUse(apiLogin);  ; //consumo del api
+
+
     //cuandno termina de ejecutarse
 
     ///Si el servico se ejecuta mal mostar menaje
@@ -99,13 +106,11 @@ export class LoginComponent {
       PreferencesService.tokenStorage = resLogin.message;
       PreferencesService.userStorage = resLogin.user;
       // PreferencesService.userStorage = "ASISTENTEG";
-      PreferencesService.conStorageStr = this._encryptService.encrypt(resLogin.con)
     }
 
     PreferencesService.token = resLogin.message;
     PreferencesService.user = resLogin.user;
     // PreferencesService.user = "ASISTENTEG";
-    PreferencesService.conStr = this._encryptService.encrypt(resLogin.con)
 
 
     let user = PreferencesService.user;
@@ -154,12 +159,15 @@ export class LoginComponent {
       PreferencesService.empresa = empresas[0];
       PreferencesService.estacion = estaciones[0];
 
-      //Cargar tipo cambio
-      let resTipoCammbio = await this._tipoCambioService.getTipoCambio(
+
+      const apiTipoCambio = ()=> this._tipoCambioService.getTipoCambio(
         user,
         token,
         PreferencesService.empresa.empresa,
       );
+
+      //Cargar tipo cambio
+      let resTipoCammbio = await ApiService.apiUse(apiTipoCambio) ;
 
       this.isLoading = false;
 

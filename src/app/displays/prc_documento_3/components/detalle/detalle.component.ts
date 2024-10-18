@@ -23,6 +23,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detalle',
@@ -90,8 +91,6 @@ export class DetalleComponent implements AfterViewInit {
     private _dataUserService: DataUserService,
 
   ) {
-    //filtro producto
-    facturaService.filtrosProductos = PreferencesService.filtroProducto;
   }
 
 
@@ -113,8 +112,7 @@ export class DetalleComponent implements AfterViewInit {
     let boddegaTra = this.facturaService.traInternas[indexTra].bodega; // bodega  de la transaccion
     let precioTra = this.facturaService.traInternas[indexTra].precio; //tipo precio de la transaccion
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -122,6 +120,9 @@ export class DetalleComponent implements AfterViewInit {
       productTra.producto,
       productTra.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //Si bo se pudo obtener ls bodegas
     if (!resBodega.status) {
@@ -164,8 +165,8 @@ export class DetalleComponent implements AfterViewInit {
       this.productoService.bodega = this.productoService.bodegas[0];
       let bodega: number = this.productoService.bodega.bodega;
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+
+      const apiPrecio = ()=> this._productService.getPrecios(
         this.user,
         this.token,
         bodega,
@@ -174,6 +175,9 @@ export class DetalleComponent implements AfterViewInit {
         this.facturaService.cuenta?.cuenta_Correntista ?? 0,
         this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
+
+      //buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio);
 
 
       //Si no se pudo obtener precios
@@ -219,13 +223,16 @@ export class DetalleComponent implements AfterViewInit {
 
       //si no hay precios buscar factor conversion
       if (this.productoService.precios.length == 0) {
-        let resfactor = await this._productService.getFactorConversion(
+
+        const apiFactor = ()=> this._productService.getFactorConversion(
           this.user,
           this.token,
           bodega,
           productTra.producto,
           productTra.unidad_Medida,
         );
+
+        let resfactor = await ApiService.apiUse(apiFactor);
 
 
         //si no sepudo obtener factores de conversion
@@ -434,8 +441,7 @@ export class DetalleComponent implements AfterViewInit {
     this.facturaService.isLoading = true;
 
 
-
-    let resproductoDesc = await this._productService.getProduct(
+    const apiProduct = ()=>  this._productService.getProduct(
       this.token,
       this.user,
       this.estacion,
@@ -444,6 +450,8 @@ export class DetalleComponent implements AfterViewInit {
       this.facturaService.rangoFin,
 
     );
+
+    let resproductoDesc = await ApiService.apiUse(apiProduct);
 
 
     if (!resproductoDesc.status) {
@@ -519,8 +527,7 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -528,6 +535,9 @@ export class DetalleComponent implements AfterViewInit {
       product.producto,
       product.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //si fallo la busquea¿da de bodegas
     if (!resBodega.status) {
@@ -571,8 +581,7 @@ export class DetalleComponent implements AfterViewInit {
     //Si solo hay una bodega
     let bodega: number = this.productoService.bodega.bodega;
 
-    //buscar precios
-    let resPrecio = await this._productService.getPrecios(
+    const apiPrecio = ()=> this._productService.getPrecios(
       this.user,
       this.token,
       bodega,
@@ -581,6 +590,9 @@ export class DetalleComponent implements AfterViewInit {
       this.facturaService.cuenta?.cuenta_Correntista ?? 0,
       this.facturaService.cuenta?.cuenta_Cta ?? "0",
     );
+
+    //buscar precios
+    let resPrecio = await  ApiService.apiUse(apiPrecio);
 
 
     //si no fiue pocible obtener los precios mmostrar error 
@@ -625,13 +637,17 @@ export class DetalleComponent implements AfterViewInit {
 
     //si no hay precios buscar factor conversion
     if (this.productoService.precios.length == 0) {
-      let resfactor = await this._productService.getFactorConversion(
+      
+      const apiFactor = ()=> this._productService.getFactorConversion(
         this.user,
         this.token,
         bodega,
         product.producto,
         product.unidad_Medida,
       );
+
+      
+      let resfactor = await ApiService.apiUse(apiFactor);
 
       //si no feue posible controrar los factores de conversion mostrar error
       if (!resfactor.status) {
@@ -739,7 +755,8 @@ export class DetalleComponent implements AfterViewInit {
     //si no se abre el dialogo agregar ka transaccon directammente
 
     if (!this.productoService.bodega!.posee_Componente) {
-      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.facturaService.serie!.serie_Documento,
         this.facturaService.tipoDocumento!,
@@ -756,6 +773,8 @@ export class DetalleComponent implements AfterViewInit {
         this.token,
 
       );
+
+      let resDisponibiladProducto: ResApiInterface = await ApiService.apiUse(apiValidateProd);
 
 
       if (!resDisponibiladProducto.status) {
@@ -844,12 +863,14 @@ export class DetalleComponent implements AfterViewInit {
         let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+        const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
           this.token,
           dateEnd,
           dateStart,
           this.productoService.total.toString(),
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
 
 
@@ -1146,13 +1167,16 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+    const apiObjProd = ()=> this._productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+     
     this.facturaService.isLoading = false;
 
 

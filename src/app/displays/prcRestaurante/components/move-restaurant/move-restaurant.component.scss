@@ -1,0 +1,225 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris); //bordes y texto gris
+$blanco        : var(--blanco);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.traslado {
+    background: $fondo;
+}
+
+mat-horizontal-stepper-header {
+    padding: 0px !important;
+}
+
+mat-horizontal-stepper-header {
+    height: 50px !important;
+}
+
+mat-horizontal-content-container {
+    padding: 0px !important;
+}
+
+.contenido-ubicaciones-mesas {
+    padding   : 10px;
+    height    : calc(100vh - 166px) !important;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ubicaciones {
+    padding: 0px 10px 10px;
+}
+
+.mesas {
+    padding: 10px;
+}
+
+.ubicacion {
+    padding      : 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa {
+    padding      : 5px 10px;
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    margin-top   : 10px;
+    border-radius: 10px
+}
+
+.mesa:hover,
+.ubicacion:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.ubicacionMesaSelect {
+    background: $bordes;
+}
+
+.checkSelect {
+    background: $bordes !important;
+}
+
+.descripciones {
+    width: calc(100% - 40px);
+}
+
+.textBold {
+    font-weight: 550;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.text10 {
+    font-size: 10px !important;
+}
+
+.text8 {
+    font-size: 8px !important;
+}
+
+.textBold12 {
+    font-weight: 550;
+    font-size  : 12px !important;
+}
+
+.prefBold12 {
+    font-size  : 12px !important;
+    font-weight: bold;
+    color      : $personalizado;
+}
+
+.textBoldCenter {
+    text-align : center;
+    font-weight: 550;
+}
+
+.textLeft12 {
+    font-size : 12px !important;
+    text-align: left;
+}
+
+.titulo {
+    font-size  : 14px;
+    font-weight: 500;
+}
+
+
+.mesasx2 {
+    display              : grid;
+    grid-template-columns: repeat(2, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 0px 15px;
+}
+
+.cantidad-registros {
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    font-size       : 14px;
+    font-weight     : 500;
+}
+
+.step-subtitle {
+    font-size: 0.85rem;
+    color    : $gris;
+}
+
+.cuentas {
+    padding-bottom: 20px;
+}
+
+.cuentasx3 {
+    display              : grid;
+    grid-template-columns: repeat(3, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    gap                  : 10px 15px;
+    padding-top          : 10px;
+}
+
+.espacioCuenta {
+    width      : 100%;
+    display    : flex;
+    align-items: center;
+}
+
+.circulo {
+    background-color: $personalizado;
+    width           : 50px;
+    height          : 50px;
+    border-radius   : 50%;
+    overflow        : hidden;
+    display         : flex;
+    align-items     : center;
+}
+
+.icoCuenta {
+    color    : $blanco;
+    font-size: 25px;
+}
+
+.detalleCuenta {
+    width: calc(100% - 60px);
+}
+
+.cuenta {
+    display      : flex;
+    align-items  : center;
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    background   : $bloques;
+    border-radius: 5px;
+    padding      : 10px;
+}
+
+.cuenta:hover {
+    cursor    : pointer;
+    background: $bordes;
+}
+
+.resumen {
+    width        : 45%;
+    padding      : 10px;
+    border-radius: 5px;
+    box-shadow   : $sombra;
+    border       : solid 1px $bordes;
+}
+
+.origenDestino {
+    display       : flex;
+    align-items   : center;
+    padding-bottom: 20px;
+}
+
+/*Boton ir arriba*/
+.regresar,
+.siguiente {
+    background-color: $personalizado;
+}

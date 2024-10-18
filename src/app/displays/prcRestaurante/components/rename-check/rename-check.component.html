@@ -1,0 +1,28 @@
+<div mat-dialog-content class="dialog">
+
+    <div class="contenido">
+
+        <p class="tituloPin">
+            {{ 'pos.restaurante.renombrarCuenta' | translate }}
+        </p>
+
+        <div class="inputPin">
+            <input type="text" required [(ngModel)]="nombre " name="nombre" class="pin" autocomplete="off">
+
+        </div>
+
+        <div class="dFlex">
+            <button mat-stroked-button (click)="cancelar()">
+                {{ 'pos.botones.cancelar' | translate }}
+            </button>
+
+            <span class="spacer"></span>
+
+            <button mat-stroked-button (click)="renombrar()">
+                {{ 'pos.botones.agregar'| translate }}
+            </button>
+        </div>
+
+
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { PreferencesService } from 'src/app/services/preferences.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TipoTransaccionInterface } from '../../interfaces/tipo-transaccion.interface';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-historial',
@@ -77,12 +78,14 @@ export class HistorialComponent implements OnInit {
 
     this.isLoading = true;
 
-    //Obntner ultimos documentos relizados
-    let resDocProcessed: ResApiInterface = await this._documentService.getStructureDocProcessed(
+    const getApiDocPrcess = ()=> this._documentService.getStructureDocProcessed(
       this.user,
       this.token,
       this.searchDoc
-    )
+    );
+
+    //Obntner ultimos documentos relizados
+    let resDocProcessed: ResApiInterface = await ApiService.apiUse(getApiDocPrcess); 
 
     //si algo salio mal
     if (!resDocProcessed.status) {
@@ -112,14 +115,15 @@ export class HistorialComponent implements OnInit {
     this.documentosRecientes = await this.setDocument(docsRecents);
 
     //PARA DOCUMENTOS PENDIENTES DE MIGRAR
-
-    //Obntner ultimos documentos relizados
-    let resDocPending: ResApiInterface = await this._documentService.getStructureDosPendigs(
+    const getApiDocPending = ()=>this._documentService.getStructureDosPendigs(
       this.user,
       this.token,
       this.searchDoc,
       this.searchUserDoc
-    )
+    );
+
+    //Obntner ultimos documentos relizados
+    let resDocPending: ResApiInterface = await ApiService.apiUse(getApiDocPending); 
 
     //si algo salio mal
     if (!resDocPending.status) {
@@ -301,12 +305,14 @@ export class HistorialComponent implements OnInit {
     if (this.recientes) {
       this.isLoading = true;
 
-      //Obntner ultimos documentos relizados
-      let resDocProcessed: ResApiInterface = await this._documentService.getStructureDocProcessed(
+      const apidocProcess = ()=> this._documentService.getStructureDocProcessed(
         this.user,
         this.token,
         this.searchDoc
-      )
+      );
+
+      //Obntner ultimos documentos relizados
+      let resDocProcessed: ResApiInterface = await ApiService.apiUse(apidocProcess); 
 
       //si algo salio mal
       if (!resDocProcessed.status) {
@@ -343,13 +349,16 @@ export class HistorialComponent implements OnInit {
     if (this.pendientes) {
 
       this.isLoading = true;
-      //Obntner ultimos documentos relizados
-      let resDocPending: ResApiInterface = await this._documentService.getStructureDosPendigs(
+
+      const docPending = ()=> this._documentService.getStructureDosPendigs(
         this.user,
         this.token,
         this.searchUserDoc,
         this.searchDoc,
-      )
+      );
+
+      //Obntner ultimos documentos relizados
+      let resDocPending: ResApiInterface = await ApiService.apiUse(docPending); 
 
       //si algo salio mal
       if (!resDocPending.status) {

@@ -25,6 +25,7 @@ import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
 import { VendedorInterface } from '../../interfaces/vendedor.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-documento',
@@ -297,19 +298,22 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
             if (tra.producto.tipo_Producto != 2) {
-              
+
 
               this.facturaService.isLoading = true;
               let dateStart: string = `${this.facturaService.fechaIni!.getDate()}/${this.facturaService.fechaIni!.getMonth() + 1}/${this.facturaService.fechaIni!.getFullYear()} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
               let dateEnd: string = `${this.facturaService.fechaFin!.getDate()}/${this.facturaService.fechaFin!.getMonth() + 1}/${this.facturaService.fechaFin!.getFullYear()} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
 
 
-              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
                 this.token,
                 dateStart,
                 dateEnd,
                 tra.precioCantidad!.toString(),
               );
+
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
               this.facturaService.isLoading = false;
 
@@ -392,13 +396,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
               let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
 
-
-              let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
                 this.token,
                 dateStart,
                 dateEnd,
                 tra.precioCantidad!.toString(),
               );
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
               this.facturaService.isLoading = false;
 
@@ -496,14 +501,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.vendedores = [];
     this.facturaService.vendedor = undefined;
 
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+
+    const apiSeller = () => this._cuentaService.getSeller(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller);
 
     if (!resVendedor.status) {
 
@@ -546,14 +554,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.tiposTransaccion = [];
 
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion) ;
 
     if (!resTransaccion.status) {
 
@@ -580,15 +591,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.parametros;
 
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    const apiParam = ()=> this._parametroService.getParametro(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
       this.estacion,
-    )
+    );
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await ApiService.apiUse(apiParam);
 
     if (!resParametro.status) {
 
@@ -619,13 +632,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.formasPago = [];
 
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+
+    const apiPagos = ()=> this._formaPagoService.getFormas(
       this.token,
       this.empresa,
       serie,
       this.documento,
     );
+
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resFormaPago.status) {
@@ -660,7 +676,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+      const apiReferencia = ()=> this._referenciaService.getTipoReferencia(this.user, this.token);
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
@@ -764,12 +782,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Limpiar la lista de registros antes de cada búsqueda
     this.facturaService.isLoading = true;
 
-    let resCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiGetCUenta = () => this._cuentaService.getClient(
       this.user,
       this.token,
       this.empresa,
       this.facturaService.searchClient,
     );
+
+    let resCuenta: ResApiInterface = await ApiService.apiUse(apiGetCUenta);
 
 
     if (!resCuenta.status) {
@@ -794,7 +814,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+      const apiCredenciales = ()=> this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+
+      let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales);
 
       if (!resCredenciales.status) {
 
@@ -833,13 +855,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let cleanedString = this.facturaService.searchClient.replace(/[\s\-]/g, '');
 
-
-      let resRecpetor: ResApiInterface = await this._felService.getReceptor(
+      const apiReceptor = () => this._felService.getReceptor(
         this.token,
         llaveApi,
         usuarioApi,
         cleanedString,
       );
+
+      let resRecpetor: ResApiInterface = await ApiService.apiUse(apiReceptor);
 
 
       if (!resRecpetor.status) {
@@ -871,13 +894,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-      //Usar servicio para actualizar cuenta
-      let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+
+      const postCuenta = () => this._cuentaService.postCuenta(
         this.user,
         this.token,
         this.empresa,
         cuenta,
       );
+
+      //Usar servicio para actualizar cuenta
+      let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
 
       //Si el servicio falló
@@ -892,14 +918,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       ////////////////
-
-      //buscar informacin de la cuenta  creada
-      let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+      const getCuenta = () => this._cuentaService.getClient(
         this.user,
         this.token,
         this.empresa,
         cuenta.nit,
       );
+      //buscar informacin de la cuenta  creada
+      let infoCuenta: ResApiInterface = await ApiService.apiUse(getCuenta);
 
       // si falló la buqueda de la cuenta creada
       if (!infoCuenta.response) {

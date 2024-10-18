@@ -26,6 +26,7 @@ import { MontoIntreface } from '../../interfaces/monto.interface';
 import { BancoInterface } from '../../interfaces/banco.interface';
 import { CuentaBancoInterface } from '../../interfaces/cuenta-banco.interface';
 import { TipoReferenciaInterface } from '../../interfaces/tipo-referencia';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detalle-documento',
@@ -181,13 +182,16 @@ export class DetalleDocumentoComponent implements OnInit {
     }
 
 
-    let resSerie: ResApiInterface = await this._serieService.getSerie(
+    const apiSerie = ()=> this._serieService.getSerie(
       this.user,
       this.token,
       tipoDoc,
       empresaId,
       estacionId,
     );
+
+
+    let resSerie: ResApiInterface = await ApiService.apiUse(apiSerie);
 
 
     if (!resSerie.status) {
@@ -227,17 +231,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-
-    let resName: ResApiInterface = await this._cuentaService.getNombreCuenta(
+    const getNombreCuenta = ()=> this._cuentaService.getNombreCuenta(
       this.token,
       idCuenta,
     );
 
-
+    let resName: ResApiInterface = await ApiService.apiUse(getNombreCuenta);
 
     if (!resName.status) {
-
-
 
       this.isLoading = false;
 
@@ -261,12 +262,15 @@ export class DetalleDocumentoComponent implements OnInit {
     let name: ResponseInterface = resName.response;
 
     if (name.data) {
-      let resClient: ResApiInterface = await this._cuentaService.getClient(
+
+      const getApiCuenta = ()=> this._cuentaService.getClient(
         this.user,
         this.token,
         empresaId,
         name.data,
       );
+
+      let resClient: ResApiInterface = await ApiService.apiUse(getApiCuenta);
 
       if (!resClient.status) {
 
@@ -311,13 +315,16 @@ export class DetalleDocumentoComponent implements OnInit {
 
     if (objDoc.Doc_Cuenta_Correntista_Ref) {
 
-      let resCuentaRef: ResApiInterface = await this._cuentaService.getSeller(
+
+      const apiSeller = ()=> this._cuentaService.getSeller(
         this.user,
         this.token,
         tipoDoc,
         serieDoc,
         empresaId,
       );
+
+      let resCuentaRef: ResApiInterface = await ApiService.apiUse(apiSeller);
 
       if (!resCuentaRef.status) {
 
@@ -363,11 +370,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
     for (const tra of objDoc.Doc_Transaccion) {
 
-      let resSku: ResApiInterface = await this._productoService.getSku(
+
+      const apiSku = ()=> this._productoService.getSku(
         this.token,
         tra.Tra_Producto,
         tra.Tra_Unidad_Medida,
       );
+
+      let resSku: ResApiInterface = await ApiService.apiUse(apiSku);
 
 
       if (!resSku.status) {
@@ -395,8 +405,7 @@ export class DetalleDocumentoComponent implements OnInit {
 
       let sku: ResponseInterface = resSku.response;
 
-
-      let resProducto: ResApiInterface = await this._productoService.getProduct(
+      const apiProduct = ()=> this._productoService.getProduct(
         this.token,
         this.user,
         estacionId,
@@ -404,6 +413,9 @@ export class DetalleDocumentoComponent implements OnInit {
         0,
         100,
       );
+
+
+      let resProducto: ResApiInterface = await ApiService.apiUse(apiProduct) ;
 
 
       if (!resProducto.status) {
@@ -450,13 +462,14 @@ export class DetalleDocumentoComponent implements OnInit {
 
     }
 
-
-    let resPagos: ResApiInterface = await this._pagoService.getFormas(
+    const apiPagos = ()=> this._pagoService.getFormas(
       this.token,
       empresaId,
       serieDoc,
       tipoDoc
     );
+
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resPagos.status) {
@@ -496,11 +509,13 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-        let resBancos: ResApiInterface = await this._pagoService.getBancos(
+        const apiBanco = ()=> this._pagoService.getBancos(
           this.user,
           this.token,
           empresaId,
         );
+
+        let resBancos: ResApiInterface = await ApiService.apiUse(apiBanco) ;
 
 
         if (!resBancos.status) {
@@ -540,13 +555,15 @@ export class DetalleDocumentoComponent implements OnInit {
 
 
 
-
-          let resCuentaBanco = await this._pagoService.getCuentasBanco(
+          const apiCuentaBanco = ()=> this._pagoService.getCuentasBanco(
             this.user,
             this.token,
             empresaId,
-            this.banco.banco,
+            this.banco!.banco,
           );
+
+
+          let resCuentaBanco = await ApiService.apiUse(apiBanco);
 
           if (!resCuentaBanco.status) {
 

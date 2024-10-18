@@ -1,0 +1,279 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$bloques       : var(--bloques-claro);
+$sombra        : var(--sombra-claro);
+$negro         : var(--negro); //bordes y texto azul
+$gris          : var(--gris); //bordes y texto gris
+$blanco        : var(--blanco);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+    color        : $negro;
+}
+
+hr {
+    margin    : 0.5rem 0;
+    color     : inherit;
+    border    : 0;
+    border-top: 1px solid;
+    opacity   : .25;
+}
+
+.contenido-dialogo::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenido-dialogo::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenido-dialogo::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.head__sidenav {
+    width           : 100%;
+    height          : 55px !important;
+    display         : flex;
+    align-items     : center;
+    background-color: $fondo;
+    padding         : 0px 15px;
+    border-bottom   : 1px solid $bordes;
+}
+
+.progress {
+    padding         : 0px;
+    padding-right   : 0px;
+    width           : 680px;
+    height          : 430px;
+    background-color: $fondo;
+}
+
+.dialog {
+    padding         : 0px;
+    width           : 700px;
+    height          : 430px;
+    background-color: $fondo;
+    overflow        : hidden;
+}
+
+.close {
+    color      : $gris;
+    float      : left !important;
+    font-size  : 28px;
+    font-weight: bold;
+    cursor     : pointer;
+    text-align : center;
+}
+
+.contenido-dialogo {
+    height    : calc(100% - 90px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.botones {
+    padding: 0px 20px;
+}
+
+.textBold {
+    font-weight: 550;
+}
+
+.text12 {
+    font-size: 12px !important;
+}
+
+.textCenter12 {
+    text-align: center;
+}
+
+.producto-cantidad {
+    display    : flex;
+    align-items: center;
+    padding    : 5px 0px;
+}
+
+.cantidad {
+    height       : 40px;
+    background   : none;
+    font-size    : 14px;
+    padding      : 0px 3px;
+    outline      : none;
+    border-style : none;
+    border-top   : 0.5px solid $bordes;
+    border-bottom: 0.5px solid $bordes;
+    color        : $personalizado;
+    width        : 40px;
+    text-align   : center;
+}
+
+.sumar,
+.restar {
+    height      : 40px;
+    background  : none;
+    font-size   : 14px;
+    outline     : none;
+    border-style: none;
+    border      : 0.5px solid $bordes;
+    color       : $personalizado;
+    width       : 40px;
+    display     : flex;
+    align-items : center;
+}
+
+.restar {
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sumar {
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sumar-restar {
+    width     : 100%;
+    text-align: center;
+}
+
+.sumar-restar:hover {
+    cursor: pointer;
+}
+
+.bodega-tipo-precio {
+    display    : flex;
+    align-items: center;
+    padding    : 0px 20px;
+}
+
+.menus {
+    padding: 5px 0px;
+    width  : 48%;
+}
+
+.mat-mdc-option {
+    min-height: 30px;
+    color     : $personalizado;
+    font-size : 13px;
+}
+
+.bodegas {
+    border-style : none;
+    border-bottom: 1px solid $bordes;
+    font-size    : 12px;
+}
+
+.imgProducto {
+    margin : 10px 0px;
+    display: flex;
+}
+
+.image-product {
+    height       : 150px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .dialog,
+    .progress {
+        width: 100%;
+    }
+
+    .bodega-tipo-precio {
+        display: block !important;
+    }
+
+    .menus {
+        width: 100% !important;
+    }
+
+    .nuevaCuenta {
+        background: $personalizado;
+        color     : $blanco;
+    }
+}
+
+.agregarBtn {
+    width     : calc(100% - 150px);
+    background: $personalizado;
+    color     : $blanco;
+}
+
+.example-radio-group {
+    display       : flex;
+    flex-direction: column;
+    margin        : 0px 0;
+    align-items   : flex-start;
+    font-size     : 12px;
+}
+
+.example-radio-button {
+    margin: 0px;
+    color : $personalizado;
+}
+
+.radio-button {
+    font-size: 12px;
+}
+
+.route-container {
+    display    : flex;
+    align-items: center;
+}
+
+.route-item {
+    cursor     : pointer;
+    display    : flex;
+    align-items: center;
+}
+
+.grey-bold {
+    font-weight: bold;
+    color      : $gris;
+    font-size  : 12px !important;
+}
+
+.grey-normal {
+    color    : $gris;
+    font-size: 12px !important;
+}
+
+.separadorGris {
+    height    : 10px;
+    background: #E3E2E2;
+    margin    : 8px 0px;
+}
+
+.padding020 {
+    padding: 0px 20px;
+}
+
+.guarniciones {
+    padding: 0px 20px;
+}
+
+.campos {
+    color           : $personalizado;
+    width           : 100%;
+    border-style    : none;
+    background-color: transparent;
+    outline         : none;
+    font-size       : 12px !important;
+    padding         : 3px;
+    border-bottom   : solid 1px $gris;
+}
