@@ -1869,6 +1869,8 @@ export class FacturaComponent implements OnInit {
           if (detail.tipo_producto != 2) {
             // Calcular precio unitario a partir de los días cobrados
             precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
+          }else{
+            precioUnitario = precioUnitario / detail.cantidad;
           }
         }
       } else {
