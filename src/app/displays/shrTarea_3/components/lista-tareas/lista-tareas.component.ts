@@ -95,6 +95,8 @@ export class ListaTareasComponent implements OnInit {
 
   }
 
+  resultados: boolean = false;
+
   goBack() {
     //Ocultar todos los componentes 
     components.forEach(element => {
@@ -378,6 +380,8 @@ export class ListaTareasComponent implements OnInit {
       this.rangoIni = this.tareasFiltro.length + 1;
       this.rangoFin = this.rangoIni + this.intervaloRegistros;
 
+      this.resultados = true;
+
     } else {
 
       this.rangoIni = 1;
@@ -420,8 +424,14 @@ export class ListaTareasComponent implements OnInit {
 
       this.rangoIni += this.intervaloRegistros;
       this.rangoFin += this.intervaloRegistros;
+
+      this.resultados = true;
     }
 
+  }
+
+  verResultados() {
+    this.tareasFiltro.length > 0 && this.searchText ? this.resultados = true : this.resultados = false;
   }
 
   async viewTask(tarea: TareaInterface): Promise<void> {
