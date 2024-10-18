@@ -1405,6 +1405,7 @@ export class NuevaTareaComponent implements OnInit {
 
     // // F I N - C O M E N T A R I O
 
+    this.limpiarCrear(); //Limpiar despues de crear
     this.isLoading = false;
 
     this._widgetsService.openSnackbar(`${this._translate.instant('crm.alertas.tareaCreadaExito')}${nuevasTareas[0].tarea}`);
