@@ -307,7 +307,7 @@ export class HomeRestaurantComponent implements OnInit {
           selected: false,
           transacciones: [],
           ubicacion: this.restaurantService.location!,
-          serie:this.restaurantService.serie!,
+          serie: this.restaurantService.serie!,
         }
 
       );
@@ -342,8 +342,9 @@ export class HomeRestaurantComponent implements OnInit {
 
 
   async loadData() {
-
-
+    //desseleccionar mesa y ubicacion
+    this.restaurantService.location = undefined;
+    this.restaurantService.table = undefined;
 
     this.restaurantService.isLoading = true;
     //cargar serie

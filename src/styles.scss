@@ -305,6 +305,7 @@ input[type="radio"] {
     box-shadow      : var(--sombra-oscuro) !important;
 }
 
+.dark-theme .cuenta,
 .dark-theme .opcion-vista:hover,
 .dark-theme .tarea:hover {
     background-color: $bloques !important;
@@ -454,6 +455,7 @@ input[type="radio"] {
 }
 
 // Borde izquierdo 
+.dark-theme .detalleOrden,
 .dark-theme .detalle-tarea {
     border-left: 1px solid var(--bordes-oscuro) !important;
 }
@@ -581,7 +583,11 @@ input[type="radio"] {
 // .dark-theme button:not(:disabled),
 // .dark-theme .comentario,
 // .dark-theme .comentario_desc,
-
+.dark-theme .borderBottom,
+.dark-theme .bloqueW10T,
+.dark-theme .bloqueW20T,
+.dark-theme .resumen,
+.dark-theme .mat-stepper-horizontal-line,
 .dark-theme .descripcion-error,
 .dark-theme .descripcion-error-doble,
 .dark-theme .cotizacion,
@@ -600,6 +606,7 @@ input[type="radio"] {
     border-color: var(--bordes-oscuro) !important;
 }
 
+.dark-theme .prefBold12,
 .dark-theme .ruta:hover {
     color: $personalizado !important;
 }
@@ -901,12 +908,17 @@ input[type="radio"] {
 
 
 //hover seleccionado
+.dark-theme .ubicacionMesaSelect,
+.dark-theme .ubicacionMesaSelect:hover,
 .dark-theme .pago-seleccionado,
 .dark-theme .elemento:hover {
     background-color: var(--seleccionado2) !important;
 }
 
-.dark-theme .verimagen:hover {
+
+.dark-theme .icoEditar,
+.dark-theme .editarCuenta:hover,
+.dark-theme .verimagen {
     color: var(--boton-ico-oscuro) !important;
 }
 
@@ -950,11 +962,15 @@ input[type="radio"] {
 }
 
 //solo fondo
+.dark-theme .traslado,
+.dark-theme .contenidoTraslado,
+.dark-theme .contenido,
 .dark-theme .resultados {
     background: $fondo-oscuro !important;
 }
 
 //borde abajo 0.5px
+.dark-theme .comandaBotones,
 .dark-theme .registrosTareas,
 .dark-theme .verMas,
 .dark-theme .input-container-tarea {
@@ -970,12 +986,19 @@ input[type="radio"] {
 
 //color personalizado
 
+.dark-theme .irDetalleCuenta,
 .dark-theme .verMas,
 .dark-theme .verMasTxt {
     color: $azul-dark !important;
 }
 
+//borde azul
+.dark-theme .irDetalleCuenta {
+    border-bottom: 0.5px solid $azul-dark !important;
+}
+
 //sombra
+.dark-theme .resumen,
 .dark-theme .resultados {
     box-shadow: var(--sombra-oscuro) !important;
 }
