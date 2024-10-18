@@ -390,13 +390,13 @@
             "trasladoCuenta": "Accounts transferred successfully.",
             "trasladoTran": "Transactions transferred successfully.",
             "trasladoMesa": "Table transferred successfully.",
-            "nuevaUbicacion": "New location.",
+            "nuevaUbicacion": "New location",
             "ubicacionesT": "LOCATIONS",
-            "nuevaMesa": "New table.",
+            "nuevaMesa": "New table",
             "mesasT": "TABLES",
             "cuentasT": "ACCOUNTS",
             "cuenta": "Account",
-            "nuevaCuenta": "New account.",
+            "nuevaCuenta": "New account",
             "nuevaCuentaT": "NEW ACCOUNT",
             "resumen": "Summary",
             "traslado": "Transfer",
@@ -421,7 +421,7 @@
             "noHayProductos": "No products available for this category.",
             "cuenteRenombrada": "Account renamed successfully.",
             "renombrarCuenta": "Rename account.",
-            "mesasAbiertas": "Open tables.",
+            "mesasAbiertas": "Open Tables",
             "idDoc": "ID DOC",
             "serieT": "SERIES",
             "ubicacionT": "LOCATION",
@@ -445,7 +445,10 @@
             "traEliminada": "Transaction deleted.",
             "sinCuentasComandar": "No accounts to order.",
             "cuentaParaComandar": "Select an account to order.",
-            "sinMesasAbiertas": "There are no open tables yet."
+            "sinMesasAbiertas": "There are no open tables yet.",
+            "seleccionarCuentas": "Select all accounts.",
+            "eliminarSeleccionadas": "Delete selected accounts.",
+            "seleccionarTran": "Select all transactions."
         }
     },
     "crm": {

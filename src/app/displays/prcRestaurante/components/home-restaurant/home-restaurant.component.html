@@ -237,6 +237,7 @@
                                     <div class="contenido-ubicaciones-mesas">
                                         <div class="tablaDocumentos" *ngIf="restaurantService.orders.length > 0">
                                             <div class="tabla-titulos">
+                                                <span class="spacer"></span>
                                                 <div class="bloqueW10T">
                                                     <p class="tituloTab">{{'pos.restaurante.idDoc' | translate }}</p>
                                                 </div>
@@ -263,44 +264,48 @@
                                                 <div class="bloqueW20T">
                                                     <p class="tituloTab">{{'pos.restaurante.totalT' | translate }}</p>
                                                 </div>
+                                                <span class="spacer"></span>
+
                                             </div>
                                             <div class="tabla-lista"
-                                                *ngFor="let order of restaurantService.orders; let indexOrder = index">
-                                                <div class="bloqueW10T">
+                                                *ngFor="let order of restaurantService.orders; let indexOrder = index; let last = last">
+                                                <span class="spacer"></span>
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].consecutivo}}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].serie.descripcion}}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].ubicacion.descripcion }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].mesa.descripcion }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].mesero.nombre }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW10T">
+                                                <div class="bloqueW10T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.orders[indexOrder].nombre }}
                                                     </p>
                                                 </div>
-                                                <div class="bloqueW20T">
+                                                <div class="bloqueW20T" [ngClass]="{ 'borderBottom' : last }">
                                                     <p class="textCenter12">
                                                         {{restaurantService.getTotal(indexOrder) | currencyFormat }}
                                                     </p>
                                                 </div>
+                                                <span class="spacer"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -535,12 +540,14 @@
                                         <span class="spacer"></span>
                                         <button mat-icon-button
                                             *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
-                                            matTooltip="Seleccionar todas las cuentas." (click)="selectChecks()">
+                                            matTooltip="{{'pos.restaurante.seleccionarCuentas' | translate }}"
+                                            (click)="selectChecks()">
                                             <mat-icon>select_all</mat-icon>
                                         </button>
                                         <button mat-icon-button
                                             *ngIf="restaurantService.viewCheck && !restaurantService.viewTranCheck"
-                                            matTooltip="Eliminar cuentas." (click)="deleteCheck()">
+                                            matTooltip="{{'pos.restaurante.eliminarSeleccionadas' | translate }}"
+                                            (click)="deleteCheck()">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                         <button mat-icon-button
@@ -596,7 +603,7 @@
                                                 <p class="text10" *ngIf="tran.observacion "> {{tran.observacion}}
                                                 </p>
                                             </div>
-                                            <div class="cantidad-producto">
+                                            <div class="cantidadProducto">
                                                 <div class="dFlex">
                                                     <span class="spacer"></span>
                                                     <mat-icon class="verimagen"
@@ -685,22 +692,22 @@
                 <span class="spacer"></span>
                 <button mat-icon-button
                     *ngIf="!restaurantService.viewTranCheckMove && !restaurantService.selectNewLocation"
-                    matTooltip="Seleccionar todas las cuentas." (click)="selectCheckAll()">
+                    matTooltip="{{'pos.restaurante.seleccionarCuentas' | translate }}" (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="!restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Trasladar Cuenta" (click)="trasladarCuenta()">
+                    matTooltip="{{'pos.restaurante.trasladarCuenta' | translate }}" (click)="trasladarCuenta()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Seleccionar todas las transacciones." (click)="selectTranCheckAll()">
+                    matTooltip="{{'pos.restaurante.seleccionarTran' | translate }}" (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
                 <button mat-icon-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="Trasladar Transacción" (click)="trasladarTran()">
+                    matTooltip="{{'pos.restaurante.trasladarTran' | translate }}" (click)="trasladarTran()">
                     <mat-icon>drive_file_move_outline</mat-icon>
                 </button>
             </mat-toolbar-row>

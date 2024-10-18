@@ -390,13 +390,13 @@
             "trasladoCuenta": "Comptes transférés avec succès.",
             "trasladoTran": "Transactions transférées avec succès.",
             "trasladoMesa": "Table transférée avec succès.",
-            "nuevaUbicacion": "Nouvel emplacement.",
+            "nuevaUbicacion": "Nouvel emplacement",
             "ubicacionesT": "EMPLACEMENTS",
-            "nuevaMesa": "Nouvelle table.",
+            "nuevaMesa": "Nouvelle table",
             "mesasT": "TABLES",
             "cuentasT": "COMPTES",
             "cuenta": "Compte",
-            "nuevaCuenta": "Nouveau compte.",
+            "nuevaCuenta": "Nouveau compte",
             "nuevaCuentaT": "NOUVEAU COMPTE",
             "resumen": "Résumé",
             "traslado": "Transfert",
@@ -421,7 +421,7 @@
             "noHayProductos": "Aucun produit disponible pour cette catégorie.",
             "cuenteRenombrada": "Compte renommé avec succès.",
             "renombrarCuenta": "Renommer le compte.",
-            "mesasAbiertas": "Tables ouvertes.",
+            "mesasAbiertas": "Tables Ouvertes",
             "idDoc": "ID DOC",
             "serieT": "SÉRIE",
             "ubicacionT": "EMPLACEMENT",
@@ -445,7 +445,10 @@
             "traEliminada": "Transaction supprimée.",
             "sinCuentasComandar": "Aucun compte à commander.",
             "cuentaParaComandar": "Sélectionnez un compte à commander.",
-            "sinMesasAbiertas": "Pas encore de tables ouvertes."
+            "sinMesasAbiertas": "Pas encore de tables ouvertes.",
+            "seleccionarCuentas": "Sélectionner tous les comptes.",
+            "eliminarSeleccionadas": "Supprimer les comptes sélectionnés.",
+            "seleccionarTran": "Sélectionner toutes les transactions."
         }
     },
     "crm": {

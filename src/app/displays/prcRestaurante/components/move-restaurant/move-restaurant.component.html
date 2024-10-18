@@ -38,7 +38,7 @@
     <mat-step [stepControl]="formNewTable" [editable]="isEditable">
 
         <ng-template matStepLabel>
-            <p class="textBold">{{'pos.restaurante.ubicacionesT' | translate }} </p>
+            <p class="textBold">{{'pos.restaurante.nuevaMesa' | translate }} </p>
             <p class="step-subtitle" *ngIf="newTable">{{ newTable.descripcion }}</p>
         </ng-template>
 
@@ -79,7 +79,7 @@
     <mat-step [stepControl]="formConfirm" [editable]="isEditable" *ngIf="restaurantService.tipoTraslado == 2">
 
         <ng-template matStepLabel>
-            <p class="textBold">{{'pos.restaurante.cuenta' | translate }}</p>
+            <p class="textBold">{{'pos.restaurante.nuevaCuenta' | translate }}</p>
             <p class="step-subtitle" *ngIf="indexNewCheck != -1">{{ restaurantService.orders[indexNewCheck].nombre }}
             </p>
         </ng-template>

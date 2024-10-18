@@ -20,9 +20,8 @@ $personalizado         : var(--global-color);
 $rojo-error            : #cc4141;
 $sombra-campos         : #8b8b8b;
 $fondo-campos          : #3d3c3c;
-
-$personalizado :var(--global-color);
-$bloques       : var(--bloques-oscuro);
+$personalizado         :var(--global-color);
+$bloques               : var(--bloques-oscuro);
 
 .espacio-lineas {
     line-height: 1.2;
@@ -326,6 +325,7 @@ input[type="radio"] {
 }
 
 //TEXTOS EN COLOR BLANCO
+.dark-theme .pin,
 .dark-theme .contenedorModulo,
 .dark-theme .desa,
 .dark-theme .mat-mdc-radio-button .mdc-form-field,
@@ -677,6 +677,10 @@ input[type="radio"] {
 
 //scrolls 
 
+.dark-theme .contenido-dialogo::-webkit-scrollbar,
+.dark-theme .contenido-dialogo::-webkit-scrollbar-track,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar-track,
 .dark-theme .listas-documentos::-webkit-scrollbar,
 .dark-theme .listas-documentos::-webkit-scrollbar-track,
 .dark-theme .detallesUsuario::-webkit-scrollbar,
@@ -733,6 +737,8 @@ input[type="radio"] {
 
 
 //Color barra scroll
+.dark-theme .contenido-dialogo::-webkit-scrollbar-thumb,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .dark-theme .listas-documentos::-webkit-scrollbar-thumb,
 .dark-theme .detallesUsuario::-webkit-scrollbar-thumb,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb,
@@ -896,6 +902,14 @@ input[type="radio"] {
     background-color: var(--seleccionado2) !important;
 }
 
+.dark-theme .verimagen:hover {
+    color: var(--boton-ico-oscuro) !important;
+}
+
+.dark-theme .transaccion,
+.dark-theme .product-me,
+.dark-theme .fondoDetalle,
+.dark-theme .separadorGris,
 .dark-theme .detalleResponsable,
 .dark-theme .usuario-busqueda,
 .dark-theme .buscar-documentos,
@@ -917,4 +931,10 @@ input[type="radio"] {
 .dark-theme .pagar-detalle {
     border: solid 0.5px var(--bordes-oscuro);
 
+}
+
+.dark-theme .pin,
+.dark-theme .ubicacion,
+.dark-theme .mesa {
+    border: solid 0.5px var(--bordes-oscuro) !important;
 }
