@@ -22,6 +22,7 @@ $sombra-campos         : #8b8b8b;
 $fondo-campos          : #3d3c3c;
 $personalizado         :var(--global-color);
 $bloques               : var(--bloques-oscuro);
+$azul-dark             : #9fc7ff;
 
 .espacio-lineas {
     line-height: 1.2;
@@ -677,6 +678,8 @@ input[type="radio"] {
 
 //scrolls 
 
+.dark-theme .resultados::-webkit-scrollbar,
+.dark-theme .resultados::-webkit-scrollbar-track,
 .dark-theme .contenido-dialogo::-webkit-scrollbar,
 .dark-theme .contenido-dialogo::-webkit-scrollbar-track,
 .dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar,
@@ -737,6 +740,7 @@ input[type="radio"] {
 
 
 //Color barra scroll
+.dark-theme .resultados::-webkit-scrollbar-thumb,
 .dark-theme .contenido-dialogo::-webkit-scrollbar-thumb,
 .dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .dark-theme .listas-documentos::-webkit-scrollbar-thumb,
@@ -933,8 +937,45 @@ input[type="radio"] {
 
 }
 
+.dark-theme .resultado,
 .dark-theme .pin,
 .dark-theme .ubicacion,
 .dark-theme .mesa {
     border: solid 0.5px var(--bordes-oscuro) !important;
+}
+
+//sin  borde arriba
+.dark-theme .resultado {
+    border-top: none !important;
+}
+
+//solo fondo
+.dark-theme .resultados {
+    background: $fondo-oscuro !important;
+}
+
+//borde abajo 0.5px
+.dark-theme .registrosTareas,
+.dark-theme .verMas,
+.dark-theme .input-container-tarea {
+    border-bottom: 0.5px solid var(--bordes-oscuro) !important;
+}
+
+//borde izquierzo y derecho
+.dark-theme .registrosTareas,
+.dark-theme .verMas {
+    border-right: 0.5px solid var(--bordes-oscuro) !important;
+    border-left : 0.5px solid var(--bordes-oscuro) !important;
+}
+
+//color personalizado
+
+.dark-theme .verMas,
+.dark-theme .verMasTxt {
+    color: $azul-dark !important;
+}
+
+//sombra
+.dark-theme .resultados {
+    box-shadow: var(--sombra-oscuro) !important;
 }

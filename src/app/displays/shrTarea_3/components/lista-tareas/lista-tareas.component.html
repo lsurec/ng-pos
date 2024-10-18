@@ -35,7 +35,7 @@
                             autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}"
                             [ngClass]="{ 'border-radius': tareasFiltro.length == 0}" (click)="verResultados()">
                         <div class="resultados" *ngIf="tareasFiltro.length > 0 && resultados ">
-                            <p class="registros">{{'crm.home.registros' | translate}}
+                            <p class="registrosTareas">{{'crm.home.registros' | translate}}
                                 {{tareasFiltro.length}}
                             </p>
                             <div class="espacio-result">
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="verMas">
-                                    <p (click)="filtrarResultados(1)">Ver más</p>
+                                    <p class="verMasTxt" (click)="filtrarResultados(1)">Ver más</p>
                                 </div>
                             </div>
                         </div>
