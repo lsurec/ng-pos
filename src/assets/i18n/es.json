@@ -448,7 +448,8 @@
             "sinMesasAbiertas": "Aún no hay mesas abiertas.",
             "seleccionarCuentas": "Seleccionar todas las cuentas.",
             "eliminarSeleccionadas": "Eliminar cuentas.",
-            "seleccionarTran": "Seleccionar todas las transacciones."
+            "seleccionarTran": "Seleccionar todas las transacciones.",
+            "estadoCuenta": "Estado de Cuenta"
         }
     },
     "crm": {

@@ -891,6 +891,11 @@ label[for*='6']:before {
     width  : 100%;
 }
 
+.clasificacioProductoyDetalle {
+    display: block;
+    width  : calc(100% - 250px);
+}
+
 .ocultarDetalles {
     display: none;
 }
