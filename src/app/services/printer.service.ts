@@ -2074,6 +2074,264 @@ export class PrinterService {
         return docDefinition;
     }
 
+    getStatusAccount() {
+
+
+        let divider = {
+            layout: 'headerLineOnly',
+            table: {
+                widths: ['100%'],
+                headerRows: 1,
+                body: [
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                ]
+            }
+        };
+
+        var docDefinition: TDocumentDefinitions = {
+
+            info: {
+                title: "ESTADO DE CUENTA",
+                author: 'Demosoft',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                {
+                    text: "Club Campestre la montaña",
+                    style: 'centerBold',
+                },
+                {
+                    text: "Barra mirablosque",
+                    style: 'centerBold',
+                },
+                {
+                    text: "Mesa: Mesa 1",
+                    style: 'centerBold',
+                },
+                {
+                    text: "MIRALBOSQUE - 1",
+                    style: 'centerBold',
+                },
+                //TABLA PRODUCTOS
+                {
+                    layout: 'headerLineOnly',
+                    margin: [0, 10, 0, 0],
+                    table: {
+
+                        widths: ['15%', '60%', '25%'],
+                        headerRows: 1,
+
+                        body: [
+
+                            [
+                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
+                                // { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
+                            ],
+
+                            [
+                                {
+                                    text: "100", style: 'normalText'
+                                },
+                                {
+                                    text: "Consectetur velit duis ea nisi fugiat magna in in aliqua excepteur do.", style: 'normalText'
+                                },
+                                {
+                                    text: "10000", style: 'normalText'
+                                },
+                            ]
+
+                        ],
+                    },
+
+                },
+                divider,
+                {
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['75%', '25%'],
+                        body: [
+                            [
+                                {
+                                    text: "Sub-Total:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ],
+                            [
+                                {
+                                    text: "Descuento:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ],
+                            [
+                                {
+                                    text: "Total:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ]
+                        ]
+                    }
+                },
+                divider,
+                {
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['75%', '25%'],
+
+                        body: [
+                            [
+                                {
+                                    text: "Propina:", style: 'endText',
+                                },
+                                divider,
+                            ]
+                           
+                        ]
+                    }
+                },
+                {
+                    text: "Nombre:", style: 'normalText', margin:[0,10,0,0],
+                },
+                divider,
+                {
+                    text: "NiT:", style: 'normalText'
+                },
+                divider,
+                {
+                    text: "Email:", style: 'normalText'
+                },
+                divider,
+
+                {
+                    text: "Le atendió: Mesero", style: 'normalText', margin:[0,20,0,0],
+                },
+                {
+                    text: "12/12/2020", style: 'normalText', margin:[0,10,0,0],
+                },
+                {
+                    text: "12:12:12", style: 'normalText',
+                },
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+            ],
+            styles: {
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                centerBold: {
+                    fontSize: 8,
+                    alignment: 'center',
+                    bold: true,
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+                endText: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                endTextBold: {
+                    fontSize: 8,
+                    alignment: 'right',
+                    bold: true,
+                },
+                header: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'center',
+                },
+                tHeaderLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tHeaderValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                tProductsHeader: {
+                    fontSize: 8.5,
+                    bold: true,
+                },
+                tProductsBody: {
+                    fontSize: 8,
+                },
+                tTotals: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'right',
+                },
+                tClientLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tClientValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                text: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                link: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                    alignment: 'center',
+                },
+            },
+        }
+
+
+        return docDefinition;
+    }
 
     async getComandaTMU(format: FormatoComandaInterface) {
 
@@ -2094,10 +2352,10 @@ export class PrinterService {
             );
         });
 
-        let currentDate:Date = new Date(format.detalles[0].fecha_Hora);
+        let currentDate: Date = new Date(format.detalles[0].fecha_Hora);
 
         let day = currentDate.getDate();
-        let month = currentDate.getMonth() +   1;
+        let month = currentDate.getMonth() + 1;
         let year = currentDate.getFullYear();
         let hour = currentDate.getHours();
         let minutes = currentDate.getMinutes();
