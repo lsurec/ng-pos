@@ -121,8 +121,9 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.viewMoveCheckTable = false;
   }
 
-  printStatusAccount(){
-    
+  async printStatusAccount(){
+          const doc = await this._printService.getStatusAccountTMU();;
+      pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).open();
   }
 
   viewMoveCheckTable() {
