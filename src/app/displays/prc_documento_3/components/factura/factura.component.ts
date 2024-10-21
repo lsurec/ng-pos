@@ -1846,6 +1846,9 @@ export class FacturaComponent implements OnInit {
     detalles.forEach(detail => {
 
 
+      console.log(detail);
+      console.log(detail.tipo_Producto);
+      
 
       if (detail.cantidad == 0 && detail.monto > 0) {
         //4 cargo
@@ -1866,7 +1869,11 @@ export class FacturaComponent implements OnInit {
         // Si hay cantidad (no es cargo ni descuento)
         if (detail.cantidad > 0) {
           // Si no es servicio (tipo producto != 2)
-          if (detail.tipo_producto != 2) {
+          console.log(detail.tipo_Producto);
+          // console.log(this.consecutivoDoc);
+          
+          
+          if (detail.tipo_Producto != 2) {
             // Calcular precio unitario a partir de los días cobrados
             precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
           }else{
