@@ -436,12 +436,12 @@
                                         (click)="viewMoveCheckTable()">
                                         <mat-icon>drive_file_move_outline</mat-icon>
                                     </button>
-                                    <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
+                                    <button mat-icon-button matTooltip="{{'pos.restaurante.monitorPrint' | translate }}"
                                         (click)="printComanda(restaurantService.indexCheck)">
                                         <mat-icon>desktop_windows</mat-icon>
                                     </button>
                                     <button mat-icon-button (click)="printStatusAccount()"
-                                        matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
+                                        matTooltip="{{'pos.restaurante.estadoCuenta' | translate }}">
                                         <mat-icon>print</mat-icon>
                                     </button>
                                 </ng-container>
@@ -478,11 +478,12 @@
                                 (click)="viewMoveCheckTable()">
                                 <mat-icon>drive_file_move_outline</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="{{'pos.restaurante.comandar' | translate }}"
+                            <button mat-icon-button matTooltip="{{'pos.restaurante.monitorPrint' | translate }}"
                                 (click)="printComanda(restaurantService.indexCheck)">
                                 <mat-icon>desktop_windows</mat-icon>
                             </button>
-                            <button mat-icon-button (click)="printStatusAccount()" matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
+                            <button mat-icon-button (click)="printStatusAccount()"
+                                matTooltip="{{'pos.restaurante.estadoCuenta' | translate }}">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>
@@ -514,7 +515,8 @@
                             </mat-toolbar>
 
                             <div class="dFlex">
-                                <div class="clasificacioProducto">
+                                <div class="clasificacioProducto"
+                                    [ngClass]="{'clasificacioProductoyDetalle': restaurantService.verDetalleOrden}">
                                     <app-classifications *ngIf="restaurantService.idPantalla == 1">
                                     </app-classifications>
                                     <app-products *ngIf="restaurantService.idPantalla == 2"></app-products>
