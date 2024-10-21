@@ -204,7 +204,8 @@
             "inicio": "Inicio",
             "listo": "Listo",
             "guardarCambios": "Guardar cambios",
-            "modificar": "Modificar"
+            "modificar": "Modificar",
+            "siguiente": "Siguiente"
         },
         "error": {
             "informe": "Informe de error",

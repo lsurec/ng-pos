@@ -347,6 +347,15 @@
                         </div>
                         <div class="borde-detalles"></div>
                         <div class="detalles-usuario">
+                            <mat-icon class="iconos-detalles">person</mat-icon>
+                            <span class="spacer"></span>
+                            <div class="detalle">
+                                <p class="subtitulo">{{'pos.restaurante.mesero' | translate}}</p>
+                                <p class="descripcion"> {{restaurantService.waiter?.nombre }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="detalles-usuario">
                             <mat-icon class="iconos-detalles">business</mat-icon>
                             <span class="spacer"></span>
                             <div class="detalle">
@@ -697,20 +706,20 @@
                     matTooltip="{{'pos.restaurante.seleccionarCuentas' | translate }}" (click)="selectCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button
+                <button mat-raised-button
                     *ngIf="!restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="{{'pos.restaurante.trasladarCuenta' | translate }}" (click)="trasladarCuenta()">
-                    <mat-icon>drive_file_move_outline</mat-icon>
+                    class="boton-azul" (click)="trasladarCuenta()">
+                    {{'pos.botones.siguiente' | translate}}
                 </button>
                 <button mat-icon-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
                     matTooltip="{{'pos.restaurante.seleccionarTran' | translate }}" (click)="selectTranCheckAll()">
                     <mat-icon>select_all</mat-icon>
                 </button>
-                <button mat-icon-button
+                <button mat-raised-button
                     *ngIf="restaurantService.viewTranCheckMove  && !restaurantService.selectNewLocation"
-                    matTooltip="{{'pos.restaurante.trasladarTran' | translate }}" (click)="trasladarTran()">
-                    <mat-icon>drive_file_move_outline</mat-icon>
+                    class="boton-azul" (click)="trasladarTran()">
+                    {{'pos.botones.siguiente' | translate}}
                 </button>
             </mat-toolbar-row>
 

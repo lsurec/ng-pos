@@ -204,7 +204,8 @@
             "inicio": "Accueil",
             "listo": "Terminé",
             "guardarCambios": "Enregistrer les modifications",
-            "modificar": "Modifier"
+            "modificar": "Modifier",
+            "siguiente": "Suivant"
         },
         "error": {
             "informe": "Rapport d'erreur",
