@@ -2074,7 +2074,7 @@ export class PrinterService {
         return docDefinition;
     }
 
-    getStatusAccount() {
+    async getStatusAccountTMU() {
 
 
         let divider = {
@@ -2197,6 +2197,8 @@ export class PrinterService {
                 },
                 divider,
                 {
+                    margin: [0, 10, 0, 0],
+
                     layout: 'noBorders',
                     table: {
 
@@ -2214,14 +2216,17 @@ export class PrinterService {
                     }
                 },
                 {
-                    text: "Nombre:", style: 'normalText', margin:[0,10,0,0],
+                    text: "Nombre:", style: 'normalText', margin:[0,10,0,10],
                 },
                 divider,
                 {
+                    margin: [0, 0, 0, 10],
+                    
                     text: "NiT:", style: 'normalText'
                 },
                 divider,
                 {
+                    margin: [0, 0, 0, 10],
                     text: "Email:", style: 'normalText'
                 },
                 divider,
