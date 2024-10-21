@@ -440,7 +440,7 @@
                                         (click)="printComanda(restaurantService.indexCheck)">
                                         <mat-icon>desktop_windows</mat-icon>
                                     </button>
-                                    <button mat-icon-button
+                                    <button mat-icon-button (click)="printStatusAccount()"
                                         matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
                                         <mat-icon>print</mat-icon>
                                     </button>
@@ -482,7 +482,7 @@
                                 (click)="printComanda(restaurantService.indexCheck)">
                                 <mat-icon>desktop_windows</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
+                            <button mat-icon-button (click)="printStatusAccount()" matTooltip="{{'pos.restaurante.monitorPrint' | translate }}">
                                 <mat-icon>print</mat-icon>
                             </button>
                         </ng-container>

@@ -121,6 +121,10 @@ export class HomeRestaurantComponent implements OnInit {
     this.restaurantService.viewMoveCheckTable = false;
   }
 
+  printStatusAccount(){
+    
+  }
+
   viewMoveCheckTable() {
 
     if (this.restaurantService.orders.length == 0) {
