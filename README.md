@@ -5,34 +5,54 @@ Aplicacion web con Angular y .NET CORE.
 Esta aplicación es una solución integral de punto de venta (POS) diseñada para facilitar y optimizar la gestión de un negocio. Con características avanzadas como la capacidad de certificar documentos electrónicos (DTEs), imprimir documentos, entre muchas otras funciones. La aplicación es una herramienta completa para agilizar las operaciones y mejorar la experiencia de los clientes.
 
 - [Punto de ventas (POS) Web App](#punto-de-ventas-pos-web-app)
-  - [Características](#características)
-  - [Vista Previa](#vista-previa)
-    - [Idioma de la aplicación](#idioma-de-la-aplicación)
-    - [Tema de la aplicación](#tema-de-la-aplicación)
+  - [Caracteristicas](#caracteristicas)
+  - [Vista Previa.](#vista-previa)
+    - [Idioma de la aplicación.](#idioma-de-la-aplicación)
+    - [Tema de la aplicación.](#tema-de-la-aplicación)
     - [Configuración inicial del Origen de Datos](#configuración-inicial-del-origen-de-datos)
     - [Inicio de sesión](#inicio-de-sesión)
-    - [Configuración local](#configuracion-local)
-    - [Pantalla principal (Home)](#pantalla-principal-home)
+    - [Configuracion local.](#configuracion-local)
+    - [Pantalla princial (Home)](#pantalla-princial-home)
       - [Menú de aplicaciones](#menú-de-aplicaciones)
     - [Detalles de Usuario](#detalles-de-usuario)
     - [Ajustes](#ajustes)
-    - [Configuración de impresora](#configuración-de-impresora)
-  - [Módulo de Facturación](#módulo-de-facturación)
-    - [Historial de documentos](#historial-de-documentos)
-    - [Imprimir documento](#imprimir-documento)
-    - [Documento](#documento)
-      - [Nueva cuenta](#nueva-cuenta)
-      - [Actualizar cuenta](#actualizar-cuenta)
-    - [Detalle del documento](#detalle-del-documento)
-    - [Productos encontrados](#productos-encontrados)
-    - [Formulario de Producto](#formulario-de-producto)
-    - [Cargo abono](#cargo-abono)
-  - [Módulo de Listado de Cotizaciones](#módulo-de-listado-de-cotizaciones)
-    - [Tipos de documentos](#tipos-de-documentos)
-    - [Documento origen](#documento-origen)
-    - [Documento destino](#documento-destino)
-    - [Conversión de documento](#conversión-de-documento)
-    - [Documento procesado](#documento-procesado)
+    - [Configuración de impresora.](#configuración-de-impresora)
+  - [Módulo de Facturación.](#módulo-de-facturación)
+    - [Historial de documentos.](#historial-de-documentos)
+    - [Imprimir documento.](#imprimir-documento)
+    - [Documento.](#documento)
+      - [Nueva cuenta.](#nueva-cuenta)
+      - [Actualizar cuenta.](#actualizar-cuenta)
+    - [Detalle del documento.](#detalle-del-documento)
+    - [Productos encontrados.](#productos-encontrados)
+    - [Formulario de Producto.](#formulario-de-producto)
+    - [Cargo abono.](#cargo-abono)
+  - [Módulo de Listado de Cotizaciones.](#módulo-de-listado-de-cotizaciones)
+    - [Tipos de documentos.](#tipos-de-documentos)
+    - [Documento origen.](#documento-origen)
+    - [Documento destino.](#documento-destino)
+    - [Conversión de documento.](#conversión-de-documento)
+    - [Documento procesado.](#documento-procesado)
+  - [Módulo de Restaurante](#módulo-de-restaurante)
+    - [Ubicaciones y Mesas](#ubicaciones-y-mesas)
+    - [Mesas abiertas](#mesas-abiertas)
+    - [Clasificaciones](#clasificaciones)
+    - [Productos](#productos)
+    - [Producto](#producto)
+    - [Guarniciones](#guarniciones)
+    - [Órdenes](#órdenes)
+    - [Traslados](#traslados)
+  - [Módulo de Tareas](#módulo-de-tareas)
+    - [Búsqueda de Tareas](#búsqueda-de-tareas)
+    - [Detalle Tarea](#detalle-tarea)
+    - [Crear Tarea](#crear-tarea)
+  - [Módulo de Calendario](#módulo-de-calendario)
+    - [Vista Mes](#vista-mes)
+    - [Vista Semana](#vista-semana)
+    - [Vista Día](#vista-día)
+    - [Detalle tarea](#detalle-tarea-1)
+- [Configuraciones del proyecto.](#configuraciones-del-proyecto)
+  - [Cómo implementar un nuevo idioma para la aplicación.](#cómo-implementar-un-nuevo-idioma-para-la-aplicación)
 
 ## Caracteristicas 
 
@@ -183,6 +203,74 @@ Esta aplicación es una solución integral de punto de venta (POS) diseñada par
 ### Documento procesado.
 
 ![screenshot](screenshot/docProcesado.png)
+
+## Módulo de Restaurante
+
+### Ubicaciones y Mesas
+
+![screenshot](screenshot/ubiMesa.png)
+
+### Mesas abiertas
+
+![screenshot](screenshot/mesasAbiertas.png)
+
+### Clasificaciones
+
+![screenshot](screenshot/clasificaciones.png)
+
+### Productos
+
+![screenshot](screenshot/productos.png)
+
+### Producto
+
+![screenshot](screenshot/productoRes.png)
+
+### Guarniciones
+
+![screenshot](screenshot/guarniciones.png)
+
+### Órdenes
+
+![screenshot](screenshot/ordenes.png)
+
+### Traslados
+
+![screenshot](screenshot/traslado.png)
+
+<!-- Tareas -->
+## Módulo de Tareas
+
+### Búsqueda de Tareas 
+
+![screenshot](screenshot/buscarTareas.png)
+
+### Detalle Tarea
+
+![screenshot](screenshot/detalleTarea.png)
+
+### Crear Tarea
+
+![screenshot](screenshot/crearTarea.png)
+
+<!-- Calendario -->
+## Módulo de Calendario
+
+### Vista Mes 
+
+![screenshot](screenshot/mes.png)
+
+### Vista Semana 
+
+![screenshot](screenshot/semana.png)
+
+### Vista Día 
+
+![screenshot](screenshot/dia.png)
+
+### Detalle tarea
+
+![screenshot](screenshot/tareaCalendario.png)
 
 <!-- aquiiiiiiiiiii -->
 

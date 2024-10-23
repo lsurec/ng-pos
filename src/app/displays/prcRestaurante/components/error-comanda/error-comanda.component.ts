@@ -152,11 +152,11 @@ export class ErrorComandaComponent {
       const doc = await this._printService.getComandaTMU(element);
       pdfMake.createPdf(doc, undefined, undefined, pdfFonts.pdfMake.vfs).print();
 
-      this.closeDialog();
-
-      this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
+      
     }
-
+    
+    this._notificationService.openSnackbar(this._translate.instant('pos.restaurante.comandaEnviada'));
+    this.closeDialog();
     this.restaurantService.isLoading = false;
 
   }

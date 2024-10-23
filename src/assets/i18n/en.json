@@ -204,7 +204,8 @@
             "inicio": "Home",
             "listo": "Done",
             "guardarCambios": "Save changes",
-            "modificar": "Modify"
+            "modificar": "Modify",
+            "siguiente": "Next"
         },
         "error": {
             "informe": "Error Report",

@@ -449,7 +449,8 @@
             "seleccionarCuentas": "Alle Konten auswählen.",
             "eliminarSeleccionadas": "Ausgewählte Konten löschen.",
             "seleccionarTran": "Alle Transaktionen auswählen.",
-            "estadoCuenta": "Kontostand"
+            "estadoCuenta": "Kontostand",
+            "siguiente": "Nächste"
         }
     },
     "crm": {
