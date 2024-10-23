@@ -15,7 +15,8 @@ export class PrinterService {
     private _urlBase: string = urlApi.apiServer.urlPrint;
 
     //inicializar http
-    constructor(private _http: HttpClient,
+    constructor(
+        private _http: HttpClient,
         private _facturaService: FacturaService,
         private _translate: TranslateService,
     ) {
