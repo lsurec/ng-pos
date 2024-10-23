@@ -448,7 +448,8 @@
             "sinMesasAbiertas": "Noch keine offenen Tische.",
             "seleccionarCuentas": "Alle Konten auswählen.",
             "eliminarSeleccionadas": "Ausgewählte Konten löschen.",
-            "seleccionarTran": "Alle Transaktionen auswählen."
+            "seleccionarTran": "Alle Transaktionen auswählen.",
+            "estadoCuenta": "Kontostand"
         }
     },
     "crm": {

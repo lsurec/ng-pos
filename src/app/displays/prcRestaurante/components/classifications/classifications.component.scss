@@ -50,6 +50,11 @@ p {
     background   : $blanco;
 }
 
+.productWidth {
+    width      : 200px;
+    margin-left: 10px;
+}
+
 .image-product {
     width : -webkit-fill-available;
     height: 200px;
@@ -67,25 +72,36 @@ p {
 /*Fin Tarjeta Producto*/
 
 .clasificacionesx3 {
-    display              : grid;
-    grid-template-columns: repeat(3, 1fr);
+    display                 : grid;
+    grid-template-columns   : repeat(3, 1fr);
     //Espacio entre las mesas, puedes ajustar esto
-    gap                  : 0px 15px;
+    // gap                  : 0px 15px;
 }
+
+// .clasificacionesx2 {
+//     display              : grid;
+//     grid-template-columns: repeat(2, 1fr);
+// }
 
 @media screen and (max-width: 767px) {
     .clasificacionesx3 {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .clasificacionesx2 {
+        display              : grid;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .product-me {
-        width: 100% !important;
+        margin-left: 10px;
     }
+
 }
 
 @media screen and (max-width: 550px) {
     .clasificacionesx3 {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
 
     .product-me {
