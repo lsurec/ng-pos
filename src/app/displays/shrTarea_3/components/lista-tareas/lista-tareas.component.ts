@@ -588,7 +588,7 @@ export class ListaTareasComponent implements OnInit {
     //Mis Asignaciones (Mi usuario es responsable de la tarea)
     this.tareaGlobalService.opcionFiltro = 3;
 
-    if (!this.verCreadas && this.asignadasTareas.length == 0) {
+    if (!this.verAsignadas && this.asignadasTareas.length == 0) {
       this.obtenerAsignadas();
     }
 
