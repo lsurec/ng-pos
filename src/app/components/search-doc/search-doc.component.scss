@@ -5,6 +5,7 @@ $fondo         : var(--fondo-claro); //fondo Demosoft
 $scroll        : var(--global-color); //barra azul
 $gris          : var(--gris);
 $blanco        : var(--blaco);
+$sombra        : var(--sombra-claro);
 
 .progress {
     padding         : 10px 20px;
@@ -91,7 +92,7 @@ $blanco        : var(--blaco);
     }
 
     .informacion,
-    .fechas{
+    .fechas {
         width: 100% !important;
     }
 }
@@ -134,23 +135,6 @@ p {
     display    : flex;
     align-items: center;
     width      : 55%;
-}
-
-
-.mat-mdc-select {
-    display    : flex;
-    width      : 100%;
-    outline    : none;
-    padding    : 0px 5px;
-    background : transparent !important;
-    align-items: center;
-    height     : 50px;
-}
-
-.mat-mdc-option {
-    min-height: 30px;
-    color     : $personalizado;
-    font-size : 13px;
 }
 
 .lista-documentos {
@@ -212,23 +196,6 @@ p {
     width  : 60%;
 }
 
-.chip {
-    display      : inline-block;
-    padding      : 5px 8px;
-    margin       : 4px;
-    cursor       : pointer;
-    border       : 1px solid $gris;
-    border-radius: 20px;
-    font-size    : 12px;
-}
-
-.selected {
-    background-color: $personalizado;
-    color           : $blanco;
-    border          : 1px solid $personalizado;
-}
-
-
 //Estilo para el contenedor del icono y el campo de entrada
 .input-container {
     position     : relative;
@@ -265,11 +232,7 @@ p {
     height     : calc(100vh - 264px);
 }
 
-.espacioFiltros {
-    display    : flex;
-    align-items: center;
-    width      : 20%;
-}
+
 
 .padding-right {
     padding-right: 50px;
@@ -301,4 +264,14 @@ p {
         right    : 30px;
         font-size: 20px;
     }
+}
+
+.bloqueDetalle {
+    width        : 45%;
+    border-radius: 5px;
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    padding      : 10px;
+    margin-bottom: 10px;
+    background   : $bordes;
 }
