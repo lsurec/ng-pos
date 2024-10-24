@@ -6,6 +6,7 @@ $scroll        : var(--global-color); //barra azul
 $gris          : var(--gris);
 $blanco        : var(--blaco);
 $sombra        : var(--sombra-claro);
+$bloques       : var(--bloques-claro);
 
 .progress {
     padding         : 10px 20px;
@@ -273,5 +274,35 @@ p {
     box-shadow   : $sombra;
     padding      : 10px;
     margin-bottom: 10px;
-    background   : $bordes;
+    background   : $bloques;
+}
+
+.width45 {
+    width: 45%;
+}
+
+.detalles-lista {
+    width  : 48%;
+    padding: 10px 0px 5px;
+}
+
+.descripcion-total {
+    padding: 0px 10px 5px;
+    width  : 48%;
+}
+
+.productoPagoAgregado {
+    width        : 45%;
+    border-radius: 5px;
+    border       : solid 1px $bordes;
+    box-shadow   : $sombra;
+    padding      : 10px;
+    margin-bottom: 10px;
+    background   : $bloques;
+}
+
+.descripcionProductoPago {
+    padding      : 5px;
+    border       : solid 1px $bordes;
+    border-radius: 5px;
 }

@@ -187,215 +187,210 @@
             </mat-toolbar>
 
             <div class="container_main">
-
-                D E T A L L E S
-
-                <div class="container-main">
-                    <div class="container">
-                        <div class="dFlex">
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde">{{'pos.home.tipoDocumento' | translate}}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Tipo documento detalle</p>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde ">{{'pos.home.serieDocumento' | translate}}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Serie documento detalle</p>
-                                </div>
+                <div class="container">
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">{{'pos.home.tipoDocumento' | translate}}</p>
+                            <div class="descripciones">
+                                <p class="textos">Tipo documento detalle</p>
                             </div>
                         </div>
-
-                        <div class="dFlex">
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde">{{'pos.home.empresa' | translate}}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Empresa documento detalle</p>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde ">{{'pos.home.estacion' | translate}}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Estacion documento detalle</p>
-                                </div>
+                        <span class="spacer"></span>
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde ">{{'pos.home.serieDocumento' | translate}}</p>
+                            <div class="descripciones">
+                                <p class="textos">Serie documento detalle</p>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="dFlex">
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">{{'pos.home.empresa' | translate}}</p>
+                            <div class="descripciones">
+                                <p class="textos">Empresa documento detalle</p>
+                            </div>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde ">{{'pos.home.estacion' | translate}}</p>
+                            <div class="descripciones">
+                                <p class="textos">Estacion documento detalle</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde ">{{ 'pos.factura.tipoRef' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Tipo referencia detalle</p>
+                            </div>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">
+                                {{ 'pos.factura.descripcion' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Descripcion tipo referencia detalle</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">
+                                {{ 'pos.factura.contacto' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Observacion 2</p>
+                            </div>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">
+                                {{ 'pos.factura.entrega' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Observacion 3</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde">
+                                {{ 'pos.factura.observacion' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Observacion</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dFlex">
+                        <div class="dFlex width45">
                             <div class="bloqueDetalle">
-                                <p class="subtitulo-borde ">{{ 'pos.factura.tipoRef' | translate }}</p>
+                                <p class="subtitulo-borde">
+                                    {{ 'pos.factura.fEntrega' | translate }}
+                                </p>
                                 <div class="descripciones">
-                                    <p class="textos">Tipo referencia detalle</p>
+                                    <p class="textos">Fecha Ref Ini</p>
                                 </div>
                             </div>
                             <span class="spacer"></span>
                             <div class="bloqueDetalle">
                                 <p class="subtitulo-borde">
-                                    {{ 'pos.factura.descripcion' | translate }}</p>
+                                    {{ 'pos.factura.fRecoger' | translate }}</p>
                                 <div class="descripciones">
-                                    <p class="textos">Descripcion tipo referencia detalle</p>
+                                    <p class="textos">Fecha Ref Fin</p>
                                 </div>
                             </div>
                         </div>
+                        <span class="spacer"></span>
 
-                        <div class="dFlex">
+                        <div class="dFlex width45">
                             <div class="bloqueDetalle">
-                                <p class="subtitulo-borde">
-                                    {{ 'pos.factura.contacto' | translate }}</p>
+                                <p class="subtitulo-borde">{{ 'pos.documento.fechaIni' | translate }} </p>
                                 <div class="descripciones">
-                                    <p class="textos">Observacion 2</p>
+                                    <p class="textos">Fecha Ini</p>
                                 </div>
                             </div>
                             <span class="spacer"></span>
                             <div class="bloqueDetalle">
-                                <p class="subtitulo-borde">
-                                    {{ 'pos.factura.entrega' | translate }}</p>
+                                <p class="subtitulo-borde">{{ 'pos.documento.fechaFin' | translate }} </p>
                                 <div class="descripciones">
-                                    <p class="textos">Observacion 3</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dFlex">
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde">
-                                    {{ 'pos.factura.observacion' | translate }}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Observacion</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="cliente-vendedor">
-                            <div class="fechas">
-                                <div class="fechaER">
-                                    <p class="subtitulo-borde">
-                                        {{ 'pos.factura.fEntrega' | translate }}
-                                    </p>
-                                    <div class="descripciones">
-                                        <p class="textos">Fecha Ref Ini</p>
-                                    </div>
-                                </div>
-                                <span class="spacer"></span>
-                                <div class="fechaER">
-                                    <p class="subtitulo-borde">
-                                        {{ 'pos.factura.fRecoger' | translate }}</p>
-                                    <div class="descripciones">
-                                        <p class="textos">Fecha Ref Fin</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-
-                            <div class="fechas">
-                                <div class="fechaER">
-                                    <p class="subtitulo-borde">{{ 'pos.documento.fechaIni' | translate }} </p>
-                                    <div class="descripciones">
-                                        <p class="textos">Fecha Ini</p>
-                                    </div>
-                                </div>
-                                <span class="spacer"></span>
-                                <div class="fechaER">
-                                    <p class="subtitulo-borde">{{ 'pos.documento.fechaFin' | translate }} </p>
-                                    <div class="descripciones">
-                                        <p class="textos">Fecha Fin</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="cliente-vendedor">
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
-                                <div class="descripciones">
-                                    <p class="textos">{{ 'pos.factura.nit' | translate }}: 1234567-8</p>
-                                    <p class="textos">{{ 'pos.factura.nombre' | translate }}: Cliente 1</p>
-                                    <p class="textos">{{ 'pos.factura.direccion' | translate }}: Ciudad</p>
-                                </div>
-                            </div>
-
-                            <span class="spacer"></span>
-                            <div class="bloqueDetalle">
-                                <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
-                                <div class="descripciones">
-                                    <p class="textos">Vendedor 2</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="productos-pagos">
-                            <div class="detalles-lista">
-                                <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
-                                <div class="descripcion-producto">
-                                    <p class="textos">1 x 10</p>
-                                    <p class="textos">{{ 'pos.factura.sku' | translate }} Café</p>
-                                    <p class="textos">{{ 'pos.factura.precio_unitario' | translate }}
-                                        {{ 0 | currency: ' ' :'symbol':'2.2-2' }}
-                                    </p>
-                                    <p class="textos">{{ 'pos.factura.total' | translate }} {{100 | currency:'
-                                        ':'symbol':'2.2-2' }}
-                                    </p>
-                                </div>
-                            </div>
-                            <span class="spacer"></span>
-                            <div class="detalles-lista">
-                                <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
-                                <div class="descripcion-pago">
-                                    <p class="textos">Cargo/Descuento</p>
-                                    <p class="textos">{{ 'pos.factura.autorizacion' | translate }}
-                                        453
-                                    </p>
-                                    <p class="textos">
-                                        {{ 'pos.factura.referencia' | translate }}
-                                        100
-                                    </p>
-                                    <p class="textos">{{ 'pos.factura.banco' | translate }}
-                                        10 </p>
-                                    <p class="textos">{{ 'pos.factura.cuenta' | translate }}
-                                        Cuenta 1 </p>
-                                    <p class="textos">
-                                        {{ 'pos.factura.monto' | translate }} {{0 | currency:' ':'symbol':'2.2-2' }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pago">
-                            <span class="spacer"></span>
-                            <div class="descripcion-total">
-                                <div class="dFlex">
-                                    <p class="subtitulo-total">{{ 'pos.factura.subtotal' | translate }}</p>
-                                    <span class="spacer"></span>
-                                    <p class="textos-total">
-                                        {{4 | currency:' ':'symbol':'2.2-2'}}
-                                    </p>
-                                </div>
-                                <div class="dFlex">
-                                    <p class="subtitulo-total">{{ 'pos.factura.cargos' | translate }}</p>
-                                    <span class="spacer"></span>
-                                    <p class="textos-total"> {{ 10 | currency:' ':'symbol':'2.2-2' }}
-                                    </p>
-                                </div>
-                                <div class="dFlex">
-                                    <p class="subtitulo-total">{{ 'pos.factura.descuentos' | translate }}</p>
-                                    <span class="spacer"></span>
-                                    <p class="textos-total">
-                                        {{5 | currency:' ':'symbol':'2.2-2' }}
-                                    </p>
-                                </div>
-                                <!-- <hr> -->
-                                <div class="dFlex total-barra">
-                                    <p class="subtitulo-total">{{ 'pos.factura.total' | translate }}</p>
-                                    <span class="spacer"></span>
-                                    <p class="textos-total">{{5 | currency:' ':'symbol':'2.2-2' }}
-                                    </p>
+                                    <p class="textos">Fecha Fin</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+
+                    <div class="dFlex">
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde ">{{ 'pos.factura.receptor' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">{{ 'pos.factura.nit' | translate }}: 1234567-8</p>
+                                <p class="textos">{{ 'pos.factura.nombre' | translate }}: Cliente 1</p>
+                                <p class="textos">{{ 'pos.factura.direccion' | translate }}: Ciudad</p>
+                            </div>
+                        </div>
+
+                        <span class="spacer"></span>
+                        <div class="bloqueDetalle">
+                            <p class="subtitulo-borde ">{{ 'pos.factura.vendedor' | translate }}</p>
+                            <div class="descripciones">
+                                <p class="textos">Vendedor 2</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dFlex">
+                        <div class="productoPagoAgregado">
+                            <p class="subtitulo">{{ 'pos.factura.productos' | translate }}</p>
+                            <div class="descripcionProductoPago">
+                                <p class="textos">1 x 10</p>
+                                <p class="textos">{{ 'pos.factura.sku' | translate }} Café</p>
+                                <p class="textos">{{ 'pos.factura.precio_unitario' | translate }}
+                                    {{ 0 | currency: ' ' :'symbol':'2.2-2' }}
+                                </p>
+                                <p class="textos">{{ 'pos.factura.total' | translate }} {{100 | currency:'
+                                    ':'symbol':'2.2-2' }}
+                                </p>
+                            </div>
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="productoPagoAgregado">
+                            <p class="subtitulo">{{ 'pos.factura.formas_pago' | translate }}</p>
+                            <div class="descripcionProductoPago">
+                                <p class="textos">Cargo/Descuento</p>
+                                <p class="textos">{{ 'pos.factura.autorizacion' | translate }}
+                                    453
+                                </p>
+                                <p class="textos">
+                                    {{ 'pos.factura.referencia' | translate }}
+                                    100
+                                </p>
+                                <p class="textos">{{ 'pos.factura.banco' | translate }}
+                                    10 </p>
+                                <p class="textos">{{ 'pos.factura.cuenta' | translate }}
+                                    Cuenta 1 </p>
+                                <p class="textos">
+                                    {{ 'pos.factura.monto' | translate }} {{0 | currency:' ':'symbol':'2.2-2' }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dFlex">
+                        <span class="spacer"></span>
+                        <div class="descripcion-total">
+                            <div class="dFlex">
+                                <p class="subtitulo-total">{{ 'pos.factura.subtotal' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos-total">
+                                    {{4 | currency:' ':'symbol':'2.2-2'}}
+                                </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo-total">{{ 'pos.factura.cargos' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos-total"> {{ 10 | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="subtitulo-total">{{ 'pos.factura.descuentos' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos-total">
+                                    {{5 | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                            </div>
+                            <!-- <hr> -->
+                            <div class="dFlex total-barra">
+                                <p class="subtitulo-total">{{ 'pos.factura.total' | translate }}</p>
+                                <span class="spacer"></span>
+                                <p class="textos-total">{{5 | currency:' ':'symbol':'2.2-2' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
