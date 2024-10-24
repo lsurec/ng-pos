@@ -110,6 +110,7 @@ import { MoveCheckTransactionComponent } from './displays/prcRestaurante/compone
 import { ErrorComandaComponent } from './displays/prcRestaurante/components/error-comanda/error-comanda.component';
 import { MoveRestaurantComponent } from './displays/prcRestaurante/components/move-restaurant/move-restaurant.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { SearchDocComponent } from './components/search-doc/search-doc.component';
 
 @NgModule({
   declarations: [
@@ -189,6 +190,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MoveCheckTransactionComponent,
     ErrorComandaComponent,
     MoveRestaurantComponent,
+    SearchDocComponent,
   ],
   imports: [
     MatCardModule,
