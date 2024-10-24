@@ -44,8 +44,12 @@ export class SearchDocComponent implements OnInit, AfterViewInit {
     "pedro",
     "sandia"
   ];
+
+  verError: boolean = false;
+  regresar: number = 0;
   busqueda: string = "";
   botonIrArriba: boolean = false;
+  isLoading: boolean = false;
   botonIrAbajo: boolean = true;
   fechaInicial?: NgbDateStruct; //fecha inicial 
   fechaFinal?: NgbDateStruct; //fecha final
@@ -64,8 +68,9 @@ export class SearchDocComponent implements OnInit, AfterViewInit {
     this.viewDetails()
   }
 
-
-  loadData() { }
+  loadData() {
+    this.isLoading = true;
+  }
 
   sincronizarFechas() { }
 

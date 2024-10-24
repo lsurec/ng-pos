@@ -1,188 +1,198 @@
-<div *ngIf="verBusqueda">
-    <mat-toolbar class="toolbarPhone">
-        <mat-toolbar-row class="toolbar-row">
-            <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-icon-button (click)="loadData()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-            <p class="titulo">Buscar documentos</p>
+<app-error *ngIf="verError" [regresar]="regresar"></app-error>
+<div *ngIf="!verError">
+    <app-progress *ngIf="isLoading" class="progress"></app-progress>
+    <div *ngIf="!isLoading">
+        <div *ngIf="verBusqueda">
+            <mat-toolbar class="toolbarPhone">
+                <mat-toolbar-row class="toolbar-row">
+                    <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="loadData()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <p class="titulo">Buscar documentos</p>
 
 
-            <span class="spacer"></span>
+                    <span class="spacer"></span>
 
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <mat-toolbar class="toolbarlargeTitle">
-        <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button mat-icon-button (click)="loadData()">
-            <mat-icon>refresh</mat-icon>
-        </button>
-        <p class="titulo">Buscar documentos</p>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbarlargeTitle">
+                <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <button mat-icon-button (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+                <p class="titulo">Buscar documentos</p>
 
 
-        <span class="spacer"></span>
-
-    </mat-toolbar>
-
-    <div class="container_main" #contentContainer>
-
-        <div class="filtros">
-            <div class="fechas">
-                <form class="calendarios">
-                    <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
-                    <div class="input-group">
-                        <input class="form-control" name="dp" [(ngModel)]=" fechaInicial" ngbDatepicker
-                            #d="ngbDatepicker" (ngModelChange)="sincronizarFechas()" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()" type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                        </button>
-                    </div>
-                </form>
                 <span class="spacer"></span>
 
-                <form class="calendarios">
-                    <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
+            </mat-toolbar>
+
+            <div class="container_main" #contentContainer>
+
+                <div class="filtros">
+                    <div class="fechas">
+                        <form class="calendarios">
+                            <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
+                            <div class="input-group">
+                                <input class="form-control" name="dp" [(ngModel)]=" fechaInicial" ngbDatepicker
+                                    #d="ngbDatepicker" (ngModelChange)="sincronizarFechas()" />
+                                <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()"
+                                    type="button">
+                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                </button>
+                            </div>
+                        </form>
+                        <span class="spacer"></span>
+
+                        <form class="calendarios">
+                            <p class="textosBold14">{{ 'pos.documento.fechaFin' | translate }}</p>
 
 
-                    <div class="input-group">
-                        <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
-                            #d2="ngbDatepicker" [minDate]="fechaInicial!" (ngModelChange)="loadData()" />
-                        <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()" type="button">
-                            <mat-icon class="ico-calendario">calendar_month</mat-icon>
-                        </button>
+                            <div class="input-group">
+                                <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
+                                    #d2="ngbDatepicker" [minDate]="fechaInicial!" (ngModelChange)="loadData()" />
+                                <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()"
+                                    type="button">
+                                    <mat-icon class="ico-calendario">calendar_month</mat-icon>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <span class="spacer"></span>
-        </div>
+                    <span class="spacer"></span>
+                </div>
 
 
-        <div *ngIf="documentos.length > 0">
-            <!--Boton ir arriba-->
-            <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
-                <mat-icon>arrow_upward</mat-icon>
-            </button>
-            <!--Boton ir abajo-->
-            <button *ngIf="botonIrAbajo && ! botonIrArriba" mat-mini-fab class="button_down_content"
-                (click)="scrollDown()">
-                <mat-icon>south</mat-icon>
-            </button>
-        </div>
-
-        <div class="informacion">
-            <p class="textosBold14">{{ 'pos.factura.buscarPor' | translate }}:</p>
-            <div class="dFlex">
-                <div class="input-container">
-                    <input #inputFilterDoc class="barra-de-busqueda" type="search" name="search" [(ngModel)]="busqueda"
-                        autocomplete="off" placeholder="{{'pos.inputs.buscar' | translate}}"
-                        (ngModelChange)="filtrar()">
-                    <button mat-icon-button class="iconoLupa" type="submit">
-                        <mat-icon>search</mat-icon>
+                <div *ngIf="documentos.length > 0">
+                    <!--Boton ir arriba-->
+                    <button *ngIf="botonIrArriba" mat-mini-fab class="button_up_content" (click)="scrollUp()">
+                        <mat-icon>arrow_upward</mat-icon>
+                    </button>
+                    <!--Boton ir abajo-->
+                    <button *ngIf="botonIrAbajo && ! botonIrArriba" mat-mini-fab class="button_down_content"
+                        (click)="scrollDown()">
+                        <mat-icon>south</mat-icon>
                     </button>
                 </div>
-                <span class="spacer"></span>
-            </div>
-        </div>
 
-        <div class="d-flex">
-            <span class="spacer"></span>
-            <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
-                ({{documentos.length}})
-            </p>
-        </div>
+                <div class="informacion">
+                    <p class="textosBold14">{{ 'pos.factura.buscarPor' | translate }}:</p>
+                    <div class="dFlex">
+                        <div class="input-container">
+                            <input #inputFilterDoc class="barra-de-busqueda" type="search" name="search"
+                                [(ngModel)]="busqueda" autocomplete="off"
+                                placeholder="{{'pos.inputs.buscar' | translate}}" (ngModelChange)="filtrar()">
+                            <button mat-icon-button class="iconoLupa" type="submit">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                        <span class="spacer"></span>
+                    </div>
+                </div>
 
-        <div class="cambiarFecha" *ngIf="documentos.length == 0">
-            <span class="spacer"></span>
-            <p class="textosBold14"> {{ 'pos.factura.actualizarFechas' | translate }} </p>
-            <span class="spacer"></span>
-        </div>
-
-        <div class="lista-documentos" *ngFor="let documento of documentos">
-
-            <div class="dFlex">
-                <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
-                <p class="padding-right"></p>
-                <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}:
-                    {{documento.consecutivo_Interno_Ref}}
-                </p>
-                <span class="spacer"></span>
-                <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.usuario}}</p>
-            </div>
-
-            <div class="documentos-origen" (click)=" detalleDoc()">
-                <div class="dFlex">
-                    <p class="textosBold14">{{ 'pos.documento.fechaHora' | translate }} </p>
-                    <p class="textos14">14/10/2014 13:00:00</p>
-
+                <div class="d-flex">
                     <span class="spacer"></span>
-                    <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
-                    <p class="textos14">14/10/2014</p>
-                </div>
-                <div class="dFlex">
-                    <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
-                    <p class="textos14">La Carreta </p>
-                </div>
-                <div class="dFlex">
-                    <p class="textosBold14">{{ 'pos.factura.cliente' | translate }}: </p>
-                    <p class="textos14"> Juan Perez </p>
-                </div>
-                <div class="dFlex">
-                    <p class="textosBold14">NIT: </p>
-                    <p class="textos14"> 8765432-1 </p>
-                </div>
-                <div class="dFlex">
-                    <span class="spacer"></span>
-                    <p class="textosBold14">{{ 'pos.factura.total' | translate }}: {{documento.monto | currencyFormat}}
+                    <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
+                        ({{documentos.length}})
                     </p>
                 </div>
+
+                <div class="cambiarFecha" *ngIf="documentos.length == 0">
+                    <span class="spacer"></span>
+                    <p class="textosBold14"> {{ 'pos.factura.actualizarFechas' | translate }} </p>
+                    <span class="spacer"></span>
+                </div>
+
+                <div class="lista-documentos" *ngFor="let documento of documentos">
+
+                    <div class="dFlex">
+                        <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
+                        <p class="padding-right"></p>
+                        <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}:
+                            {{documento.consecutivo_Interno_Ref}}
+                        </p>
+                        <span class="spacer"></span>
+                        <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.usuario}}</p>
+                    </div>
+
+                    <div class="documentos-origen" (click)=" detalleDoc()">
+                        <div class="dFlex">
+                            <p class="textosBold14">{{ 'pos.documento.fechaHora' | translate }} </p>
+                            <p class="textos14">14/10/2014 13:00:00</p>
+
+                            <span class="spacer"></span>
+                            <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
+                            <p class="textos14">14/10/2014</p>
+                        </div>
+                        <div class="dFlex">
+                            <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
+                            <p class="textos14">La Carreta </p>
+                        </div>
+                        <div class="dFlex">
+                            <p class="textosBold14">{{ 'pos.factura.cliente' | translate }}: </p>
+                            <p class="textos14"> Juan Perez </p>
+                        </div>
+                        <div class="dFlex">
+                            <p class="textosBold14">NIT: </p>
+                            <p class="textos14"> 8765432-1 </p>
+                        </div>
+                        <div class="dFlex">
+                            <span class="spacer"></span>
+                            <p class="textosBold14">{{ 'pos.factura.total' | translate }}: {{documento.monto |
+                                currencyFormat}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="spacer"></span>
             </div>
         </div>
 
-        <span class="spacer"></span>
+
+        <div *ngIf="verDetalle">
+
+            <mat-toolbar class="toolbarPhone">
+                <mat-toolbar-row class="toolbar-row">
+                    <button mat-icon-button (click)="backSearch() "
+                        matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="loadData()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <p class="titulo">Detalle documento: 123</p>
+
+
+                    <span class="spacer"></span>
+
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbarlargeTitle">
+                <button mat-icon-button (click)="backSearch() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <button mat-icon-button (click)="loadData()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+                <p class="titulo">Detalle documento: 123</p>
+
+
+                <span class="spacer"></span>
+
+            </mat-toolbar>
+
+            <div class="container_main">
+
+            </div>
+
+        </div>
+
+        <!-- Mostrar logos -->
+        <app-barra-logos></app-barra-logos>
     </div>
 </div>
-
-
-<div *ngIf="verDetalle">
-
-    <mat-toolbar class="toolbarPhone">
-        <mat-toolbar-row class="toolbar-row">
-            <button mat-icon-button (click)="backSearch() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-icon-button (click)="loadData()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-            <p class="titulo">Detalle documento: 123</p>
-
-
-            <span class="spacer"></span>
-
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <mat-toolbar class="toolbarlargeTitle">
-        <button mat-icon-button (click)="backSearch() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button mat-icon-button (click)="loadData()">
-            <mat-icon>refresh</mat-icon>
-        </button>
-        <p class="titulo">Detalle documento: 123</p>
-
-
-        <span class="spacer"></span>
-
-    </mat-toolbar>
-
-    <div class="container_main">
-
-    </div>
-
-</div>
-
-<!-- Mostrar logos -->
-<app-barra-logos></app-barra-logos>
