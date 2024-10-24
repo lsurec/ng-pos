@@ -20,9 +20,9 @@ $personalizado         : var(--global-color);
 $rojo-error            : #cc4141;
 $sombra-campos         : #8b8b8b;
 $fondo-campos          : #3d3c3c;
-
-$personalizado :var(--global-color);
-$bloques       : var(--bloques-oscuro);
+$personalizado         :var(--global-color);
+$bloques               : var(--bloques-oscuro);
+$azul-dark             : #9fc7ff;
 
 .espacio-lineas {
     line-height: 1.2;
@@ -183,6 +183,7 @@ input[type="radio"] {
     top             : 50%;
     left            : 50%;
     transform       : translate(-50%, -50%);
+    color           : var(--blanco) !important;
 }
 
 /* Importing Bootstrap SCSS file. */
@@ -304,6 +305,7 @@ input[type="radio"] {
     box-shadow      : var(--sombra-oscuro) !important;
 }
 
+.dark-theme .cuenta,
 .dark-theme .opcion-vista:hover,
 .dark-theme .tarea:hover {
     background-color: $bloques !important;
@@ -325,6 +327,7 @@ input[type="radio"] {
 }
 
 //TEXTOS EN COLOR BLANCO
+.dark-theme .pin,
 .dark-theme .contenedorModulo,
 .dark-theme .desa,
 .dark-theme .mat-mdc-radio-button .mdc-form-field,
@@ -452,6 +455,7 @@ input[type="radio"] {
 }
 
 // Borde izquierdo 
+.dark-theme .detalleOrden,
 .dark-theme .detalle-tarea {
     border-left: 1px solid var(--bordes-oscuro) !important;
 }
@@ -583,7 +587,11 @@ input[type="radio"] {
 // .dark-theme button:not(:disabled),
 // .dark-theme .comentario,
 // .dark-theme .comentario_desc,
-
+.dark-theme .borderBottom,
+.dark-theme .bloqueW10T,
+.dark-theme .bloqueW20T,
+.dark-theme .resumen,
+.dark-theme .mat-stepper-horizontal-line,
 .dark-theme .descripcion-error,
 .dark-theme .descripcion-error-doble,
 .dark-theme .cotizacion,
@@ -602,6 +610,7 @@ input[type="radio"] {
     border-color: var(--bordes-oscuro) !important;
 }
 
+.dark-theme .prefBold12,
 .dark-theme .ruta:hover {
     color: $personalizado !important;
 }
@@ -680,6 +689,12 @@ input[type="radio"] {
 
 //scrolls 
 
+.dark-theme .resultados::-webkit-scrollbar,
+.dark-theme .resultados::-webkit-scrollbar-track,
+.dark-theme .contenido-dialogo::-webkit-scrollbar,
+.dark-theme .contenido-dialogo::-webkit-scrollbar-track,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar-track,
 .dark-theme .listas-documentos::-webkit-scrollbar,
 .dark-theme .listas-documentos::-webkit-scrollbar-track,
 .dark-theme .detallesUsuario::-webkit-scrollbar,
@@ -736,6 +751,9 @@ input[type="radio"] {
 
 
 //Color barra scroll
+.dark-theme .resultados::-webkit-scrollbar-thumb,
+.dark-theme .contenido-dialogo::-webkit-scrollbar-thumb,
+.dark-theme .contenido-ubicaciones-mesas::-webkit-scrollbar-thumb,
 .dark-theme .listas-documentos::-webkit-scrollbar-thumb,
 .dark-theme .detallesUsuario::-webkit-scrollbar-thumb,
 .dark-theme .mdc-menu-surface.mat-mdc-select-panel::-webkit-scrollbar-thumb,
@@ -894,11 +912,24 @@ input[type="radio"] {
 
 
 //hover seleccionado
+.dark-theme .ubicacionMesaSelect,
+.dark-theme .ubicacionMesaSelect:hover,
 .dark-theme .pago-seleccionado,
 .dark-theme .elemento:hover {
     background-color: var(--seleccionado2) !important;
 }
 
+
+.dark-theme .icoEditar,
+.dark-theme .editarCuenta:hover,
+.dark-theme .verimagen {
+    color: var(--boton-ico-oscuro) !important;
+}
+
+.dark-theme .transaccion,
+.dark-theme .product-me,
+.dark-theme .fondoDetalle,
+.dark-theme .separadorGris,
 .dark-theme .detalleResponsable,
 .dark-theme .usuario-busqueda,
 .dark-theme .buscar-documentos,
@@ -920,4 +951,59 @@ input[type="radio"] {
 .dark-theme .pagar-detalle {
     border: solid 0.5px var(--bordes-oscuro);
 
+}
+
+.dark-theme .resultado,
+.dark-theme .pin,
+.dark-theme .ubicacion,
+.dark-theme .mesa {
+    border: solid 0.5px var(--bordes-oscuro) !important;
+}
+
+//sin  borde arriba
+.dark-theme .resultado {
+    border-top: none !important;
+}
+
+//solo fondo
+.dark-theme .cantidad-registros,
+.dark-theme .traslado,
+.dark-theme .contenidoTraslado,
+.dark-theme .contenido,
+.dark-theme .resultados {
+    background: $fondo-oscuro !important;
+}
+
+//borde abajo 0.5px
+.dark-theme .comandaBotones,
+.dark-theme .registrosTareas,
+.dark-theme .verMas,
+.dark-theme .input-container-tarea {
+    border-bottom: 0.5px solid var(--bordes-oscuro) !important;
+}
+
+//borde izquierzo y derecho
+.dark-theme .registrosTareas,
+.dark-theme .verMas {
+    border-right: 0.5px solid var(--bordes-oscuro) !important;
+    border-left : 0.5px solid var(--bordes-oscuro) !important;
+}
+
+//color personalizado
+
+.dark-theme .irDetalleCuenta,
+.dark-theme .verMas,
+.dark-theme .verMasTxt {
+    color: $azul-dark !important;
+}
+
+//borde azul
+.dark-theme .irDetalleCuenta {
+    border-bottom: 0.5px solid $azul-dark !important;
+}
+
+//sombra
+.dark-theme .resumen,
+.dark-theme .resultados {
+    box-shadow: var(--sombra-oscuro) !important;
 }

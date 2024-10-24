@@ -58,7 +58,7 @@ export class RetryService {
     this.felProcess.next();
   }
 
-  
+
   private printFormat = new Subject<void>();
 
   printFormat$ = this.printFormat.asObservable();
@@ -67,4 +67,12 @@ export class RetryService {
     this.printFormat.next();
   }
 
+  //para productos de una clasificacion
+  private products = new Subject<void>();
+
+  products$ = this.products.asObservable();
+
+  productsRetry() {
+    this.products.next();
+  }
 }

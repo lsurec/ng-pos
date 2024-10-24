@@ -3,4 +3,5 @@ export interface VendedorInterface {
     cuenta_Cta:             string;
     iD_Cuenta:              string;
     nom_Cuenta_Correntista: string;
+    orden: number;
 }

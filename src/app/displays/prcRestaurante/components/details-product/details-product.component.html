@@ -1,0 +1,141 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <button mat-icon-button (click)="loadData()" matTooltip="{{ 'pos.botones.actualizar' | translate }}">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <p class="textBold"> {{restaurantService.classification?.des_Clasificacion}} </p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+        <div class="imgProducto">
+            <span class="spacer"></span>
+            <!-- <img src="assets/placeimg.jpg" class="image-product"> -->
+            <img src="https://aprende.guatemala.com/wp-content/uploads/2016/10/Receta-para-preparar-un-desayuno-chapin.jpg"
+                class="image-product">
+            <span class="spacer"></span>
+            <button mat-icon-button class="nuevaCuenta" (click)="newCheck()"
+                matTooltip="{{ 'pos.factura.nueva' | translate }}">
+                <mat-icon>person_add</mat-icon>
+            </button>
+        </div>
+
+        <div class="padding020 dFlex">
+            <p class="textBold">
+                {{restaurantService. product?.des_Producto}} ({{restaurantService. product?.producto_Id}})
+            </p>
+            <span class="spacer"></span>
+            <p class="textBold">
+                {{unitario!.precioU | currencyFormat }}
+            </p>
+        </div>
+
+        <hr>
+        <div class="bodega-tipo-precio">
+            <div class="menus">
+                <p class="textBold">{{ 'pos.factura.bodega' | translate }}</p>
+                <mat-select name="estado" class="bodegas"
+                    placeholder="{{ 'pos.factura.seleccionarBodega' | translate }}" [(ngModel)]=" bodega"
+                    (ngModelChange)="changeBodega()">
+                    <mat-option *ngFor="let bodega of  bodegas" [value]="bodega">
+                        ({{bodega.bodega}}) {{bodega.nombre}} | {{ 'pos.factura.existencia' | translate }}
+                        ({{bodega.existencia}})
+                    </mat-option>
+                </mat-select>
+            </div>
+            <span class="spacer"></span>
+            <div class="menus">
+                <div *ngIf="unitarios.length == 0">
+                    <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
+
+                    <p class="textBold">{{ 'pos.factura.sinPrecios' | translate }}</p>
+
+                </div>
+                <div *ngIf="unitarios.length > 0">
+                    <div *ngIf="unitarios[0].precio">
+                        <p class="textBold">{{ 'pos.factura.tipo_precio' | translate }}</p>
+                        <mat-select name="estado" class="bodegas"
+                            placeholder="{{ 'pos.factura.seleccionarTipoPrecio' | translate }}" [(ngModel)]="unitario"
+                            (ngModelChange)="calcTotal()">
+                            <mat-option *ngFor="let precio of  unitarios" [value]="precio">
+                                {{precio.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div *ngIf="!unitarios[0].precio">
+                        <p class="textBold">{{ 'pos.factura.presentaciones' | translate }}</p>
+                        <mat-select name="estado" class="bodegas"
+                            placeholder="{{ 'pos.factura.seleccionarPresentacion' | translate }}"
+                            [(ngModel)]=" unitario" (ngModelChange)="calcTotal()">
+                            <mat-option *ngFor="let precio of  unitarios" [value]="precio">
+                                {{precio.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="separadorGris"></div>
+        <div *ngFor="let father of garnishs; let indexFather = index">
+            <div class="guarniciones">
+                <div class="route-container">
+                    <div *ngFor="let route of father.route; let indexRoute = index" class="route-item"
+                        (click)="changeRoute(indexFather, indexRoute)">
+                        <p
+                            [ngClass]="{ 'grey-normal': indexRoute != father.route.length - 1, 'grey-bold': indexRoute == father.route.length - 1 }">
+                            {{ route.item?.descripcion }}
+                        </p>
+                        <mat-icon *ngIf="indexRoute != father.route.length - 1">arrow_right</mat-icon>
+                    </div>
+                </div>
+
+                <div class="text12">
+                    {{ 'pos.restaurante.seleccionar' | translate }}
+                </div>
+
+                <mat-radio-group [(ngModel)]="father.selected" class="example-radio-group">
+                    <mat-radio-button *ngFor="let child of father.route[father.route.length - 1].children"
+                        [value]="child.item" (change)="changeGarnishActive(indexFather, child)"
+                        class="example-radio-button">
+                        {{ child.item?.descripcion }}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="separadorGris"></div>
+        </div>
+        <div class="padding020">
+            <p class="textBold">{{'pos.restaurante.notasPro' | translate }}</p>
+            <textarea name="notas" id="descripcion" cols="30" rows="2" class="campos"
+                placeholder="{{'pos.restaurante.instrucciones' | translate }}" [(ngModel)]="observacion"></textarea>
+        </div>
+    </div>
+    <hr>
+    <div class="botones">
+        <div class="dFlex">
+            <p class="textBold">{{ 'pos.factura.total' | translate }}</p>
+            <span class="spacer"></span>
+            <p class="textBold"> {{total | currencyFormat }} </p>
+        </div>
+        <div class="dFlex">
+            <div class="dFlex">
+                <div class="restar" (click)="restar()">
+                    <mat-icon class="sumar-restar">remove</mat-icon>
+                </div>
+                <input class="cantidad" type="text" name="search" [(ngModel)]="cantidad" autocomplete="off"
+                    (ngModelChange)="calcTotal()" (keypress)="validarNumeros($event)">
+                <div class="sumar" (click)="sumar()">
+                    <mat-icon class="sumar-restar">add</mat-icon>
+                </div>
+            </div>
+            <span class="spacer"></span>
+            <button class="agregarBtn" mat-stroked-button (click)="enviar()">
+                {{ 'pos.botones.agregar' | translate }}
+            </button>
+        </div>
+    </div>
+</div>

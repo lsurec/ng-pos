@@ -25,6 +25,7 @@ import { PrecioInterface } from 'src/app/displays/prc_documento_3/interfaces/pre
 import { UnitarioInterface } from 'src/app/displays/prc_documento_3/interfaces/unitario.interface';
 import { ValidateProductInterface } from '../../interfaces/validate-product.interface';
 import { CurrencyPipe } from '@angular/common';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-convert-docs',
@@ -124,14 +125,15 @@ export class ConvertDocsComponent {
 
     //buscar  informacion de la transacción
 
-
-    let resTipoTransacciones: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
       this.globalConvertSrevice.docOriginSelect!.serie_Documento,
       this.globalConvertSrevice.docOriginSelect!.empresa,
     );
+
+    let resTipoTransacciones: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion) ;
 
     //si no se pudo actualziar mostrar alerta
     if (!resTipoTransacciones.status) {
@@ -148,7 +150,8 @@ export class ConvertDocsComponent {
     //Validar que las transaccones por autorizar esten disponibles
     for (const tra of traCheks) {
 
-      let resProduct = await this._productService.getProduct(
+
+      const apiProduct = ()=> this._productService.getProduct(
         this.token,
         this.user,
         this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
@@ -156,6 +159,8 @@ export class ConvertDocsComponent {
         0,
         100,
       );
+
+      let resProduct = await ApiService.apiUse(apiProduct) ;
 
 
 
@@ -199,8 +204,7 @@ export class ConvertDocsComponent {
       //Detalled del producto encontrados
       let prod: ProductoInterface = productSearch[iProd];
 
-      // /buscar precios
-      let resPrecio = await this._productService.getPrecios(
+      const apiPrecio = ()=> this._productService.getPrecios(
         this.user,
         this.token,
         tra.detalle.bodega,
@@ -209,6 +213,9 @@ export class ConvertDocsComponent {
         0,
         "0",
       );
+
+      // /buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio) ;
 
 
       if (!resPrecio.status) {
@@ -257,8 +264,7 @@ export class ConvertDocsComponent {
       }
 
 
-      //verifcar disponiobilidad del producto
-      let resValidaDisponibilidad: ResApiInterface = await this._productService.getValidateProducts(
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.globalConvertSrevice.docOriginSelect!.serie_Documento,
         this.globalConvertSrevice.docOriginSelect!.tipo_Documento,
@@ -274,6 +280,9 @@ export class ConvertDocsComponent {
         precioSelect.id,
         this.token,
       );
+
+      //verifcar disponiobilidad del producto
+      let resValidaDisponibilidad: ResApiInterface = await ApiService.apiUse(apiValidateProd);
 
 
       if (!resValidaDisponibilidad.status) {
@@ -319,14 +328,15 @@ export class ConvertDocsComponent {
     //Recorrer todas las transacciones seleccionadas
     for (const tra of traCheks) {
 
-
-      //Actualizar transacciones que se vana a confirmar
-      let resActualizar = await this._receptionService.postActualizar(
+      const apiActualizarDoc = ()=> this._receptionService.postActualizar(
         this.user,
         this.token,
         tra.detalle.relacion_Consecutivo_Interno,
         tra.disponibleMod,
       );
+
+      //Actualizar transacciones que se vana a confirmar
+      let resActualizar = await ApiService.apiUse(apiActualizarDoc);
 
       //si no se pudo actualziar mostrar alerta
       if (!resActualizar.status) {
@@ -354,11 +364,13 @@ export class ConvertDocsComponent {
     };
 
 
-    //conversion de documento origen a documento destino
-    let resConvert: ResApiInterface = await this._receptionService.postConvertir(
+    const apiConvert = ()=> this._receptionService.postConvertir(
       this.token,
       param,
     );
+
+    //conversion de documento origen a documento destino
+    let resConvert: ResApiInterface = await ApiService.apiUse(apiConvert);
 
 
     //si el srvicio de eejecuto incorrectaemnete
@@ -391,8 +403,7 @@ export class ConvertDocsComponent {
     this.globalConvertSrevice.detialsDocDestination = [];
 
 
-    //Consumo del servico 
-    let res: ResApiInterface = await this._receptionService.getDetallesDocDestino(
+    const apiDetalleDestino = ()=> this._receptionService.getDetallesDocDestino(
       this.token,
       this.user,
       this.globalConvertSrevice.docDestinoSelect!.documento,
@@ -402,7 +413,10 @@ export class ConvertDocsComponent {
       this.globalConvertSrevice.docDestinoSelect!.localizacion,
       this.globalConvertSrevice.docDestinoSelect!.estacion,
       this.globalConvertSrevice.docDestinoSelect!.fechaReg,
-    )
+    );
+
+    //Consumo del servico 
+    let res: ResApiInterface = await ApiService.apiUse(apiDetalleDestino); 
 
 
     //si el consumo el servic o salio mal
@@ -424,8 +438,8 @@ export class ConvertDocsComponent {
     //inciiar carga
     this.globalConvertSrevice.isLoading = true;
 
-    //Consumo para obtener detalles del docuemnto origen
-    let res: ResApiInterface = await this._receptionService.getDetallesDocOrigen(
+
+    const apiDetalleOrigen = ()=> this._receptionService.getDetallesDocOrigen(
       this.token,
       this.user,
       this.globalConvertSrevice.docOriginSelect!.documento,
@@ -436,7 +450,10 @@ export class ConvertDocsComponent {
       this.globalConvertSrevice.docOriginSelect!.estacion_Trabajo,
       this.globalConvertSrevice.docOriginSelect!.fecha_Reg,
 
-    )
+    );
+
+    //Consumo para obtener detalles del docuemnto origen
+    let res: ResApiInterface = await ApiService.apiUse(apiDetalleOrigen); 
 
     //finalizar carga
     this.globalConvertSrevice.isLoading = false;

@@ -1,0 +1,24 @@
+<app-progress *ngIf="isLoading" class="progress"></app-progress>
+<mat-toolbar-row class="head__sidenav" *ngIf="!isLoading">
+    <span class="spacer"></span>
+    <p class="textBold">{{restaurantService. product?.des_Producto}} </p>
+    <span class="spacer"></span>
+
+    <span class="close" (click)="closeDialog()">&times;</span>
+</mat-toolbar-row>
+
+<div mat-dialog-content class="dialog" *ngIf="!isLoading">
+
+    <div class="contenido-dialogo">
+
+        <div class="imagen">
+            <span class="spacer"></span>
+            <!-- <img src="assets/placeimg.jpg" class="image-product"> -->
+            <img [src]="urlImg"
+                class="image-product">
+            <span class="spacer"></span>
+        </div>
+
+    </div>
+
+</div>

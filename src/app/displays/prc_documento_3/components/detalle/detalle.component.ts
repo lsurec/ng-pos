@@ -23,6 +23,7 @@ import { UtilitiesService } from 'src/app/services/utilities.service';
 import { ValidateProductInterface } from 'src/app/displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { PrecioDiaInterface } from '../../interfaces/precio-dia.interface';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-detalle',
@@ -90,8 +91,6 @@ export class DetalleComponent implements AfterViewInit {
     private _dataUserService: DataUserService,
 
   ) {
-    //filtro producto
-    facturaService.filtrosProductos = PreferencesService.filtroProducto;
   }
 
 
@@ -113,8 +112,7 @@ export class DetalleComponent implements AfterViewInit {
     let boddegaTra = this.facturaService.traInternas[indexTra].bodega; // bodega  de la transaccion
     let precioTra = this.facturaService.traInternas[indexTra].precio; //tipo precio de la transaccion
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -122,6 +120,9 @@ export class DetalleComponent implements AfterViewInit {
       productTra.producto,
       productTra.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //Si bo se pudo obtener ls bodegas
     if (!resBodega.status) {
@@ -164,8 +165,8 @@ export class DetalleComponent implements AfterViewInit {
       this.productoService.bodega = this.productoService.bodegas[0];
       let bodega: number = this.productoService.bodega.bodega;
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+
+      const apiPrecio = ()=> this._productService.getPrecios(
         this.user,
         this.token,
         bodega,
@@ -174,6 +175,9 @@ export class DetalleComponent implements AfterViewInit {
         this.facturaService.cuenta?.cuenta_Correntista ?? 0,
         this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
+
+      //buscar precios
+      let resPrecio = await ApiService.apiUse(apiPrecio);
 
 
       //Si no se pudo obtener precios
@@ -219,13 +223,16 @@ export class DetalleComponent implements AfterViewInit {
 
       //si no hay precios buscar factor conversion
       if (this.productoService.precios.length == 0) {
-        let resfactor = await this._productService.getFactorConversion(
+
+        const apiFactor = ()=> this._productService.getFactorConversion(
           this.user,
           this.token,
           bodega,
           productTra.producto,
           productTra.unidad_Medida,
         );
+
+        let resfactor = await ApiService.apiUse(apiFactor);
 
 
         //si no sepudo obtener factores de conversion
@@ -378,16 +385,11 @@ export class DetalleComponent implements AfterViewInit {
 
       }
     }
-
-
-
-
-
   }
+  
 
-
-  addTransaction() {
-
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
   }
 
   //bsuqueda de productos
@@ -439,8 +441,7 @@ export class DetalleComponent implements AfterViewInit {
     this.facturaService.isLoading = true;
 
 
-
-    let resproductoDesc = await this._productService.getProduct(
+    const apiProduct = ()=>  this._productService.getProduct(
       this.token,
       this.user,
       this.estacion,
@@ -449,6 +450,8 @@ export class DetalleComponent implements AfterViewInit {
       this.facturaService.rangoFin,
 
     );
+
+    let resproductoDesc = await ApiService.apiUse(apiProduct);
 
 
     if (!resproductoDesc.status) {
@@ -524,8 +527,7 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //buscar bodegas del produxto
-    let resBodega = await this._productService.getBodegaProducto(
+    const apiBodega = ()=> this._productService.getBodegaProducto(
       this.user,
       this.token,
       this.empresa,
@@ -533,6 +535,9 @@ export class DetalleComponent implements AfterViewInit {
       product.producto,
       product.unidad_Medida,
     );
+
+    //buscar bodegas del produxto
+    let resBodega = await ApiService.apiUse(apiBodega);
 
     //si fallo la busquea¿da de bodegas
     if (!resBodega.status) {
@@ -569,29 +574,85 @@ export class DetalleComponent implements AfterViewInit {
     }
 
 
-    //Si solo hay una bodega
-    if (this.productoService.bodegas.length == 1) {
-      this.productoService.bodega = this.productoService.bodegas[0];
-      let bodega: number = this.productoService.bodega.bodega;
+    this.productoService.bodega = this.productoService.bodegas.reduce((prev, curr) => {
+      return (curr.orden < prev.orden) ? curr : prev;
+    });
 
-      //buscar precios
-      let resPrecio = await this._productService.getPrecios(
+    //Si solo hay una bodega
+    let bodega: number = this.productoService.bodega.bodega;
+
+    const apiPrecio = ()=> this._productService.getPrecios(
+      this.user,
+      this.token,
+      bodega,
+      product.producto,
+      product.unidad_Medida,
+      this.facturaService.cuenta?.cuenta_Correntista ?? 0,
+      this.facturaService.cuenta?.cuenta_Cta ?? "0",
+    );
+
+    //buscar precios
+    let resPrecio = await  ApiService.apiUse(apiPrecio);
+
+
+    //si no fiue pocible obtener los precios mmostrar error 
+    if (!resPrecio.status) {
+
+      //finalziuar proceso
+      this.facturaService.isLoading = false;
+
+
+      let verificador = await this._notificationsService.openDialogActions(
+        {
+          title: this._translate.instant('pos.alertas.salioMal'),
+          description: this._translate.instant('pos.alertas.error'),
+          verdadero: this._translate.instant('pos.botones.informe'),
+          falso: this._translate.instant('pos.botones.aceptar'),
+        }
+      );
+
+      if (!verificador) return;
+
+      this.verError(resPrecio);
+
+      return;
+
+    }
+
+    //precios encontrados
+    let precios: PrecioInterface[] = resPrecio.response;
+
+    precios.forEach(element => {
+      this.productoService.precios.push(
+        {
+          id: element.tipo_Precio,
+          precioU: element.precio_Unidad,
+          descripcion: element.des_Tipo_Precio,
+          precio: true,
+          moneda: element.moneda,
+          orden: element.precio_Orden,
+        }
+      );
+    });
+
+    //si no hay precios buscar factor conversion
+    if (this.productoService.precios.length == 0) {
+      
+      const apiFactor = ()=> this._productService.getFactorConversion(
         this.user,
         this.token,
         bodega,
         product.producto,
         product.unidad_Medida,
-        this.facturaService.cuenta?.cuenta_Correntista ?? 0,
-        this.facturaService.cuenta?.cuenta_Cta ?? "0",
       );
 
+      
+      let resfactor = await ApiService.apiUse(apiFactor);
 
-      //si no fiue pocible obtener los precios mmostrar error 
-      if (!resPrecio.status) {
+      //si no feue posible controrar los factores de conversion mostrar error
+      if (!resfactor.status) {
 
-        //finalziuar proceso
         this.facturaService.isLoading = false;
-
 
         let verificador = await this._notificationsService.openDialogActions(
           {
@@ -604,114 +665,52 @@ export class DetalleComponent implements AfterViewInit {
 
         if (!verificador) return;
 
-        this.verError(resPrecio);
+        this.verError(resfactor);
 
         return;
 
       }
 
-      //precios encontrados
-      let precios: PrecioInterface[] = resPrecio.response;
+      //factores de convrsion encontradposa
+      let factores: FactorConversionInterface[] = resfactor.response;
 
-      precios.forEach(element => {
+      //nneyvo onbheoto precio interno
+      factores.forEach(element => {
         this.productoService.precios.push(
           {
             id: element.tipo_Precio,
             precioU: element.precio_Unidad,
             descripcion: element.des_Tipo_Precio,
-            precio: true,
+            precio: false,
             moneda: element.moneda,
-            orden: element.precio_Orden,
+            orden: element.tipo_Precio_Orden,
           }
         );
       });
 
-      //si no hay precios buscar factor conversion
-      if (this.productoService.precios.length == 0) {
-        let resfactor = await this._productService.getFactorConversion(
-          this.user,
-          this.token,
-          bodega,
-          product.producto,
-          product.unidad_Medida,
-        );
-
-        //si no feue posible controrar los factores de conversion mostrar error
-        if (!resfactor.status) {
-
-          this.facturaService.isLoading = false;
-
-          let verificador = await this._notificationsService.openDialogActions(
-            {
-              title: this._translate.instant('pos.alertas.salioMal'),
-              description: this._translate.instant('pos.alertas.error'),
-              verdadero: this._translate.instant('pos.botones.informe'),
-              falso: this._translate.instant('pos.botones.aceptar'),
-            }
-          );
-
-          if (!verificador) return;
-
-          this.verError(resfactor);
-
-          return;
-
-        }
-
-        //factores de convrsion encontradposa
-        let factores: FactorConversionInterface[] = resfactor.response;
-
-        //nneyvo onbheoto precio interno
-        factores.forEach(element => {
-          this.productoService.precios.push(
-            {
-              id: element.tipo_Precio,
-              precioU: element.precio_Unidad,
-              descripcion: element.des_Tipo_Precio,
-              precio: false,
-              moneda: element.moneda,
-              orden: element.tipo_Precio_Orden,
-            }
-          );
-        });
-
-      }
-
-      //TODO: evaluar precios vacios
-
-      //si solo ahy precio seleccoanrlo por defectp
-      if (this.productoService.precios.length == 1) {
-
-        let precioU: UnitarioInterface = this.productoService.precios[0];
-
-        this.productoService.precio = precioU;
-        this.productoService.total = precioU.precioU;
-        this.productoService.precioU = precioU.precioU;
-        this.productoService.precioText = precioU.precioU.toString();
-
-      } else if (this.productoService.precios.length > 1) {
-        //si ahy mas de un precio seleccionar uno por defecto segun campo orden
-        for (let i = 0; i < this.productoService.precios.length; i++) {
-          const element = this.productoService.precios[i];
-          if (element.orden) {
-            this.productoService.precio = element;
-            this.productoService.total = element.precioU;
-            this.productoService.precioU = element.precioU;
-            this.productoService.precioText = element.precioU.toString();
-
-            break;
-          }
-
-        }
-
-        if (!this.productoService.precio) {
-          this.productoService.precio = this.productoService.precios![0];
-          this.productoService.total = this.productoService.precios![0].precioU;
-          this.productoService.precioU = this.productoService.precios![0].precioU;
-          this.productoService.precioText = this.productoService.precios![0].precioU.toString();
-        }
-      }
     }
+
+
+    if (this.productoService.precios.length > 0) {
+
+      this.productoService.precio = this.productoService.precios.reduce((prev, curr) => {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
+
+      if(!this.productoService.precio){
+        this.productoService.precio = this.productoService.precios[0];
+      }
+
+      
+      
+      this.productoService.total = this.productoService.precio.precioU;
+      this.productoService.precioU = this.productoService.precio.precioU;
+      this.productoService.precioText = this.productoService.precio.precioU.toString();
+      
+    }
+
+    
+
 
     if (this.productoService.bodegas.length > 1 || this.productoService.precios.length > 1 || this.facturaService.valueParametro(351)) {
       this.facturaService.isLoading = false;
@@ -756,7 +755,8 @@ export class DetalleComponent implements AfterViewInit {
     //si no se abre el dialogo agregar ka transaccon directammente
 
     if (!this.productoService.bodega!.posee_Componente) {
-      let resDisponibiladProducto: ResApiInterface = await this._productService.getValidateProducts(
+
+      const apiValidateProd = ()=> this._productService.getValidateProduct(
         this.user,
         this.facturaService.serie!.serie_Documento,
         this.facturaService.tipoDocumento!,
@@ -773,6 +773,8 @@ export class DetalleComponent implements AfterViewInit {
         this.token,
 
       );
+
+      let resDisponibiladProducto: ResApiInterface = await ApiService.apiUse(apiValidateProd);
 
 
       if (!resDisponibiladProducto.status) {
@@ -841,19 +843,34 @@ export class DetalleComponent implements AfterViewInit {
 
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
-    if (this.facturaService.valueParametro(44)) {
+
+  
+    if (this.facturaService.valueParametro(44) && product.tipo_Producto != 2) {
 
 
       // let strFechaIni: string = this.facturaService.formatstrDateForPriceU(this.facturaService.fechaIni!);
 
 
       if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni!)) {
-        let res: ResApiInterface = await this._productService.getFormulaPrecioU(
+
+
+        let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+        let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+        let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+        let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
+
+        let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+        let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
+
+
+        const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
           this.token,
-          this.facturaService.fechaIni!,
-          this.facturaService.fechaFin!,
+          dateEnd,
+          dateStart,
           this.productoService.total.toString(),
         );
+
+        let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
 
 
 
@@ -921,6 +938,7 @@ export class DetalleComponent implements AfterViewInit {
       }
     }
 
+    
 
 
     // /7agregar transaccion
@@ -928,7 +946,7 @@ export class DetalleComponent implements AfterViewInit {
       {
         bodega: this.productoService.bodega,
         cantidad: UtilitiesService.convertirTextoANumero(this.productoService.cantidad)!,
-        cantidadDias: this.facturaService.valueParametro(44) ? cantidadDias : 0,
+        cantidadDias: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? cantidadDias : 0,
         cargo: 0,
         consecutivo: 0,
         descuento: 0,
@@ -936,12 +954,13 @@ export class DetalleComponent implements AfterViewInit {
         isChecked: false,
         operaciones: [],
         precio: this.productoService.precio!,
-        precioCantidad: this.facturaService.valueParametro(44) ? this.productoService.total : null,
-        precioDia: this.facturaService.valueParametro(44) ? precioDias : null,
+        precioCantidad: this.facturaService.valueParametro(44) && product.tipo_Producto != 2? this.productoService.total : null,
+        precioDia: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? precioDias : null,
         producto: product,
-        total: this.facturaService.valueParametro(44) ? precioDias : this.productoService.total,
+        total: this.facturaService.valueParametro(44) && product.tipo_Producto != 2 ? precioDias : this.productoService.total,
       }
     );
+
 
     this.productoService.cantidad = "1";
     //Transacion agregada
@@ -1148,13 +1167,16 @@ export class DetalleComponent implements AfterViewInit {
 
     this.facturaService.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this._productService.getObjetosProducto(
+    const apiObjProd = ()=> this._productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+     
     this.facturaService.isLoading = false;
 
 

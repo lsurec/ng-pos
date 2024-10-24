@@ -200,7 +200,7 @@ $barra-carga   : rgba(0, 0, 0, 0.2);
 .container_main {
     padding   : 0px 15px;
     width     : 100%;
-    height    : calc(100vh - 234px) !important;
+    height    : calc(100vh - 232px) !important;
     float     : left;
     overflow-y: auto;
     overflow-x: hidden;
@@ -260,7 +260,7 @@ $barra-carga   : rgba(0, 0, 0, 0.2);
     padding   : 5px 20px;
 }
 
-.registros {
+.registrosTareas {
     font-size    : 12px;
     text-align   : right;
     padding      : 5px 20px;
@@ -451,9 +451,13 @@ p {
 
 .verMas {
     padding        : 10px;
-    color          : $personalizado;
     text-decoration: underline;
     cursor         : pointer;
+    color          : $personalizado;
+}
+
+.verMasTxt {
+    color: $personalizado;
 }
 
 .encontradas {

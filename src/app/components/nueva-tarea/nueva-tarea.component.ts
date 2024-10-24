@@ -1011,7 +1011,21 @@ export class NuevaTareaComponent implements OnInit {
   };
 
   //limpiar formulario de tareas
-  limpiarCrear(): void {
+  async limpiarCrear(): Promise<void> {
+
+    //Dialofo de confirmacion
+    let verificador: boolean = await this._widgetsService.openDialogActions(
+      {
+        title: this._translate.instant('pos.alertas.eliminar'),
+        description: this._translate.instant('pos.alertas.perderDatos'),
+        verdadero: this._translate.instant('pos.botones.aceptar'),
+        falso: this._translate.instant('pos.botones.cancelar'),
+      }
+    );
+
+    if (!verificador) return;
+
+    this.isLoading = true;
 
     this.formulario.reset();
     this.requerido = false;
@@ -1068,6 +1082,7 @@ export class NuevaTareaComponent implements OnInit {
 
     this.cargarFormulario();
 
+    this.isLoading = false;
   };
 
   //revisar que todos los campos esten completos y guardar la tarea
@@ -1405,6 +1420,7 @@ export class NuevaTareaComponent implements OnInit {
 
     // // F I N - C O M E N T A R I O
 
+    this.limpiarCrear(); //Limpiar despues de crear
     this.isLoading = false;
 
     this._widgetsService.openSnackbar(`${this._translate.instant('crm.alertas.tareaCreadaExito')}${nuevasTareas[0].tarea}`);

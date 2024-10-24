@@ -130,12 +130,23 @@ export class FacturaService {
 
     filtrosProductos: number = 1; //filtro producto
 
-    filtroPreferencia: number = 1;
-    idFiltroPreferencia: number = 1;
 
     rangoIni: number = 1;
     rangoFin: number = 20;
     intervaloRegistros: number = 20;
+
+    confirmarCotizacion: boolean = false;
+
+    terminosyCondiciones: String[] = [
+        "Esta Cotización no es reservación.",
+        "Al confirmar su cotización se requiere de contrato firmado.",
+        "Los precios cotizados están sujetos a cambios.",
+        "Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+        "Se solicitara cheque de garantía.",
+        "Se cobrará por daños al mobiliario y equipo según contrato.",
+    ];
+
+    copiaTerminosyCondiciones: String[] = [...this.terminosyCondiciones];
 
     //estados:1 cargando; 2:correcto; 3:error
     //pasos para pantalla de carga
@@ -170,9 +181,7 @@ export class FacturaService {
         private _convertService: GlobalConvertService,
     ) {
 
-        if (!PreferencesService.filtroProducto) {
-            PreferencesService.filtroProducto = 1;
-        }
+        
     }
 
 
@@ -186,6 +195,11 @@ export class FacturaService {
 
     //mostrar pestaña detalle
     showDetalle() {
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = true;
         this.tabPago = false;
@@ -193,6 +207,12 @@ export class FacturaService {
 
     //mostrar pestaña pagos
     showPago() {
+
+        if(this.vendedores.length > 0 && !this.vendedor){
+            this._notificationsService.openSnackbar(this._translate.instant('pos.alertas.sinVendedor')); 
+            return;
+        }
+        
         this.tabDocummento = false;
         this.tabDetalle = false;
         this.tabPago = true;
@@ -250,6 +270,7 @@ export class FacturaService {
         this.observacion = "";
         this.searchClient = "";
         this.searchProduct = "";
+        this.confirmarCotizacion = false;
     }
 
     addLeadingZero(number: number): string {

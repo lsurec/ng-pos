@@ -7,6 +7,7 @@ import { TipoTransaccionInterface } from 'src/app/displays/prc_documento_3/inter
 import { DocumentService } from 'src/app/displays/prc_documento_3/services/document.service';
 import { TipoTransaccionService } from 'src/app/displays/prc_documento_3/services/tipos-transaccion.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { ApiService } from 'src/app/services/api.service';
 import { EventService } from 'src/app/services/event.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PreferencesService } from 'src/app/services/preferences.service';
@@ -75,12 +76,14 @@ export class DocsHistorialComponent implements OnInit {
 
     this.isLoading = true;
 
-    //Obntner ultimos documentos relizados
-    let resDoc = await this._documentService.getDocument(
+    const apiDoc = ()=> this._documentService.getDocument(
       this.user,
       this.token,
       0,
-    )
+    );
+
+    //Obntner ultimos documentos relizados
+    let resDoc = await ApiService.apiUse(apiDoc);
 
     //si algo salio mal
     if (!resDoc.status) {
@@ -113,14 +116,17 @@ export class DocsHistorialComponent implements OnInit {
       //Converitr estructira json str a un objeto JSON
       let estructura: Documento = JSON.parse(doc.estructura);
 
-      //Buscar lostipos de transaccion de un documento recuperado
-      let resTra = await this._tiposTransaccion.getTipoTransaccion(
+
+      const apiTipoTransaccion = ()=> this._tiposTransaccion.getTipoTransaccion(
         this.user,
         this.token,
         estructura.Doc_Tipo_Documento,
         estructura.Doc_Serie_Documento,
         estructura.Doc_Empresa,
       );
+
+      //Buscar lostipos de transaccion de un documento recuperado
+      let resTra = await ApiService.apiUse(apiTipoTransaccion);
 
       //Si algo salio mal
       if (!resTra.status) {

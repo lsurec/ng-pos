@@ -34,6 +34,7 @@ import { DataUserService } from '../../services/data-user.service';
 import { TypeErrorInterface } from 'src/app/interfaces/type-error.interface';
 import { RetryService } from 'src/app/services/retry.service';
 import { DataFelInterface } from '../../interfaces/data-fel.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-resumen-documento',
@@ -346,11 +347,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //buscar documento, plantilla xml
 
-    let resXMlCert: ResApiInterface = await this._felService.getDocXmlCert(
+    const apiXmlCert = ()=> this._felService.getDocXmlCert(
       this.user,
       this.token,
       this.consecutivoDoc,
-    )
+    );
+
+    let resXMlCert: ResApiInterface = await  ApiService.apiUse(apiXmlCert);
 
     if (!resXMlCert.status) {
 
@@ -381,13 +384,15 @@ export class ResumenDocumentoComponent implements OnInit {
     // uuidDoc = "9CD5BF5A-CD69-4D4D-A37D-1F8979BD2835";
 
 
-    //buscar las credenciales del certificador
-    let resCredenciales: ResApiInterface = await this._felService.getCredenciales(
+    const apiCredenciales = ()=> this._felService.getCredenciales(
       certificador,
       this.empresa,
       this.user,
       this.token,
-    )
+    );
+
+    //buscar las credenciales del certificador
+    let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales); 
 
 
     if (!resCredenciales.status) {
@@ -540,12 +545,13 @@ export class ResumenDocumentoComponent implements OnInit {
       usuarioFirma: usuarioFirma,
     }
 
-
-    let resCertDoc: ResApiInterface = await this._felService.postInfile(
+    const apiPostInfile = ()=> this._felService.postInfile(
       apiUse,
       paramFel,
       this.token,
-    )
+    );
+
+    let resCertDoc: ResApiInterface = await ApiService.apiUse(apiPostInfile); 
 
 
     if (!resCertDoc.status) {
@@ -568,12 +574,13 @@ export class ResumenDocumentoComponent implements OnInit {
       uuid: uuidDoc,
     }
 
-
-    //actualizar odcumento con firma
-    let resUpdateXml: ResApiInterface = await this._felService.postXmlUpdate(
+    const apiPostXml = ()=> this._felService.postXmlUpdate(
       this.token,
       paramUpdate,
-    )
+    );
+
+    //actualizar odcumento con firma
+    let resUpdateXml: ResApiInterface = await ApiService.apiUse(apiPostXml)
 
 
     if (!resUpdateXml.status) {
@@ -609,12 +616,13 @@ export class ResumenDocumentoComponent implements OnInit {
         user: this.user,
       }
 
-
-      let resUpdateEstructura: ResApiInterface = await this._documentService.updateDocument(
+      const updateEstructura = ()=> this._documentService.updateDocument(
         this.token,
         document,
         this.consecutivoDoc,
       );
+
+      let resUpdateEstructura: ResApiInterface = await  ApiService.apiUse(updateEstructura);
 
 
       //TODO:Mensjaje de error
@@ -701,10 +709,13 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     this.isLoading = true;
-    let resUpdateEncabezado: ResApiInterface = await this._recpetionService.updateDocument(
+
+    const apiUpdateDoc = ()=> this._recpetionService.updateDocument(
       this.token,
       docModify,
     );
+
+    let resUpdateEncabezado: ResApiInterface = await ApiService.apiUse(apiUpdateDoc);
 
     if (!resUpdateEncabezado.status) {
       this.isLoading = false;
@@ -742,10 +753,14 @@ export class ResumenDocumentoComponent implements OnInit {
 
     }
 
-    let resRefUpdate: ResApiInterface = await this._recpetionService.updateRef(
+
+    const apiUpdateRef = ()=> this._recpetionService.updateRef(
       this.token,
       refModify,
     );
+
+
+    let resRefUpdate: ResApiInterface = await  ApiService.apiUse(apiUpdateRef);
 
     if (!resRefUpdate.status) {
       this.isLoading = false;
@@ -792,11 +807,12 @@ export class ResumenDocumentoComponent implements OnInit {
         usuario: this.user,
       }
 
-
-      let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+      const apiDelete = ()=> this._recpetionService.anularTransaccion(
         this.token,
         transactionEliminar,
       );
+
+      let resTransDelete: ResApiInterface = await  ApiService.apiUse(apiDelete);
 
 
       if (!resTransDelete.status) {
@@ -854,12 +870,12 @@ export class ResumenDocumentoComponent implements OnInit {
           usuario: this.user,
         }
 
-
-        let resTransDelete: ResApiInterface = await this._recpetionService.anularTransaccion(
+        const apiDelete = ()=> this._recpetionService.anularTransaccion(
           this.token,
           transactionActualizar,
         );
 
+        let resTransDelete: ResApiInterface = await ApiService.apiUse(apiDelete) ;
 
         if (!resTransDelete.status) {
 
@@ -882,14 +898,12 @@ export class ResumenDocumentoComponent implements OnInit {
 
         }
 
-
-
-
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+        const apiUpdateTra = ()=> this._recpetionService.insertarTransaccion(
           this.token,
           transactionActualizar,
         );
 
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTra) ;
 
         if (!resActualizarTransaccion.status) {
 
@@ -944,10 +958,13 @@ export class ResumenDocumentoComponent implements OnInit {
           usuario: this.user,
         }
 
-        let resActualizarTransaccion: ResApiInterface = await this._recpetionService.insertarTransaccion(
+
+        const apiUpdateTransaccion = ()=> this._recpetionService.insertarTransaccion(
           this.token,
           transactionNueva,
         );
+
+        let resActualizarTransaccion: ResApiInterface = await ApiService.apiUse(apiUpdateTransaccion);
 
 
         if (!resActualizarTransaccion.status) {
@@ -989,11 +1006,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     this.isLoading = true;
 
-    let resCot: ResApiInterface = await this._printFormatService.getReportCotizacion(
+    const apiCotFormat = ()=> this._printFormatService.getReportCotizacion(
       this.user,
       this.token,
       this.consecutivoDoc,
     );
+
+    let resCot: ResApiInterface = await ApiService.apiUse(apiCotFormat);
 
     if (!resCot.status) {
       this.isLoading = false;
@@ -1040,11 +1059,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     this.isLoading = true;
 
-    let resEncabezado: ResApiInterface = await this._documentService.getEncabezados(
+    const apiEcabezado = ()=> this._documentService.getEncabezados(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resEncabezado: ResApiInterface = await ApiService.apiUse(apiEcabezado) ;
 
     if (!resEncabezado.status) {
 
@@ -1069,11 +1090,13 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let encabezados: EncabezadoPrintInterface[] = resEncabezado.response;
 
-    let resDetalles: ResApiInterface = await this._documentService.getDetalles(
+    const apiDetalle = ()=> this._documentService.getDetalles(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resDetalles: ResApiInterface = await ApiService.apiUse(apiDetalle);
 
     if (!resDetalles.status) {
 
@@ -1098,11 +1121,14 @@ export class ResumenDocumentoComponent implements OnInit {
 
     let detalles: DetallePrintInterface[] = resDetalles.response;
 
-    let resPagos: ResApiInterface = await this._documentService.getPagos(
+
+    const apiPagos = ()=> this._documentService.getPagos(
       this.user,
       this.token,
       this.consecutivoDoc!,
     );
+
+    let resPagos: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resPagos.status) {
@@ -1185,6 +1211,7 @@ export class ResumenDocumentoComponent implements OnInit {
     }
 
     let documento: DocumentoData = {
+evento:      "",
       consecutivo: this.consecutivoDoc,
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: isFel ? this._translate.instant('pos.factura.fel') : this._translate.instant('pos.factura.documento_generico'),
@@ -1203,6 +1230,7 @@ export class ResumenDocumentoComponent implements OnInit {
     let currentDate: Date = new Date();
 
     let cliente: Cliente = {
+      tipo :cuenta?.des_Grupo_Cuenta ?? "",
       correo: cuenta?.eMail ?? "",
       nombre: cuenta?.factura_Nombre ?? "",
       direccion: cuenta?.factura_Direccion ?? "",
@@ -1596,6 +1624,7 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(4),
               Tra_Monto: operacion.cargo,
               Tra_Monto_Dias: null,
+              Tra_Observacion: null,
             }
           );
 
@@ -1623,7 +1652,7 @@ export class ResumenDocumentoComponent implements OnInit {
               Tra_Tipo_Transaccion: this.facturaService.resolveTipoTransaccion(3),
               Tra_Monto: operacion.descuento,
               Tra_Monto_Dias: null,
-
+              Tra_Observacion: null,
             }
           );
         }
@@ -1648,6 +1677,7 @@ export class ResumenDocumentoComponent implements OnInit {
           Tra_Monto: transaccion.total,
           //TODO:veridificar monto por dias
           Tra_Monto_Dias: transaccion.precioDia,
+          Tra_Observacion:null,
         }
 
       );
@@ -1732,6 +1762,7 @@ export class ResumenDocumentoComponent implements OnInit {
 
     //documento estructura
     this.docGlobal = {
+      Doc_Confirmar_Orden: true,
       Consecutivo_Interno: randomNumber1,
       Doc_Ref_Tipo_Referencia: this.facturaService.valueParametro(58) ? this.facturaService.tipoReferencia?.tipo_Referencia : null,
       Doc_Ref_Fecha_Ini: this.facturaService.valueParametro(381) ? fEntrega : null,
@@ -1773,8 +1804,10 @@ export class ResumenDocumentoComponent implements OnInit {
       estado: this.facturaService.valueParametro(349) ? 1 : 11,
     }
 
+    const apiPostDoc =()=>  this._documentService.postDocument(this.token, document);
+
     //consumo del servico para crear el documento
-    let resDoc = await this._documentService.postDocument(this.token, document);
+    let resDoc = await ApiService.apiUse(apiPostDoc);
 
 
     //Si algo salió mal mostrar error

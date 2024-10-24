@@ -513,8 +513,8 @@ export class CalendarioComponent implements OnInit {
       calendar.selected = previousMonth;
     });
     //agregar que la fgecha del picker sea 1
-    // await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
     this.datePicker.setDate(1);
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
   }
 
   //Cambiar al mes siguiente
@@ -537,6 +537,8 @@ export class CalendarioComponent implements OnInit {
     //agregar que la fgecha del picker sea 1
     // await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
     this.datePicker.setDate(1);
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
+
   }
 
   indexWeekDiaHoy: number = 0;
@@ -569,7 +571,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   //Cambiar a la semana anterior
-  backWeek(): void {
+  async backWeek(): Promise<void> {
     //dia que se debe marcar
     let indexDaySelected: number = -1;
 
@@ -661,11 +663,12 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = nextMonthPicker;
       calendar.selected = nextMonthPicker;
     });
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
 
   }
 
   //Cambiar a la semana siguiente
-  nextWeek(): void {
+  async nextWeek(): Promise<void> {
     //dia que se debe marcar
     let indexDaySelected: number = -1;
 
@@ -758,6 +761,8 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = nextMonthPicker;
       calendar.selected = nextMonthPicker;
     });
+
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
 
   }
 
@@ -1230,7 +1235,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   //cambia al dia anterior
-  backDay(): void {
+  async backDay(): Promise<void> {
     //buscar el ultimo dia del mes
     let ultimodia: number = this.obtenerUltimoDiaMes(this.yearSelect, this.monthSelectView - 1);
 
@@ -1260,10 +1265,13 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = previousMonth;
       calendar.selected = previousMonth;
     });
+
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
+
   }
 
   //Cambia al dia siguiente
-  nextDay(): void {
+  async nextDay(): Promise<void> {
     //ontener ultimo dia del mes
     let ultimodia: number = this.obtenerUltimoDiaMes(this.yearSelect, this.monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes
@@ -1294,6 +1302,8 @@ export class CalendarioComponent implements OnInit {
       calendar.activeDate = nextMonth;
       calendar.selected = nextMonth;
     });
+
+    await this.getTareasCalendario(this.monthSelectView, this.yearSelect);
   }
 
   //TODO: Aqui me queqdé con el tipado

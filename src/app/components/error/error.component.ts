@@ -11,6 +11,7 @@ import { ErrorInterface } from 'src/app/interfaces/error.interface';
 import { EmpresaInterface } from 'src/app/interfaces/empresa.interface';
 import { EstacionInterface } from 'src/app/interfaces/estacion.interface';
 import { GlobalConvertService } from 'src/app/displays/listado_Documento_Pendiente_Convertir/services/global-convert.service';
+import { GlobalRestaurantService } from 'src/app/displays/prcRestaurante/services/global-restaurant.service';
 
 @Component({
   selector: 'app-error',
@@ -32,7 +33,7 @@ export class ErrorComponent implements OnInit {
     private _location: Location,
     private _eventService: EventService,
     private _globalConvertSrevice: GlobalConvertService,
-
+    private globalRestaurantService: GlobalRestaurantService,
   ) {
   }
 
@@ -139,6 +140,10 @@ export class ErrorComponent implements OnInit {
       case 20:
         //desde error a calendario
         this._eventService.regresarCalendarioEvent(true);
+        break;
+      case 21:
+        //desde error a restaurante
+        this._eventService.homeDeErrorRestauranteEvent(true);
         break;
       default:
         this._location.back();

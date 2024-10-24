@@ -1,0 +1,17 @@
+<div class="contenido">
+    <div class="clasificacionesx3" [ngClass]="{'clasificacionesx2' : restaurantService.verDetalleOrden }">
+        <div class="dFlex" *ngFor="let classification of restaurantService.classifications"
+            (click)="selectClassification(classification)">
+            <span class="spacer"></span>
+            <div class="product-me" [ngClass]="{'productWidth' : restaurantService.verDetalleOrden }">
+                <img src="assets/placeimg.jpg" class="image-product">
+                <!-- <img src="assets/placeimg.jpg" *ngIf="!producto.url_Img" class="image-product"> -->
+                <!-- <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
+                <div class="nombre_producto">
+                    <p>{{classification.des_Clasificacion}}</p>
+                </div>
+            </div>
+            <span class="spacer"></span>
+        </div>
+    </div>
+</div>

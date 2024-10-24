@@ -24,6 +24,8 @@ import { FelService } from '../../services/fel.service';
 import { CredencialInterface } from '../../interfaces/credencial.interface';
 import { DataNitInterface } from '../../interfaces/data-nit.interface';
 import { CuentaCorrentistaInterface } from '../../interfaces/cuenta-correntista.interface';
+import { VendedorInterface } from '../../interfaces/vendedor.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-documento',
@@ -291,42 +293,52 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         if (UtilitiesService.majorOrEqualDateWithoutSeconds(this.facturaService.fechaFin!, this.facturaService.fechaIni)) {
 
 
+          let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
-            let count: number = 0;
 
 
-            this.facturaService.isLoading = true;
+            if (tra.producto.tipo_Producto != 2) {
 
-            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-              this.token,
-              this.facturaService.fechaIni,
-              this.facturaService.fechaFin!,
-              tra.precioCantidad!.toString(),
-            );
 
-            this.facturaService.isLoading = false;
+              this.facturaService.isLoading = true;
+              let dateStart: string = `${this.facturaService.fechaIni!.getDate()}/${this.facturaService.fechaIni!.getMonth() + 1}/${this.facturaService.fechaIni!.getFullYear()} ${this.facturaService.fechaIni!.getHours()}:${this.facturaService.fechaIni!.getMinutes()}:${this.facturaService.fechaIni!.getSeconds()}`;
+              let dateEnd: string = `${this.facturaService.fechaFin!.getDate()}/${this.facturaService.fechaFin!.getMonth() + 1}/${this.facturaService.fechaFin!.getFullYear()} ${this.facturaService.fechaFin!.getHours()}:${this.facturaService.fechaFin!.getMinutes()}:${this.facturaService.fechaFin!.getSeconds()}`;
 
-            if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
 
-              return;
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
+                this.token,
+                dateStart,
+                dateEnd,
+                tra.precioCantidad!.toString(),
+              );
+
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
+
+              this.facturaService.isLoading = false;
+
+              if (!res.status) {
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              let calculoDias: PrecioDiaInterface[] = res.response;
+
+              if (calculoDias.length == 0) {
+                res.response = "No se están obteniendo valores del procedimiento almacenado"
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
             }
-
-            let calculoDias: PrecioDiaInterface[] = res.response;
-
-            if (calculoDias.length == 0) {
-              res.response = "No se están obteniendo valores del procedimiento almacenado"
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
-
-              return;
-            }
-
-            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
-
 
             count++;
 
@@ -351,6 +363,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  addLeadingZero(number: number): string {
+    return number.toString().padStart(2, '0');
+  }
   async setDateFin() {
     this.facturaService.fechaFin = this.convertValidDate(this.facturaService.inputFechaFinal!, this.facturaService.formControlHoraFin.value);
     //si se debe calcular el preciuo por dias
@@ -363,44 +378,57 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (this.facturaService.traInternas.length > 0) {
 
-          //Calcular nuevos totales
-
+          let count: number = 0;
           for (const tra of this.facturaService.traInternas) {
-            let count: number = 0;
+
+            if (tra.producto.tipo_Producto != 2) {
 
 
-            this.facturaService.isLoading = true;
+              this.facturaService.isLoading = true;
 
-            let res: ResApiInterface = await this._productService.getFormulaPrecioU(
-              this.token,
-              this.facturaService.fechaIni!,
-              this.facturaService.fechaFin,
-              tra.precioCantidad!.toString(),
-            );
 
-            this.facturaService.isLoading = false;
+              let startDate = this.addLeadingZero(this.facturaService.fechaIni!.getDate());
+              let startMont = this.addLeadingZero(this.facturaService.fechaIni!.getMonth() + 1);
+              let endDate = this.addLeadingZero(this.facturaService.fechaFin!.getDate());
+              let endMont = this.addLeadingZero(this.facturaService.fechaFin!.getMonth() + 1);
 
-            if (!res.status) {
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
+              let dateStart: string = `${this.facturaService.fechaIni!.getFullYear()}${startMont}${startDate} ${this.addLeadingZero(this.facturaService.fechaIni!.getHours())}:${this.addLeadingZero(this.facturaService.fechaIni!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaIni!.getSeconds())}`;
+              let dateEnd: string = `${this.facturaService.fechaFin!.getFullYear()}${endMont}${endDate} ${this.addLeadingZero(this.facturaService.fechaFin!.getHours())}:${this.addLeadingZero(this.facturaService.fechaFin!.getMinutes())}:${this.addLeadingZero(this.facturaService.fechaFin!.getSeconds())}`;
 
-              return;
+
+              const apiPrecioDia = ()=> this._productService.getFormulaPrecioU(
+                this.token,
+                dateStart,
+                dateEnd,
+                tra.precioCantidad!.toString(),
+              );
+
+              let res: ResApiInterface = await ApiService.apiUse(apiPrecioDia);
+
+              this.facturaService.isLoading = false;
+
+              if (!res.status) {
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              let calculoDias: PrecioDiaInterface[] = res.response;
+
+              if (calculoDias.length == 0) {
+                res.response = "No se están obteniendo valores del procedimiento almacenado"
+                this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
+                console.error(res);
+
+                return;
+              }
+
+              this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
+              this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
+
             }
-
-            let calculoDias: PrecioDiaInterface[] = res.response;
-
-            if (calculoDias.length == 0) {
-              res.response = "No se están obteniendo valores del procedimiento almacenado"
-              this._notificationService.openSnackbar(this._translate.instant('pos.alertas.noCalculoDias'));
-              console.error(res);
-
-              return;
-            }
-
-            this.facturaService.traInternas[count].precioDia = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].total = calculoDias[0].monto_Calculado;
-            this.facturaService.traInternas[count].cantidadDias = calculoDias[0].catidad_Dia;
-
 
             count++;
 
@@ -473,14 +501,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.facturaService.vendedores = [];
     this.facturaService.vendedor = undefined;
 
-    //buscar vendedores
-    let resVendedor: ResApiInterface = await this._cuentaService.getSeller(
+
+    const apiSeller = () => this._cuentaService.getSeller(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //buscar vendedores
+    let resVendedor: ResApiInterface = await ApiService.apiUse(apiSeller);
 
     if (!resVendedor.status) {
 
@@ -506,22 +537,34 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.vendedores = resVendedor.response;
 
-    //si solo hay un vendedor seleccionarlo por defecto
-    if (this.facturaService.vendedores.length == 1) {
-      this.facturaService.vendedor = this.facturaService.vendedores[0];
-      this.facturaService.saveDocLocal();
+
+    let vendedorDefault: VendedorInterface;
+
+    if (this.facturaService.vendedores.length > 0) {
+
+      vendedorDefault = this.facturaService.vendedores.reduce((prev, curr) => {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
+
     }
+
+    //si solo hay un vendedor seleccionarlo por defecto
+    this.facturaService.vendedor = vendedorDefault!;
+    this.facturaService.saveDocLocal();
 
     this.facturaService.tiposTransaccion = [];
 
-    //Buscar tipos transaccion
-    let resTransaccion: ResApiInterface = await this._tipoTransaccionService.getTipoTransaccion(
+
+    const apiTipoTransaccion = ()=> this._tipoTransaccionService.getTipoTransaccion(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
     );
+
+    //Buscar tipos transaccion
+    let resTransaccion: ResApiInterface = await ApiService.apiUse(apiTipoTransaccion) ;
 
     if (!resTransaccion.status) {
 
@@ -548,15 +591,17 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.parametros;
 
-    //Buscar parametros del documento
-    let resParametro: ResApiInterface = await this._parametroService.getParametro(
+    const apiParam = ()=> this._parametroService.getParametro(
       this.user,
       this.token,
       this.documento,
       serie,
       this.empresa,
       this.estacion,
-    )
+    );
+
+    //Buscar parametros del documento
+    let resParametro: ResApiInterface = await ApiService.apiUse(apiParam);
 
     if (!resParametro.status) {
 
@@ -587,13 +632,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.facturaService.formasPago = [];
 
-    //Buscar formas de pago
-    let resFormaPago: ResApiInterface = await this._formaPagoService.getFormas(
+
+    const apiPagos = ()=> this._formaPagoService.getFormas(
       this.token,
       this.empresa,
       serie,
       this.documento,
     );
+
+    //Buscar formas de pago
+    let resFormaPago: ResApiInterface = await ApiService.apiUse(apiPagos);
 
 
     if (!resFormaPago.status) {
@@ -628,7 +676,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       this.facturaService.tiposReferencia = [];
 
 
-      let resTipoRefencia: ResApiInterface = await this._referenciaService.getTipoReferencia(this.user, this.token);
+      const apiReferencia = ()=> this._referenciaService.getTipoReferencia(this.user, this.token);
+
+      let resTipoRefencia: ResApiInterface = await ApiService.apiUse(apiReferencia);
 
 
       //si algo salio mal
@@ -687,8 +737,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-
-      this.facturaService.showDetalle();
+      if ((this.facturaService.series.length > 1 && this.facturaService.serie != null) && (this.facturaService.vendedores.length > 0 && this.facturaService.vendedor != null) && (this.facturaService.valueParametro(58) && this.facturaService.tipoReferencia != null)) {
+        this.facturaService.showDetalle();
+      }
 
       this._notificationService.openSnackbar(this._translate.instant('pos.alertas.cuentaSeleccionada'));
       this.facturaService.saveDocLocal();
@@ -731,12 +782,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
     // Limpiar la lista de registros antes de cada búsqueda
     this.facturaService.isLoading = true;
 
-    let resCuenta: ResApiInterface = await this._cuentaService.getClient(
+    const apiGetCUenta = () => this._cuentaService.getClient(
       this.user,
       this.token,
       this.empresa,
       this.facturaService.searchClient,
     );
+
+    let resCuenta: ResApiInterface = await ApiService.apiUse(apiGetCUenta);
 
 
     if (!resCuenta.status) {
@@ -761,7 +814,9 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      let resCredenciales: ResApiInterface = await this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+      const apiCredenciales = ()=> this._felService.getCredenciales(1, this.empresa, this.user, this.token,);
+
+      let resCredenciales: ResApiInterface = await ApiService.apiUse(apiCredenciales);
 
       if (!resCredenciales.status) {
 
@@ -800,13 +855,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let cleanedString = this.facturaService.searchClient.replace(/[\s\-]/g, '');
 
-
-      let resRecpetor: ResApiInterface = await this._felService.getReceptor(
+      const apiReceptor = () => this._felService.getReceptor(
         this.token,
         llaveApi,
         usuarioApi,
         cleanedString,
       );
+
+      let resRecpetor: ResApiInterface = await ApiService.apiUse(apiReceptor);
 
 
       if (!resRecpetor.status) {
@@ -838,13 +894,16 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
 
-      //Usar servicio para actualizar cuenta
-      let resCuenta: ResApiInterface = await this._cuentaService.postCuenta(
+
+      const postCuenta = () => this._cuentaService.postCuenta(
         this.user,
         this.token,
         this.empresa,
         cuenta,
       );
+
+      //Usar servicio para actualizar cuenta
+      let resCuenta: ResApiInterface = await ApiService.apiUse(postCuenta);
 
 
       //Si el servicio falló
@@ -859,14 +918,14 @@ export class DocumentoComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       ////////////////
-
-      //buscar informacin de la cuenta  creada
-      let infoCuenta: ResApiInterface = await this._cuentaService.getClient(
+      const getCuenta = () => this._cuentaService.getClient(
         this.user,
         this.token,
         this.empresa,
         cuenta.nit,
       );
+      //buscar informacin de la cuenta  creada
+      let infoCuenta: ResApiInterface = await ApiService.apiUse(getCuenta);
 
       // si falló la buqueda de la cuenta creada
       if (!infoCuenta.response) {

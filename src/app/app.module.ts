@@ -92,6 +92,25 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { RegistroDeErroresComponent } from './components/registro-de-errores/registro-de-errores.component';
 import { DetalleErrorComponent } from './components/detalle-error/detalle-error.component';
 import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tareas/lista-tareas.component';
+import { EditarTerminosComponent } from './displays/prc_documento_3/components/editar-terminos/editar-terminos.component';
+import { InputTerminoComponent } from './displays/prc_documento_3/components/input-termino/input-termino.component';
+import { HomeRestaurantComponent } from './displays/prcRestaurante/components/home-restaurant/home-restaurant.component';
+import { PinMeseroComponent } from './displays/prcRestaurante/components/pin-mesero/pin-mesero.component';
+import { PermisionsComponent } from './displays/prcRestaurante/components/permisions/permisions.component';
+import { ProductClassificationsComponent } from './displays/prcRestaurante/components/product-classifications/product-classifications.component';
+import { ClassificationsComponent } from './displays/prcRestaurante/components/classifications/classifications.component';
+import { ProductsComponent } from './displays/prcRestaurante/components/products/products.component';
+import { DetailsProductComponent } from './displays/prcRestaurante/components/details-product/details-product.component';
+import { CurrencyPipe } from '@angular/common';
+import { NewCheckComponent } from './displays/prcRestaurante/components/new-check/new-check.component';
+import { SelectCheckComponent } from './displays/prcRestaurante/components/select-check/select-check.component';
+import { RenameCheckComponent } from './displays/prcRestaurante/components/rename-check/rename-check.component';
+import { ImageRestaurantComponent } from './displays/prcRestaurante/components/image-restaurant/image-restaurant.component';
+import { MoveCheckTransactionComponent } from './displays/prcRestaurante/components/move-check-transaction/move-check-transaction.component';
+import { ErrorComandaComponent } from './displays/prcRestaurante/components/error-comanda/error-comanda.component';
+import { MoveRestaurantComponent } from './displays/prcRestaurante/components/move-restaurant/move-restaurant.component';
+import { MatStepperModule } from '@angular/material/stepper';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -154,6 +173,22 @@ import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tar
     RegistroDeErroresComponent,
     DetalleErrorComponent,
     ListaTareasComponent,
+    EditarTerminosComponent,
+    InputTerminoComponent,
+    HomeRestaurantComponent,
+    PinMeseroComponent,
+    PermisionsComponent,
+    ProductClassificationsComponent,
+    ClassificationsComponent,
+    ProductsComponent,
+    DetailsProductComponent,
+    NewCheckComponent,
+    SelectCheckComponent,
+    RenameCheckComponent,
+    ImageRestaurantComponent,
+    MoveCheckTransactionComponent,
+    ErrorComandaComponent,
+    MoveRestaurantComponent,
   ],
   imports: [
     MatCardModule,
@@ -193,13 +228,16 @@ import { ListaTareasComponent } from './displays/shrTarea_3/components/lista-tar
     MatInputModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatStepperModule,
   ],
   providers: [
     {
       provide: NgbDatepickerI18n,
       useClass: CustomDatepickerI18n,
     },
+    CurrencyPipe,
+
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: ErrorInterceptor,

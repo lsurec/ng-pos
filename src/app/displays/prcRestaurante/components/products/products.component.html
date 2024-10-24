@@ -1,0 +1,17 @@
+<div class="contenido">
+    <div class="clasificacionesx3" [ngClass]="{'clasificacionesx2' : restaurantService.verDetalleOrden }">
+        <div class="dFlex" *ngFor="let producto of products" (click)="selectProduct(producto)">
+            <span class="spacer"></span>
+            <div class="product-me" [ngClass]="{'productWidth' : restaurantService.verDetalleOrden }">
+                <img src="assets/placeimg.jpg" class="image-product">
+                <!-- <img src="assets/img/image-not-found.png" *ngIf="!producto.url_Img" class="image-product">
+                <img src="{{producto.url_Img}}" *ngIf="producto.url_Img" class="image-product"> -->
+                <div class="nombre_producto">
+                    <p>SKU {{producto.producto_Id}}</p>
+                    <p>{{producto.des_Producto}}</p>
+                </div>
+            </div>
+            <span class="spacer"></span>
+        </div>
+    </div>
+</div>

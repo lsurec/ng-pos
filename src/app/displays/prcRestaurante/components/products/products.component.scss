@@ -1,0 +1,116 @@
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$bordes        : var(--bordes-claro);
+$personalizado : var(--global-color); //bordes y texto azul
+$blanco        : var(--blanco);
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.contenido::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contenido::-webkit-scrollbar-track {
+    background: $fondo;
+}
+
+.contenido::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.contenido {
+    padding   : 10px;
+    width     : 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height    : calc(100vh - 168px);
+}
+
+/*Tarjeta Producto*/
+
+.product-me {
+    float        : left;
+    width        : 250px;
+    box-shadow   : none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background   : $blanco;
+}
+
+.productWidth {
+    width      : 200px;
+    margin-left: 10px;
+}
+
+
+.image-product {
+    width : -webkit-fill-available;
+    height: 200px;
+    cursor: pointer;
+}
+
+
+.nombre_producto {
+    text-align : center;
+    font-weight: 600;
+    color      : $personalizado;
+    padding    : 10px 0px;
+}
+
+/*Fin Tarjeta Producto*/
+
+.clasificacionesx3 {
+    display                 : grid;
+    grid-template-columns   : repeat(3, 1fr);
+    //Espacio entre las mesas, puedes ajustar esto
+    // gap                  : 0px 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .clasificacionesx2 {
+        display              : grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-me {
+        margin-left: 10px;
+    }
+
+}
+
+@media screen and (max-width: 550px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-me {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .clasificacionesx3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .product-me {
+        width: 100% !important;
+    }
+}

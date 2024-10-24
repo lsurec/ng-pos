@@ -15,6 +15,7 @@ import { DataUserService } from 'src/app/displays/prc_documento_3/services/data-
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-details-dest-docs',
@@ -55,8 +56,7 @@ export class DetailsDestDocsComponent {
     //iniciar proceso
     this.globalConvertSrevice.isLoading = true;
 
-    //Buscar detalles del documento destino
-    let res: ResApiInterface = await this._receptionService.getDetallesDocDestino(
+    const apiDetalleDestino = ()=> this._receptionService.getDetallesDocDestino(
       this.token,
       this.user,
       this.globalConvertSrevice.docDestinoSelect!.documento,
@@ -66,7 +66,10 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.docDestinoSelect!.localizacion,
       this.globalConvertSrevice.docDestinoSelect!.estacion,
       this.globalConvertSrevice.docDestinoSelect!.fechaReg,
-    )
+    );
+
+    //Buscar detalles del documento destino
+    let res: ResApiInterface = await ApiService.apiUse(apiDetalleDestino); 
 
     //finalizar proceso
     this.globalConvertSrevice.isLoading = false;
@@ -87,8 +90,8 @@ export class DetailsDestDocsComponent {
     //limpiar datos anterirores
     this.globalConvertSrevice.docsOrigin = [];
 
-    //Consumo del servicio
-    let res: ResApiInterface = await this._receptionService.getPendindgDocs(
+
+    const apiDocOrigen = ()=> this._receptionService.getPendindgDocs(
       this.user,
       this.token,
       this.globalConvertSrevice.docSelect!.tipo_Documento,
@@ -96,6 +99,9 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.formatStrFilterDate(this.globalConvertSrevice.fechaFinal!),
       "",
     );
+
+    //Consumo del servicio
+    let res: ResApiInterface = await ApiService.apiUse(apiDocOrigen) ;
 
 
     //SI el servico falló mostrar error
@@ -115,8 +121,7 @@ export class DetailsDestDocsComponent {
   async printDoc() {
     this.globalConvertSrevice.isLoading = true;
 
-    //obtener datos que van a imprimirse
-    let res: ResApiInterface = await this._receptionService.getDataPrint(
+    const apiDataPrint = ()=> this._receptionService.getDataPrint(
       this.token,
       this.user,
       this.globalConvertSrevice.docDestinoSelect!.documento,
@@ -128,6 +133,9 @@ export class DetailsDestDocsComponent {
       this.globalConvertSrevice.docDestinoSelect!.fechaReg,
 
     );
+
+    //obtener datos que van a imprimirse
+    let res: ResApiInterface = await ApiService.apiUse(apiDataPrint);
 
     // si esl servicio falló
     if (!res.status) {
@@ -167,6 +175,7 @@ export class DetailsDestDocsComponent {
     //datos del documento
     let documento: DocumentoData = {
       consecutivo: 0,
+      evento:"",
       titulo: encabezado.tipo_Documento?.toUpperCase()!,
       descripcion: this._translate.instant('pos.factura.documento_generico'),
       fechaCert: "",
@@ -182,6 +191,7 @@ export class DetailsDestDocsComponent {
 
     //Datos del cliente
     let cliente: Cliente = {
+      tipo: "",
       nombre: encabezado?.documento_Nombre ?? "",
       direccion: encabezado?.documento_Direccion ?? "",
       nit: encabezado?.documento_Nit ?? "",

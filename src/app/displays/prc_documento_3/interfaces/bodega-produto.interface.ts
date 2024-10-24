@@ -3,4 +3,5 @@ export interface BodegaProductoInterface {
     nombre:     string;
     existencia: number;
     posee_Componente: boolean;
+    orden: number;
 }

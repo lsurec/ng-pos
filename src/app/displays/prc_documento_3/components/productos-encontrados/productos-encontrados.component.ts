@@ -10,6 +10,7 @@ import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ObjetoProductoInterface } from '../../interfaces/objeto-producto.interface';
 import { FacturaService } from '../../services/factura.service';
 import { EventService } from 'src/app/services/event.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-productos-encontrados',
@@ -60,13 +61,16 @@ export class ProductosEncontradosComponent {
 
     this.isLoading = true;
 
-    //seacrh image in products 
-    let resObjProduct: ResApiInterface = await this.productService.getObjetosProducto(
+    const apiObjProd = ()=> this.productService.getObjetosProducto(
       this.token,
       producto.producto,
       producto.unidad_Medida,
       this.empresa,
-    )
+    );
+
+    //seacrh image in products 
+    let resObjProduct: ResApiInterface = await ApiService.apiUse(apiObjProd);
+    
     this.isLoading = false;
 
 
@@ -110,7 +114,7 @@ export class ProductosEncontradosComponent {
 
     this.isLoading = true;
 
-    let resTarea: ResApiInterface = await this.productService.getProduct(
+    const apiProduct = ()=> this.productService.getProduct(
       this.token,
       this.user,
       this.estacion,
@@ -118,6 +122,8 @@ export class ProductosEncontradosComponent {
       this.facturaService.rangoIni,
       this.facturaService.rangoFin,
     );
+
+    let resTarea: ResApiInterface = await ApiService.apiUse(apiProduct);
 
     if (!resTarea.status) {
       this.isLoading = false;

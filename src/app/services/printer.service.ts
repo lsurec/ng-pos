@@ -6,6 +6,8 @@ import { DocPrintModel } from '../interfaces/doc-print.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { ValidateProductInterface } from '../displays/listado_Documento_Pendiente_Convertir/interfaces/validate-product.interface';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { FacturaService } from '../displays/prc_documento_3/services/factura.service';
+import { FormatoComandaInterface } from '../displays/prcRestaurante/interfaces/data-comanda.interface';
 
 @Injectable()
 export class PrinterService {
@@ -14,6 +16,7 @@ export class PrinterService {
 
     //inicializar http
     constructor(private _http: HttpClient,
+        private _facturaService: FacturaService,
         private _translate: TranslateService,
     ) {
     }
@@ -1020,6 +1023,39 @@ export class PrinterService {
 
 
 
+        let terminos: any[] = [];
+
+
+        for (let i = 0; i < this._facturaService.terminosyCondiciones.length; i++) {
+            const element = this._facturaService.terminosyCondiciones[i];
+            terminos.push(
+                {
+                    marginTop: 2,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: [
+                                        {
+                                            text: `${i + 1}. `,
+                                            style: 'normalTextBold'
+                                        },
+                                        {
+                                            text: element,
+                                            style: 'normalText'
+                                        },
+                                    ]
+                                }
+                            ]
+                        ]
+                    }
+                },
+
+            );
+        }
+
+
         let transacciones: any[] = [];
 
         doc.items.forEach(item => {
@@ -1376,6 +1412,29 @@ export class PrinterService {
                                     ]
                                 }
                             ],
+                            [
+                                {
+                                    text: "TIPO CLIENTE:",
+                                    style: 'normalTextBold',
+                                },
+                                {
+                                    text: doc.cliente.tipo,
+                                    style: 'normalText',
+                                }
+                                ,
+                                {
+                                    text: [
+                                        {
+                                            text: "Tipo evento: ",
+                                            style: 'normalTextBold',
+                                        },
+                                        {
+                                            text: doc.documento.evento,
+                                            style: 'normalText',
+                                        }
+                                    ]
+                                }
+                            ],
                         ]
                     }
                 },
@@ -1553,143 +1612,7 @@ export class PrinterService {
                     bold: true,
                     fontSize: 13,
                 },
-                {
-                    marginTop: 2,
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '1. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Esta Cotización no es reservación',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '2. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Al confirmar su cotizacion se requiere de contrato firmado',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '3. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Los precios cotizados estan sujetos a cambios',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '4. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se cobrara Q 125.00 por cheque rechazado por cargos administrativos',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '5. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se solicitara cheque de garantía',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 2,
-
-                    table: {
-                        widths: ['100%'],
-                        body: [
-                            [
-                                {
-                                    text: [
-                                        {
-                                            text: '6. ',
-                                            style: 'normalTextBold'
-                                        },
-                                        {
-                                            text: 'Se cobrará por daños al mobiliario y equipo según contrato ',
-                                            style: 'normalText'
-                                        },
-                                    ]
-                                }
-                            ]
-                        ]
-                    }
-                }
+                ...terminos,
             ],
             styles: {
                 headerText: {
@@ -1805,7 +1728,7 @@ export class PrinterService {
         };
 
         var docDefinition: TDocumentDefinitions = {
-           
+
             info: {
                 title: doc.documento.titulo,
                 author: 'Demosoft',
@@ -2145,6 +2068,391 @@ export class PrinterService {
                     margin: [0, 0, 0, 4],
                     alignment: 'center',
                 },
+            },
+        };
+
+        return docDefinition;
+    }
+
+    async getStatusAccountTMU() {
+
+
+        let divider = {
+            layout: 'headerLineOnly',
+            table: {
+                widths: ['100%'],
+                headerRows: 1,
+                body: [
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                    [
+                        {
+                            text: ''
+                        }
+                    ],
+                ]
+            }
+        };
+
+        var docDefinition: TDocumentDefinitions = {
+
+            info: {
+                title: "ESTADO DE CUENTA",
+                author: 'Demosoft',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                {
+                    text: "Club Campestre la montaña",
+                    style: 'centerBold',
+                },
+                {
+                    text: "Barra mirablosque",
+                    style: 'centerBold',
+                },
+                {
+                    text: "Mesa: Mesa 1",
+                    style: 'centerBold',
+                },
+                {
+                    text: "MIRALBOSQUE - 1",
+                    style: 'centerBold',
+                },
+                //TABLA PRODUCTOS
+                {
+                    layout: 'headerLineOnly',
+                    margin: [0, 10, 0, 0],
+                    table: {
+
+                        widths: ['15%', '60%', '25%'],
+                        headerRows: 1,
+
+                        body: [
+
+                            [
+                                { text: this._translate.instant('pos.factura.cant').toUpperCase(), style: 'normalTextBold' },
+                                { text: this._translate.instant('pos.factura.descripcion').toUpperCase(), style: 'normalTextBold' },
+                                // { text: this._translate.instant('pos.factura.p_u'), style: 'endTextBold' },
+                                { text: this._translate.instant('pos.factura.monto').toUpperCase(), style: 'endTextBold' },
+                            ],
+
+                            [
+                                {
+                                    text: "100", style: 'normalText'
+                                },
+                                {
+                                    text: "Consectetur velit duis ea nisi fugiat magna in in aliqua excepteur do.", style: 'normalText'
+                                },
+                                {
+                                    text: "10000", style: 'normalText'
+                                },
+                            ]
+
+                        ],
+                    },
+
+                },
+                divider,
+                {
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['75%', '25%'],
+                        body: [
+                            [
+                                {
+                                    text: "Sub-Total:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ],
+                            [
+                                {
+                                    text: "Descuento:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ],
+                            [
+                                {
+                                    text: "Total:", style: 'endText',
+                                },
+                                {
+                                    text: "100,000.00", style: 'endText',
+                                }
+                            ]
+                        ]
+                    }
+                },
+                divider,
+                {
+                    margin: [0, 10, 0, 0],
+
+                    layout: 'noBorders',
+                    table: {
+
+                        widths: ['75%', '25%'],
+
+                        body: [
+                            [
+                                {
+                                    text: "Propina:", style: 'endText',
+                                },
+                                divider,
+                            ]
+                           
+                        ]
+                    }
+                },
+                {
+                    text: "Nombre:", style: 'normalText', margin:[0,10,0,10],
+                },
+                divider,
+                {
+                    margin: [0, 0, 0, 10],
+                    
+                    text: "NiT:", style: 'normalText'
+                },
+                divider,
+                {
+                    margin: [0, 0, 0, 10],
+                    text: "Email:", style: 'normalText'
+                },
+                divider,
+
+                {
+                    text: "Le atendió: Mesero", style: 'normalText', margin:[0,20,0,0],
+                },
+                {
+                    text: "12/12/2020", style: 'normalText', margin:[0,10,0,0],
+                },
+                {
+                    text: "12:12:12", style: 'normalText',
+                },
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+            ],
+            styles: {
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                centerBold: {
+                    fontSize: 8,
+                    alignment: 'center',
+                    bold: true,
+                },
+                normalText: {
+                    fontSize: 8,
+                },
+                normalTextBold: {
+                    fontSize: 8,
+                    bold: true,
+                },
+
+                endText: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                endTextBold: {
+                    fontSize: 8,
+                    alignment: 'right',
+                    bold: true,
+                },
+                header: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'center',
+                },
+                tHeaderLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tHeaderValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                tProductsHeader: {
+                    fontSize: 8.5,
+                    bold: true,
+                },
+                tProductsBody: {
+                    fontSize: 8,
+                },
+                tTotals: {
+                    fontSize: 9,
+                    bold: true,
+                    alignment: 'right',
+                },
+                tClientLabel: {
+                    fontSize: 8,
+                    alignment: 'right',
+                },
+                tClientValue: {
+                    fontSize: 8,
+                    bold: true,
+                },
+                text: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+                link: {
+                    fontSize: 8,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                    alignment: 'center',
+                },
+            },
+        }
+
+
+        return docDefinition;
+    }
+
+    async getComandaTMU(format: FormatoComandaInterface) {
+
+        let transacciones: any[] = [];
+
+        format.detalles.forEach(item => {
+            transacciones.push(
+                [
+                    {
+                        text: item.cantidad,
+                        style: "normalText10"
+                    },
+                    {
+                        text: `${item.des_Producto}${item.observacion ? ' (' + item.observacion + ')' : ''}`,
+                        style: "normalText10"
+                    },
+                ],
+            );
+        });
+
+        let currentDate: Date = new Date(format.detalles[0].fecha_Hora);
+
+        let day = currentDate.getDate();
+        let month = currentDate.getMonth() + 1;
+        let year = currentDate.getFullYear();
+        let hour = currentDate.getHours();
+        let minutes = currentDate.getMinutes();
+        let seconds = currentDate.getSeconds();
+
+        let dateStr = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+
+
+        var docDefinition: TDocumentDefinitions = {
+
+            info: {
+                title: format.detalles[0].bodega,
+                author: 'DEMOSOFT S.A.',
+                subject: 'ticket',
+                keywords: 'tck, sale',
+            },
+            pageSize: {
+                width: 226.77,
+                height: 'auto',
+            },
+            pageMargins: [5.66, 0, 5.66, 5.66],
+            content: [
+                {
+                    text: format.detalles[0].des_Ubicacion, style: 'center10',
+                },
+                {
+                    text: `Mesa: ${format.detalles[0].des_Mesa}`, style: 'center',
+                },
+                {
+                    text: `${format.detalles[0].serie_Documento} - ${format.detalles[0].iD_Documento_Ref}`, style: 'center10',
+                },
+                {
+                    margin: [10, 10, 10, 0],
+                    layout: 'noBorders',
+                    table: {
+                        // headers are automatically repeated if the table spans over multiple pages
+                        // you can declare how many rows should be treated as headers
+                        headerRows: 1,
+                        widths: ['10%', '90%'],
+                        body: [
+                            [{ text: 'Cant.', style: "normalText" }, { text: 'Descripción', style: "normalText" },],
+                            ...transacciones
+                        ],
+
+                    }
+                },
+                {
+                    margin: [0, 10, 0, 0],
+                    text: `Le atendió: ${format.detalles[0].userName.toUpperCase()}`, style: 'center',
+                },
+                {
+                    text: dateStr, style: 'center',
+                },
+                {
+                    margin: [0, 20, 0, 0],
+                    text: '---------------------------------------------------------------',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Power By',
+                    style: 'center',
+                },
+
+                {
+                    text: 'Desarrollo Moderno de Software S.A.',
+                    style: 'center',
+                },
+
+                {
+                    text: 'www.demosoft.com.gt',
+                    style: 'center',
+                },
+            ],
+            styles: {
+                center10: {
+                    fontSize: 10,
+                    alignment: 'center',
+                },
+                center: {
+                    fontSize: 8,
+                    alignment: 'center',
+                },
+
+                normalText: {
+                    fontSize: 8,
+                },
+                normalText10: {
+                    fontSize: 10,
+                },
+
+
             },
         };
 

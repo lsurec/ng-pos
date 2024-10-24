@@ -33,9 +33,10 @@
                         </button>
                         <input class="barra-de-busqueda" type="search" name="search" [(ngModel)]="searchText"
                             autocomplete="off" placeholder="{{'crm.crear.busqueda' | translate}}"
-                            [ngClass]="{ 'border-radius': tareasFiltro.length == 0}">
-                        <div class="resultados" *ngIf="tareasFiltro.length > 0">
-                            <p class="registros">{{'crm.home.registros' | translate}}
+                            [ngClass]="{ 'border-radius': tareasFiltro.length == 0 || !resultados }"
+                            (click)="verResultados()">
+                        <div class="resultados" *ngIf="tareasFiltro.length > 0 && resultados ">
+                            <p class="registrosTareas">{{'crm.home.registros' | translate}}
                                 {{tareasFiltro.length}}
                             </p>
                             <div class="espacio-result">
@@ -49,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="verMas">
-                                    <p (click)="filtrarResultados(1)">Ver más</p>
+                                    <p class="verMasTxt" (click)="filtrarResultados(1)">Ver más</p>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +80,8 @@
                     {{'crm.tarea.invitaciones' | translate}}
                 </div>
 
-                <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas">
+                <section id="content1" class="content1 contenido-seleccionado" *ngIf="verTareas"
+                    (click)="resultados = false">
                     <!-- Veremos todas las tareas del portal -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
@@ -165,7 +167,8 @@
                     </div>
                 </section>
 
-                <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas">
+                <section id="content2" class="content2 contenido-seleccionado" *ngIf="verCreadas"
+                    (click)="resultados = false">
                     <!-- Veremos las tareas creadas por el usuario que inició sesion -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
@@ -250,7 +253,8 @@
                     </div>
                 </section>
 
-                <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas">
+                <section id="content3" class="content3 contenido-seleccionado" *ngIf="verAsignadas"
+                    (click)="resultados = false">
                     <!-- Veremos las tareas asignadas al usuario que inició sesion -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
@@ -335,7 +339,8 @@
                     </div>
                 </section>
 
-                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones">
+                <section id="content4" class="content4 contenido-seleccionado" *ngIf="verInvitaciones"
+                    (click)="resultados = false">
                     <!-- Veremos las tareas a las que el usuario que inició sesion es invitado -->
                     <div class="container_main" #contentContainer>
                         <p class="coincidencias">{{'crm.home.registros' | translate}}
