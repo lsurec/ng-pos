@@ -26,6 +26,65 @@
 
     <div class="container_main" #contentContainer>
 
+        <div class="menusApi">
+            <mat-select class="tipo-tarea" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoMetodo" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoDato" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoRespuesta" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoServicio" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="camposTabla">
+            <div class="campo">
+                <p class="textBold">Parametro</p>
+            </div>
+            <div class="valor">
+                <p class="textBold">Valor</p>
+            </div>
+            <div class="descripcion">
+                <p class="textBold">Descripcion</p>
+            </div>
+        </div>
+        <div class="camposTabla">
+            <div class="campo">
+                <p class="text12">user</p>
+            </div>
+            <div class="valor">
+                <p class="text12">admin</p>
+            </div>
+            <div class="descripcion">
+                <p class="text12">Usuario con permisos.</p>
+            </div>
+        </div>
+        <div class="camposTabla">
+            <div class="campo">
+                <p class="text12">user</p>
+            </div>
+            <div class="valor">
+                <p class="text12">admin</p>
+            </div>
+            <div class="descripcion">
+                <p class="text12">Usuario con permisos.</p>
+            </div>
+        </div>
     </div>
     <app-barra-logos></app-barra-logos>
 </div>

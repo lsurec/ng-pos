@@ -452,9 +452,13 @@
             "seleccionarTran": "Seleccionar todas las transacciones.",
             "estadoCuenta": "Estado de Cuenta"
         },
-        "apis":{
-            "direccion" : "Dirección",
-            "tel" : "Teléfono"
+        "apis": {
+            "direccion": "Dirección",
+            "tel": "Teléfono",
+            "metodosT": "METODOS",
+            "datoT": "TIPO DATO",
+            "respuestaT": "TIPO RESPUESTA",
+            "servicioT": "TIPO SERVICIO"
         }
     },
     "crm": {
