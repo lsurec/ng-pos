@@ -18,29 +18,29 @@ export class CatalogoApisComponent {
 
   apis: ApiInterface[] = [
     {
-      nombre: "Infile",
-      metodo: "Zona1",
-      url: "1234567-8",
+      nombre: "LOGIN",
+      metodo: "POST",
+      url: "/api/Login",
     },
     {
-      nombre: "Infile",
-      metodo: "Zona1",
-      url: "1234567-8",
+      nombre: "EMPRESAS",
+      metodo: "GET",
+      url: "/api/Empresa/{usuario}",
     },
     {
-      nombre: "Infile",
-      metodo: "Zona1",
-      url: "1234567-8",
+      nombre: "ESTACIONES DE TRABAJO",
+      metodo: "GET",
+      url: "/api/Estacion/{usuario}",
     },
     {
-      nombre: "Infile",
-      metodo: "Zona1",
-      url: "1234567-8",
+      nombre: "APLICACIONES",
+      metodo: "GET",
+      url: "/api/Application/{usuario}",
     },
     {
-      nombre: "Infile",
-      metodo: "Zona1",
-      url: "1234567-8",
+      nombre: "DISPLAYS",
+      metodo: "GET",
+      url: "/api/Display",
     },
   ];
 
