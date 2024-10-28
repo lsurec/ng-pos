@@ -1,0 +1,31 @@
+<div *ngIf="!mantenimiento.isLoading">
+    <mat-toolbar class="toolbarPhone">
+        <mat-toolbar-row class="toolbar-row">
+            <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-icon-button (click)="loadData()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <p class="titulo">Api Detalle</p>
+            <span class="spacer"></span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-toolbar class="toolbarlargeTitle">
+        <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button mat-icon-button (click)="loadData()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <p class="titulo">Api Detalle</p>
+        <span class="spacer"></span>
+    </mat-toolbar>
+
+    <div class="container_main" #contentContainer>
+
+    </div>
+    <app-barra-logos></app-barra-logos>
+</div>

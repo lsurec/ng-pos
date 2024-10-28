@@ -53,6 +53,8 @@ export class CatalogoApisComponent {
   }
 
   detalleApi() {
+    this.mantenimiento.catalogo = false;
+    this.mantenimiento.apiDetalle = true;
   }
 
 }

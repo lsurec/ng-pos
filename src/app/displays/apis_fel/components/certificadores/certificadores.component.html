@@ -1,6 +1,6 @@
 <div *ngIf="!mantenimiento.isLoading">
     <app-catalogo-apis *ngIf="mantenimiento.catalogo"></app-catalogo-apis>
-
+    <app-api-detalle *ngIf="mantenimiento.apiDetalle"></app-api-detalle>
     <div *ngIf="mantenimiento.certificador">
         <mat-toolbar class="toolbarPhone">
             <mat-toolbar-row class="toolbar-row">

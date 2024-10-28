@@ -9,4 +9,5 @@ export class CertificadorService {
     isLoading: boolean = false;
     catalogo: boolean = false;
     certificador: boolean = true;
+    apiDetalle: boolean = false;
 }

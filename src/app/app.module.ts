@@ -112,6 +112,7 @@ import { MoveRestaurantComponent } from './displays/prcRestaurante/components/mo
 import { MatStepperModule } from '@angular/material/stepper';
 import { CertificadoresComponent } from './displays/apis_fel/components/certificadores/certificadores.component';
 import { CatalogoApisComponent } from './displays/apis_fel/components/catalogo-apis/catalogo-apis.component';
+import { ApiDetalleComponent } from './displays/apis_fel/components/api-detalle/api-detalle.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +194,7 @@ import { CatalogoApisComponent } from './displays/apis_fel/components/catalogo-a
     MoveRestaurantComponent,
     CertificadoresComponent,
     CatalogoApisComponent,
+    ApiDetalleComponent,
   ],
   imports: [
     MatCardModule,

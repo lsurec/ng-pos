@@ -1,0 +1,140 @@
+$personalizado : var(--global-color); //bordes y texto azul
+$seleccionado  : var(--bloques-claro);
+$bordes        : var(--bordes-claro); //bordes menu
+$fondo         : var(--fondo-claro); //fondo Demosoft
+$scroll        : var(--global-color); //barra azul
+$gris          : var(--gris);
+$blanco        : var(--blaco);
+$sombra        : var(--sombra-claro);
+$bloques       : var(--bloques-claro);
+
+.progress {
+    padding         : 10px 20px;
+    width           : 100%;
+    height          : 100vh; //importante para que este centrado
+    background-color: $fondo;
+}
+
+/*Toolbar*/
+
+.icon_toolbar {
+    font-size: 22px;
+}
+
+.toolbarPhone {
+    display: none;
+    height : 64px;
+}
+
+.toolbarPhone,
+.toolbarlargeTitle {
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
+}
+
+.toolbar-row {
+    height: 64px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .toolbarlargeTitle {
+        display: none !important;
+    }
+
+    .toolbarPhone {
+        display: block !important;
+    }
+}
+
+/*Fin Toolbar*/
+
+/*Contendo derecho*/
+
+.container_main::-webkit-scrollbar {
+    width           : 7px;
+    background-color: $fondo;
+}
+
+.container_main::-webkit-scrollbar-track {
+    background-color: $fondo;
+}
+
+.container_main::-webkit-scrollbar-thumb {
+    background-color: $scroll;
+    border-radius   : 20px;
+    border          : 3px $fondo;
+}
+
+.container_page {
+    height    : 100vh;
+    width     : 100vw;
+    margin-top: 65px;
+    position  : fixed;
+}
+
+.container_main {
+    width     : 100%;
+    height    : calc(100vh - 128px);
+    float     : left;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding   : 20px;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    .container_main {
+        width: 100%;
+    }
+
+    .filtros {
+        display: block !important;
+    }
+
+    .informacion,
+    .fechas {
+        width: 100% !important;
+    }
+}
+
+.head__sidenav {
+    height          : 44px !important;
+    background-color: $fondo;
+    border-bottom   : 1px solid $bordes;
+}
+
+/*Fin Contendo derecho*/
+
+.dFlex {
+    display    : flex;
+    align-items: center;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.padding-right {
+    padding-right: 50px;
+}
+
+.titulo {
+    font-weight: bold;
+    font-size  : 16px;
+}
+
+.textos14 {
+    font-size: 14px;
+}
+
+.textosBold14 {
+    font-size    : 14px;
+    font-weight  : 550;
+    padding-right: 5px;
+}
