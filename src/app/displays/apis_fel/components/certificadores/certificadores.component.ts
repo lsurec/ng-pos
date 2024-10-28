@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CertificadorInterface } from '../../interfaces/certificador.interface';
+import { CertificadorService } from '../../services/certificador.service';
 
 @Component({
   selector: 'app-certificadores',
@@ -7,9 +8,6 @@ import { CertificadorInterface } from '../../interfaces/certificador.interface';
   styleUrls: ['./certificadores.component.scss']
 })
 export class CertificadoresComponent {
-
-
-  isLoading: boolean = false;
 
   cetificadores: CertificadorInterface[] = [
     {
@@ -37,8 +35,23 @@ export class CertificadoresComponent {
       tel: "76543210"
     }
   ];
-  backPage() { }
-  loadData() { }
-  detalleCert() { }
+
+
+  constructor(
+    public mantenimiento: CertificadorService,
+  ) {
+
+  }
+
+  backPage() {
+  }
+
+  loadData() {
+  }
+
+  detalleCert() {
+    this.mantenimiento.catalogo = true;
+    this.mantenimiento.certificador = false;
+  }
 
 }

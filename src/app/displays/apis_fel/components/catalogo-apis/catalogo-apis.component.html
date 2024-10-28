@@ -1,1 +1,50 @@
-<p>catalogo-apis works!</p>
+<div *ngIf="!mantenimiento.isLoading">
+    <mat-toolbar class="toolbarPhone">
+        <mat-toolbar-row class="toolbar-row">
+            <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <button mat-icon-button (click)="loadData()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <p class="titulo">Catalogo de Apis</p>
+            <span class="spacer"></span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-toolbar class="toolbarlargeTitle">
+        <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <button mat-icon-button (click)="loadData()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <p class="titulo">Catalogo de Apis</p>
+        <span class="spacer"></span>
+    </mat-toolbar>
+
+    <div class="container_main" #contentContainer>
+        <div class="d-flex">
+            <span class="spacer"></span>
+            <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
+                ({{apis.length}})
+            </p>
+        </div>
+
+        <div class="dFlex" *ngFor="let api of apis">
+            <span class="spacer"></span>
+            <div class="lista-documentos">
+                <div class="documentos-origen" (click)=" detalleApi()">
+                    <p class="textosBold14">{{ api.nombre }} </p>
+                    <div class="dFlex">
+                        <p class="textosBold14">{{api.metodo}}</p>
+                        <p class="textos14"> {{api.url}}</p>
+                    </div>
+                </div>
+            </div>
+            <span class="spacer"></span>
+        </div>
+    </div>
+    <app-barra-logos></app-barra-logos>
+</div>
