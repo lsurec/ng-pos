@@ -1,4 +1,6 @@
-export const catalogoTipoServicio = [
+import { TipoServicioInterface } from "../interfaces/tipo_servicio.interface";
+
+export const catalogoTipoServicio:TipoServicioInterface[] = [
     {
         "Tipo_Servicio": 1,
         "Nombre": "Api Rest"

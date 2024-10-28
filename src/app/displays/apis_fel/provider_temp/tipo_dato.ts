@@ -1,4 +1,6 @@
-export const catalogoTipoDato = [
+import { TipoDatoInterface } from "../interfaces/tipo_dato.interface";
+
+export const catalogoTipoDato: TipoDatoInterface[] = [
     {
         "Tipo_Dato": 1,
         "Nombre": "STRING"

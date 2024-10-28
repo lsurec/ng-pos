@@ -1,4 +1,6 @@
-export const ctalogoTipoApi = [
+import { TipoAPIInreface } from "../interfaces/tipo_api.interface";
+
+export const ctalogoTipoApi:TipoAPIInreface[] = [
     {
         "Tipo_Metodo": 1,
         "Nombre": "POST"

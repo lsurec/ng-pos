@@ -1,4 +1,6 @@
-export const catalogoTipoMetodo = [
+import { TipoMetodoInterface } from "../interfaces/tipo_metodo.interface";
+
+export const catalogoTipoMetodo:TipoMetodoInterface[] = [
     {
         "Tipo_Metodo": 1,
         "Nombre": "POST"
