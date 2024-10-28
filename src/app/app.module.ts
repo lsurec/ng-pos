@@ -110,6 +110,8 @@ import { MoveCheckTransactionComponent } from './displays/prcRestaurante/compone
 import { ErrorComandaComponent } from './displays/prcRestaurante/components/error-comanda/error-comanda.component';
 import { MoveRestaurantComponent } from './displays/prcRestaurante/components/move-restaurant/move-restaurant.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { CertificadoresComponent } from './displays/apis_fel/components/certificadores/certificadores.component';
+import { CatalogoApisComponent } from './displays/apis_fel/components/catalogo-apis/catalogo-apis.component';
 
 @NgModule({
   declarations: [
@@ -189,6 +191,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MoveCheckTransactionComponent,
     ErrorComandaComponent,
     MoveRestaurantComponent,
+    CertificadoresComponent,
+    CatalogoApisComponent,
   ],
   imports: [
     MatCardModule,
