@@ -451,6 +451,10 @@
             "eliminarSeleccionadas": "Eliminar cuentas.",
             "seleccionarTran": "Seleccionar todas las transacciones.",
             "estadoCuenta": "Estado de Cuenta"
+        },
+        "apis":{
+            "direccion" : "Dirección",
+            "tel" : "Teléfono"
         }
     },
     "crm": {
