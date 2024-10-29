@@ -24,6 +24,14 @@ export class ApiDetalleComponent implements OnInit {
 
   api?: ApiInterface;
 
+  parametro: string = "user";
+  valor: string = "admin";
+  descripcion: string = "";
+
+  parametroN: string = "";
+  valorN: string = "";
+  descripcionN: string = "";
+
   constructor(
     public mantenimiento: CertificadorService,
   ) {

@@ -58,36 +58,48 @@
         </div>
 
         <div class="camposTabla">
-            <div class="campo">
+            <div class="campo padding5x10">
                 <p class="textBold">Parametro</p>
             </div>
-            <div class="valor">
+            <div class="valor padding5x10">
                 <p class="textBold">Valor</p>
             </div>
-            <div class="descripcion">
+            <div class="descripcion padding5x10">
                 <p class="textBold">Descripcion</p>
             </div>
         </div>
         <div class="camposTabla">
             <div class="campo">
-                <p class="text12">user</p>
+                <input type="text" class="txtCampo" [(ngModel)]="parametro">
             </div>
             <div class="valor">
-                <p class="text12">admin</p>
+                <input type="text" class="txtValor" [(ngModel)]="valor">
             </div>
             <div class="descripcion">
-                <p class="text12">Usuario con permisos.</p>
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcion">
             </div>
         </div>
         <div class="camposTabla">
             <div class="campo">
-                <p class="text12">user</p>
+                <input type="text" class="txtCampo" [(ngModel)]="parametro">
             </div>
             <div class="valor">
-                <p class="text12">admin</p>
+                <input type="text" class="txtValor" [(ngModel)]="valor">
             </div>
             <div class="descripcion">
-                <p class="text12">Usuario con permisos.</p>
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcion">
+            </div>
+        </div>
+        <!-- Para nuevo -->
+        <div class="camposTabla">
+            <div class="campoN">
+                <input type="text" class="txtCampo" [(ngModel)]="parametroN">
+            </div>
+            <div class="valorN">
+                <input type="text" class="txtValor" [(ngModel)]="valorN">
+            </div>
+            <div class="descripcionN">
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcionN">
             </div>
         </div>
     </div>

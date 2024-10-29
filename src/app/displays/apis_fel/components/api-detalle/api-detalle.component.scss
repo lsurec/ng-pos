@@ -186,17 +186,39 @@ p {
 .valor,
 .descripcion {
     width        : 100%;
-    padding      : 5px 10px;
     border       : solid 1px $bordes;
     border-bottom: none;
 }
 
-.campo {
+.campo,
+.valor {
     border-right: none;
 }
 
-.valor {
+.txtCampo,
+.txtValor,
+.txtDescripcion {
+    width       : 100%;
+    padding     : 5px 10px;
+    background  : none;
+    outline     : none;
+    border-style: none;
+}
+
+.campoN,
+.valorN,
+.descripcionN {
+    width : 100%;
+    border: solid 1px $bordes;
+}
+
+.campoN,
+.valorN {
     border-right: none;
+}
+
+.padding5x10 {
+    padding: 5px 10px;
 }
 
 .barra-de-busqueda:hover {
