@@ -9,6 +9,10 @@ import { TipoRespuestaInterface } from '../../interfaces/tipo_respuesta.interfac
 import { catalogoTipoServicio } from '../../provider_temp/tipo_servicio';
 import { TipoServicioInterface } from '../../interfaces/tipo_servicio.interface';
 import { CatalogoAPIInterface } from '../../interfaces/catalogo_api.interface';
+import { CatalogoParametroInterface } from '../../interfaces/catalogo_parametro.interface';
+import { catalogoParametro } from '../../provider_temp/catalogo_parametro';
+import { TipoParametroInterface } from '../../interfaces/tipo_parammetro.interface';
+import { catalogoTipoParametro } from '../../provider_temp/tipo_parametro';
 
 @Component({
   selector: 'app-api-detalle',
@@ -21,6 +25,8 @@ export class ApiDetalleComponent implements OnInit {
   catalogoTipoDato: TipoDatoInterface[] = catalogoTipoDato;
   catalogoTipoRespuesta: TipoRespuestaInterface[] = catalogoTipoRespuesta;
   catalogoTipoServicio: TipoServicioInterface[] = catalogoTipoServicio;
+  catalogoParametro: CatalogoParametroInterface[] = catalogoParametro;
+  catalogoTipoParametro: TipoParametroInterface[] = catalogoTipoParametro;
 
   api?: CatalogoAPIInterface;
 
@@ -32,6 +38,8 @@ export class ApiDetalleComponent implements OnInit {
   valorN: string = "";
   descripcionN: string = "";
 
+  metodo?: TipoMetodoInterface;
+
   constructor(
     public mantenimiento: CertificadorService,
   ) {
@@ -39,6 +47,8 @@ export class ApiDetalleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.api = this.mantenimiento.api;
+
+    this.metodo = this.getTipoMetodo(this.api!.Tipo_Metodo)!;
   }
 
   backPage() {
@@ -54,5 +64,28 @@ export class ApiDetalleComponent implements OnInit {
 
   }
 
+  getTipoMetodo(tipo: number): TipoMetodoInterface | null {
+    for (let index = 0; index < this.catalogoTipoMetodo.length; index++) {
+      let element: TipoMetodoInterface = this.catalogoTipoMetodo[index];
+
+      if (tipo === element.Tipo_Metodo) {
+        return element;
+      }
+    }
+    // Agregar retorno explícito en caso de que no haya coincidencia
+    return null;
+  }
+
+  getTipoParametro(tipo: number): TipoParametroInterface | null {
+    for (let index = 0; index < this.catalogoTipoParametro.length; index++) {
+      let element: TipoParametroInterface = this.catalogoTipoParametro[index];
+
+      if (tipo === element.Tipo_Parametro) {
+        return element;
+      }
+    }
+    // Agregar retorno explícito en caso de que no haya coincidencia
+    return null;
+  }
 
 }

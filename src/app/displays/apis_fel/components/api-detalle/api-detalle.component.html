@@ -27,7 +27,8 @@
     <div class="container_main" #contentContainer>
 
         <div class="metodoApi">
-            <mat-select class="metodos" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}">
+            <mat-select class="metodos" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}"
+                [(ngModel)]="metodo">
                 <mat-option *ngFor="let tipo of catalogoTipoMetodo" [value]="tipo">
                     {{tipo.Nombre}}
                 </mat-option>
@@ -62,21 +63,21 @@
                 <p class="textBold">Parametro</p>
             </div>
             <div class="valor padding5x10">
-                <p class="textBold">Valor</p>
+                <p class="textBold">Plantilla</p>
             </div>
             <div class="descripcion padding5x10">
                 <p class="textBold">Descripcion</p>
             </div>
         </div>
-        <div class="camposTabla">
+        <div class="camposTabla" *ngFor="let parametro of catalogoParametro ">
             <div class="campo">
-                <input type="text" class="txtCampo" [(ngModel)]="parametro">
+                <input type="text" class="txtCampo" [(ngModel)]="getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
             </div>
             <div class="valor">
-                <input type="text" class="txtValor" [(ngModel)]="valor">
+                <input type="text" class="txtValor" [(ngModel)]="parametro.Plantilla">
             </div>
             <div class="descripcion">
-                <input type="text" class="txtDescripcion" [(ngModel)]="descripcion">
+                <input type="text" class="txtDescripcion" [(ngModel)]="parametro.Descripcion">
             </div>
         </div>
         <div class="camposTabla">
