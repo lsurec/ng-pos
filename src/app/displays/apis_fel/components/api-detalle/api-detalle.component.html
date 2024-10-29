@@ -26,6 +26,82 @@
 
     <div class="container_main" #contentContainer>
 
+        <div class="metodoApi">
+            <mat-select class="metodos" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoMetodo" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <form #searchForm="ngForm" (ngSubmit)="aceptar()" class="inputApi">
+                <input class="urlApi" type="text" name="search" [(ngModel)]="api!.url" autocomplete="off">
+            </form>
+        </div>
+
+        <div class="menusApi">
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoDato" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoRespuesta" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+            <span class="spacer"></span>
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}">
+                <mat-option *ngFor="let tipo of catalogoTipoServicio" [value]="tipo">
+                    {{tipo.Nombre}}
+                </mat-option>
+            </mat-select>
+        </div>
+
+        <div class="camposTabla">
+            <div class="campo padding5x10">
+                <p class="textBold">Parametro</p>
+            </div>
+            <div class="valor padding5x10">
+                <p class="textBold">Valor</p>
+            </div>
+            <div class="descripcion padding5x10">
+                <p class="textBold">Descripcion</p>
+            </div>
+        </div>
+        <div class="camposTabla">
+            <div class="campo">
+                <input type="text" class="txtCampo" [(ngModel)]="parametro">
+            </div>
+            <div class="valor">
+                <input type="text" class="txtValor" [(ngModel)]="valor">
+            </div>
+            <div class="descripcion">
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcion">
+            </div>
+        </div>
+        <div class="camposTabla">
+            <div class="campo">
+                <input type="text" class="txtCampo" [(ngModel)]="parametro">
+            </div>
+            <div class="valor">
+                <input type="text" class="txtValor" [(ngModel)]="valor">
+            </div>
+            <div class="descripcion">
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcion">
+            </div>
+        </div>
+        <!-- Para nuevo -->
+        <div class="camposTabla">
+            <div class="campoN">
+                <input type="text" class="txtCampo" [(ngModel)]="parametroN">
+            </div>
+            <div class="valorN">
+                <input type="text" class="txtValor" [(ngModel)]="valorN">
+            </div>
+            <div class="descripcionN">
+                <input type="text" class="txtDescripcion" [(ngModel)]="descripcionN">
+            </div>
+        </div>
     </div>
     <app-barra-logos></app-barra-logos>
 </div>
