@@ -39,19 +39,15 @@
         </div>
 
         <div class="menusApi">
-            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}">
-                <mat-option *ngFor="let tipo of catalogoTipoDato" [value]="tipo">
-                    {{tipo.Nombre}}
-                </mat-option>
-            </mat-select>
-            <span class="spacer"></span>
-            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}">
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}"
+                [(ngModel)]="respuesta">
                 <mat-option *ngFor="let tipo of catalogoTipoRespuesta" [value]="tipo">
                     {{tipo.Nombre}}
                 </mat-option>
             </mat-select>
             <span class="spacer"></span>
-            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}">
+            <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}"
+                [(ngModel)]="servicio">
                 <mat-option *ngFor="let tipo of catalogoTipoServicio" [value]="tipo">
                     {{tipo.Nombre}}
                 </mat-option>

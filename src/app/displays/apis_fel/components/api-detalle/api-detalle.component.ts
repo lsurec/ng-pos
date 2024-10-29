@@ -35,6 +35,8 @@ export class ApiDetalleComponent implements OnInit {
   descripcionN: string = "";
 
   metodo?: TipoMetodoInterface;
+  servicio?: TipoServicioInterface;
+  respuesta?: TipoRespuestaInterface;
 
   constructor(
     public mantenimiento: CertificadorService,
@@ -45,6 +47,8 @@ export class ApiDetalleComponent implements OnInit {
     this.api = this.mantenimiento.api;
 
     this.metodo = this.getTipoMetodo(this.api!.Tipo_Metodo)!;
+    this.respuesta = this.getTipoRespuesta(this.api!.Tipo_Respuesta)!;
+    this.servicio = this.getTipoServicio(this.api!.Tipo_Servicio)!;
   }
 
   backPage() {
@@ -89,6 +93,30 @@ export class ApiDetalleComponent implements OnInit {
       let element: TipoDatoInterface = this.catalogoTipoDato[index];
 
       if (tipo === element.Tipo_Dato) {
+        return element;
+      }
+    }
+    // Agregar retorno explícito en caso de que no haya coincidencia
+    return null;
+  }
+
+  getTipoRespuesta(tipo: number): TipoRespuestaInterface | null {
+    for (let index = 0; index < this.catalogoTipoRespuesta.length; index++) {
+      let element: TipoRespuestaInterface = this.catalogoTipoRespuesta[index];
+
+      if (tipo === element.Tipo_Respuesta) {
+        return element;
+      }
+    }
+    // Agregar retorno explícito en caso de que no haya coincidencia
+    return null;
+  }
+
+  getTipoServicio(tipo: number): TipoServicioInterface | null {
+    for (let index = 0; index < this.catalogoTipoServicio.length; index++) {
+      let element: TipoServicioInterface = this.catalogoTipoServicio[index];
+
+      if (tipo === element.Tipo_Servicio) {
         return element;
       }
     }
