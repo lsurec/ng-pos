@@ -139,7 +139,6 @@ p {
     color      : $personalizado;
     display    : flex;
     align-items: center;
-    margin     : 0px 5px;
 }
 
 .metodoApi {
@@ -249,4 +248,8 @@ p {
     padding                   : 10px;
     border-top-right-radius   : 10px;
     border-bottom-right-radius: 10px;
+}
+
+.menuDesc {
+    width: 45%;
 }
