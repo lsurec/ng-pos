@@ -30,10 +30,6 @@ export class ApiDetalleComponent implements OnInit {
 
   api?: CatalogoAPIInterface;
 
-  parametro: string = "user";
-  valor: string = "admin";
-  descripcion: string = "";
-
   parametroN: string = "";
   valorN: string = "";
   descripcionN: string = "";
@@ -81,6 +77,18 @@ export class ApiDetalleComponent implements OnInit {
       let element: TipoParametroInterface = this.catalogoTipoParametro[index];
 
       if (tipo === element.Tipo_Parametro) {
+        return element;
+      }
+    }
+    // Agregar retorno explícito en caso de que no haya coincidencia
+    return null;
+  }
+
+  getTipoDato(tipo: number): TipoDatoInterface | null {
+    for (let index = 0; index < this.catalogoTipoDato.length; index++) {
+      let element: TipoDatoInterface = this.catalogoTipoDato[index];
+
+      if (tipo === element.Tipo_Dato) {
         return element;
       }
     }
