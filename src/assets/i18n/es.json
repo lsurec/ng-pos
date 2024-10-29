@@ -455,7 +455,7 @@
         "apis": {
             "direccion": "Dirección",
             "tel": "Teléfono",
-            "metodosT": "METODOS",
+            "metodosT": "METODOS HTTP",
             "datoT": "TIPO DATO",
             "respuestaT": "TIPO RESPUESTA",
             "servicioT": "TIPO SERVICIO"

@@ -134,12 +134,29 @@ p {
 .tipo-tarea {
     border     : 1px solid $bordes;
     min-height : 30px;
-    padding    : 0px 10px;
+    padding    : 5px 10px;
     font-size  : 13px;
     color      : $personalizado;
     display    : flex;
     align-items: center;
-    margin     : 0px 10px;
+    margin     : 0px 5px;
+}
+
+.metodoApi {
+    display: flex;
+    padding: 10px 0px;
+}
+
+.metodos {
+    border                   : 1px solid $bordes;
+    padding                  : 0px 10px;
+    color                    : $personalizado;
+    display                  : flex;
+    align-items              : center;
+    width                    : 180px;
+    border-top-left-radius   : 10px;
+    border-bottom-left-radius: 10px;
+    border-right             : none;
 }
 
 .mat-mdc-option {
@@ -148,8 +165,16 @@ p {
     font-size : 13px;
 }
 
+.inputApi {
+    width: 100%;
+}
+
+.menu {
+    width: 35%;
+}
+
 .menusApi {
-    padding: 10px;
+    padding: 10px 0px;
     display: flex;
 }
 
@@ -172,4 +197,34 @@ p {
 
 .valor {
     border-right: none;
+}
+
+.barra-de-busqueda:hover {
+    border: 1px solid $personalizado;
+}
+
+// estilos para los inputs 
+.barra-de-busqueda {
+    width        : 100%;
+    background   : none;
+    font-size    : 14px;
+    outline      : none;
+    border-style : none;
+    border       : 0.5px solid $bordes;
+    color        : $personalizado;
+    border-radius: 10px;
+    padding      : 10px;
+}
+
+.urlApi {
+    width                     : 100%;
+    background                : none;
+    font-size                 : 14px;
+    outline                   : none;
+    border-style              : none;
+    border                    : 0.5px solid $bordes;
+    color                     : $personalizado;
+    padding                   : 10px;
+    border-top-right-radius   : 10px;
+    border-bottom-right-radius: 10px;
 }

@@ -52,7 +52,8 @@ export class CatalogoApisComponent {
   loadData() {
   }
 
-  detalleApi() {
+  detalleApi(api: ApiInterface) {
+    this.mantenimiento.api = api;
     this.mantenimiento.catalogo = false;
     this.mantenimiento.apiDetalle = true;
   }

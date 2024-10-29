@@ -35,7 +35,7 @@
         <div class="dFlex" *ngFor="let api of apis">
             <span class="spacer"></span>
             <div class="lista-documentos">
-                <div class="documentos-origen" (click)=" detalleApi()">
+                <div class="documentos-origen" (click)=" detalleApi(api)">
                     <p class="textosBold14">{{ api.nombre }} </p>
                     <div class="dFlex">
                         <p class="textosBold14">{{api.metodo}}</p>

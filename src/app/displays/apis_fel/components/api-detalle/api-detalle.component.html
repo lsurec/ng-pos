@@ -26,13 +26,18 @@
 
     <div class="container_main" #contentContainer>
 
-        <div class="menusApi">
-            <mat-select class="tipo-tarea" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}">
+        <div class="metodoApi">
+            <mat-select class="metodos" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}">
                 <mat-option *ngFor="let tipo of catalogoTipoMetodo" [value]="tipo">
                     {{tipo.Nombre}}
                 </mat-option>
             </mat-select>
-            <span class="spacer"></span>
+            <form #searchForm="ngForm" (ngSubmit)="aceptar()" class="inputApi">
+                <input class="urlApi" type="text" name="search" [(ngModel)]="api!.url" autocomplete="off">
+            </form>
+        </div>
+
+        <div class="menusApi">
             <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}">
                 <mat-option *ngFor="let tipo of catalogoTipoDato" [value]="tipo">
                     {{tipo.Nombre}}
