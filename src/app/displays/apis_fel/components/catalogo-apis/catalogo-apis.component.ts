@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ApiInterface } from '../../interfaces/api.interface';
 import { CertificadorService } from '../../services/certificador.service';
+import { CatalogoAPIInterface } from '../../interfaces/catalogo_api.interface';
+import { catalogoApi } from '../../provider_temp/catalogo_api';
 
 @Component({
   selector: 'app-catalogo-apis',
@@ -16,33 +17,7 @@ export class CatalogoApisComponent {
 
   }
 
-  apis: ApiInterface[] = [
-    {
-      nombre: "LOGIN",
-      metodo: "POST",
-      url: "/api/Login",
-    },
-    {
-      nombre: "EMPRESAS",
-      metodo: "GET",
-      url: "/api/Empresa/{usuario}",
-    },
-    {
-      nombre: "ESTACIONES DE TRABAJO",
-      metodo: "GET",
-      url: "/api/Estacion/{usuario}",
-    },
-    {
-      nombre: "APLICACIONES",
-      metodo: "GET",
-      url: "/api/Application/{usuario}",
-    },
-    {
-      nombre: "DISPLAYS",
-      metodo: "GET",
-      url: "/api/Display",
-    },
-  ];
+  apis: CatalogoAPIInterface[] = catalogoApi;
 
   backPage() {
     this.mantenimiento.catalogo = false;
@@ -52,7 +27,7 @@ export class CatalogoApisComponent {
   loadData() {
   }
 
-  detalleApi(api: ApiInterface) {
+  detalleApi(api: CatalogoAPIInterface) {
     this.mantenimiento.api = api;
     this.mantenimiento.catalogo = false;
     this.mantenimiento.apiDetalle = true;

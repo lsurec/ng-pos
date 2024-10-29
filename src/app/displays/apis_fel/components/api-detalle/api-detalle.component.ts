@@ -8,7 +8,7 @@ import { catalogoTipoRespuesta } from '../../provider_temp/tipo_respuesta';
 import { TipoRespuestaInterface } from '../../interfaces/tipo_respuesta.interface';
 import { catalogoTipoServicio } from '../../provider_temp/tipo_servicio';
 import { TipoServicioInterface } from '../../interfaces/tipo_servicio.interface';
-import { ApiInterface } from '../../interfaces/api.interface';
+import { CatalogoAPIInterface } from '../../interfaces/catalogo_api.interface';
 
 @Component({
   selector: 'app-api-detalle',
@@ -22,7 +22,7 @@ export class ApiDetalleComponent implements OnInit {
   catalogoTipoRespuesta: TipoRespuestaInterface[] = catalogoTipoRespuesta;
   catalogoTipoServicio: TipoServicioInterface[] = catalogoTipoServicio;
 
-  api?: ApiInterface;
+  api?: CatalogoAPIInterface;
 
   parametro: string = "user";
   valor: string = "admin";
