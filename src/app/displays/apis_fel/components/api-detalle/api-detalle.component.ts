@@ -124,4 +124,11 @@ export class ApiDetalleComponent implements OnInit {
     return null;
   }
 
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto'; // Resetea la altura para calcular la nueva altura
+    const newHeight = Math.min(textarea.scrollHeight, 150); // Calcula la nueva altura, con un máximo de 150px (10 rows aprox.)
+    textarea.style.height = newHeight + 'px';
+  }
+
 }

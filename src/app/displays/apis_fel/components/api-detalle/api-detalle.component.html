@@ -117,6 +117,14 @@
                 <input type="text" class="txtDescripcion" [(ngModel)]="descripcionN" placeholder="Descripcion">
             </div>
         </div>
+
+        <div class="firmaDoc">
+            <p class="textBold">Nodo Firma Documento:</p>
+            <textarea name="notas" id="descripcion" cols="30" rows="3" placeholder="Nodo Firma Documento."
+                [(ngModel)]="api!.Nodo_FirmaDocumentoResponse" (input)="autoResize($event)"
+                style="overflow:auto; resize:none;" class="nodoFirma"></textarea>
+        </div>
+
     </div>
     <app-barra-logos></app-barra-logos>
 </div>
