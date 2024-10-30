@@ -9,11 +9,6 @@ import { Subject } from 'rxjs';
 //eventos para pantalla volver a cargar
 export class UtilitiesService {
 
-    static isNumeric(value: any): boolean {
-        return !isNaN(Number(value));
-    }
-
-
     static async generatePdfBlob(pdfDocGenerator: { getBlob: (arg0: (blob: any) => void) => void; }): Promise<Blob> {
         return new Promise((resolve, reject) => {
             pdfDocGenerator.getBlob((blob) => {

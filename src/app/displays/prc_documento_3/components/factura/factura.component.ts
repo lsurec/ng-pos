@@ -1846,11 +1846,14 @@ export class FacturaComponent implements OnInit {
     detalles.forEach(detail => {
 
 
-      if (detail.monto_Descuento >= 0 && detail.monto_Cargo >= 0) {
+      if (Math.abs(detail.monto_Descuento ?? 0) >= 0 && detail.monto_Cargo >= 0) {
 
         cargo += detail.monto_Cargo;
-        descuento += detail.monto_Descuento;
+        descuento += Math.abs(detail.monto_Descuento);
         subtotal += detail.monto;
+
+        console.log(descuento);
+        
 
       } else {
         
@@ -1859,7 +1862,7 @@ export class FacturaComponent implements OnInit {
           cargo += detail.monto;
         } else if (detail.cantidad == 0 && detail.monto < 0) {
           //5 descuento
-          descuento += detail.monto;
+          descuento += Math.abs(detail.monto);
         } else {
           //cualquier otro
           subtotal += detail.monto;
@@ -1888,11 +1891,8 @@ export class FacturaComponent implements OnInit {
           precioUnitario = precioUnitario / detail.cantidad;
         }
       }
-
-
-      console.log(detail.monto_Descuento);
       
-      let totalCalc: number = (detail.monto + detail.monto_Cargo) + detail.monto_Descuento;
+      let totalCalc: number = (detail.monto + detail.monto_Cargo) - Math.abs(detail.monto_Descuento);
 
       items.push(
         {
@@ -1909,7 +1909,7 @@ export class FacturaComponent implements OnInit {
       );
     });
 
-    total += (subtotal + cargo) + descuento;
+    total = (subtotal + cargo) - descuento;
 
     let montos: Montos = {
       subtotal: this.currencyPipe.transform(subtotal, ' ', 'symbol', '2.2-2')!,
