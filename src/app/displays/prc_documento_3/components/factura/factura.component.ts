@@ -1865,11 +1865,11 @@ export class FacturaComponent implements OnInit {
         // Si hay cantidad (no es cargo ni descuento)
         if (detail.cantidad > 0) {
           // Si no es servicio (tipo producto != 2)
-          
+
           if (detail.tipo_Producto != 2) {
             // Calcular precio unitario a partir de los días cobrados
             precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
-          }else{
+          } else {
             precioUnitario = precioUnitario / detail.cantidad;
           }
         }
@@ -1890,7 +1890,9 @@ export class FacturaComponent implements OnInit {
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
           imagen64: detail.img_Producto,
-          precioRepocision: detail.precio_Reposicion ?? "00.00",
+          precioRepocision: this.currencyPipe.transform(detail.precio_Reposicion ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
+          cargos: this.currencyPipe.transform(detail.monto_cargo ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
+          descuentos: this.currencyPipe.transform(detail.monto_descuento ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
         }
       );
     });

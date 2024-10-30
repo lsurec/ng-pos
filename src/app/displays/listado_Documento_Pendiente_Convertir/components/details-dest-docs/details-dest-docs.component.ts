@@ -234,6 +234,9 @@ export class DetailsDestDocsComponent {
           //Calcular preco untario, si la cantidad es 0 agregar el total de la transaccion
           unitario: this.currencyPipe.transform((detail.cantidad ?? 0) > 0 ? (detail.monto ?? 0) / (detail.cantidad ?? 0) : detail.monto, ' ', 'symbol', '2.2-2')!,
           total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          cargos: "00.00",
+          descuentos: "00.00",
+          precioRepocision: "00.00",
         }
       );
     });
