@@ -1846,32 +1846,40 @@ export class FacturaComponent implements OnInit {
     detalles.forEach(detail => {
 
 
-      if (detail.cantidad == 0 && detail.monto > 0) {
-        //4 cargo
-        cargo += detail.monto;
-      } else if (detail.cantidad == 0 && detail.monto < 0) {
-        //5 descuento
-        descuento += detail.monto;
-      } else {
-        //cualquier otro
+      if (detail.monto_Descuento >= 0 && detail.monto_Cargo >= 0) {
+
+        cargo += detail.monto_Cargo;
+        descuento += detail.monto_Descuento;
         subtotal += detail.monto;
+
+      } else {
+        
+        if (detail.cantidad == 0 && detail.monto > 0) {
+          //4 cargo
+          cargo += detail.monto;
+        } else if (detail.cantidad == 0 && detail.monto < 0) {
+          //5 descuento
+          descuento += detail.monto;
+        } else {
+          //cualquier otro
+          subtotal += detail.monto;
+        }
       }
 
+
+
       //TODO:Calculo de dias solo debria ser para ALfa Y Omega
+      
       let precioUnitario: number = detail.monto;
 
       // Si el tipo de documento es cotización (tipo doc 20)
       if (this.facturaService.tipoDocumento == 20) {
         // Si hay cantidad (no es cargo ni descuento)
-        if (detail.cantidad > 0) {
-          // Si no es servicio (tipo producto != 2)
-
-          if (detail.tipo_Producto != 2) {
-            // Calcular precio unitario a partir de los días cobrados
-            precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
-          } else {
-            precioUnitario = precioUnitario / detail.cantidad;
-          }
+        if (detail.tipo_Producto != 2) {
+          // Calcular precio unitario a partir de los días cobrados
+          precioUnitario = (precioUnitario / encabezado.cantidad_Dias_Fecha_Ini_Fin) / detail.cantidad;
+        } else {
+          precioUnitario = precioUnitario / detail.cantidad;
         }
       } else {
         // Si hay cantidad (no es cargo ni descuento)
@@ -1881,18 +1889,22 @@ export class FacturaComponent implements OnInit {
         }
       }
 
+
+      console.log(detail.monto_Descuento);
+      
+      let totalCalc: number = (detail.monto + detail.monto_Cargo) + detail.monto_Descuento;
+
       items.push(
         {
           sku: detail.producto_Id,
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
           unitario: this.currencyPipe.transform(precioUnitario, ' ', 'symbol', '2.2-2')!,
-          total: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
-          precioDia: this.currencyPipe.transform(detail.monto, ' ', 'symbol', '2.2-2')!,
+          total: this.currencyPipe.transform(this.tipoDocumento == 20 ? totalCalc : detail.monto, ' ', 'symbol', '2.2-2')!, //Si eso ctiizacion total calculado
           imagen64: detail.img_Producto,
           precioRepocision: this.currencyPipe.transform(detail.precio_Reposicion ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
-          cargos: this.currencyPipe.transform(detail.monto_cargo ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
-          descuentos: this.currencyPipe.transform(detail.monto_descuento ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
+          cargos: this.currencyPipe.transform(detail.monto_Cargo ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
+          descuentos: this.currencyPipe.transform(detail.monto_Descuento ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
         }
       );
     });
@@ -1975,6 +1987,8 @@ export class FacturaComponent implements OnInit {
       fechas: fechas,
     }
 
+
+
     //Imprimir doc 
     if (this.facturaService.tipoDocumento! == 20) {
       //immmpirmir cotizacion
@@ -1983,8 +1997,6 @@ export class FacturaComponent implements OnInit {
       const docDefinition = await this._printService.getPDFCotizacionAlfaYOmega(this.docPrint);
 
       pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).print();
-
-      // pdfMake.createPdf(docDefinition).print();
 
       if (
         this.facturaService.nuevoDoc) {

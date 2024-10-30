@@ -1087,7 +1087,13 @@ export class PrinterService {
                         text: item.unitario,
                         style: 'normalText'
                     },
-
+                    {
+                        text: item.cargos,
+                        style: 'normalText'
+                    }, {
+                        text: item.descuentos,
+                        style: 'normalText'
+                    },
                     {
                         text: item.total,
                         style: 'normalText'
@@ -1529,7 +1535,7 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1565,6 +1571,14 @@ export class PrinterService {
                                     style: 'normalTextBold'
                                 },
                                 {
+                                    text: 'Cargo',
+                                    style: 'normalTextBold'
+                                },
+                                 {
+                                    text: 'Descuento',
+                                    style: 'normalTextBold'
+                                },
+                                {
                                     text: 'Total',
                                     style: 'normalTextBold'
                                 },
@@ -1576,13 +1590,77 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
 
                         body: [
                             ...transacciones
                         ]
                     }
                 },
+                // {
+                //     marginTop: 5,
+                //     marginLeft: 175,
+                //     layout: 'noBorders',
+                //     table: {
+
+                //         widths: ['55%', '45%'],
+                //         body: [
+                //             [
+                //                 {
+                //                     text: 'Sub-total',
+                //                     style: 'headerText'
+                //                 },
+                //                 {
+                //                     text: doc.montos.subtotal,
+                //                     style: 'headerText',
+                //                     alignment: 'right',
+                //                 }
+                //             ]
+                //         ]
+                //     }
+                // },
+                // {
+                //     marginLeft: 180,
+                //     layout: 'noBorders',
+                //     table: {
+
+                //         widths: ['55%', '45%'],
+                //         body: [
+                //             [
+                //                 {
+                //                     text: '(+) Cargos',
+                //                     style: 'headerText'
+                //                 },
+                //                 {
+                //                     text: doc.montos.cargos,
+                //                     style: 'headerText',
+                //                     alignment: 'right',
+                //                 }
+                //             ]
+                //         ]
+                //     }
+                // },
+                // {
+                //     marginLeft: 185,
+                //     layout: 'noBorders',
+                //     table: {
+
+                //         widths: ['55%', '45%'],
+                //         body: [
+                //             [
+                //                 {
+                //                     text: '(-) Descuentos',
+                //                     style: 'headerText'
+                //                 },
+                //                 {
+                //                     text: doc.montos.descuentos,
+                //                     style: 'headerText',
+                //                     alignment: 'right',
+                //                 }
+                //             ]
+                //         ]
+                //     }
+                // },
                 {
                     marginTop: 5,
                     marginLeft: 172,
@@ -2211,17 +2289,17 @@ export class PrinterService {
                                 },
                                 divider,
                             ]
-                           
+
                         ]
                     }
                 },
                 {
-                    text: "Nombre:", style: 'normalText', margin:[0,10,0,10],
+                    text: "Nombre:", style: 'normalText', margin: [0, 10, 0, 10],
                 },
                 divider,
                 {
                     margin: [0, 0, 0, 10],
-                    
+
                     text: "NiT:", style: 'normalText'
                 },
                 divider,
@@ -2232,10 +2310,10 @@ export class PrinterService {
                 divider,
 
                 {
-                    text: "Le atendió: Mesero", style: 'normalText', margin:[0,20,0,0],
+                    text: "Le atendió: Mesero", style: 'normalText', margin: [0, 20, 0, 0],
                 },
                 {
-                    text: "12/12/2020", style: 'normalText', margin:[0,10,0,0],
+                    text: "12/12/2020", style: 'normalText', margin: [0, 10, 0, 0],
                 },
                 {
                     text: "12:12:12", style: 'normalText',

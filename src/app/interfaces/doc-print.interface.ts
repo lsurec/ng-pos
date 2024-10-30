@@ -45,7 +45,7 @@ export interface Item {
   descripcion: string;
   cantidad: number;
   unitario: string;
-  precioDia: string,
+  // precioDia: string,
   total: string;
   cargos:string,
   descuentos:string;

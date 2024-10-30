@@ -14,7 +14,7 @@ export interface DetallePrintInterface {
     img_Producto: any;
     precio_Reposicion: any;
     tipo_Producto: number;
-    monto_descuento: any;
-    monto_cargo: any;
+    monto_Descuento: any;
+    monto_Cargo: any;
 
 }
