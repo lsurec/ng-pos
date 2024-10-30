@@ -1,18 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CertificadorService } from '../../services/certificador.service';
 import { TipoMetodoInterface } from '../../interfaces/tipo_metodo.interface';
-import { catalogoTipoMetodo } from '../../provider_temp/tipo_metodo';
-import { TipoDatoInterface } from '../../interfaces/tipo_dato.interface';
-import { catalogoTipoDato } from '../../provider_temp/tipo_dato';
-import { catalogoTipoRespuesta } from '../../provider_temp/tipo_respuesta';
 import { TipoRespuestaInterface } from '../../interfaces/tipo_respuesta.interface';
-import { catalogoTipoServicio } from '../../provider_temp/tipo_servicio';
 import { TipoServicioInterface } from '../../interfaces/tipo_servicio.interface';
 import { CatalogoAPIInterface } from '../../interfaces/catalogo_api.interface';
-import { CatalogoParametroInterface } from '../../interfaces/catalogo_parametro.interface';
-import { catalogoParametro } from '../../provider_temp/catalogo_parametro';
-import { TipoParametroInterface } from '../../interfaces/tipo_parammetro.interface';
-import { catalogoTipoParametro } from '../../provider_temp/tipo_parametro';
+import { Parametro } from '../../interfaces/parametro.interface';
 
 @Component({
   selector: 'app-api-detalle',
@@ -20,25 +12,18 @@ import { catalogoTipoParametro } from '../../provider_temp/tipo_parametro';
   styleUrls: ['./api-detalle.component.scss']
 })
 export class ApiDetalleComponent implements OnInit {
+  @ViewChildren('valorInput') valorInputs!: QueryList<ElementRef>;
+  private nuevoElementoAgregado = false;
+
+  items: Parametro[] = [];
 
   api?: CatalogoAPIInterface;
-
-  dato?: TipoDatoInterface;
-  parametro?: TipoParametroInterface;
-  valorN: string = "";
-  descripcionN: string = "";
 
   metodo?: TipoMetodoInterface;
   servicio?: TipoServicioInterface;
   respuesta?: TipoRespuestaInterface;
   url?: string;
   nodoFirmaDoc?: string;
-
-  //Nuevo
-
-  parametroNuevo?: TipoParametroInterface | null;
-  tipoDatoNuevo?: TipoDatoInterface | null;
-
 
   constructor(
     public mantenimiento: CertificadorService,
@@ -80,26 +65,37 @@ export class ApiDetalleComponent implements OnInit {
     textarea.style.height = newHeight + 'px';
   }
 
-  mostrarFila: boolean = false;
-
-
-  cambioParametro(index: number) {
-    if (!this.parametro) {
-      this.parametro = this.mantenimiento.catalogoTipoParametro[index];
+  escribir: boolean = false;
+  agregarItem() {
+    // Si la lista está vacía, permite agregar el primer elemento
+    if (this.items.length === 0 || this.tieneValores(this.items[this.items.length - 1])) {
+      this.items.push({ parametro: null, valorN: '', dato: null, descripcionN: '' });
+      this.nuevoElementoAgregado = true; // Marca para enfocar el nuevo elemento   
     }
 
-    this.mostrarFila = true;
-    this.parametroNuevo = null;
+    this.escribir = true;
   }
 
-  seleccionarDato(index: number) {
+  // Función para verificar si un item tiene algún valor
+  tieneValores(item: Parametro): boolean {
+    return !!item.parametro || !!item.valorN || !!item.dato || !!item.descripcionN;
+  }
 
-    if (!this.dato) {
-      this.dato = this.mantenimiento.catalogoTipoDato[index];
+  ngAfterViewChecked() {
+    // Enfoca el último input si se agregó un nuevo elemento
+    if (this.nuevoElementoAgregado) {
+      this.focusAndSelectText();
+      this.nuevoElementoAgregado = false; // Resetea la marca para futuras adiciones
     }
-
-    this.mostrarFila = true;
-    this.tipoDatoNuevo = null;
   }
 
+  focusAndSelectText() {
+    const inputElement = this.valorInputs.last?.nativeElement; // Obtiene el último input
+    if (inputElement) {
+      inputElement.focus(); // Enfoca el input
+      setTimeout(() => {
+        inputElement.setSelectionRange(0, inputElement.value.length); // Selecciona el texto
+      }, 0);
+    }
+  }
 }
