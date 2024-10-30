@@ -23,7 +23,8 @@ export class ApiDetalleComponent implements OnInit {
 
   api?: CatalogoAPIInterface;
 
-  parametroN: string = "";
+  dato?: TipoDatoInterface;
+  parametro?: TipoParametroInterface;
   valorN: string = "";
   descripcionN: string = "";
 
@@ -32,6 +33,11 @@ export class ApiDetalleComponent implements OnInit {
   respuesta?: TipoRespuestaInterface;
   url?: string;
   nodoFirmaDoc?: string;
+
+  //Nuevo
+
+  parametroNuevo?: TipoParametroInterface;
+
 
   constructor(
     public mantenimiento: CertificadorService,
@@ -67,6 +73,27 @@ export class ApiDetalleComponent implements OnInit {
     textarea.style.height = 'auto'; // Resetea la altura para calcular la nueva altura
     const newHeight = Math.min(textarea.scrollHeight, 150); // Calcula la nueva altura, con un máximo de 150px (10 rows aprox.)
     textarea.style.height = newHeight + 'px';
+  }
+
+  mostrarFila: boolean = false;
+
+
+  cambioParametro(index: number) {
+    this.parametro = this.mantenimiento.catalogoTipoParametro[index];
+
+    this.mostrarFila = true;
+
+    this.parametroNuevo = undefined;
+
+    console.log(this.parametroNuevo);
+
+  }
+
+  seleccionarDato(index: number) {
+
+    this.dato = this.mantenimiento.catalogoTipoDato[index];
+
+    this.mostrarFila = true;
   }
 
 }

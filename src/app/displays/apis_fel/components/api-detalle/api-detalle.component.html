@@ -94,15 +94,25 @@
             </div>
         </div>
 
-        <div class="camposTabla">
+        <div class="camposTabla" *ngIf="mostrarFila">
             <div class="campo">
-                <input type="text" class="txtCampo" [(ngModel)]="parametroN" placeholder="Parametro">
+                <mat-select class="menuParam" name="tipoParametro" placeholder="{{ 'pos.apis.parametroT' | translate }}"
+                    [(ngModel)]="parametro">
+                    <mat-option *ngFor="let parametro of mantenimiento.catalogoTipoParametro" [value]="parametro">
+                        {{parametro.Nombre}}
+                    </mat-option>
+                </mat-select>
             </div>
             <div class="valor">
                 <input type="text" class="txtValor" [(ngModel)]="valorN" placeholder="Plantilla">
             </div>
             <div class="valor">
-                <input type="text" class="txtValor" [(ngModel)]="valorN" placeholder="Tipo de Dato">
+                <mat-select class="menuParam" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}"
+                    [(ngModel)]="dato">
+                    <mat-option *ngFor="let dato of mantenimiento.catalogoTipoDato" [value]="dato">
+                        {{dato.Nombre}}
+                    </mat-option>
+                </mat-select>
             </div>
             <div class="descripcion">
                 <input type="text" class="txtDescripcion" [(ngModel)]="descripcionN" placeholder="Descripcion">
@@ -111,13 +121,24 @@
         <!-- Para nuevo -->
         <div class="camposTabla">
             <div class="campoN">
-                <input type="text" class="txtCampo" placeholder="Parametro">
+                <mat-select class="menuParam" name="tipoParametro" placeholder="{{ 'pos.apis.parametroT' | translate }}"
+                    [(ngModel)]="parametroNuevo">
+                    <mat-option *ngFor="let parametro of mantenimiento.catalogoTipoParametro; let index = index"
+                        [value]="parametro" (click)="cambioParametro(index)">
+                        {{parametro.Nombre}}
+                    </mat-option>
+                </mat-select>
             </div>
             <div class="valorN">
                 <input type="text" class="txtValor" placeholder="Plantilla">
             </div>
             <div class="valorN">
-                <input type="text" class="txtValor" placeholder="Tipo de Dato">
+                <mat-select class="menuParam" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}"
+                    [(ngModel)]="dato">
+                    <mat-option *ngFor="let dato of mantenimiento.catalogoTipoDato" [value]="dato">
+                        {{dato.Nombre}}
+                    </mat-option>
+                </mat-select>
             </div>
             <div class="descripcionN">
                 <input type="text" class="txtDescripcion" placeholder="Descripcion">

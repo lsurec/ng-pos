@@ -458,7 +458,8 @@
             "metodosT": "METODOS HTTP",
             "datoT": "TIPO DATO",
             "respuestaT": "TIPO RESPUESTA",
-            "servicioT": "TIPO SERVICIO"
+            "servicioT": "TIPO SERVICIO",
+            "parametroT": "TIPO PARAMETRO"
         }
     },
     "crm": {

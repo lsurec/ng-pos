@@ -141,6 +141,16 @@ p {
     align-items: center;
 }
 
+.menuParam {
+    // border     : 1px solid $bordes;
+    min-height : 30px;
+    padding    : 5px 10px;
+    font-size  : 13px;
+    color      : $personalizado;
+    display    : flex;
+    align-items: center;
+}
+
 .metodoApi {
     display: flex;
     padding: 10px 0px;
