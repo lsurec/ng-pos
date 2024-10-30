@@ -21,13 +21,6 @@ import { catalogoTipoParametro } from '../../provider_temp/tipo_parametro';
 })
 export class ApiDetalleComponent implements OnInit {
 
-  catalogoTipoMetodo: TipoMetodoInterface[] = catalogoTipoMetodo;
-  catalogoTipoDato: TipoDatoInterface[] = catalogoTipoDato;
-  catalogoTipoRespuesta: TipoRespuestaInterface[] = catalogoTipoRespuesta;
-  catalogoTipoServicio: TipoServicioInterface[] = catalogoTipoServicio;
-  catalogoParametro: CatalogoParametroInterface[] = catalogoParametro;
-  catalogoTipoParametro: TipoParametroInterface[] = catalogoTipoParametro;
-
   api?: CatalogoAPIInterface;
 
   parametroN: string = "";
@@ -46,9 +39,9 @@ export class ApiDetalleComponent implements OnInit {
   ngOnInit(): void {
     this.api = this.mantenimiento.api;
 
-    this.metodo = this.getTipoMetodo(this.api!.Tipo_Metodo)!;
-    this.respuesta = this.getTipoRespuesta(this.api!.Tipo_Respuesta)!;
-    this.servicio = this.getTipoServicio(this.api!.Tipo_Servicio)!;
+    this.metodo = this.mantenimiento.getTipoMetodo(this.api!.Tipo_Metodo)!;
+    this.respuesta = this.mantenimiento.getTipoRespuesta(this.api!.Tipo_Respuesta)!;
+    this.servicio = this.mantenimiento.getTipoServicio(this.api!.Tipo_Servicio)!;
   }
 
   backPage() {
@@ -62,66 +55,6 @@ export class ApiDetalleComponent implements OnInit {
 
   aceptar() {
 
-  }
-
-  getTipoMetodo(tipo: number): TipoMetodoInterface | null {
-    for (let index = 0; index < this.catalogoTipoMetodo.length; index++) {
-      let element: TipoMetodoInterface = this.catalogoTipoMetodo[index];
-
-      if (tipo === element.Tipo_Metodo) {
-        return element;
-      }
-    }
-    // Agregar retorno explícito en caso de que no haya coincidencia
-    return null;
-  }
-
-  getTipoParametro(tipo: number): TipoParametroInterface | null {
-    for (let index = 0; index < this.catalogoTipoParametro.length; index++) {
-      let element: TipoParametroInterface = this.catalogoTipoParametro[index];
-
-      if (tipo === element.Tipo_Parametro) {
-        return element;
-      }
-    }
-    // Agregar retorno explícito en caso de que no haya coincidencia
-    return null;
-  }
-
-  getTipoDato(tipo: number): TipoDatoInterface | null {
-    for (let index = 0; index < this.catalogoTipoDato.length; index++) {
-      let element: TipoDatoInterface = this.catalogoTipoDato[index];
-
-      if (tipo === element.Tipo_Dato) {
-        return element;
-      }
-    }
-    // Agregar retorno explícito en caso de que no haya coincidencia
-    return null;
-  }
-
-  getTipoRespuesta(tipo: number): TipoRespuestaInterface | null {
-    for (let index = 0; index < this.catalogoTipoRespuesta.length; index++) {
-      let element: TipoRespuestaInterface = this.catalogoTipoRespuesta[index];
-
-      if (tipo === element.Tipo_Respuesta) {
-        return element;
-      }
-    }
-    // Agregar retorno explícito en caso de que no haya coincidencia
-    return null;
-  }
-
-  getTipoServicio(tipo: number): TipoServicioInterface | null {
-    for (let index = 0; index < this.catalogoTipoServicio.length; index++) {
-      let element: TipoServicioInterface = this.catalogoTipoServicio[index];
-
-      if (tipo === element.Tipo_Servicio) {
-        return element;
-      }
-    }
-    // Agregar retorno explícito en caso de que no haya coincidencia
-    return null;
   }
 
   autoResize(event: Event): void {

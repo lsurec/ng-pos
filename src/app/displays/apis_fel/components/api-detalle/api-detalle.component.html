@@ -29,7 +29,7 @@
         <div class="metodoApi">
             <mat-select class="metodos" name="tipo" placeholder="{{ 'pos.apis.metodosT' | translate }}"
                 [(ngModel)]="metodo">
-                <mat-option *ngFor="let tipo of catalogoTipoMetodo" [value]="tipo">
+                <mat-option *ngFor="let tipo of mantenimiento.catalogoTipoMetodo" [value]="tipo">
                     {{tipo.Nombre}}
                 </mat-option>
             </mat-select>
@@ -43,7 +43,7 @@
                 <p class="textBold">Servicio:</p>
                 <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}"
                     [(ngModel)]="servicio">
-                    <mat-option *ngFor="let tipo of catalogoTipoServicio" [value]="tipo">
+                    <mat-option *ngFor="let tipo of mantenimiento.catalogoTipoServicio" [value]="tipo">
                         {{tipo.Nombre}}
                     </mat-option>
                 </mat-select>
@@ -53,7 +53,7 @@
                 <p class="textBold">Respuesta:</p>
                 <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}"
                     [(ngModel)]="respuesta">
-                    <mat-option *ngFor="let tipo of catalogoTipoRespuesta" [value]="tipo">
+                    <mat-option *ngFor="let tipo of mantenimiento.catalogoTipoRespuesta" [value]="tipo">
                         {{tipo.Nombre}}
                     </mat-option>
                 </mat-select>
@@ -74,15 +74,15 @@
                 <p class="textBold">Descripcion</p>
             </div>
         </div>
-        <div class="camposTabla" *ngFor="let parametro of catalogoParametro ">
+        <div class="camposTabla" *ngFor="let parametro of mantenimiento.catalogoParametro ">
             <div class="campo">
-                <input type="text" class="txtCampo" [(ngModel)]="getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
+                <input type="text" class="txtCampo" [(ngModel)]="mantenimiento.getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
             </div>
             <div class="valor">
                 <input type="text" class="txtValor" [(ngModel)]="parametro.Plantilla">
             </div>
             <div class="valor">
-                <p class="txtValor">{{getTipoDato(parametro.Tipo_Dato)?.Nombre}}</p>
+                <p class="txtValor">{{mantenimiento.getTipoDato(parametro.Tipo_Dato)?.Nombre}}</p>
             </div>
             <div class="descripcion">
                 <input type="text" class="txtDescripcion" [(ngModel)]="parametro.Descripcion">
