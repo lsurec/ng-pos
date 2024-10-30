@@ -69,6 +69,10 @@ export class ApiDetalleComponent implements OnInit {
 
   }
 
+  guardar() {
+  }
+
+
   autoResize(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = 'auto'; // Resetea la altura para calcular la nueva altura
