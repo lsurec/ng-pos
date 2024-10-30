@@ -8,7 +8,8 @@
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>
-            <p class="titulo">Api Detalle</p>
+            <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
+            <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
             <span class="spacer"></span>
         </mat-toolbar-row>
     </mat-toolbar>
@@ -20,7 +21,8 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <span class="spacer"></span>
-        <p class="titulo">Api Detalle</p>
+        <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
+        <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
         <span class="spacer"></span>
     </mat-toolbar>
 
@@ -34,7 +36,7 @@
                 </mat-option>
             </mat-select>
             <form #searchForm="ngForm" (ngSubmit)="aceptar()" class="inputApi">
-                <input class="urlApi" type="text" name="search" [(ngModel)]="api!.Url_Api" autocomplete="off">
+                <input class="urlApi" type="text" name="search" [(ngModel)]="url" autocomplete="off">
             </form>
         </div>
 
@@ -74,20 +76,24 @@
                 <p class="textBold">Descripcion</p>
             </div>
         </div>
-        <div class="camposTabla" *ngFor="let parametro of mantenimiento.catalogoParametro ">
-            <div class="campo">
-                <input type="text" class="txtCampo" [(ngModel)]="mantenimiento.getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
-            </div>
-            <div class="valor">
-                <input type="text" class="txtValor" [(ngModel)]="parametro.Plantilla">
-            </div>
-            <div class="valor">
-                <p class="txtValor">{{mantenimiento.getTipoDato(parametro.Tipo_Dato)?.Nombre}}</p>
-            </div>
-            <div class="descripcion">
-                <input type="text" class="txtDescripcion" [(ngModel)]="parametro.Descripcion">
+        <div *ngIf="api != undefined">
+            <div class="camposTabla" *ngFor="let parametro of mantenimiento.catalogoParametro ">
+                <div class="campo">
+                    <input type="text" class="txtCampo"
+                        [(ngModel)]="mantenimiento.getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
+                </div>
+                <div class="valor">
+                    <input type="text" class="txtValor" [(ngModel)]="parametro.Plantilla">
+                </div>
+                <div class="valor">
+                    <p class="txtValor">{{mantenimiento.getTipoDato(parametro.Tipo_Dato)?.Nombre}}</p>
+                </div>
+                <div class="descripcion">
+                    <input type="text" class="txtDescripcion" [(ngModel)]="parametro.Descripcion">
+                </div>
             </div>
         </div>
+
         <div class="camposTabla">
             <div class="campo">
                 <input type="text" class="txtCampo" placeholder="Parametro">
@@ -121,8 +127,8 @@
         <div class="firmaDoc">
             <p class="textBold">Nodo Firma Documento:</p>
             <textarea name="notas" id="descripcion" cols="30" rows="3" placeholder="Nodo Firma Documento."
-                [(ngModel)]="api!.Nodo_FirmaDocumentoResponse" (input)="autoResize($event)"
-                style="overflow:auto; resize:none;" class="nodoFirma"></textarea>
+                [(ngModel)]="nodoFirmaDoc" (input)="autoResize($event)" style="overflow:auto; resize:none;"
+                class="nodoFirma"></textarea>
         </div>
 
     </div>

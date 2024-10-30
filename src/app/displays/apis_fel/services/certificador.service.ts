@@ -24,7 +24,7 @@ export class CertificadorService {
     certificador: boolean = true;
     apiDetalle: boolean = false;
     api?: CatalogoAPIInterface;
-
+    accion: number = 0;
     //Listas
 
     catalogoTipoMetodo: TipoMetodoInterface[] = catalogoTipoMetodo;

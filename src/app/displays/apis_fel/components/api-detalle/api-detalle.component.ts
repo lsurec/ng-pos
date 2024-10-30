@@ -30,21 +30,26 @@ export class ApiDetalleComponent implements OnInit {
   metodo?: TipoMetodoInterface;
   servicio?: TipoServicioInterface;
   respuesta?: TipoRespuestaInterface;
+  url?: string;
+  nodoFirmaDoc?: string;
 
   constructor(
     public mantenimiento: CertificadorService,
   ) {
 
   }
+
   ngOnInit(): void {
     this.api = this.mantenimiento.api;
-
-    this.metodo = this.mantenimiento.getTipoMetodo(this.api!.Tipo_Metodo)!;
-    this.respuesta = this.mantenimiento.getTipoRespuesta(this.api!.Tipo_Respuesta)!;
-    this.servicio = this.mantenimiento.getTipoServicio(this.api!.Tipo_Servicio)!;
+    this.url = this.api ? this.api.Url_Api : '';
+    this.nodoFirmaDoc = this.api ? this.api.Nodo_FirmaDocumentoResponse : '';
+    this.metodo = this.api ? this.mantenimiento.getTipoMetodo(this.api!.Tipo_Metodo)! : undefined;
+    this.respuesta = this.api ? this.mantenimiento.getTipoRespuesta(this.api!.Tipo_Respuesta)! : undefined;
+    this.servicio = this.api ? this.mantenimiento.getTipoServicio(this.api!.Tipo_Servicio)! : undefined;
   }
 
   backPage() {
+    this.mantenimiento.api = undefined;
     this.mantenimiento.apiDetalle = false;
     this.mantenimiento.certificador = false;
     this.mantenimiento.catalogo = true;

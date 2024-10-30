@@ -28,7 +28,14 @@ export class CatalogoApisComponent {
   }
 
   detalleApi(api: CatalogoAPIInterface) {
+    this.mantenimiento.accion = 0;
     this.mantenimiento.api = api;
+    this.mantenimiento.catalogo = false;
+    this.mantenimiento.apiDetalle = true;
+  }
+
+  nueva() {
+    this.mantenimiento.accion = 1;
     this.mantenimiento.catalogo = false;
     this.mantenimiento.apiDetalle = true;
   }
