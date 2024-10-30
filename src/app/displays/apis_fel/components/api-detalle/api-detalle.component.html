@@ -110,7 +110,7 @@
             </div>
             <div class="valor">
                 <input type="text" class="txtValor" [(ngModel)]="item.valorN" placeholder="Plantilla"
-                    (ngModelChange)="escribir = false" #valorInput>
+                    (ngModelChange)="escribir = false" #plantillaInput>
             </div>
             <div class="valor">
                 <mat-select class="menuParam" name="tipoDato{{i}}" placeholder="{{ 'pos.apis.datoT' | translate }}"
@@ -121,7 +121,8 @@
                 </mat-select>
             </div>
             <div class="descripcion">
-                <input type="text" class="txtDescripcion" [(ngModel)]="item.descripcionN" placeholder="Descripcion">
+                <input type="text" class="txtDescripcion" (ngModelChange)="escribir = false"
+                    [(ngModel)]="item.descripcionN" placeholder="Descripcion" #descripcionInput>
             </div>
         </div>
         <div class="camposTabla">
@@ -133,7 +134,7 @@
                     </mat-option>
                 </mat-select>
             </div>
-            <div class="valorN" (click)="agregarItem()">
+            <div class="valorN" (click)="agregarItem(0)">
                 <input type="text" class="txtValor" placeholder="Plantilla" [disabled]="escribir">
             </div>
             <div class="valorN">
@@ -143,12 +144,10 @@
                     </mat-option>
                 </mat-select>
             </div>
-            <div class="descripcionN">
-                <input type="text" class="txtDescripcion" placeholder="Descripcion">
+            <div class="descripcionN" (click)="agregarItem(1)">
+                <input type="text" class="txtDescripcion" placeholder="Descripcion" [disabled]="escribir">
             </div>
         </div>
-
-        <button mat-raised-button color="primary" (click)="agregarItem()">Agregar Nuevo</button>
 
         <div class="firmaDoc">
             <p class="textBold">Nodo Firma Documento:</p>

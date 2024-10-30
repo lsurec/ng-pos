@@ -12,7 +12,8 @@ import { Parametro } from '../../interfaces/parametro.interface';
   styleUrls: ['./api-detalle.component.scss']
 })
 export class ApiDetalleComponent implements OnInit {
-  @ViewChildren('valorInput') valorInputs!: QueryList<ElementRef>;
+  @ViewChildren('plantillaInput') plantillaInputs!: QueryList<ElementRef>;
+  @ViewChildren('descripcionInput') descripcionInputs!: QueryList<ElementRef>;
   private nuevoElementoAgregado = false;
 
   items: Parametro[] = [];
@@ -24,6 +25,7 @@ export class ApiDetalleComponent implements OnInit {
   respuesta?: TipoRespuestaInterface;
   url?: string;
   nodoFirmaDoc?: string;
+  escribir: boolean = false;
 
   constructor(
     public mantenimiento: CertificadorService,
@@ -65,8 +67,10 @@ export class ApiDetalleComponent implements OnInit {
     textarea.style.height = newHeight + 'px';
   }
 
-  escribir: boolean = false;
-  agregarItem() {
+  agregarItem(valorFoco: number) {
+    //Para saber que input se va a seleccionar
+    this.foco = valorFoco;
+
     // Si la lista está vacía, permite agregar el primer elemento
     if (this.items.length === 0 || this.tieneValores(this.items[this.items.length - 1])) {
       this.items.push({ parametro: null, valorN: '', dato: null, descripcionN: '' });
@@ -89,13 +93,32 @@ export class ApiDetalleComponent implements OnInit {
     }
   }
 
+  foco: number = 0;
+
   focusAndSelectText() {
-    const inputElement = this.valorInputs.last?.nativeElement; // Obtiene el último input
-    if (inputElement) {
-      inputElement.focus(); // Enfoca el input
-      setTimeout(() => {
-        inputElement.setSelectionRange(0, inputElement.value.length); // Selecciona el texto
-      }, 0);
+
+    //0 es para el parametro
+    if (this.foco == 0) {
+      const inputElement = this.plantillaInputs.last?.nativeElement; // Obtiene el último input
+      if (inputElement) {
+        inputElement.focus(); // Enfoca el input
+        setTimeout(() => {
+          inputElement.setSelectionRange(0, inputElement.value.length); // Selecciona el texto
+        }, 0);
+      }
+      return;
+    }
+
+    //1 es para la descripcion
+    if (this.foco == 1) {
+      const inputElement = this.descripcionInputs.last?.nativeElement; // Obtiene el último input
+      if (inputElement) {
+        inputElement.focus(); // Enfoca el input
+        setTimeout(() => {
+          inputElement.setSelectionRange(0, inputElement.value.length); // Selecciona el texto
+        }, 0);
+      }
+      return;
     }
   }
 }
