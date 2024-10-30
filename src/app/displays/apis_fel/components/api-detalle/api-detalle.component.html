@@ -134,8 +134,9 @@
             </div>
             <div class="valorN">
                 <mat-select class="menuParam" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}"
-                    [(ngModel)]="dato">
-                    <mat-option *ngFor="let dato of mantenimiento.catalogoTipoDato" [value]="dato">
+                    [(ngModel)]="tipoDatoNuevo">
+                    <mat-option *ngFor="let dato of mantenimiento.catalogoTipoDato; let index = index" [value]="dato"
+                        (click)="seleccionarDato(index)">
                         {{dato.Nombre}}
                     </mat-option>
                 </mat-select>

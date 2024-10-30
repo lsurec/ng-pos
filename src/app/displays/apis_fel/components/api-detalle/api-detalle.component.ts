@@ -36,7 +36,8 @@ export class ApiDetalleComponent implements OnInit {
 
   //Nuevo
 
-  parametroNuevo?: TipoParametroInterface;
+  parametroNuevo?: TipoParametroInterface | null;
+  tipoDatoNuevo?: TipoDatoInterface | null;
 
 
   constructor(
@@ -79,21 +80,22 @@ export class ApiDetalleComponent implements OnInit {
 
 
   cambioParametro(index: number) {
-    this.parametro = this.mantenimiento.catalogoTipoParametro[index];
+    if (!this.parametro) {
+      this.parametro = this.mantenimiento.catalogoTipoParametro[index];
+    }
 
     this.mostrarFila = true;
-
-    this.parametroNuevo = undefined;
-
-    console.log(this.parametroNuevo);
-
+    this.parametroNuevo = null;
   }
 
   seleccionarDato(index: number) {
 
-    this.dato = this.mantenimiento.catalogoTipoDato[index];
+    if (!this.dato) {
+      this.dato = this.mantenimiento.catalogoTipoDato[index];
+    }
 
     this.mostrarFila = true;
+    this.tipoDatoNuevo = null;
   }
 
 }
