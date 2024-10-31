@@ -11,7 +11,7 @@
             <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
             <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
             <span class="spacer"></span>
-            <button mat-icon-button (click)="guardar()">
+            <button mat-mini-fab class="btnColor" (click)="guardar()">
                 <mat-icon>save</mat-icon>
             </button>
         </mat-toolbar-row>
@@ -27,7 +27,7 @@
         <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
         <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
         <span class="spacer"></span>
-        <button mat-icon-button (click)="guardar()">
+        <button mat-mini-fab class="btnColor" (click)="guardar()">
             <mat-icon>save</mat-icon>
         </button>
     </mat-toolbar>
