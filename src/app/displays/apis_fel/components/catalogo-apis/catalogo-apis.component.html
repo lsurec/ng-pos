@@ -44,7 +44,8 @@
                 <div class="documentos-origen" (click)=" detalleApi(api)">
                     <p class="textosBold14">{{ api.Nombre_Api }} </p>
                     <div class="dFlex">
-                        <p class="textosBold14">
+                        <p class="textosBold14"
+                            [ngStyle]="{ 'color': mantenimiento.getTipoMetodo(api.Tipo_Metodo)?.Color }">
                             {{ mantenimiento.getTipoMetodo(api.Tipo_Metodo)?.Nombre }}
                         </p>
                         <p class="textos14"> {{api.Url_Api }}</p>

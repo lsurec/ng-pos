@@ -1,24 +1,29 @@
 import { TipoMetodoInterface } from "../interfaces/tipo_metodo.interface";
 
-export const catalogoTipoMetodo:TipoMetodoInterface[] = [
+export const catalogoTipoMetodo: TipoMetodoInterface[] = [
     {
         "Tipo_Metodo": 1,
-        "Nombre": "POST"
+        "Nombre": "POST",
+        "Color": "#ede02e"
     },
     {
         "Tipo_Metodo": 2,
-        "Nombre": "PUT"
+        "Nombre": "PUT",
+        "Color": "#54aee2"
     },
     {
         "Tipo_Metodo": 3,
-        "Nombre": "GET"
+        "Nombre": "GET",
+        "Color": "#30b74a"
     },
     {
         "Tipo_Metodo": 4,
-        "Nombre": "DELETE"
+        "Nombre": "DELETE",
+        "Color": "#e2a331"
     },
     {
         "Tipo_Metodo": 5,
-        "Nombre": "PATCH"
+        "Nombre": "PATCH",
+        "Color": "#dac0fb"
     }
 ];
