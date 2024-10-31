@@ -69,38 +69,38 @@
         </div>
 
         <div class="camposTabla">
-            <div class="campo padding5x10">
+            <div class="campoApi padding5x10">
                 <p class="textBold">Parametro</p>
             </div>
-            <div class="valor padding5x10">
+            <div class="valorApi padding5x10">
                 <p class="textBold">Plantilla</p>
             </div>
-            <div class="valor padding5x10">
+            <div class="valorApi padding5x10">
                 <p class="textBold">Tipo de Dato</p>
             </div>
-            <div class="descripcion padding5x10">
+            <div class="descApi padding5x10">
                 <p class="textBold">Descripcion</p>
             </div>
         </div>
         <div *ngIf="api != undefined">
             <div class="camposTabla" *ngFor="let parametro of mantenimiento.catalogoParametro ">
-                <div class="campo">
+                <div class="campoApi">
                     <input type="text" class="txtCampo"
                         [(ngModel)]="mantenimiento.getTipoParametro(parametro.Tipo_Parametro)!.Nombre">
                 </div>
-                <div class="valor">
+                <div class="valorApi">
                     <input type="text" class="txtValor" [(ngModel)]="parametro.Plantilla">
                 </div>
-                <div class="valor">
+                <div class="valorApi">
                     <p class="txtValor">{{mantenimiento.getTipoDato(parametro.Tipo_Dato)?.Nombre}}</p>
                 </div>
-                <div class="descripcion">
+                <div class="descApi">
                     <input type="text" class="txtDescripcion" [(ngModel)]="parametro.Descripcion">
                 </div>
             </div>
         </div>
         <div *ngFor="let item of items; let i = index" class="camposTabla">
-            <div class="campo">
+            <div class="campoApi">
                 <mat-select class="menuParam" name="tipoParametro{{i}}"
                     placeholder="{{ 'pos.apis.parametroT' | translate }}" [(ngModel)]="item.parametro">
                     <mat-option *ngFor="let parametro of mantenimiento.catalogoTipoParametro" [value]="parametro">
@@ -108,11 +108,11 @@
                     </mat-option>
                 </mat-select>
             </div>
-            <div class="valor">
+            <div class="valorApi">
                 <input type="text" class="txtValor" [(ngModel)]="item.valorN" placeholder="Plantilla"
                     (ngModelChange)="escribir = false" #plantillaInput>
             </div>
-            <div class="valor">
+            <div class="valorApi">
                 <mat-select class="menuParam" name="tipoDato{{i}}" placeholder="{{ 'pos.apis.datoT' | translate }}"
                     [(ngModel)]="item.dato">
                     <mat-option *ngFor="let dato of mantenimiento.catalogoTipoDato" [value]="dato">
@@ -120,7 +120,7 @@
                     </mat-option>
                 </mat-select>
             </div>
-            <div class="descripcion">
+            <div class="descApi">
                 <input type="text" class="txtDescripcion" (ngModelChange)="escribir = false"
                     [(ngModel)]="item.descripcionN" placeholder="Descripcion" #descripcionInput>
             </div>

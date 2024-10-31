@@ -220,6 +220,11 @@ input[type="radio"] {
 }
 
 //Aplica el tema oscuro a elementos específicos si es necesario 
+
+.dark-theme .nodoFirma,
+.dark-theme .txtCampo,
+.dark-theme .txtValor,
+.dark-theme .txtDescripcion,
 .dark-theme .container_start,
 .dark-theme .toolbarlarge,
 .dark-theme .toolbarlargeTitle,
@@ -583,6 +588,16 @@ input[type="radio"] {
 // .dark-theme button:not(:disabled),
 // .dark-theme .comentario,
 // .dark-theme .comentario_desc,
+
+.dark-theme .nodoFirma,
+.dark-theme .descripcionN,
+.dark-theme .valorN,
+.dark-theme .campoN,
+.dark-theme .descApi,
+.dark-theme .valorApi,
+.dark-theme .campoApi,
+.dark-theme .metodos,
+.dark-theme .urlApi,
 .dark-theme .borderBottom,
 .dark-theme .bloqueW10T,
 .dark-theme .bloqueW20T,

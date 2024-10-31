@@ -191,16 +191,16 @@ p {
     display: flex;
 }
 
-.campo,
-.valor,
-.descripcion {
+.campoApi,
+.valorApi,
+.descApi {
     width        : 100%;
     border       : solid 1px $bordes;
     border-bottom: none;
 }
 
-.campo,
-.valor {
+.campoApi,
+.valorApi {
     border-right: none;
 }
 
@@ -274,7 +274,7 @@ p {
     outline      : none;
     background   : transparent;
     min-height   : 25px;
-    padding      : 10px 5px;
+    padding      : 10px;
     border-radius: 10px;
 }
 
