@@ -459,7 +459,18 @@
             "datoT": "TIPO DATO",
             "respuestaT": "TIPO RESPUESTA",
             "servicioT": "TIPO SERVICIO",
-            "parametroT": "TIPO PARAMETRO"
+            "parametroT": "TIPO PARAMETRO",
+            "apiDetalle": "Api Detalle",
+            "apiNueva": "Nueva Api",
+            "servicio": "Servicio",
+            "respuesta": "Respuesta",
+            "parametro": "Parametro",
+            "plantilla": "Plantilla",
+            "tipoDato": "Tipo de Dato",
+            "descripcion": "Descripción",
+            "nodoFirma": "Nodo Firma Documento",
+            "apiCatalogo": "Catálogo de Apis",
+            "certificadores": "Certificadores"
         }
     },
     "crm": {

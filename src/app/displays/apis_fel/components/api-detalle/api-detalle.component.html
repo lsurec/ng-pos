@@ -8,8 +8,12 @@
                 <mat-icon>refresh</mat-icon>
             </button>
             <span class="spacer"></span>
-            <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
-            <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
+            <p *ngIf="mantenimiento.accion == 0" class="titulo">
+                {{'pos.apis.apiDetalle' | translate }}
+            </p>
+            <p *ngIf="mantenimiento.accion == 1" class="titulo">
+                {{'pos.apis.apiNueva' | translate }}
+            </p>
             <span class="spacer"></span>
             <button mat-mini-fab class="btnColor" (click)="guardar()">
                 <mat-icon>save</mat-icon>
@@ -24,8 +28,12 @@
             <mat-icon>refresh</mat-icon>
         </button>
         <span class="spacer"></span>
-        <p *ngIf="mantenimiento.accion == 0" class="titulo">Api Detalle</p>
-        <p *ngIf="mantenimiento.accion == 1" class="titulo">Nueva Api</p>
+        <p *ngIf="mantenimiento.accion == 0" class="titulo">
+            {{'pos.apis.apiDetalle' | translate }}
+        </p>
+        <p *ngIf="mantenimiento.accion == 1" class="titulo">
+            {{'pos.apis.apiNueva' | translate }}
+        </p>
         <span class="spacer"></span>
         <button mat-mini-fab class="btnColor" (click)="guardar()">
             <mat-icon>save</mat-icon>
@@ -48,7 +56,7 @@
 
         <div class="menusApi">
             <div class="menuDesc">
-                <p class="textBold">Servicio:</p>
+                <p class="textBold">{{ 'pos.apis.servicio' | translate }}: </p>
                 <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.servicioT' | translate }}"
                     [(ngModel)]="servicio">
                     <mat-option *ngFor="let tipo of mantenimiento.catalogoTipoServicio" [value]="tipo">
@@ -58,7 +66,7 @@
             </div>
             <span class="spacer"></span>
             <div class="menuDesc">
-                <p class="textBold">Respuesta:</p>
+                <p class="textBold">{{ 'pos.apis.respuesta' | translate }}:</p>
                 <mat-select class="tipo-tarea" name="tipoDato" placeholder="{{ 'pos.apis.respuestaT' | translate }}"
                     [(ngModel)]="respuesta">
                     <mat-option *ngFor="let tipo of mantenimiento.catalogoTipoRespuesta" [value]="tipo">
@@ -70,16 +78,16 @@
 
         <div class="camposTabla">
             <div class="campoApi padding5x10">
-                <p class="textBold">Parametro</p>
+                <p class="textBold">{{ 'pos.apis.parametro' | translate }}</p>
             </div>
             <div class="valorApi padding5x10">
-                <p class="textBold">Plantilla</p>
+                <p class="textBold">{{ 'pos.apis.plantilla' | translate }}</p>
             </div>
             <div class="valorApi padding5x10">
-                <p class="textBold">Tipo de Dato</p>
+                <p class="textBold">{{ 'pos.apis.tipoDato' | translate }}</p>
             </div>
             <div class="descApi padding5x10">
-                <p class="textBold">Descripcion</p>
+                <p class="textBold">{{ 'pos.apis.descripcion' | translate }}</p>
             </div>
         </div>
         <div *ngIf="api != undefined">
@@ -109,8 +117,9 @@
                 </mat-select>
             </div>
             <div class="valorApi">
-                <input type="text" class="txtValor" [(ngModel)]="item.valorN" placeholder="Plantilla"
-                    (ngModelChange)="escribir = false" #plantillaInput>
+                <input type="text" class="txtValor" [(ngModel)]="item.valorN"
+                    placeholder="{{'pos.apis.plantilla' | translate }}" (ngModelChange)="escribir = false"
+                    #plantillaInput>
             </div>
             <div class="valorApi">
                 <mat-select class="menuParam" name="tipoDato{{i}}" placeholder="{{ 'pos.apis.datoT' | translate }}"
@@ -122,7 +131,8 @@
             </div>
             <div class="descApi">
                 <input type="text" class="txtDescripcion" (ngModelChange)="escribir = false"
-                    [(ngModel)]="item.descripcionN" placeholder="Descripcion" #descripcionInput>
+                    [(ngModel)]="item.descripcionN" placeholder="{{ 'pos.apis.descripcion' | translate }}"
+                    #descripcionInput>
             </div>
         </div>
         <div class="camposTabla">
@@ -135,7 +145,8 @@
                 </mat-select>
             </div>
             <div class="valorN" (click)="agregarItem(0)">
-                <input type="text" class="txtValor" placeholder="Plantilla" [disabled]="escribir">
+                <input type="text" class="txtValor" placeholder="{{ 'pos.apis.plantilla' | translate }}"
+                    [disabled]="escribir">
             </div>
             <div class="valorN">
                 <mat-select class="menuParam" name="tipoDato" placeholder="{{ 'pos.apis.datoT' | translate }}">
@@ -145,15 +156,16 @@
                 </mat-select>
             </div>
             <div class="descripcionN" (click)="agregarItem(1)">
-                <input type="text" class="txtDescripcion" placeholder="Descripcion" [disabled]="escribir">
+                <input type="text" class="txtDescripcion" placeholder="{{ 'pos.apis.descripcion' | translate }}"
+                    [disabled]="escribir">
             </div>
         </div>
 
         <div class="firmaDoc">
-            <p class="textBold">Nodo Firma Documento:</p>
-            <textarea name="notas" id="descripcion" cols="30" rows="3" placeholder="Nodo Firma Documento."
-                [(ngModel)]="nodoFirmaDoc" (input)="autoResize($event)" style="overflow:auto; resize:none;"
-                class="nodoFirma"></textarea>
+            <p class="textBold">{{ 'pos.apis.nodoFirma' | translate }}:</p>
+            <textarea name="notas" id="descripcion" cols="30" rows="3"
+                placeholder="{{'pos.apis.nodoFirma' | translate }}." [(ngModel)]="nodoFirmaDoc"
+                (input)="autoResize($event)" style="overflow:auto; resize:none;" class="nodoFirma"></textarea>
         </div>
 
     </div>

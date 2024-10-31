@@ -451,6 +451,26 @@
             "eliminarSeleccionadas": "Delete selected accounts.",
             "seleccionarTran": "Select all transactions.",
             "estadoCuenta": "Account Status"
+        },
+        "apis": {
+            "direccion": "Address",
+            "tel": "Phone",
+            "metodosT": "HTTP METHODS",
+            "datoT": "DATA TYPE",
+            "respuestaT": "RESPONSE TYPE",
+            "servicioT": "SERVICE TYPE",
+            "parametroT": "PARAMETER TYPE",
+            "apiDetalle": "API Detail",
+            "apiNueva": "New API",
+            "servicio": "Service",
+            "respuesta": "Response",
+            "parametro": "Parameter",
+            "plantilla": "Template",
+            "tipoDato": "Data Type",
+            "descripcion": "Description",
+            "nodoFirma": "Document Signature Node",
+            "apiCatalogo": "API Catalog",
+            "certificadores": "Certifiers"
         }
     },
     "crm": {

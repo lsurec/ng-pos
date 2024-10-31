@@ -451,6 +451,26 @@
             "eliminarSeleccionadas": "Supprimer les comptes sélectionnés.",
             "seleccionarTran": "Sélectionner toutes les transactions.",
             "estadoCuenta": "État du Compte"
+        },
+        "apis": {
+            "direccion": "Adresse",
+            "tel": "Téléphone",
+            "metodosT": "MÉTHODES HTTP",
+            "datoT": "TYPE DE DONNÉE",
+            "respuestaT": "TYPE DE RÉPONSE",
+            "servicioT": "TYPE DE SERVICE",
+            "parametroT": "TYPE DE PARAMÈTRE",
+            "apiDetalle": "Détail de l'API",
+            "apiNueva": "Nouvelle API",
+            "servicio": "Service",
+            "respuesta": "Réponse",
+            "parametro": "Paramètre",
+            "plantilla": "Modèle",
+            "tipoDato": "Type de Donnée",
+            "descripcion": "Description",
+            "nodoFirma": "Nœud de Signature du Document",
+            "apiCatalogo": "Catalogue d'APIs",
+            "certificadores": "Certificateurs"
         }
     },
     "crm": {

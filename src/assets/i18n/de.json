@@ -204,7 +204,8 @@
             "inicio": "Startseite",
             "listo": "Fertig",
             "guardarCambios": "Änderungen speichern",
-            "modificar": "Ändern"
+            "modificar": "Ändern",
+            "siguiente": "Nächste"
         },
         "error": {
             "informe": "Fehlerbericht",
@@ -449,8 +450,27 @@
             "seleccionarCuentas": "Alle Konten auswählen.",
             "eliminarSeleccionadas": "Ausgewählte Konten löschen.",
             "seleccionarTran": "Alle Transaktionen auswählen.",
-            "estadoCuenta": "Kontostand",
-            "siguiente": "Nächste"
+            "estadoCuenta": "Kontostand"
+        },
+        "apis": {
+            "direccion": "Adresse",
+            "tel": "Telefon",
+            "metodosT": "HTTP-METHODEN",
+            "datoT": "DATENTYP",
+            "respuestaT": "ANTWORTTYP",
+            "servicioT": "DIENSTTYP",
+            "parametroT": "PARAMETERTYP",
+            "apiDetalle": "API-Detail",
+            "apiNueva": "Neue API",
+            "servicio": "Dienst",
+            "respuesta": "Antwort",
+            "parametro": "Parameter",
+            "plantilla": "Vorlage",
+            "tipoDato": "Datentyp",
+            "descripcion": "Beschreibung",
+            "nodoFirma": "Dokument-Signaturknoten",
+            "apiCatalogo": "API-Katalog",
+            "certificadores": "Zertifizierer"
         }
     },
     "crm": {
