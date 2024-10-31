@@ -1,9 +1,25 @@
-<div *ngIf="!mantenimiento.isLoading">
-    <app-catalogo-apis *ngIf="mantenimiento.catalogo"></app-catalogo-apis>
-    <app-api-detalle *ngIf="mantenimiento.apiDetalle"></app-api-detalle>
-    <div *ngIf="mantenimiento.certificador">
-        <mat-toolbar class="toolbarPhone">
-            <mat-toolbar-row class="toolbar-row">
+<app-error *ngIf="mantenimiento.verError" [regresar]="regresar"></app-error>
+
+<div *ngIf="!mantenimiento.verError">
+    <app-progress *ngIf="mantenimiento.isLoading"></app-progress>
+    <div *ngIf="!mantenimiento.isLoading">
+        <app-catalogo-apis *ngIf="mantenimiento.catalogo"></app-catalogo-apis>
+        <app-api-detalle *ngIf="mantenimiento.apiDetalle"></app-api-detalle>
+        <div *ngIf="mantenimiento.certificador">
+            <mat-toolbar class="toolbarPhone">
+                <mat-toolbar-row class="toolbar-row">
+                    <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="loadData()">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <span class="spacer"></span>
+                    <p class="titulo">{{ 'pos.apis.certificadores' | translate }}</p>
+                    <span class="spacer"></span>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <mat-toolbar class="toolbarlargeTitle">
                 <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
@@ -13,50 +29,42 @@
                 <span class="spacer"></span>
                 <p class="titulo">{{ 'pos.apis.certificadores' | translate }}</p>
                 <span class="spacer"></span>
-            </mat-toolbar-row>
-        </mat-toolbar>
-        <mat-toolbar class="toolbarlargeTitle">
-            <button mat-icon-button (click)="backPage() " matTooltip="{{ 'pos.botones.regresar' | translate }}">
-                <mat-icon>arrow_back</mat-icon>
-            </button>
-            <button mat-icon-button (click)="loadData()">
-                <mat-icon>refresh</mat-icon>
-            </button>
-            <span class="spacer"></span>
-            <p class="titulo">{{ 'pos.apis.certificadores' | translate }}</p>
-            <span class="spacer"></span>
-        </mat-toolbar>
+                <button mat-icon-button (click)="showError()">
+                    <mat-icon>error</mat-icon>
+                </button>
+            </mat-toolbar>
 
-        <div class="container_main" #contentContainer>
-            <div class="d-flex">
-                <span class="spacer"></span>
-                <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
-                    ({{cetificadores.length}})
-                </p>
-            </div>
+            <div class="container_main" #contentContainer>
+                <div class="d-flex">
+                    <span class="spacer"></span>
+                    <p class="textosBold14">{{ 'pos.factura.registros' | translate }}
+                        ({{cetificadores.length}})
+                    </p>
+                </div>
 
-            <div class="dFlex" *ngFor="let certificador of cetificadores">
-                <span class="spacer"></span>
-                <div class="cetificadores">
-                    <div class="documentos-origen" (click)=" detalleCert()">
-                        <p class="textosBold14">{{ certificador.nombre }} </p>
-                        <div class="dFlex">
-                            <p class="textosBold14">NIT: </p>
-                            <p class="textos14"> 8765432-1 </p>
-                        </div>
-                        <div class="dFlex">
-                            <p class="textosBold14">{{ 'pos.apis.direccion' | translate }}: </p>
-                            <p class="textos14"> {{certificador.direccion}}</p>
-                        </div>
-                        <div class="dFlex">
-                            <p class="textosBold14">{{ 'pos.apis.tel' | translate }} </p>
-                            <p class="textos14">{{certificador.tel}}</p>
+                <div class="dFlex" *ngFor="let certificador of cetificadores">
+                    <span class="spacer"></span>
+                    <div class="cetificadores">
+                        <div class="documentos-origen" (click)=" detalleCert()">
+                            <p class="textosBold14">{{ certificador.nombre }} </p>
+                            <div class="dFlex">
+                                <p class="textosBold14">NIT: </p>
+                                <p class="textos14"> 8765432-1 </p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="textosBold14">{{ 'pos.apis.direccion' | translate }}: </p>
+                                <p class="textos14"> {{certificador.direccion}}</p>
+                            </div>
+                            <div class="dFlex">
+                                <p class="textosBold14">{{ 'pos.apis.tel' | translate }} </p>
+                                <p class="textos14">{{certificador.tel}}</p>
+                            </div>
                         </div>
                     </div>
+                    <span class="spacer"></span>
                 </div>
-                <span class="spacer"></span>
             </div>
+            <app-barra-logos></app-barra-logos>
         </div>
-        <app-barra-logos></app-barra-logos>
     </div>
 </div>

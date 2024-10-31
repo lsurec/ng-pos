@@ -19,6 +19,7 @@ import { catalogoTipoServicio } from "../provider_temp/tipo_servicio";
 
 export class CertificadorService {
 
+    verError: boolean = false;
     isLoading: boolean = false;
     catalogo: boolean = false;
     certificador: boolean = true;

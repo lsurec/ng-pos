@@ -40,4 +40,8 @@ export class CatalogoApisComponent {
     this.mantenimiento.apiDetalle = true;
   }
 
+  showError() {
+    this.mantenimiento.verError = true;
+  }
+
 }

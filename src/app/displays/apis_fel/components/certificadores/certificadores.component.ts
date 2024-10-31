@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CertificadorInterface } from '../../interfaces/certificador.interface';
 import { CertificadorService } from '../../services/certificador.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-certificadores',
@@ -36,11 +37,16 @@ export class CertificadoresComponent {
     }
   ];
 
+  regresar: number = 22;
 
   constructor(
+    private _eventService: EventService,
     public mantenimiento: CertificadorService,
   ) {
-
+    //mostrar contenido a regresar de error
+    this._eventService.certificadoresDeError$.subscribe((eventData) => {
+      this.mantenimiento.verError = false;
+    });
   }
 
   backPage() {
@@ -52,6 +58,10 @@ export class CertificadoresComponent {
   detalleCert() {
     this.mantenimiento.catalogo = true;
     this.mantenimiento.certificador = false;
+  }
+
+  showError() {
+    this.mantenimiento.verError = true;
   }
 
 }

@@ -255,4 +255,13 @@ export class EventService {
         this.homeDeErrorRestaurante.next(eventData);
     }
 
+    //Regresar de error a certificaciones
+    private certificadoresDeError = new Subject<any>();
+
+    certificadoresDeError$ = this.certificadoresDeError.asObservable();
+
+    certificadoresDeErrorEvent(eventData: boolean) {
+        this.certificadoresDeError.next(eventData);
+    }
+
 }

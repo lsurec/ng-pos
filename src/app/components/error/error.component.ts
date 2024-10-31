@@ -55,6 +55,8 @@ export class ErrorComponent implements OnInit {
   //regresar a la pantalla anterior
   goBack() {
 
+    console.log(this.regresar);
+
     switch (this.regresar) {
       case 1:
         //desde documento
@@ -145,6 +147,10 @@ export class ErrorComponent implements OnInit {
       case 21:
         //desde error a restaurante
         this._eventService.homeDeErrorRestauranteEvent(true);
+        break;
+      case 22:
+        //desde error a certificaion
+        this._eventService.certificadoresDeErrorEvent(true);
         break;
       default:
         this._location.back();
