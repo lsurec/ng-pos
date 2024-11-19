@@ -1087,13 +1087,13 @@ export class PrinterService {
                         text: item.unitario,
                         style: 'normalText'
                     },
-                    {
-                        text: item.cargos,
-                        style: 'normalText'
-                    }, {
-                        text: item.descuentos,
-                        style: 'normalText'
-                    },
+                    // {
+                    //     text: item.cargos,
+                    //     style: 'normalText'
+                    // }, {
+                    //     text: item.descuentos,
+                    //     style: 'normalText'
+                    // },
                     {
                         text: item.total,
                         style: 'normalText'
@@ -1535,7 +1535,8 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%',],
+                        // widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1570,14 +1571,14 @@ export class PrinterService {
                                     text: 'Precio Unitario',
                                     style: 'normalTextBold'
                                 },
-                                {
-                                    text: 'Cargo',
-                                    style: 'normalTextBold'
-                                },
-                                 {
-                                    text: 'Descuento',
-                                    style: 'normalTextBold'
-                                },
+                                // {
+                                //     text: 'Cargo',
+                                //     style: 'normalTextBold'
+                                // },
+                                //  {
+                                //     text: 'Descuento',
+                                //     style: 'normalTextBold'
+                                // },
                                 {
                                     text: 'Total',
                                     style: 'normalTextBold'
@@ -1597,70 +1598,70 @@ export class PrinterService {
                         ]
                     }
                 },
-                // {
-                //     marginTop: 5,
-                //     marginLeft: 175,
-                //     layout: 'noBorders',
-                //     table: {
+                {
+                    marginTop: 5,
+                    marginLeft: 175,
+                    layout: 'noBorders',
+                    table: {
 
-                //         widths: ['55%', '45%'],
-                //         body: [
-                //             [
-                //                 {
-                //                     text: 'Sub-total',
-                //                     style: 'headerText'
-                //                 },
-                //                 {
-                //                     text: doc.montos.subtotal,
-                //                     style: 'headerText',
-                //                     alignment: 'right',
-                //                 }
-                //             ]
-                //         ]
-                //     }
-                // },
-                // {
-                //     marginLeft: 180,
-                //     layout: 'noBorders',
-                //     table: {
+                        widths: ['55%', '45%'],
+                        body: [
+                            [
+                                {
+                                    text: 'Sub-total',
+                                    style: 'headerText'
+                                },
+                                {
+                                    text: doc.montos.subtotal,
+                                    style: 'headerText',
+                                    alignment: 'right',
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginLeft: 180,
+                    layout: 'noBorders',
+                    table: {
 
-                //         widths: ['55%', '45%'],
-                //         body: [
-                //             [
-                //                 {
-                //                     text: '(+) Cargos',
-                //                     style: 'headerText'
-                //                 },
-                //                 {
-                //                     text: doc.montos.cargos,
-                //                     style: 'headerText',
-                //                     alignment: 'right',
-                //                 }
-                //             ]
-                //         ]
-                //     }
-                // },
-                // {
-                //     marginLeft: 185,
-                //     layout: 'noBorders',
-                //     table: {
+                        widths: ['55%', '45%'],
+                        body: [
+                            [
+                                {
+                                    text: '(+) Cargos',
+                                    style: 'headerText'
+                                },
+                                {
+                                    text: doc.montos.cargos,
+                                    style: 'headerText',
+                                    alignment: 'right',
+                                }
+                            ]
+                        ]
+                    }
+                },
+                {
+                    marginLeft: 185,
+                    layout: 'noBorders',
+                    table: {
 
-                //         widths: ['55%', '45%'],
-                //         body: [
-                //             [
-                //                 {
-                //                     text: '(-) Descuentos',
-                //                     style: 'headerText'
-                //                 },
-                //                 {
-                //                     text: doc.montos.descuentos,
-                //                     style: 'headerText',
-                //                     alignment: 'right',
-                //                 }
-                //             ]
-                //         ]
-                //     }
-                // },
+                        widths: ['55%', '45%'],
+                        body: [
+                            [
+                                {
+                                    text: '(-) Descuentos',
+                                    style: 'headerText'
+                                },
+                                {
+                                    text: doc.montos.descuentos,
+                                    style: 'headerText',
+                                    alignment: 'right',
+                                }
+                            ]
+                        ]
+                    }
+                },
                 {
                     marginTop: 5,
                     marginLeft: 172,

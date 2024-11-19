@@ -1889,7 +1889,7 @@ export class FacturaComponent implements OnInit {
         }
       }
       
-      let totalCalc: number = (detail.monto + detail.monto_Cargo) - Math.abs(detail.monto_Descuento);
+      // let totalCalc: number = (detail.monto + detail.monto_Cargo) - Math.abs(detail.monto_Descuento);
 
       items.push(
         {
@@ -1897,7 +1897,8 @@ export class FacturaComponent implements OnInit {
           descripcion: detail.des_Producto,
           cantidad: detail.cantidad,
           unitario: this.currencyPipe.transform(precioUnitario, ' ', 'symbol', '2.2-2')!,
-          total: this.currencyPipe.transform(this.tipoDocumento == 20 ? totalCalc : detail.monto, ' ', 'symbol', '2.2-2')!, //Si eso ctiizacion total calculado
+          // total: this.currencyPipe.transform(this.tipoDocumento == 20 ? totalCalc : detail.monto, ' ', 'symbol', '2.2-2')!, //Si eso ctiizacion total calculado
+          total: this.currencyPipe.transform( detail.monto, ' ', 'symbol', '2.2-2')!, //Si eso ctiizacion total calculado
           imagen64: detail.img_Producto,
           precioRepocision: this.currencyPipe.transform(detail.precio_Reposicion ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
           cargos: this.currencyPipe.transform(detail.monto_Cargo ?? 0, ' ', 'symbol', '2.2-2') ?? "00.00",
