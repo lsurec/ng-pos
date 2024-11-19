@@ -1081,11 +1081,12 @@ export class PrinterService {
                     {
                         image: item.imagen64 ? `data:image/jpeg;base64,${item.imagen64}` : backgroundimg,
                         fit: [50, 50],
-
+                        alignment: 'center',
+                        
                     },
                     {
                         text: item.unitario,
-                        style: 'normalText'
+                        alignment: 'right',
                     },
                     // {
                     //     text: item.cargos,
@@ -1096,7 +1097,7 @@ export class PrinterService {
                     // },
                     {
                         text: item.total,
-                        style: 'normalText'
+                        alignment: 'right',
                     },
                 ],
 
@@ -1590,9 +1591,7 @@ export class PrinterService {
                 {
                     layout: 'noBorders',
                     table: {
-
-                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%', '10%', '10%'],
-
+                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%',],
                         body: [
                             ...transacciones
                         ]
@@ -1836,6 +1835,11 @@ export class PrinterService {
                 },
                 normalText: {
                     fontSize: 9,
+                },
+                
+                normalTextEnd: {
+                    fontSize: 9,
+                    alignment:'right'
                 },
                 normalTextBold: {
                     fontSize: 9,
