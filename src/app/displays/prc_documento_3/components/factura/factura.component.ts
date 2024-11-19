@@ -2699,13 +2699,14 @@ export class FacturaComponent implements OnInit {
       Doc_UserName: this.user,
       Doc_Observacion_1: this.facturaService.observacion,
       Doc_Tipo_Pago: 1, //TODO:preguntar
-      Doc_Elemento_Asignado: 1, //TODO:Preguntar
+      Doc_Elemento_Asignado: 1, //TODO:Preguntarf
       Doc_Transaccion: transacciones,
       Doc_Cargo_Abono: pagos,
     }
 
     //onjeto para el api
     let document: PostDocumentInterface = {
+
       estructura: JSON.stringify(this.docGlobal),
       user: this.user,
       estado: this.facturaService.valueParametro(349) ? 1 : 11,
