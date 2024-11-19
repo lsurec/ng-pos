@@ -1535,7 +1535,7 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%',],
                         // widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
                         body: [
                             [
@@ -1591,7 +1591,7 @@ export class PrinterService {
                     layout: 'noBorders',
                     table: {
 
-                        widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%', '10%', '10%'],
 
                         body: [
                             ...transacciones
@@ -1630,7 +1630,8 @@ export class PrinterService {
                             [
                                 {
                                     text: '(+) Cargos',
-                                    style: 'headerText'
+                                    style: 'headerText',
+                                    color: 'green'
                                 },
                                 {
                                     text: doc.montos.cargos,
@@ -1642,7 +1643,7 @@ export class PrinterService {
                     }
                 },
                 {
-                    marginLeft: 185,
+                    marginLeft: 195,
                     layout: 'noBorders',
                     table: {
 
@@ -1651,7 +1652,8 @@ export class PrinterService {
                             [
                                 {
                                     text: '(-) Descuentos',
-                                    style: 'headerText'
+                                    style: 'headerText',
+                                    color: 'red'
                                 },
                                 {
                                     text: doc.montos.descuentos,
@@ -1686,12 +1688,145 @@ export class PrinterService {
                     }
                 },
                 {
-                    marginTop: 5,
+                    marginTop: 10,
                     text: 'CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACIÓN',
                     bold: true,
                     fontSize: 13,
                 },
                 ...terminos,
+                {
+                    marginTop: 10,
+                    text: 'Cuentas',
+                    bold: true,
+                    fontSize: 13,
+                },
+
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "ALFA Y OMEGA",
+                                    style: 'normalText'
+                                },
+
+                            ],
+                            [
+                                {
+                                    text: "BANCO INDUSTRIAL",
+                                    style: 'normalText'
+                                },
+
+
+
+                            ],
+                            [
+                                {
+                                    text: "006-015563-0",
+                                    style: 'normalText'
+                                },
+
+
+                            ],
+                            [
+                                {
+                                    text: "Monetarios",
+                                    style: 'normalText'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "ALFA Y OMEGA",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "BANCO GYT MONETARIOS",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "001-0020034-5",
+                                    style: 'normalText'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "BAC MONETARIOS",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "AGROINVERSIONES DIVERSAS LA SELVA S A",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "No.902811157",
+                                    style: 'normalText'
+                                },
+                            ],
+                        ]
+                    }
+                },
+                {
+                    marginTop:5,
+                    text:'Enviar boleta a su ejecutiva.',
+                    style:'normalTextBold'
+                },
+
             ],
             styles: {
                 headerText: {
