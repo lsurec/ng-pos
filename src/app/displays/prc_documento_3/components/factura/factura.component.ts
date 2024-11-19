@@ -1852,9 +1852,6 @@ export class FacturaComponent implements OnInit {
         descuento += Math.abs(detail.monto_Descuento);
         subtotal += detail.monto;
 
-        console.log(descuento);
-        
-
       } else {
         
         if (detail.cantidad == 0 && detail.monto > 0) {
