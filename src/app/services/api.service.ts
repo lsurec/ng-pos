@@ -18,7 +18,6 @@ export class ApiService {
 
             //Resultado del api
             const response: ResponseInterface = res.body as ResponseInterface;
-console.log(response)
             //Retronarn respuesta correcta
             return {
                 status: true,

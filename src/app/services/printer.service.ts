@@ -1598,94 +1598,94 @@ export class PrinterService {
                     }
                 },
                 {
-                    marginTop: 5,
-                    marginLeft: 175,
-                    layout: 'noBorders',
                     table: {
-
-                        widths: ['55%', '45%'],
+                        widths: ['100%'], // Asegura que todo ocupe el ancho de la página
                         body: [
                             [
                                 {
-                                    text: 'Sub-total',
-                                    style: 'headerText'
-                                },
-                                {
-                                    text: doc.montos.subtotal,
-                                    style: 'headerText',
-                                    alignment: 'right',
+                                    table: {
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                { text: 'Sub-total', style: 'headerText', alignment: 'left', },
+                                                { text: doc.montos.subtotal, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
                                 }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginLeft: 180,
-                    layout: 'noBorders',
-                    table: {
-
-                        widths: ['55%', '45%'],
-                        body: [
+                            ],
                             [
                                 {
-                                    text: '(+) Cargos',
-                                    style: 'headerText',
-                                    color: 'green'
-                                },
-                                {
-                                    text: doc.montos.cargos,
-                                    style: 'headerText',
-                                    alignment: 'right',
+                                    table: {
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                          { text: '(+) Cargos', style: 'headerText', color: 'green', alignment: 'left',},
+                                                { text: doc.montos.cargos, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
                                 }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginLeft: 195,
-                    layout: 'noBorders',
-                    table: {
-
-                        widths: ['55%', '45%'],
-                        body: [
+                            ],
                             [
                                 {
-                                    text: '(-) Descuentos',
-                                    style: 'headerText',
-                                    color: 'red'
-                                },
-                                {
-                                    text: doc.montos.descuentos,
-                                    style: 'headerText',
-                                    alignment: 'right',
+                                    table: {
+                                        
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                { text: '(-) Descuentos', style: 'headerText', color: 'red',alignment: 'left', },
+                                                { text: doc.montos.descuentos, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
                                 }
-                            ]
-                        ]
-                    }
-                },
-                {
-                    marginTop: 5,
-                    marginLeft: 172,
-                    fillColor: '#CCCCCC',
-                    layout: 'noBorders',
-                    table: {
-
-                        widths: ['55%', '45%'],
-                        body: [
+                            ],
                             [
                                 {
-                                    text: 'TOTAL',
-                                    style: 'headerText'
-                                },
-                                {
-                                    text: doc.montos.total,
-                                    style: 'headerText',
-                                    alignment: 'right',
+                                    table: {
+                                        widths: ['30%', '15%', '15%', '40%'],
+                                        body: [
+                                            [
+                                                {}, // Primera celda sin fondo
+                                                {
+                                                    text:'',
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+
+                                                }, // Segunda celda sin fondo
+                                                { 
+                                                    text: 'TOTAL', 
+                                                    style: 'headerText', 
+                                                    alignment: 'left', 
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+                                                },
+                                                { 
+                                                    text: doc.montos.total, 
+                                                    style: 'headerText', 
+                                                    alignment: 'right', 
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+                                                }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
                                 }
                             ]
+                            
                         ]
-                    }
-                },
+                    },
+                    layout: 'noBorders',
+                }
+,                
                 {
                     marginTop: 10,
                     text: 'CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACIÓN',
