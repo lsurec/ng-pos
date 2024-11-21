@@ -90,7 +90,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
 
     //Calcular el total (cantidad * precio seleccionado)
-    this.productoService.total = cantidad! * this.productoService.precio.precioU;
+    this.productoService.total = parseFloat((cantidad! * this.productoService.precio.precioU).toFixed(2));
 
     
 
