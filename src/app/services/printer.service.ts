@@ -1081,16 +1081,23 @@ export class PrinterService {
                     {
                         image: item.imagen64 ? `data:image/jpeg;base64,${item.imagen64}` : backgroundimg,
                         fit: [50, 50],
-
+                        alignment: 'center',
+                        
                     },
                     {
                         text: item.unitario,
-                        style: 'normalText'
+                        alignment: 'right',
                     },
-
+                    // {
+                    //     text: item.cargos,
+                    //     style: 'normalText'
+                    // }, {
+                    //     text: item.descuentos,
+                    //     style: 'normalText'
+                    // },
                     {
                         text: item.total,
-                        style: 'normalText'
+                        alignment: 'right',
                     },
                 ],
 
@@ -1529,7 +1536,8 @@ export class PrinterService {
                 {
                     fillColor: '#CCCCCC',
                     table: {
-                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
+                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%',],
+                        // widths: ['10%', '10%', '10%', '20%', '10%', '10%', '10%', '10%', '10%',],
                         body: [
                             [
                                 {
@@ -1564,6 +1572,14 @@ export class PrinterService {
                                     text: 'Precio Unitario',
                                     style: 'normalTextBold'
                                 },
+                                // {
+                                //     text: 'Cargo',
+                                //     style: 'normalTextBold'
+                                // },
+                                //  {
+                                //     text: 'Descuento',
+                                //     style: 'normalTextBold'
+                                // },
                                 {
                                     text: 'Total',
                                     style: 'normalTextBold'
@@ -1575,44 +1591,241 @@ export class PrinterService {
                 {
                     layout: 'noBorders',
                     table: {
-
-                        widths: ['12%', '10%', '10%', '33%', '15%', '10%', '10%',],
-
+                        widths: ['10%', '10%', '10%', '30%', '20%', '10%', '10%',],
                         body: [
                             ...transacciones
                         ]
                     }
                 },
                 {
-                    marginTop: 5,
-                    marginLeft: 172,
-                    fillColor: '#CCCCCC',
-                    layout: 'noBorders',
                     table: {
-
-                        widths: ['55%', '45%'],
+                        widths: ['100%'], // Asegura que todo ocupe el ancho de la página
                         body: [
                             [
                                 {
-                                    text: 'TOTAL',
-                                    style: 'headerText'
-                                },
+                                    table: {
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                { text: 'Sub-total', style: 'headerText', alignment: 'left', },
+                                                { text: doc.montos.subtotal, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
+                                }
+                            ],
+                            [
                                 {
-                                    text: doc.montos.total,
-                                    style: 'headerText',
-                                    alignment: 'right',
+                                    table: {
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                          { text: '(+) Cargos', style: 'headerText', color: 'green', alignment: 'left',},
+                                                { text: doc.montos.cargos, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
+                                }
+                            ],
+                            [
+                                {
+                                    table: {
+                                        
+                                        widths: ['30%','15%','15%', '40%'],
+                                        body: [
+                                            [
+                                                {},
+                                                {},
+                                                { text: '(-) Descuentos', style: 'headerText', color: 'red',alignment: 'left', },
+                                                { text: doc.montos.descuentos, style: 'headerText', alignment: 'right' }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
+                                }
+                            ],
+                            [
+                                {
+                                    table: {
+                                        widths: ['30%', '15%', '15%', '40%'],
+                                        body: [
+                                            [
+                                                {}, // Primera celda sin fondo
+                                                {
+                                                    text:'',
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+
+                                                }, // Segunda celda sin fondo
+                                                { 
+                                                    text: 'TOTAL', 
+                                                    style: 'headerText', 
+                                                    alignment: 'left', 
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+                                                },
+                                                { 
+                                                    text: doc.montos.total, 
+                                                    style: 'headerText', 
+                                                    alignment: 'right', 
+                                                    fillColor: '#CCCCCC' // Fondo aplicado a esta celda
+                                                }
+                                            ]
+                                        ]
+                                    },
+                                    layout: 'noBorders'
                                 }
                             ]
+                            
                         ]
-                    }
-                },
+                    },
+                    layout: 'noBorders',
+                }
+,                
                 {
-                    marginTop: 5,
+                    marginTop: 10,
                     text: 'CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACIÓN',
                     bold: true,
                     fontSize: 13,
                 },
                 ...terminos,
+                {
+                    marginTop: 10,
+                    text: 'Cuentas',
+                    bold: true,
+                    fontSize: 13,
+                },
+
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "ALFA Y OMEGA",
+                                    style: 'normalText'
+                                },
+
+                            ],
+                            [
+                                {
+                                    text: "BANCO INDUSTRIAL",
+                                    style: 'normalText'
+                                },
+
+
+
+                            ],
+                            [
+                                {
+                                    text: "006-015563-0",
+                                    style: 'normalText'
+                                },
+
+
+                            ],
+                            [
+                                {
+                                    text: "Monetarios",
+                                    style: 'normalText'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "ALFA Y OMEGA",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "BANCO GYT MONETARIOS",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "001-0020034-5",
+                                    style: 'normalText'
+                                },
+                            ]
+                        ]
+                    }
+                },
+                {
+                    layout: {
+                        hLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.body.length) ? 1 : 0; // Línea horizontal solo en los bordes superior e inferior
+                        },
+                        vLineWidth: function (i, node) {
+                            return (i === 0 || i === node.table.widths!.length) ? 1 : 0; // Línea vertical solo en los bordes izquierdo y derecho
+                        },
+                        paddingTop: function (i, node) { return 0; },
+                        paddingBottom: function (i, node) { return 0; }
+                    },
+                    marginTop: 5,
+                    table: {
+                        widths: ['100%'],
+                        body: [
+                            [
+                                {
+                                    text: "BAC MONETARIOS",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "AGROINVERSIONES DIVERSAS LA SELVA S A",
+                                    style: 'normalText'
+                                },
+                            ],
+                            [
+                                {
+                                    text: "No.902811157",
+                                    style: 'normalText'
+                                },
+                            ],
+                        ]
+                    }
+                },
+                {
+                    marginTop:5,
+                    text:'Enviar boleta a su ejecutiva.',
+                    style:'normalTextBold'
+                },
+
             ],
             styles: {
                 headerText: {
@@ -1622,6 +1835,11 @@ export class PrinterService {
                 },
                 normalText: {
                     fontSize: 9,
+                },
+                
+                normalTextEnd: {
+                    fontSize: 9,
+                    alignment:'right'
                 },
                 normalTextBold: {
                     fontSize: 9,
@@ -2211,17 +2429,17 @@ export class PrinterService {
                                 },
                                 divider,
                             ]
-                           
+
                         ]
                     }
                 },
                 {
-                    text: "Nombre:", style: 'normalText', margin:[0,10,0,10],
+                    text: "Nombre:", style: 'normalText', margin: [0, 10, 0, 10],
                 },
                 divider,
                 {
                     margin: [0, 0, 0, 10],
-                    
+
                     text: "NiT:", style: 'normalText'
                 },
                 divider,
@@ -2232,10 +2450,10 @@ export class PrinterService {
                 divider,
 
                 {
-                    text: "Le atendió: Mesero", style: 'normalText', margin:[0,20,0,0],
+                    text: "Le atendió: Mesero", style: 'normalText', margin: [0, 20, 0, 0],
                 },
                 {
-                    text: "12/12/2020", style: 'normalText', margin:[0,10,0,0],
+                    text: "12/12/2020", style: 'normalText', margin: [0, 10, 0, 0],
                 },
                 {
                     text: "12:12:12", style: 'normalText',

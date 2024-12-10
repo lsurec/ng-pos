@@ -834,7 +834,8 @@ export class DetalleComponent implements AfterViewInit {
     let cantidad = UtilitiesService.convertirTextoANumero(this.productoService.cantidad);
 
     //Calcular el total (cantidad * precio seleccionado)
-    this.productoService.total = cantidad! * this.productoService.precio.precioU;
+    this.productoService.total = parseFloat((cantidad! * this.productoService.precio.precioU).toFixed(2));
+    
 
     //calcular precio dia si se necesita
 
@@ -937,9 +938,6 @@ export class DetalleComponent implements AfterViewInit {
         return;
       }
     }
-
-    
-
 
     // /7agregar transaccion
     this.facturaService.addTransaction(

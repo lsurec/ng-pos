@@ -11,16 +11,16 @@ export class UtilitiesService {
 
     static async generatePdfBlob(pdfDocGenerator: { getBlob: (arg0: (blob: any) => void) => void; }): Promise<Blob> {
         return new Promise((resolve, reject) => {
-          pdfDocGenerator.getBlob((blob) => {
-            if (blob) {
-              resolve(blob);  // Resolviendo la promesa con el blob
-            } else {
-              reject('Error al generar el PDF');
-            }
-          });
+            pdfDocGenerator.getBlob((blob) => {
+                if (blob) {
+                    resolve(blob);  // Resolviendo la promesa con el blob
+                } else {
+                    reject('Error al generar el PDF');
+                }
+            });
         });
-      }
-    
+    }
+
 
     static isEqualDate(fechaInicio: Date, fechaFinal: Date) {
         const fecha1SinHora: Date = new Date(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate());

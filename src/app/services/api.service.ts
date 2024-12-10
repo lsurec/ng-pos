@@ -18,7 +18,6 @@ export class ApiService {
 
             //Resultado del api
             const response: ResponseInterface = res.body as ResponseInterface;
-
             //Retronarn respuesta correcta
             return {
                 status: true,
@@ -27,6 +26,8 @@ export class ApiService {
             };
         } catch (err: any) {
             //Si existen errores
+            console.log(err);
+            
             let resApi: ResApiInterface = {
                 status: false,
                 response: err?.error?.data || err.message || 'Unknown error',

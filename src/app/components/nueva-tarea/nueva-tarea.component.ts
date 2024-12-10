@@ -1010,6 +1010,67 @@ export class NuevaTareaComponent implements OnInit {
     // this.desdeTareas.emit(true);
   };
 
+  limpiar() {
+    this.isLoading = true;
+
+    this.formulario.reset();
+    this.requerido = false;
+
+    for (let index = 0; index < this.estadosTarea.length; index++) {
+      const element = this.estadosTarea[index];
+      if (element.descripcion.toLowerCase() == 'activo') {
+        this.estadoTarea = element;
+        break;
+      }
+    }
+
+    for (let index = 0; index < this.tiposTarea.length; index++) {
+      const element = this.tiposTarea[index];
+      if (element.descripcion.toLowerCase() == 'tarea') {
+        this.tipoTarea = element;
+        break;
+      }
+    }
+
+    for (let index = 0; index < this.prioridadesTarea.length; index++) {
+      const element = this.prioridadesTarea[index];
+      if (element.nombre.toLowerCase() == 'normal') {
+        this.prioridadTarea = element;
+        break;
+      }
+    }
+
+    for (let index = 0; index < this.periodicidad.length; index++) {
+      const element = this.periodicidad[index];
+      if (element.descripcion.toLowerCase() == 'minutos') {
+        this.tiempoEstimado = element;
+        break;
+      }
+    }
+
+    this.fechaTarea = new Date(this.tareasGlobalService.fechaIniCalendario!);
+    // this.fechaActual();
+    if (this.tareasGlobalService.idPantalla == 1) {
+      this.fechaActual();
+    } else if (this.tareasGlobalService.idPantalla == 2) {
+      this.fechaCalendario();
+    }
+
+    if (this.tareasGlobalService.idPantalla == 2 && this.tareasGlobalService.vistaDia) {
+      this.fechaDiaCalendario();
+    }
+
+    this.descripcion = '';
+    this.selectedFiles = [];
+    this.idReferencia = undefined;
+    this.usuariosInvitados = [];
+    this.responsable = undefined;
+
+    this.cargarFormulario();
+
+    this.isLoading = false;
+  }
+
   //limpiar formulario de tareas
   async limpiarCrear(): Promise<void> {
 
@@ -1420,7 +1481,7 @@ export class NuevaTareaComponent implements OnInit {
 
     // // F I N - C O M E N T A R I O
 
-    this.limpiarCrear(); //Limpiar despues de crear
+    this.limpiar(); //Limpiar despues de crear
     this.isLoading = false;
 
     this._widgetsService.openSnackbar(`${this._translate.instant('crm.alertas.tareaCreadaExito')}${nuevasTareas[0].tarea}`);

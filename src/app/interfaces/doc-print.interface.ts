@@ -45,9 +45,11 @@ export interface Item {
   descripcion: string;
   cantidad: number;
   unitario: string;
-  precioDia: string,
+  // precioDia: string,
   total: string;
-  precioRepocision?:string;
+  cargos:string,
+  descuentos:string;
+  precioRepocision:string;
   imagen64?:string;
 }
 
