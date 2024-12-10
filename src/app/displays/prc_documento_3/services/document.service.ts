@@ -13,6 +13,39 @@ export class DocumentService {
     constructor(private _http: HttpClient) {
     }
 
+    getSearchDoc(
+        token: string,
+        user: string,
+        doc: number,
+        serie: string,
+        enterprise: number,
+        station: number,
+        start: Date,
+        end: Date,
+        desc: string,
+        filter: boolean,
+    ) {
+        let headers = new HttpHeaders(
+            {
+                "Authorization": "bearer " + token,
+                "user": user,
+                "doc": doc,
+                "serie": serie,
+                "enterprise": enterprise,
+                "station": station,
+                "start": start.toISOString(),
+                "end": end.toISOString(),
+                "desc": filter ?  desc : "empty",
+                "filter": filter ? "true" : "false" ,
+
+            }
+        )
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Documento/buscar`, { headers: headers, observe: 'response' });
+
+    }
+
     getStructureDocProcessed(
         user: string,
         token: string,
