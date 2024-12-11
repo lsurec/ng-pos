@@ -40,7 +40,7 @@
                             <p class="textosBold14">{{ 'pos.documento.fechaIni' | translate }}</p>
                             <div class="input-group">
                                 <input class="form-control" name="dp" [(ngModel)]=" fechaInicial" ngbDatepicker
-                                    #d="ngbDatepicker" (ngModelChange)="sincronizarFechas()" />
+                                    #d="ngbDatepicker" (ngModelChange)="loadDocs()" />
                                 <button class="btn btn-outline-secondary ver-calendario" (click)="d.toggle()"
                                     type="button">
                                     <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -55,7 +55,7 @@
 
                             <div class="input-group">
                                 <input class="form-control" name="dp2" [(ngModel)]=" fechaFinal" ngbDatepicker
-                                    #d2="ngbDatepicker" [minDate]="fechaInicial!" (ngModelChange)="loadData()" />
+                                    #d2="ngbDatepicker" [minDate]="fechaInicial!" (ngModelChange)="loadDocs()" />
                                 <button class="btn btn-outline-secondary ver-calendario" (click)="d2.toggle()"
                                     type="button">
                                     <mat-icon class="ico-calendario">calendar_month</mat-icon>
@@ -110,39 +110,39 @@
                 <div class="lista-documentos" *ngFor="let documento of documentos">
 
                     <div class="dFlex">
-                        <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.iD_Documento}}</p>
+                        <p class="textosBold14">{{ 'pos.documento.idDoc' | translate }} {{documento.id_Documento}}</p>
                         <p class="padding-right"></p>
-                        <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}:
-                            {{documento.consecutivo_Interno_Ref}}
+                     <p class="textosBold14">{{ 'pos.factura.consecutivo' | translate }}:
+                            {{documento.consecutivo_Interno}}
                         </p>
                         <span class="spacer"></span>
-                        <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.usuario}}</p>
+                        <p class="textosBold14">{{ 'pos.documento.usuario' | translate }} {{documento.userName}}</p>
                     </div>
 
                     <div class="documentos-origen" (click)=" detalleDoc()">
                         <div class="dFlex">
                             <p class="textosBold14">{{ 'pos.documento.fechaHora' | translate }} </p>
-                            <p class="textos14">14/10/2014 13:00:00</p>
+                            <p class="textos14">{{documento.fecha_Hora}}</p>
 
                             <span class="spacer"></span>
                             <p class="textosBold14">{{ 'pos.documento.fechaDoc' | translate }} </p>
-                            <p class="textos14">14/10/2014</p>
+                            <p class="textos14">{{documento.fecha_Documento}}</p>
                         </div>
                         <div class="dFlex">
                             <p class="textosBold14">{{ 'pos.documento.serieDoc' | translate }} </p>
-                            <p class="textos14">La Carreta </p>
+                            <p class="textos14">{{documento.des_Serie_Documento}} </p>
                         </div>
                         <div class="dFlex">
                             <p class="textosBold14">{{ 'pos.factura.cliente' | translate }}: </p>
-                            <p class="textos14"> Juan Perez </p>
+                            <p class="textos14"> {{documento.documento_Nombre}} </p>
                         </div>
                         <div class="dFlex">
                             <p class="textosBold14">NIT: </p>
-                            <p class="textos14"> 8765432-1 </p>
+                            <p class="textos14"> {{documento.documento_NIT}} </p>
                         </div>
                         <div class="dFlex">
                             <span class="spacer"></span>
-                            <p class="textosBold14">{{ 'pos.factura.total' | translate }}: {{documento.monto |
+                            <p class="textosBold14">{{ 'pos.factura.total' | translate }}: {{documento.t_Tra_M |
                                 currencyFormat}}
                             </p>
                         </div>
